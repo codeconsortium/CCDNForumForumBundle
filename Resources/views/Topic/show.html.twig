@@ -1,0 +1,98 @@
+{% extends 'CCDNCommonCommonBundle:Layout:layout_body_left.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link href="{{ asset('bundles/ccdncommoncrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('bundles/ccdncommonbbcode/css/bbcode.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block title %}{{ 'title.topic.show' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') }}{% endblock %}
+
+{% block sidebar %}
+	{% if is_granted('ROLE_MODERATOR') %}
+	<div class="common_box_5 bg_header_smoke">
+		<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.special' | trans({}, 'CCDNCommonCommonBundle') }}</span></div>
+		<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_moderator_forum_cp') }}">{{ 'general.view.link_moderate' | trans({}, 'CCDNCommonCommonBundle') }}</a></div>
+		{% if is_granted('ROLE_ADMIN') %}
+		<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_admin_forum_cp') }}">{{ 'general.view.link_administrate' | trans({}, 'CCDNCommonCommonBundle') }}</a></div>
+		{% endif %}
+	</div>
+	{% endif %}
+
+	<div class="common_box_5 bg_header_smoke">
+		<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') }}</span></div>
+		<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_forum_topic_reply', {'topic_id': topic.getId }) }}">{{ 'sidebar.link.reply_to_topic' | trans({}, 'CCDNForumForumBundle') }}</a></div>
+		<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_forum_topic_create', {'board_id': board.getId }) }}">{{ 'sidebar.link.create_new_topic' | trans({}, 'CCDNForumForumBundle') }}</a></div>
+	</div>
+
+	{% if is_granted('ROLE_MODERATOR') %}
+	<div class="common_box_5 bg_header_smoke">
+		<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.moderator_tools' | trans({}, 'CCDNForumForumBundle') }}</span></div>
+		<div class="common_box_panel">
+			{% if topic.closedBy %}
+				<a class="sidebar" href="{{ path('cc_moderator_forum_reopen_topic', {'topic_id': topic.getId }) }}">{{ 'link.topic.reopen' | trans({}, 'CCDNForumForumBundle') }}</a>
+			{% else %}
+				<a class="sidebar" href="{{ path('cc_moderator_forum_close_topic', {'topic_id': topic.getId }) }}">{{ 'link.topic.close' | trans({}, 'CCDNForumForumBundle') }}</a>
+			{% endif %}
+		</div>
+		<div class="common_box_panel">
+			<a class="sidebar" href="{{ path('cc_moderator_forum_topic_change_board', {'topic_id': topic.getId }) }}">{{ 'link.topic.change_board' | trans({}, 'CCDNForumForumBundle') }}</a>
+		</div>
+		<div class="common_box_panel">
+			{% if topic.deletedBy %}
+				<a class="sidebar" href="{{ path('cc_moderator_forum_topic_restore', {'topic_id': topic.getId }) }}">{{ 'link.topic.restore' |trans({}, 'CCDNForumForumBundle') }}</a>
+			{% else %}
+				<a class="sidebar" href="{{ path('cc_moderator_forum_topic_delete', {'topic_id': topic.getId }) }}">{{ 'link.topic.delete' |trans({}, 'CCDNForumForumBundle') }}</a>
+			{% endif %}
+		</div>
+	</div>
+	{% endif %}
+{% endblock %}
+
+{% block body %}
+
+{% include 'CCDNCommonCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+
+{% include 'CCDNCommonCommonBundle:Flashes:flashes.html.twig' %}
+
+<div class="common_box_5 bg_header_smoke">
+	<div class="common_box_header">
+		<span class="heading_glow">{{ topic.getTitle }}</span>
+	</div>
+	{% if topic.closedBy or topic.deletedBy %}
+	<div class="common_box_panel">
+		{% if topic.closedBy %}
+		<div style="width: auto; display: inline-block !important" class="common_box_5 margin_5 padding_5 h_align_centre v_align_top bg_highlight_orange">
+			<img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_locked.png') }}" />
+			<span class="common_note">{{ 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') }}{{ topic.getClosedBy.getUsername }}
+			{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}{{ topic.getClosedDate |date("d/m/Y - H:i:s") }}</span>
+		</div>
+		{% endif %}
+		{% if topic.deletedBy %}
+		<div style="width: auto; display: inline-block !important" class="common_box_5 margin_5 padding_5 h_align_centre v_align_top bg_highlight_orange">
+			<img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_trash.png') }}" />
+			<span class="common_note">{{ 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') }}{{ topic.getDeletedBy.getUsername }}
+			{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}{{ topic.getDeletedDate |date("d/m/Y - H:i:s") }}</span>
+		</div>
+		{% endif %}
+	</div>
+	{% endif %}
+	
+	<div class="common_box_panel common_tool_strip">
+		<div class="pagerfanta">
+			{{ pagerfanta(pager, 'default', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) }}
+		</div>
+	</div>
+		{% for key, post in topic.posts %}
+			{% include "CCDNForumForumBundle:Post:item_post.html.twig" %}
+		{% endfor %}
+	<div class="common_box_panel common_tool_strip">
+		<div class="pagerfanta">
+			{{ pagerfanta(pager, 'default', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) }}
+		</div>
+	</div>
+</div>
+
+{% include 'CCDNCommonCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+
+{% endblock %}

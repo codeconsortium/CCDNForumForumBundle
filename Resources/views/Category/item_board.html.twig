@@ -1,0 +1,37 @@
+<tr class="{{ cycler(['row_odd', 'row_even'], 'board') }}">
+	<td class="padding_5 h_align_centre v_align_middle" style="width:52px;">
+		<img class="icon_32x32" width="32px" height="32px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/32x32/32x32_board.png') }}" />
+	</td>
+	<td class="h_align_left v_align_top">
+		<a href="{{ path('cc_forum_board_show', {'board_id': board.getId }) }}">{{ board.getName }}</a><br />
+		<span class="common_body">{{ board.getDescription }}</span>		
+	</td>
+	<td class="h_align_left v_align_top" style="width:12%;">
+		<span class="label_small">{{ 'board.table.body.topic_count' | trans({}, 'CCDNForumForumBundle') }}</span>
+		<span class="stat_small">{{ board.getTopicCount }}</span>
+	</td>
+	<td class="h_align_left v_align_top" style="width:12%;">
+		<span class="label_small">{{ 'board.table.body.post_count' | trans({}, 'CCDNForumForumBundle') }}</span>
+		<span class="stat_small">{{ board.getPostCount }}</span>
+	</td>
+	<td class="h_align_centre v_align_top" style="width:20%;">
+		<span class="label_small">
+		{% if board.getLastPost %}
+			{% if board.getLastPost.getTopic %}
+				{% set page = divCeil(( board.getLastPost.getTopic.getReplyCount + 1), topics_per_board_page) %}
+				{{ 'post.posted_by' | trans({}, 'CCDNForumForumBundle') }}
+				{% if board.getLastPost.getCreatedBy %}
+					<a class="username_small" href="{{ path(user_profile_route, {'user_id': board.getLastPost.getCreatedBy.getId } ) }}">{{ board.getLastPost.getCreatedBy.getUsername }}</a> 
+				{% else %}
+					Guest 
+				{% endif %}
+				<br />{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': board.getLastPost.getTopic.getId, 'page':page } ) }}#{{ board.getLastPost.getId }}">{{ board.getLastPost.getCreatedDate|date("d/m/Y - H:i:s") }}</a>
+			{% else %}
+				{{ 'info.not_applicable' | trans({}, 'CCDNForumForumBundle') }}
+			{% endif %}
+		{% else %}
+			{{ 'info.not_applicable' | trans({}, 'CCDNForumForumBundle') }}
+		{% endif %}
+		</span>
+	</td>
+</tr>

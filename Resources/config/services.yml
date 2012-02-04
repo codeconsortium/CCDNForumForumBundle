@@ -1,0 +1,102 @@
+parameters:
+    ccdn_forum_forum.post.manager.class:                CCDNForum\ForumBundle\Entity\Manager\PostManager
+    ccdn_forum_forum.post.form.type.class:              CCDNForum\ForumBundle\Form\Type\PostType
+    ccdn_forum_forum.post.form.insert.handler.class:    CCDNForum\ForumBundle\Form\Handler\PostInsertFormHandler
+    ccdn_forum_forum.post.form.update.handler.class:    CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
+    
+    ccdn_forum_forum.topic.manager.class:               CCDNForum\ForumBundle\Entity\Manager\TopicManager
+    ccdn_forum_forum.topic.form.type.class:             CCDNForum\ForumBundle\Form\Type\TopicType
+    ccdn_forum_forum.topic.form.insert.handler.class:   CCDNForum\ForumBundle\Form\Handler\TopicInsertFormHandler
+    ccdn_forum_forum.topic.form.update.handler.class:   CCDNForum\ForumBundle\Form\Handler\TopicUpdateFormHandler
+    
+    ccdn_forum_forum.flag.manager.class:                CCDNForum\ForumBundle\Entity\Manager\FlagManager
+    ccdn_forum_forum.flag.form.type.class:              CCDNForum\ForumBundle\Form\Type\FlagType
+    ccdn_forum_forum.flag.form.insert.handler.class:    CCDNForum\ForumBundle\Form\Handler\FlagInsertFormHandler
+    ccdn_forum_forum.flag.form.default_choices.class:   CCDNForum\ForumBundle\Form\ChoiceDefaults\FlagChoices
+
+    ccdn_forum_forum.category.repository.class:         CCDNForum\ForumBundle\Repository\CategoryRepository
+    ccdn_forum_forum.board.repository.class:            CCDNForum\ForumBundle\Repository\BoardRepository
+    ccdn_forum_forum.topic.repository.class:            CCDNForum\ForumBundle\Repository\TopicRepository
+    ccdn_forum_forum.post.repository.class:             CCDNForum\ForumBundle\Repository\PostRepository
+    ccdn_forum_forum.flag.repository.class:             CCDNForum\ForumBundle\Repository\FlagRepository
+    
+#    ccdn_forum_forum.category.manager.class:            CCDNForum\ForumBundle\Entity\Manager\CategoryManager
+    ccdn_forum_forum.board.manager.class:               CCDNForum\ForumBundle\Entity\Manager\BoardManager
+    
+services:
+    post.manager:
+        class:  %ccdn_forum_forum.post.manager.class%
+        arguments:  [@doctrine, @service_container]              
+    post.form.type:
+        class:  %ccdn_forum_forum.post.form.type.class%
+        arguments:  [@doctrine]
+    post.form.insert.handler:
+        class:  %ccdn_forum_forum.post.form.insert.handler.class%
+        arguments:  [@form.factory, @service_container, @post.manager]
+    post.form.update.handler:
+        class:  %ccdn_forum_forum.post.form.update.handler.class%
+        arguments:  [@form.factory, @service_container, @post.manager]
+    
+    topic.manager:
+        class:  %ccdn_forum_forum.topic.manager.class%
+        arguments:  [@doctrine, @service_container]   
+    topic.form.type:
+        class:  %ccdn_forum_forum.topic.form.type.class%
+        arguments:  [@doctrine]
+    topic.form.insert.handler:
+        class:  %ccdn_forum_forum.topic.form.insert.handler.class%
+        arguments:  [@form.factory, @service_container, @topic.manager]
+    topic.form.update.handler:
+        class:  %ccdn_forum_forum.topic.form.update.handler.class%
+        arguments:  [@form.factory, @service_container, @topic.manager]
+        
+    flag.manager:
+        class:  %ccdn_forum_forum.flag.manager.class%
+        arguments:  [@doctrine, @service_container]   
+    flag.form.type:
+        class:  %ccdn_forum_forum.flag.form.type.class%
+        arguments:  [@doctrine]        
+    flag.form.insert.handler:
+        class:  %ccdn_forum_forum.flag.form.insert.handler.class%
+        arguments:  [@form.factory, @service_container, @flag.manager]
+    flag.form.default_choices:
+        class:  %ccdn_forum_forum.flag.form.default_choices.class%
+        arguments: [@service_container]
+
+    category.repository:
+        class: %ccdn_forum_forum.category.repository.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository 
+        arguments:
+            - 'CCDNForum\ForumBundle\Entity\Category'
+    board.repository:
+        class: %ccdn_forum_forum.board.repository.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository 
+        arguments:
+            - 'CCDNForum\ForumBundle\Entity\Board'
+    topic.repository:
+        class: %ccdn_forum_forum.topic.repository.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository 
+        arguments:
+            - 'CCDNForum\ForumBundle\Entity\Topic'
+    post.repository:
+        class: %ccdn_forum_forum.post.repository.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository 
+        arguments:
+            - 'CCDNForum\ForumBundle\Entity\Post'
+    flag.repository:
+        class: %ccdn_forum_forum.flag.repository.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository 
+        arguments:
+            - 'CCDNForum\ForumBundle\Entity\Flag'
+            
+#    category.manager:
+#        class:  %ccdn_forum_forum.category.manager.class%
+#        arguments:  [@doctrine, @service_container]        
+    board.manager:
+        class:  %ccdn_forum_forum.board.manager.class%
+        arguments:  [@doctrine, @service_container]

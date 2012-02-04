@@ -1,0 +1,151 @@
+<div class="common_box_panel bg_header_sub_item padding_5">
+	<div class="row padding_5">
+		<div style="width: 42%;" class="column v_align_top"><a class="heading_link" name="{{ post.getId }}" href="#{{ post.getId }}">Re: {{ post.getTopic.getTitle }}</a></div>
+		<div style="width: 45%;" class="column v_align_top h_align_right">		
+				{% if is_granted('ROLE_USER') %}
+					{% if post.getCreatedBy %}
+				<a class="button_link" href="{{ path('cc_message_message_compose_to', {'user_id': post.getCreatedBy.getId }) }}">{{ 'link.user.message' | trans({}, 'CCDNUserProfileBundle') }}</a>
+					{% endif %}
+					
+				<a class="button_link" href="{{ path('cc_forum_post_flag', {'post_id': post.getId }) }}">{{ 'link.post.flag' | trans({}, 'CCDNForumForumBundle') }}</a>
+					{% if post.getCreatedBy %}
+						{% if post.getCreatedBy.getId == user.getId or is_granted('ROLE_MODERATOR') %}
+				<a class="button_link" href="{{ path('cc_forum_post_edit', {'post_id': post.getId }) }}">{{ 'link.post.edit' | trans({}, 'CCDNForumForumBundle') }}</a>
+							{% if not post.getDeletedBy %}
+				<a class="button_link" href="{{ path('cc_forum_post_delete', {'post_id': post.getId }) }}">{{ 'link.post.delete' | trans({}, 'CCDNForumForumBundle') }}</a>
+							{% endif %}
+						{% endif %}
+					{% elseif is_granted('ROLE_MODERATOR') %}
+				<a class="button_link" href="{{ path('cc_forum_post_edit', {'post_id': post.getId }) }}">{{ 'link.post.edit' | trans({}, 'CCDNForumForumBundle') }}</a>
+						{% if not post.getDeletedBy %}
+				<a class="button_link" href="{{ path('cc_forum_post_delete', {'post_id': post.getId }) }}">{{ 'link.post.delete' | trans({}, 'CCDNForumForumBundle') }}</a>
+						{% endif %}
+					{% endif %}
+
+					{% if is_granted('ROLE_MODERATOR') %}
+						{% if post.getLockedBy %}
+				<a class="button_link" href="{{ path('cc_moderator_forum_unlock_post', {'post_id': post.getId }) }}">{{ 'link.post.unlock' | trans({}, 'CCDNForumForumBundle') }}</a>
+						{% else %}
+				<a class="button_link" href="{{ path('cc_moderator_forum_lock_post', {'post_id': post.getId }) }}">{{ 'link.post.lock' | trans({}, 'CCDNForumForumBundle') }}</a>
+						{% endif %}
+
+						{% if post.getDeletedBy %}
+				<a class="button_link" href="{{ path('cc_moderator_forum_post_restore', {'post_id': post.getId }) }}">{{ 'link.post.restore' | trans({}, 'CCDNForumForumBundle') }}</a>
+						{% endif %}
+					{% endif %}
+									
+				<a class="button_link" href="{{ path('cc_forum_topic_reply', {'topic_id': post.getTopic.getId }) }}">{{ 'link.post.reply' | trans({}, 'CCDNForumForumBundle') }}</a>
+				<a class="button_link" href="{{ path('cc_forum_topic_reply_with_quote', {'topic_id': post.getTopic.getId, 'quote_id': post.getId }) }}">{{ 'link.post.quote' | trans({}, 'CCDNForumForumBundle') }}</a>	
+				{% endif %}
+		</div>
+		<div style="width: 10%;" class="column v_align_top h_align_right">
+			{% if post.getLockedDate %}
+				<img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_locked.png') }}" />
+			{% endif %}
+			<a class="heading_link" href="{{ path('cc_forum_post_show', {'post_id': post.getId }) }}#{{ post.getId }}">#{{ post.getId }}</a>
+		</div>
+	</div>
+</div>
+
+<div class="common_box_panel bg_item_light">
+	<div class="row padding_10">
+		
+		<div style="width: auto;" class="column v_align_top h_align_left">
+			{% if post.getCreatedBy %}
+				{% if post.getCreatedBy.getProfile %}
+					{% if post.getCreatedBy.getProfile.getAvatarIsRemote %}
+						{% if post.getCreatedBy.getProfile.getAvatar %}
+							<img class="avatar" width="100px" height="100px" src="{{ post.getCreatedBy.getProfile.getAvatar }}" />
+						{% else %}
+							<img class="avatar" width="100px" height="100px" src="{{ asset('bundles/ccdncommoncommon/images/profile/anonymous_avatar.gif') }}" />
+						{% endif %}
+					{% else %}
+						{% if post.getCreatedBy.getProfile.getAvatar %}
+							{# later on this will reference the avatarBundle asset and append the avatar onto the end #}
+							{# e.g: {{ asset('bundles/ccdnuseravatar/images/avatars/') }}{{ post.getCreatedBy.getProfile.getAvatar }} #}
+							<img class="avatar" width="100px" height="100px" src="{{ asset('bundles/ccdncommoncommon/images/profile/anonymous_avatar.gif') }}" />
+						{% else %}
+							<img class="avatar" width="100px" height="100px" src="{{ asset('bundles/ccdncommoncommon/images/profile/anonymous_avatar.gif') }}" />
+						{% endif %}
+					{% endif %}
+				{% else %}
+					<img class="avatar" width="100px" height="100px" src="{{ asset('bundles/ccdncommoncommon/images/profile/anonymous_avatar.gif') }}" />
+				{% endif %}
+			{% else %}
+				<img class="avatar" width="100px" height="100px" src="{{ asset('bundles/ccdncommoncommon/images/profile/anonymous_avatar.gif') }}" />
+			{% endif %}
+		</div>
+		
+		<div style="width: auto;" class="column v_align_top h_align_left padding_5">
+			<div class="row h_align_centre padding_5">
+				{% if post.getCreatedBy %}
+				<a class="username_medium" href="{{ path(user_profile_route, {'user_id': post.getCreatedBy.getId } ) }}">{{ post.getCreatedBy }}</a>
+				{% else %}Guest{% endif %}
+			</div>
+			<div class="row h_align_centre padding_5">
+				<img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_star.png') }}" 
+				/><img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_star.png') }}" 
+				/><img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_star.png') }}" 
+				/><img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_star.png') }}" 
+				/><img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_star.png') }}"/>
+			</div>
+			{#<div class="row h_align_centre padding_5">{{ 'post.user.post_count' | trans({'%post_count%': '50'}, 'CCDNForumForumBundle') }}</div>#}
+		</div>
+		
+		<div style="width: auto; float: right;" class="column v_align_top h_align_right">
+			<div style="width: auto;" class="common_box_5 margin_5 padding_5 h_align_right v_align_top bg_highlight_light"><span class="common_note">&nbsp;{{ 'generic.posted_at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getCreatedDate|date("d/m/Y - H:i:s") }}</span></div>	
+
+			{% if post.getEditedDate %}
+			<div style="width: auto;" class="common_box_5 margin_5 padding_5 h_align_right v_align_top bg_highlight_light">
+			<span class="common_note">
+			&nbsp;{{ 'post.edited_by' |trans({}, 'CCDNForumForumBundle') }}
+			{% if post.getEditedBy %}{{ post.getEditedBy.getUsername }}{% else %}Guest{% endif %}
+			{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getEditedDate |date("d/m/Y - H:i:s") }}
+			</span>
+			</div>
+			{% endif %}
+			
+			{% if post.getFlags.count > 0 %}
+			<div style="width: auto; display: inline-block !important" class="common_box_5 margin_5 padding_5 h_align_centre v_align_top bg_highlight_red">
+				<img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_flag.png') }}" />
+				<span class="common_note">{{ 'post.has_been_flagged' |trans({}, 'CCDNForumForumBundle') }}</span>
+			</div>
+			{% endif %}
+		</div>
+
+	</div>
+	
+	<div class="row">
+		<img class="text_bubble_chevron" width="30px" height="20px" src="{{ asset('bundles/ccdnforumforum/images/text_bubble/chevron.png') }}" />
+		{% if post.getDeletedBy %}
+		<div class="common_box_5 margin_10 padding_2 text_bubble">
+			<div class="common_box_5 margin_0 padding_10 text_bubble_deleted">
+				<div class="padding_10">
+					<span class="common_body">
+					{{ 'post.is_deleted' | trans({}, 'CCDNForumForumBundle') }} - 
+					{{ 'post.deleted_by' |trans({}, 'CCDNForumForumBundle') }}
+					{% if post.getDeletedBy %}{{ post.getDeletedBy.getUsername }}{% else %}Guest{% endif %}
+					{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getCreatedDate|date("d/m/Y - H:i:s") }}
+					</span>
+				</div>
+			</div>
+		</div>
+		{% else %}
+		<div class="common_box_5 margin_10 padding_10 text_bubble">
+			<span class="common_body">
+			{{ BBCode(post.getBody | raw) | raw}}
+			</span>
+			{% if post.getCreatedBy %}
+				{% if post.getCreatedBy.getProfile %}
+					{% if post.getCreatedBy.getProfile.getSignature %}
+			<br /><br /><hr />
+			<span class="common_body">
+			{{ BBCode(post.getCreatedBy.getProfile.getSignature | raw) | raw }}
+			</span>
+					{% endif %}
+				{% endif %}
+			{% endif %}
+		</div>
+		{% endif %}
+	</div>
+</div>

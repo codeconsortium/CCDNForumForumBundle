@@ -1,0 +1,21 @@
+{% block field_label %}
+{% spaceless %}
+	{% set attr = attr|merge({ 'class': attr.class|default('') ~ 'widget_label'}) %}
+    <label for="{{ id }}" {{ block('widget_attributes') }}>{{ label }}</label>
+{% endspaceless %}
+{% endblock field_label %}
+
+
+
+{% block field_widget %}
+    {% set type = type|default('text') %}
+	{% set attr = attr|merge({ 'class': attr.class|default('') ~ 'widget_text'}) %}
+    <input type="{{ type }}" {{ block('widget_attributes') }} value="{{ value }}" />
+{% endblock field_widget %}
+
+
+
+{% block textarea_widget %}
+	{% set attr = attr|merge({ 'class': attr.class|default('') ~ 'widget_textarea'}) %}
+    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+{% endblock textarea_widget %}

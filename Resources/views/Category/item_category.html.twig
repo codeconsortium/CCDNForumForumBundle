@@ -1,0 +1,30 @@
+<div class="common_box_5 bg_header_smoke">
+	<div class="common_box_header">
+		<span class="heading_glow">{{ category.name }}</span>
+	</div>
+	<div class="common_box_panel common_tool_strip">
+		<span class="common_h2">
+			<img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_category.png') }}" />
+			<a class="heading_link" href="{{ path('cc_forum_category_show', {'category_id': category.id }) }}">{{ category.name }}</a>
+		</span>
+	</div>
+	<div class="common_box_panel">
+		<table class="common_list">
+			<thead>
+			</thead>
+			<tfoot>
+			</tfoot>
+			<tbody>
+			{% for row, board in category.boards %}
+				{% include "CCDNForumForumBundle:Category:item_board.html.twig" %}
+			{% else %}
+				<tr>
+					<td class="h_align_centre v_align_middle" colspan="4" width="100%" >	
+						{{ 'category.table.empty' | trans({}, 'CCDNForumForumBundle') }}
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>

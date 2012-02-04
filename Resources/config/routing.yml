@@ -1,0 +1,121 @@
+cc_forum_home_root:
+    pattern: /
+    defaults: { _controller: CCDNForumForumBundle:Category:index, _locale: en }
+
+cc_forum_home:
+    pattern: /{_locale}/forum
+    defaults:   { _contoller: CCDNForumForumBundle:Category:index, _locale: en }
+    requirements:
+        _locale: en
+            
+cc_forum_category:
+    pattern:    /{_locale}/forum
+    defaults:   { _controller: CCDNForumForumBundle:Category:index, _locale: en }
+    requirements:
+        _locale: en
+        
+cc_forum_category_index:
+    pattern:    /{_locale}/forum/index
+    defaults:   { _controller: CCDNForumForumBundle:Category:index, _locale: en }
+    requirements:
+        _locale: en
+        
+cc_forum_category_show:
+    pattern:    /{_locale}/forum/category/{category_id}
+    defaults:   { _controller: CCDNForumForumBundle:Category:show, _locale: en }
+    requirements:
+        _locale: en
+        
+cc_forum_board_show_paginated:
+    pattern:    /{_locale}/forum/board/{board_id}/page/{page}
+    defaults:   { _controller: CCDNForumForumBundle:Board:show, _locale: en, page: 1}
+    requirements:
+        _locale: en
+        
+cc_forum_board_show:
+    pattern:    /{_locale}/forum/board/{board_id}
+    defaults:   { _controller: CCDNForumForumBundle:Board:show, _locale: en, page: 1}
+    requirements:
+        _locale: en
+        
+cc_forum_topic_show_paginated:
+    pattern:    /{_locale}/forum/topic/{topic_id}/page/{page}
+    defaults:   { _controller: CCDNForumForumBundle:Topic:show, _locale: en }
+    requirements:
+        _locale: en
+        
+# item anchored below is only for use in creating a path, not for a request!
+cc_forum_topic_show_paginated_anchored:
+    pattern:    /{_locale}/forum/topic/{topic_id}/page/{page}#{post_id}
+    requirements:
+        _locale: en
+        
+cc_forum_topic_show:
+    pattern:    /{_locale}/forum/topic/{topic_id}
+    defaults:   { _controller: CCDNForumForumBundle:Topic:show, _locale: en, page: 1}
+    requirements:
+        _locale: en
+        
+cc_forum_post_show:
+    pattern:    /{_locale}/forum/post/{post_id}
+    defaults:   { _controller: CCDNForumForumBundle:Post:show, _locale: en }
+    requirements:
+        _locale: en
+        
+# ---- creation
+    
+cc_forum_topic_create:
+    pattern:    /{_locale}/forum/board/{board_id}/create/topic
+    defaults:   { _controller: CCDNForumForumBundle:Topic:create, _locale: en }
+    requirements:
+        _locale: en
+        
+cc_forum_topic_reply:
+    pattern:    /{_locale}/forum/topic/{topic_id}/reply
+    defaults:   { _controller: CCDNForumForumBundle:Topic:reply, _locale: en, quote_id: 0 }
+    requirements:
+        _locale: en
+
+cc_forum_topic_reply_with_quote:
+    pattern:    /{_locale}/forum/topic/{topic_id}/reply/quote/{quote_id}
+    defaults:   { _controller: CCDNForumForumBundle:Topic:reply, _locale: en, quote_id: 0 }
+    requirements:
+        _locale: en
+
+# ---- edting
+    
+cc_forum_post_edit:
+    pattern:    /{_locale}/forum/post/{post_id}/edit
+    defaults:   { _controller: CCDNForumForumBundle:Post:edit, _locale: en }
+    requirements:
+        _locale: en
+        
+# ---- deleting
+
+cc_forum_post_delete:
+    pattern:    /{_locale}/forum/post/{post_id}/delete
+    defaults:   { _controller: CCDNForumForumBundle:Post:delete, _locale: en }
+    requirements:
+        _locale: en
+
+cc_forum_post_delete_confirmed:
+    pattern:    /{_locale}/forum/post/{post_id}/delete/confirm
+    defaults:   { _controller: CCDNForumForumBundle:Post:deleteConfirmed, _locale: en }
+    requirements:
+        _locale: en
+
+# ---- flag
+cc_forum_post_flag:
+    pattern:    /{_locale}/forum/post/{post_id}/flag
+    defaults:   { _controller: CCDNForumForumBundle:Post:flag, _locale: en }
+    requirements:
+        _locale: en
+
+#    requirements:
+#        _method: GET
+    
+#post_edit_process:
+#    pattern:    /forum/post/{post_id}/edit/process
+#    defaults:   { _controller: CCDNForumForumBundle:Post:editProcess }
+#    requirements:
+#        _method: POST

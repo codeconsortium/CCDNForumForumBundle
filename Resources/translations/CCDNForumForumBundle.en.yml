@@ -1,0 +1,119 @@
+category.index: Forum Index
+
+sidebar.header.tools: Tools
+sidebar.link.reply_to_topic: Reply to topic      
+sidebar.link.post_new_topic: Post New Topic
+sidebar.link.create_new_topic: Create New Topic
+
+sidebar.header.moderator_tools: Moderator Tools
+
+# crumbs:
+crumbs.forum_index: Forum Index
+crumbs.topic.create: Create New Topic
+crumbs.topic.reply: Reply to Topic
+crumbs.topic.delete: "Delete Topic: "
+crumbs.post.edit: "Edit Post: #"
+crumbs.post.flag: "Flag Post: #"
+crumbs.post.delete: "Delete Post: #"
+
+# Page titles:
+title.category.index: 'Forum: Index.'
+title.category.show: 'Forum: Category "%category_name%".'
+title.board.show: 'Forum: Board "%board_name%".'
+title.topic.show: 'Forum: "%topic_title%".'
+title.topic.create: 'Forum: Create topic on board "%board_name%".'
+title.topic.reply: 'Forum: Reply to topic "%topic_title%".'
+title.topic.edit: 'Forum: Edit topic "%topic_title%".'
+title.topic.delete: 'Forum: Delete topic "%topic_title%".'
+title.post.show: 'Forum: #%post_id% for topic "%topic_title%".'
+title.post.edit: 'Forum: Edit post #%post_id% of topic "%topic_title%".'
+title.post.delete: 'Forum: Delete #%post_id% for topic "%topic_title%".'
+title.flag.post: 'Forum: Flag post #%post_id%. for topic "%topic_title%"'
+
+# links & button links
+link.post.flag: Flag
+link.post.edit: Edit
+link.post.reply: Reply
+link.post.quote: Quote
+link.post.delete: Delete
+link.post.restore: Restore
+link.post.lock: Lock
+link.post.unlock: Unlock
+link.topic.close: Close Topic
+link.topic.reopen: Reopen Topic
+link.topic.delete: Delete Topic
+link.topic.restore: Restore Topic
+link.topic.change_board: Change Board
+
+flash.post.edit.success: 'Post: #%post_id% of topic: "%topic_title%" edited successfully.'
+flash.post.delete.success: 'Post: #%post_id% deleted successfully.'
+flash.post.flagged.success: 'You flagged the post: #%post_id% of topic: "%topic_title%".'
+
+flash.topic.create.success: 'You posted the new topic: "%topic_title%".'
+flash.topic.reply.success: 'You posted a reply to the topic: "%topic_title%".'
+
+# show:
+categories.empty: There are no categories.
+category.table.empty: There are no boards for this category.
+board.table.empty: No topics for this board, be the first to post one!
+
+# show:
+board.table.body.topic_count: 'Topics: '
+board.table.body.post_count: 'Posts: '
+    
+board.table.head.topic_title: Topic
+board.table.head.reply_count: Replies
+board.table.head.view_count: Views
+board.table.head.last_post: Last Post
+
+board.table.body.reply_count: 'Replies: '
+board.table.body.view_count: 'Viewed: '
+info.not_applicable: N/A
+
+# show:
+post.posted_by: 'Posted by '
+post.edited_by: 'Edited by '
+post.locked_by: 'Locked by '
+post.deleted_by: 'Deleted by '
+topic.closed_by: 'Topic closed by '
+topic.deleted_by: 'Topic deleted by '
+generic.posted_at: 'Posted at '
+post.has_been_flagged: 'This post has been flagged!'
+actioned.at: ' at '
+
+topic.transcript: '"%topic_title%" Transcript.'
+
+post.user.post_count: %post_count% Posts
+post.is_deleted: This post has been removed.
+
+# form
+form.label.topic.title: 'Title: '
+form.label.post.body: 'Body: '
+form.button.topic.create: Post Topic
+form.button.topic.reply: Post Reply
+form.button.post.edit: Update
+
+# delete:
+topic.delete_topic_question: Are you sure you want to delete this topic?
+post.delete_post_question: Are you sure you want to delete this post?
+post.delete.confirm_yes: Yes
+post.delete.confirm_no: No
+
+# flag
+form.label.post.flag.reason: 'Reason: '
+form.label.post.flag.description: 'Description of issue: '
+form.button.post.flag.submit: Submit Flag
+
+flag.reasons.spam: Spam
+flag.reasons.age_inappropriate_content: Inappropriate content
+flag.reasons.aggressive_attitude: Aggressive attitude
+flag.reasons.hate_speech: Hate speech
+flag.reasons.condoning_provoking_violence: Condoning or provoking violence
+flag.reasons.offensive_content: Offensive content
+
+flag.statuses.open: Open
+flag.statuses.being_investigated: Being investigated
+flag.statuses.closed_resolved: Closed / resolved
+flag.statuses.closed_unresolvable: Closed / unresolvable
+flag.statuses.closed_no_issue: Closed / no issue
+flag.statuses.closed_pending_review: Closed / pending review
