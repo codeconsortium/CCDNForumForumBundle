@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use CCDNCommon\CommonBundle\Entity\Manager\EntityManagerInterface;
+use CCDNComponent\CommonBundle\Entity\Manager\EntityManagerInterface;
 
 /**
  * 

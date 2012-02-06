@@ -40,7 +40,7 @@
 		</div>
 		<div style="width: 10%;" class="column v_align_top h_align_right">
 			{% if post.getLockedDate %}
-				<img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_locked.png') }}" />
+				<img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_locked.png') }}" />
 			{% endif %}
 			<a class="heading_link" href="{{ path('cc_forum_post_show', {'post_id': post.getId }) }}#{{ post.getId }}">#{{ post.getId }}</a>
 		</div>
@@ -57,22 +57,22 @@
 						{% if post.getCreatedBy.getProfile.getAvatar %}
 							<img class="avatar" width="100px" height="100px" src="{{ post.getCreatedBy.getProfile.getAvatar }}" />
 						{% else %}
-							<img class="avatar" width="100px" height="100px" src="{{ asset('bundles/ccdncommoncommon/images/profile/anonymous_avatar.gif') }}" />
+							<img class="avatar" width="100px" height="100px" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" />
 						{% endif %}
 					{% else %}
 						{% if post.getCreatedBy.getProfile.getAvatar %}
 							{# later on this will reference the avatarBundle asset and append the avatar onto the end #}
 							{# e.g: {{ asset('bundles/ccdnuseravatar/images/avatars/') }}{{ post.getCreatedBy.getProfile.getAvatar }} #}
-							<img class="avatar" width="100px" height="100px" src="{{ asset('bundles/ccdncommoncommon/images/profile/anonymous_avatar.gif') }}" />
+							<img class="avatar" width="100px" height="100px" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" />
 						{% else %}
-							<img class="avatar" width="100px" height="100px" src="{{ asset('bundles/ccdncommoncommon/images/profile/anonymous_avatar.gif') }}" />
+							<img class="avatar" width="100px" height="100px" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" />
 						{% endif %}
 					{% endif %}
 				{% else %}
-					<img class="avatar" width="100px" height="100px" src="{{ asset('bundles/ccdncommoncommon/images/profile/anonymous_avatar.gif') }}" />
+					<img class="avatar" width="100px" height="100px" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" />
 				{% endif %}
 			{% else %}
-				<img class="avatar" width="100px" height="100px" src="{{ asset('bundles/ccdncommoncommon/images/profile/anonymous_avatar.gif') }}" />
+				<img class="avatar" width="100px" height="100px" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" />
 			{% endif %}
 		</div>
 		
@@ -83,11 +83,11 @@
 				{% else %}Guest{% endif %}
 			</div>
 			<div class="row h_align_centre padding_5">
-				<img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_star.png') }}" 
-				/><img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_star.png') }}" 
-				/><img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_star.png') }}" 
-				/><img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_star.png') }}" 
-				/><img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_star.png') }}"/>
+				<img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" 
+				/><img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" 
+				/><img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" 
+				/><img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" 
+				/><img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}"/>
 			</div>
 			{#<div class="row h_align_centre padding_5">{{ 'post.user.post_count' | trans({'%post_count%': '50'}, 'CCDNForumForumBundle') }}</div>#}
 		</div>
@@ -107,7 +107,7 @@
 			
 			{% if post.getFlags.count > 0 %}
 			<div style="width: auto; display: inline-block !important" class="common_box_5 margin_5 padding_5 h_align_centre v_align_top bg_highlight_red">
-				<img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncommoncommon/images/icons/Black/16x16/16x16_flag.png') }}" />
+				<img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" />
 				<span class="common_note">{{ 'post.has_been_flagged' |trans({}, 'CCDNForumForumBundle') }}</span>
 			</div>
 			{% endif %}

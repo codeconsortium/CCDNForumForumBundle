@@ -187,6 +187,7 @@ class PostController extends ContainerAware
 				return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:edit_topic.html.' . $this->getEngine(), array(
 					'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
 					'board' => $board,
+					'topic' => $topic,
 					'post' => $post,
 					'crumbs' => $crumb_trail,
 					'form' => $form->createView(),
@@ -196,6 +197,7 @@ class PostController extends ContainerAware
 				return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:edit_post.html.' . $this->getEngine(), array(
 					'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
 					'board' => $board,
+					'topic' => $topic,
 					'post' => $post,
 					'crumbs' => $crumb_trail,
 					'form' => $form->createView(),

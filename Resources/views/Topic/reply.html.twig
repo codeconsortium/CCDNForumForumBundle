@@ -1,15 +1,15 @@
-{% extends 'CCDNCommonCommonBundle:Layout:layout_body_left.html.twig' %}
+{% extends 'CCDNComponentCommonBundle:Layout:layout_body_left.html.twig' %}
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link href="{{ asset('bundles/ccdncommoncommon/css/form.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('bundles/ccdncommoncrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('bundles/ccdncommonbbcode/css/bbcode.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('bundles/ccdncomponentcommon/css/form.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('bundles/ccdncomponentbbcode/css/bbcode.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
-	<script src="{{ asset('bundles/ccdncommonbbcode/js/jquery.bbcode.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/ccdncomponentbbcode/js/jquery.bbcode.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block title %}{{ 'title.topic.reply' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') }}{% endblock %}
@@ -17,10 +17,10 @@
 {% block sidebar %}
 	{% if is_granted('ROLE_MODERATOR') %}
 	<div class="common_box_5 bg_header_smoke">
-		<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.special' | trans({}, 'CCDNCommonCommonBundle') }}</span></div>
-		<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_moderator_forum_cp') }}">{{ 'general.view.link_moderate' | trans({}, 'CCDNCommonCommonBundle') }}</a></div>
+		<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.special' | trans({}, 'CCDNComponentCommonBundle') }}</span></div>
+		<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_moderator_forum_cp') }}">{{ 'general.view.link_moderate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
 		{% if is_granted('ROLE_ADMIN') %}
-		<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_admin_forum_cp') }}">{{ 'general.view.link_administrate' | trans({}, 'CCDNCommonCommonBundle') }}</a></div>
+		<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_admin_forum_cp') }}">{{ 'general.view.link_administrate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
 		{% endif %}
 	</div>
 	{% endif %}
@@ -33,9 +33,9 @@
 
 {% block body %}
 
-{% include 'CCDNCommonCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 
-{% include 'CCDNCommonCommonBundle:Flashes:flashes.html.twig' %}
+{% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
 
 <div class="common_box_5 bg_header_smoke">
 	<div class="common_box_header">
@@ -61,7 +61,7 @@
 						<td class="h_align_right v_align_top">{{ form_label(form.body, null, { 'label': 'form.label.post.body'| trans({}, 'CCDNForumForumBundle') }) }}</td>
 						<td class="h_align_left v_align_middle">
 							{{ form_errors(form.body) }}
-							{% form_theme form 'CCDNCommonBBCodeBundle:Form:fields.html.twig' %}
+							{% form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' %}
 							{{ form_widget(form.body) }}
 						</td>
 					</tr>
@@ -78,6 +78,6 @@
 
 {% include 'CCDNForumForumBundle:Topic:transcript.html.twig' with {'topic': topic } %}
 
-{% include 'CCDNCommonCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 
 {% endblock %}
