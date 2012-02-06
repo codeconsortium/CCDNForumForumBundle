@@ -30,6 +30,7 @@ use Symfony\Component\DependencyInjection\Loader;
 class CCDNForumForumExtension extends Extension
 {
 
+
     /**
      * {@inheritDoc}
      */
@@ -44,14 +45,65 @@ class CCDNForumForumExtension extends Extension
         $loader->load('services.yml');
 
 		$container->setParameter('ccdn_forum_forum.template.engine', $config['template']['engine']);
-		$container->setParameter('ccdn_forum_forum.board.topics_per_board_page', $config['board']['topics_per_board_page']);
-		$container->setParameter('ccdn_forum_forum.topic.posts_per_topic_page', $config['topic']['posts_per_topic_page']);		
 		$container->setParameter('ccdn_forum_forum.user.profile_route', $config['user']['profile_route']);
+		
+		$this->getCategorySection($container, $config);
+		$this->getBoardSection($container, $config);
+		$this->getTopicSection($container, $config);
+		$this->getPostSection($container, $config);
     }
-
+	
+	
+    /**
+     * {@inheritDoc}
+     */
 	public function getAlias()
 	{
 		return 'ccdn_forum_forum';
+	}
+	
+
+	/**
+	 *
+	 * @access private
+	 * @param $container, $config
+	 */
+	private function getCategorySection($container, $config)
+	{
+		
+	}
+	
+
+	/**
+	 *
+	 * @access private
+	 * @param $container, $config
+	 */
+	private function getBoardSection($container, $config)
+	{
+		$container->setParameter('ccdn_forum_forum.board.topics_per_page', $config['board']['topics_per_page']);
+	}
+	
+
+	/**
+	 *
+	 * @access private
+	 * @param $container, $config
+	 */
+	private function getTopicSection($container, $config)
+	{
+		$container->setParameter('ccdn_forum_forum.topic.posts_per_page', $config['topic']['posts_per_page']);		
+	}
+	
+
+	/**
+	 *
+	 * @access private
+	 * @param $container, $config
+	 */
+	private function getPostSection($container, $config)
+	{
+		
 	}
 	
 }

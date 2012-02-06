@@ -41,8 +41,8 @@ class TopicController extends ContainerAware
 		
 		$topic_paginated = $this->container->get('topic.repository')->findOneByIdJoinedToPostsPaginated($topic_id);
 		
-		$posts_per_topic_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_topic_page');
-		$topic_paginated->setMaxPerPage($posts_per_topic_page);
+		$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
+		$topic_paginated->setMaxPerPage($posts_per_page);
 		$topic_paginated->setCurrentPage($page, false, true);
 		
 		$topic_ = $topic_paginated->getCurrentPageResults();
@@ -189,7 +189,7 @@ class TopicController extends ContainerAware
 		if ($formHandler->process())	
 		{				
 			// page of the last post
-			$posts_per_topic_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_topic_page');
+			$posts_per_topic_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
 			$counters = $formHandler->getCounters();
 			$page = ceil(++$counters['replyCount'] / $posts_per_topic_page);
 

@@ -155,8 +155,8 @@ class PostController extends ContainerAware
 			{
 				if ($post->getId() == $postTest->getId())
 				{
-					$posts_per_topic_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_topic_page');
-					$page = ceil($index / $posts_per_topic_page);
+					$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
+					$page = ceil($index / $posts_per_page);
 					break;
 				}
 			}

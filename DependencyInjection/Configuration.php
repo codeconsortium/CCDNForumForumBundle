@@ -14,6 +14,7 @@
 namespace CCDNForum\ForumBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
@@ -26,6 +27,8 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
+	
+	
     /**
      * {@inheritDoc}
      */
@@ -50,18 +53,80 @@ class Configuration implements ConfigurationInterface
 						->scalarNode('theme')->defaultValue('CCDNForumForumBundle:Form:fields.html.twig')->end()
 					->end()
 				->end()
+			->end();
+
+		$this->addCategorySection($rootNode);
+		$this->addBoardSection($rootNode);
+		$this->addTopicSection($rootNode);
+		$this->addPostSection($rootNode);
+		
+        return $treeBuilder;
+    }
+
+	
+
+	/**
+	 *
+	 * @access private
+	 * @param ArrayNodeDefinition $node
+	 */
+	private function addCategorySection(ArrayNodeDefinition $node)
+	{
+		$node
+			->children()
+			
+			->end();
+	}
+	
+
+	/**
+	 *
+	 * @access private
+	 * @param ArrayNodeDefinition $node
+	 */
+	private function addBoardSection(ArrayNodeDefinition $node)
+	{
+		$node
+			->children()
 				->arrayNode('board')
 					->children()
-						->scalarNode('topics_per_board_page')->defaultValue('40')->end()
-					->end()
-				->end()
-				->arrayNode('topic')
-					->children()
-						->scalarNode('posts_per_topic_page')->defaultValue('20')->end()
+						->scalarNode('topics_per_page')->defaultValue('40')->end()
 					->end()
 				->end()
 			->end();
+	}
 
-        return $treeBuilder;
-    }
+
+	/**
+	 *
+	 * @access private
+	 * @param ArrayNodeDefinition $node
+	 */
+	private function addTopicSection(ArrayNodeDefinition $node)
+	{
+		$node
+			->children()
+				->arrayNode('topic')
+					->children()
+						->scalarNode('posts_per_page')->defaultValue('20')->end()
+					->end()
+				->end()
+			->end();
+	}
+	
+
+	/**
+	 *
+	 * @access private
+	 * @param ArrayNodeDefinition $node
+	 */	
+	private function addPostSection(ArrayNodeDefinition $node)
+	{
+		$node
+			->children()
+			
+			->end();
+	}
+
+	
 }

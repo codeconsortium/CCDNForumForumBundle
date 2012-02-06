@@ -18,7 +18,7 @@
 		<span class="label_small">
 		{% if board.getLastPost %}
 			{% if board.getLastPost.getTopic %}
-				{% set page = divCeil(( board.getLastPost.getTopic.getReplyCount + 1), topics_per_board_page) %}
+				{% set page = divCeil(( board.getLastPost.getTopic.getReplyCount + 1), topics_per_page) %}
 				{{ 'post.posted_by' | trans({}, 'CCDNForumForumBundle') }}
 				{% if board.getLastPost.getCreatedBy %}
 					<a class="username_small" href="{{ path(user_profile_route, {'user_id': board.getLastPost.getCreatedBy.getId } ) }}">{{ board.getLastPost.getCreatedBy.getUsername }}</a> 

@@ -38,7 +38,7 @@ class CategoryController extends ContainerAware
 		if ( ! $categories) {
 			throw NotFoundHttpException('No categories exists!');
 		}
-		$topics_per_board_page = $this->container->getParameter('ccdn_forum_forum.board.topics_per_board_page');
+		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.topics_per_page');
 		
 		$crumb_trail = $this->container->get('crumb_trail')
 			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), 
@@ -48,7 +48,7 @@ class CategoryController extends ContainerAware
 			'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
 			'crumbs' => $crumb_trail,
 			'categories' => $categories,
-			'topics_per_board_page' => $topics_per_board_page,
+			'topics_per_page' => $topics_per_page,
 			));
     }
 
@@ -68,7 +68,7 @@ class CategoryController extends ContainerAware
 			throw NotFoundhttpException('No such category exists!');
 		}
 		
-		$topics_per_board_page = $this->container->getParameter('ccdn_forum_forum.board.topics_per_board_page');
+		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.topics_per_page');
 		
 		$crumb_trail = $this->container->get('crumb_trail')
 			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), 
@@ -80,7 +80,7 @@ class CategoryController extends ContainerAware
 			'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
 			'crumbs' => $crumb_trail,
 			'category' => $category,
-			'topics_per_board_page' => $topics_per_board_page,
+			'topics_per_page' => $topics_per_page,
 			));
 	}
 	

@@ -42,9 +42,9 @@ class BoardController extends ContainerAware
 		}
 
 		// deal with pagination.
-		$topics_per_board_page = $this->container->getParameter('ccdn_forum_forum.board.topics_per_board_page');
+		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.topics_per_page');
 
-		$board_paginated->setMaxPerPage($topics_per_board_page);
+		$board_paginated->setMaxPerPage($topics_per_page);
 		$board_paginated->setCurrentPage($page, false, true);
 
 		$board_ = $board_paginated->getCurrentPageResults();
@@ -58,7 +58,7 @@ class BoardController extends ContainerAware
 		$board = $board_[0];			
 
 		// this is necessary for working out the last page for each topic.
-		$posts_per_topic_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_topic_page');
+		$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
 		
 		// setup bread crumbs.
 		$category = $board->getCategory();
@@ -74,7 +74,7 @@ class BoardController extends ContainerAware
 			'crumbs' => $crumb_trail,
 			'board' => $board,
 			'pager' => $board_paginated,
-			'posts_per_topic_page' => $posts_per_topic_page,
+			'posts_per_page' => $posts_per_page,
 			));
         
 	}
