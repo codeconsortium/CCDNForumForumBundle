@@ -42,7 +42,7 @@ class Board
     protected $topics;
     
 	/**
-     * @ORM\Column(type="string", length="100")
+     * @ORM\Column(type="string", length=100)
 	 * @Assert\NotBlank(message = "Board name must not be blank!")
      */
 	protected $name;
