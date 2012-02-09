@@ -42,7 +42,7 @@ class Topic
     protected $board;
 	
 	/**
-	 * @ORM\Column(type="string", length="100")
+	 * @ORM\Column(type="string", length=100)
 	 * @Assert\NotBlank(message = "Title must not be blank!")
 	 */
 	protected $title;
