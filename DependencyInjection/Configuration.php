@@ -74,7 +74,17 @@ class Configuration implements ConfigurationInterface
 	{
 		$node
 			->children()
-			
+				->arrayNode('category')
+					->children()
+						->arrayNode('layout_templates')
+							->children()
+								->scalarNode('index')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('show')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								
+							->end()
+						->end()
+					->end()
+				->end()
 			->end();
 	}
 	
@@ -91,6 +101,11 @@ class Configuration implements ConfigurationInterface
 				->arrayNode('board')
 					->children()
 						->scalarNode('topics_per_page')->defaultValue('40')->end()
+						->arrayNode('layout_templates')
+							->children()
+								->scalarNode('show')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+							->end()
+						->end()
 					->end()
 				->end()
 			->end();
@@ -109,6 +124,13 @@ class Configuration implements ConfigurationInterface
 				->arrayNode('topic')
 					->children()
 						->scalarNode('posts_per_page')->defaultValue('20')->end()
+						->arrayNode('layout_templates')
+							->children()
+								->scalarNode('create')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('reply')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('show')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+							->end()
+						->end()
 					->end()
 				->end()
 			->end();
@@ -124,7 +146,19 @@ class Configuration implements ConfigurationInterface
 	{
 		$node
 			->children()
-			
+				->arrayNode('post')
+					->children()
+						->arrayNode('layout_templates')
+							->children()
+								->scalarNode('show')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('flag')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('edit_topic')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('edit_post')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('delete_post')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+							->end()
+						->end()
+					->end()
+				->end()
 			->end();
 	}
 

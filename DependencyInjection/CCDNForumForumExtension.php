@@ -70,7 +70,8 @@ class CCDNForumForumExtension extends Extension
 	 */
 	private function getCategorySection($container, $config)
 	{
-		
+		$container->setParameter('ccdn_forum_forum.category.layout_templates.index', $config['category']['layout_templates']['index']);
+		$container->setParameter('ccdn_forum_forum.category.layout_templates.show', $config['category']['layout_templates']['show']);
 	}
 	
 
@@ -82,6 +83,7 @@ class CCDNForumForumExtension extends Extension
 	private function getBoardSection($container, $config)
 	{
 		$container->setParameter('ccdn_forum_forum.board.topics_per_page', $config['board']['topics_per_page']);
+		$container->setParameter('ccdn_forum_forum.board.layout_templates.show', $config['board']['layout_templates']['show']);
 	}
 	
 
@@ -93,6 +95,9 @@ class CCDNForumForumExtension extends Extension
 	private function getTopicSection($container, $config)
 	{
 		$container->setParameter('ccdn_forum_forum.topic.posts_per_page', $config['topic']['posts_per_page']);		
+		$container->setParameter('ccdn_forum_forum.topic.layout_templates.create', $config['topic']['layout_templates']['create']);
+		$container->setParameter('ccdn_forum_forum.topic.layout_templates.reply', $config['topic']['layout_templates']['reply']);
+		$container->setParameter('ccdn_forum_forum.topic.layout_templates.show', $config['topic']['layout_templates']['show']);
 	}
 	
 
@@ -103,7 +108,11 @@ class CCDNForumForumExtension extends Extension
 	 */
 	private function getPostSection($container, $config)
 	{
-		
+		$container->setParameter('ccdn_forum_forum.post.layout_templates.show', $config['post']['layout_templates']['show']);
+		$container->setParameter('ccdn_forum_forum.post.layout_templates.flag', $config['post']['layout_templates']['flag']);
+		$container->setParameter('ccdn_forum_forum.post.layout_templates.edit_post', $config['post']['layout_templates']['edit_post']);
+		$container->setParameter('ccdn_forum_forum.post.layout_templates.edit_topic', $config['post']['layout_templates']['edit_topic']);
+		$container->setParameter('ccdn_forum_forum.post.layout_templates.delete_post', $config['post']['layout_templates']['delete_post']);
 	}
 	
 }
