@@ -38,7 +38,7 @@ class Category
     protected $boards;
 
 	/**
-     * @ORM\Column(type="string", length="100")
+     * @ORM\Column(type="string", length=100)
      */
 	protected $name;
 
