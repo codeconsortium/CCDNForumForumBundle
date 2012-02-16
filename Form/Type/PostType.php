@@ -85,6 +85,7 @@ class PostType extends AbstractType
 	{
 		return array(
 			'data_class' => 'CCDNForum\ForumBundle\Entity\Post',
+            'empty_data' => new \CCDNForum\ForumBundle\Entity\Post(),
 			'csrf_protection' => true,
             'csrf_field_name' => '_token',
             // a unique key to help generate the secret token

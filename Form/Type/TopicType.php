@@ -47,6 +47,7 @@ class TopicType extends AbstractType
 	{
 		return array(
 			'data_class' => 'CCDNForum\ForumBundle\Entity\Topic',
+            'empty_data' => new \CCDNForum\ForumBundle\Entity\Topic(),
 			'csrf_protection' => true,
             'csrf_field_name' => '_token',
             // a unique key to help generate the secret token

@@ -71,6 +71,7 @@ class FlagType extends AbstractType
 	{
 		return array(
 			'data_class' => 'CCDNForum\ForumBundle\Entity\Flag',
+            'empty_data' => new \CCDNForum\ForumBundle\Entity\Flag(),
 			'csrf_protection' => true,
             'csrf_field_name' => '_token',
             // a unique key to help generate the secret token
