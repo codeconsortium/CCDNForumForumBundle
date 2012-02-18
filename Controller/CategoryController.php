@@ -35,9 +35,10 @@ class CategoryController extends ContainerAware
     {
 		$categories = $this->container->get('category.repository')->findAllJoinedToBoard();
 		
-		if (!$categories) {
-			throw new NotFoundHttpException('No categories exists!');
-		}
+		//if (!$categories) {
+		//	throw new NotFoundHttpException('No categories exists!');
+		//}
+		
 		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.topics_per_page');
 		
 		$crumb_trail = $this->container->get('crumb_trail')
