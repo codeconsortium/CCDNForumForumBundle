@@ -2,11 +2,11 @@ cc_forum_home_root:
     pattern: /
     defaults: { _controller: CCDNForumForumBundle:Category:index, _locale: en }
 
-cc_forum_home:
-    pattern: /{_locale}/forum
-    defaults:   { _contoller: CCDNForumForumBundle:Category:index, _locale: en }
-    requirements:
-        _locale: en
+#cc_forum_home:
+#    pattern: /{_locale}/forum
+#    defaults:   { _controller: CCDNForumForumBundle:Category:index, _locale: en }
+#    requirements:
+#        _locale: en
             
 cc_forum_category:
     pattern:    /{_locale}/forum
