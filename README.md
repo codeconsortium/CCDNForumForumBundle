@@ -170,10 +170,17 @@ route to a users profile if you are not using the CCDNUser\ProfileBundle. Otherw
 4) In your app/config/routing.yml add:  
 
 ```sh
-	forum:  
-	    resource: "@CCDNForumForumBundle/Resources/config/routing.yml"  
-	    resource: "@CCDNForumForumAdminBundle/Resources/config/routing.yml"  
-	    resource: "@CCDNForumForumModeratorBundle/Resources/config/routing.yml"  
+CCDNForumModeratorBundle:
+    resource: "@CCDNForumModeratorBundle/Resources/config/routing.yml"
+    prefix: /
+
+CCDNForumAdminBundle:
+    resource: "@CCDNForumAdminBundle/Resources/config/routing.yml"
+    prefix: /
+
+CCDNForumForumBundle:
+    resource: "@CCDNForumForumBundle/Resources/config/routing.yml"
+    prefix: /
 ```
 
 5) Symlink assets to your public web directory by running this in the command line:
