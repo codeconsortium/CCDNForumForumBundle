@@ -30,7 +30,8 @@ Dependencies:
 5. [CCDNComponent CommonBundle](https://github.com/codeconsortium/CommonBundle).
 6. [CCDNComponent BBCodeBundle](https://github.com/codeconsortium/BBCodeBundle).
 7. [CCDNComponent CrumbTrailBundle](https://github.com/codeconsortium/CrumbTrailBundle).
-	  
+8. [CCDNComponent AttachmentBundle](https://github.com/codeconsortium/AttachmentBundle).
+	
 Installation:
 -------------
  
@@ -66,6 +67,10 @@ Installation:
     git=http://github.com/codeconsortium/CrumbTrailBundle.git
     target=/bundles/CCDNComponent/CrumbTrailBundle
 
+[CCDNComponentAttachmentBundle]
+	git=http://github.com/codeconsortium/AttachmentBundle.git
+	target=/bundles/CCDNComponent/AttachmentBundle
+	
 [CCDNForum]
     git=http://github.com/codeconsortium/CCDNForum.git
     target=/bundles/CCDNForum
@@ -84,6 +89,7 @@ and then run `bin/vendors install` script.
 	new CCDNComponent\CommonBundle\CCDNComponentCommonBundle(),
 	new CCDNComponent\BBCodeBundle\CCDNComponentBBCodeBundle(),
 	new CCDNComponent\CrumbTrailBundle\CCDNComponentCrumbTrailBundle(),
+	new CCDNComponent\AttachmentBundle\CCDNComponentAttachmentBundle(),
 	new CCDNForum\ForumBundle\CCDNForumForumBundle(),
 	new CCDNForum\ForumAdminBundle\CCDNForumForumAdminBundle(),
 	new CCDNForum\ForumModeratorBundle\CCDNForumForumModeratorBundle(),
@@ -92,76 +98,89 @@ and then run `bin/vendors install` script.
 3) In your app/config/config.yml add (this is configs for all 3 forum bundles):    
 
 ```sh
-	ccdn_forum_forum:
-	    user:
-	        profile_route: cc_profile_show_by_id
-	    template:
-	        engine: twig
-	        theme: CCDNForumForumBundle:Form:fields.html.twig
-	    category:
-	        layout_templates:
-	            index: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	    board:
-	        topics_per_page: 40
-	        layout_templates:
-	            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	    topic:
-	        posts_per_page: 10
-	        layout_templates:
-	            create: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	            reply: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	    post:
-	        layout_templates:
-	            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	            flag: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	            edit_post: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	            edit_topic: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	            delete_post: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+ccdn_forum_forum:
+    user:
+        profile_route: cc_profile_show_by_id
+    template:
+        engine: twig
+        theme: CCDNForumForumBundle:Form:fields.html.twig
+    category:
+        layout_templates:
+            index: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+    board:
+        topics_per_page: 40
+        layout_templates:
+            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+    topic:
+        posts_per_page: 10
+        layout_templates:
+            create: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            reply: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+    post:
+        layout_templates:
+            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            flag: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            edit_post: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            edit_topic: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            delete_post: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
 
-	ccdn_forum_forum_admin:
-	    user:
-	        profile_route: cc_profile_show_by_id
-	    template:
-	        engine: twig
-	        theme: CCDNForumForumAdminBundle:fields.html.twig
-	    category:
-	        layout_templates:
-	            create: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	            delete_category: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	            edit: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	            index: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	    board:
-	        topics_per_page: 40
-	        layout_templates:
-	            create: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	            delete_board: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	            edit: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+ccdn_forum_forum_admin:
+    user:
+        profile_route: cc_profile_show_by_id
+    template:
+        engine: twig
+        theme: CCDNForumForumAdminBundle:fields.html.twig
+    category:
+        layout_templates:
+            create: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            delete_category: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            edit: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            index: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+    board:
+        topics_per_page: 40
+        layout_templates:
+            create: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            delete_board: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            edit: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
 
-	ccdn_forum_forum_moderator:
-	    user:
-	        profile_route: cc_profile_show_by_id
-	    template:
-	        engine: twig
-	        theme: CCDNForumForumModeratorBundle:fields.html.twig
-	    flag:
-	        flags_per_page: 40
-	        layout_templates:
-	            flag_mark: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	            show_flag: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	            show_flagged: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	    topic:
-	        topics_per_page: 40
-	        posts_per_page: 20
-	        layout_templates:
-	            change_board: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	            show_closed: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	            delete_topic: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-	    post:
-	        posts_per_page: 40
-	        layout_templates:
-	            show_locked: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+ccdn_forum_forum_moderator:
+    user:
+        profile_route: cc_profile_show_by_id
+    template:
+        engine: twig
+        theme: CCDNForumForumModeratorBundle:fields.html.twig
+    flag:
+        flags_per_page: 40
+        layout_templates:
+            flag_mark: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            show_flag: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            show_flagged: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+    topic:
+        topics_per_page: 40
+        posts_per_page: 20
+        layout_templates:
+            change_board: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            show_closed: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            delete_topic: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+    post:
+        posts_per_page: 40
+        layout_templates:
+            show_locked: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+
+ccdn_component_attachment:
+    user:
+        profile_route: cc_profile_show_by_id
+    template:
+        engine: twig
+        theme: CCDNComponentAttachmentBundle:Form:fields.html.twig
+    store:
+        dir: /users/reecefowell/projects/htdocs/symfony/store/
+    quota_per_user:
+        max_files_quantity: 20
+        max_filesize_per_file: 300KiB
+        max_total_quota: 1000KiB
 ```
 
 Set the appropriate layout templates you want under the sections 'layout_templates' and the 
@@ -170,6 +189,10 @@ route to a users profile if you are not using the CCDNUser\ProfileBundle. Otherw
 4) In your app/config/routing.yml add:  
 
 ```sh
+CCDNComponentAttachmentBundle:
+    resource: "@CCDNComponentAttachmentBundle/Resources/config/routing.yml"
+    prefix: /
+
 CCDNForumModeratorBundle:
     resource: "@CCDNForumModeratorBundle/Resources/config/routing.yml"
     prefix: /
