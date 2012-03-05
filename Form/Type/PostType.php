@@ -30,10 +30,15 @@ class PostType extends AbstractType
 	 */
 	private $options;
 	
-
-	public function __construct()
+	protected $container;
+	protected $doctrine;
+	
+	public function __construct(/*$doctrine,*/ $service_container)
 	{
 		$this->options = array();
+		
+	//	$this->doctrine = $doctrine;
+		$this->container = $service_container;
 	}
 	
 	
@@ -42,7 +47,7 @@ class PostType extends AbstractType
 	 * @access public
 	 * @param Array() $options
 	 */
-	public function setOptions(array $options)
+	public function setOptions($options)
 	{
 		$this->options = $options;
 	}
@@ -70,7 +75,18 @@ class PostType extends AbstractType
 		} else {
 			$builder->add('body', 'textarea');
 		}
-
+		
+		$userId = $this->options['user']->getId();
+		$attachments = $this->container->get('attachment.repository')->findForUserByIdAsQB($userId);
+		
+		$builder->add('attachment', 'entity', array(
+		    'class' => 'CCDNComponentAttachmentBundle:Attachment',
+		  //  'query_builder' => $this->container->get('attachment.repository')->findForUserByIdAsQB($userId),
+			'choices' => $attachments,
+		    'property' => 'attachment_original',
+			'required' => false,
+			)
+		);
 	}
 	
 

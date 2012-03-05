@@ -184,7 +184,13 @@ class TopicController extends ContainerAware
 			$quote = "";
 		}
 		
-		$formHandler = $this->container->get('post.form.insert.handler')->setOptions(array('topic' => $topic, 'user' => $user, 'quote' => $quote));
+		$options = array('topic' => $topic, 'user' => $user);
+		if ($quote)
+		{
+			$options['quote'] = $quote;
+		}
+		
+		$formHandler = $this->container->get('post.form.insert.handler')->setOptions($options);
 					
 		if ($formHandler->process())	
 		{				

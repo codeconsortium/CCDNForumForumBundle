@@ -29,7 +29,7 @@ services:
         arguments:  [@doctrine, @service_container]              
     post.form.type:
         class:  %ccdn_forum_forum.post.form.type.class%
-        arguments:  [@doctrine]
+        arguments:  [@service_container, @doctrine]
     post.form.insert.handler:
         class:  %ccdn_forum_forum.post.form.insert.handler.class%
         arguments:  [@form.factory, @service_container, @post.manager]

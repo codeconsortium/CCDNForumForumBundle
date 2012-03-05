@@ -98,7 +98,7 @@ class TopicInsertFormHandler
 	 * @param Array() $options
 	 * @return $this
 	 */
-	public function setOptions(array $options = null )
+	public function setOptions($options = null )
 	{
 		$this->options = $options;
 		
@@ -112,11 +112,12 @@ class TopicInsertFormHandler
 	 * @return bool
 	 */
 	public function process()
-	{			
+	{		
 		$this->getForm();
 		
 		if ($this->request->getMethod() == 'POST')
 		{
+			
 			$this->form->bindRequest($this->request);
 		
 			$formData = $this->form->getData();
@@ -128,7 +129,9 @@ class TopicInsertFormHandler
 			$formData->getTopic()->setReplyCount(0);
 
 			$formData->getTopic()->setBoard($this->options['board']);				
-					
+				
+//			$attachment = $formData->getAttachment();
+				
 			if ($this->form->isValid())
 			{	
 				$this->onSuccess($this->form->getData());
@@ -151,6 +154,7 @@ class TopicInsertFormHandler
 		if ( ! $this->form)
 		{
 			$postType = $this->container->get('post.form.type');
+			$postType->setOptions($this->options);
 			$topicType = $this->container->get('topic.form.type');
 			
 			$this->form = $this->factory->create($postType);

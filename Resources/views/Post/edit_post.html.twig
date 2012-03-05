@@ -68,6 +68,13 @@
 						</td>
 					</tr>
 					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+						<td class="h_align_right v_align_top">{{ form_label(form.attachment, null, { 'label': 'form.label.post.attachment'| trans({}, 'CCDNForumForumBundle')}) }}</td>
+						<td class="h_align_left v_align_middle">
+							{{ form_errors(form.attachment) }}
+							{{ form_widget(form.attachment) }}
+						</td>
+					</tr>
+					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
 						<td class="h_align_centre v_align_middle" colspan="2">
 							<input type="submit" value="{{ 'form.button.post.edit' | trans({}, 'CCDNForumForumBundle') }}" />
 						</td>

@@ -144,6 +144,8 @@ class PostUpdateFormHandler
 		if ( ! $this->form)
 		{
 			$postType = $this->container->get('post.form.type');
+			$postType->setOptions($this->options);
+			
 			$this->form = $this->factory->create($postType, $this->options['post']);
 		}
 

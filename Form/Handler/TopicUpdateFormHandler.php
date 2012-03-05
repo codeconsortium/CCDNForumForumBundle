@@ -146,6 +146,8 @@ class TopicUpdateFormHandler
 		if ( ! $this->form)
 		{
 			$postType = $this->container->get('post.form.type');
+			$postType->setOptions($this->options);
+			
 			$topicType = $this->container->get('topic.form.type');
 			
 			$this->form = $this->factory->create($postType, $this->options['post']);

@@ -120,6 +120,11 @@ class PostInsertFormHandler
 			$formData->setCreatedBy($this->options['user']);
 
 			$formData->setTopic($this->options['topic']);
+			
+//			$attachment = $formData->getAttachment();
+//			echo $attachment; die();
+//			$attachment = $this->container->get('attachment.repository')->findSingleAttachmentForUserById( , $this->options['user']->getId());
+//			$formData->setAttachment($attachment);
 
 			if ($this->form->isValid())
 			{	
@@ -144,11 +149,12 @@ class PostInsertFormHandler
 		if ( ! $this->form)
 		{
 			$postType = $this->container->get('post.form.type');
+			$postType->setOptions($this->options);
 			
-			if ($this->options['quote'])
+			/*if ($this->options['quote'])
 			{
 				$postType->setOptions(array('quote' => $this->options['quote']));
-			}
+			}*/
 			
 			$this->form = $this->factory->create($postType);			
 		}

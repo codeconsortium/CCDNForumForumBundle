@@ -89,6 +89,7 @@ post.is_deleted: This post has been removed.
 # form
 form.label.topic.title: 'Title: '
 form.label.post.body: 'Body: '
+form.label.post.attachment: 'Attachment: '
 form.button.topic.create: Post Topic
 form.button.topic.reply: Post Reply
 form.button.post.edit: Update

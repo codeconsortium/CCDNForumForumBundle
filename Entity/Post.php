@@ -94,6 +94,12 @@ class Post
      */
 	protected $flags;
 
+	/**
+     * @ORM\ManyToOne(targetEntity="CCDNComponent\AttachmentBundle\Entity\Attachment", cascade={"persist"})
+     * @ORM\JoinColumn(name="attachment_id", referencedColumnName="id", onDelete="SET NULL")
+	 */
+	protected $attachment;
+	
     /**
      * Get id
      *
@@ -488,5 +494,27 @@ class Post
     public function getFlags()
     {
         return $this->flags;
+    }
+
+    /**
+     * Set attachment
+     *
+     * @param CCDNComponent\AttachmentBundle\Entity\Attachment $attachment
+     * @return Post
+     */
+    public function setAttachment(\CCDNComponent\AttachmentBundle\Entity\Attachment $attachment = null)
+    {
+        $this->attachment = $attachment;
+        return $this;
+    }
+
+    /**
+     * Get attachment
+     *
+     * @return CCDNComponent\AttachmentBundle\Entity\Attachment 
+     */
+    public function getAttachment()
+    {
+        return $this->attachment;
     }
 }
