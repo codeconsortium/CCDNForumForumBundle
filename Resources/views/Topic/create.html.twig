@@ -68,6 +68,8 @@
 						<td class="h_align_left v_align_middle">
 							{{ form_errors(form.attachment) }}
 							{{ form_widget(form.attachment) }}
+							&nbsp;<a target="_blank" href="{{ path('cc_attachment_index') }}">{{ 'link.attachments_manager' | trans({}, 'CCDNComponentAttachmentBundle') }}</a>
+							&nbsp;<a target="_blank" href="{{ path('cc_attachment_upload') }}">{{ 'link.upload' | trans({}, 'CCDNComponentAttachmentBundle') }}</a>
 						</td>
 					</tr>
 					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
