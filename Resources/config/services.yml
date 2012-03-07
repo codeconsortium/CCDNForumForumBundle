@@ -1,4 +1,7 @@
 parameters:
+    ccdn_forum_forum.registry.repository.class:         CCDNForum\ForumBundle\Repository\RegistryRepository
+    ccdn_forum_forum.registry.manager.class:            CCDNForum\ForumBundle\Entity\Manager\RegistryManager
+        
     ccdn_forum_forum.post.manager.class:                CCDNForum\ForumBundle\Entity\Manager\PostManager
     ccdn_forum_forum.post.form.type.class:              CCDNForum\ForumBundle\Form\Type\PostType
     ccdn_forum_forum.post.form.insert.handler.class:    CCDNForum\ForumBundle\Form\Handler\PostInsertFormHandler
@@ -24,6 +27,18 @@ parameters:
     ccdn_forum_forum.board.manager.class:               CCDNForum\ForumBundle\Entity\Manager\BoardManager
     
 services:
+    ccdn_forum_forum.registry.repository:
+        class: %ccdn_forum_forum.registry.repository.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository 
+        arguments:
+            - 'CCDNForum\ForumBundle\Entity\Registry'
+
+    ccdn_forum_forum.registry.manager:
+        class: %ccdn_forum_forum.registry.manager.class%
+        arguments: [@doctrine, @service_container]
+        
+        
     ccdn_forum_forum.post.manager:
         class:  %ccdn_forum_forum.post.manager.class%
         arguments:  [@doctrine, @service_container]              

@@ -39,6 +39,17 @@ class PostManager extends BaseManager implements EntityManagerInterface
 	protected $postCount;
 	
 	
+	public function flushNow()
+	{
+		parent::flushNow();
+		
+		$user = $this->container->get('security.context')->getToken()->getUser();
+
+		$this->container->get('ccdn_forum_forum.registry.manager')->updateCachePostCountForUser($user);
+	}
+	
+	
+	
 	/**
 	 *
 	 * @access public
@@ -68,6 +79,7 @@ class PostManager extends BaseManager implements EntityManagerInterface
 		$this->persist($topic)->flushNow();
 
 		$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($topic->getBoard())->flushNow();			
+		
 		
 		return $this;
 	}	

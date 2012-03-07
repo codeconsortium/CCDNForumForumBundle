@@ -89,7 +89,9 @@
 				/><img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" 
 				/><img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}"/>
 			</div>
-			{#<div class="row h_align_centre padding_5">{{ 'post.user.post_count' | trans({'%post_count%': '50'}, 'CCDNForumForumBundle') }}</div>#}
+			{% if post.getRegistry %}
+			<div class="row h_align_centre padding_5">{{ 'post.user.post_count' | trans({'%post_count%': post.getRegistry.getCachePostCount}, 'CCDNForumForumBundle') }}</div>
+			{% endif %}
 		</div>
 		
 		<div style="width: auto; float: right;" class="column v_align_top h_align_right">

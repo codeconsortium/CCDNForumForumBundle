@@ -100,6 +100,12 @@ class Post
 	 */
 	protected $attachment;
 	
+	/**
+     * @ORM\ManyToOne(targetEntity="CCDNForum\ForumBundle\Entity\Registry", cascade={"persist"})
+     * @ORM\JoinColumn(name="registry_id", referencedColumnName="id", onDelete="SET NULL")
+	 */
+	protected $registry;
+	
     /**
      * Get id
      *
@@ -516,5 +522,27 @@ class Post
     public function getAttachment()
     {
         return $this->attachment;
+    }
+
+    /**
+     * Set registry
+     *
+     * @param CCDNForum\ForumBundle\Entity\Registry $registry
+     * @return Post
+     */
+    public function setRegistry(\CCDNForum\ForumBundle\Entity\Registry $registry = null)
+    {
+        $this->registry = $registry;
+        return $this;
+    }
+
+    /**
+     * Get registry
+     *
+     * @return CCDNForum\ForumBundle\Entity\Registry 
+     */
+    public function getRegistry()
+    {
+        return $this->registry;
     }
 }

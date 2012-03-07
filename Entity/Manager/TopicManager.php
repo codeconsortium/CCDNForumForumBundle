@@ -32,6 +32,17 @@ class TopicManager extends BaseManager implements EntityManagerInterface
 	protected $counters;
 
 	
+	public function flushNow()
+	{
+		parent::flushNow();
+		
+		$user = $this->container->get('security.context')->getToken()->getUser();
+
+		$this->container->get('ccdn_forum_forum.registry.manager')->updateCachePostCountForUser($user);
+	}
+	
+	
+	
 	/**
 	 *
 	 * @access public

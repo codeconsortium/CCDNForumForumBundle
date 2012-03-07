@@ -39,6 +39,8 @@ class TopicRepository extends EntityRepository
 			->createQuery('
 				SELECT t, p	FROM CCDNForumForumBundle:Topic t
 				INNER JOIN t.posts p
+				LEFT JOIN p.created_by u
+				LEFT JOIN p.registry r
 				WHERE t.id = :id
 				GROUP BY p.id
 				ORDER BY p.created_date ASC')
@@ -65,6 +67,8 @@ class TopicRepository extends EntityRepository
 			->createQuery('
 				SELECT t, p	FROM CCDNForumForumBundle:Topic t
 				INNER JOIN t.posts p
+				LEFT JOIN p.created_by u
+				LEFT JOIN p.registry r
 				WHERE t.id = :id
 				GROUP BY p.id
 				ORDER BY p.created_date ASC')

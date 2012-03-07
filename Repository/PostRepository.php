@@ -25,6 +25,7 @@ use Pagerfanta\Pagerfanta;
  */
 class PostRepository extends EntityRepository
 {
+
 	
 	
 	/**
@@ -58,9 +59,10 @@ class PostRepository extends EntityRepository
 		try {
 	        return $query->getsingleResult();
 	    } catch (\Doctrine\ORM\NoResultException $e) {
-	        return;
+	        return null;
 	    }
 	}
+
 
 
 	/**
@@ -85,5 +87,31 @@ class PostRepository extends EntityRepository
 	        return null;
 	    }
 	}
+	
+	
+	
+	/**
+	 *
+	 *
+	 */
+	public function getPostCountForUserById($user_id)
+	{
+		
+		$query = $this->getEntityManager()
+			->createQuery('	
+				SELECT COUNT(p.id) AS postCount
+				FROM CCDNForumForumBundle:Post p
+				LEFT JOIN p.topic t
+				WHERE p.created_by = :id AND p.deleted_by IS NULL AND t.deleted_by IS NULL')
+			->setParameter('id', $user_id);
+			
+		try {
+	        return $query->getsingleResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    }
+	
+	}
+	
 	
 }
