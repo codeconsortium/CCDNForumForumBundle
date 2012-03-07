@@ -58,7 +58,7 @@ class PostManager extends BaseManager implements EntityManagerInterface
 		
 		// we need to return this to the controller so it
 		//  can redirect the user to the appropriate page.
-		$topic_counter = $this->container->get('board.repository')->getReplyCountsForTopic($topic->getId());
+		$topic_counter = $this->container->get('ccdn_forum_forum.board.repository')->getReplyCountsForTopic($topic->getId());
 		$this->replyCount = ($topic_counter['replyCount'] - 1);
 			
 		// set the board / topic last post 
@@ -67,7 +67,7 @@ class PostManager extends BaseManager implements EntityManagerInterface
 				
 		$this->persist($topic)->flushNow();
 
-		$this->container->get('board.manager')->updateBoardStats($topic->getBoard())->flushNow();			
+		$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($topic->getBoard())->flushNow();			
 		
 		return $this;
 	}	
@@ -113,7 +113,7 @@ class PostManager extends BaseManager implements EntityManagerInterface
 			// we must persist and flush before we can get accurate counter information.
 			$this->persist($topic, $post)->flushNow();
 
-			$this->container->get('board.manager')->updateBoardStats($topic->getBoard())->flushNow();			
+			$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($topic->getBoard())->flushNow();			
 		}
 		
 		// update the record

@@ -145,10 +145,10 @@ class TopicUpdateFormHandler
 	{
 		if ( ! $this->form)
 		{
-			$postType = $this->container->get('post.form.type');
+			$postType = $this->container->get('ccdn_forum_forum.post.form.type');
 			$postType->setOptions($this->options);
 			
-			$topicType = $this->container->get('topic.form.type');
+			$topicType = $this->container->get('ccdn_forum_forum.topic.form.type');
 			
 			$this->form = $this->factory->create($postType, $this->options['post']);
 			$this->form->add($this->factory->create($topicType, $this->options['post']->getTopic()));

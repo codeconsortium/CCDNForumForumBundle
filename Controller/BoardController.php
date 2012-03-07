@@ -36,9 +36,9 @@ class BoardController extends ContainerAware
 	{
 		if ($this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{
-			$board_paginated = $this->container->get('board.repository')->findOneByIdJoinedWithTopicsForModerators($board_id);
+			$board_paginated = $this->container->get('ccdn_forum_forum.board.repository')->findOneByIdJoinedWithTopicsForModerators($board_id);
 		} else {
-			$board_paginated = $this->container->get('board.repository')->findOneByIdJoinedWithTopics($board_id);		
+			$board_paginated = $this->container->get('ccdn_forum_forum.board.repository')->findOneByIdJoinedWithTopics($board_id);		
 		}
 
 		// deal with pagination.
@@ -63,7 +63,7 @@ class BoardController extends ContainerAware
 		// setup bread crumbs.
 		$category = $board->getCategory();
 		
-		$crumb_trail = $this->container->get('crumb_trail')
+		$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
 			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), 
 				$this->container->get('router')->generate('cc_forum_category_index'), "home")
 			->add($category->getName(), $this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")

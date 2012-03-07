@@ -39,7 +39,7 @@ class PostController extends ContainerAware
 	{
 		$user = $this->container->get('security.context')->getToken()->getUser();
 		
-		$post = $this->container->get('post.repository')->find($post_id);
+		$post = $this->container->get('ccdn_forum_forum.post.repository')->find($post_id);
 	
 		if ( ! $post) {
 			throw new NotFoundHttpException('No such post exists!');
@@ -58,7 +58,7 @@ class PostController extends ContainerAware
 		$board = $topic->getBoard();
 		$category = $board->getCategory();
 		
-		$crumb_trail = $this->container->get('crumb_trail')
+		$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
 			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), 
 				$this->container->get('router')->generate('cc_forum_category_index'), "home")
 			->add($category->getName(), $this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
@@ -90,7 +90,7 @@ class PostController extends ContainerAware
 
 		$user = $this->container->get('security.context')->getToken()->getUser();
 			
-		$post = $this->container->get('post.repository')->findPostForEditing($post_id);
+		$post = $this->container->get('ccdn_forum_forum.post.repository')->findPostForEditing($post_id);
 		
 		if ( ! $post) {
 			throw new NotFoundHttpException('No such post exists!');
@@ -173,7 +173,7 @@ class PostController extends ContainerAware
 			$board = $topic->getBoard();
 			$category = $board->getCategory();
 
-			$crumb_trail = $this->container->get('crumb_trail')
+			$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
 				->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), 
 					$this->container->get('router')->generate('cc_forum_category_index'), "home")
 				->add($category->getName(),	$this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
@@ -221,7 +221,7 @@ class PostController extends ContainerAware
 
 		$user = $this->container->get('security.context')->getToken()->getUser();
 			
-		$post = $this->container->get('post.repository')->findPostForEditing($post_id);
+		$post = $this->container->get('ccdn_forum_forum.post.repository')->findPostForEditing($post_id);
 	
 		if ( ! $post) {
 			throw new NotFoundHttpException('No such post exists!');
@@ -275,7 +275,7 @@ class PostController extends ContainerAware
 		}
 		
 		// setup crumb trail.
-		$crumb_trail = $this->container->get('crumb_trail')
+		$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
 			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), 
 				$this->container->get('router')->generate('cc_forum_category_index'), "home")
 			->add($category->getName(),	$this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
@@ -309,7 +309,7 @@ class PostController extends ContainerAware
 		
 		$user = $this->container->get('security.context')->getToken()->getUser();
 
-		$post = $this->container->get('post.repository')->findPostForEditing($post_id);
+		$post = $this->container->get('ccdn_forum_forum.post.repository')->findPostForEditing($post_id);
 
 		if ( ! $post) {
 			throw new NotFoundHttpException('No such post exists!');
@@ -346,7 +346,7 @@ class PostController extends ContainerAware
 			}
 		}	
 
-		$this->container->get('post.manager')->softDelete($post, $user)->flushNow();
+		$this->container->get('ccdn_forum_forum.post.manager')->softDelete($post, $user)->flushNow();
 
 		// set flash message		
 		$this->container->get('session')->setFlash('notice', 
@@ -372,7 +372,7 @@ class PostController extends ContainerAware
 
 		$user = $this->container->get('security.context')->getToken()->getUser();
 		
-		$post = $this->container->get('post.repository')->find($post_id);
+		$post = $this->container->get('ccdn_forum_forum.post.repository')->find($post_id);
 		
 		if ( ! $post) {
 			throw new NotFoundHttpException('No such post exists!');
@@ -396,7 +396,7 @@ class PostController extends ContainerAware
 			throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
 		}
 		
-		$formHandler = $this->container->get('flag.form.insert.handler')->setOptions(array('post' => $post, 'user' => $user));
+		$formHandler = $this->container->get('ccdn_forum_forum.flag.form.insert.handler')->setOptions(array('post' => $post, 'user' => $user));
 					
 		if ($formHandler->process())
 		{	
@@ -415,7 +415,7 @@ class PostController extends ContainerAware
 			$board = $topic->getBoard();
 			$category = $board->getCategory();
 			
-			$crumb_trail = $this->container->get('crumb_trail')
+			$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
 				->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), 
 					$this->container->get('router')->generate('cc_forum_category_index'), "home")
 				->add($category->getName(),	$this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")

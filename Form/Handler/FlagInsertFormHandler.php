@@ -142,8 +142,8 @@ class FlagInsertFormHandler
 	{
 		if ( ! $this->form)
 		{
-			$flagType = $this->container->get('flag.form.type');
-			$flagType->setOptions(array('flag_default_choices' => $this->container->get('flag.form.default_choices')));
+			$flagType = $this->container->get('ccdn_forum_forum.flag.form.type');
+			$flagType->setOptions(array('flag_default_choices' => $this->container->get('ccdn_forum_forum.flag.form.default_choices')));
 			$this->form = $this->factory->create($flagType);
 		}
 		

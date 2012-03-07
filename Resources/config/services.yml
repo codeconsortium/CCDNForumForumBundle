@@ -24,70 +24,70 @@ parameters:
     ccdn_forum_forum.board.manager.class:               CCDNForum\ForumBundle\Entity\Manager\BoardManager
     
 services:
-    post.manager:
+    ccdn_forum_forum.post.manager:
         class:  %ccdn_forum_forum.post.manager.class%
         arguments:  [@doctrine, @service_container]              
-    post.form.type:
+    ccdn_forum_forum.post.form.type:
         class:  %ccdn_forum_forum.post.form.type.class%
         arguments:  [@service_container, @doctrine]
-    post.form.insert.handler:
+    ccdn_forum_forum.post.form.insert.handler:
         class:  %ccdn_forum_forum.post.form.insert.handler.class%
-        arguments:  [@form.factory, @service_container, @post.manager]
+        arguments:  [@form.factory, @service_container, @ccdn_forum_forum.post.manager]
     post.form.update.handler:
         class:  %ccdn_forum_forum.post.form.update.handler.class%
-        arguments:  [@form.factory, @service_container, @post.manager]
+        arguments:  [@form.factory, @service_container, @ccdn_forum_forum.post.manager]
     
-    topic.manager:
+    ccdn_forum_forum.topic.manager:
         class:  %ccdn_forum_forum.topic.manager.class%
         arguments:  [@doctrine, @service_container]   
-    topic.form.type:
+    ccdn_forum_forum.topic.form.type:
         class:  %ccdn_forum_forum.topic.form.type.class%
         arguments:  [@doctrine]
-    topic.form.insert.handler:
+    ccdn_forum_forum.topic.form.insert.handler:
         class:  %ccdn_forum_forum.topic.form.insert.handler.class%
-        arguments:  [@form.factory, @service_container, @topic.manager]
+        arguments:  [@form.factory, @service_container, @ccdn_forum_forum.topic.manager]
     topic.form.update.handler:
         class:  %ccdn_forum_forum.topic.form.update.handler.class%
-        arguments:  [@form.factory, @service_container, @topic.manager]
+        arguments:  [@form.factory, @service_container, @ccdn_forum_forum.topic.manager]
         
-    flag.manager:
+    ccdn_forum_forum.flag.manager:
         class:  %ccdn_forum_forum.flag.manager.class%
         arguments:  [@doctrine, @service_container]   
-    flag.form.type:
+    ccdn_forum_forum.flag.form.type:
         class:  %ccdn_forum_forum.flag.form.type.class%
         arguments:  [@doctrine]        
-    flag.form.insert.handler:
+    ccdn_forum_forum.flag.form.insert.handler:
         class:  %ccdn_forum_forum.flag.form.insert.handler.class%
-        arguments:  [@form.factory, @service_container, @flag.manager]
-    flag.form.default_choices:
+        arguments:  [@form.factory, @service_container, @ccdn_forum_forum.flag.manager]
+    ccdn_forum_forum.flag.form.default_choices:
         class:  %ccdn_forum_forum.flag.form.default_choices.class%
         arguments: [@service_container]
 
-    category.repository:
+    ccdn_forum_forum.category.repository:
         class: %ccdn_forum_forum.category.repository.class%
         factory_service: doctrine.orm.default_entity_manager
         factory_method: getRepository 
         arguments:
             - 'CCDNForum\ForumBundle\Entity\Category'
-    board.repository:
+    ccdn_forum_forum.board.repository:
         class: %ccdn_forum_forum.board.repository.class%
         factory_service: doctrine.orm.default_entity_manager
         factory_method: getRepository 
         arguments:
             - 'CCDNForum\ForumBundle\Entity\Board'
-    topic.repository:
+    ccdn_forum_forum.topic.repository:
         class: %ccdn_forum_forum.topic.repository.class%
         factory_service: doctrine.orm.default_entity_manager
         factory_method: getRepository 
         arguments:
             - 'CCDNForum\ForumBundle\Entity\Topic'
-    post.repository:
+    ccdn_forum_forum.post.repository:
         class: %ccdn_forum_forum.post.repository.class%
         factory_service: doctrine.orm.default_entity_manager
         factory_method: getRepository 
         arguments:
             - 'CCDNForum\ForumBundle\Entity\Post'
-    flag.repository:
+    ccdn_forum_forum.flag.repository:
         class: %ccdn_forum_forum.flag.repository.class%
         factory_service: doctrine.orm.default_entity_manager
         factory_method: getRepository 
@@ -97,6 +97,6 @@ services:
 #    category.manager:
 #        class:  %ccdn_forum_forum.category.manager.class%
 #        arguments:  [@doctrine, @service_container]        
-    board.manager:
+    ccdn_forum_forum.board.manager:
         class:  %ccdn_forum_forum.board.manager.class%
         arguments:  [@doctrine, @service_container]

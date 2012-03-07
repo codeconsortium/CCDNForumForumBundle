@@ -123,7 +123,7 @@ class PostInsertFormHandler
 			
 //			$attachment = $formData->getAttachment();
 //			echo $attachment; die();
-//			$attachment = $this->container->get('attachment.repository')->findSingleAttachmentForUserById( , $this->options['user']->getId());
+//			$attachment = $this->container->get('ccdn_component_attachment.attachment.repository')->findSingleAttachmentForUserById( , $this->options['user']->getId());
 //			$formData->setAttachment($attachment);
 
 			if ($this->form->isValid())
@@ -148,7 +148,7 @@ class PostInsertFormHandler
 	{
 		if ( ! $this->form)
 		{
-			$postType = $this->container->get('post.form.type');
+			$postType = $this->container->get('ccdn_forum_forum.post.form.type');
 			$postType->setOptions($this->options);
 			
 			/*if ($this->options['quote'])

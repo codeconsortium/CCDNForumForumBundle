@@ -39,7 +39,7 @@ class TopicController extends ContainerAware
 		
 		$user = $this->container->get('security.context')->getToken()->getUser();
 		
-		$topic_paginated = $this->container->get('topic.repository')->findOneByIdJoinedToPostsPaginated($topic_id);
+		$topic_paginated = $this->container->get('ccdn_forum_forum.topic.repository')->findOneByIdJoinedToPostsPaginated($topic_id);
 		
 		$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
 		$topic_paginated->setMaxPerPage($posts_per_page);
@@ -61,13 +61,13 @@ class TopicController extends ContainerAware
 		}
 		
 		// update the view counter because you viewed the topic
-		$this->container->get('topic.repository')->incrementViewCounter($topic);
+		$this->container->get('ccdn_forum_forum.topic.repository')->incrementViewCounter($topic);
 		
 		// setup crumb trail.
 		$board = $topic->getBoard();
 		$category = $board->getCategory();
 		
-		$crumb_trail = $this->container->get('crumb_trail')	
+		$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')	
 			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), 
 				$this->container->get('router')->generate('cc_forum_category_index'), "home")
 			->add($category->getName(), 
@@ -105,13 +105,13 @@ class TopicController extends ContainerAware
 		
 		$user = $this->container->get('security.context')->getToken()->getUser();
 		
-		$board = $this->container->get('board.repository')->find($board_id);
+		$board = $this->container->get('ccdn_forum_forum.board.repository')->find($board_id);
 		
 		if ( ! $board) {
 			throw new NotFoundHttpException('No such board exists!');
 		}
 		
-		$formHandler = $this->container->get('topic.form.insert.handler')->setOptions(array(
+		$formHandler = $this->container->get('ccdn_forum_forum.topic.form.insert.handler')->setOptions(array(
 			'board' => $board,
 			'user' => $user));
 			
@@ -129,7 +129,7 @@ class TopicController extends ContainerAware
 			// setup crumb trail.
 			$category = $board->getCategory();
 			
-			$crumb_trail = $this->container->get('crumb_trail')
+			$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
 				->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), 
 					$this->container->get('router')->generate('cc_forum_category_index'), "home")
 				->add($category->getName(), 
@@ -166,7 +166,7 @@ class TopicController extends ContainerAware
 		
 		$user = $this->container->get('security.context')->getToken()->getUser();
 		
-		$topic = $this->container->get('topic.repository')->findOneByIdJoinedToPosts($topic_id);
+		$topic = $this->container->get('ccdn_forum_forum.topic.repository')->findOneByIdJoinedToPosts($topic_id);
 		
 		if ( ! $topic) {
 			throw new NotFoundHttpException('No such topic exists!');
@@ -179,7 +179,7 @@ class TopicController extends ContainerAware
 		
 		if ( ! empty($quote_id))
 		{
-			$quote = $this->container->get('post.repository')->find($quote_id);
+			$quote = $this->container->get('ccdn_forum_forum.post.repository')->find($quote_id);
 		} else {
 			$quote = "";
 		}
@@ -190,7 +190,7 @@ class TopicController extends ContainerAware
 			$options['quote'] = $quote;
 		}
 		
-		$formHandler = $this->container->get('post.form.insert.handler')->setOptions($options);
+		$formHandler = $this->container->get('ccdn_forum_forum.post.form.insert.handler')->setOptions($options);
 					
 		if ($formHandler->process())	
 		{				
@@ -213,7 +213,7 @@ class TopicController extends ContainerAware
 			$board = $topic->getBoard();
 			$category = $board->getCategory();
 			
-			$crumb_trail = $this->container->get('crumb_trail')
+			$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
 				->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), 
 					$this->container->get('router')->generate('cc_forum_category_index'), "home")
 				->add($category->getName(), 

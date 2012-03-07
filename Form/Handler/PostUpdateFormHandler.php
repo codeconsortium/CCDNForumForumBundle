@@ -143,7 +143,7 @@ class PostUpdateFormHandler
 	{
 		if ( ! $this->form)
 		{
-			$postType = $this->container->get('post.form.type');
+			$postType = $this->container->get('ccdn_forum_forum.post.form.type');
 			$postType->setOptions($this->options);
 			
 			$this->form = $this->factory->create($postType, $this->options['post']);

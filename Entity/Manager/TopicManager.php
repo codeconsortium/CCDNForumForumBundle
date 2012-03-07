@@ -55,7 +55,7 @@ class TopicManager extends BaseManager implements EntityManagerInterface
 
 		$this->persist($topic)->flushNow();
 		
-		$this->container->get('board.manager')->updateBoardStats($topic->getBoard())->flushNow();			
+		$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($topic->getBoard())->flushNow();			
 		
 		return $this;
 	}
@@ -92,7 +92,7 @@ class TopicManager extends BaseManager implements EntityManagerInterface
 		// update the record before doing record counts
 		$this->persist($topic)->flushNow();
 		
-		$this->container->get('board.manager')->updateBoardStats($topic->getBoard())->flushNow();
+		$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($topic->getBoard())->flushNow();
 		
 		return $this;
 	}
