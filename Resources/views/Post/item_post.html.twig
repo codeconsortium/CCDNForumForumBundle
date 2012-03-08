@@ -137,13 +137,14 @@
 			<span class="common_body">
 			{{ BBCode(post.getBody | raw) | raw}}
 			</span>
+			<br />
+			{% if post.getAttachment %}
+			<br /><a href="{{ path('cc_attachment_download', {'attachment_id': post.getAttachment.getId }) }}"><img src="{{ path('cc_attachment_thumbnail', {'attachment_id': post.getAttachment.getId }) }}" /></a>
+			{% endif %}
+			
 			{% if post.getCreatedBy %}
 				{% if post.getCreatedBy.getProfile %}
 					{% if post.getCreatedBy.getProfile.getSignature %}
-			<br />
-			{% if post.getAttachment %}
-				<br /><a href="{{ path('cc_attachment_download', {'attachment_id': post.getAttachment.getId }) }}"><img src="{{ path('cc_attachment_thumbnail', {'attachment_id': post.getAttachment.getId }) }}" /></a>
-			{% endif %}
 			<br /><hr />
 			<span class="common_body">
 			{{ BBCode(post.getCreatedBy.getProfile.getSignature | raw) | raw }}
