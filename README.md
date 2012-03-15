@@ -98,6 +98,7 @@ and then run `bin/vendors install` script.
 3) In your app/config/config.yml add (this is configs for all 3 forum bundles):    
 
 ```sh
+# for CCDNForum ForumBundle    
 ccdn_forum_forum:
     user:
         profile_route: cc_profile_show_by_id
@@ -113,7 +114,7 @@ ccdn_forum_forum:
         layout_templates:
             show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
     topic:
-        posts_per_page: 10
+        posts_per_page: 5
         layout_templates:
             create: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
             reply: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
@@ -126,12 +127,12 @@ ccdn_forum_forum:
             edit_topic: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
             delete_post: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
 
-ccdn_forum_forum_admin:
+ccdn_forum_admin:
     user:
         profile_route: cc_profile_show_by_id
     template:
         engine: twig
-        theme: CCDNForumForumAdminBundle:fields.html.twig
+        theme: CCDNForumAdminBundle:Form:fields.html.twig
     category:
         layout_templates:
             create: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
@@ -145,12 +146,12 @@ ccdn_forum_forum_admin:
             delete_board: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
             edit: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
 
-ccdn_forum_forum_moderator:
+ccdn_forum_moderator:
     user:
         profile_route: cc_profile_show_by_id
     template:
         engine: twig
-        theme: CCDNForumForumModeratorBundle:fields.html.twig
+        theme: CCDNForumModeratorBundle:Form:fields.html.twig
     flag:
         flags_per_page: 40
         layout_templates:
@@ -169,6 +170,7 @@ ccdn_forum_forum_moderator:
         layout_templates:
             show_locked: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
 
+# for CCDNComponent AttachmentBundle
 ccdn_component_attachment:
     user:
         profile_route: cc_profile_show_by_id
@@ -176,16 +178,26 @@ ccdn_component_attachment:
         engine: twig
         theme: CCDNComponentAttachmentBundle:Form:fields.html.twig
     store:
-        dir: /users/reecefowell/projects/htdocs/symfony/store/
+        dir: %ccdn_attachment_file_store%
     quota_per_user:
         max_files_quantity: 20
         max_filesize_per_file: 300KiB
         max_total_quota: 1000KiB
+    attachment:
+        layout_templates:
+            list: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+            upload: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
 ```
 
 Set the appropriate layout templates you want under the sections 'layout_templates' and the 
 route to a users profile if you are not using the CCDNUser\ProfileBundle. Otherwise use defaults.
-	  
+
+and in your app/config/parameters.ini add and set the value to the directory where you want to keep your attachment files:
+
+```sh
+ccdn_attachment_file_store= "/your/folder/where/you/want/to/store/attachments"
+```
+ 
 4) In your app/config/routing.yml add:  
 
 ```sh

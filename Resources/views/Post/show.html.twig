@@ -54,7 +54,7 @@
 		<span class="heading_glow">{{ topic.getTitle }}</span>
 	</div>
 	{% if topic.closedBy %}
-	<div class="common_box_panel common_tool_strip">
+	<div class="common_box_panel">
 		{{ 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') }}{{ topic.getClosedBy.getUsername }}
 		{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}{{ topic.getClosedDate |date("d/m/Y - H:i:s") }}
 	</div>

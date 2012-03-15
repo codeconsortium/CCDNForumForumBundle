@@ -38,10 +38,8 @@
 	<div class="common_box_panel">
 		<span class="page_header_strip_description">{{ board.description }}</span>
 	</div>
-	<div class="common_box_panel common_tool_strip">
-		<div class="pagerfanta">
-		    {{ pagerfanta(pager, 'default', {'routeName':'cc_forum_board_show_paginated', 'routeParams':{'board_id':board.getId}} ) }}
-		</div>
+	<div class="pagerfanta">
+	    {{ pagerfanta(pager, 'default', {'routeName':'cc_forum_board_show_paginated', 'routeParams':{'board_id':board.getId}} ) }}
 	</div>
 	<div class="common_box_panel">
 			<table class="common_list">
@@ -123,10 +121,8 @@
 				</tbody>
 			</table>
 	</div>
-	<div class="common_box_panel common_tool_strip">
-		<div class="pagerfanta">
-		    {{ pagerfanta(pager, 'default', {'routeName':'cc_forum_board_show_paginated', 'routeParams':{'board_id':board.getId}} ) }}
-		</div>
+	<div class="pagerfanta">
+	    {{ pagerfanta(pager, 'default', {'routeName':'cc_forum_board_show_paginated', 'routeParams':{'board_id':board.getId}} ) }}
 	</div>
 </div>
 {% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}

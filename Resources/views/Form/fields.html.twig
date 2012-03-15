@@ -14,7 +14,6 @@
 {% endblock field_widget %}
 
 
-
 {% block textarea_widget %}
 	{% set attr = attr|merge({ 'class': attr.class|default('') ~ 'widget_textarea'}) %}
     <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>

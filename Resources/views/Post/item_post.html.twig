@@ -1,49 +1,10 @@
-<div class="common_box_panel bg_header_sub_item padding_5">
-	<div class="row padding_5">
-		<div style="width: 42%;" class="column v_align_top"><a class="heading_link" name="{{ post.getId }}" href="#{{ post.getId }}">Re: {{ post.getTopic.getTitle }}</a></div>
-		<div style="width: 45%;" class="column v_align_top h_align_right">		
-				{% if is_granted('ROLE_USER') %}
-					{% if post.getCreatedBy %}
-				<a class="button_link" href="{{ path('cc_message_message_compose_to', {'user_id': post.getCreatedBy.getId }) }}">{{ 'link.user.message' | trans({}, 'CCDNUserProfileBundle') }}</a>
-					{% endif %}
-					
-				<a class="button_link" href="{{ path('cc_forum_post_flag', {'post_id': post.getId }) }}">{{ 'link.post.flag' | trans({}, 'CCDNForumForumBundle') }}</a>
-					{% if post.getCreatedBy %}
-						{% if post.getCreatedBy.getId == user.getId or is_granted('ROLE_MODERATOR') %}
-				<a class="button_link" href="{{ path('cc_forum_post_edit', {'post_id': post.getId }) }}">{{ 'link.post.edit' | trans({}, 'CCDNForumForumBundle') }}</a>
-							{% if not post.getDeletedBy %}
-				<a class="button_link" href="{{ path('cc_forum_post_delete', {'post_id': post.getId }) }}">{{ 'link.post.delete' | trans({}, 'CCDNForumForumBundle') }}</a>
-							{% endif %}
-						{% endif %}
-					{% elseif is_granted('ROLE_MODERATOR') %}
-				<a class="button_link" href="{{ path('cc_forum_post_edit', {'post_id': post.getId }) }}">{{ 'link.post.edit' | trans({}, 'CCDNForumForumBundle') }}</a>
-						{% if not post.getDeletedBy %}
-				<a class="button_link" href="{{ path('cc_forum_post_delete', {'post_id': post.getId }) }}">{{ 'link.post.delete' | trans({}, 'CCDNForumForumBundle') }}</a>
-						{% endif %}
-					{% endif %}
-
-					{% if is_granted('ROLE_MODERATOR') %}
-						{% if post.getLockedBy %}
-				<a class="button_link" href="{{ path('cc_moderator_forum_unlock_post', {'post_id': post.getId }) }}">{{ 'link.post.unlock' | trans({}, 'CCDNForumForumBundle') }}</a>
-						{% else %}
-				<a class="button_link" href="{{ path('cc_moderator_forum_lock_post', {'post_id': post.getId }) }}">{{ 'link.post.lock' | trans({}, 'CCDNForumForumBundle') }}</a>
-						{% endif %}
-
-						{% if post.getDeletedBy %}
-				<a class="button_link" href="{{ path('cc_moderator_forum_post_restore', {'post_id': post.getId }) }}">{{ 'link.post.restore' | trans({}, 'CCDNForumForumBundle') }}</a>
-						{% endif %}
-					{% endif %}
-									
-				<a class="button_link" href="{{ path('cc_forum_topic_reply', {'topic_id': post.getTopic.getId }) }}">{{ 'link.post.reply' | trans({}, 'CCDNForumForumBundle') }}</a>
-				<a class="button_link" href="{{ path('cc_forum_topic_reply_with_quote', {'topic_id': post.getTopic.getId, 'quote_id': post.getId }) }}">{{ 'link.post.quote' | trans({}, 'CCDNForumForumBundle') }}</a>	
-				{% endif %}
-		</div>
-		<div style="width: 10%;" class="column v_align_top h_align_right">
-			{% if post.getLockedDate %}
-				<img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_locked.png') }}" />
-			{% endif %}
-			<a class="heading_link" href="{{ path('cc_forum_post_show', {'post_id': post.getId }) }}#{{ post.getId }}">#{{ post.getId }}</a>
-		</div>
+<div class="common_box_sub_header">
+	<div class="float_left"><a class="heading_link" href="{{ path('cc_forum_post_show', {'post_id': post.getId }) }}#{{ post.getId }}">Re: {{ post.getTopic.getTitle }}</a></div>
+	<div class="float_right">
+		{% if post.getLockedDate %}
+			<img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_locked.png') }}" />
+		{% endif %}
+		<a class="heading_link" name="{{ post.getId }}" href="#{{ post.getId }}">#{{ post.getId }}</a>
 	</div>
 </div>
 
@@ -95,10 +56,10 @@
 		</div>
 		
 		<div style="width: auto; float: right;" class="column v_align_top h_align_right">
-			<div style="width: auto;" class="common_box_5 margin_5 padding_5 h_align_right v_align_top bg_highlight_light"><span class="common_note">&nbsp;{{ 'generic.posted_at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getCreatedDate|date("d/m/Y - H:i:s") }}</span></div>	
+			<div style="width: auto;" class="margin_5 padding_5 h_align_right v_align_top bg_highlight_light"><span class="common_note">&nbsp;{{ 'generic.posted_at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getCreatedDate|date("d/m/Y - H:i:s") }}</span></div>	
 
 			{% if post.getEditedDate %}
-			<div style="width: auto;" class="common_box_5 margin_5 padding_5 h_align_right v_align_top bg_highlight_light">
+			<div style="width: auto;" class="margin_5 padding_5 h_align_right v_align_top bg_highlight_light">
 			<span class="common_note">
 			&nbsp;{{ 'post.edited_by' |trans({}, 'CCDNForumForumBundle') }}
 			{% if post.getEditedBy %}{{ post.getEditedBy.getUsername }}{% else %}Guest{% endif %}
@@ -118,7 +79,6 @@
 	</div>
 	
 	<div class="row">
-		<img class="text_bubble_chevron" width="30px" height="20px" src="{{ asset('bundles/ccdnforumforum/images/text_bubble/chevron.png') }}" />
 		{% if post.getDeletedBy %}
 		<div class="common_box_5 margin_10 padding_2 text_bubble">
 			<div class="common_box_5 margin_0 padding_10 text_bubble_deleted">
@@ -133,22 +93,64 @@
 			</div>
 		</div>
 		{% else %}
-		<div class="common_box_5 margin_10 padding_10 text_bubble">
-			<span class="common_body">
-			{{ BBCode(post.getBody | raw) | raw}}
-			</span>
-			<br />
-			{% if post.getAttachment %}
-			<br /><a href="{{ path('cc_attachment_download', {'attachment_id': post.getAttachment.getId }) }}"><img src="{{ path('cc_attachment_thumbnail', {'attachment_id': post.getAttachment.getId }) }}" /></a>
-			{% endif %}
-			
+		{# common_box_5 margin_10 padding_10 #}
+		<div class="text_bubble">
+			<div class="text_bubble_header">
+				<img class="text_bubble_chevron" width="30px" height="20px" src="{{ asset('bundles/ccdnforumforum/images/text_bubble/chevron.png') }}" />
+				
+				{% if is_granted('ROLE_USER') %}
+					{% if post.getCreatedBy %}
+				<a class="button_link_light" href="{{ path('cc_message_message_compose_to', {'user_id': post.getCreatedBy.getId }) }}">{{ 'link.user.message' | trans({}, 'CCDNUserProfileBundle') }}</a>
+					{% endif %}
+					
+				<a class="button_link_light" href="{{ path('cc_forum_post_flag', {'post_id': post.getId }) }}">{{ 'link.post.flag' | trans({}, 'CCDNForumForumBundle') }}</a>
+					{% if post.getCreatedBy %}
+						{% if post.getCreatedBy.getId == user.getId or is_granted('ROLE_MODERATOR') %}
+				<a class="button_link_light" href="{{ path('cc_forum_post_edit', {'post_id': post.getId }) }}">{{ 'link.post.edit' | trans({}, 'CCDNForumForumBundle') }}</a>
+							{% if not post.getDeletedBy %}
+				<a class="button_link_light" href="{{ path('cc_forum_post_delete', {'post_id': post.getId }) }}">{{ 'link.post.delete' | trans({}, 'CCDNForumForumBundle') }}</a>
+							{% endif %}
+						{% endif %}
+					{% elseif is_granted('ROLE_MODERATOR') %}
+				<a class="button_link_light" href="{{ path('cc_forum_post_edit', {'post_id': post.getId }) }}">{{ 'link.post.edit' | trans({}, 'CCDNForumForumBundle') }}</a>
+						{% if not post.getDeletedBy %}
+				<a class="button_link_light" href="{{ path('cc_forum_post_delete', {'post_id': post.getId }) }}">{{ 'link.post.delete' | trans({}, 'CCDNForumForumBundle') }}</a>
+						{% endif %}
+					{% endif %}
+
+					{% if is_granted('ROLE_MODERATOR') %}
+						{% if post.getLockedBy %}
+				<a class="button_link_light" href="{{ path('cc_moderator_forum_unlock_post', {'post_id': post.getId }) }}">{{ 'link.post.unlock' | trans({}, 'CCDNForumForumBundle') }}</a>
+						{% else %}
+				<a class="button_link_light" href="{{ path('cc_moderator_forum_lock_post', {'post_id': post.getId }) }}">{{ 'link.post.lock' | trans({}, 'CCDNForumForumBundle') }}</a>
+						{% endif %}
+
+						{% if post.getDeletedBy %}
+				<a class="button_link_light" href="{{ path('cc_moderator_forum_post_restore', {'post_id': post.getId }) }}">{{ 'link.post.restore' | trans({}, 'CCDNForumForumBundle') }}</a>
+						{% endif %}
+					{% endif %}
+									
+				<a class="button_link_light" href="{{ path('cc_forum_topic_reply', {'topic_id': post.getTopic.getId }) }}">{{ 'link.post.reply' | trans({}, 'CCDNForumForumBundle') }}</a>
+				<a class="button_link_light" href="{{ path('cc_forum_topic_reply_with_quote', {'topic_id': post.getTopic.getId, 'quote_id': post.getId }) }}">{{ 'link.post.quote' | trans({}, 'CCDNForumForumBundle') }}</a>	
+				{% endif %}
+			</div>
+			<div class="text_bubble_body">
+				<span class="common_body">
+					{{ BBCode(post.getBody | raw) | raw}}<br />
+				</span>
+				{% if post.getAttachment %}
+				<br /><a href="{{ path('cc_attachment_download', {'attachment_id': post.getAttachment.getId }) }}"><img src="{{ path('cc_attachment_thumbnail', {'attachment_id': post.getAttachment.getId }) }}" /></a>
+				{% endif %}
+				<br />
+			</div>
 			{% if post.getCreatedBy %}
 				{% if post.getCreatedBy.getProfile %}
 					{% if post.getCreatedBy.getProfile.getSignature %}
-			<br /><hr />
-			<span class="common_body">
-			{{ BBCode(post.getCreatedBy.getProfile.getSignature | raw) | raw }}
-			</span>
+			<div class="text_bubble_footer">
+				<span class="common_body">
+				{{ BBCode(post.getCreatedBy.getProfile.getSignature | raw) | raw }}
+				</span>
+			</div>			
 					{% endif %}
 				{% endif %}
 			{% endif %}

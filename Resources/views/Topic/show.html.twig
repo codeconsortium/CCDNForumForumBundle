@@ -78,18 +78,14 @@
 	</div>
 	{% endif %}
 	
-	<div class="common_box_panel common_tool_strip">
-		<div class="pagerfanta">
-			{{ pagerfanta(pager, 'default', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) }}
-		</div>
+	<div class="pagerfanta">
+		{{ pagerfanta(pager, 'default', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) }}
 	</div>
 		{% for key, post in topic.posts %}
 			{% include "CCDNForumForumBundle:Post:item_post.html.twig" %}
 		{% endfor %}
-	<div class="common_box_panel common_tool_strip">
-		<div class="pagerfanta">
-			{{ pagerfanta(pager, 'default', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) }}
-		</div>
+	<div class="pagerfanta">
+		{{ pagerfanta(pager, 'default', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) }}
 	</div>
 </div>
 
