@@ -44,12 +44,12 @@
 	<div class="common_box_panel">
 			<table class="common_list">
 				<thead>
-					<th></th>
-					<th></th>
+					<th style="width: 18px;"></th>
+					<th style="width: 18px;"></th>
 					<th>{{ 'board.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') }}</th>
-					<th>{{ 'board.table.head.reply_count' | trans({}, 'CCDNForumForumBundle') }}</th>
-					<th>{{ 'board.table.head.view_count' | trans({}, 'CCDNForumForumBundle') }}</th>
-					<th>{{ 'board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') }}</th>	
+					<th style="width: 100px;">{{ 'board.table.head.reply_count' | trans({}, 'CCDNForumForumBundle') }}</th>
+					<th style="width: 100px;">{{ 'board.table.head.view_count' | trans({}, 'CCDNForumForumBundle') }}</th>
+					<th style="width: 170px;">{{ 'board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') }}</th>	
 				</thead>
 				<tfoot>
 				</tfoot>
@@ -59,19 +59,19 @@
 						<tr class="{{ cycle(['row_odd', 'row_even'], row) }}">
 							<td class="padding_5 h_align_centre v_align_middle">
 							{% if topic.getClosedDate %}
-								<img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_locked.png') }}" />
+								<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_locked.png') }}" alt="icon" />
 							{% else %}
 								{# else if not closed, then if new posts add special icon here #}
 							{% endif %}
 							{% if topic.getDeletedDate %}
-								<img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_trash.png') }}" />
+								<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_trash.png') }}" alt="icon" />
 							{% else %}
 								{# else if not closed, then if new posts add special icon here #}
 							{% endif %}
 							</td>
 							<td class="padding_5 h_align_centre v_align_middle">
 								{# use custom icons below, will be later specified in the create topic form #}
-								<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}"><img class="icon_16x16" width="16px" height="16px" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_communication.png') }}" /></a>					
+								<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}"><img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_communication.png') }}" alt="icon" /></a>					
 							</td>
 							<td class="padding_5 h_align_left v_align_top">
 								<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}">{{ topic.getTitle }}</a>
