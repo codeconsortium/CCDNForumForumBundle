@@ -59,23 +59,23 @@
 						<tr class="{{ cycle(['row_odd', 'row_even'], row) }}">
 							<td class="padding_5 h_align_centre v_align_middle">
 							{% if topic.getClosedDate %}
-								<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_locked.png') }}" alt="icon" />
+								<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_locked.png') }}" alt="icon">
 							{% else %}
 								{# else if not closed, then if new posts add special icon here #}
 							{% endif %}
 							{% if topic.getDeletedDate %}
-								<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_trash.png') }}" alt="icon" />
+								<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_trash.png') }}" alt="icon">
 							{% else %}
 								{# else if not closed, then if new posts add special icon here #}
 							{% endif %}
 							</td>
 							<td class="padding_5 h_align_centre v_align_middle">
 								{# use custom icons below, will be later specified in the create topic form #}
-								<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}"><img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_communication.png') }}" alt="icon" /></a>					
+								<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}"><img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_communication.png') }}" alt="icon"></a>					
 							</td>
 							<td class="padding_5 h_align_left v_align_top">
 								<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}">{{ topic.getTitle }}</a>
-								<br />
+								<br>
 
 								{% if topic.getFirstPost %}
 									<span class="label_small">

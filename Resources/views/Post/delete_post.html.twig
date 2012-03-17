@@ -38,7 +38,7 @@
 	<div class="common_box_panel h_align_centre v_align_middle">
 		<div class="h_align_centre v_align_middle margin_10 padding_10">
 			{{ confirmation_message | trans({}, 'CCDNForumForumBundle') }}
-			<br /><br />
+			<br><br>
 			<a class="button_link" href="{{ path('cc_forum_post_delete_confirmed', {'post_id': post.id })}}">{{ 'post.delete.confirm_yes' | trans({}, 'CCDNForumForumBundle') }}</a>
 			&nbsp;&nbsp;&nbsp;
 			<a class="button_link" href="{{ path('cc_forum_topic_show', {'topic_id': topic.id })}}">{{ 'post.delete.confirm_no' | trans({}, 'CCDNForumForumBundle') }}</a>

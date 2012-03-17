@@ -1,9 +1,9 @@
 <tr class="{{ cycler(['row_odd', 'row_even'], 'board') }}">
 	<td class="padding_5 h_align_centre v_align_middle" style="width:52px;">
-		<img class="icon_32x32" width="32" height="32" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_board.png') }}" alt="icon" />
+		<img class="icon_32x32" width="32" height="32" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_board.png') }}" alt="icon">
 	</td>
 	<td class="h_align_left v_align_top">
-		<a href="{{ path('cc_forum_board_show', {'board_id': board.getId }) }}">{{ board.getName }}</a><br />
+		<a href="{{ path('cc_forum_board_show', {'board_id': board.getId }) }}">{{ board.getName }}</a><br>
 		<span class="common_body">{{ board.getDescription }}</span>		
 	</td>
 	<td class="h_align_left v_align_top" style="width: 100px;">
@@ -25,7 +25,7 @@
 				{% else %}
 					Guest 
 				{% endif %}
-				<br />{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': board.getLastPost.getTopic.getId, 'page':page } ) }}#{{ board.getLastPost.getId }}">{{ board.getLastPost.getCreatedDate|date("d/m/Y - H:i:s") }}</a>
+				<br>{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': board.getLastPost.getTopic.getId, 'page':page } ) }}#{{ board.getLastPost.getId }}">{{ board.getLastPost.getCreatedDate|date("d/m/Y - H:i:s") }}</a>
 			{% else %}
 				{{ 'info.not_applicable' | trans({}, 'CCDNForumForumBundle') }}
 			{% endif %}
