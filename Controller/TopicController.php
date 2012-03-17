@@ -39,16 +39,16 @@ class TopicController extends ContainerAware
 		
 		$user = $this->container->get('security.context')->getToken()->getUser();
 		
-		$topic_paginated = $this->container->get('ccdn_forum_forum.topic.repository')->findOneByIdJoinedToPostsPaginated($topic_id);
+		$topic = $this->container->get('ccdn_forum_forum.topic.repository')->findByIdWithBoardAndCategory($topic_id);
+		$posts_paginated = $this->container->get('ccdn_forum_forum.post.repository')->findPostsForTopicByIdPaginated($topic_id);
 		
 		$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
-		$topic_paginated->setMaxPerPage($posts_per_page);
-		$topic_paginated->setCurrentPage($page, false, true);
-		
-		$topic_ = $topic_paginated->getCurrentPageResults();
-		$topic = $topic_[0];
-				
-		if ( ! $topic) {
+		$posts_paginated->setMaxPerPage($posts_per_page);
+		$posts_paginated->setCurrentPage($page, false, true);		
+		$posts = $posts_paginated->getCurrentPageResults();		
+
+		if ( ! $topic || ! $posts_paginated)
+		{
 			throw new NotFoundHttpException('No such topic exists!');
 		}
 		
@@ -81,9 +81,9 @@ class TopicController extends ContainerAware
 			'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
 			'user'	=> $user,
 			'crumbs' => $crumb_trail,
-			'topic' => $topic,
 			'board' => $board,
-			'pager' => $topic_paginated,
+			'topic' => $topic,
+			'pager' => $posts_paginated,
 		));
 	}
 

@@ -30,6 +30,36 @@ class PostRepository extends EntityRepository
 	
 	/**
 	 *
+	 * @access public
+	 * @param int $topic_id
+	 */
+	public function findPostsForTopicByIdPaginated($topicId)
+	{
+		
+		$query = $this->getEntityManager()
+			->createQuery('
+				SELECT p, t FROM CCDNForumForumBundle:Post p
+				LEFT JOIN p.topic t
+				LEFT JOIN p.created_by u
+				LEFT JOIN p.registry r
+				WHERE p.topic = :id
+				GROUP BY p.id
+				ORDER BY p.created_date ASC
+			')
+			->setParameter('id', $topicId);
+
+		try {
+			return new Pagerfanta(new DoctrineORMAdapter($query));
+	        //return $query->getSingleResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    }
+	}
+	
+	
+	
+	/**
+	 *
 	 * Finds the post requested for editing joined to its
 	 * topic and also the post referenced as first post. This
 	 * is so that if first_post matches the request post by ID

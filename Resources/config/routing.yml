@@ -37,10 +37,15 @@ cc_forum_board_show:
     defaults:   { _controller: CCDNForumForumBundle:Board:show, _locale: en, page: 1}
     requirements:
         _locale: en
-        
+
+#
+#
+# Topics
+#   
+#
 cc_forum_topic_show_paginated:
     pattern:    /{_locale}/forum/topic/{topic_id}/page/{page}
-    defaults:   { _controller: CCDNForumForumBundle:Topic:show, _locale: en }
+    defaults:   { _controller: CCDNForumForumBundle:Topic:show, _locale: en, page: 1 }
     requirements:
         _locale: en
         
@@ -52,7 +57,7 @@ cc_forum_topic_show_paginated_anchored:
         
 cc_forum_topic_show:
     pattern:    /{_locale}/forum/topic/{topic_id}
-    defaults:   { _controller: CCDNForumForumBundle:Topic:show, _locale: en, page: 1}
+    defaults:   { _controller: CCDNForumForumBundle:Topic:show, _locale: en, page: 1 }
     requirements:
         _locale: en
         
