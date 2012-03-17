@@ -44,15 +44,15 @@
 	<div class="common_box_panel">
 			<table class="common_list">
 				<thead>
-					<th style="width: 18px;"></th>
-					<th style="width: 18px;"></th>
-					<th>{{ 'board.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') }}</th>
-					<th style="width: 100px;">{{ 'board.table.head.reply_count' | trans({}, 'CCDNForumForumBundle') }}</th>
-					<th style="width: 100px;">{{ 'board.table.head.view_count' | trans({}, 'CCDNForumForumBundle') }}</th>
-					<th style="width: 170px;">{{ 'board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') }}</th>	
+					<tr>
+						<th style="width: 18px;"></th>
+						<th style="width: 18px;"></th>
+						<th>{{ 'board.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') }}</th>
+						<th style="width: 100px;">{{ 'board.table.head.reply_count' | trans({}, 'CCDNForumForumBundle') }}</th>
+						<th style="width: 100px;">{{ 'board.table.head.view_count' | trans({}, 'CCDNForumForumBundle') }}</th>
+						<th style="width: 170px;">{{ 'board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') }}</th>	
+					</tr>
 				</thead>
-				<tfoot>
-				</tfoot>
 				<tbody>
 				{% for row, topic in pager.getCurrentPageResults %}
 					{% if not topic.getDeletedBy or is_granted('ROLE_MODERATOR') %}
@@ -90,7 +90,7 @@
 								{% endif %}
 							</td>
 							<td class="h_align_left v_align_middle">
-								<span class="label_small">{{ 'board.table.body.reply_count' | trans({}, 'CCDNForumForumBundle') }}</span>&nbsp;<span class="stat_small">{{ topic.getReplyCount }}</span><br/>
+								<span class="label_small">{{ 'board.table.body.reply_count' | trans({}, 'CCDNForumForumBundle') }}</span>&nbsp;<span class="stat_small">{{ topic.getReplyCount }}</span><br>
 							</td>
 							<td class="h_align_left v_align_middle">
 								<span class="label_small">{{ 'board.table.body.view_count' | trans({}, 'CCDNForumForumBundle') }}</span>&nbsp;<span class="stat_small">{{ topic.getViewCount }}</span>
