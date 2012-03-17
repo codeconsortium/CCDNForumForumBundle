@@ -41,7 +41,11 @@ class PostRepository extends EntityRepository
 				SELECT p, t FROM CCDNForumForumBundle:Post p
 				LEFT JOIN p.topic t
 				LEFT JOIN p.created_by u
+				LEFT JOIN p.edited_by eu
+				LEFT JOIN p.deleted_by du
+				LEFT JOIN p.locked_by lu
 				LEFT JOIN p.registry r
+				LEFT JOIN p.attachment pa
 				WHERE p.topic = :id
 				GROUP BY p.id
 				ORDER BY p.created_date ASC

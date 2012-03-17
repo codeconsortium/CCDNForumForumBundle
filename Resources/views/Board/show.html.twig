@@ -54,7 +54,7 @@
 				<tfoot>
 				</tfoot>
 				<tbody>
-				{% for row, topic in board.topics %}
+				{% for row, topic in pager.getCurrentPageResults %}
 					{% if not topic.getDeletedBy or is_granted('ROLE_MODERATOR') %}
 						<tr class="{{ cycle(['row_odd', 'row_even'], row) }}">
 							<td class="padding_5 h_align_centre v_align_middle">

@@ -27,11 +27,68 @@ class TopicRepository extends EntityRepository
 {
 	
 	
+	/**
+	 *
+	 * @access public
+	 * @param int $topicId
+	 */
+	public function findTopicsForBoardById($boardId)
+	{
+		$query = $this->getEntityManager()
+			->createQuery('
+				SELECT t, fp, lp FROM CCDNForumForumBundle:Topic t
+				LEFT JOIN t.last_post lp
+				LEFT JOIN lp.created_by lpu
+				LEFT JOIN t.first_post fp
+				LEFT JOIN fp.created_by fpu
+				WHERE t.board = :id AND t.deleted_by IS NULL
+				GROUP BY t.id
+				ORDER BY lp.created_date DESC')
+			->setParameter('id', $boardId);
+
+		try {
+			return new Pagerfanta(new DoctrineORMAdapter($query));
+//	        return $query->getSingleResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    }
+	}
+	
+	
 	
 	/**
 	 *
 	 * @access public
-	 * @param int $topic_id
+	 * @param int $topicId
+	 */
+	public function findTopicsForBoardByIdForModerators($boardId)
+	{
+		$query = $this->getEntityManager()
+			->createQuery('
+				SELECT t, fp, lp FROM CCDNForumForumBundle:Topic t
+				LEFT JOIN t.last_post lp
+				LEFT JOIN lp.created_by lpu
+				LEFT JOIN t.first_post fp
+				LEFT JOIN fp.created_by fpu
+				WHERE t.board = :id
+				GROUP BY t.id
+				ORDER BY lp.created_date DESC')
+			->setParameter('id', $boardId);
+
+		try {
+			return new Pagerfanta(new DoctrineORMAdapter($query));
+//	        return $query->getSingleResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    }
+	}
+		
+		
+	
+	/**
+	 *
+	 * @access public
+	 * @param int $topicId
 	 */
 	public function findByIdWithBoardAndCategory($topicId)
 	{

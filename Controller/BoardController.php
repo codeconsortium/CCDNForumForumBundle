@@ -34,29 +34,27 @@ class BoardController extends ContainerAware
 	 */
 	public function showAction($board_id, $page)
 	{
+		
+		$board = $this->container->get('ccdn_forum_forum.board.repository')->findOneByIdWithCategory($board_id);
+
 		if ($this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{
-			$board_paginated = $this->container->get('ccdn_forum_forum.board.repository')->findOneByIdJoinedWithTopicsForModerators($board_id);
+			$topics_paginated = $this->container->get('ccdn_forum_forum.topic.repository')->findTopicsForBoardByIdForModerators($board_id);
 		} else {
-			$board_paginated = $this->container->get('ccdn_forum_forum.board.repository')->findOneByIdJoinedWithTopics($board_id);		
+			$topics_paginated = $this->container->get('ccdn_forum_forum.topic.repository')->findTopicsForBoardById($board_id);		
 		}
 
 		// deal with pagination.
 		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.topics_per_page');
-
-		$board_paginated->setMaxPerPage($topics_per_page);
-		$board_paginated->setCurrentPage($page, false, true);
-
-		$board_ = $board_paginated->getCurrentPageResults();
+		$topics_paginated->setMaxPerPage($topics_per_page);
+		$topics_paginated->setCurrentPage($page, false, true);
 
 		// check board exists.
-		if (count($board_) < 1)
+		if ( ! $board || ! $topics_paginated->getCurrentPageResults())
 		{
 			throw new NotFoundHttpException('No such board exists!');
 		}
 		
-		$board = $board_[0];			
-
 		// this is necessary for working out the last page for each topic.
 		$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
 		
@@ -73,7 +71,7 @@ class BoardController extends ContainerAware
 			'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
 			'crumbs' => $crumb_trail,
 			'board' => $board,
-			'pager' => $board_paginated,
+			'pager' => $topics_paginated,
 			'posts_per_page' => $posts_per_page,
 			));
         

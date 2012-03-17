@@ -32,7 +32,7 @@ class BoardRepository extends EntityRepository
 	 * @access public
 	 * @param int $board_id
 	 */	
-	public function findOneByIdJoinedWithTopics($board_id)
+/*	public function findOneByIdJoinedWithTopics($board_id)
 	{	
 		$query = $this->getEntityManager()
 			->createQuery('
@@ -43,6 +43,7 @@ class BoardRepository extends EntityRepository
 				WHERE b.id = :id AND t.deleted_by IS NULL
 				GROUP BY t.id
 				ORDER BY lp.created_date DESC')
+				
 			->setParameter('id', $board_id);
 		
 		try {
@@ -51,7 +52,7 @@ class BoardRepository extends EntityRepository
 	    } catch (\Doctrine\ORM\NoResultException $e) {
 	        return null;
 	    }	
-	}
+	}*/
 	
 	
 	/**
@@ -59,7 +60,7 @@ class BoardRepository extends EntityRepository
 	 * @access public
 	 * @param int $board_id
 	 */
-	public function findOneByIdJoinedWithTopicsForModerators($board_id)
+/*	public function findOneByIdJoinedWithTopicsForModerators($board_id)
 	{	
 		$query = $this->getEntityManager()
 			->createQuery('
@@ -78,7 +79,29 @@ class BoardRepository extends EntityRepository
 	    } catch (\Doctrine\ORM\NoResultException $e) {
 	        return null;
 	    }	
+	}*/
+	
+	/**
+	 *
+	 * @access public
+	 * @param int $board_id
+	 */	
+	public function findOneByIdWithCategory($boardId)
+	{	
+		$query = $this->getEntityManager()
+			->createQuery('
+				SELECT b, c FROM CCDNForumForumBundle:Board b
+				LEFT JOIN b.category c
+				WHERE b.id = :id')
+			->setParameter('id', $boardId);
+
+		try {
+	        return $query->getSingleResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    }	
 	}
+
 
 
 	/**

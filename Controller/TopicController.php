@@ -45,9 +45,8 @@ class TopicController extends ContainerAware
 		$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
 		$posts_paginated->setMaxPerPage($posts_per_page);
 		$posts_paginated->setCurrentPage($page, false, true);		
-		$posts = $posts_paginated->getCurrentPageResults();		
 
-		if ( ! $topic || ! $posts_paginated)
+		if ( ! $topic || ! $posts_paginated->getCurrentPageResults())
 		{
 			throw new NotFoundHttpException('No such topic exists!');
 		}
