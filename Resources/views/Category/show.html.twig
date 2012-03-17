@@ -2,8 +2,8 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link href="{{ asset('bundles/ccdncomponentcommon/css/common_elements.css')}}" rel="stylesheet" type="text/css" />
-	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('bundles/ccdncomponentcommon/css/common_elements.css')}}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block title %}{{ 'title.category.show' | trans({'%category_name%': category.name}, 'CCDNForumForumBundle') }}{% endblock %}
