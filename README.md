@@ -30,7 +30,8 @@ Dependencies:
 5. [CCDNComponent CommonBundle](https://github.com/codeconsortium/CommonBundle).
 6. [CCDNComponent BBCodeBundle](https://github.com/codeconsortium/BBCodeBundle).
 7. [CCDNComponent CrumbTrailBundle](https://github.com/codeconsortium/CrumbTrailBundle).
-8. [CCDNComponent AttachmentBundle](https://github.com/codeconsortium/AttachmentBundle).
+8. [CCDNComponent DashboardBundle](https://github.com/codeconsortium/DashboardBundle).
+9. [CCDNComponent AttachmentBundle](https://github.com/codeconsortium/AttachmentBundle).
 	
 Installation:
 -------------
@@ -55,17 +56,21 @@ Installation:
     git=http://github.com/whiteoctober/WhiteOctoberPagerfantaBundle.git
     target=/bundles/WhiteOctober/PagerfantaBundle
 
-[CommonBundle]
+[CCDNComponentCommonBundle]
     git=http://github.com/codeconsortium/CommonBundle.git
     target=/bundles/CCDNComponent/CommonBundle
 
-[BBCodeBundle]
+[CCDNComponentBBCodeBundle]
     git=http://github.com/codeconsortium/BBCodeBundle.git
     target=/bundles/CCDNComponent/BBCodeBundle
 
-[CrumbTrailBundle]
+[CCDNComponentCrumbTrailBundle]
     git=http://github.com/codeconsortium/CrumbTrailBundle.git
     target=/bundles/CCDNComponent/CrumbTrailBundle
+
+[CCDNComponentDashboardBundle]
+    git=http://github.com/codeconsortium/DashboardBundle.git
+    target=/bundles/CCDNComponent/DashboardBundle
 
 [CCDNComponentAttachmentBundle]
 	git=http://github.com/codeconsortium/AttachmentBundle.git
@@ -89,6 +94,7 @@ and then run `bin/vendors install` script.
 	new CCDNComponent\CommonBundle\CCDNComponentCommonBundle(),
 	new CCDNComponent\BBCodeBundle\CCDNComponentBBCodeBundle(),
 	new CCDNComponent\CrumbTrailBundle\CCDNComponentCrumbTrailBundle(),
+	new CCDNComponent\DashboardBundle\CCDNComponentDashboardBundle(),
 	new CCDNComponent\AttachmentBundle\CCDNComponentAttachmentBundle(),
 	new CCDNForum\ForumBundle\CCDNForumForumBundle(),
 	new CCDNForum\ForumAdminBundle\CCDNForumForumAdminBundle(),
@@ -201,6 +207,10 @@ ccdn_attachment_file_store= "/your/folder/where/you/want/to/store/attachments"
 4) In your app/config/routing.yml add:  
 
 ```sh
+CCDNComponentDashboardBundle:
+	resource: @"CCDNComponentDashboardBundle/Resources/config/routing.yml"
+	prefix: /
+
 CCDNComponentAttachmentBundle:
     resource: "@CCDNComponentAttachmentBundle/Resources/config/routing.yml"
     prefix: /
