@@ -26,7 +26,7 @@ parameters:
 #    ccdn_forum_forum.category.manager.class:            CCDNForum\ForumBundle\Entity\Manager\CategoryManager
     ccdn_forum_forum.board.manager.class:               CCDNForum\ForumBundle\Entity\Manager\BoardManager
     
-    ccdn_forum_forum.dashboard_integrator.class:        CCDNForum\ForumBundle\Component\Dashboard\DashboardIntegrator
+    ccdn_forum_forum.dashboard.integrator.class:        CCDNForum\ForumBundle\Component\Dashboard\DashboardIntegrator
     
 services:
     ccdn_forum_forum.registry.repository:
@@ -119,8 +119,8 @@ services:
         arguments:  [@doctrine, @service_container]
         
 
-    ccdn_forum_forum.dashboard_integrator:
-        class: %ccdn_forum_forum.dashboard_integrator.class%
+    ccdn_forum_forum.dashboard.integrator:
+        class: %ccdn_forum_forum.dashboard.integrator.class%
         arguments: [@service_container]
         tags:
-            - { name: ccdn_component_dashboard.registry }
+            - { name: ccdn_component_dashboard.integrator }
