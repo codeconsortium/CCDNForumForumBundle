@@ -20,11 +20,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use CCDNComponent\CommonBundle\Entity\Manager\EntityManagerInterface;
 
-//use CCDNForum\ForumBundle\Entity\Manager\TopicManager;
-//use CCDNForum\ForumBundle\Form\Type\TopicType;
-//use CCDNForum\ForumBundle\Form\Type\PostType;
-//use CCDNForum\ForumBundle\Entity\Post;
-
 /**
  * 
  * @author Reece Fowell <reece@codeconsortium.com> 
@@ -129,9 +124,7 @@ class TopicInsertFormHandler
 			$formData->getTopic()->setReplyCount(0);
 
 			$formData->getTopic()->setBoard($this->options['board']);				
-				
-//			$attachment = $formData->getAttachment();
-				
+						
 			if ($this->form->isValid())
 			{	
 				$this->onSuccess($this->form->getData());

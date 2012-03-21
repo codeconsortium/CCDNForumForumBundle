@@ -33,11 +33,10 @@ class PostType extends AbstractType
 	protected $container;
 	protected $doctrine;
 	
-	public function __construct(/*$doctrine,*/ $service_container)
+	public function __construct($service_container)
 	{
 		$this->options = array();
 		
-	//	$this->doctrine = $doctrine;
 		$this->container = $service_container;
 	}
 	
@@ -47,7 +46,7 @@ class PostType extends AbstractType
 	 * @access public
 	 * @param Array() $options
 	 */
-	public function setOptions($options)
+	public function setOptions($options = array())
 	{
 		$this->options = $options;
 	}
@@ -81,7 +80,7 @@ class PostType extends AbstractType
 		
 		$builder->add('attachment', 'entity', array(
 		    'class' => 'CCDNComponentAttachmentBundle:Attachment',
-		  //  'query_builder' => $this->container->get('ccdn_component_attachment.attachment.repository')->findForUserByIdAsQB($userId),
+//		    'query_builder' => $this->container->get('ccdn_component_attachment.attachment.repository')->findForUserByIdAsQB($userId),
 			'choices' => $attachments,
 		    'property' => 'attachment_original',
 			'required' => false,

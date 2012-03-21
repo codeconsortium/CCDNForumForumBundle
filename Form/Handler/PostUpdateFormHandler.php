@@ -20,9 +20,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use CCDNComponent\CommonBundle\Entity\Manager\EntityManagerInterface;
 
-//use CCDNForum\ForumBundle\Entity\Manager\PostManager;
-//use CCDNForum\ForumBundle\Form\Type\PostType;
-
 /**
  * 
  * @author Reece Fowell <reece@codeconsortium.com> 
@@ -145,7 +142,6 @@ class PostUpdateFormHandler
 		{
 			$postType = $this->container->get('ccdn_forum_forum.post.form.type');
 			$postType->setOptions($this->options);
-			
 			$this->form = $this->factory->create($postType, $this->options['post']);
 		}
 

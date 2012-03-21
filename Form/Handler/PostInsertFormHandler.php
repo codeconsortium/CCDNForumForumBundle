@@ -121,11 +121,6 @@ class PostInsertFormHandler
 
 			$formData->setTopic($this->options['topic']);
 			
-//			$attachment = $formData->getAttachment();
-//			echo $attachment; die();
-//			$attachment = $this->container->get('ccdn_component_attachment.attachment.repository')->findSingleAttachmentForUserById( , $this->options['user']->getId());
-//			$formData->setAttachment($attachment);
-
 			if ($this->form->isValid())
 			{	
 				$this->onSuccess($this->form->getData());
@@ -149,13 +144,7 @@ class PostInsertFormHandler
 		if ( ! $this->form)
 		{
 			$postType = $this->container->get('ccdn_forum_forum.post.form.type');
-			$postType->setOptions($this->options);
-			
-			/*if ($this->options['quote'])
-			{
-				$postType->setOptions(array('quote' => $this->options['quote']));
-			}*/
-			
+			$postType->setOptions($this->options);			
 			$this->form = $this->factory->create($postType);			
 		}
 

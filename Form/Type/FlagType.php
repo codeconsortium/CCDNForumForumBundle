@@ -37,7 +37,7 @@ class FlagType extends AbstractType
 	 * @access public
 	 * @param Array() $options
 	 */
-	public function setOptions($options)
+	public function setOptions($options = array())
 	{
 		$this->options = $options;
 	}
@@ -50,8 +50,7 @@ class FlagType extends AbstractType
 	 */
 	public function buildForm(FormBuilder $builder, array $options)
 	{
-	//	$flagChoices = new FlagChoices();
-		
+	
 		$builder
 			->add('reason', 'choice', array(
 				'choices' => $this->options['flag_default_choices']->getReasonCodes()
