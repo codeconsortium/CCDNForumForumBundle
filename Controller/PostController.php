@@ -129,9 +129,9 @@ class PostController extends ContainerAware
 		
 		if ($post->getTopic()->getFirstPost()->getId() == $post->getId())
 		{	// if post is the very first post of the topic then use a topic handler so user can change topic title
-			$formHandler = $this->container->get('topic.form.update.handler')->setOptions(array('post' => $post, 'user' => $user));
+			$formHandler = $this->container->get('ccdn_forum_forum.topic.update.form.handler')->setOptions(array('post' => $post, 'user' => $user));
 		} else {
-			$formHandler = $this->container->get('post.form.update.handler')->setOptions(array('post' => $post, 'user' => $user));
+			$formHandler = $this->container->get('ccdn_forum_forum.post.update.form.handler')->setOptions(array('post' => $post, 'user' => $user));
 		}
 
 		if ($formHandler->process())

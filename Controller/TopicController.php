@@ -109,7 +109,7 @@ class TopicController extends ContainerAware
 		//
 		// Set the form handler options
 		//
-		$formHandler = $this->container->get('ccdn_forum_forum.topic.form.insert.handler')->setOptions(array('board' => $board,	'user' => $user));
+		$formHandler = $this->container->get('ccdn_forum_forum.topic.insert.form.handler')->setOptions(array('board' => $board,	'user' => $user));
 		
 		if (isset($_POST['submit_preview']))
 		{
@@ -184,7 +184,7 @@ class TopicController extends ContainerAware
 		
 		$options = array('topic' => $topic,	'user' => $user, 'quote' => (empty($quote) ? null : $quote));
 		
-		$formHandler = $this->container->get('ccdn_forum_forum.post.form.insert.handler')->setOptions($options);
+		$formHandler = $this->container->get('ccdn_forum_forum.post.insert.form.handler')->setOptions($options);
 		
 		if (isset($_POST['submit_preview']))
 		{

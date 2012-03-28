@@ -4,13 +4,13 @@ parameters:
         
     ccdn_forum_forum.post.manager.class:                CCDNForum\ForumBundle\Entity\Manager\PostManager
     ccdn_forum_forum.post.form.type.class:              CCDNForum\ForumBundle\Form\Type\PostType
-    ccdn_forum_forum.post.form.insert.handler.class:    CCDNForum\ForumBundle\Form\Handler\PostInsertFormHandler
-    ccdn_forum_forum.post.form.update.handler.class:    CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
+    ccdn_forum_forum.post.insert.form.handler.class:    CCDNForum\ForumBundle\Form\Handler\PostInsertFormHandler
+    ccdn_forum_forum.post.update.form.handler.class:    CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
     
     ccdn_forum_forum.topic.manager.class:               CCDNForum\ForumBundle\Entity\Manager\TopicManager
     ccdn_forum_forum.topic.form.type.class:             CCDNForum\ForumBundle\Form\Type\TopicType
-    ccdn_forum_forum.topic.form.insert.handler.class:   CCDNForum\ForumBundle\Form\Handler\TopicInsertFormHandler
-    ccdn_forum_forum.topic.form.update.handler.class:   CCDNForum\ForumBundle\Form\Handler\TopicUpdateFormHandler
+    ccdn_forum_forum.topic.insert.form.handler.class:   CCDNForum\ForumBundle\Form\Handler\TopicInsertFormHandler
+    ccdn_forum_forum.topic.update.form.handler.class:   CCDNForum\ForumBundle\Form\Handler\TopicUpdateFormHandler
     
     ccdn_forum_forum.flag.manager.class:                CCDNForum\ForumBundle\Entity\Manager\FlagManager
     ccdn_forum_forum.flag.form.type.class:              CCDNForum\ForumBundle\Form\Type\FlagType
@@ -47,11 +47,11 @@ services:
     ccdn_forum_forum.post.form.type:
         class:  %ccdn_forum_forum.post.form.type.class%
         arguments:  [@service_container, @doctrine]
-    ccdn_forum_forum.post.form.insert.handler:
-        class:  %ccdn_forum_forum.post.form.insert.handler.class%
+    ccdn_forum_forum.post.insert.form.handler:
+        class:  %ccdn_forum_forum.post.insert.form.handler.class%
         arguments:  [@form.factory, @service_container, @ccdn_forum_forum.post.manager]
-    post.form.update.handler:
-        class:  %ccdn_forum_forum.post.form.update.handler.class%
+    ccdn_forum_forum.post.update.form.handler:
+        class:  %ccdn_forum_forum.post.update.form.handler.class%
         arguments:  [@form.factory, @service_container, @ccdn_forum_forum.post.manager]
     
     ccdn_forum_forum.topic.manager:
@@ -60,11 +60,11 @@ services:
     ccdn_forum_forum.topic.form.type:
         class:  %ccdn_forum_forum.topic.form.type.class%
         arguments:  [@doctrine]
-    ccdn_forum_forum.topic.form.insert.handler:
-        class:  %ccdn_forum_forum.topic.form.insert.handler.class%
+    ccdn_forum_forum.topic.insert.form.handler:
+        class:  %ccdn_forum_forum.topic.insert.form.handler.class%
         arguments:  [@form.factory, @service_container, @ccdn_forum_forum.topic.manager]
-    topic.form.update.handler:
-        class:  %ccdn_forum_forum.topic.form.update.handler.class%
+    ccdn_forum_forum.topic.update.form.handler:
+        class:  %ccdn_forum_forum.topic.update.form.handler.class%
         arguments:  [@form.factory, @service_container, @ccdn_forum_forum.topic.manager]
         
     ccdn_forum_forum.flag.manager:
