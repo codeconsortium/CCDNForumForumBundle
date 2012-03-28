@@ -25,7 +25,7 @@ use CCDNComponent\CommonBundle\Entity\Manager\EntityManagerInterface;
  * @author Reece Fowell <reece@codeconsortium.com> 
  * @version 1.0
  */
-class PostInsertFormHandler
+class PostFormHandler
 {
 	
 
@@ -80,7 +80,7 @@ class PostInsertFormHandler
 
 	/**
 	 *
-	 *
+	 * @access protected
 	 */
 	protected $previewMode;
 	
@@ -88,9 +88,41 @@ class PostInsertFormHandler
 	
 	/**
 	 *
-	 *
+	 * @access protected
 	 */
 	protected $previewData;
+	
+	
+	
+	/**
+	 *
+	 * @access protected
+	 */
+	protected $strategy; 
+	const INSERT = 0;
+	const UPDATE = 1;
+	
+	
+	
+	/**
+	 *
+	 * @access public
+	 */
+	public function setInsert()
+	{
+		$this->strategy = self::INSERT;
+	}
+	
+	
+
+	/**
+	 *
+	 * @access public
+	 */
+	public function setUpdate()	
+	{
+		$this->strategy = self::UPDATE;
+	}
 	
 	
 	
@@ -143,10 +175,29 @@ class PostInsertFormHandler
 		
 			$formData = $this->form->getData();
 
-			$formData->setCreatedDate(new \DateTime());
-			$formData->setCreatedBy($this->options['user']);
-			$formData->setTopic($this->options['topic']);
-			
+			//
+			// INSERT topic
+			//
+			if ($this->strategy == self::INSERT)
+			{
+				$formData->setCreatedDate(new \DateTime());
+				$formData->setCreatedBy($this->options['user']);
+				$formData->setTopic($this->options['topic']);
+			}
+
+			//
+			// UPDATE topic
+			//
+			if ($this->strategy == self::UPDATE)
+			{
+				$formData = $this->form->getData();		
+				$formData->setEditedDate(new \DateTime());
+				$formData->setEditedBy($this->options['user']);
+			}
+		
+			//
+			// Validate
+			//
 			if ($this->form->isValid())
 			{	
 				$this->onSuccess($this->form->getData());
@@ -164,6 +215,7 @@ class PostInsertFormHandler
 	/**
 	 *
 	 *
+	 * @access public
 	 */
 	public function previewMode()
 	{
@@ -175,7 +227,7 @@ class PostInsertFormHandler
 	/**
 	 *
 	 *
-	 *
+	 * @access public
 	 */
 	public function getPreview()
 	{
@@ -200,8 +252,26 @@ class PostInsertFormHandler
 		{
 			$postType = $this->container->get('ccdn_forum_forum.post.form.type');
 			$postType->setOptions($this->options);
-			$this->form = $this->factory->create($postType);
+
+			//
+			// INSERT topic
+			//
+			if ($this->strategy == self::INSERT)
+			{
+				$this->form = $this->factory->create($postType);
+			}
 			
+			//
+			// UPDATE topic
+			//
+			if ($this->strategy == self::UPDATE)
+			{
+				$this->form = $this->factory->create($postType, $this->options['post']);
+			}
+			
+			//
+			// Preview mode
+			//
 			if ($this->previewMode)
 			{
 				$this->form->bindRequest($this->request);
@@ -222,7 +292,21 @@ class PostInsertFormHandler
 	 */
 	protected function onSuccess($entity)
     {
-		return $this->manager->insert($entity)->flushNow();
+		//
+		// INSERT topic
+		//
+		if ($this->strategy == self::INSERT)
+		{
+			return $this->manager->insert($entity)->flushNow();
+		}
+		
+		//
+		// UPDATE topic
+		//
+		if ($this->strategy == self::UPDATE)
+		{
+			return $this->manager->update($entity)->flushNow();
+		}
     }
 
 
@@ -230,6 +314,7 @@ class PostInsertFormHandler
 	/**
 	 *
 	 *
+	 * @access public
 	 */
 	public function getCounters()
 	{

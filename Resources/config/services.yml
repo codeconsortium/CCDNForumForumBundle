@@ -4,13 +4,13 @@ parameters:
         
     ccdn_forum_forum.post.manager.class:                CCDNForum\ForumBundle\Entity\Manager\PostManager
     ccdn_forum_forum.post.form.type.class:              CCDNForum\ForumBundle\Form\Type\PostType
-    ccdn_forum_forum.post.insert.form.handler.class:    CCDNForum\ForumBundle\Form\Handler\PostInsertFormHandler
-    ccdn_forum_forum.post.update.form.handler.class:    CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
+    ccdn_forum_forum.post.insert.form.handler.class:    CCDNForum\ForumBundle\Form\Handler\PostFormHandler
+    ccdn_forum_forum.post.update.form.handler.class:    CCDNForum\ForumBundle\Form\Handler\PostFormHandler
     
     ccdn_forum_forum.topic.manager.class:               CCDNForum\ForumBundle\Entity\Manager\TopicManager
     ccdn_forum_forum.topic.form.type.class:             CCDNForum\ForumBundle\Form\Type\TopicType
-    ccdn_forum_forum.topic.insert.form.handler.class:   CCDNForum\ForumBundle\Form\Handler\TopicInsertFormHandler
-    ccdn_forum_forum.topic.update.form.handler.class:   CCDNForum\ForumBundle\Form\Handler\TopicUpdateFormHandler
+    ccdn_forum_forum.topic.insert.form.handler.class:   CCDNForum\ForumBundle\Form\Handler\TopicFormHandler
+    ccdn_forum_forum.topic.update.form.handler.class:   CCDNForum\ForumBundle\Form\Handler\TopicFormHandler
     
     ccdn_forum_forum.flag.manager.class:                CCDNForum\ForumBundle\Entity\Manager\FlagManager
     ccdn_forum_forum.flag.form.type.class:              CCDNForum\ForumBundle\Form\Type\FlagType
@@ -50,9 +50,13 @@ services:
     ccdn_forum_forum.post.insert.form.handler:
         class:  %ccdn_forum_forum.post.insert.form.handler.class%
         arguments:  [@form.factory, @service_container, @ccdn_forum_forum.post.manager]
+        calls:
+            - [ setInsert, []]
     ccdn_forum_forum.post.update.form.handler:
         class:  %ccdn_forum_forum.post.update.form.handler.class%
         arguments:  [@form.factory, @service_container, @ccdn_forum_forum.post.manager]
+        calls:
+            - [ setUpdate, []]
     
     ccdn_forum_forum.topic.manager:
         class:  %ccdn_forum_forum.topic.manager.class%
@@ -63,9 +67,13 @@ services:
     ccdn_forum_forum.topic.insert.form.handler:
         class:  %ccdn_forum_forum.topic.insert.form.handler.class%
         arguments:  [@form.factory, @service_container, @ccdn_forum_forum.topic.manager]
+        calls:
+            - [ setInsert, []]
     ccdn_forum_forum.topic.update.form.handler:
         class:  %ccdn_forum_forum.topic.update.form.handler.class%
         arguments:  [@form.factory, @service_container, @ccdn_forum_forum.topic.manager]
+        calls:
+            - [ setUpdate, []]
         
     ccdn_forum_forum.flag.manager:
         class:  %ccdn_forum_forum.flag.manager.class%

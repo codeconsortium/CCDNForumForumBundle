@@ -134,68 +134,80 @@ class PostController extends ContainerAware
 			$formHandler = $this->container->get('ccdn_forum_forum.post.update.form.handler')->setOptions(array('post' => $post, 'user' => $user));
 		}
 
-		if ($formHandler->process())
-		{	// get posts for determining the page of the edited post
-			$topic = $post->getTopic();						
+		if (isset($_POST['submit_preview']))
+		{
+			$formHandler->previewMode();
+		}
 
-			// scan for matching post in order and find its index to divide by items per page
-			/*
-			Reece Fowell.
-			The loop below, could be better written by adding a query to the repo to retrieve
-			posts but only the id column and created date, then sorting by date and hydrating
-			as array instead of collection. Then find array entry via id without a loop, possible
-			php function, maybe array_walk?? This should return the index in the array.
-			*/
+		if (isset($_POST['submit_post']))
+		{
+			if ($formHandler->process())
+			{	// get posts for determining the page of the edited post
+				$topic = $post->getTopic();						
+
+				// scan for matching post in order and find its index to divide by items per page
+				/*
+				Reece Fowell.
+				The loop below, could be better written by adding a query to the repo to retrieve
+				posts but only the id column and created date, then sorting by date and hydrating
+				as array instead of collection. Then find array entry via id without a loop, possible
+				php function, maybe array_walk?? This should return the index in the array.
+				*/
 			
-			foreach ($topic->getPosts() as $index => $postTest)					// <------------- move this shit to the Post or TopicEntityManager?
-			{
-				if ($post->getId() == $postTest->getId())
+				foreach ($topic->getPosts() as $index => $postTest)					// <------------- move this shit to the Post or TopicEntityManager?
 				{
-					$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
-					$page = ceil($index / $posts_per_page);
-					break;
+					if ($post->getId() == $postTest->getId())
+					{
+						$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
+						$page = ceil($index / $posts_per_page);
+						break;
+					}
 				}
-			}
 			
-			$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.post.edit.success', array('%post_id%' => $post_id, '%topic_title%' => $post->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.post.edit.success', array('%post_id%' => $post_id, '%topic_title%' => $post->getTopic()->getTitle()), 'CCDNForumForumBundle'));
 				
-			// redirect user on successful edit.
-			return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show_paginated_anchored', 
-				array('topic_id' => $topic->getId(), 'page' => $page, 'post_id' => $post->getId() ) ));
-		} else {
-			// setup crumb trail.
-			$topic = $post->getTopic();
-			$board = $topic->getBoard();
-			$category = $board->getCategory();
-
-			$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
-				->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
-				->add($category->getName(),	$this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
-				->add($board->getName(), $this->container->get('router')->generate('cc_forum_board_show', array('board_id' => $board->getId())), "board")
-				->add($topic->getTitle(), $this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $topic->getId())), "communication")
-				->add($this->container->get('translator')->trans('crumbs.post.edit', array(), 'CCDNForumForumBundle') . $post->getId(), $this->container->get('router')->generate('cc_forum_topic_reply', array('topic_id' => $topic->getId())), "edit");
-
-			if ($post->getTopic()->getFirstPost()->getId() == $post->getId())
-			{	// render edit_topic if first post
-				return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:edit_topic.html.' . $this->getEngine(), array(
-					'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
-					'board' => $board,
-					'topic' => $topic,
-					'post' => $post,
-					'crumbs' => $crumb_trail,
-					'form' => $formHandler->getForm()->createView(),
-				));
-			} else {
-				// render edit_post if not first post
-				return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:edit_post.html.' . $this->getEngine(), array(
-					'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
-					'board' => $board,
-					'topic' => $topic,
-					'post' => $post,
-					'crumbs' => $crumb_trail,
-					'form' => $formHandler->getForm()->createView(),
-				));
+				// redirect user on successful edit.
+				return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show_paginated_anchored', 
+					array('topic_id' => $topic->getId(), 'page' => $page, 'post_id' => $post->getId() ) ));
 			}
+		}
+		
+		// setup crumb trail.
+		$topic = $post->getTopic();
+		$board = $topic->getBoard();
+		$category = $board->getCategory();
+
+		$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
+			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
+			->add($category->getName(),	$this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
+			->add($board->getName(), $this->container->get('router')->generate('cc_forum_board_show', array('board_id' => $board->getId())), "board")
+			->add($topic->getTitle(), $this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $topic->getId())), "communication")
+			->add($this->container->get('translator')->trans('crumbs.post.edit', array(), 'CCDNForumForumBundle') . $post->getId(), $this->container->get('router')->generate('cc_forum_topic_reply', array('topic_id' => $topic->getId())), "edit");
+
+		if ($post->getTopic()->getFirstPost()->getId() == $post->getId())
+		{	// render edit_topic if first post
+			return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:edit_topic.html.' . $this->getEngine(), array(
+				'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
+				'user' => $user,
+				'board' => $board,
+				'topic' => $topic,
+				'post' => $post,
+				'crumbs' => $crumb_trail,
+				'preview' => $formHandler->getPreview(),
+				'form' => $formHandler->getForm()->createView(),
+			));
+		} else {
+			// render edit_post if not first post
+			return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:edit_post.html.' . $this->getEngine(), array(
+				'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
+				'user' => $user,
+				'board' => $board,
+				'topic' => $topic,
+				'post' => $post,
+				'crumbs' => $crumb_trail,
+				'preview' => $formHandler->getPreview(),
+				'form' => $formHandler->getForm()->createView(),
+			));
 		}
 	}
 	

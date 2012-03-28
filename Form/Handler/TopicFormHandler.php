@@ -25,9 +25,9 @@ use CCDNComponent\CommonBundle\Entity\Manager\EntityManagerInterface;
  * @author Reece Fowell <reece@codeconsortium.com> 
  * @version 1.0
  */
-class TopicInsertFormHandler
+class TopicFormHandler
 {
-	
+
 
 	
 	/**
@@ -93,7 +93,39 @@ class TopicInsertFormHandler
 	protected $previewData;
 	
 	
+	
+	/**
+	 *
+	 * @access protected
+	 */
+	protected $strategy; 
+	const INSERT = 0;
+	const UPDATE = 1;
+	
+	
+	
+	/**
+	 *
+	 * @access public
+	 */
+	public function setInsert()
+	{
+		$this->strategy = self::INSERT;
+	}
+	
+	
 
+	/**
+	 *
+	 * @access public
+	 */
+	public function setUpdate()	
+	{
+		$this->strategy = self::UPDATE;
+	}
+	
+	
+	
 	/**
 	 *
 	 * @access public
@@ -110,6 +142,7 @@ class TopicInsertFormHandler
 		
 		$this->previewMode = false;
 	}
+
 	
 	
 	/**
@@ -124,6 +157,7 @@ class TopicInsertFormHandler
 		
 		return $this;
 	}
+	
 	
 	
 	/**
@@ -142,14 +176,32 @@ class TopicInsertFormHandler
 		
 			$formData = $this->form->getData();
 
-			$formData->setCreatedDate(new \DateTime());
-			$formData->setCreatedBy($this->options['user']);
+			//
+			// INSERT topic
+			//
+			if ($this->strategy == self::INSERT)
+			{
+				$formData->setCreatedDate(new \DateTime());
+				$formData->setCreatedBy($this->options['user']);
 
-			$formData->getTopic()->setViewCount(0);
-			$formData->getTopic()->setReplyCount(0);
+				$formData->getTopic()->setViewCount(0);
+				$formData->getTopic()->setReplyCount(0);
 
-			$formData->getTopic()->setBoard($this->options['board']);				
-						
+				$formData->getTopic()->setBoard($this->options['board']);				
+			}
+
+			//
+			// UPDATE topic
+			//
+			if ($this->strategy == self::UPDATE)
+			{
+				$formData->setEditedDate(new \DateTime());
+				$formData->setEditedBy($this->options['user']);
+			}
+			
+			//
+			// Validate
+			//			
 			if ($this->form->isValid())
 			{	
 				$this->onSuccess($this->form->getData());
@@ -166,6 +218,7 @@ class TopicInsertFormHandler
 	/**
 	 *
 	 *
+	 * @access public
 	 */
 	public function previewMode()
 	{
@@ -177,7 +230,7 @@ class TopicInsertFormHandler
 	/**
 	 *
 	 *
-	 *
+	 * @access public
 	 */
 	public function getPreview()
 	{
@@ -205,9 +258,23 @@ class TopicInsertFormHandler
 			$postType->setOptions($this->options);
 			$topicType = $this->container->get('ccdn_forum_forum.topic.form.type');
 			
-			$this->form = $this->factory->create($postType);			
-			$this->form->add($this->factory->create($topicType));
+			// set for insert method
+			if ($this->strategy == self::INSERT)
+			{
+				$this->form = $this->factory->create($postType);			
+				$this->form->add($this->factory->create($topicType));
+			}
 			
+			// set if in update method
+			if ($this->strategy == self::UPDATE)
+			{
+				$this->form = $this->factory->create($postType, $this->options['post']);
+				$this->form->add($this->factory->create($topicType, $this->options['post']->getTopic()));
+			}			
+			
+			//
+			// Preview mode
+			//
 			if ($this->previewMode)
 			{				
 				$this->form->bindRequest($this->request);
@@ -229,7 +296,16 @@ class TopicInsertFormHandler
 	 */
 	protected function onSuccess($entity)
     {
-		return $this->manager->insert($entity)->flushNow();
+
+		if ($this->strategy == self::INSERT)
+		{
+			return $this->manager->insert($entity)->flushNow();		
+		}
+
+		if ($this->strategy == self::UPDATE)
+		{
+			return $this->manager->update($entity)->flushNow();
+		}
     }
 
 

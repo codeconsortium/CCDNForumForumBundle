@@ -11,8 +11,6 @@
 					{% endif %}
 				{% else %}
 					{% if user.getProfile.getAvatar %}
-						{# later on this will reference the avatarBundle asset and append the avatar onto the end #}
-						{# e.g: {{ asset('bundles/ccdnuseravatar/images/avatars/') }}{{ post.getCreatedBy.getProfile.getAvatar }} #}
 						<img class="avatar" width="100" height="100" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" alt="avatar">
 					{% else %}
 						<img class="avatar" width="100" height="100" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" alt="avatar">
@@ -44,7 +42,7 @@
 			</div>
 			<div class="text_bubble_body">
 				<span class="common_body">
-				{{ BBCode(post.getBody | raw) | raw}}<br>
+				{{ BBCode(preview.getBody | raw) | raw}}<br>
 				</span>
 				<br>
 			</div>
