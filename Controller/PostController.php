@@ -114,9 +114,9 @@ class PostController extends ContainerAware
 			throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
 		}
 		
-		/*
-		 *	Invalidate this action / redirect if user should not have access to it
-		 */
+		//
+		//	Invalidate this action / redirect if user should not have access to it
+		//
 		if ( ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
 			if ($post->getCreatedBy()) {	
 				// if user does not own post, or is not a mod
@@ -186,29 +186,22 @@ class PostController extends ContainerAware
 
 		if ($post->getTopic()->getFirstPost()->getId() == $post->getId())
 		{	// render edit_topic if first post
-			return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:edit_topic.html.' . $this->getEngine(), array(
-				'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
-				'user' => $user,
-				'board' => $board,
-				'topic' => $topic,
-				'post' => $post,
-				'crumbs' => $crumb_trail,
-				'preview' => $formHandler->getPreview(),
-				'form' => $formHandler->getForm()->createView(),
-			));
+			$template = 'CCDNForumForumBundle:Post:edit_topic.html.' . $this->getEngine();
 		} else {
 			// render edit_post if not first post
-			return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:edit_post.html.' . $this->getEngine(), array(
-				'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
-				'user' => $user,
-				'board' => $board,
-				'topic' => $topic,
-				'post' => $post,
-				'crumbs' => $crumb_trail,
-				'preview' => $formHandler->getPreview(),
-				'form' => $formHandler->getForm()->createView(),
-			));
+			$template = 'CCDNForumForumBundle:Post:edit_post.html.' . $this->getEngine();
 		}
+		
+		return $this->container->get('templating')->renderResponse($template, array(
+			'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
+			'user' => $user,
+			'board' => $board,
+			'topic' => $topic,
+			'post' => $post,
+			'crumbs' => $crumb_trail,
+			'preview' => $formHandler->getPreview(),
+			'form' => $formHandler->getForm()->createView(),
+		));
 	}
 	
 	
@@ -407,30 +400,27 @@ class PostController extends ContainerAware
 			return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show_paginated_anchored', 
 				array('topic_id' => $post->getTopic()->getId(), 'page' => 1, 'post_id' => $post_id) ));
 		}
-		else
-		{		
-			// setup crumb trail.
-			$topic = $post->getTopic();
-			$board = $topic->getBoard();
-			$category = $board->getCategory();
-			
-			$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
-				->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
-				->add($category->getName(),	$this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
-				->add($board->getName(), $this->container->get('router')->generate('cc_forum_board_show', array('board_id' => $board->getId())), "board")
-				->add($topic->getTitle(), $this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $topic->getId())), "communication")
-				->add($this->container->get('translator')->trans('crumbs.post.flag', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_post_flag', array('post_id' => $post_id)), "flag");
-				
-			return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:flag.html.' . $this->getEngine(), array(
-				'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
-				'user' => $user,
-				'topic' => $topic,
-				'post' => $post,
-				'crumbs' => $crumb_trail,
-				'form' => $formHandler->getForm()->createView(),
-			));
-		}
+
+		// setup crumb trail.
+		$topic = $post->getTopic();
+		$board = $topic->getBoard();
+		$category = $board->getCategory();
 		
+		$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
+			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
+			->add($category->getName(),	$this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
+			->add($board->getName(), $this->container->get('router')->generate('cc_forum_board_show', array('board_id' => $board->getId())), "board")
+			->add($topic->getTitle(), $this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $topic->getId())), "communication")
+			->add($this->container->get('translator')->trans('crumbs.post.flag', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_post_flag', array('post_id' => $post_id)), "flag");
+			
+		return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:flag.html.' . $this->getEngine(), array(
+			'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
+			'user' => $user,
+			'topic' => $topic,
+			'post' => $post,
+			'crumbs' => $crumb_trail,
+			'form' => $formHandler->getForm()->createView(),
+		));
 	}
 	
 	
