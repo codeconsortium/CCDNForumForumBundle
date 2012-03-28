@@ -29,11 +29,13 @@ class PostUpdateFormHandler
 {
 	
 	
+	
 	/**
 	 *
 	 * @access protected
 	 */	
 	protected $factory;
+	
 	
 	
 	/**
@@ -43,11 +45,13 @@ class PostUpdateFormHandler
 	protected $container;
 	
 	
+	
 	/**
 	 *
 	 * @access protected
 	 */
 	protected $request;
+	
 	
 	
 	/**
@@ -57,6 +61,7 @@ class PostUpdateFormHandler
 	protected $manager;
 	
 	
+	
 	/**
 	 *
 	 * @access protected
@@ -64,11 +69,13 @@ class PostUpdateFormHandler
 	protected $options;
 	
 	
+	
 	/**
 	 *
 	 * @access protected
 	 */
 	protected $form;
+
 
 
 	/**
@@ -87,6 +94,7 @@ class PostUpdateFormHandler
 	}
 	
 	
+	
 	/**
 	 *
 	 * @access public
@@ -99,6 +107,7 @@ class PostUpdateFormHandler
 		
 		return $this;
 	}
+	
 	
 	
 	/**
@@ -114,8 +123,7 @@ class PostUpdateFormHandler
 		{
 			$this->form->bindRequest($this->request);
 		
-			$formData = $this->form->getData();
-			
+			$formData = $this->form->getData();		
 			$formData->setEditedDate(new \DateTime());
 			$formData->setEditedBy($this->options['user']);
 
@@ -129,6 +137,7 @@ class PostUpdateFormHandler
 
 		return false;
 	}
+	
 	
 	
 	/**
@@ -149,6 +158,7 @@ class PostUpdateFormHandler
 	}
 	
 	
+	
 	/**
 	 *
 	 * @access protected
@@ -160,8 +170,15 @@ class PostUpdateFormHandler
         return $this->manager->update($entity)->flushNow();			
     }
 
+
+
+	/**
+	 *
+	 *
+	 */
 	public function getCounters()
 	{
 		return $this->manager->getCounters();
 	}
+	
 }

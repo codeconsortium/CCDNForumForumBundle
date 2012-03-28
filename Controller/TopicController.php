@@ -91,9 +91,9 @@ class TopicController extends ContainerAware
 	 */
 	public function createAction($board_id)
 	{
-		/*
-		 *	Invalidate this action / redirect if user should not have access to it
-		 */
+		//
+		//	Invalidate this action / redirect if user should not have access to it
+		//
 		if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
 			throw new AccessDeniedException('You do not have permission to use this resource!');
 		}
@@ -106,32 +106,43 @@ class TopicController extends ContainerAware
 			throw new NotFoundHttpException('No such board exists!');
 		}
 		
+		//
+		// Set the form handler options
+		//
 		$formHandler = $this->container->get('ccdn_forum_forum.topic.form.insert.handler')->setOptions(array('board' => $board,	'user' => $user));
-			
-		if ($formHandler->process())	
-		{	
-			$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle()), 'CCDNForumForumBundle'));
-										
-			return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $formHandler->getForm()->getData()->getTopic()->getId() )));
-		}
-		else
+		
+		if (isset($_POST['submit_preview']))
 		{
-			// setup crumb trail.
-			$category = $board->getCategory();
-			
-			$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
-				->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
-				->add($category->getName(), $this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
-				->add($board->getName(), $this->container->get('router')->generate('cc_forum_board_show', array('board_id' => $board->getId())), "board")
-				->add($this->container->get('translator')->trans('crumbs.topic.create', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_topic_create', array('board_id' => $board->getId())), "edit");
+			$formHandler->previewMode();
+		}
 
-			return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Topic:create.html.' . $this->getEngine(), array(
-				'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
-				'board' => $board,
-				'crumbs' => $crumb_trail,
-				'form' => $formHandler->getForm()->createView(),
-			));
-		}	
+		if (isset($_POST['submit_post']))
+		{
+			if ($formHandler->process())	
+			{	
+				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+										
+				return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $formHandler->getForm()->getData()->getTopic()->getId() )));
+			}
+		}
+		
+		// setup crumb trail.
+		$category = $board->getCategory();
+		
+		$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
+			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
+			->add($category->getName(), $this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
+			->add($board->getName(), $this->container->get('router')->generate('cc_forum_board_show', array('board_id' => $board->getId())), "board")
+			->add($this->container->get('translator')->trans('crumbs.topic.create', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_topic_create', array('board_id' => $board->getId())), "edit");
+
+		return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Topic:create.html.' . $this->getEngine(), array(
+			'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
+			'user' => $user,
+			'crumbs' => $crumb_trail,
+			'board' => $board,
+			'preview' => $formHandler->getPreview(),
+			'form' => $formHandler->getForm()->createView(),
+		));
 	}
 	
 	
@@ -143,9 +154,9 @@ class TopicController extends ContainerAware
 	 */	
 	public function replyAction($topic_id, $quote_id)
 	{
-		/*
-		 *	Invalidate this action / redirect if user should not have access to it
-		 */
+		//
+		// 	Invalidate this action / redirect if user should not have access to it
+		//
 		if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
 			throw new AccessDeniedException('You do not have permission to use this resource!');
 		}
@@ -163,53 +174,59 @@ class TopicController extends ContainerAware
 			throw new AccessDeniedException('This topic has been closed!');
 		}
 		
+		//
+		// Set the form handler options
+		//
 		if ( ! empty($quote_id))
 		{
-			$quote = $this->container->get('ccdn_forum_forum.post.repository')->find($quote_id);
-		} else {
-			$quote = "";
+			$quote = $this->container->get('ccdn_forum_forum.post.repository')->find($quote_id);		
 		}
 		
-		$options = array('topic' => $topic, 'user' => $user);
-		if ($quote)
-		{
-			$options['quote'] = $quote;
-		}
+		$options = array('topic' => $topic,	'user' => $user, 'quote' => (empty($quote) ? null : $quote));
 		
 		$formHandler = $this->container->get('ccdn_forum_forum.post.form.insert.handler')->setOptions($options);
-					
-		if ($formHandler->process())	
-		{				
-			// page of the last post
-			$posts_per_topic_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
-			$counters = $formHandler->getCounters();
-			$page = ceil(++$counters['replyCount'] / $posts_per_topic_page);
+		
+		if (isset($_POST['submit_preview']))
+		{
+			$formHandler->previewMode();
+		}
 
-			$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.topic.reply.success', array('%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle'));
+		if (isset($_POST['submit_post']))
+		{	
+
+			if ($formHandler->process())	
+			{				
+				// page of the last post
+				$posts_per_topic_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
+				$counters = $formHandler->getCounters();
+				$page = ceil(++$counters['replyCount'] / $posts_per_topic_page);
+
+				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.topic.reply.success', array('%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle'));
 				
-			return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show_paginated_anchored', 
-				array('topic_id' => $topic_id, 'page' => $page, 'post_id' => $topic->getLastPost()->getId()) ));
+				return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show_paginated_anchored', 
+					array('topic_id' => $topic_id, 'page' => $page, 'post_id' => $topic->getLastPost()->getId()) ));
+			}
 		}
-		else
-		{		
-			// setup crumb trail.
-			$board = $topic->getBoard();
-			$category = $board->getCategory();
+		
+		// setup crumb trail.
+		$board = $topic->getBoard();
+		$category = $board->getCategory();
+		
+		$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
+			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
+			->add($category->getName(), $this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
+			->add($board->getName(), $this->container->get('router')->generate('cc_forum_board_show', array('board_id' => $board->getId())), "board")
+			->add($topic->getTitle(), $this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $topic->getId())), "communication")
+			->add($this->container->get('translator')->trans('crumbs.topic.reply', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_topic_reply', array('topic_id' => $topic->getId())), "edit");
 			
-			$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
-				->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
-				->add($category->getName(), $this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
-				->add($board->getName(), $this->container->get('router')->generate('cc_forum_board_show', array('board_id' => $board->getId())), "board")
-				->add($topic->getTitle(), $this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $topic->getId())), "communication")
-				->add($this->container->get('translator')->trans('crumbs.topic.reply', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_topic_reply', array('topic_id' => $topic->getId())), "edit");
-				
-			return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Topic:reply.html.' . $this->getEngine(), array(
-				'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
-				'topic' => $topic,
-				'crumbs' => $crumb_trail,
-				'form' => $formHandler->getForm()->createView(),
-			));
-		}
+		return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Topic:reply.html.' . $this->getEngine(), array(
+			'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
+			'user' => $user,
+			'crumbs' => $crumb_trail,
+			'topic' => $topic,
+			'preview' => $formHandler->getPreview(),
+			'form' => $formHandler->getForm()->createView(),
+		));
 	}
 
 

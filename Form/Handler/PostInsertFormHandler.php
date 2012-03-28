@@ -28,6 +28,7 @@ use CCDNComponent\CommonBundle\Entity\Manager\EntityManagerInterface;
 class PostInsertFormHandler
 {
 	
+
 	
 	/**
 	 *
@@ -35,6 +36,7 @@ class PostInsertFormHandler
 	 */	
 	protected $factory;
 	
+
 	
 	/**
 	 *
@@ -43,11 +45,13 @@ class PostInsertFormHandler
 	protected $container;
 	
 	
+	
 	/**
 	 *
 	 * @access protected
 	 */
 	protected $request;
+
 	
 	
 	/**
@@ -55,6 +59,7 @@ class PostInsertFormHandler
 	 * @access protected
 	 */
 	protected $manager;
+
 	
 	
 	/**
@@ -62,6 +67,7 @@ class PostInsertFormHandler
 	 * @access protected
 	 */
 	protected $options;
+
 	
 	
 	/**
@@ -71,6 +77,23 @@ class PostInsertFormHandler
 	protected $form;
 
 
+
+	/**
+	 *
+	 *
+	 */
+	protected $previewMode;
+	
+	
+	
+	/**
+	 *
+	 *
+	 */
+	protected $previewData;
+	
+	
+	
 	/**
 	 *
 	 * @access public
@@ -84,7 +107,10 @@ class PostInsertFormHandler
 		$this->manager = $manager;
 
 		$this->request = $container->get('request');
+		
+		$this->previewMode = false;
 	}
+	
 	
 	
 	/**
@@ -99,6 +125,7 @@ class PostInsertFormHandler
 		
 		return $this;
 	}
+	
 	
 	
 	/**
@@ -118,7 +145,6 @@ class PostInsertFormHandler
 
 			$formData->setCreatedDate(new \DateTime());
 			$formData->setCreatedBy($this->options['user']);
-
 			$formData->setTopic($this->options['topic']);
 			
 			if ($this->form->isValid())
@@ -134,6 +160,35 @@ class PostInsertFormHandler
 	}
 	
 	
+	
+	/**
+	 *
+	 *
+	 */
+	public function previewMode()
+	{
+		$this->previewMode = true;	
+	}
+	
+	
+	
+	/**
+	 *
+	 *
+	 *
+	 */
+	public function getPreview()
+	{
+		// we need to use the getForm to ensure a preview is created
+		// incase the form createView method is invoked after this 
+		// method. Otherwise we won't have any preview data.
+		$this->getForm();
+		
+		return $this->previewData;
+	}
+	
+	
+	
 	/**
 	 *
 	 * @access public
@@ -144,12 +199,19 @@ class PostInsertFormHandler
 		if ( ! $this->form)
 		{
 			$postType = $this->container->get('ccdn_forum_forum.post.form.type');
-			$postType->setOptions($this->options);			
-			$this->form = $this->factory->create($postType);			
+			$postType->setOptions($this->options);
+			$this->form = $this->factory->create($postType);
+			
+			if ($this->previewMode)
+			{
+				$this->form->bindRequest($this->request);
+				$this->previewData = $this->form->getData();
+			}			
 		}
 
 		return $this->form;
 	}
+	
 	
 	
 	/**
@@ -163,8 +225,15 @@ class PostInsertFormHandler
 		return $this->manager->insert($entity)->flushNow();
     }
 
+
+
+	/**
+	 *
+	 *
+	 */
 	public function getCounters()
 	{
 		return $this->manager->getCounters();
 	}
+	
 }

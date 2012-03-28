@@ -16,6 +16,8 @@ namespace CCDNForum\ForumBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
+use CCDNForum\ForumBundle\Entity\Post;
+
 /**
  * 
  * @author Reece Fowell <reece@codeconsortium.com> 
@@ -52,6 +54,7 @@ class PostType extends AbstractType
 	}
 	
 	
+	
 	/**
 	 *
 	 * @access public
@@ -59,21 +62,9 @@ class PostType extends AbstractType
 	 */
 	public function buildForm(FormBuilder $builder, array $options)
 	{
-		if (array_key_exists('quote', $this->options))
-		{
-			$quote = $this->options['quote'];
-			
-			$author = $quote->getCreatedBy();
-			$body = $quote->getBody();
-			
-			$quote = '[QUOTE=' . $author . ']' . $body . '[/QUOTE]';
-
-			$builder->add('body', 'textarea', array(
-				'data' => $quote,
-			));
-		} else {
-			$builder->add('body', 'textarea');
-		}
+		$builder->add('body', 'textarea', array(
+			'data' => $this->getQuote(),
+		));
 		
 		$userId = $this->options['user']->getId();
 		$attachments = $this->container->get('ccdn_component_attachment.attachment.repository')->findForUserByIdAsQB($userId);
@@ -88,7 +79,34 @@ class PostType extends AbstractType
 		);
 	}
 	
+	
+	
+	/**
+	 *
+	 *
+	 */
+	public function getQuote()
+	{
+		if (array_key_exists('quote', $this->options))
+		{
+			if (is_object($this->options['quote']) && $this->options['quote'] instanceof Post)
+			{
+				$quote = $this->options['quote'];
+			
+				$author = $quote->getCreatedBy();
+				$body = $quote->getBody();
+			
+				$quote = '[QUOTE=' . $author . ']' . $body . '[/QUOTE]';
 
+				return $quote;
+			}
+		}
+
+		return "";
+	}
+
+	
+	
 	/**
 	 *
 	 * for creating and replying to topics
@@ -107,6 +125,7 @@ class PostType extends AbstractType
             'intention'       => 'post_item',
 		);
 	}
+
 
 
 	/**

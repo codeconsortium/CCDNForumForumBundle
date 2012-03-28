@@ -31,6 +31,14 @@
 
 {% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
 
+{% if preview is not empty %}
+	{% set post = preview %}
+<div class="common_box_5 bg_header_smoke">
+	{% include "CCDNForumForumBundle:Post:post_preview.html.twig" %}
+</div>
+{% endif %}
+
+
 <div class="common_box_5 bg_header_smoke">
 	<div class="common_box_header">
 		<span class="heading_glow">{{ 'title.topic.create' | trans({'%board_name%': board.getName }, 'CCDNForumForumBundle') }}</span>
@@ -68,7 +76,8 @@
 					</tr>
 					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
 						<td class="form_tool_strip" colspan="2">
-							<input type="submit" class="widget_submit" value="{{ 'form.button.topic.create' | trans({}, 'CCDNForumForumBundle') }}">
+							<input type="submit" class="widget_submit" value="{{ 'form.button.topic.create' | trans({}, 'CCDNForumForumBundle') }}" name="submit_post">
+							<input type="submit" class="widget_submit" value="{{ 'form.button.post.preview' | trans({}, 'CCDNForumForumBundle') }}" name="submit_preview">
 						</td>
 					</tr>
 				</tbody>

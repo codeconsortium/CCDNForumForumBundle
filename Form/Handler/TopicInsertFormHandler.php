@@ -28,6 +28,7 @@ use CCDNComponent\CommonBundle\Entity\Manager\EntityManagerInterface;
 class TopicInsertFormHandler
 {
 	
+
 	
 	/**
 	 *
@@ -35,12 +36,14 @@ class TopicInsertFormHandler
 	 */
 	protected $factory;
 	
+
 	
 	/**
 	 *
 	 * @access protected
 	 */
 	protected $container;
+
 	
 	
 	/**
@@ -50,11 +53,13 @@ class TopicInsertFormHandler
 	protected $request;
 	
 	
+	
 	/**
 	 *
 	 * @access protected
 	 */
 	protected $manager;
+	
 	
 	
 	/**
@@ -64,12 +69,30 @@ class TopicInsertFormHandler
 	protected $options;
 	
 	
+	
 	/**
 	 *
 	 * @access protected
 	 */
 	protected $form;
 
+
+
+	/**
+	 *
+	 * @access protected
+	 */
+	protected $previewMode;
+	
+	
+	
+	/**
+	 *
+	 * @access protected
+	 */
+	protected $previewData;
+	
+	
 
 	/**
 	 *
@@ -84,6 +107,8 @@ class TopicInsertFormHandler
 		$this->manager = $manager;
 
 		$this->request = $container->get('request');
+		
+		$this->previewMode = false;
 	}
 	
 	
@@ -137,6 +162,35 @@ class TopicInsertFormHandler
 	}
 	
 	
+	
+	/**
+	 *
+	 *
+	 */
+	public function previewMode()
+	{
+		$this->previewMode = true;	
+	}
+	
+	
+	
+	/**
+	 *
+	 *
+	 *
+	 */
+	public function getPreview()
+	{
+		// we need to use the getForm to ensure a preview is created
+		// incase the form createView method is invoked after this 
+		// method. Otherwise we won't have any preview data.
+		$this->getForm();
+		
+		return $this->previewData;
+	}
+	
+	
+	
 	/**
 	 *
 	 * @access public
@@ -144,18 +198,27 @@ class TopicInsertFormHandler
 	 */
 	public function getForm()
 	{
+		
 		if ( ! $this->form)
 		{
 			$postType = $this->container->get('ccdn_forum_forum.post.form.type');
 			$postType->setOptions($this->options);
 			$topicType = $this->container->get('ccdn_forum_forum.topic.form.type');
 			
-			$this->form = $this->factory->create($postType);
+			$this->form = $this->factory->create($postType);			
 			$this->form->add($this->factory->create($topicType));
+			
+			if ($this->previewMode)
+			{				
+				$this->form->bindRequest($this->request);
+				$this->previewData = $this->form->getData();
+			}
+			
 		}
 		
 		return $this->form;
 	}
+	
 	
 	
 	/**
@@ -169,6 +232,12 @@ class TopicInsertFormHandler
 		return $this->manager->insert($entity)->flushNow();
     }
 
+
+
+	/**
+	 *
+	 * @access protected
+	 */
 	public function getCounters()
 	{
 		return $this->manager->getCounters();
