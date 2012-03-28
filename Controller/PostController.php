@@ -391,7 +391,7 @@ class PostController extends ContainerAware
 			throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
 		}
 		
-		$formHandler = $this->container->get('ccdn_forum_forum.flag.form.insert.handler')->setOptions(array('post' => $post, 'user' => $user));
+		$formHandler = $this->container->get('ccdn_forum_forum.flag.form.handler')->setOptions(array('post' => $post, 'user' => $user));
 					
 		if ($formHandler->process())
 		{	

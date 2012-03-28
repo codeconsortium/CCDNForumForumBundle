@@ -14,7 +14,7 @@ parameters:
     
     ccdn_forum_forum.flag.manager.class:                CCDNForum\ForumBundle\Entity\Manager\FlagManager
     ccdn_forum_forum.flag.form.type.class:              CCDNForum\ForumBundle\Form\Type\FlagType
-    ccdn_forum_forum.flag.form.insert.handler.class:    CCDNForum\ForumBundle\Form\Handler\FlagInsertFormHandler
+    ccdn_forum_forum.flag.form.handler.class:           CCDNForum\ForumBundle\Form\Handler\FlagFormHandler
     ccdn_forum_forum.flag.form.default_choices.class:   CCDNForum\ForumBundle\Form\ChoiceDefaults\FlagChoices
 
     ccdn_forum_forum.category.repository.class:         CCDNForum\ForumBundle\Repository\CategoryRepository
@@ -81,8 +81,8 @@ services:
     ccdn_forum_forum.flag.form.type:
         class:  %ccdn_forum_forum.flag.form.type.class%
         arguments:  [@doctrine]        
-    ccdn_forum_forum.flag.form.insert.handler:
-        class:  %ccdn_forum_forum.flag.form.insert.handler.class%
+    ccdn_forum_forum.flag.form.handler:
+        class:  %ccdn_forum_forum.flag.form.handler.class%
         arguments:  [@form.factory, @service_container, @ccdn_forum_forum.flag.manager]
     ccdn_forum_forum.flag.form.default_choices:
         class:  %ccdn_forum_forum.flag.form.default_choices.class%

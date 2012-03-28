@@ -25,7 +25,7 @@ use CCDNComponent\CommonBundle\Entity\Manager\EntityManagerInterface;
  * @author Reece Fowell <reece@codeconsortium.com> 
  * @version 1.0
  */
-class FlagInsertFormHandler
+class FlagFormHandler
 {
 	
 	
