@@ -111,13 +111,27 @@ class TopicController extends ContainerAware
 		//
 		$formHandler = $this->container->get('ccdn_forum_forum.topic.insert.form.handler')->setOptions(array('board' => $board,	'user' => $user));
 		
+		if (isset($_POST['submit_draft']))
+		{
+			$formHandler->setMode($formHandler::DRAFT);
+			
+			if ($formHandler->process())	
+			{
+				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.draft.save.success', array(), 'CCDNForumForumBundle'));
+			
+				return new RedirectResponse($this->container->get('router')->generate('cc_forum_drafts_list'));
+			}
+		}
+		
 		if (isset($_POST['submit_preview']))
 		{
-			$formHandler->previewMode();
+			$formHandler->setMode($formHandler::PREVIEW);
 		}
 
 		if (isset($_POST['submit_post']))
 		{
+			$formHandler->setMode($formHandler::NORMAL);
+			
 			if ($formHandler->process())	
 			{	
 				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle()), 'CCDNForumForumBundle'));
@@ -140,7 +154,7 @@ class TopicController extends ContainerAware
 			'user' => $user,
 			'crumbs' => $crumb_trail,
 			'board' => $board,
-			'preview' => $formHandler->getPreview(),
+			'preview' => $formHandler->getForm()->getData(),
 			'form' => $formHandler->getForm()->createView(),
 		));
 	}
@@ -186,9 +200,21 @@ class TopicController extends ContainerAware
 		
 		$formHandler = $this->container->get('ccdn_forum_forum.post.insert.form.handler')->setOptions($options);
 		
+		if (isset($_POST['submit_draft']))
+		{
+			$formHandler->setMode($formHandler::DRAFT);
+			
+			if ($formHandler->process())	
+			{
+				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.draft.save.success', array(), 'CCDNForumForumBundle'));
+			
+				return new RedirectResponse($this->container->get('router')->generate('cc_forum_drafts_list'));
+			}
+		}
+		
 		if (isset($_POST['submit_preview']))
 		{
-			$formHandler->previewMode();
+			$formHandler->setMode($formHandler::PREVIEW);
 		}
 
 		if (isset($_POST['submit_post']))
@@ -224,7 +250,7 @@ class TopicController extends ContainerAware
 			'user' => $user,
 			'crumbs' => $crumb_trail,
 			'topic' => $topic,
-			'preview' => $formHandler->getPreview(),
+			'preview' => $formHandler->getForm()->getData(),
 			'form' => $formHandler->getForm()->createView(),
 		));
 	}

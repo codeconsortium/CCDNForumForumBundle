@@ -40,6 +40,31 @@ cc_forum_board_show:
 
 #
 #
+# Drafts
+#
+#
+cc_forum_drafts_list:
+    pattern: /{_locale}/forum/drafts
+    defaults: { _controller: CCDNForumForumBundle:Draft:list, _locale: en, page: 1 }
+
+cc_forum_drafts_list_paginated:
+    pattern: /{_locale}/forum/drafts/page/{page}
+    defaults: { _controller: CCDNForumForumBundle:Draft:list, _locale: en, page: 1 }
+
+cc_forum_draft_show:
+    pattern: /{_locale}/forum/draft/{draftId}/show
+    defaults: { _controller: CCDNForumForumBundle:Draft:show, _locale: en }
+
+cc_forum_draft_delete:
+    pattern: /{_locale}/forum/draft/{draftId}/delete
+    defaults: { _controller: CCDNForumForumBundle:Draft:delete, _locale: en }
+    
+cc_forum_draft_publish:
+    pattern: /{_locale}/forum/draft/{draftId}/publish
+    defaults: { _controller: CCDNForumForumBundle:Draft:publish, _locale: en }
+    
+#
+#
 # Topics
 #   
 #

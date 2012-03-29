@@ -76,21 +76,6 @@ class PostFormHandler
 	 */
 	protected $form;
 
-
-
-	/**
-	 *
-	 * @access protected
-	 */
-	protected $previewMode;
-	
-	
-	
-	/**
-	 *
-	 * @access protected
-	 */
-	protected $previewData;
 	
 	
 	
@@ -103,12 +88,36 @@ class PostFormHandler
 	const UPDATE = 1;
 	
 	
+	protected $mode;
+	const NORMAL = 0;
+	const PREVIEW = 1;
+	const DRAFT = 2;
+	
+	
+	
+	/**
+	 *
+	 * @access public
+	 * @param FormFactory $factory, ContainerInterface $container, EntityManagerInterface $manager
+	 */
+	public function __construct(FormFactory $factory, ContainerInterface $container)
+	{
+		$this->options = array();
+		$this->factory = $factory;
+		$this->container = $container;
+
+		// topic manager is the default unless the mode is changed.
+		$this->mode = self::NORMAL;
+		$this->manager = $this->container->get('ccdn_forum_forum.post.manager');
+		
+		$this->request = $container->get('request');		
+	}
 	
 	/**
 	 *
 	 * @access public
 	 */
-	public function setInsert()
+	public function useInsertStrategy()
 	{
 		$this->strategy = self::INSERT;
 	}
@@ -119,30 +128,37 @@ class PostFormHandler
 	 *
 	 * @access public
 	 */
-	public function setUpdate()	
+	public function useUpdateStrategy()	
 	{
 		$this->strategy = self::UPDATE;
 	}
 	
 	
 	
+	
 	/**
 	 *
+	 *
 	 * @access public
-	 * @param FormFactory $factory, ContainerInterface $container, EntityManagerInterface $manager
 	 */
-	public function __construct(FormFactory $factory, ContainerInterface $container, EntityManagerInterface $manager)
+	public function setMode($mode)
 	{
-		$this->options = array();
-		$this->factory = $factory;
-		$this->container = $container;
-		$this->manager = $manager;
-
-		$this->request = $container->get('request');
-		
-		$this->previewMode = false;
+		switch($mode)
+		{
+			case self::NORMAL:
+				$this->mode = self::NORMAL;
+				$this->manager = $this->container->get('ccdn_forum_forum.topic.manager');
+			break;
+			case self::PREVIEW:
+				$this->mode = self::PREVIEW;
+				$this->manager = $this->container->get('ccdn_forum_forum.topic.manager');
+			break;
+			case self::DRAFT:
+				$this->mode = self::DRAFT;
+				$this->manager = $this->container->get('ccdn_forum_forum.draft.manager');
+			break;
+		}
 	}
-	
 	
 	
 	/**
@@ -171,8 +187,6 @@ class PostFormHandler
 			
 		if ($this->request->getMethod() == 'POST')
 		{
-			$this->form->bindRequest($this->request);
-		
 			$formData = $this->form->getData();
 
 			//
@@ -210,34 +224,7 @@ class PostFormHandler
 		return false;
 	}
 	
-	
-	
-	/**
-	 *
-	 *
-	 * @access public
-	 */
-	public function previewMode()
-	{
-		$this->previewMode = true;	
-	}
-	
-	
-	
-	/**
-	 *
-	 *
-	 * @access public
-	 */
-	public function getPreview()
-	{
-		// we need to use the getForm to ensure a preview is created
-		// incase the form createView method is invoked after this 
-		// method. Otherwise we won't have any preview data.
-		$this->getForm();
-		
-		return $this->previewData;
-	}
+
 	
 	
 	
@@ -248,6 +235,7 @@ class PostFormHandler
 	 */
 	public function getForm()
 	{
+		
 		if ( ! $this->form)
 		{
 			$postType = $this->container->get('ccdn_forum_forum.post.form.type');
@@ -269,13 +257,9 @@ class PostFormHandler
 				$this->form = $this->factory->create($postType, $this->options['post']);
 			}
 			
-			//
-			// Preview mode
-			//
-			if ($this->previewMode)
+			if ($this->request->getMethod() == 'POST')
 			{
 				$this->form->bindRequest($this->request);
-				$this->previewData = $this->form->getData();
 			}			
 		}
 

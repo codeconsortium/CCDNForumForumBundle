@@ -44,6 +44,7 @@ class DashboardIntegrator extends BaseIntegrator implements IntegratorInterface
 			'user' => array(
 				'Community' => array(
 					'cc_forum_index' => array('url' => $this->baseUrl . '/' . $this->locale . '/forum', 'name' => 'Forum', 'icon' => $this->basePath . '/bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_discussion.png'),
+					'cc_forum_drafts_list' => array('auth' => 'ROLE_USER', 'url' => $this->baseUrl . '/' . $this->locale . '/forum/drafts', 'name' => 'Forum Drafts', 'icon' => $this->basePath . '/bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_pen.png')
 				),
 			),
 

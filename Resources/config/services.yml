@@ -23,6 +23,9 @@ parameters:
     ccdn_forum_forum.post.repository.class:             CCDNForum\ForumBundle\Repository\PostRepository
     ccdn_forum_forum.flag.repository.class:             CCDNForum\ForumBundle\Repository\FlagRepository
     
+    ccdn_forum_forum.draft.repository.class:            CCDNForum\ForumBundle\Repository\DraftRepository
+    ccdn_forum_forum.draft.manager.class:               CCDNForum\ForumBundle\Entity\Manager\DraftManager
+        
 #    ccdn_forum_forum.category.manager.class:            CCDNForum\ForumBundle\Entity\Manager\CategoryManager
     ccdn_forum_forum.board.manager.class:               CCDNForum\ForumBundle\Entity\Manager\BoardManager
     
@@ -49,14 +52,14 @@ services:
         arguments:  [@service_container, @doctrine]
     ccdn_forum_forum.post.insert.form.handler:
         class:  %ccdn_forum_forum.post.insert.form.handler.class%
-        arguments:  [@form.factory, @service_container, @ccdn_forum_forum.post.manager]
+        arguments:  [@form.factory, @service_container]
         calls:
-            - [ setInsert, []]
+            - [ useInsertStrategy, []]
     ccdn_forum_forum.post.update.form.handler:
         class:  %ccdn_forum_forum.post.update.form.handler.class%
-        arguments:  [@form.factory, @service_container, @ccdn_forum_forum.post.manager]
+        arguments:  [@form.factory, @service_container]
         calls:
-            - [ setUpdate, []]
+            - [ useUpdateStrategy, []]
     
     ccdn_forum_forum.topic.manager:
         class:  %ccdn_forum_forum.topic.manager.class%
@@ -66,14 +69,14 @@ services:
         arguments:  [@doctrine]
     ccdn_forum_forum.topic.insert.form.handler:
         class:  %ccdn_forum_forum.topic.insert.form.handler.class%
-        arguments:  [@form.factory, @service_container, @ccdn_forum_forum.topic.manager]
+        arguments:  [@form.factory, @service_container]
         calls:
-            - [ setInsert, []]
+            - [ useInsertStrategy, []]
     ccdn_forum_forum.topic.update.form.handler:
         class:  %ccdn_forum_forum.topic.update.form.handler.class%
-        arguments:  [@form.factory, @service_container, @ccdn_forum_forum.topic.manager]
+        arguments:  [@form.factory, @service_container]
         calls:
-            - [ setUpdate, []]
+            - [ useUpdateStrategy, []]
         
     ccdn_forum_forum.flag.manager:
         class:  %ccdn_forum_forum.flag.manager.class%
@@ -119,6 +122,17 @@ services:
         arguments:
             - 'CCDNForum\ForumBundle\Entity\Flag'
             
+    ccdn_forum_forum.draft.repository:
+        class: %ccdn_forum_forum.draft.repository.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository 
+        arguments:
+            - 'CCDNForum\ForumBundle\Entity\Draft'
+    
+    ccdn_forum_forum.draft.manager:
+        class: %ccdn_forum_forum.draft.manager.class%
+        arguments: [@doctrine, @service_container]
+
 #    category.manager:
 #        class:  %ccdn_forum_forum.category.manager.class%
 #        arguments:  [@doctrine, @service_container]        
