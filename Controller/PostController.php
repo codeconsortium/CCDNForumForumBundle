@@ -134,17 +134,17 @@ class PostController extends ContainerAware
 			$formHandler = $this->container->get('ccdn_forum_forum.post.update.form.handler')->setOptions(array('post' => $post, 'user' => $user));
 		}
 
-		if (isset($_POST['submit_draft']))
-		{
-			$formHandler->setMode($formHandler::DRAFT);
-			
-			if ($formHandler->process())	
-			{
-				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.draft.save.success', array(), 'CCDNForumForumBundle'));
-			
-				return new RedirectResponse($this->container->get('router')->generate('cc_forum_drafts_list'));
-			}
-		}
+//		if (isset($_POST['submit_draft']))
+//		{
+//			$formHandler->setMode($formHandler::DRAFT);
+//			
+//			if ($formHandler->process())	
+//			{
+//				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.draft.save.success', array(), 'CCDNForumForumBundle'));
+//			
+//				return new RedirectResponse($this->container->get('router')->generate('cc_forum_drafts_list'));
+//			}
+//		}
 		
 		if (isset($_POST['submit_preview']))
 		{

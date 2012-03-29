@@ -15,6 +15,7 @@ namespace CCDNForum\ForumBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -28,6 +29,13 @@ class DraftController extends ContainerAware
 	
 	public function listAction($page)
 	{
+		//
+		//	Invalidate this action / redirect if user should not have access to it
+		//
+		if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
+			throw new AccessDeniedException('You do not have permission to use this resource!');
+		}
+		
 		$user = $this->container->get('security.context')->getToken()->getUser();
 		
 		$draftsPaginated = $this->container->get('ccdn_forum_forum.draft.repository')->findDraftsPaginated($user->getId());
@@ -50,7 +58,25 @@ class DraftController extends ContainerAware
 		));
 	}
 	
+	public function deleteAction($draftId)
+	{
+		//
+		//	Invalidate this action / redirect if user should not have access to it
+		//
+		if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
+			throw new AccessDeniedException('You do not have permission to use this resource!');
+		}
+		
+		$draft = $this->container->get('ccdn_forum_forum.draft.repository')->findOneById($draftId);
+
+		if ($draft)
+		{
+			$this->container->get('ccdn_forum_forum.draft.manager')->remove($draft)->flushNow();
+		}
 	
+		return new RedirectResponse($this->container->get('router')->generate('cc_forum_drafts_list'));
+		
+	}
 	
 	/**
 	 *

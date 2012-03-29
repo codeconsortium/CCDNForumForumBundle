@@ -46,6 +46,8 @@ link.topic.reopen: Reopen Topic
 link.topic.delete: Delete Topic
 link.topic.restore: Restore Topic
 link.topic.change_board: Change Board
+link.draft.delete: Delete
+link.draft.publish: Edit & Publish
 
 flash.post.edit.success: 'Post: #%post_id% of topic: "%topic_title%" edited successfully.'
 flash.post.delete.success: 'Post: #%post_id% deleted successfully.'

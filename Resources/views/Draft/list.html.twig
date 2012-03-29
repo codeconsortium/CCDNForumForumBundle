@@ -69,7 +69,8 @@
 								<div class="text_bubble">
 									<div class="text_bubble_header">
 										<img class="text_bubble_chevron" width="30" height="20" src="{{ asset('bundles/ccdnforumforum/images/text_bubble/chevron_shaded.png') }}" alt="chevron">
-
+										<a class="button_link_light" href="{{ path('cc_forum_draft_delete', {'draftId': draft.getId }) }}">{{ 'link.draft.delete' | trans({}, 'CCDNForumForumBundle') }}</a>
+										<a class="button_link_light" href="{{ path('cc_forum_draft_publish', {'draftId': draft.getId }) }}">{{ 'link.draft.publish' | trans({}, 'CCDNForumForumBundle') }}</a>
 									</div>
 									<div class="text_bubble_body">
 										<span class="common_body">
