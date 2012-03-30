@@ -31,9 +31,11 @@
 	<div class="common_box_header">
 		<span class="heading_glow">{{ 'title.drafts' | trans({}, 'CCDNForumForumBundle' ) }}</span>
 	</div>
+	{% if pager.haveToPaginate %}
 	<div class="pagerfanta">
 	    {{ pagerfanta(pager, 'default', {'routeName':'cc_forum_drafts_list_paginated', 'routeParams':{}} ) }}
 	</div>
+	{% endif %}
 	<div class="common_box_panel">
 			<table class="common_list">
 				<thead>
@@ -100,9 +102,11 @@
 				</tbody>
 			</table>
 	</div>
+	{% if pager.haveToPaginate %}
 	<div class="pagerfanta">
 	    {{ pagerfanta(pager, 'default', {'routeName':'cc_forum_drafts_list_paginated', 'routeParams':{}} ) }}
 	</div>
+	{% endif %}
 </div>
 {% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 

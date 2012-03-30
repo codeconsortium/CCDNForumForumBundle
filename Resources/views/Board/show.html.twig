@@ -38,9 +38,11 @@
 	<div class="common_box_panel">
 		<span class="page_header_strip_description">{{ board.description }}</span>
 	</div>
+	{% if pager.haveToPaginate %}
 	<div class="pagerfanta">
 	    {{ pagerfanta(pager, 'default', {'routeName':'cc_forum_board_show_paginated', 'routeParams':{'board_id':board.getId}} ) }}
 	</div>
+	{% endif %}
 	<div class="common_box_panel">
 			<table class="common_list">
 				<thead>
@@ -121,9 +123,11 @@
 				</tbody>
 			</table>
 	</div>
+	{% if pager.haveToPaginate %}
 	<div class="pagerfanta">
 	    {{ pagerfanta(pager, 'default', {'routeName':'cc_forum_board_show_paginated', 'routeParams':{'board_id':board.getId}} ) }}
 	</div>
+	{% endif %}
 </div>
 {% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 

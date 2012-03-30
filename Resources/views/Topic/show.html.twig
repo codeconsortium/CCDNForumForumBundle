@@ -78,15 +78,21 @@
 	</div>
 	{% endif %}
 	
+	{% if pager.haveToPaginate %}
 	<div class="pagerfanta">
 		{{ pagerfanta(pager, 'default', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) }}
 	</div>
-		{% for key, post in pager.getCurrentPageResults %}
-			{% include "CCDNForumForumBundle:Post:item_post.html.twig" %}
-		{% endfor %}
+	{% endif %}
+	
+	{% for key, post in pager.getCurrentPageResults %}
+		{% include "CCDNForumForumBundle:Post:item_post.html.twig" %}
+	{% endfor %}
+
+	{% if pager.haveToPaginate %}
 	<div class="pagerfanta">
 		{{ pagerfanta(pager, 'default', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) }}
 	</div>
+	{% endif %}
 </div>
 
 {% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
