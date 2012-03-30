@@ -59,6 +59,7 @@ class Configuration implements ConfigurationInterface
 		$this->addBoardSection($rootNode);
 		$this->addTopicSection($rootNode);
 		$this->addPostSection($rootNode);
+		$this->addDraftSection($rootNode);
 		
         return $treeBuilder;
     }
@@ -88,6 +89,7 @@ class Configuration implements ConfigurationInterface
 			->end();
 	}
 	
+	
 
 	/**
 	 *
@@ -110,6 +112,7 @@ class Configuration implements ConfigurationInterface
 				->end()
 			->end();
 	}
+
 
 
 	/**
@@ -137,6 +140,7 @@ class Configuration implements ConfigurationInterface
 	}
 	
 
+
 	/**
 	 *
 	 * @access private
@@ -162,5 +166,28 @@ class Configuration implements ConfigurationInterface
 			->end();
 	}
 
+	
+
+	/**
+	 *
+	 * @access private
+	 * @param ArrayNodeDefinition $node
+	 */
+	private function addDraftSection(ArrayNodeDefinition $node)
+	{
+		$node
+			->children()
+				->arrayNode('draft')
+					->children()
+						->scalarNode('drafts_per_page')->defaultValue('40')->end()
+						->arrayNode('layout_templates')
+							->children()
+								->scalarNode('list')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+							->end()
+						->end()
+					->end()
+				->end()
+			->end();
+	}
 	
 }

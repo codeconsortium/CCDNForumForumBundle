@@ -132,7 +132,10 @@ ccdn_forum_forum:
             edit_post: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
             edit_topic: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
             delete_post: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-
+    draft:
+        drafts_per_page: 10
+        layout_templates:
+            list: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
 ccdn_forum_admin:
     user:
         profile_route: cc_profile_show_by_id

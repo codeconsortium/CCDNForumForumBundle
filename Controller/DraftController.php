@@ -46,7 +46,7 @@ class DraftController extends ContainerAware
 		$draftsPaginated = $this->container->get('ccdn_forum_forum.draft.repository')->findDraftsPaginated($user->getId());
 		
 		// deal with pagination.
-		$draftsPerPage = $this->container->getParameter('ccdn_forum_forum.board.topics_per_page');
+		$draftsPerPage = $this->container->getParameter('ccdn_forum_forum.draft.drafts_per_page');
 		$draftsPaginated->setMaxPerPage($draftsPerPage);
 		$draftsPaginated->setCurrentPage($page, false, true);
 		
@@ -56,7 +56,6 @@ class DraftController extends ContainerAware
 		return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Draft:list.html.' . $this->getEngine(), array(
 			'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
 			'crumbs' => $crumb_trail,
-//			'board' => $board,
 			'pager' => $draftsPaginated,
 		));
 	}
