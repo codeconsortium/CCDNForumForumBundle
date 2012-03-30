@@ -25,6 +25,7 @@ class CategoryRepository extends EntityRepository
 {
 
 
+
 	/**
 	 *
 	 * @access public
@@ -45,6 +46,7 @@ class CategoryRepository extends EntityRepository
 	        return null;
 	    }
 	}
+	
 	
 	
 	/**
@@ -71,6 +73,7 @@ class CategoryRepository extends EntityRepository
 	        return null;
 	    }	
 	}
+	
 	
 	
 	/**

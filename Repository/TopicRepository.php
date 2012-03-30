@@ -25,6 +25,7 @@ use Pagerfanta\Pagerfanta;
  */
 class TopicRepository extends EntityRepository
 {
+
 	
 	
 	/**
@@ -48,7 +49,6 @@ class TopicRepository extends EntityRepository
 
 		try {
 			return new Pagerfanta(new DoctrineORMAdapter($query));
-//	        return $query->getSingleResult();
 	    } catch (\Doctrine\ORM\NoResultException $e) {
 	        return null;
 	    }
@@ -77,7 +77,6 @@ class TopicRepository extends EntityRepository
 
 		try {
 			return new Pagerfanta(new DoctrineORMAdapter($query));
-//	        return $query->getSingleResult();
 	    } catch (\Doctrine\ORM\NoResultException $e) {
 	        return null;
 	    }
@@ -106,6 +105,8 @@ class TopicRepository extends EntityRepository
 	        return null;
 	    }
 	}
+	
+	
 	
 	/**
 	 *
@@ -136,6 +137,7 @@ class TopicRepository extends EntityRepository
 	}*/
 
 
+
 	/**
 	 *
 	 * @access public
@@ -156,12 +158,12 @@ class TopicRepository extends EntityRepository
 			->setParameter('id', $topic_id);
 					
 		try {
-			//return new Pagerfanta(new DoctrineORMAdapter($query));
 	        return $query->getSingleResult();
 	    } catch (\Doctrine\ORM\NoResultException $e) {
 	        return null;
 	    }
 	}
+	
 	
 	
 	/**
@@ -205,6 +207,8 @@ class TopicRepository extends EntityRepository
 	        return null;
 	    }
 	}
+
+
 
 /*	
 	public function getTopicForeignCounters($topic_id)

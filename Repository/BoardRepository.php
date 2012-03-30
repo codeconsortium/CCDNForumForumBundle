@@ -54,6 +54,7 @@ class BoardRepository extends EntityRepository
 	    }	
 	}*/
 	
+
 	
 	/**
 	 *
@@ -80,6 +81,8 @@ class BoardRepository extends EntityRepository
 	        return null;
 	    }	
 	}*/
+	
+	
 	
 	/**
 	 *
@@ -137,6 +140,7 @@ class BoardRepository extends EntityRepository
 	        return;
 	    }
 	}
+	
 	
 	
 	/**
@@ -198,6 +202,7 @@ class BoardRepository extends EntityRepository
 	}
 	
 	
+	
 	/**
 	 *
 	 * @access public
@@ -222,6 +227,7 @@ class BoardRepository extends EntityRepository
 	        return;
 	    }	
 	}
+	
 	
 	
 	/**
@@ -250,6 +256,7 @@ class BoardRepository extends EntityRepository
 		}
 	}
 	
+
 	
 	/**
 	 *

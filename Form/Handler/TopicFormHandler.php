@@ -86,6 +86,12 @@ class TopicFormHandler
 	const INSERT = 0;
 	const UPDATE = 1;
 	
+	
+	
+	/**
+	 *
+	 * @access protected
+	 */
 	protected $mode;
 	const NORMAL = 0;
 	const PREVIEW = 1;
@@ -111,6 +117,8 @@ class TopicFormHandler
 		$this->request = $container->get('request');
 	}
 	
+	
+	
 	/**
 	 *
 	 * @access public
@@ -130,7 +138,6 @@ class TopicFormHandler
 	{
 		$this->strategy = self::UPDATE;
 	}
-	
 	
 	
 	
@@ -157,6 +164,8 @@ class TopicFormHandler
 			break;
 		}
 	}
+	
+	
 	
 	/**
 	 *
@@ -223,7 +232,6 @@ class TopicFormHandler
 		return false;
 	}
 
-	
 	
 	
 	/**

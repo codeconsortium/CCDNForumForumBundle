@@ -30,6 +30,7 @@ class PostManager extends BaseManager implements EntityManagerInterface
 	 * @access protected
 	 */
 	protected $replyCount;
+
 	
 	
 	/**
@@ -39,6 +40,11 @@ class PostManager extends BaseManager implements EntityManagerInterface
 	protected $postCount;
 	
 	
+	
+	/**
+	 *
+	 * @access public
+	 */
 	public function flushNow()
 	{
 		parent::flushNow();
@@ -85,6 +91,7 @@ class PostManager extends BaseManager implements EntityManagerInterface
 	}	
 	
 	
+	
 	/**
 	 *
 	 * @access public
@@ -98,6 +105,7 @@ class PostManager extends BaseManager implements EntityManagerInterface
 		
 		return $this;
 	}
+	
 	
 	
 	/**
@@ -135,6 +143,7 @@ class PostManager extends BaseManager implements EntityManagerInterface
 	}
 	
 	
+	
 	/**
 	 *
 	 * @access public
@@ -150,6 +159,7 @@ class PostManager extends BaseManager implements EntityManagerInterface
 		
 		return $this;
 	}
+	
 	
 	
 	/**
@@ -169,6 +179,7 @@ class PostManager extends BaseManager implements EntityManagerInterface
 	}
 	
 	
+	
 	/**
 	 *
 	 * @access public
@@ -184,6 +195,7 @@ class PostManager extends BaseManager implements EntityManagerInterface
 		
 		return $this;
 	}
+	
 	
 	
 	/**

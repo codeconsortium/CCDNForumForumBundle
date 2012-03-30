@@ -21,6 +21,7 @@ class DraftRepository extends EntityRepository
 	 *
 	 * @access public
 	 * @param int $userId
+	 * @return Collection
 	 */
 	public function findDraftsPaginated($userId)
 	{
@@ -41,6 +42,14 @@ class DraftRepository extends EntityRepository
 	    }
 	}
 	
+	
+	
+	/**
+	 *
+	 * @access public
+	 * @param Int $draftId, Int $userId
+	 * @return null|Draft
+	 */
 	public function findOneByIdForUserById($draftId, $userId)
 	{
 		
@@ -57,4 +66,5 @@ class DraftRepository extends EntityRepository
 	        return null;
 	    }
 	}
+	
 }

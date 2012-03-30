@@ -147,5 +147,4 @@ class PostRepository extends EntityRepository
 	
 	}
 	
-	
 }

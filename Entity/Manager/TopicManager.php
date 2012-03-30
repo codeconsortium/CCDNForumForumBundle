@@ -32,6 +32,11 @@ class TopicManager extends BaseManager implements EntityManagerInterface
 	protected $counters;
 
 	
+	
+	/**
+	 *
+	 * @access public
+	 */
 	public function flushNow()
 	{
 		parent::flushNow();
@@ -70,6 +75,7 @@ class TopicManager extends BaseManager implements EntityManagerInterface
 		
 		return $this;
 	}
+
 	
 	
 	/**
@@ -85,6 +91,7 @@ class TopicManager extends BaseManager implements EntityManagerInterface
 	
 		return $this;
 	}
+	
 	
 	
 	/**
@@ -109,6 +116,7 @@ class TopicManager extends BaseManager implements EntityManagerInterface
 	}
 	
 	
+	
 	/**
 	 *
 	 * @access public
@@ -124,6 +132,7 @@ class TopicManager extends BaseManager implements EntityManagerInterface
 		
 		return $this;
 	}
+	
 	
 	
 	/**
@@ -142,6 +151,7 @@ class TopicManager extends BaseManager implements EntityManagerInterface
 		return $this;
 	}
 	
+
 	
 	/**
 	 *
@@ -158,6 +168,7 @@ class TopicManager extends BaseManager implements EntityManagerInterface
 		
 		return $this;
 	}
+	
 	
 	
 	/**

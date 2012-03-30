@@ -27,9 +27,18 @@ use CCDNForum\ForumBundle\Entity\Draft;
  */
 class DraftManager extends BaseManager implements EntityManagerInterface
 {
+	
 	const TOPIC = 0;
 	const REPLY = 1;
 	
+	
+	
+	/**
+	 *
+	 * @access public
+	 * @param Int $draftId
+	 * @return null|Post|Array
+	 */
 	public function getDraft($draftId)
 	{
 		$user = $this->container->get('security.context')->getToken()->getUser();
@@ -92,6 +101,11 @@ class DraftManager extends BaseManager implements EntityManagerInterface
 	}
 	
 	
+	
+	/**
+	 *
+	 * @access public
+	 */
 	public function flushNow()
 	{
 		parent::flushNow();		
@@ -145,6 +159,7 @@ class DraftManager extends BaseManager implements EntityManagerInterface
 		
 		return $this;
 	}	
+	
 	
 	
 	/**

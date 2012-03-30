@@ -88,6 +88,11 @@ class PostFormHandler
 	const UPDATE = 1;
 	
 	
+	
+	/**
+	 *
+	 * @access protected
+	 */
 	protected $mode;
 	const NORMAL = 0;
 	const PREVIEW = 1;
@@ -113,6 +118,8 @@ class PostFormHandler
 		$this->request = $container->get('request');		
 	}
 	
+	
+	
 	/**
 	 *
 	 * @access public
@@ -132,7 +139,6 @@ class PostFormHandler
 	{
 		$this->strategy = self::UPDATE;
 	}
-	
 	
 	
 	
@@ -159,6 +165,7 @@ class PostFormHandler
 			break;
 		}
 	}
+	
 	
 	
 	/**
@@ -225,8 +232,6 @@ class PostFormHandler
 	}
 	
 
-	
-	
 	
 	/**
 	 *

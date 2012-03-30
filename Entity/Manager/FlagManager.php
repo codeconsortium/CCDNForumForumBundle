@@ -25,6 +25,7 @@ class FlagManager extends BaseManager implements EntityManagerInterface
 {
 	
 	
+	
 	/**
 	 *
 	 * @access public
@@ -38,6 +39,7 @@ class FlagManager extends BaseManager implements EntityManagerInterface
 		
 		return $this;
 	}	
+	
 	
 	
 	/**

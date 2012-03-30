@@ -35,6 +35,7 @@ class TopicType extends AbstractType
 		$builder->add('title');
 	}
 	
+	
 
 	/**
 	 *
@@ -54,6 +55,7 @@ class TopicType extends AbstractType
             'intention'       => 'topic_item',
 		);
 	}
+	
 	
 	
 	/**

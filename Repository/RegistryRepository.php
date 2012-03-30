@@ -26,6 +26,7 @@ class RegistryRepository extends EntityRepository
 {
 	
 	
+	
 	/**
 	 *
 	 * @access public

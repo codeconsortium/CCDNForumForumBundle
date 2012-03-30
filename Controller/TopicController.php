@@ -235,7 +235,7 @@ class TopicController extends ContainerAware
 		if ($draftId != 0)
 		{
 			$draft = $this->container->get('ccdn_forum_forum.draft.manager')->getDraft($draftId);
-//			echo '<pre>' . print_r($draft->getBody(), true) . '</pre>'; die();
+
 			if (is_object($draft) && $draft instanceof Post)
 			{
 				$options['post'] = $draft;

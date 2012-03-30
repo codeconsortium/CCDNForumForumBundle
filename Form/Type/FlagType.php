@@ -32,6 +32,7 @@ class FlagType extends AbstractType
 	protected $options;
 	
 	
+	
 	/**
 	 *
 	 * @access public
@@ -41,6 +42,7 @@ class FlagType extends AbstractType
 	{
 		$this->options = $options;
 	}
+	
 	
 	
 	/**
@@ -57,6 +59,7 @@ class FlagType extends AbstractType
 			));
 		$builder->add('description');
 	}
+	
 	
 	
 	/**
@@ -77,6 +80,7 @@ class FlagType extends AbstractType
             'intention'       => 'flag_item',
 		);
 	}
+
 
 
 	/**

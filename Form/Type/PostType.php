@@ -31,16 +31,36 @@ class PostType extends AbstractType
 	 * @access private
 	 */
 	private $options;
-	
+
+
+
+	/**
+	 *
+	 * @access private
+	 */
 	protected $container;
+	
+	
+	
+	/**
+	 *
+	 * @access private
+	 */
 	protected $doctrine;
 	
+	
+	
+	/**
+	 *
+	 *
+	 */
 	public function __construct($service_container)
 	{
 		$this->options = array();
 		
 		$this->container = $service_container;
 	}
+	
 	
 	
 	/**
@@ -83,7 +103,8 @@ class PostType extends AbstractType
 	
 	/**
 	 *
-	 *
+	 * @access public
+	 * @return String
 	 */
 	public function getQuote()
 	{
