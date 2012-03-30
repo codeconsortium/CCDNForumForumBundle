@@ -96,21 +96,24 @@ cc_forum_post_show:
     
 cc_forum_topic_create:
     pattern:    /{_locale}/forum/board/{board_id}/create/topic
-    defaults:   { _controller: CCDNForumForumBundle:Topic:create, _locale: en }
-    requirements:
-        _locale: en
+    defaults:   { _controller: CCDNForumForumBundle:Topic:create, _locale: en, draftId: 0 }
+        
+cc_forum_topic_create_from_draft:
+    pattern:    /{_locale}/forum/board/{board_id}/create/topic/from/draft/{draftId}
+    defaults:   { _controller: CCDNForumForumBundle:Topic:create, _locale: en, draftId: 0 }
         
 cc_forum_topic_reply:
     pattern:    /{_locale}/forum/topic/{topic_id}/reply
-    defaults:   { _controller: CCDNForumForumBundle:Topic:reply, _locale: en, quote_id: 0 }
-    requirements:
-        _locale: en
+    defaults:   { _controller: CCDNForumForumBundle:Topic:reply, _locale: en, quote_id: 0, draftId: 0 }
+
+cc_forum_topic_reply_from_draft:
+    pattern:    /{_locale}/forum/topic/{topic_id}/reply/from/draft/{draftId}
+    defaults:   { _controller: CCDNForumForumBundle:Topic:reply, _locale: en, quote_id: 0, draftId: 0 }
 
 cc_forum_topic_reply_with_quote:
     pattern:    /{_locale}/forum/topic/{topic_id}/reply/quote/{quote_id}
-    defaults:   { _controller: CCDNForumForumBundle:Topic:reply, _locale: en, quote_id: 0 }
-    requirements:
-        _locale: en
+    defaults:   { _controller: CCDNForumForumBundle:Topic:reply, _locale: en, quote_id: 0, draftId: 0 }
+
 
 # ---- edting
     

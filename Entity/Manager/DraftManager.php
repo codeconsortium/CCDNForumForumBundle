@@ -27,16 +27,74 @@ use CCDNForum\ForumBundle\Entity\Draft;
  */
 class DraftManager extends BaseManager implements EntityManagerInterface
 {
+	const TOPIC = 0;
+	const REPLY = 1;
+	
+	public function getDraft($draftId)
+	{
+		$user = $this->container->get('security.context')->getToken()->getUser();
+		
+		$draft = $this->container->get('ccdn_forum_forum.draft.repository')->findOneByIdForUserById($draftId, $user->getId());
+		
+		if ( ! $draft)
+		{
+			return null;
+		}
+		
+		//
+		// is this a topic?
+		//
+		if (is_object($draft->getTopic()) && $draft->getTopic() instanceof Topic)
+		{
+			if ($draft->getTopic()->getId())
+			{
+				// we have a reply
+				$type = self::REPLY;
+			} else {
+				// we have a topic
+				$type = self::TOPIC;
+			}
+		} else {
+			// we have a topic
+			$type = self::TOPIC;
+		}
 
+		//
+		// format the entity to be returned.
+		// 
+		if ($type == self::REPLY)
+		{
+			$post = new Post();
+			
+			$post->setTopic($draft->getTopic());			
+			$post->setBody($draft->getBody());
+
+			return $post;
+		}
+		
+		if ($type == self::TOPIC)
+		{
+			$topic = new Topic();
+			$post = new Post();
+
+			if ($draft->getBoard())
+			{
+				$topic->setBoard($draft->getBoard());
+			}
+			$topic->setTitle($draft->getTitle());
+					
+			$post->setBody($draft->getBody());	
+			
+			return array('topic' => $topic, 'post' => $post);
+		}
+		
+		return null;
+	}
 	
 	
 	public function flushNow()
 	{
-		parent::flushNow();
-		
-//		$user = $this->container->get('security.context')->getToken()->getUser();
-
-//		$this->container->get('ccdn_forum_forum.registry.manager')->updateCachePostCountForUser($user);
+		parent::flushNow();		
 	}
 	
 	
@@ -66,9 +124,9 @@ class DraftManager extends BaseManager implements EntityManagerInterface
 				if ($post->getTopic()->getId())
 				{
 					$draft->setTopic($post->getTopic());
-					$draft->setBoard($post->getTopic()->getBoard());
 				} else {
 					$draft->setTitle($post->getTopic()->getTitle());
+					$draft->setBoard($post->getTopic()->getBoard());
 				}
 			}
 			
@@ -100,38 +158,6 @@ class DraftManager extends BaseManager implements EntityManagerInterface
 		// update a record
 		$this->persist($draft);
 		
-		return $this;
-	}
-	
-	
-	/**
-	 *
-	 * @access public
-	 * @param $post
-	 * @return $this
-	 */
-	public function delete($post)
-	{
-/*		$topic = $post->getTopic();
-		
-		// if this is the first post and only post, then
-		// soft delete the topic aswell.
-		if ($topic->getReplyCount() == 0)
-		{
-			$topic->setDeletedBy($user);
-			$topic->setDeletedDate(new \DateTime());
-			$topic->setClosedBy($user);
-			$topic->setClosedDate(new \DateTime());
-	
-			// we must persist and flush before we can get accurate counter information.
-			$this->persist($topic, $post)->flushNow();
-
-//			$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($topic->getBoard())->flushNow();			
-		}
-		
-		// update the record
-		$this->persist($post);
-	*/
 		return $this;
 	}
 	

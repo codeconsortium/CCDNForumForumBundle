@@ -77,7 +77,7 @@ board.table.body.view_count: 'Viewed: '
 info.not_applicable: N/A
 
 drafts.table.head.topic_title: "Topic"
-
+drafts.table.empty: 'No drafts found.'
 # show:
 post.posted_by: 'Posted by '
 post.edited_by: 'Edited by '

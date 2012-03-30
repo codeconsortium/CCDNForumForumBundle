@@ -39,7 +39,7 @@
 				<thead>
 					<tr>
 						<th style="width: 18px;"></th>
-						<th>{{ 'drafts.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') }}</th>
+						<th colspan="2">{{ 'drafts.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') }}</th>
 						<th style="width: 200px;"></th>
 					</tr>
 				</thead>
@@ -53,19 +53,29 @@
 								<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_chat.png') }}" alt="icon">
 								{% endif %}
 							</td>
+							{% if draft.getTopic %}
+							<td class="padding_5 h_align_left v_align_middle" colspan="2">
+								<b>Reply:</b>&nbsp;<a href="{{ path('cc_forum_topic_show', {'topic_id': draft.getTopic.getId }) }}">{{ draft.getTopic.getTitle }}</a>
+							</td>
+							{% else %}
 							<td class="padding_5 h_align_left v_align_middle">
-								{% if draft.getTopic %}
-									<b>Reply:</b>&nbsp;<a href="{{ path('cc_forum_topic_show', {'topic_id': draft.getTopic.getId }) }}">{{ draft.getTopic.getTitle }}</a>
-								{% else %}
-									<b>Topic:</b>&nbsp;{{ draft.getTitle }}
+								<b>Topic:</b>&nbsp;{{ draft.getTitle }}
+							</td>
+							<td class="padding_5 h_align_left v_align_middle">
+								{% if draft.getBoard %}
+									<a href="{{ path('cc_forum_board_show', {'board_id': draft.getBoard.getId}) }}">
+										<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_board.png') }}" alt="icon">
+										{{ draft.getBoard.getName }}
+									</a>
 								{% endif %}
 							</td>
+							{% endif %}
 							<td class="padding_5 h_align_centre v_align_middle">
 								{{ draft.getCreatedDate|date("d/m/Y - H:i:s") }}
 							</td>
 						</tr>
 						<tr class="{{ cycle(['row_odd', 'row_even'], row) }}">
-							<td colspan="3">
+							<td colspan="4">
 								<div class="text_bubble">
 									<div class="text_bubble_header">
 										<img class="text_bubble_chevron" width="30" height="20" src="{{ asset('bundles/ccdnforumforum/images/text_bubble/chevron_shaded.png') }}" alt="chevron">
@@ -83,7 +93,7 @@
 				{% else %}
 					<tr>
 						<td class="h_align_centre v_align_middle" colspan="3" width="100%">
-							{{ 'board.table.empty' | trans({}, 'CCDNForumForumBundle') }}
+							{{ 'drafts.table.empty' | trans({}, 'CCDNForumForumBundle') }}
 						</td>
 					</tr>
 				{% endfor %}

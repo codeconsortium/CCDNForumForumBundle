@@ -246,7 +246,15 @@ class PostFormHandler
 			//
 			if ($this->strategy == self::INSERT)
 			{
-				$this->form = $this->factory->create($postType);
+				// post for draft
+				if (array_key_exists('post', $this->options))
+				{
+					$this->form = $this->factory->create($postType, $this->options['post']);				
+				} else {
+					$this->form = $this->factory->create($postType);			
+				}
+				
+				//$this->form = $this->factory->create($postType);
 			}
 			
 			//

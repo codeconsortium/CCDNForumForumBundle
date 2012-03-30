@@ -18,6 +18,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+use CCDNForum\ForumBundle\Entity\Topic;
+use CCDNForum\ForumBundle\Entity\Post;
+use CCDNForum\ForumBundle\Entity\Draft;
+
+
 /**
  * 
  * @author Reece Fowell <reece@codeconsortium.com> 
@@ -67,8 +72,15 @@ class DraftController extends ContainerAware
 			throw new AccessDeniedException('You do not have permission to use this resource!');
 		}
 		
-		$draft = $this->container->get('ccdn_forum_forum.draft.repository')->findOneById($draftId);
+		$user = $this->container->get('security.context')->getToken()->getUser();
+		
+		$draft = $this->container->get('ccdn_forum_forum.draft.repository')->findOneByIdForUserById($draftId, $user->getId());
 
+		if ( ! $draft)
+		{
+			throw new NotFoundHttpException('No such draft exists!');			
+		}
+		
 		if ($draft)
 		{
 			$this->container->get('ccdn_forum_forum.draft.manager')->remove($draft)->flushNow();
@@ -84,10 +96,40 @@ class DraftController extends ContainerAware
 	 * @param $draftId
 	 * @return RedirectResponse|RenderResponse
 	 */
-	public function showAction($draftId)
+	public function publishAction($draftId)
 	{
-
+		//
+		//	Invalidate this action / redirect if user should not have access to it
+		//
+		if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
+			throw new AccessDeniedException('You do not have permission to use this resource!');
+		}
         
+		$user = $this->container->get('security.context')->getToken()->getUser();
+
+		$draft = $this->container->get('ccdn_forum_forum.draft.repository')->findOneByIdForUserById($draftId, $user->getId());
+
+		if ( ! $draft)
+		{
+			throw new NotFoundHttpException('No such draft exists!');			
+		}
+		
+		//
+		// is this a topic?
+		//
+		if (is_object($draft->getTopic()) && $draft->getTopic() instanceof Topic)
+		{
+			if ($draft->getTopic()->getId())
+			{
+				return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_reply_from_draft', array('topic_id' => $draft->getTopic()->getId(), 'draftId' => $draft->getId()) ));
+			} else {
+				return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_create_from_draft', array('board_id' => $draft->getBoard()->getId(), 'draftId' => $draft->getId()) ));
+			}
+		} else {
+			return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_create_from_draft', array('board_id' => $draft->getBoard()->getId(), 'draftId' => $draft->getId()) ));
+		}
+	
+		return new RedirectResponse($this->container->get('router')->generate('cc_forum_drafts_list'));
 	}
 	
 	

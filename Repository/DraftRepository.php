@@ -41,4 +41,20 @@ class DraftRepository extends EntityRepository
 	    }
 	}
 	
+	public function findOneByIdForUserById($draftId, $userId)
+	{
+		
+		$query = $this->getEntityManager()
+			->createQuery('	
+				SELECT d
+				FROM CCDNForumForumBundle:Draft d
+				WHERE d.id = :draftId AND d.created_by = :userId')
+			->setParameters(array('draftId' => $draftId, 'userId' => $userId));
+			
+		try {
+	        return $query->getsingleResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    }
+	}
 }

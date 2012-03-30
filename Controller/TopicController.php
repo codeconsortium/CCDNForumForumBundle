@@ -19,6 +19,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+
+use CCDNForum\ForumBundle\Entity\Topic;
+use CCDNForum\ForumBundle\Entity\Post;
+use CCDNForum\ForumBundle\Entity\Draft;
+
 /**
  * 
  * @author Reece Fowell <reece@codeconsortium.com> 
@@ -89,7 +94,7 @@ class TopicController extends ContainerAware
 	 * @param $board_id
 	 * @return RedirectResponse|RenderResponse
 	 */
-	public function createAction($board_id)
+	public function createAction($board_id, $draftId)
 	{
 		//
 		//	Invalidate this action / redirect if user should not have access to it
@@ -105,11 +110,36 @@ class TopicController extends ContainerAware
 		if ( ! $board) {
 			throw new NotFoundHttpException('No such board exists!');
 		}
-		
+
 		//
 		// Set the form handler options
 		//
-		$formHandler = $this->container->get('ccdn_forum_forum.topic.insert.form.handler')->setOptions(array('board' => $board,	'user' => $user));
+		$options = array('board' => $board,	'user' => $user);
+		
+		//
+		// Publishing drafts
+		//
+		if ($draftId != 0)
+		{
+			$draft = $this->container->get('ccdn_forum_forum.draft.manager')->getDraft($draftId);
+
+			if (array_key_exists('post', $draft) && array_key_exists('topic', $draft))
+			{
+				if (is_object($draft['topic']) && $draft['topic'] instanceof Topic && is_object($draft['post']) && $draft['post'] instanceof Post)
+				{
+					$options['topic'] = $draft['topic'];
+					$options['post'] = $draft['post'];
+				} else {
+					if (is_object($draft) && $draft instanceof Post)
+					{
+						return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_reply_from_draft', array('topic_id' => $draft->getTopic()->getId(), 'draftId' => $draft->getId()) ));
+					}
+				}
+			}
+			
+		}
+		
+		$formHandler = $this->container->get('ccdn_forum_forum.topic.insert.form.handler')->setOptions($options);
 		
 		if (isset($_POST['submit_draft']))
 		{
@@ -166,7 +196,7 @@ class TopicController extends ContainerAware
 	 * @param $topic_id, $quote_id
 	 * @return RedirectResponse|RenderResponse
 	 */	
-	public function replyAction($topic_id, $quote_id)
+	public function replyAction($topic_id, $quote_id, $draftId)
 	{
 		//
 		// 	Invalidate this action / redirect if user should not have access to it
@@ -188,6 +218,7 @@ class TopicController extends ContainerAware
 			throw new AccessDeniedException('This topic has been closed!');
 		}
 		
+		
 		//
 		// Set the form handler options
 		//
@@ -195,8 +226,27 @@ class TopicController extends ContainerAware
 		{
 			$quote = $this->container->get('ccdn_forum_forum.post.repository')->find($quote_id);		
 		}
-		
+
 		$options = array('topic' => $topic,	'user' => $user, 'quote' => (empty($quote) ? null : $quote));
+		
+		//
+		// Publishing drafts
+		//
+		if ($draftId != 0)
+		{
+			$draft = $this->container->get('ccdn_forum_forum.draft.manager')->getDraft($draftId);
+//			echo '<pre>' . print_r($draft->getBody(), true) . '</pre>'; die();
+			if (is_object($draft) && $draft instanceof Post)
+			{
+				$options['post'] = $draft;
+			} else {
+				if (is_object($draft) && $draft instanceof Topic)
+				{
+					return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_create_from_draft', array('board_id' => $draft->getBoard()->getId(), 'draftId' => $draft->getId()) ));
+				}
+			}
+		}
+		
 		
 		$formHandler = $this->container->get('ccdn_forum_forum.post.insert.form.handler')->setOptions($options);
 		

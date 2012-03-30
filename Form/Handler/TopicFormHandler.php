@@ -243,8 +243,22 @@ class TopicFormHandler
 			// set for insert method
 			if ($this->strategy == self::INSERT)
 			{
-				$this->form = $this->factory->create($postType);			
-				$this->form->add($this->factory->create($topicType));
+				
+				// post for draft
+				if (array_key_exists('post', $this->options))
+				{
+					$this->form = $this->factory->create($postType, $this->options['post']);				
+				} else {
+					$this->form = $this->factory->create($postType);			
+				}
+				
+				// topic for draft
+				if (array_key_exists('topic', $this->options))
+				{
+					$this->form->add($this->factory->create($topicType, $this->options['topic']));
+				} else {
+					$this->form->add($this->factory->create($topicType));					
+				}
 			}
 			
 			// set if in update method
