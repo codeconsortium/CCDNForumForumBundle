@@ -26,7 +26,33 @@ use Pagerfanta\Pagerfanta;
 class BoardRepository extends EntityRepository
 {
 
-
+	
+	public function findAllHydratedAsArray()
+	{
+		$query = $this->getEntityManager()
+			->createQuery('
+				SELECT b, c FROM CCDNForumForumBundle:Board b
+				INNER JOIN b.category c
+				GROUP BY c.id');
+				
+			
+		try {
+			$results = $query->getResult();
+			$hydrated = array();
+			
+			//
+			// Do some custom array hydration.
+			//
+			foreach($results as $result)
+			{
+				$hydrated[$result->getCategory()->getName()][$result->getId()] = $result->getName();
+			}
+			
+	        return $hydrated;
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    }
+	}
 	/**
 	 *
 	 * @access public

@@ -16,6 +16,8 @@ namespace CCDNForum\ForumBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
+use Doctrine\ORM\EntityRepository;
+
 /**
  * 
  * @author Reece Fowell <reece@codeconsortium.com> 
@@ -23,7 +25,12 @@ use Symfony\Component\Form\FormBuilder;
  */
 class TopicType extends AbstractType
 {
+	protected $defaults = array();
 	
+	public function setDefaultValues($defaults)
+	{
+		$this->defaults = array_merge($this->defaults, $defaults);
+	}
 	
 	/**
 	 *
@@ -32,6 +39,29 @@ class TopicType extends AbstractType
 	 */
 	public function buildForm(FormBuilder $builder, array $options)
 	{
+		
+		if (array_key_exists('choose_board', $this->defaults))
+		{
+			if ($this->defaults['choose_board'])
+			{			
+				if (array_key_exists('board', $this->defaults))
+				{
+					$preferredChoices = array($this->defaults['board']->getName() => $this->defaults['board']->getId());
+				} else {
+					$preferredChoices = array();
+				} 
+				
+				$builder
+					->add('board', 'entity', array(
+						'class' => 'CCDNForumForumBundle:Board',
+						'query_builder' => function($repository)  { return $repository->createQueryBuilder('b')->addSelect('c')->innerJoin('b.category', 'c')->groupBy('c.id')->orderBy('c.id', 'ASC'); },
+						'property' => 'name',
+						'preferred_choices' => $preferredChoices,					
+					));
+					
+			}
+		}	
+		
 		$builder->add('title');
 	}
 	

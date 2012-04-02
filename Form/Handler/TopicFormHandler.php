@@ -206,7 +206,10 @@ class TopicFormHandler
 				$formData->getTopic()->setViewCount(0);
 				$formData->getTopic()->setReplyCount(0);
 
-				$formData->getTopic()->setBoard($this->options['board']);				
+				$board = $formData->getTopic()->getBoard();
+				
+		
+				//$formData->getTopic()->setBoard($this->options['board']);				
 			}
 
 			//
@@ -251,6 +254,10 @@ class TopicFormHandler
 			// set for insert method
 			if ($this->strategy == self::INSERT)
 			{
+				if (array_key_exists('board', $this->options))
+				{
+					$topicType->setDefaultValues(array('choose_board' => true, 'board' => $this->options['board']));
+				}
 				
 				// post for draft
 				if (array_key_exists('post', $this->options))
@@ -272,6 +279,11 @@ class TopicFormHandler
 			// set if in update method
 			if ($this->strategy == self::UPDATE)
 			{
+				if (array_key_exists('board', $this->options))
+				{
+					$topicType->setDefaultValues(array('choose_board' => true, 'board' => $this->options['board']));
+				}
+				
 				$this->form = $this->factory->create($postType, $this->options['post']);
 				$this->form->add($this->factory->create($topicType, $this->options['post']->getTopic()));
 			}			
