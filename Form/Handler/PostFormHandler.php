@@ -66,7 +66,7 @@ class PostFormHandler
 	 *
 	 * @access protected
 	 */
-	protected $options;
+	protected $defaults;
 
 	
 	
@@ -107,7 +107,7 @@ class PostFormHandler
 	 */
 	public function __construct(FormFactory $factory, ContainerInterface $container)
 	{
-		$this->options = array();
+		$this->defaults = array();
 		$this->factory = $factory;
 		$this->container = $container;
 
@@ -174,9 +174,9 @@ class PostFormHandler
 	 * @param Array() $options
 	 * @return $this
 	 */
-	public function setOptions(array $options = null )
+	public function setDefaultValues(array $defaults = null )
 	{
-		$this->options = $options;
+		$this->defaults = array_merge($this->defaults, $defaults);
 		
 		return $this;
 	}
@@ -202,8 +202,8 @@ class PostFormHandler
 			if ($this->strategy == self::INSERT)
 			{
 				$formData->setCreatedDate(new \DateTime());
-				$formData->setCreatedBy($this->options['user']);
-				$formData->setTopic($this->options['topic']);
+				$formData->setCreatedBy($this->defaults['user']);
+				$formData->setTopic($this->defaults['topic']);
 			}
 
 			//
@@ -213,7 +213,7 @@ class PostFormHandler
 			{
 				$formData = $this->form->getData();		
 				$formData->setEditedDate(new \DateTime());
-				$formData->setEditedBy($this->options['user']);
+				$formData->setEditedBy($this->defaults['user']);
 			}
 		
 			//
@@ -244,7 +244,7 @@ class PostFormHandler
 		if ( ! $this->form)
 		{
 			$postType = $this->container->get('ccdn_forum_forum.post.form.type');
-			$postType->setOptions($this->options);
+			$postType->setOptions($this->defaults);
 
 			//
 			// INSERT topic
@@ -252,9 +252,9 @@ class PostFormHandler
 			if ($this->strategy == self::INSERT)
 			{
 				// post for draft
-				if (array_key_exists('post', $this->options))
+				if (array_key_exists('post', $this->defaults))
 				{
-					$this->form = $this->factory->create($postType, $this->options['post']);				
+					$this->form = $this->factory->create($postType, $this->defaults['post']);				
 				} else {
 					$this->form = $this->factory->create($postType);			
 				}
@@ -267,7 +267,7 @@ class PostFormHandler
 			//
 			if ($this->strategy == self::UPDATE)
 			{
-				$this->form = $this->factory->create($postType, $this->options['post']);
+				$this->form = $this->factory->create($postType, $this->defaults['post']);
 			}
 			
 			if ($this->request->getMethod() == 'POST')

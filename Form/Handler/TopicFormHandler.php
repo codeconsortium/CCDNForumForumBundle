@@ -66,7 +66,7 @@ class TopicFormHandler
 	 *
 	 * @access protected
 	 */
-	protected $options;
+	protected $defaults;
 	
 	
 	
@@ -106,7 +106,7 @@ class TopicFormHandler
 	 */
 	public function __construct(FormFactory $factory, ContainerInterface $container)
 	{
-		$this->options = array();
+		$this->defaults = array();
 		$this->factory = $factory;
 		$this->container = $container;
 		
@@ -173,9 +173,9 @@ class TopicFormHandler
 	 * @param Array() $options
 	 * @return $this
 	 */
-	public function setOptions($options = null )
+	public function setDefaultValues($defaults = null)
 	{
-		$this->options = $options;
+		$this->defaults = array_merge($this->defaults, $defaults);
 		
 		return $this;
 	}
@@ -201,7 +201,7 @@ class TopicFormHandler
 			if ($this->strategy == self::INSERT)
 			{
 				$formData->setCreatedDate(new \DateTime());
-				$formData->setCreatedBy($this->options['user']);
+				$formData->setCreatedBy($this->defaults['user']);
 
 				$formData->getTopic()->setViewCount(0);
 				$formData->getTopic()->setReplyCount(0);
@@ -209,7 +209,7 @@ class TopicFormHandler
 				$board = $formData->getTopic()->getBoard();
 				
 		
-				//$formData->getTopic()->setBoard($this->options['board']);				
+				//$formData->getTopic()->setBoard($this->defaults['board']);				
 			}
 
 			//
@@ -218,7 +218,7 @@ class TopicFormHandler
 			if ($this->strategy == self::UPDATE)
 			{
 				$formData->setEditedDate(new \DateTime());
-				$formData->setEditedBy($this->options['user']);
+				$formData->setEditedBy($this->defaults['user']);
 			}
 			
 			//
@@ -248,29 +248,29 @@ class TopicFormHandler
 		if ( ! $this->form)
 		{
 			$postType = $this->container->get('ccdn_forum_forum.post.form.type');
-			$postType->setOptions($this->options);
+			$postType->setOptions($this->defaults);
 			$topicType = $this->container->get('ccdn_forum_forum.topic.form.type');
 			
 			// set for insert method
 			if ($this->strategy == self::INSERT)
 			{
-				if (array_key_exists('board', $this->options))
+				if (array_key_exists('board', $this->defaults))
 				{
-					$topicType->setDefaultValues(array('choose_board' => true, 'board' => $this->options['board']));
+					$topicType->setDefaultValues(array('choose_board' => true, 'board' => $this->defaults['board']));
 				}
 				
 				// post for draft
-				if (array_key_exists('post', $this->options))
+				if (array_key_exists('post', $this->defaults))
 				{
-					$this->form = $this->factory->create($postType, $this->options['post']);				
+					$this->form = $this->factory->create($postType, $this->defaults['post']);				
 				} else {
 					$this->form = $this->factory->create($postType);			
 				}
 				
 				// topic for draft
-				if (array_key_exists('topic', $this->options))
+				if (array_key_exists('topic', $this->defaults))
 				{
-					$this->form->add($this->factory->create($topicType, $this->options['topic']));
+					$this->form->add($this->factory->create($topicType, $this->defaults['topic']));
 				} else {
 					$this->form->add($this->factory->create($topicType));					
 				}
@@ -279,13 +279,13 @@ class TopicFormHandler
 			// set if in update method
 			if ($this->strategy == self::UPDATE)
 			{
-				if (array_key_exists('board', $this->options))
+				if (array_key_exists('board', $this->defaults))
 				{
-					$topicType->setDefaultValues(array('choose_board' => true, 'board' => $this->options['board']));
+					$topicType->setDefaultValues(array('choose_board' => true, 'board' => $this->defaults['board']));
 				}
 				
-				$this->form = $this->factory->create($postType, $this->options['post']);
-				$this->form->add($this->factory->create($topicType, $this->options['post']->getTopic()));
+				$this->form = $this->factory->create($postType, $this->defaults['post']);
+				$this->form->add($this->factory->create($topicType, $this->defaults['post']->getTopic()));
 			}			
 
 			if ($this->request->getMethod() == 'POST')

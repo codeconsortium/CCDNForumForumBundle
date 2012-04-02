@@ -139,7 +139,7 @@ class TopicController extends ContainerAware
 			
 		}
 		
-		$formHandler = $this->container->get('ccdn_forum_forum.topic.insert.form.handler')->setOptions($options);
+		$formHandler = $this->container->get('ccdn_forum_forum.topic.insert.form.handler')->setDefaultValues($options);
 		
 		if (isset($_POST['submit_draft']))
 		{
@@ -248,7 +248,7 @@ class TopicController extends ContainerAware
 		}
 		
 		
-		$formHandler = $this->container->get('ccdn_forum_forum.post.insert.form.handler')->setOptions($options);
+		$formHandler = $this->container->get('ccdn_forum_forum.post.insert.form.handler')->setDefaultValues($options);
 		
 		if (isset($_POST['submit_draft']))
 		{
