@@ -30,7 +30,7 @@ class PostType extends AbstractType
 	 *
 	 * @access private
 	 */
-	private $options;
+	private $defaults = array();
 
 
 
@@ -56,7 +56,7 @@ class PostType extends AbstractType
 	 */
 	public function __construct($service_container)
 	{
-		$this->options = array();
+		$this->defaults = array();
 		
 		$this->container = $service_container;
 	}
@@ -68,9 +68,11 @@ class PostType extends AbstractType
 	 * @access public
 	 * @param Array() $options
 	 */
-	public function setOptions($options = array())
+	public function setDefaultValues(array $defaults = null)
 	{
-		$this->options = $options;
+		$this->defaults = array_merge($this->defaults, $defaults);
+		
+		return $this;
 	}
 	
 	
@@ -86,7 +88,7 @@ class PostType extends AbstractType
 			'data' => $this->getQuote(),
 		));
 		
-		$userId = $this->options['user']->getId();
+		$userId = $this->defaults['user']->getId();
 		$attachments = $this->container->get('ccdn_component_attachment.attachment.repository')->findForUserByIdAsQB($userId);
 		
 		$builder->add('attachment', 'entity', array(
@@ -108,11 +110,11 @@ class PostType extends AbstractType
 	 */
 	public function getQuote()
 	{
-		if (array_key_exists('quote', $this->options))
+		if (array_key_exists('quote', $this->defaults))
 		{
-			if (is_object($this->options['quote']) && $this->options['quote'] instanceof Post)
+			if (is_object($this->defaults['quote']) && $this->defaults['quote'] instanceof Post)
 			{
-				$quote = $this->options['quote'];
+				$quote = $this->defaults['quote'];
 			
 				$author = $quote->getCreatedBy();
 				$body = $quote->getBody();

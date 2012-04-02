@@ -25,12 +25,29 @@ use Doctrine\ORM\EntityRepository;
  */
 class TopicType extends AbstractType
 {
+	
+	
+	/**
+	 *
+	 * @access protected
+	 */
 	protected $defaults = array();
 	
-	public function setDefaultValues($defaults)
+	
+	
+	/**
+	 *
+	 * @access public
+	 * @param array() $defaults
+	 */
+	public function setDefaultValues(array $defaults = null)
 	{
 		$this->defaults = array_merge($this->defaults, $defaults);
+		
+		return $this;
 	}
+	
+	
 	
 	/**
 	 *

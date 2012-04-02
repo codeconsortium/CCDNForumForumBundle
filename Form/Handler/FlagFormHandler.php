@@ -61,7 +61,7 @@ class FlagFormHandler
 	 *
 	 * @access protected
 	 */
-	protected $options;
+	protected $defaults = array();
 	
 	
 	/**
@@ -78,7 +78,7 @@ class FlagFormHandler
 	 */
 	public function __construct(FormFactory $factory, ContainerInterface $container, EntityManagerInterface $manager)
 	{
-		$this->options = array();
+		$this->defaults = array();
 		$this->factory = $factory;
 		$this->container = $container;
 		$this->manager = $manager;
@@ -93,9 +93,9 @@ class FlagFormHandler
 	 * @param Array() $options
 	 * @return $this
 	 */
-	public function setOptions(array $options = null )
+	public function setDefaultValues(array $defaults = null)
 	{
-		$this->options = $options;
+		$this->defaults = array_merge($this->defaults, $defaults);
 		
 		return $this;
 	}
@@ -116,9 +116,9 @@ class FlagFormHandler
 		
 			$formData = $this->form->getData();
 
-			$formData->setPost($this->options['post']);
+			$formData->setPost($this->defaults['post']);
 			$formData->setFlaggedDate(new \DateTime());
-			$formData->setFlaggedBy($this->options['user']);
+			$formData->setFlaggedBy($this->defaults['user']);
 			$formData->setStatus(0);
 			
 			if ($this->form->isValid())
@@ -143,7 +143,7 @@ class FlagFormHandler
 		if ( ! $this->form)
 		{
 			$flagType = $this->container->get('ccdn_forum_forum.flag.form.type');
-			$flagType->setOptions(array('flag_default_choices' => $this->container->get('ccdn_forum_forum.flag.form.default_choices')));
+			$flagType->setDefaultValues(array('flag_default_choices' => $this->container->get('ccdn_forum_forum.flag.form.default_choices')));
 			$this->form = $this->factory->create($flagType);
 		}
 		

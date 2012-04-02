@@ -29,7 +29,7 @@ class FlagType extends AbstractType
 	 *
 	 * @access protected
 	 */
-	protected $options;
+	protected $defaults = array();
 	
 	
 	
@@ -38,9 +38,11 @@ class FlagType extends AbstractType
 	 * @access public
 	 * @param Array() $options
 	 */
-	public function setOptions($options = array())
+	public function setDefaultValues(array $defaults = null)
 	{
-		$this->options = $options;
+		$this->defaults = array_merge($this->defaults, $defaults);
+		
+		return $this;
 	}
 	
 	
@@ -55,7 +57,7 @@ class FlagType extends AbstractType
 	
 		$builder
 			->add('reason', 'choice', array(
-				'choices' => $this->options['flag_default_choices']->getReasonCodes()
+				'choices' => $this->defaults['flag_default_choices']->getReasonCodes()
 			));
 		$builder->add('description');
 	}

@@ -66,7 +66,7 @@ class PostFormHandler
 	 *
 	 * @access protected
 	 */
-	protected $defaults;
+	protected $defaults = array();
 
 	
 	
@@ -174,7 +174,7 @@ class PostFormHandler
 	 * @param Array() $options
 	 * @return $this
 	 */
-	public function setDefaultValues(array $defaults = null )
+	public function setDefaultValues(array $defaults = null)
 	{
 		$this->defaults = array_merge($this->defaults, $defaults);
 		
@@ -244,7 +244,7 @@ class PostFormHandler
 		if ( ! $this->form)
 		{
 			$postType = $this->container->get('ccdn_forum_forum.post.form.type');
-			$postType->setOptions($this->defaults);
+			$postType->setDefaultValues($this->defaults);
 
 			//
 			// INSERT topic
