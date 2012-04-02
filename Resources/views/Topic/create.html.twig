@@ -49,13 +49,13 @@
 			<div class="errors">{{ form_errors(form) }}</div>
 			<table class="common_list">
 				<tbody>
-						<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-							<td class="form_label">{{ form_label(form.Topic.board, null, { 'label': 'form.label.topic.board'| trans({}, 'CCDNForumForumBundle')}) }}</td>
-							<td class="form_widget">
-								{{ form_errors(form.Topic.board) }}
-								{{ form_widget(form.Topic.board) }}
-							</td>
-						</tr>
+					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
+						<td class="form_label">{{ form_label(form.Topic.board, null, { 'label': 'form.label.topic.board'| trans({}, 'CCDNForumForumBundle')}) }}</td>
+						<td class="form_widget">
+							{{ form_errors(form.Topic.board) }}
+							{{ form_widget(form.Topic.board) }}
+						</td>
+					</tr>
 					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
 						<td class="form_label">{{ form_label(form.Topic.title, null, { 'label': 'form.label.topic.title'| trans({}, 'CCDNForumForumBundle')}) }}</td>
 						<td class="form_widget">
