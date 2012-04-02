@@ -58,6 +58,9 @@ flash.topic.reply.success: 'You posted a reply to the topic: "%topic_title%".'
 
 flash.draft.save.success: "Draft saved successfully."
 
+flash.draft.topic_does_not_exist: 'The topic you are trying to reply to no longer exists.'
+flash.draft.board_does_not_exist: 'The board you are trying to post to no longer exists.'
+
 # show:
 categories.empty: There are no categories.
 category.table.empty: There are no boards for this category.
