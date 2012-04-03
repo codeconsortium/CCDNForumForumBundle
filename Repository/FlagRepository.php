@@ -50,4 +50,27 @@ class FlagRepository extends EntityRepository
 	    }
 	}
 	
+	
+
+	/**
+	 *
+	 * @access public
+	 * @param Array
+	 */
+	public function findTheseFlagsById($flagIds)
+	{
+ 		$qb = $this->getEntityManager()->createQueryBuilder();
+		$query = $qb->add('select', 'f')
+			->from('CCDNForumForumBundle:Flag', 'f')
+			->where($qb->expr()->in('f.id', '?2'))
+			->setParameters(array('2' => array_values($flagIds)))
+			->getQuery();
+
+		try {
+			return $query->getResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    }
+	}
+	
 }

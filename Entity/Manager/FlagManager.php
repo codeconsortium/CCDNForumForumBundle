@@ -56,4 +56,39 @@ class FlagManager extends BaseManager implements EntityManagerInterface
 		return $this;
 	}
 	
+	
+	
+	/**
+	 *
+	 *
+	 */
+	public function bulkDelete($flags)
+	{
+		foreach($flags as $flag)
+		{
+			$this->remove($flag);
+		}
+		
+		return $this;
+	}
+	
+	
+	
+	/**
+	 *
+	 *
+	 *
+	 */
+	public function bulkMarkAs($flags, $status)
+	{
+		foreach($flags as $flag)
+		{
+			$flag->setStatus($status);
+			$this->persist($flag);
+		}
+		
+		return $this;
+	}
+	
+	
 }
