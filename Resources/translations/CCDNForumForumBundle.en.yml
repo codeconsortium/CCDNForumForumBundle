@@ -79,6 +79,8 @@ board.table.head.created_by: 'Created By'
 board.table.head.created_on: 'Created On'
 board.table.head.locked_by: 'Locked By'
 board.table.head.locked_on: 'Locked On'
+board.table.head.closed_by: 'Closed By'
+board.table.head.closed_on: 'Closed On'
 board.table.head.deleted_by: 'Deleted By'
 board.table.head.deleted_on: 'Deleted On'
 

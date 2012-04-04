@@ -222,6 +222,16 @@ class TopicManager extends BaseManager implements EntityManagerInterface
 		return $this;
 	}
 	
+	public function bulkHardDelete($topics)
+	{
+		foreach($topics as $topic)
+		{
+			$this->remove($topic);
+		}
+		
+		return $this;
+	}
+	
 	/**
 	 *
 	 * @access public
