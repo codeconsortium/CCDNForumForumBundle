@@ -255,6 +255,8 @@ class PostManager extends BaseManager implements EntityManagerInterface
 	
 	public function bulkHardDelete($posts)
 	{
+		$boardsToUpdate = array();
+		
 		foreach($posts as $post)
 		{
 			$topic = $post->getTopic();
@@ -274,6 +276,8 @@ class PostManager extends BaseManager implements EntityManagerInterface
 							$this->persist($board);
 							
 							$this->flushNow();
+							
+							$boardsToUpdate[] = $board;
 						}
 						
 						if ($topic->getReplyCount() < 1)
@@ -304,6 +308,11 @@ class PostManager extends BaseManager implements EntityManagerInterface
 				}
 			}			
 			$this->remove($post);
+		}
+		
+		foreach($boardsToUpdate as $board)
+		{
+			$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($board)->flushNow();			
 		}
 		
 		return $this;
