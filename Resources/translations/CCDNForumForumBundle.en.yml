@@ -74,6 +74,13 @@ board.table.head.topic_title: Topic
 board.table.head.reply_count: Replies
 board.table.head.view_count: Views
 board.table.head.last_post: Last Post
+board.table.head.post_number: 'Post #'
+board.table.head.created_by: 'Created By'
+board.table.head.created_on: 'Created On'
+board.table.head.locked_by: 'Locked By'
+board.table.head.locked_on: 'Locked On'
+board.table.head.deleted_by: 'Deleted By'
+board.table.head.deleted_on: 'Deleted On'
 
 board.table.body.reply_count: 'Replies: '
 board.table.body.view_count: 'Viewed: '

@@ -196,6 +196,61 @@ class PostManager extends BaseManager implements EntityManagerInterface
 		return $this;
 	}
 	
+	public function bulkLock($posts)
+	{
+		foreach($posts as $post)
+		{
+			$post->setLockedBy($this->container->get('security.context')->getToken()->getUser());
+			$post->setLockedDate(new \DateTime());
+						
+			$this->persist($post);
+		}
+		
+		return $this;
+	}
+	
+	
+	
+	public function bulkUnlock($posts)
+	{
+		foreach($posts as $post)
+		{
+			$post->setLockedBy(null);
+			$post->setLockedDate(null);
+						
+			$this->persist($post);
+		}
+		
+		return $this;
+	}
+	
+	
+	public function bulkRestore($posts)
+	{
+		foreach($posts as $post)
+		{
+			$post->setDeletedBy(null);
+			$post->setDeletedDate(null);
+			
+			$this->persist($post);
+		}
+		
+		return $this;
+	}
+	
+	
+	public function bulkSoftDelete($posts)
+	{
+		foreach($posts as $post)
+		{
+			$post->setDeletedBy($this->container->get('security.context')->getToken()->getUser());
+			$post->setDeletedDate(new \DateTime());
+			
+			$this->persist($post);
+		}
+		
+		return $this;
+	}
 	
 	
 	/**

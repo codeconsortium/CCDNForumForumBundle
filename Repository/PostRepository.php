@@ -126,6 +126,31 @@ class PostRepository extends EntityRepository
 	
 	/**
 	 *
+	 * for moderator
+	 *
+	 *
+	 * @access public
+	 */
+	public function findThesePostsByIdForModeration($postIds)
+	{
+		$qb = $this->getEntityManager()->createQueryBuilder();
+		$query = $qb->add('select', 'p')
+			->from('CCDNForumForumBundle:Post', 'p')
+			->where($qb->expr()->in('p.id', '?1'))
+			->setParameters(array('1' => array_values($postIds)))
+			->getQuery();
+
+		try {
+			return $query->getResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    }	
+	}
+	
+	
+	
+	/**
+	 *
 	 *
 	 */
 	public function getPostCountForUserById($user_id)
