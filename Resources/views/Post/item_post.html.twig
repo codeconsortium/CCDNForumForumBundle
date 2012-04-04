@@ -120,9 +120,9 @@
 
 					{% if is_granted('ROLE_MODERATOR') %}
 						{% if post.getLockedBy %}
-				<a class="button_link_light" href="{{ path('cc_moderator_forum_unlock_post', {'post_id': post.getId }) }}">{{ 'link.post.unlock' | trans({}, 'CCDNForumForumBundle') }}</a>
+				<a class="button_link_light" href="{{ path('cc_moderator_forum_post_unlock', {'post_id': post.getId }) }}">{{ 'link.post.unlock' | trans({}, 'CCDNForumForumBundle') }}</a>
 						{% else %}
-				<a class="button_link_light" href="{{ path('cc_moderator_forum_lock_post', {'post_id': post.getId }) }}">{{ 'link.post.lock' | trans({}, 'CCDNForumForumBundle') }}</a>
+				<a class="button_link_light" href="{{ path('cc_moderator_forum_post_lock', {'post_id': post.getId }) }}">{{ 'link.post.lock' | trans({}, 'CCDNForumForumBundle') }}</a>
 						{% endif %}
 
 						{% if post.getDeletedBy %}
