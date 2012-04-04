@@ -170,6 +170,57 @@ class TopicManager extends BaseManager implements EntityManagerInterface
 	}
 	
 	
+	public function bulkClose($topics)
+	{
+		foreach($topics as $topic)
+		{
+			$topic->setClosedBy($this->container->get('security.context')->getToken()->getUser());
+			$topic->setClosedDate(new \DateTime());
+			
+			$this->persist($topic);
+		}
+		
+		return $this;
+	}
+	
+	public function bulkReopen($topics)
+	{
+		foreach($topics as $topic)
+		{
+			$topic->setClosedBy(null);
+			$topic->setClosedDate(null);
+			
+			$this->persist($topic);
+		}
+		
+		return $this;
+	}
+	
+	public function bulkRestore($topics)
+	{
+		foreach($topics as $topic)
+		{
+			$topic->setDeletedBy(null);
+			$topic->setDeletedDate(null);
+			
+			$this->persist($topic);
+		}
+		
+		return $this;
+	}
+	
+	public function bulkSoftDelete($topics)
+	{
+		foreach($topics as $topic)
+		{
+			$topic->setDeletedBy($this->container->get('security.context')->getToken()->getUser());
+			$topic->setDeletedDate(new \DateTime());
+			
+			$this->persist($topic);
+		}
+		
+		return $this;
+	}
 	
 	/**
 	 *

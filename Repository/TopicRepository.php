@@ -197,7 +197,7 @@ class TopicRepository extends EntityRepository
 				LEFT JOIN t.last_post lp
 				LEFT JOIN t.first_post fp
 				LEFT JOIN t.board b
-				WHERE t.closed_by IS NOT NULL
+				WHERE t.closed_by IS NOT NULL OR t.deleted_by IS NOT NULL
 				GROUP BY t.id
 				ORDER BY lp.created_date DESC');
 	
@@ -207,7 +207,31 @@ class TopicRepository extends EntityRepository
 	        return null;
 	    }
 	}
+	
+	
+	
+	/**
+	 *
+	 * for moderator
+	 *
+	 *
+	 * @access public
+	 */
+	public function findTheseTopicsByIdForModeration($topicIds)
+	{
+		$qb = $this->getEntityManager()->createQueryBuilder();
+		$query = $qb->add('select', 't')
+			->from('CCDNForumForumBundle:Topic', 't')
+			->where($qb->expr()->in('t.id', '?1'))
+			->setParameters(array('1' => array_values($topicIds)))
+			->getQuery();
 
+		try {
+			return $query->getResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    }	
+	}
 
 
 /*	
