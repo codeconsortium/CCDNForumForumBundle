@@ -1,10 +1,10 @@
 <div class="common_box_sub_header" id="post_{{ post.getId }}">
-	<div class="float_left"><a class="heading_link" href="{{ path('cc_forum_post_show', {'post_id': post.getId }) }}#{{ post.getId }}">Re: {{ post.getTopic.getTitle }}</a></div>
+	<div class="float_left"><a class="heading_link" href="{{ path('cc_forum_post_show', {'post_id': post.getId }) }}">Re: {{ post.getTopic.getTitle }}</a></div>
 	<div class="float_right">
 		{% if post.getLockedDate %}
 			<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_locked.png') }}">
 		{% endif %}
-		<a class="heading_link" href="post_#{{ post.getId }}">#{{ post.getId }}</a>
+		<a class="heading_link" href="#post_{{ post.getId }}">#{{ post.getId }}</a>
 	</div>
 </div>
 
