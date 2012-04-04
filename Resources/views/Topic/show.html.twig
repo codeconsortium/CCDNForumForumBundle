@@ -30,9 +30,9 @@
 		<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.moderator_tools' | trans({}, 'CCDNForumForumBundle') }}</span></div>
 		<div class="common_box_panel">
 			{% if topic.closedBy %}
-				<a class="sidebar" href="{{ path('cc_moderator_forum_reopen_topic', {'topic_id': topic.getId }) }}">{{ 'link.topic.reopen' | trans({}, 'CCDNForumForumBundle') }}</a>
+				<a class="sidebar" href="{{ path('cc_moderator_forum_topic_reopen', {'topic_id': topic.getId }) }}">{{ 'link.topic.reopen' | trans({}, 'CCDNForumForumBundle') }}</a>
 			{% else %}
-				<a class="sidebar" href="{{ path('cc_moderator_forum_close_topic', {'topic_id': topic.getId }) }}">{{ 'link.topic.close' | trans({}, 'CCDNForumForumBundle') }}</a>
+				<a class="sidebar" href="{{ path('cc_moderator_forum_topic_close', {'topic_id': topic.getId }) }}">{{ 'link.topic.close' | trans({}, 'CCDNForumForumBundle') }}</a>
 			{% endif %}
 		</div>
 		<div class="common_box_panel">
