@@ -57,7 +57,7 @@ class FlagRepository extends EntityRepository
 	 * @access public
 	 * @param Array
 	 */
-	public function findTheseFlagsById($flagIds)
+	public function findTheseFlagsByIdForModeration($flagIds)
 	{
  		$qb = $this->getEntityManager()->createQueryBuilder();
 		$query = $qb->add('select', 'f')
