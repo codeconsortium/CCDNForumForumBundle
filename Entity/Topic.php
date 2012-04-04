@@ -48,12 +48,12 @@ class Topic
 	protected $title;
 
 	/**
-	 * @ORM\OneToOne(targetEntity="Post")
+	 * @ORM\OneToOne(targetEntity="Post", cascade={"remove"})
 	 */
 	protected $first_post;
 		
 	/**
-	 * @ORM\OneToOne(targetEntity="Post")
+	 * @ORM\OneToOne(targetEntity="Post", cascade={"remove"})
 	 */
 	protected $last_post;
 	
@@ -192,7 +192,7 @@ class Topic
      *
      * @param CCDNForum\ForumBundle\Entity\Post $lastPost
      */
-    public function setLastPost(\CCDNForum\ForumBundle\Entity\Post $lastPost)
+    public function setLastPost(\CCDNForum\ForumBundle\Entity\Post $lastPost = null)
     {
         $this->last_post = $lastPost;
     }
@@ -232,7 +232,7 @@ class Topic
      *
      * @param CCDNForum\ForumBundle\Entity\Post $firstPost
      */
-    public function setFirstPost(\CCDNForum\ForumBundle\Entity\Post $firstPost)
+    public function setFirstPost(\CCDNForum\ForumBundle\Entity\Post $firstPost = null)
     {
         $this->first_post = $firstPost;
     }

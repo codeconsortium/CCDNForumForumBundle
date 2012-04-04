@@ -215,7 +215,7 @@ class Board
      *
      * @param CCDNForum\ForumBundle\Entity\Post $lastPost
      */
-    public function setLastPost(\CCDNForum\ForumBundle\Entity\Post $lastPost)
+    public function setLastPost(\CCDNForum\ForumBundle\Entity\Post $lastPost = null)
     {
         $this->last_post = $lastPost;
     }

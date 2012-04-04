@@ -253,6 +253,62 @@ class PostManager extends BaseManager implements EntityManagerInterface
 	}
 	
 	
+	public function bulkHardDelete($posts)
+	{
+		foreach($posts as $post)
+		{
+			$topic = $post->getTopic();
+
+			if ($post->getTopic())
+			{
+				if ($post->getTopic()->getLastPost())
+				{
+					if ($post->getTopic()->getLastPost()->getId() == $post->getId())
+					{
+						if ($topic->getBoard())
+						{
+							$board = $topic->getBoard();
+							
+							$board->setLastPost(null);
+							
+							$this->persist($board);
+							
+							$this->flushNow();
+						}
+						
+						if ($topic->getReplyCount() < 1)
+						{
+							$this->remove($topic);
+					
+							$this->flushNow();
+											
+							continue;
+						} else {
+							// unlink the last post
+							$topic->setLastPost(null);
+
+							$this->persist($topic);					
+						}
+					}
+				}
+				
+				if ($post->getTopic()->getFirstPost())
+				{
+					if ($post->getTopic()->getFirstPost()->getId() == $post->getId())
+					{
+						// unlink the first post!
+						$topic->setFirstPost(null);
+				
+						$this->persist($topic);
+					}
+				}
+			}			
+			$this->remove($post);
+		}
+		
+		return $this;
+	}
+	
 	/**
 	 *
 	 * @access public

@@ -97,8 +97,31 @@ class PostRepository extends EntityRepository
 	    }
 	}
 
-
-
+	/**
+	 *
+	 * for moderator
+	 *
+	 * @access public
+	 */
+	public function findDeletedPostsForAdminsPaginated()
+	{
+		
+		$query = $this->getEntityManager()
+			->createQuery('	
+				SELECT p, t
+				FROM CCDNForumForumBundle:Post p
+				LEFT JOIN p.topic t
+				WHERE p.deleted_by IS NOT NULL');
+		
+		try {
+			return new Pagerfanta(new DoctrineORMAdapter($query));
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    }	
+	}
+	
+	
+	
 	/**
 	 *
 	 * for moderator
