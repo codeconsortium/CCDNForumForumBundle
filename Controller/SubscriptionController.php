@@ -54,8 +54,11 @@ class SubscriptionController extends ContainerAware
 		$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
 		
 		$crumb_trail = $this->container->get('ccdn_component_crumb_trail.crumb_trail')
+			->add($this->container->get('translator')->trans('crumbs.dashboard', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_dashboard_index'), "sitemap")
 			->add($this->container->get('translator')->trans('crumbs.dashboard', array(), 'CCDNUserAdminBundle'), $this->container->get('router')->generate('cc_dashboard_index'), "sitemap")
-			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home");
+			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
+			->add($this->container->get('translator')->trans('crumbs.topic.subscriptions', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_subscriptions'), "bookmark");
+
 		
 		return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Subscription:show.html.' . $this->getEngine(), array(
 			'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),

@@ -9,10 +9,12 @@ sidebar.link.topic_unsubscribe: Unsubscribe
 sidebar.header.moderator_tools: Moderator Tools
 
 # crumbs:
+crumbs.dashboard: Dashboard
 crumbs.forum_index: Forum Index
 crumbs.topic.create: Create New Topic
 crumbs.topic.reply: Reply to Topic
 crumbs.topic.delete: "Delete Topic: "
+crumbs.topic.subscriptions: 'Subscriptions'
 crumbs.post.edit: "Edit Post: #"
 crumbs.post.flag: "Flag Post: #"
 crumbs.post.delete: "Delete Post: #"
