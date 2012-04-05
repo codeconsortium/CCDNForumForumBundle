@@ -9,14 +9,14 @@ parameters:
     ccdn_forum_forum.subscription.repository.class:     CCDNForum\ForumBundle\Repository\SubscriptionRepository
     ccdn_forum_forum.flag.repository.class:             CCDNForum\ForumBundle\Repository\FlagRepository
 
-#   ccdn_forum_forum.category.manager.class:            CCDNForum\ForumBundle\Entity\Manager\CategoryManager
-    ccdn_forum_forum.board.manager.class:               CCDNForum\ForumBundle\Entity\Manager\BoardManager
-    ccdn_forum_forum.topic.manager.class:               CCDNForum\ForumBundle\Entity\Manager\TopicManager
-    ccdn_forum_forum.post.manager.class:                CCDNForum\ForumBundle\Entity\Manager\PostManager
-    ccdn_forum_forum.registry.manager.class:            CCDNForum\ForumBundle\Entity\Manager\RegistryManager
-    ccdn_forum_forum.draft.manager.class:               CCDNForum\ForumBundle\Entity\Manager\DraftManager
-    ccdn_forum_forum.subscription.manager.class:        CCDNForum\ForumBundle\Entity\Manager\SubscriptionManager
-    ccdn_forum_forum.flag.manager.class:                CCDNForum\ForumBundle\Entity\Manager\FlagManager
+#   ccdn_forum_forum.category.manager.class:            CCDNForum\ForumBundle\Manager\CategoryManager
+    ccdn_forum_forum.board.manager.class:               CCDNForum\ForumBundle\Manager\BoardManager
+    ccdn_forum_forum.topic.manager.class:               CCDNForum\ForumBundle\Manager\TopicManager
+    ccdn_forum_forum.post.manager.class:                CCDNForum\ForumBundle\Manager\PostManager
+    ccdn_forum_forum.registry.manager.class:            CCDNForum\ForumBundle\Manager\RegistryManager
+    ccdn_forum_forum.draft.manager.class:               CCDNForum\ForumBundle\Manager\DraftManager
+    ccdn_forum_forum.subscription.manager.class:        CCDNForum\ForumBundle\Manager\SubscriptionManager
+    ccdn_forum_forum.flag.manager.class:                CCDNForum\ForumBundle\Manager\FlagManager
         
     ccdn_forum_forum.post.form.type.class:              CCDNForum\ForumBundle\Form\Type\PostType
     ccdn_forum_forum.post.insert.form.handler.class:    CCDNForum\ForumBundle\Form\Handler\PostFormHandler
@@ -33,6 +33,7 @@ parameters:
     ccdn_forum_forum.dashboard.integrator.class:        CCDNForum\ForumBundle\Component\Dashboard\DashboardIntegrator
     
 services:
+    
     #
     # Repositories.
     #

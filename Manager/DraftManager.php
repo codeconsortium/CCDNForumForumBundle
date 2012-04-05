@@ -11,10 +11,10 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Entity\Manager;
+namespace CCDNForum\ForumBundle\Manager;
 
-use CCDNComponent\CommonBundle\Entity\Manager\EntityManagerInterface;
-use CCDNComponent\CommonBundle\Entity\Manager\BaseManager;
+use CCDNComponent\CommonBundle\Manager\ManagerInterface;
+use CCDNComponent\CommonBundle\Manager\BaseManager;
 
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
@@ -25,7 +25,7 @@ use CCDNForum\ForumBundle\Entity\Draft;
  * @author Reece Fowell <reece@codeconsortium.com> 
  * @version 1.0
  */
-class DraftManager extends BaseManager implements EntityManagerInterface
+class DraftManager extends BaseManager implements ManagerInterface
 {
 	
 	const TOPIC = 0;

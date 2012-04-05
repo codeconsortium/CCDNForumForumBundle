@@ -11,10 +11,10 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Entity\Manager;
+namespace CCDNForum\ForumBundle\Manager;
 
-use CCDNComponent\CommonBundle\Entity\Manager\EntityManagerInterface;
-use CCDNComponent\CommonBundle\Entity\Manager\BaseManager;
+use CCDNComponent\CommonBundle\Manager\ManagerInterface;
+use CCDNComponent\CommonBundle\Manager\BaseManager;
 
 use CCDNForum\ForumBundle\Entity\Registry;
 
@@ -23,7 +23,7 @@ use CCDNForum\ForumBundle\Entity\Registry;
  * @author Reece Fowell <reece@codeconsortium.com> 
  * @version 1.0
  */
-class RegistryManager extends BaseManager implements EntityManagerInterface
+class RegistryManager extends BaseManager implements ManagerInterface
 {
 
 
