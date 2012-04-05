@@ -152,3 +152,20 @@ cc_forum_post_flag:
 #    defaults:   { _controller: CCDNForumForumBundle:Post:editProcess }
 #    requirements:
 #        _method: POST
+
+cc_forum_subscriptions:
+    pattern: /{_locale}/forum/subscriptions
+    defaults: { _controller: CCDNForumForumBundle:Subscription:show, _locale: en, page: 1 }
+    
+cc_forum_subscriptions_paginated:
+    pattern: /{_locale}/forum/subscriptions/page/{page}
+    defaults: { _controller: CCDNForumForumBundle:Subscription:show, _locale: en, page: 1 }
+    
+cc_forum_subscriptions_subscribe:
+    pattern: /{_locale}/forum/subscriptions/topic/{topic_id}/subscribe
+    defaults: { _controller: CCDNForumForumBundle:Subscription:subscribe, _locale: en }    
+    
+cc_forum_subscriptions_unsubscribe:
+    pattern: /{_locale}/forum/subscriptions/topic/{topic_id}/unsubscribe
+    defaults: { _controller: CCDNForumForumBundle:Subscription:unsubscribe, _locale: en }    
+    

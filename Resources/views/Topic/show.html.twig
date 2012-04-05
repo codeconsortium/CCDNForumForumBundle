@@ -23,6 +23,21 @@
 		<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') }}</span></div>
 		<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_forum_topic_reply', {'topic_id': topic.getId }) }}">{{ 'sidebar.link.reply_to_topic' | trans({}, 'CCDNForumForumBundle') }}</a></div>
 		<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_forum_topic_create', {'board_id': board.getId }) }}">{{ 'sidebar.link.create_new_topic' | trans({}, 'CCDNForumForumBundle') }}</a></div>
+		{% if is_granted('ROLE_USER') %}
+			{% if subscription is defined %}
+				{% if subscription is not null %}
+					{% if subscription.subscribed == true %}
+						<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_forum_subscriptions_unsubscribe', {'topic_id': topic.getId }) }}">{{ 'sidebar.link.topic_unsubscribe' | trans({}, 'CCDNForumForumBundle') }}</a></div>
+					{% else %}
+						<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_forum_subscriptions_subscribe', {'topic_id': topic.getId }) }}">{{ 'sidebar.link.topic_subscribe' | trans({}, 'CCDNForumForumBundle') }}</a></div>						
+					{% endif %}
+				{% else %}
+					<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_forum_subscriptions_subscribe', {'topic_id': topic.getId }) }}">{{ 'sidebar.link.topic_subscribe' | trans({}, 'CCDNForumForumBundle') }}</a></div>						
+				{% endif %}
+			{% else %}
+				<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_forum_subscriptions_subscribe', {'topic_id': topic.getId }) }}">{{ 'sidebar.link.topic_subscribe' | trans({}, 'CCDNForumForumBundle') }}</a></div>		
+			{% endif %}
+		{% endif %}
 	</div>
 
 	{% if is_granted('ROLE_MODERATOR') %}

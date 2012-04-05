@@ -2,6 +2,9 @@ parameters:
     ccdn_forum_forum.registry.repository.class:         CCDNForum\ForumBundle\Repository\RegistryRepository
     ccdn_forum_forum.registry.manager.class:            CCDNForum\ForumBundle\Entity\Manager\RegistryManager
         
+    ccdn_forum_forum.subscription.repository.class:     CCDNForum\ForumBundle\Repository\SubscriptionRepository
+    ccdn_forum_forum.subscription.manager.class:        CCDNForum\ForumBundle\Entity\Manager\SubscriptionManager
+    
     ccdn_forum_forum.post.manager.class:                CCDNForum\ForumBundle\Entity\Manager\PostManager
     ccdn_forum_forum.post.form.type.class:              CCDNForum\ForumBundle\Form\Type\PostType
     ccdn_forum_forum.post.insert.form.handler.class:    CCDNForum\ForumBundle\Form\Handler\PostFormHandler
@@ -43,6 +46,16 @@ services:
         class: %ccdn_forum_forum.registry.manager.class%
         arguments: [@doctrine, @service_container]
         
+    ccdn_forum_forum.subscription.repository:
+        class: %ccdn_forum_forum.subscription.repository.class%
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository 
+        arguments:
+            - 'CCDNForum\ForumBundle\Entity\Subscription'
+
+    ccdn_forum_forum.subscription.manager:
+        class: %ccdn_forum_forum.subscription.manager.class%
+        arguments: [@doctrine, @service_container]
         
     ccdn_forum_forum.post.manager:
         class:  %ccdn_forum_forum.post.manager.class%

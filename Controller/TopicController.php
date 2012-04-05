@@ -67,6 +67,14 @@ class TopicController extends ContainerAware
 		// update the view counter because you viewed the topic
 		$this->container->get('ccdn_forum_forum.topic.repository')->incrementViewCounter($topic);
 		
+		// get the topic subscriptions
+		if ( ! empty($user))
+		{
+			$subscription = $this->container->get('ccdn_forum_forum.subscription.repository')->findTopicSubscriptionByTopicAndUserId($topic_id, $user->getId());
+		} else {
+			$subscription = null;
+		}
+		
 		// setup crumb trail.
 		$board = $topic->getBoard();
 		$category = $board->getCategory();
@@ -84,6 +92,7 @@ class TopicController extends ContainerAware
 			'board' => $board,
 			'topic' => $topic,
 			'pager' => $posts_paginated,
+			'subscription' => $subscription,
 		));
 	}
 

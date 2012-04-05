@@ -4,7 +4,8 @@ sidebar.header.tools: Tools
 sidebar.link.reply_to_topic: Reply to topic      
 sidebar.link.post_new_topic: Post New Topic
 sidebar.link.create_new_topic: Create New Topic
-
+sidebar.link.topic_subscribe: Subscribe
+sidebar.link.topic_unsubscribe: Unsubscribe
 sidebar.header.moderator_tools: Moderator Tools
 
 # crumbs:
@@ -60,6 +61,10 @@ flash.draft.save.success: "Draft saved successfully."
 
 flash.draft.topic_does_not_exist: 'The topic you are trying to reply to no longer exists.'
 flash.draft.board_does_not_exist: 'The board you are trying to post to no longer exists.'
+
+flash.subscription.topic.subscribed: 'You subscribed to the topic %topic_title%.'
+flash.subscription.topic.unsubscribed: 'You unsubscribed from the topic %topic_title%'
+flash.subscription.topic.not.found: 'Topic could not be subscribed to because it was not found! Sorry about that.'
 
 # show:
 categories.empty: There are no categories.
