@@ -77,7 +77,11 @@ board.table.empty: No topics for this board, be the first to post one!
 # show:
 board.table.body.topic_count: 'Topics: '
 board.table.body.post_count: 'Posts: '
-    
+
+board.table.head.board: 'Board'
+board.table.head.topic_count: 'Topics'
+board.table.head.post_count: 'Posts'
+
 board.table.head.topic_title: Topic
 board.table.head.reply_count: Replies
 board.table.head.view_count: Views

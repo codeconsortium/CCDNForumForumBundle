@@ -7,6 +7,15 @@
 	</div>
 	<div class="common_table_panel">
 		<table class="common_list">
+			<thead>
+				<tr>
+					<th></th>
+					<th>{{ 'board.table.head.board' | trans({}, 'CCDNForumForumBundle') }}</th>
+					<th>{{ 'board.table.head.topic_count' | trans({}, 'CCDNForumForumBundle') }}</th>
+					<th>{{ 'board.table.head.post_count' | trans({}, 'CCDNForumForumBundle') }}</th>
+					<th>{{ 'board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') }}</th>
+				</tr>
+			</thead>
 			<tbody>
 			{% for row, board in category.boards %}
 				{% include "CCDNForumForumBundle:Category:item_board.html.twig" %}
