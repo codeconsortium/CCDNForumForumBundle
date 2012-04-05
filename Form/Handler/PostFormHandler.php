@@ -211,9 +211,18 @@ class PostFormHandler
 			//
 			if ($this->strategy == self::UPDATE)
 			{
-				$formData = $this->form->getData();		
-				$formData->setEditedDate(new \DateTime());
-				$formData->setEditedBy($this->defaults['user']);
+				$formData = $this->form->getData();	
+
+				// get the current time, and compare to when the post was made.
+				$now = new \DateTime();
+				$interval = $now->diff($formData->getCreatedDate());
+				
+				// if post is less than 15 minutes old, don't add that it was edited.
+				if ($interval->format('%i') > 15)
+				{
+					$formData->setEditedDate(new \DateTime());
+					$formData->setEditedBy($this->defaults['user']);
+				}				
 			}
 		
 			//
