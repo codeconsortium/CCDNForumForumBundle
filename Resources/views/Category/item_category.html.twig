@@ -1,14 +1,11 @@
-<div class="common_box_5 bg_header_smoke">
-	<div class="common_box_header">
-		<span class="heading_glow">{{ category.name }}</span>
-	</div>
+<div class="common_box_5">
 	<div class="common_box_panel">
 		<span class="common_h2">
 			<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_category.png') }}" alt="icon">
 			<a class="heading_link" href="{{ path('cc_forum_category_show', {'category_id': category.id }) }}">{{ category.name }}</a>
 		</span>
 	</div>
-	<div class="common_box_panel">
+	<div class="common_table_panel">
 		<table class="common_list">
 			<tbody>
 			{% for row, board in category.boards %}

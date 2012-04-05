@@ -50,7 +50,7 @@
 	<div class="common_box_header">
 		<span class="heading_glow">{{ 'title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') }}</span>
 	</div>
-	<div class="common_box_panel">
+	<div class="common_table_panel">
 		{% form_theme form param('ccdn_forum_forum.template.theme') %}
 		<form action="{{ path('cc_forum_post_edit', { 'post_id': post.id } ) }}" method="post" {{ form_enctype(form) }}>
 			{{ form_row(form._token) }}
