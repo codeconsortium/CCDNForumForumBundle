@@ -33,7 +33,8 @@ title.post.show: 'Forum: #%post_id% for topic "%topic_title%".'
 title.post.edit: 'Forum: Edit post #%post_id% of topic "%topic_title%".'
 title.post.delete: 'Forum: Delete #%post_id% for topic "%topic_title%".'
 title.flag.post: 'Forum: Flag post #%post_id%. for topic "%topic_title%"'
-title.drafts: "Drafts"
+title.drafts: 'Drafts'
+title.subscriptions.show: 'Subscriptions'
 
 # links & button links
 link.post.flag: Flag
