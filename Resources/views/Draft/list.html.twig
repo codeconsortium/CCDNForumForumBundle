@@ -8,15 +8,15 @@
 {% block title %}{{ 'title.drafts' | trans({}, 'CCDNForumForumBundle' ) }}{% endblock %}
 
 {% block sidebar %}
-{% if is_granted('ROLE_MODERATOR') %}
-<div class="common_box_5 bg_header_smoke">
-	<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.special' | trans({}, 'CCDNComponentCommonBundle') }}</span></div>
-	<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_moderator_forum_cp') }}">{{ 'general.view.link_moderate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
-	{% if is_granted('ROLE_ADMIN') %}
-	<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_admin_forum_cp') }}">{{ 'general.view.link_administrate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
+	{% if is_granted('ROLE_MODERATOR') %}
+	<div class="sidebar">
+		<div class="sidebar_header"><span class="sidebar_header">{{ 'sidebar.header.special' | trans({}, 'CCDNComponentCommonBundle') }}</span></div>
+		<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_moderator_forum_cp') }}">{{ 'general.view.link_moderate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
+		{% if is_granted('ROLE_ADMIN') %}
+		<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_admin_forum_cp') }}">{{ 'general.view.link_administrate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
+		{% endif %}
+	</div>
 	{% endif %}
-</div>
-{% endif %}
 
 {% endblock %}
 
@@ -27,75 +27,84 @@
 {% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
 
 
-<div class="common_box_5 bg_header_smoke">
-	<div class="common_box_header">
-		<span class="heading_glow">{{ 'title.drafts' | trans({}, 'CCDNForumForumBundle' ) }}</span>
+<div class="section_wrap_square">
+	<div class="section_header">
+		<h2>{{ 'title.drafts' | trans({}, 'CCDNForumForumBundle' ) }}</h2>
 	</div>
+	
 	{% if pager.haveToPaginate %}
 	<div class="pagerfanta">
 	    {{ pagerfanta(pager, 'default', {'routeName':'cc_forum_drafts_list_paginated', 'routeParams':{}} ) }}
 	</div>
 	{% endif %}
-	<div class="common_table_panel">
+	<div class="section_table_panel">
 			<table class="common_list">
 				<thead>
 					<tr>
-						<th style="width: 18px;"></th>
-						<th colspan="2">{{ 'drafts.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') }}</th>
-						<th style="width: 200px;"></th>
+						<th class="icon"></th>
+						<th class="left" colspan="2"><span class="table_header">{{ 'drafts.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') }}</span></th>
+						<th class="center" style="width: 200px;"><span class="table_header">&nbsp;</span></th>
+						<th class="center" style="width: 200px;"></th>
 					</tr>
 				</thead>
 				<tbody>
 				{% for row, draft in pager.getCurrentPageResults %}
 						<tr class="{{ cycle(['row_odd', 'row_even'], row) }}">
-							<td class="padding_5 h_align_centre v_align_middle">
+							<td class="icon16">
 								{% if draft.getTopic %}
-								<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_communication.png') }}" alt="icon">
+								<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_communication.png') }}" alt="icon">
 								{% else %}
-								<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_chat.png') }}" alt="icon">
+								<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_chat.png') }}" alt="icon">
 								{% endif %}
 							</td>
 							{% if draft.getTopic %}
-							<td class="padding_5 h_align_left v_align_middle" colspan="2">
+							<td class="left" colspan="2">
+								<span class="table_data">
 								<b>Reply:</b>&nbsp;<a href="{{ path('cc_forum_topic_show', {'topic_id': draft.getTopic.getId }) }}">{{ draft.getTopic.getTitle }}</a>
+								</span>
 							</td>
 							{% else %}
-							<td class="padding_5 h_align_left v_align_middle">
+							<td class="left">
+								<span class="table_data">
 								<b>Topic:</b>&nbsp;{{ draft.getTitle }}
+								</span>
 							</td>
-							<td class="padding_5 h_align_left v_align_middle">
+							<td class="left">
+								<span class="table_data">
 								{% if draft.getBoard %}
 									<a href="{{ path('cc_forum_board_show', {'board_id': draft.getBoard.getId}) }}">
-										<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_board.png') }}" alt="icon">
+										<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_board.png') }}" alt="icon">
 										{{ draft.getBoard.getName }}
 									</a>
+								{% else %}
+								N/A
 								{% endif %}
+								</span>
 							</td>
 							{% endif %}
-							<td class="padding_5 h_align_centre v_align_middle">
+							<td class="center">
+								<span class="table_data">
 								{{ draft.getCreatedDate|date("d/m/Y - H:i:s") }}
+								</span>
+							</td>
+							<td class="center">
+								<a class="button_link_light" href="{{ path('cc_forum_draft_delete', {'draftId': draft.getId }) }}">{{ 'link.draft.delete' | trans({}, 'CCDNForumForumBundle') }}</a>
+								<a class="button_link_light" href="{{ path('cc_forum_draft_publish', {'draftId': draft.getId }) }}">{{ 'link.draft.publish' | trans({}, 'CCDNForumForumBundle') }}</a>
 							</td>
 						</tr>
 						<tr class="{{ cycle(['row_odd', 'row_even'], row) }}">
-							<td colspan="4">
-								<div class="text_bubble">
-									<div class="text_bubble_header">
-										<img class="text_bubble_chevron" width="30" height="20" src="{{ asset('bundles/ccdnforumforum/images/text_bubble/chevron_shaded.png') }}" alt="chevron">
-										<a class="button_link_light" href="{{ path('cc_forum_draft_delete', {'draftId': draft.getId }) }}">{{ 'link.draft.delete' | trans({}, 'CCDNForumForumBundle') }}</a>
-										<a class="button_link_light" href="{{ path('cc_forum_draft_publish', {'draftId': draft.getId }) }}">{{ 'link.draft.publish' | trans({}, 'CCDNForumForumBundle') }}</a>
-									</div>
-									<div class="text_bubble_body">
-										<span class="common_body">
-										{{ BBCode(draft.body | raw) | raw | slice(0, 200)}}&nbsp;...
-										</span>
-									</div>								
+							<td class="center" colspan="5">
+								<div class="round_box">
+									<span class="common_body">
+									{{ BBCode(draft.body | raw) | raw | slice(0, 200)}}&nbsp;...
+									</span>
 								</div>
 							</td>
 						</tr>
 				{% else %}
 					<tr>
-						<td class="h_align_centre v_align_middle" colspan="4" width="100%">
-							{{ 'drafts.table.empty' | trans({}, 'CCDNForumForumBundle') }}
+						<td class="center" colspan="5">
+							<span class="table_empty">{{ 'drafts.table.empty' | trans({}, 'CCDNForumForumBundle') }}</span>
 						</td>
 					</tr>
 				{% endfor %}

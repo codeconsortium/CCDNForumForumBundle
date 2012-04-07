@@ -8,15 +8,15 @@
 {% block title %}{{ 'title.subscriptions.show' | trans({}, 'CCDNForumForumBundle' ) }}{% endblock %}
 
 {% block sidebar %}
-{% if is_granted('ROLE_MODERATOR') %}
-<div class="common_box_5 bg_header_smoke">
-	<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.special' | trans({}, 'CCDNComponentCommonBundle') }}</span></div>
-	<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_moderator_forum_cp') }}">{{ 'general.view.link_moderate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
-	{% if is_granted('ROLE_ADMIN') %}
-	<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_admin_forum_cp') }}">{{ 'general.view.link_administrate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
+	{% if is_granted('ROLE_MODERATOR') %}
+	<div class="sidebar">
+		<div class="sidebar_header"><span class="sidebar_header">{{ 'sidebar.header.special' | trans({}, 'CCDNComponentCommonBundle') }}</span></div>
+		<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_moderator_forum_cp') }}">{{ 'general.view.link_moderate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
+		{% if is_granted('ROLE_ADMIN') %}
+		<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_admin_forum_cp') }}">{{ 'general.view.link_administrate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
+		{% endif %}
+	</div>
 	{% endif %}
-</div>
-{% endif %}
 
 {% endblock %}
 
@@ -27,9 +27,9 @@
 {% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
 
 
-<div class="common_box_5 bg_header_smoke">
-	<div class="common_box_header">
-		<span class="heading_glow">{{ 'title.subscriptions.show' | trans({}, 'CCDNForumForumBundle' ) }}</span>
+<div class="section_wrap_square">
+	<div class="section_header">
+		<h2>{{ 'title.subscriptions.show' | trans({}, 'CCDNForumForumBundle' ) }}</h2>
 	</div>
 
 	{% if pager.haveToPaginate %}
@@ -37,16 +37,16 @@
 	    {{ pagerfanta(pager, 'default', {'routeName':'cc_forum_subscriptions_paginated', 'routeParams':{}} ) }}
 	</div>
 	{% endif %}
-	<div class="common_table_panel">
+	<div class="section_table_panel">
 			<table class="common_list">
 				<thead>
 					<tr>
-						<th style="width: 18px;"></th>
-						<th style="width: 18px;"></th>
-						<th>{{ 'board.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') }}</th>
-						<th style="width: 100px;">{{ 'board.table.head.reply_count' | trans({}, 'CCDNForumForumBundle') }}</th>
-						<th style="width: 100px;">{{ 'board.table.head.view_count' | trans({}, 'CCDNForumForumBundle') }}</th>
-						<th style="width: 170px;">{{ 'board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') }}</th>	
+						<th class="icon"></th>
+						<th class="icon"></th>
+						<th class="left"><span class="table_header">{{ 'board.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') }}</span></th>
+						<th class="center" style="width: 100px;"><span class="table_header">{{ 'board.table.head.reply_count' | trans({}, 'CCDNForumForumBundle') }}</span></th>
+						<th class="center" style="width: 100px;"><span class="table_header">{{ 'board.table.head.view_count' | trans({}, 'CCDNForumForumBundle') }}</span></th>
+						<th class="center" style="width: 170px;"><span class="table_header">{{ 'board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') }}</span></th>	
 					</tr>
 				</thead>
 				<tbody>
@@ -54,28 +54,28 @@
 					{% set topic = subscription.getTopic %}
 					{% if not topic.getDeletedBy or is_granted('ROLE_MODERATOR') %}
 						<tr class="{{ cycle(['row_odd', 'row_even'], row) }}">
-							<td class="padding_5 h_align_centre v_align_middle">
+							<td class="icon16">
 							{% if topic.getClosedDate %}
-								<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_locked.png') }}" alt="icon">
+								<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_locked.png') }}" alt="icon">
 							{% else %}
 								{# else if not closed, then if new posts add special icon here #}
 							{% endif %}
 							{% if topic.getDeletedDate %}
-								<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_trash.png') }}" alt="icon">
+								<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_trash.png') }}" alt="icon">
 							{% else %}
 								{# else if not closed, then if new posts add special icon here #}
 							{% endif %}
 							</td>
-							<td class="padding_5 h_align_centre v_align_middle">
+							<td class="icon16">
 								{# use custom icons below, will be later specified in the create topic form #}
-								<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}"><img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_communication.png') }}" alt="icon"></a>					
+								<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}"><img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_communication.png') }}" alt="icon"></a>					
 							</td>
-							<td class="padding_5 h_align_left v_align_top">
+							<td class="left">
+								<span class="table_data">
 								<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}">{{ topic.getTitle }}</a>
 								<br>
 
 								{% if topic.getFirstPost %}
-									<span class="label_small">
 									{{ 'post.posted_by' | trans({}, 'CCDNForumForumBundle') }}
 									{% if topic.getFirstPost.getCreatedBy %}
 										<a class="username_small" href="{{ path(user_profile_route, {'user_id': topic.getFirstPost.getCreatedBy.getId } ) }}">{{ topic.getFirstPost.getCreatedBy }}</a>
@@ -83,17 +83,17 @@
 										Guest
 									{% endif %}
 									{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}">{{ topic.getFirstPost.getCreatedDate|date("d/m/Y - H:i:s") }}</a>
-									</span>
 								{% endif %}
+								</span>
 							</td>
-							<td class="h_align_left v_align_middle">
-								<span class="label_small">{{ 'board.table.body.reply_count' | trans({}, 'CCDNForumForumBundle') }}</span>&nbsp;<span class="stat_small">{{ topic.getReplyCount }}</span><br>
+							<td class="center">
+								<span class="table_data">{{ topic.getReplyCount }}</span>
 							</td>
-							<td class="h_align_left v_align_middle">
-								<span class="label_small">{{ 'board.table.body.view_count' | trans({}, 'CCDNForumForumBundle') }}</span>&nbsp;<span class="stat_small">{{ topic.getViewCount }}</span>
+							<td class="center">
+								<span class="table_data">{{ topic.getViewCount }}</span>
 							</td>
-							<td class="h_align_left v_align_middle padding_5">
-								<span class="label_small">				
+							<td class="center">
+								<span class="table_data">				
 								{% if topic.getLastPost %}
 									{{ 'post.posted_by' | trans({}, 'CCDNForumForumBundle') }}
 									{% if topic.getLastPost.getCreatedBy %}
@@ -110,8 +110,8 @@
 					{% endif %}
 				{% else %}
 					<tr>
-						<td class="h_align_centre v_align_middle" colspan="6" width="100%">
-							{{ 'board.table.empty' | trans({}, 'CCDNForumForumBundle') }}
+						<td class="center" colspan="6">
+							<span class="table_empty">{{ 'board.table.empty' | trans({}, 'CCDNForumForumBundle') }}</span>
 						</td>
 					</tr>
 				{% endfor %}

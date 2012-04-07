@@ -1,7 +1,9 @@
-<div class="common_box_panel bg_item_light">
-	<div class="row padding_10">
-				
-		<div style="width: auto;" class="column v_align_top h_align_left">
+<div class="section_panel">
+	<div style="display: block; width: 120px; float: left; margin: 0px -122px 0px 0px; padding: 0px; overflow:hidden; vertical-align: top; text-align: center:">
+		<div style="margin: 0px; padding: 1px; overflow: hidden; vertical-align: top; text-align: center;">
+
+			<a class="username_medium" href="{{ path(user_profile_route, {'user_id': user.getId } ) }}">{{ user.getUsername }}</a>
+
 			{% if user.getProfile %}
 				{% if user.getProfile.getAvatarIsRemote %}
 					{% if user.getProfile.getAvatar %}
@@ -19,42 +21,30 @@
 			{% else %}
 				<img class="avatar" width="100" height="100" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" alt="avatar">
 			{% endif %}
+
+			<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon" 
+			><img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon" 
+			><img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon" 
+			><img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon" 
+			><img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon">
+			
 		</div>
-		
-		<div style="width: auto;" class="column v_align_top h_align_left padding_5">
-			<div class="row h_align_centre padding_5">
-				<a class="username_medium" href="{{ path(user_profile_route, {'user_id': user.getId } ) }}">{{ user.getUsername }}</a>
-			</div>
-			<div class="row h_align_centre padding_5">
-				<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon" 
-				><img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon" 
-				><img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon" 
-				><img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon" 
-				><img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon">
+	</div>
+	<div style="display: block; float: right; width: 100%; padding: 0px; overflow: hidden; vertical-align: top;">
+		<div style="display: block; margin: 0px 0px 0px 122px; padding: 1px; overflow: hidden; vertical-align: top;">
+
+			<div class="round_box" style="margin-left: 20px !important;">
+				<img class="text_bubble_chevron" width="20" height="30" src="{{ asset('bundles/ccdnforumforum/images/text_bubble/chevron_left.png') }}" alt="chevron">
+				<span class="common_body">
+					{{ BBCode(preview.getBody | raw) | raw}}<br>
+					{% if user.getProfile %}
+						{% if user.getProfile.getSignature %}
+							<hr>{{ BBCode(user.getProfile.getSignature | raw) | raw }}
+						{% endif %}
+					{% endif %}						
+				</span>
 			</div>
 		</div>
 	</div>
-	
-	<div class="row">
-		<div class="text_bubble">
-			<div class="text_bubble_header">
-				<img class="text_bubble_chevron" width="30" height="20" src="{{ asset('bundles/ccdnforumforum/images/text_bubble/chevron_shaded.png') }}" alt="chevron">
-			</div>
-			<div class="text_bubble_body">
-				<span class="common_body">
-				{{ BBCode(preview.getBody | raw) | raw}}<br>
-				</span>
-				<br>
-			</div>
-			{% if user.getProfile %}
-				{% if user.getProfile.getSignature %}
-			<div class="text_bubble_footer">
-				<span class="common_body">
-				{{ BBCode(user.getProfile.getSignature | raw) | raw }}
-				</span>
-			</div>			
-				{% endif %}
-			{% endif %}
-		</div>
-	</div>
+
 </div>

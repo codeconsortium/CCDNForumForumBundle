@@ -1,19 +1,20 @@
-<div class="common_box_5">
-	<div class="common_box_panel">
-		<span class="common_h2">
-			<img class="icon_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_category.png') }}" alt="icon">
-			<a class="heading_link" href="{{ path('cc_forum_category_show', {'category_id': category.id }) }}">{{ category.name }}</a>
-		</span>
+<div class="section_wrap_square">
+	<div class="section_header">
+		<h2>
+			<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_category.png') }}" alt="icon">
+			<a href="{{ path('cc_forum_category_show', {'category_id': category.id }) }}">{{ category.name }}</a>
+		</h2>
 	</div>
-	<div class="common_table_panel">
+
+	<div class="section_table_panel">
 		<table class="common_list">
 			<thead>
 				<tr>
-					<th></th>
-					<th>{{ 'board.table.head.board' | trans({}, 'CCDNForumForumBundle') }}</th>
-					<th>{{ 'board.table.head.topic_count' | trans({}, 'CCDNForumForumBundle') }}</th>
-					<th>{{ 'board.table.head.post_count' | trans({}, 'CCDNForumForumBundle') }}</th>
-					<th>{{ 'board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') }}</th>
+					<th class="center"></th>
+					<th class="left"><span class="table_header">{{ 'board.table.head.board' | trans({}, 'CCDNForumForumBundle') }}</span></th>
+					<th class="center"><span class="table_header">{{ 'board.table.head.topic_count' | trans({}, 'CCDNForumForumBundle') }}</span></th>
+					<th class="center"><span class="table_header">{{ 'board.table.head.post_count' | trans({}, 'CCDNForumForumBundle') }}</span></th>
+					<th class="center"><span class="table_header">{{ 'board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') }}</span></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -22,7 +23,7 @@
 			{% else %}
 				<tr>
 					<td class="h_align_centre v_align_middle" colspan="4" width="100%" >	
-						{{ 'category.table.empty' | trans({}, 'CCDNForumForumBundle') }}
+						<span class="table_empty">{{ 'category.table.empty' | trans({}, 'CCDNForumForumBundle') }}</span>
 					</td>
 				</tr>
 			{% endfor %}

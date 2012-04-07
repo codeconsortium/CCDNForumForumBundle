@@ -1,21 +1,21 @@
 <tr class="{{ cycler(['row_odd', 'row_even'], 'board') }}">
-	<td class="padding_5 h_align_centre v_align_middle" style="width:52px;">
-		<img class="icon_32x32" width="32" height="32" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_board.png') }}" alt="icon">
+	<td class="icon32">
+		<img class="icon32" width="32" height="32" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_board.png') }}" alt="icon">
 	</td>
-	<td class="h_align_left v_align_top">
-		<a href="{{ path('cc_forum_board_show', {'board_id': board.getId }) }}">{{ board.getName }}</a><br>
-		<span class="common_body">{{ board.getDescription }}</span>		
+	<td class="left">
+		<span class="table_data">
+			<a href="{{ path('cc_forum_board_show', {'board_id': board.getId }) }}">{{ board.getName }}</a><br>
+			{{ board.getDescription }}
+		</span>
 	</td>
-	<td class="h_align_left v_align_top" style="width: 100px;">
-		<span class="label_small">{{ 'board.table.body.topic_count' | trans({}, 'CCDNForumForumBundle') }}</span>
-		<span class="stat_small">{{ board.getTopicCount }}</span>
+	<td class="center" style="width: 100px;">
+		<span class="table_data">{{ board.getTopicCount }}</span>
 	</td>
-	<td class="h_align_left v_align_top" style="width: 100px;">
-		<span class="label_small">{{ 'board.table.body.post_count' | trans({}, 'CCDNForumForumBundle') }}</span>
-		<span class="stat_small">{{ board.getPostCount }}</span>
+	<td class="center" style="width: 100px;">
+		<span class="table_data">{{ board.getPostCount }}</span>
 	</td>
-	<td class="h_align_centre v_align_top" style="width:170px;">
-		<span class="label_small">
+	<td class="center" style="width:170px;">
+		<span class="table_data">
 		{% if board.getLastPost %}
 			{% if board.getLastPost.getTopic %}
 				{% set page = divCeil(( board.getLastPost.getTopic.getReplyCount + 1), topics_per_page) %}

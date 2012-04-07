@@ -10,32 +10,32 @@
 
 {% block sidebar %}
 	{% if is_granted('ROLE_MODERATOR') %}
-	<div class="common_box_5 bg_header_smoke">
-		<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.special' | trans({}, 'CCDNComponentCommonBundle') }}</span></div>
-		<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_moderator_forum_cp') }}">{{ 'general.view.link_moderate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
+	<div class="sidebar">
+		<div class="sidebar_header"><span class="sidebar_header">{{ 'sidebar.header.special' | trans({}, 'CCDNComponentCommonBundle') }}</span></div>
+		<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_moderator_forum_cp') }}">{{ 'general.view.link_moderate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
 		{% if is_granted('ROLE_ADMIN') %}
-		<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_admin_forum_cp') }}">{{ 'general.view.link_administrate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
+		<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_admin_forum_cp') }}">{{ 'general.view.link_administrate' | trans({}, 'CCDNComponentCommonBundle') }}</a></div>
 		{% endif %}
 	</div>
 	{% endif %}
 
-	<div class="common_box_5 bg_header_smoke">
-		<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') }}</span></div>
-		<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_forum_topic_reply', {'topic_id': topic.getId }) }}">{{ 'sidebar.link.reply_to_topic' | trans({}, 'CCDNForumForumBundle') }}</a></div>
-		<div class="common_box_panel"><a class="sidebar" href="{{ path('cc_forum_topic_create', {'board_id': topic.getBoard.getId }) }}">{{ 'sidebar.link.create_new_topic' | trans({}, 'CCDNForumForumBundle') }}</a></div>
+	<div class="sidebar">
+		<div class="sidebar_header"><span class="sidebar_header">{{ 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') }}</span></div>
+		<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_forum_topic_reply', {'topic_id': topic.getId }) }}">{{ 'sidebar.link.reply_to_topic' | trans({}, 'CCDNForumForumBundle') }}</a></div>
+		<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_forum_topic_create', {'board_id': topic.getBoard.getId }) }}">{{ 'sidebar.link.create_new_topic' | trans({}, 'CCDNForumForumBundle') }}</a></div>
 	</div>
 
 	{% if is_granted('ROLE_MODERATOR') %}
-	<div class="common_box_5 bg_header_smoke">
-		<div class="common_box_header"><span class="heading_glow">{{ 'sidebar.header.moderator_tools' | trans({}, 'CCDNForumForumBundle') }}</span></div>
-		<div class="common_box_panel">
+	<div class="sidebar">
+		<div class="sidebar_header"><span class="sidebar_header">{{ 'sidebar.header.moderator_tools' | trans({}, 'CCDNForumForumBundle') }}</span></div>
+		<div class="sidebar_panel">
 			{% if topic.closedBy %}
 				<a class="sidebar" href="{{ path('cc_moderator_forum_topic_reopen', {'topic_id': topic.getId }) }}">{{ 'link.topic.reopen' | trans({}, 'CCDNForumForumBundle') }}</a>
 			{% else %}
 				<a class="sidebar" href="{{ path('cc_moderator_forum_topic_close', {'topic_id': topic.getId }) }}">{{ 'link.topic.close' | trans({}, 'CCDNForumForumBundle') }}</a>
 			{% endif %}
 		</div>
-		<div class="common_box_panel">
+		<div class="sidebar_panel">
 			<a class="sidebar" href="{{ path('cc_moderator_forum_topic_change_board', {'topic_id': topic.getId }) }}">{{ 'link.topic.change_board' | trans({}, 'CCDNForumForumBundle') }}</a>
 		</div>
 	</div>
@@ -49,12 +49,13 @@
 
 {% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
 
-<div class="common_box_5 bg_header_smoke">
-	<div class="common_box_header">
-		<span class="heading_glow">{{ topic.getTitle }}</span>
+<div class="section_wrap_square">
+	<div class="section_header">
+		<h2>{{ topic.getTitle }}</h2>
 	</div>
+	
 	{% if topic.closedBy %}
-	<div class="common_box_panel">
+	<div class="section_panel">
 		{{ 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') }}{{ topic.getClosedBy.getUsername }}
 		{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}{{ topic.getClosedDate |date("d/m/Y - H:i:s") }}
 	</div>

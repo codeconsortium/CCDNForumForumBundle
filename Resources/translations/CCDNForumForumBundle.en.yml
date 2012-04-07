@@ -32,7 +32,7 @@ title.topic.delete: 'Forum: Delete topic "%topic_title%".'
 title.post.show: 'Forum: #%post_id% for topic "%topic_title%".'
 title.post.edit: 'Forum: Edit post #%post_id% of topic "%topic_title%".'
 title.post.delete: 'Forum: Delete #%post_id% for topic "%topic_title%".'
-title.flag.post: 'Forum: Flag post #%post_id%. for topic "%topic_title%"'
+title.flag.post: 'Forum: Flag post #%post_id%. for topic "%topic_title%".'
 title.drafts: 'Drafts'
 title.subscriptions.show: 'Subscriptions'
 
@@ -70,9 +70,9 @@ flash.subscription.topic.unsubscribed: 'You unsubscribed from the topic %topic_t
 flash.subscription.topic.not.found: 'Topic could not be subscribed to because it was not found! Sorry about that.'
 
 # show:
-categories.empty: There are no categories.
-category.table.empty: There are no boards for this category.
-board.table.empty: No topics for this board, be the first to post one!
+categories.empty: 'There are no categories.'
+category.table.empty: 'There are no boards for this category.'
+board.table.empty: 'No topics for this board, be the first to post one!'
 
 # show:
 board.table.body.topic_count: 'Topics: '
