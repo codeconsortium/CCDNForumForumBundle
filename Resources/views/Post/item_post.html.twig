@@ -53,7 +53,7 @@
 			
 			<div class="row h_align_centre padding_5">
 				{% if post.getCreatedBy %}
-				<a class="username_medium" href="{{ path(user_profile_route, {'user_id': post.getCreatedBy.getId } ) }}">{{ post.getCreatedBy }}</a>
+				<a href="{{ path(user_profile_route, {'user_id': post.getCreatedBy.getId } ) }}">{{ post.getCreatedBy }}</a>
 				{% else %}Guest{% endif %}
 			</div>			
 
@@ -99,18 +99,18 @@
 		<div style="display: block; margin: 0px 0px 0px 122px; padding: 1px; overflow: hidden; vertical-align: top;">
 			
 			
-			<span class="posted_at">&nbsp;{{ 'generic.posted_at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getCreatedDate|date("d/m/Y - H:i:s") }}</span>
+			<span class="posted_on">&nbsp;{{ 'generic.posted_at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getCreatedDate|date("d/m/Y - H:i:s") }}</span>
 
 			{% if post.getEditedDate %}
-				<span class="edited_at">
+				<span class="edited_on">
 				&nbsp;{{ 'post.edited_by' |trans({}, 'CCDNForumForumBundle') }}
-				{% if post.getEditedBy %}<a href="{{ path(user_profile_route, {'user_id': post.getEditedBy.getId}) }}">{{ post.getEditedBy.getUsername }}</a>{% else %}Guest{% endif %}
+				{% if post.getEditedBy %}<a href="{{ path(user_profile_route, {'user_id': post.getEditedBy.getId}) }}">{{ post.getEditedBy.getUsername |title }}</a>{% else %}Guest{% endif %}
 				{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getEditedDate |date("d/m/Y - H:i:s") }}
 				</span>
 			{% endif %}
 
 			{% if post.getFlags.count > 0 %}
-				<span class="severe">
+				<span class="common_body">
 					<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" alt="icon">
 					{{ 'post.has_been_flagged' |trans({}, 'CCDNForumForumBundle') }}
 				</span>
@@ -119,10 +119,10 @@
 
 			{% if post.getDeletedBy %}
 				<div class="round_box">
-					<span class="common_body">
+					<span class="deleted_on">
 					{{ 'post.is_deleted' | trans({}, 'CCDNForumForumBundle') }} - 
 					{{ 'post.deleted_by' |trans({}, 'CCDNForumForumBundle') }}
-					{% if post.getDeletedBy %}{{ post.getDeletedBy.getUsername }}{% else %}Guest{% endif %}
+					{% if post.getDeletedBy %}{{ post.getDeletedBy.getUsername |title }}{% else %}Guest{% endif %}
 					{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getCreatedDate|date("d/m/Y - H:i:s") }}
 					</span>
 				</div>

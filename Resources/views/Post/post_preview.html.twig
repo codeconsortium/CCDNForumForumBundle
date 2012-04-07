@@ -2,7 +2,7 @@
 	<div style="display: block; width: 120px; float: left; margin: 0px -122px 0px 0px; padding: 0px; overflow:hidden; vertical-align: top; text-align: center:">
 		<div style="margin: 0px; padding: 1px; overflow: hidden; vertical-align: top; text-align: center;">
 
-			<a class="username_medium" href="{{ path(user_profile_route, {'user_id': user.getId } ) }}">{{ user.getUsername }}</a>
+			<a href="{{ path(user_profile_route, {'user_id': user.getId } ) }}">{{ user.getUsername }}</a>
 
 			{% if user.getProfile %}
 				{% if user.getProfile.getAvatarIsRemote %}
