@@ -93,10 +93,10 @@
 							</td>
 						</tr>
 						<tr class="{{ cycle(['row_odd', 'row_even'], row) }}">
-							<td class="center" colspan="5">
+							<td class="left" colspan="5">
 								<div class="round_box">
 									<span class="common_body">
-									{{ BBCode(draft.body | raw) | raw | slice(0, 200)}}&nbsp;...
+									{{ BBCode(draft.body | raw | slice(0, 200)) | raw }}&nbsp;...
 									</span>
 								</div>
 							</td>
