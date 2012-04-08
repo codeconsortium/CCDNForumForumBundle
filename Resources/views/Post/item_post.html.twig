@@ -48,15 +48,15 @@
 
 
 <div class="section_panel">
-	<div style="display: block; width: 120px; float: left; margin: 0px -122px 0px 0px; padding: 0px; overflow:hidden; vertical-align: top; text-align: center:">
-		<div style="margin: 0px; padding: 1px; overflow: hidden; vertical-align: top; text-align: center; z-index: 3;">
+	<div style="display:block; float:left; width:120px; margin:0px -132px 0px 0px; padding:0px; overflow:hidden; vertical-align:top; text-align:center;">
+		<div style="margin: 0px; padding: 0px; overflow: hidden; vertical-align: top; text-align: center; z-index: 3;">
 			
-			<div class="row h_align_centre padding_5">
+			<span class="username_medium">
 				{% if post.getCreatedBy %}
 				<a href="{{ path(user_profile_route, {'user_id': post.getCreatedBy.getId } ) }}">{{ post.getCreatedBy }}</a>
 				{% else %}Guest{% endif %}
-			</div>			
-
+			</span><br><br>
+			
 			{% if post.getCreatedBy %}
 				{% if post.getCreatedBy.getProfile %}
 					{% if post.getCreatedBy.getProfile.getAvatarIsRemote %}
@@ -95,11 +95,11 @@
 
 		</div>
 	</div>
-	<div style="display: block; float: right; width: 100%; padding: 0px; overflow: hidden; vertical-align: top;">
-		<div style="display: block; margin: 0px 0px 0px 122px; padding: 1px; overflow: hidden; vertical-align: top;">
+	<div style="display: block; padding: 0px; overflow: hidden; vertical-align: top;">
+		<div style="display: block; float: right; padding: 1px; margin: 0px 0px 0px 132px; overflow: hidden; vertical-align: top;">
 			
 			
-			<span class="posted_on">&nbsp;{{ 'generic.posted_at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getCreatedDate|date("d/m/Y - H:i:s") }}</span>
+			<span class="posted_on" style="padding-left: 15px;">&nbsp;{{ 'generic.posted_at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getCreatedDate|date("d/m/Y - H:i:s") }}</span>
 
 			{% if post.getEditedDate %}
 				<span class="edited_on">
@@ -129,9 +129,12 @@
 			{% else %}
 				<div class="round_box" style="margin-left: 20px !important;">
 					<img class="text_bubble_chevron" width="20" height="30" src="{{ asset('bundles/ccdnforumforum/images/text_bubble/chevron_left.png') }}" alt="chevron">
+					<div style="position: relative;	top: -30px;	z-index: 2;	visibility: visible; overflow: visible;">
+						<span class="common_body">
+							{{ BBCode(post.getBody | raw) | raw}}<br>
+						</span>
+					</div>
 					<span class="common_body">
-						{{ BBCode(post.getBody | raw) | raw}}<br>
-
 						{% if post.getAttachment %}
 							<br><a href="{{ path('cc_attachment_download', {'attachment_id': post.getAttachment.getId }) }}"><img width="60" height="60" src="{{ path('cc_attachment_thumbnail', {'attachment_id': post.getAttachment.getId }) }}" alt="{{ post.getAttachment.getAttachmentOriginal }}"></a><br>
 						{% endif %}

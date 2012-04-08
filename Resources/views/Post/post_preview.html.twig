@@ -35,8 +35,12 @@
 
 			<div class="round_box" style="margin-left: 20px !important;">
 				<img class="text_bubble_chevron" width="20" height="30" src="{{ asset('bundles/ccdnforumforum/images/text_bubble/chevron_left.png') }}" alt="chevron">
+				<div style="position: relative;	top: -30px;	z-index: 2;	visibility: visible; overflow: visible;">
+					<span class="common_body">
+						{{ BBCode(preview.getBody | raw) | raw}}<br>
+					</span>
+				</div>
 				<span class="common_body">
-					{{ BBCode(preview.getBody | raw) | raw}}<br>
 					{% if user.getProfile %}
 						{% if user.getProfile.getSignature %}
 							<hr>{{ BBCode(user.getProfile.getSignature | raw) | raw }}

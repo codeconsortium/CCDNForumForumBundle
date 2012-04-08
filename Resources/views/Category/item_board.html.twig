@@ -3,8 +3,8 @@
 		<img class="icon32" width="32" height="32" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_board.png') }}" alt="icon">
 	</td>
 	<td class="left">
-		<span class="table_data">
-			<a href="{{ path('cc_forum_board_show', {'board_id': board.getId }) }}">{{ board.getName }}</a><br>
+		<span class="common_head"><a href="{{ path('cc_forum_board_show', {'board_id': board.getId }) }}">{{ board.getName }}</a></span><br>
+		<span class="common_body">	
 			{{ board.getDescription }}
 		</span>
 	</td>
