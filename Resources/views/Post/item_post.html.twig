@@ -36,7 +36,7 @@
 			{% endif %}
 							
 		<a href="{{ path('cc_forum_topic_reply', {'topic_id': post.getTopic.getId }) }}" rel="tipsy" title="{{ 'link.post.reply' | trans({}, 'CCDNForumForumBundle') }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_comment.png') }}" alt="{{ 'link.post.reply' | trans({}, 'CCDNForumForumBundle') }}"></a>
-		<a href="{{ path('cc_forum_topic_reply_with_quote', {'topic_id': post.getTopic.getId, 'quote_id': post.getId }) }}" rel="tipsy" title="{{ 'link.post.quote' | trans({}, 'CCDNForumForumBundle') }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_comment_2.png') }}" alt="{{ 'link.post.quote' | trans({}, 'CCDNForumForumBundle') }}"></a>	
+		<a href="{{ path('cc_forum_topic_reply_with_quote', {'topic_id': post.getTopic.getId, 'quote_id': post.getId }) }}" rel="tipsy" title="{{ 'link.post.quote' | trans({}, 'CCDNForumForumBundle') }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_quote.png') }}" alt="{{ 'link.post.quote' | trans({}, 'CCDNForumForumBundle') }}"></a>	
 		{% endif %}
 		
 		{% if post.getLockedDate %}
