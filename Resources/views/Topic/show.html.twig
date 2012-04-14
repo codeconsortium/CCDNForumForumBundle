@@ -60,6 +60,13 @@
 				<a class="sidebar" href="{{ path('cc_moderator_forum_topic_delete', {'topic_id': topic.getId }) }}">{{ 'link.topic.delete' |trans({}, 'CCDNForumForumBundle') }}</a>
 			{% endif %}
 		</div>
+		<div class="sidebar_panel">
+			{% if topic.isSticky %}
+				<a class="sidebar" href="{{ path('cc_moderator_forum_topic_unsticky', {'topic_id': topic.getId }) }}">{{ 'link.topic.unsticky' |trans({}, 'CCDNForumModeratorBundle') }}</a>
+			{% else %}
+				<a class="sidebar" href="{{ path('cc_moderator_forum_topic_sticky', {'topic_id': topic.getId }) }}">{{ 'link.topic.sticky' |trans({}, 'CCDNForumModeratorBundle') }}</a>
+			{% endif %}
+		</div>
 	</div>
 	{% endif %}
 

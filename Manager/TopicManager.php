@@ -170,6 +170,41 @@ class TopicManager extends BaseManager implements ManagerInterface
 	}
 	
 	
+	
+	/**
+	 *
+	 * @access public
+	 * @param $topic
+	 * @return $this
+	 */
+	public function sticky($topic)
+	{
+		$topic->setIsSticky(true);
+		
+		$this->persist($topic);
+		
+		return $this;
+	}
+	
+
+	
+	/**
+	 *
+	 * @access public
+	 * @param $topic
+	 * @return $this
+	 */
+	public function unsticky($topic)
+	{
+		$topic->setIsSticky(false);
+		
+		$this->persist($topic);
+		
+		return $this;
+	}
+	
+	
+	
 	public function bulkClose($topics)
 	{
 		foreach($topics as $topic)

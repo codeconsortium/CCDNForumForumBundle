@@ -81,8 +81,37 @@ class TopicRepository extends EntityRepository
 	        return null;
 	    }
 	}
-		
-		
+	
+	
+	
+	/**
+	 *
+	 * @access public
+	 * @param int $topicId
+	 */
+	public function findStickyTopicsForBoardById($boardId)
+	{
+		$query = $this->getEntityManager()
+			->createQuery('
+				SELECT t, fp, lp FROM CCDNForumForumBundle:Topic t
+				LEFT JOIN t.last_post lp
+				LEFT JOIN lp.created_by lpu
+				LEFT JOIN t.first_post fp
+				LEFT JOIN fp.created_by fpu
+				WHERE t.board = :id AND t.deleted_by IS NULL AND t.is_sticky = true
+				GROUP BY t.id
+				ORDER BY lp.created_date DESC')
+			->setParameter('id', $boardId);
+
+		try {
+			//return new Pagerfanta(new DoctrineORMAdapter($query));
+			return $query->getResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    }
+	}
+	
+	
 	
 	/**
 	 *

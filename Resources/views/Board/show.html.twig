@@ -52,6 +52,7 @@
 					<tr>
 						<th class="icon" style="width: 18px;"></th>
 						<th class="icon" style="width: 18px;"></th>
+						<th class="icon" style="width: 18px;"></th>
 						<th class="left"><span class="table_header">{{ 'board.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') }}</span></th>
 						<th class="center" style="width: 100px;"><span class="table_header">{{ 'board.table.head.reply_count' | trans({}, 'CCDNForumForumBundle') }}</span></th>
 						<th class="center" style="width: 100px;"><span class="table_header">{{ 'board.table.head.view_count' | trans({}, 'CCDNForumForumBundle') }}</span></th>
@@ -62,7 +63,7 @@
 				{% for row, topic in pager.getCurrentPageResults %}
 					{% if not topic.getDeletedBy or is_granted('ROLE_MODERATOR') %}
 						<tr class="{{ cycle(['row_odd', 'row_even'], row) }}">
-							<td class="icon16">
+							<td class="center">
 							{% if topic.getClosedDate %}
 								<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_locked.png') }}" alt="icon">
 							{% else %}
@@ -77,6 +78,11 @@
 							<td class="icon16">
 								{# use custom icons below, will be later specified in the create topic form #}
 								<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}"><img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_communication.png') }}" alt="icon"></a>					
+							</td>
+							<td class="icon16">
+								{% if topic.isSticky %}
+									<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_announcement.png') }}" alt="icon">
+								{% endif %}
 							</td>
 							<td class="left">
 								<span class="table_data">

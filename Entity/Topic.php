@@ -89,6 +89,11 @@ class Topic
 	 */
 	protected $deleted_by;
 
+	/**
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $is_sticky;
+	
 
     public function __construct()
     {
@@ -335,5 +340,25 @@ class Topic
     public function getDeletedBy()
     {
         return $this->deleted_by;
+    }
+
+    /**
+     * Set is_sticky
+     *
+     * @param boolean $isSticky
+     */
+    public function setIsSticky($isSticky)
+    {
+        $this->is_sticky = $isSticky;
+    }
+
+    /**
+     * Get is_sticky
+     *
+     * @return boolean 
+     */
+    public function getIsSticky()
+    {
+        return $this->is_sticky;
     }
 }
