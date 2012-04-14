@@ -44,13 +44,16 @@ class BoardController extends ContainerAware
 			$topics_paginated = $this->container->get('ccdn_forum_forum.topic.repository')->findTopicsForBoardById($board_id);		
 		}
 
+		// get sticky topics
+		$stickyTopics = $this->container->get('ccdn_forum_forum.topic.repository')->findStickyTopicsForBoardById($board_id);		
+
 		// deal with pagination.
 		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.topics_per_page');
 		$topics_paginated->setMaxPerPage($topics_per_page);
 		$topics_paginated->setCurrentPage($page, false, true);
 
 		// check board exists.
-		if ( ! $board || ! $topics_paginated->getCurrentPageResults())
+		if ( ! $board)
 		{
 			throw new NotFoundHttpException('No such board exists!');
 		}
@@ -73,6 +76,7 @@ class BoardController extends ContainerAware
 			'board' => $board,
 			'pager' => $topics_paginated,
 			'posts_per_page' => $posts_per_page,
+			'sticky_topics' => $stickyTopics,
 			));
         
 	}
