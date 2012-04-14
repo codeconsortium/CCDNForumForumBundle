@@ -78,31 +78,44 @@ class TopicController extends ContainerAware
 		//
 		// Get post counts for users
 		//
-		$registryUserIds = array();
-		
-		foreach ($posts_paginated->getCurrentPageResults() as $key => $post)
+		if (count($posts_paginated->getCurrentPageResults()) > 0)
 		{
-			if ($post->getCreatedBy())
+			$registryUserIds = array();
+		
+			foreach ($posts_paginated->getCurrentPageResults() as $key => $post)
 			{
-				$id = $post->getCreatedBy()->getId();
-				
-				if (! array_key_exists($id, $registryUserIds))
+				if ($post->getCreatedBy())
 				{
-					$registryUserIds[] = $id;				
+					$id = $post->getCreatedBy()->getId();
+				
+					if (! array_key_exists($id, $registryUserIds))
+					{
+						$registryUserIds[] = $id;				
+					}
 				}
+			}
+		
+			$postCountsTemp = $this->container->get('ccdn_forum_forum.registry.repository')->getPostCountsForUsers($registryUserIds);
+		
+			//
+			// Sort the postCounts so that the [id] is the key of the parent key.
+			//
+			$postCounts = array();
+		
+			foreach ($postCountsTemp as $key => $registry)
+			{
+				$postCounts[$registry->getOwnedBy()->getId()] = $registry->getCachePostCount();
 			}
 		}
 		
-		$postCountsTemp = $this->container->get('ccdn_forum_forum.registry.repository')->getPostCountsForUsers($registryUserIds);
-		
-		//
-		// Sort the postCounts so that the [id] is the key of the parent key.
-		//
-		$postCounts = array();
-		
-		foreach ($postCountsTemp as $key => $registry)
+		if (! @isset($postCounts))
 		{
-			$postCounts[$registry->getOwnedBy()->getId()] = $registry->getCachePostCount();
+			$postCounts = array();
+		} else {
+			if (count($postCounts) < 1)
+			{
+				$postCounts = array();
+			}
 		}
 		
 		// setup crumb trail.
