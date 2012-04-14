@@ -81,15 +81,18 @@
 				<img class="avatar" width="100" height="100" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" alt="avatar">
 			{% endif %}
 
+			{% spaceless %}
 			<div class="row h_align_centre padding_5">
-				<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon" 
-				><img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon" 
-				><img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon" 
-				><img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon" 
-				><img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon">
+				<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon">
+				<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon">
+				<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon">
+				<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon">
+				<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon">
 			</div>
-			{% if post.getRegistry %}
-			<div class="row h_align_centre padding_5">{{ 'post.user.post_count' | trans({'%post_count%': post.getRegistry.getCachePostCount}, 'CCDNForumForumBundle') }}</div>
+			{% endspaceless %}
+
+			{% if post_counts[post.getCreatedBy().getId()] is defined %}
+			<div class="row h_align_centre padding_5">{{ 'post.user.post_count' | trans({'%post_count%': post_counts[post.getCreatedBy().getId()]}, 'CCDNForumForumBundle') }}</div>
 			{% endif %}
 
 		</div>

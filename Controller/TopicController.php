@@ -75,6 +75,36 @@ class TopicController extends ContainerAware
 			$subscription = null;
 		}
 		
+		//
+		// Get post counts for users
+		//
+		$registryUserIds = array();
+		
+		foreach ($posts_paginated->getCurrentPageResults() as $key => $post)
+		{
+			if ($post->getCreatedBy())
+			{
+				$id = $post->getCreatedBy()->getId();
+				
+				if (! array_key_exists($id, $registryUserIds))
+				{
+					$registryUserIds[] = $id;				
+				}
+			}
+		}
+		
+		$postCountsTemp = $this->container->get('ccdn_forum_forum.registry.repository')->getPostCountsForUsers($registryUserIds);
+		
+		//
+		// Sort the postCounts so that the [id] is the key of the parent key.
+		//
+		$postCounts = array();
+		
+		foreach ($postCountsTemp as $key => $registry)
+		{
+			$postCounts[$registry->getOwnedBy()->getId()] = $registry->getCachePostCount();
+		}
+		
 		// setup crumb trail.
 		$board = $topic->getBoard();
 		$category = $board->getCategory();
@@ -92,6 +122,7 @@ class TopicController extends ContainerAware
 			'crumbs' => $crumb_trail,
 			'board' => $board,
 			'topic' => $topic,
+			'post_counts' => $postCounts,
 			'pager' => $posts_paginated,
 			'subscription' => $subscription,
 		));

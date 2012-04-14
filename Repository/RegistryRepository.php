@@ -13,6 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Repository;
 
+use Doctrine\ORM\Query;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -48,5 +49,32 @@ class RegistryRepository extends EntityRepository
 	        return;
 	    }
 	}
+
 	
+	
+	/**
+	 *
+	 * 
+	 *
+	 *
+	 * @access public
+	 */
+	public function getPostCountsForUsers($registryUserIds)
+	{
+		$qb = $this->getEntityManager()->createQueryBuilder();
+		$query = $qb
+			->add('select', 'r')
+			->from('CCDNForumForumBundle:Registry', 'r')
+			->where($qb->expr()->in('r.owned_by', '?1'))
+			->setParameters(array('1' => array_values($registryUserIds)))
+			->getQuery();
+
+		try {
+			return $query->getResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    }	
+	}
+	
+		
 }

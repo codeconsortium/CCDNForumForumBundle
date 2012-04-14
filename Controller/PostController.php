@@ -45,12 +45,34 @@ class PostController extends ContainerAware
 			throw new NotFoundHttpException('No such post exists!');
 		}
 		
-		// if this topics first post is deleted, and no
-		// other posts exist then throw an NotFoundHttpException!
+		// if this topics first post is deleted, and no other
+		// posts exist then throw an NotFoundHttpException!
 		if (($post->getDeletedBy() || $post->getTopic()->getDeletedBy())
 		&& ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{
 			throw new NotFoundHttpException('No such post exists!');
+		}
+
+		//
+		// Get post counts for users
+		//	
+		if ($post->getCreatedBy())
+		{
+			$postCountsTemp = $this->container->get('ccdn_forum_forum.registry.repository')->getPostCountsForUsers(array($post->getCreatedBy()->getId()));
+		
+			//
+			// Sort the postCounts so that the [id] is the key of the parent key.
+			//
+			if (count($postCountsTemp) > 0)
+			{
+				$postCounts = array();
+		
+				$postCounts[$postCountsTemp[0]->getOwnedBy()->getId()] = $postCountsTemp[0]->getCachePostCount();
+			} else {
+				$postCounts = array();
+			}
+		} else {
+			$postCounts = array();
 		}
 		
 		// setup crumb trail.
@@ -71,7 +93,9 @@ class PostController extends ContainerAware
 			'user'	=> $user,
 			'crumbs' => $crumb_trail,
 			'topic' => $topic,
-			'post' => $post));
+			'post' => $post,
+			'post_counts' => $postCounts,
+		));
 	}
 	
 	
