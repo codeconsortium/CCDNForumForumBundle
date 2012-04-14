@@ -44,7 +44,6 @@ class PostRepository extends EntityRepository
 				LEFT JOIN p.edited_by eu
 				LEFT JOIN p.deleted_by du
 				LEFT JOIN p.locked_by lu
-				LEFT JOIN p.registry r
 				LEFT JOIN p.attachment pa
 				WHERE p.topic = :id
 				GROUP BY p.id
