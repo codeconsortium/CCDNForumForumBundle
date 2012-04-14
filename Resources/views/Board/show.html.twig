@@ -58,16 +58,15 @@
 			{% for row, topic in sticky_topics %}
 				{% if not topic.getDeletedBy or is_granted('ROLE_MODERATOR') %}
 					<tr class="{{ cycle(['row_odd', 'row_even'], row) }}">
-						<td class="center">
-						{% if topic.getClosedDate %}
-							<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_locked.png') }}" alt="icon">
-						{% else %}
-							{# else if not closed, then if new posts add special icon here #}
-						{% endif %}
+						<td class="icon16">
 						{% if topic.getDeletedDate %}
 							<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_trash.png') }}" alt="icon">
 						{% else %}
-							{# else if not closed, then if new posts add special icon here #}
+							{% if topic.getClosedDate %}
+								<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_locked.png') }}" alt="icon">
+							{% else %}
+								{# else if not closed, then if new posts add special icon here #}
+							{% endif %}
 						{% endif %}
 						</td>
 						<td class="icon16">
@@ -146,16 +145,15 @@
 				{% for row, topic in pager.getCurrentPageResults %}
 					{% if not topic.getDeletedBy or is_granted('ROLE_MODERATOR') %}
 						<tr class="{{ cycle(['row_odd', 'row_even'], row) }}">
-							<td class="center">
-							{% if topic.getClosedDate %}
-								<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_locked.png') }}" alt="icon">
-							{% else %}
-								{# else if not closed, then if new posts add special icon here #}
-							{% endif %}
+							<td class="icon16">
 							{% if topic.getDeletedDate %}
 								<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_trash.png') }}" alt="icon">
 							{% else %}
-								{# else if not closed, then if new posts add special icon here #}
+								{% if topic.getClosedDate %}
+									<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_locked.png') }}" alt="icon">
+								{% else %}
+									{# else if not closed, then if new posts add special icon here #}
+								{% endif %}
 							{% endif %}
 							</td>
 							<td class="icon16">
