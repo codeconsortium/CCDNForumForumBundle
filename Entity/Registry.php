@@ -44,7 +44,17 @@ class Registry
      */
     protected $cachePostCount;
 
-
+	/**
+     * @ORM\Column(type="integer")
+     */
+	protected $cacheKarmaPositiveCount;
+	
+	/**
+     * @ORM\Column(type="integer")
+     */
+	protected $cacheKarmaNegativeCount;
+	
+	
     /**
      * Get id
      *
@@ -97,5 +107,45 @@ class Registry
     public function getOwnedBy()
     {
         return $this->owned_by;
+    }
+
+    /**
+     * Set cacheKarmaPositiveCount
+     *
+     * @param integer $cacheKarmaPositiveCount
+     */
+    public function setCacheKarmaPositiveCount($cacheKarmaPositiveCount)
+    {
+        $this->cacheKarmaPositiveCount = $cacheKarmaPositiveCount;
+    }
+
+    /**
+     * Get cacheKarmaPositiveCount
+     *
+     * @return integer 
+     */
+    public function getCacheKarmaPositiveCount()
+    {
+        return $this->cacheKarmaPositiveCount;
+    }
+
+    /**
+     * Set cacheKarmaNegativeCount
+     *
+     * @param integer $cacheKarmaNegativeCount
+     */
+    public function setCacheKarmaNegativeCount($cacheKarmaNegativeCount)
+    {
+        $this->cacheKarmaNegativeCount = $cacheKarmaNegativeCount;
+    }
+
+    /**
+     * Get cacheKarmaNegativeCount
+     *
+     * @return integer 
+     */
+    public function getCacheKarmaNegativeCount()
+    {
+        return $this->cacheKarmaNegativeCount;
     }
 }
