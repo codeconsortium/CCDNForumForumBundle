@@ -92,8 +92,8 @@
 			</div>
 			{% endspaceless %}
 
-			{% if post_counts[post.getCreatedBy().getId()] is defined %}
-			<div class="row h_align_centre padding_5">{{ 'post.user.post_count' | trans({'%post_count%': post_counts[post.getCreatedBy().getId()]}, 'CCDNForumForumBundle') }}</div>
+			{% if registries[post.getCreatedBy().getId()] is defined %}
+			<div class="row h_align_centre padding_5">{{ 'post.user.post_count' | trans({'%post_count%': registries[post.getCreatedBy().getId()].getCachePostCount()}, 'CCDNForumForumBundle') }}</div>
 			{% endif %}
 
 		</div>

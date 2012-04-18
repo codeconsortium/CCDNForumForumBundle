@@ -94,30 +94,10 @@ class TopicController extends ContainerAware
 					}
 				}
 			}
-		
-			$postCountsTemp = $this->container->get('ccdn_forum_forum.registry.repository')->getPostCountsForUsers($registryUserIds);
-		
-			//
-			// Sort the postCounts so that the [id] is the key of the parent key.
-			//
-			$postCounts = array();
-		
-			foreach ($postCountsTemp as $key => $registry)
-			{
-				$postCounts[$registry->getOwnedBy()->getId()] = $registry->getCachePostCount();
-			}
 		}
 		
-		if (! @isset($postCounts))
-		{
-			$postCounts = array();
-		} else {
-			if (count($postCounts) < 1)
-			{
-				$postCounts = array();
-			}
-		}
-		
+		$registries = $this->container->get('ccdn_forum_forum.registry.manager')->getRegistriesForUsersAsArray($registryUserIds);
+
 		// setup crumb trail.
 		$board = $topic->getBoard();
 		$category = $board->getCategory();
@@ -133,10 +113,10 @@ class TopicController extends ContainerAware
 			'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
 			'user'	=> $user,
 			'crumbs' => $crumb_trail,
+			'pager' => $posts_paginated,
 			'board' => $board,
 			'topic' => $topic,
-			'post_counts' => $postCounts,
-			'pager' => $posts_paginated,
+			'registries' => $registries,
 			'subscription' => $subscription,
 		));
 	}

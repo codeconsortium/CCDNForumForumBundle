@@ -58,22 +58,12 @@ class PostController extends ContainerAware
 		//	
 		if ($post->getCreatedBy())
 		{
-			$postCountsTemp = $this->container->get('ccdn_forum_forum.registry.repository')->getPostCountsForUsers(array($post->getCreatedBy()->getId()));
-		
-			//
-			// Sort the postCounts so that the [id] is the key of the parent key.
-			//
-			if (count($postCountsTemp) > 0)
-			{
-				$postCounts = array();
-		
-				$postCounts[$postCountsTemp[0]->getOwnedBy()->getId()] = $postCountsTemp[0]->getCachePostCount();
-			} else {
-				$postCounts = array();
-			}
+			$registryUserIds = array($post->getCreatedBy()->getId());
 		} else {
-			$postCounts = array();
+			$registryUserIds = array();
 		}
+		
+		$registries = $this->container->get('ccdn_forum_forum.registry.manager')->getRegistriesForUsersAsArray($registryUserIds);
 		
 		// setup crumb trail.
 		$topic = $post->getTopic();
@@ -94,7 +84,7 @@ class PostController extends ContainerAware
 			'crumbs' => $crumb_trail,
 			'topic' => $topic,
 			'post' => $post,
-			'post_counts' => $postCounts,
+			'registries' => $registries,
 		));
 	}
 	

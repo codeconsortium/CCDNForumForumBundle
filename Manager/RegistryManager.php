@@ -78,4 +78,38 @@ class RegistryManager extends BaseManager implements ManagerInterface
 		$this->persist($record)->flushNow();
 	}
 	
+	
+	
+	/**
+	 *
+	 *
+	 */
+	public function getRegistriesForUsersAsArray($registryUserIds = array())
+	{
+	
+		$registriesTemp = $this->container->get('ccdn_forum_forum.registry.repository')->getPostCountsForUsers($registryUserIds);
+	
+		//
+		// Sort the registries so that the [id] is the key of the parent key.
+		//
+		$registries = array();
+	
+		foreach ($registriesTemp as $key => $registry)
+		{
+			$registries[$registry->getOwnedBy()->getId()] = $registry;
+		}
+		
+		if (! @isset($registries))
+		{
+			$registries = array();
+		} else {
+			if (count($registries) < 1)
+			{
+				$registries = array();
+			}
+		}
+		
+		return $registries;
+	}
+	
 }
