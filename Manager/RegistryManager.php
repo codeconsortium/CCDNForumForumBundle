@@ -51,4 +51,31 @@ class RegistryManager extends BaseManager implements ManagerInterface
 		$this->persist($record)->flushNow();
 	}
 	
+
+
+	/**
+	 *
+	 * @access public
+	 * @param $user
+	 */
+	public function updateCacheKarmaCountForUser($user)
+	{
+
+		$record = $this->container->get('ccdn_forum_forum.registry.repository')->findRegistryRecordForUser($user->getId());
+		
+		if ( ! $record)
+		{
+			$record = new Registry();
+			$record->setOwnedBy($user);
+		}
+		
+		$karmaCount = $this->container->get('ccdn_forum_karma.karma.repository')->getKarmaCountForUserById($user->getId());
+		
+		$record->setCacheKarmaPositiveCount($karmaCount['karmaPositiveCount']);
+		$record->setCacheKarmaNegativeCount($karmaCount['karmaNegativeCount']);
+		
+		
+		$this->persist($record)->flushNow();
+	}
+	
 }
