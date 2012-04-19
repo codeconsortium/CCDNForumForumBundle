@@ -32,7 +32,7 @@ Dependencies:
 7. [CCDNComponent CrumbTrailBundle](https://github.com/codeconsortium/CrumbTrailBundle).
 8. [CCDNComponent DashboardBundle](https://github.com/codeconsortium/DashboardBundle).
 9. [CCDNComponent AttachmentBundle](https://github.com/codeconsortium/AttachmentBundle).
-	
+
 Installation:
 -------------
  
@@ -75,7 +75,7 @@ Installation:
 [CCDNComponentAttachmentBundle]
 	git=http://github.com/codeconsortium/AttachmentBundle.git
 	target=/bundles/CCDNComponent/AttachmentBundle
-	
+
 [CCDNForum]
     git=http://github.com/codeconsortium/CCDNForum.git
     target=/bundles/CCDNForum
@@ -96,15 +96,19 @@ and then run `bin/vendors install` script.
 	new CCDNComponent\CrumbTrailBundle\CCDNComponentCrumbTrailBundle(),
 	new CCDNComponent\DashboardBundle\CCDNComponentDashboardBundle(),
 	new CCDNComponent\AttachmentBundle\CCDNComponentAttachmentBundle(),
+	
 	new CCDNForum\ForumBundle\CCDNForumForumBundle(),
-	new CCDNForum\ForumAdminBundle\CCDNForumForumAdminBundle(),
-	new CCDNForum\ForumModeratorBundle\CCDNForumForumModeratorBundle(),
+	new CCDNForum\AdminBundle\CCDNForumAdminBundle(),
+	new CCDNForum\ModeratorBundle\CCDNForumModeratorBundle(),
+	new CCDNForum\KarmaBundle\CCDNForumKarmaBundle(),
 ```
 	
 3) In your app/config/config.yml add (this is configs for all 3 forum bundles):    
 
 ```sh
+#
 # for CCDNForum ForumBundle    
+#
 ccdn_forum_forum:
     user:
         profile_route: cc_profile_show_by_id
@@ -136,6 +140,7 @@ ccdn_forum_forum:
         drafts_per_page: 10
         layout_templates:
             list: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+		
 ccdn_forum_admin:
     user:
         profile_route: cc_profile_show_by_id
@@ -179,7 +184,26 @@ ccdn_forum_moderator:
         layout_templates:
             show_locked: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
 
+#
+# for CCDNForum KarmaBundle
+#
+ccdn_forum_karma:
+    user:
+        profile_route: cc_profile_show_by_id 
+    template:
+        engine: twig
+        theme: CCDNForumKarmaBundle:Form:fields.html.twig
+    review:
+        reviews_per_page: 40
+        layout_templates:
+            review_all: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+    rate:
+        layout_templates:
+            rate: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+
+#
 # for CCDNComponent AttachmentBundle
+#
 ccdn_component_attachment:
     user:
         profile_route: cc_profile_show_by_id
@@ -206,7 +230,7 @@ and in your app/config/parameters.ini add and set the value to the directory whe
 ```sh
 ccdn_attachment_file_store= "/your/folder/where/you/want/to/store/attachments"
 ```
- 
+
 4) In your app/config/routing.yml add:  
 
 ```sh
@@ -229,6 +253,10 @@ CCDNForumAdminBundle:
 CCDNForumForumBundle:
     resource: "@CCDNForumForumBundle/Resources/config/routing.yml"
     prefix: /
+
+CCDNForumKarmaBundle:
+    resource: "@CCDNForumKarmaBundle/Resources/config/routing.yml"
+    prefix: /
 ```
 
 5) Symlink assets to your public web directory by running this in the command line:
@@ -237,4 +265,8 @@ CCDNForumForumBundle:
 	php app/console assets:install --symlink web/
 ```
 	
+5) Update your database schema.
+
+6) Change the layout template you wish to use for each page by changing the configs under the labelled section 'layout_templates'.
+
 Then your done, if you need further help/support, have suggestions or want to contribute please join the community at [www.codeconsortium.com](http://www.codeconsortium.com)
