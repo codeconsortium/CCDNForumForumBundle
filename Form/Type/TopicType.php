@@ -71,11 +71,10 @@ class TopicType extends AbstractType
 				$builder
 					->add('board', 'entity', array(
 						'class' => 'CCDNForumForumBundle:Board',
-						'query_builder' => function($repository)  { return $repository->createQueryBuilder('b')->addSelect('c')->innerJoin('b.category', 'c')->groupBy('c.id')->orderBy('c.id', 'ASC'); },
+						'query_builder' => function($repository)  { return $repository->createQueryBuilder('b')->orderBy('b.id', 'ASC'); },
 						'property' => 'name',
 						'preferred_choices' => $preferredChoices,					
 					));
-					
 			}
 		}	
 		
