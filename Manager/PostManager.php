@@ -287,6 +287,9 @@ class PostManager extends BaseManager implements ManagerInterface
 	
 	public function bulkHardDelete($posts)
 	{
+		
+		$postsToDelete = array();
+		$topicsToDelete = array();
 		$boardsToUpdate = array();
 		
 		foreach($posts as $post)
@@ -295,53 +298,85 @@ class PostManager extends BaseManager implements ManagerInterface
 
 			if ($post->getTopic())
 			{
-				if ($post->getTopic()->getLastPost())
-				{
-					if ($post->getTopic()->getLastPost()->getId() == $post->getId())
-					{
-						if ($topic->getBoard())
-						{
-							$board = $topic->getBoard();
-							
-							$board->setLastPost(null);
-							
-							$this->persist($board);
-							
-							$this->flushNow();
-							
-							$boardsToUpdate[] = $board;
-						}
-						
-						if ($topic->getReplyCount() < 1)
-						{
-							$this->remove($topic);
-					
-							$this->flushNow();
-											
-							continue;
-						} else {
-							// unlink the last post
-							$topic->setLastPost(null);
+				$topic = $post->getTopic();
 
-							$this->persist($topic);					
+				if ($topic->getFirstPost())
+				{
+					if ($topic->getFirstPost()->getId() == $post->getId())
+					{
+						$topic->setFirstPost(null);
+						$this->persist($topic);
+						
+						$this->flushNow();
+						
+						if ( ! array_key_exists($topic->getId(), $topicsToDelete))
+						{
+							$topicsToDelete[$topic->getId()] = $topic;
+						}
+					}
+				}
+
+				if ($topic->getBoard())
+				{
+					$board = $topic->getBoard();
+
+					if ($board->getLastPost())
+					{
+						if ($board->getLastPost()->getId() == $post->getId())
+						{
+							$board->setLastPost(null);		
+							$this->persist($board);
 						}
 					}
 				}
 				
-				if ($post->getTopic()->getFirstPost())
+				if ($topic->getLastPost())
 				{
-					if ($post->getTopic()->getFirstPost()->getId() == $post->getId())
+					// we need to unlink a topics last post
+					// to avoid an integrity constraint.
+					if ($topic->getLastPost()->getId() == $post->getId())
 					{
-						// unlink the first post!
-						$topic->setFirstPost(null);
-				
+						$topic->setLastPost(null);
 						$this->persist($topic);
 					}
 				}
-			}			
+
+				// if we remove the last post we need to update board stats.
+				if ($topic->getBoard())
+				{
+					if ( ! array_key_exists($topic->getBoard()->getId(), $boardsToUpdate))
+					{
+						$boardsToUpdate[$topic->getBoard()->getId()] = $topic->getBoard();
+					}
+				}
+			}
 			
+			if ( ! array_key_exists($post->getId(), $postsToDelete))
+			{
+				$postsToDelete[$post->getId()] = $post;
+			}
+		}
+	//die();	
+		$this->flushNow();
+
+		foreach($postsToDelete as $post)
+		{
 			$this->remove($post);
 		}
+
+		$this->flushNow();
+		
+		foreach($topicsToDelete as $topic)
+		{
+			$this->update($topic);
+			
+			if ($topic)
+			{
+				$this->remove($topic);
+			}
+		}
+		
+		$this->flushNow();
 		
 		$boardManager = $this->container->get('ccdn_forum_forum.board.manager');
 		
