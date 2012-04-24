@@ -205,6 +205,7 @@ class TopicFormHandler
 
 				$formData->getTopic()->setViewCount(0);
 				$formData->getTopic()->setReplyCount(0);
+				$formData->getTopic()->setIsSticky(0);
 
 				$board = $formData->getTopic()->getBoard();
 				

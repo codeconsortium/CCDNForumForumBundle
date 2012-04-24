@@ -39,10 +39,15 @@ class BoardManager extends BaseManager implements ManagerInterface
 		$board->setTopicCount($counters['topicCount']);
 		$board->setPostCount($counters['postCount']);
 
-		$lastPost = $this->container->get('ccdn_forum_forum.board.repository')->findLastPostForBoard($board->getId())->getLastPost();
+		$lastPost = $this->container->get('ccdn_forum_forum.board.repository')->findLastPostForBoard($board->getId());
 	
 		// set last_post for board
-		$board->setLastPost($lastPost);
+		if ($lastPost)
+		{
+			$board->setLastPost($lastPost->getLastPost());
+		} else {
+			$board->setLastPost(null);
+		}
 	
 		$this->persist($board);
 		

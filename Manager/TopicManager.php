@@ -246,13 +246,35 @@ class TopicManager extends BaseManager implements ManagerInterface
 	
 	public function bulkSoftDelete($topics)
 	{
+		
+		$boardsToUpdate = array();
+		
 		foreach($topics as $topic)
 		{
 			$topic->setDeletedBy($this->container->get('security.context')->getToken()->getUser());
 			$topic->setDeletedDate(new \DateTime());
 			
 			$this->persist($topic);
+			
+			if ($topic->getBoard())
+			{
+				if ( ! array_key_exists($topic->getBoard()->getId(), $boardsToUpdate))
+				{
+					$boardsToUpdate[$topic->getBoard()->getId()] = $topic->getBoard();
+				}
+			}
 		}
+		
+		$this->flushNow();
+		
+		$boardManager = $this->container->get('ccdn_forum_forum.board.manager');
+		
+		foreach($boardsToUpdate as $board)
+		{
+			$boardManager->updateBoardStats($board);
+		}
+				
+		$boardManager->flushNow();
 		
 		return $this;
 	}

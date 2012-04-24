@@ -84,8 +84,10 @@ class PostManager extends BaseManager implements ManagerInterface
 				
 		$this->persist($topic)->flushNow();
 
-		$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($topic->getBoard())->flushNow();			
-		
+		if ($topic->getBoard())
+		{
+			$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($topic->getBoard())->flushNow();			
+		}
 		
 		return $this;
 	}	
@@ -133,7 +135,10 @@ class PostManager extends BaseManager implements ManagerInterface
 			// we must persist and flush before we can get accurate counter information.
 			$this->persist($topic, $post)->flushNow();
 
-			$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($topic->getBoard())->flushNow();			
+			if ($topic->getBoard())
+			{
+				$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($topic->getBoard())->flushNow();			
+			}
 		}
 		
 		// update the record
@@ -241,14 +246,41 @@ class PostManager extends BaseManager implements ManagerInterface
 	
 	public function bulkSoftDelete($posts)
 	{
+		
+		$boardsToUpdate = array();
+		
 		foreach($posts as $post)
 		{
 			$post->setDeletedBy($this->container->get('security.context')->getToken()->getUser());
 			$post->setDeletedDate(new \DateTime());
 			
 			$this->persist($post);
+			
+			if ($post->getTopic())
+			{
+				$topic = $post->getTopic();
+				
+				if ($topic->getBoard())
+				{
+					if ( ! array_key_exists($topic->getBoard()->getId(), $boardsToUpdate))
+					{
+						$boardsToUpdate[$topic->getBoard()->getId()] = $topic->getBoard();
+					}
+				}
+			}
 		}
 		
+		$this->flushNow();
+		
+		$boardManager = $this->container->get('ccdn_forum_forum.board.manager');
+		
+		foreach($boardsToUpdate as $board)
+		{
+			$boardManager->updateBoardStats($board);
+		}
+				
+		$boardManager->flushNow();
+				
 		return $this;
 	}
 	
@@ -307,14 +339,19 @@ class PostManager extends BaseManager implements ManagerInterface
 					}
 				}
 			}			
+			
 			$this->remove($post);
 		}
 		
+		$boardManager = $this->container->get('ccdn_forum_forum.board.manager');
+		
 		foreach($boardsToUpdate as $board)
 		{
-			$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($board)->flushNow();			
+			$boardManager->updateBoardStats($board);
 		}
-		
+				
+		$boardManager->flushNow();
+				
 		return $this;
 	}
 	
