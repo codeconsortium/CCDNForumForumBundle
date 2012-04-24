@@ -25,7 +25,12 @@
 				{% else %}
 					Guest 
 				{% endif %}
-				<br>{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': board.getLastPost.getTopic.getId, 'page':page } ) }}#{{ board.getLastPost.getId }}">{{ board.getLastPost.getCreatedDate|date("d/m/Y - H:i:s") }}</a>
+				<br>
+				{% if page < 2 %}
+					{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': board.getLastPost.getTopic.getId, 'page':page } ) }}#{{ board.getLastPost.getId }}">{{ board.getLastPost.getCreatedDate|date("d/m/Y - H:i:s") }}</a>
+				{% else %}
+					{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': board.getLastPost.getTopic.getId, 'page':page } ) }}#{{ board.getLastPost.getId }}">{{ board.getLastPost.getCreatedDate|date("d/m/Y - H:i:s") }}</a>
+				{% endif %}
 			{% else %}
 				{{ 'info.not_applicable' | trans({}, 'CCDNForumForumBundle') }}
 			{% endif %}
