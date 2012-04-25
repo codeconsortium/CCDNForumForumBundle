@@ -49,6 +49,8 @@ class RegistryManager extends BaseManager implements ManagerInterface
 		if ( ! $postCount)
 		{
 			$record->setCachePostCount(0);
+			$record->setCacheKarmaPositiveCount(0);
+			$record->setCacheKarmaNegativeCount(0);
 		} else {
 			$record->setCachePostCount($postCount['postCount']);		
 		}
