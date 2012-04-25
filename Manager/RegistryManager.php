@@ -45,6 +45,7 @@ class RegistryManager extends BaseManager implements ManagerInterface
 		}
 		
 		$postCount = $this->container->get('ccdn_forum_forum.post.repository')->getPostCountForUserById($user->getId());
+		$karmaCount = $this->container->get('ccdn_forum_karma.karma.repository')->getKarmaCountForUserById($user->getId());
 		
 		if ( ! $postCount)
 		{
@@ -52,7 +53,9 @@ class RegistryManager extends BaseManager implements ManagerInterface
 			$record->setCacheKarmaPositiveCount(0);
 			$record->setCacheKarmaNegativeCount(0);
 		} else {
-			$record->setCachePostCount($postCount['postCount']);		
+			$record->setCachePostCount($postCount['postCount']);
+			$record->setCacheKarmaPositiveCount($karmaCount['positiveCount']);
+			$record->setCacheKarmaNegativeCount($karmaCount['negativeCount']);
 		}
 		
 		$this->persist($record)->flushNow();
