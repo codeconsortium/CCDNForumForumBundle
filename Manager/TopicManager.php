@@ -71,6 +71,8 @@ class TopicManager extends BaseManager implements ManagerInterface
 
 		$this->persist($topic)->flushNow();
 		
+		$this->refresh($topic);
+		
 		$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($topic->getBoard())->flushNow();			
 		
 		return $this;

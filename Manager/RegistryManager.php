@@ -46,7 +46,12 @@ class RegistryManager extends BaseManager implements ManagerInterface
 		
 		$postCount = $this->container->get('ccdn_forum_forum.post.repository')->getPostCountForUserById($user->getId());
 		
-		$record->setCachePostCount($postCount['postCount']);
+		if ( ! $postCount)
+		{
+			$record->setCachePostCount(0);
+		} else {
+			$record->setCachePostCount($postCount['postCount']);		
+		}
 		
 		$this->persist($record)->flushNow();
 	}
