@@ -96,7 +96,7 @@
 							<span class="table_data">{{ topic.getViewCount }}</span>
 						</td>
 						<td class="center">
-							<span class="table_data">
+							{% spaceless %}<span class="table_data">
 							{% if topic.getLastPost %}
 								{{ 'post.posted_by' | trans({}, 'CCDNForumForumBundle') }}
 								{% if topic.getLastPost.getCreatedBy %}
@@ -105,9 +105,14 @@
 									Guest
 								{% endif %}
 								{% set page = divCeil((topic.getReplyCount + 1), posts_per_page) %}
-								{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }} <a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page } ) }}#{{ topic.getLastPost.getId }}">{{ topic.getLastPost.getCreatedDate|date("d/m/Y - H:i:s") }}</a>
+								{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}&nbsp;
+								{% if page < 2 %}
+								<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId } ) }}#{{ topic.getLastPost.getId }}">{{ topic.getLastPost.getCreatedDate|date("d/m/Y - H:i:s") }}</a>
+								{% else %}
+								<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page } ) }}#{{ topic.getLastPost.getId }}">{{ topic.getLastPost.getCreatedDate|date("d/m/Y - H:i:s") }}</a>
+								{% endif %}
 							{% endif %}
-							</span>
+							</span>{% endspaceless %}
 						</td>
 					</tr>
 				{% endif %}
@@ -183,7 +188,7 @@
 								<span class="table_data">{{ topic.getViewCount }}</span>
 							</td>
 							<td class="center">
-								<span class="table_data">
+								{% spaceless %}<span class="table_data">
 								{% if topic.getLastPost %}
 									{{ 'post.posted_by' | trans({}, 'CCDNForumForumBundle') }}
 									{% if topic.getLastPost.getCreatedBy %}
@@ -192,9 +197,14 @@
 										Guest
 									{% endif %}
 									{% set page = divCeil((topic.getReplyCount + 1), posts_per_page) %}
-									{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }} <a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page } ) }}#{{ topic.getLastPost.getId }}">{{ topic.getLastPost.getCreatedDate|date("d/m/Y - H:i:s") }}</a>
+									{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}&nbsp;
+									{% if page < 2 %}
+									<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId } ) }}#{{ topic.getLastPost.getId }}">{{ topic.getLastPost.getCreatedDate|date("d/m/Y - H:i:s") }}</a>
+									{% else %}
+									<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page } ) }}#{{ topic.getLastPost.getId }}">{{ topic.getLastPost.getCreatedDate|date("d/m/Y - H:i:s") }}</a>
+									{% endif %}
 								{% endif %}
-								</span>
+								</span>{% endspaceless %}
 							</td>
 						</tr>
 					{% endif %}
