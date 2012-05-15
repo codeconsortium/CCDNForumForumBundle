@@ -1,6 +1,6 @@
 <div class="section_sub_header" id="post_{{ post.getId }}">
 	<div class="float_left">
-		<a href="{{ path('cc_forum_post_show', {'post_id': post.getId }) }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_permalink.png') }}"></a>
+		<a href="{{ path('cc_forum_post_show', {'post_id': post.getId }) }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_permalink.png') }}" alt="permalink"></a>
 	</div>
 	<div class="float_right">
 		{% if is_granted('ROLE_USER') %}
@@ -151,11 +151,13 @@
 						{% if post.getAttachment %}
 							<br><a href="{{ path('cc_attachment_download', {'attachment_id': post.getAttachment.getId }) }}"><img width="60" height="60" src="{{ path('cc_attachment_thumbnail', {'attachment_id': post.getAttachment.getId }) }}" alt="{{ post.getAttachment.getAttachmentOriginal }}"></a><br>
 						{% endif %}
-
+					</span>
+					<hr>
+					<span class="common_body">
 						{% if post.getCreatedBy %}
 							{% if post.getCreatedBy.getProfile %}
 								{% if post.getCreatedBy.getProfile.getSignature %}
-									<hr>{{ BBCode(post.getCreatedBy.getProfile.getSignature | raw) | raw }}
+									{{ BBCode(post.getCreatedBy.getProfile.getSignature | raw) | raw }}
 								{% endif %}
 							{% endif %}
 						{% endif %}
