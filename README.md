@@ -1,11 +1,10 @@
-CCDNForum Forum Bundle(s) README.
-=================================
+CCDNForum ForumBundle README.
+=============================
 
 
-Notes: 
-------
+## Notes: 
 
-This bundle is for the symfony framework and thusly requires Symfony 2.0.x and PHP 5.3.6
+This bundle is for the symfony framework and requires Symfony 2.0.x and PHP 5.3.6
   
 This project uses Doctrine 2.0.x and so does not require any specific database.
   
@@ -19,267 +18,59 @@ Available on github <http://www.github.com/codeconsortium/>
 For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 
+## Description:
 
-Dependencies:
--------------
+This is a ForumBundle for Symfony (2.0.11) for building a bulletin board forum community where users can create and reply to discussions.
 
-1. [FOSUserBundle](http://github.com/FriendsOfSymfony/FOSUserBundle).
-2. [EWZTimeBundle](http://github.com/excelwebzone/EWZRecaptchaBundle).
-3. [PagerFanta](https://github.com/whiteoctober/Pagerfanta).
-4. [PagerFantaBundle](http://github.com/whiteoctober/WhiteOctoberPagerfantaBundle).
-5. [CCDNComponent CommonBundle](https://github.com/codeconsortium/CommonBundle).
-6. [CCDNComponent BBCodeBundle](https://github.com/codeconsortium/BBCodeBundle).
-7. [CCDNComponent CrumbTrailBundle](https://github.com/codeconsortium/CrumbTrailBundle).
-8. [CCDNComponent DashboardBundle](https://github.com/codeconsortium/DashboardBundle).
-9. [CCDNComponent AttachmentBundle](https://github.com/codeconsortium/AttachmentBundle).
+## Features.
 
-Installation:
--------------
- 
-1) Download and install the dependencies.
-   
-   You can set deps to include:
+ForumBundle Provides the following features:
 
-```sh
-[FOSUserBundle]
-    git=http://github.com/FriendsOfSymfony/FOSUserBundle.git
-    target=/bundles/FOS/UserBundle
+1. Create/Reply to Topics.
+2. Edit Topics/Posts.
+3. Flag inappropriate Posts.
+4. Make Topics sticky.
+5. Smileys and BBCode support through [CommonBundle](http://github.com/codeconsortium/CommonBundle) and [BBCodeBundle](http://github.com/codeconsortium/BBCodeBundle).
+6. Board and Topics are paginated.
+7. Topics and Posts can be soft-deleted for recovery by Admin or hard-delete.
+8. Topics can be closed and Posts locked from editing.
+9. Topics and Posts can be Previewed before posting.
+10. Topics and Posts can be saved as a Draft which can be later published.
+11. Topics can be subscribed to and followed in the Topic subscription page.
+12. Optional integration with [DashboardBundle](http://github.com/codeconsortium/DashboardBundle) for easy site navigation.
+13. Complimentary [ModeratorBundle](http://github.com/codeconsortium/CCDNForumModeratorBundle), [AdminBundle](http://github.com/codeconsortium/CCDNForumAdminBundle) allow full forum moderation and administration.
+14. Complimentary [KarmaBundle](http://github.com/codeconsortium/CCDNForumKarmaBundle) provides Post ratings giving a user an overall Karma rating.
+15. Complimentary [AttachmentBundle](http://github.com/codeconsortium/AttachmentBundle) allows file attachments to Posts.
+16. Complimentary [CrumbTrailBundle](http://github.com/codeconsortium/CrumbTrailBundle) allows easy backtracking and logical hierarchical navigation.
 
-[EWZTimeBundle]
-    git=http://github.com/excelwebzone/EWZRecaptchaBundle.git
-    target=/bundles/EWZ/Bundle/RecaptchaBundle
+You will need the complimentary bundles for this bundle to work, which are listed in the dependencies of the installation documentation.
 
-[pagerfanta]
-    git=http://github.com/whiteoctober/Pagerfanta.git
+Before installation of this bundle, you can download the [Sandbox](https://github.com/codeconsortium/CCDNForumSandBox) for testing/development and feature review, or alternatively see the product in use at [CodeConsortium](http://www.codeconsortium.com).
 
-[PagerfantaBundle]
-    git=http://github.com/whiteoctober/WhiteOctoberPagerfantaBundle.git
-    target=/bundles/WhiteOctober/PagerfantaBundle
+## Documentation.
 
-[CCDNComponentCommonBundle]
-    git=http://github.com/codeconsortium/CommonBundle.git
-    target=/bundles/CCDNComponent/CommonBundle
+Documentation can be found in the `Resources/doc/index.md` file in this bundle:
 
-[CCDNComponentBBCodeBundle]
-    git=http://github.com/codeconsortium/BBCodeBundle.git
-    target=/bundles/CCDNComponent/BBCodeBundle
+[Read the Documentation](http://github.com/codeconsortium/CCDNForumForumBundle/blob/master/Resources/doc/index.md).
 
-[CCDNComponentCrumbTrailBundle]
-    git=http://github.com/codeconsortium/CrumbTrailBundle.git
-    target=/bundles/CCDNComponent/CrumbTrailBundle
+## Installation.
 
-[CCDNComponentDashboardBundle]
-    git=http://github.com/codeconsortium/DashboardBundle.git
-    target=/bundles/CCDNComponent/DashboardBundle
+All the installation instructions are located in [documentation](http://github.com/codeconsortium/CCDNForumForumBundle/blob/master/Resources/doc/Installation).
 
-[CCDNComponentAttachmentBundle]
-	git=http://github.com/codeconsortium/AttachmentBundle.git
-	target=/bundles/CCDNComponent/AttachmentBundle
+## License.
 
-[CCDNForum]
-    git=http://github.com/codeconsortium/CCDNForum.git
-    target=/bundles/CCDNForum
-```
-add to your autoload:
+This software is licensed under the MIT license. See the complete license file in the bundle:
 
-```php
-    'CCDNComponent'    => __DIR__.'/../vendor/bundles',
-    'CCDNForum'        => __DIR__.'/../vendor/bundles',
-```
-and then run `bin/vendors install` script.
+	Resources/meta/LICENSE
 
-2) In your AppKernel.php add the following bundles to the registerBundles method array:  
+## About.
 
-```php
-	new CCDNComponent\CommonBundle\CCDNComponentCommonBundle(),
-	new CCDNComponent\BBCodeBundle\CCDNComponentBBCodeBundle(),
-	new CCDNComponent\CrumbTrailBundle\CCDNComponentCrumbTrailBundle(),
-	new CCDNComponent\DashboardBundle\CCDNComponentDashboardBundle(),
-	new CCDNComponent\AttachmentBundle\CCDNComponentAttachmentBundle(),
-	
-	new CCDNForum\ForumBundle\CCDNForumForumBundle(),
-	new CCDNForum\AdminBundle\CCDNForumAdminBundle(),
-	new CCDNForum\ModeratorBundle\CCDNForumModeratorBundle(),
-	new CCDNForum\KarmaBundle\CCDNForumKarmaBundle(),
-```
-	
-3) In your app/config/config.yml add (this is configs for all 3 forum bundles):    
+[CCDNForum ForumBundle](http://github.com/codeconsortium/CCDNForumForumBundle) is free software as part of the CCDNForum from [Code Consortium](http://www.codeconsortium.com). 
+See also the list of [contributors](http://github.com/codeconsortium/CCDNForumForumBundle/contributors).
 
-```sh
-#
-# for CCDNForum ForumBundle    
-#
-ccdn_forum_forum:
-    user:
-        profile_route: cc_profile_show_by_id
-    template:
-        engine: twig
-        theme: CCDNForumForumBundle:Form:fields.html.twig
-    category:
-        layout_templates:
-            index: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-    board:
-        topics_per_page: 40
-        layout_templates:
-            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-    topic:
-        posts_per_page: 5
-        layout_templates:
-            create: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            reply: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-    post:
-        layout_templates:
-            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            flag: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            edit_post: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            edit_topic: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            delete_post: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-    draft:
-        drafts_per_page: 10
-        layout_templates:
-            list: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-		
-ccdn_forum_admin:
-    user:
-        profile_route: cc_profile_show_by_id
-    template:
-        engine: twig
-        theme: CCDNForumAdminBundle:Form:fields.html.twig
-    category:
-        layout_templates:
-            create: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            delete_category: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            edit: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            index: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-    board:
-        topics_per_page: 40
-        layout_templates:
-            create: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            delete_board: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            edit: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+## Reporting an issue or feature request.
 
-ccdn_forum_moderator:
-    user:
-        profile_route: cc_profile_show_by_id
-    template:
-        engine: twig
-        theme: CCDNForumModeratorBundle:Form:fields.html.twig
-    flag:
-        flags_per_page: 40
-        layout_templates:
-            flag_mark: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            show_flag: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            show_flagged: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-    topic:
-        topics_per_page: 40
-        posts_per_page: 20
-        layout_templates:
-            change_board: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            show_closed: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            delete_topic: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-    post:
-        posts_per_page: 40
-        layout_templates:
-            show_locked: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+Issues and feature requests are tracked in the [Github issue tracker](http://github.com/codeconsortium/CCDNForumForumBundle/issues).
 
-#
-# for CCDNForum KarmaBundle
-#
-ccdn_forum_karma:
-    user:
-        profile_route: cc_profile_show_by_id 
-    template:
-        engine: twig
-        theme: CCDNForumKarmaBundle:Form:fields.html.twig
-    review:
-        reviews_per_page: 40
-        layout_templates:
-            review_all: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-    rate:
-        layout_templates:
-            rate: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+Discussions and debates on the project can be further discussed at [Code Consortium](http://www.codeconsortium.com).
 
-#
-# for CCDNComponent AttachmentBundle
-#
-ccdn_component_attachment:
-    user:
-        profile_route: cc_profile_show_by_id
-    template:
-        engine: twig
-        theme: CCDNComponentAttachmentBundle:Form:fields.html.twig
-    store:
-        dir: %ccdn_attachment_file_store%
-    quota_per_user:
-        max_files_quantity: 20
-        max_filesize_per_file: 300KiB
-        max_total_quota: 1000KiB
-    attachment:
-        layout_templates:
-            list: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            upload: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-```
-
-Set the appropriate layout templates you want under the sections 'layout_templates' and the 
-route to a users profile if you are not using the CCDNUser\ProfileBundle. Otherwise use defaults.
-
-and in your app/config/parameters.ini add and set the value to the directory where you want to keep your attachment files:
-
-```sh
-ccdn_attachment_file_store= "/your/folder/where/you/want/to/store/attachments"
-```
-
-4) In your app/config/routing.yml add:  
-
-```sh
-CCDNComponentDashboardBundle:
-	resource: @"CCDNComponentDashboardBundle/Resources/config/routing.yml"
-	prefix: /
-
-CCDNComponentAttachmentBundle:
-    resource: "@CCDNComponentAttachmentBundle/Resources/config/routing.yml"
-    prefix: /
-
-CCDNForumModeratorBundle:
-    resource: "@CCDNForumModeratorBundle/Resources/config/routing.yml"
-    prefix: /
-
-CCDNForumAdminBundle:
-    resource: "@CCDNForumAdminBundle/Resources/config/routing.yml"
-    prefix: /
-
-CCDNForumForumBundle:
-    resource: "@CCDNForumForumBundle/Resources/config/routing.yml"
-    prefix: /
-
-CCDNForumKarmaBundle:
-    resource: "@CCDNForumKarmaBundle/Resources/config/routing.yml"
-    prefix: /
-```
-
-5) Symlink assets to your public web directory by running this in the command line:
-
-```sh
-	php app/console assets:install --symlink web/
-```
-	
-5) Update your database schema.
-
-6) Change the layout template you wish to use for each page by changing the configs under the labelled section 'layout_templates'.
-
-If you wish to add the index page to the header links in the default template of the common bundle, then add this to your app/config.
-
-```sh
-#
-# for CCDNComponent CommonBundle
-#
-ccdn_component_common:
-    header_bar_links:
-        - { bundle: CCDNComponentDashboardBundle, label: 'layout.header_links.dashboard', route: 'cc_dashboard_index' }
-        - { bundle: CCDNUserMemberBundle, label: 'layout.header_links.members', route: 'cc_members_index'}
-        - { bundle: CCDNForumForumBundle, label: 'layout.header_links.forum', route: cc_forum_index }
-```
-
-Then your done, if you need further help/support, have suggestions or want to contribute please join the community at [www.codeconsortium.com](http://www.codeconsortium.com)
