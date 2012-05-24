@@ -55,13 +55,15 @@ Documentation can be found in the `Resources/doc/index.md` file in this bundle:
 
 ## Installation.
 
-All the installation instructions are located in [documentation](http://github.com/codeconsortium/CCDNForumForumBundle/blob/master/Resources/doc/Installation).
+All the installation instructions are located in [documentation](http://github.com/codeconsortium/CCDNForumForumBundle/blob/master/Resources/doc/Install.md).
 
 ## License.
 
 This software is licensed under the MIT license. See the complete license file in the bundle:
 
 	Resources/meta/LICENSE
+
+[Read the License](http://github.com/codeconsortium/CCDNForumForumBundle/blob/master/Resources/meta/LICENSE).
 
 ## About.
 
