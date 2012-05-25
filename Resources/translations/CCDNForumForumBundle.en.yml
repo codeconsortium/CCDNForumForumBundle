@@ -102,6 +102,8 @@ board.table.body.reply_count: 'Replies: '
 board.table.body.view_count: 'Viewed: '
 info.not_applicable: N/A
 
+subscriptions.table.empty: 'You are not subscribed to any topics.'
+
 drafts.table.head.topic_title: "Topic"
 drafts.table.empty: 'No drafts found.'
 # show:
