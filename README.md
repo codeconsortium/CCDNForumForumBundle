@@ -45,7 +45,7 @@ ForumBundle Provides the following features:
 
 You will need the complimentary bundles for this bundle to work, which are listed in the dependencies of the installation documentation.
 
-Before installation of this bundle, you can download the [Sandbox](https://github.com/codeconsortium/CCDNForumSandBox) for testing/development and feature review, or alternatively see the product in use at [CodeConsortium](http://www.codeconsortium.com).
+Before installation of this bundle, you can download the [Sandbox](https://github.com/codeconsortium/CCDNSandBox) for testing/development and feature review, or alternatively see the product in use at [CodeConsortium](http://www.codeconsortium.com).
 
 ## Documentation.
 
