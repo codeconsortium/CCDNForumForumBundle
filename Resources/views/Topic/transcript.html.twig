@@ -7,19 +7,19 @@
 		<div class="scrollable_panel" style="height: 300px;">
 			{% for post in topic.getPosts %}					
 				<div class="section_panel">
-					<div class="column h_align_left padding_5">					
+					<div class="column h_align_left">					
 						{% if post.getCreatedBy %}
 						<a href="{{ path(user_profile_route, {'user_id': post.getCreatedBy.getId } ) }}">{{ post.getCreatedBy }}</a>
 						{% else %}Guest{% endif %}
 					</div>
-					<div class="column h_align_right padding_5">
+					<div class="column h_align_right">
 						<span class="common_body">&nbsp;{{ 'generic.posted_at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getCreatedDate|date("d/m/Y - H:i:s") }}</span>	
 					</div>
 				</div>
 				<div class="section_panel">
 					{% if post.getDeletedBy %}
-					<div class="section_wrap_square margin_10 padding_2">
-						<div class="padding_10">
+					<div class="section_wrap_square">
+						<div class="">
 							<span class="common_body">
 							{{ 'post.is_deleted' | trans({}, 'CCDNForumForumBundle') }} - 
 							{{ 'post.deleted_by' |trans({}, 'CCDNForumForumBundle') }}
@@ -29,7 +29,7 @@
 						</div>
 					</div>
 					{% else %}
-					<div class="section_wrap_square margin_5 padding_5">
+					<div class="section_wrap_square">
 						<span class="common_body">
 						{{ post.getBody |raw }}
 						</span>
