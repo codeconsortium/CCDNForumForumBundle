@@ -28,22 +28,23 @@
 
 {% block body %}
 
-{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
-
 {% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
 
+<div class="section_wrap_top">
+	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+</div>
+<div class="section_wrap_bottom">
+	<h2>{{ 'title.topic.create' | trans({'%board_name%': board.getName }, 'CCDNForumForumBundle') }}</h2>
+</div>
+
 {% if preview is not empty %}
-<div class="section_wrap_square">
+<div class="section_wrap_standalone">
 	{% include "CCDNForumForumBundle:Post:post_preview.html.twig" %}
 </div>
 {% endif %}
 
 
-<div class="section_wrap_square">
-	<div class="section_header">
-		<h2>{{ 'title.topic.create' | trans({'%board_name%': board.getName }, 'CCDNForumForumBundle') }}</h2>
-	</div>
-	
+<div class="section_wrap_standalone">
 	<div class="section_table_panel">
 		{% form_theme form param('ccdn_forum_forum.template.theme') %}
 		<form action="{{ path('cc_forum_topic_create', { 'board_id': board.id } ) }}" method="post" {{ form_enctype(form) }}>
@@ -95,6 +96,8 @@
 	</div>
 </div>
 
-{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+<div class="section_wrap_standalone">
+	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+</div>
 
 {% endblock %}

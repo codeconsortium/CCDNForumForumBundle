@@ -23,12 +23,16 @@
 
 {% block body %}
 
-{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
-
 {% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
+
+<div class="section_wrap_standalone">
+	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+</div>
 
 {% include "CCDNForumForumBundle:Category:item_category.html.twig" %}
 
-{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+<div class="section_wrap_standalone">
+	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+</div>
 
 {% endblock %}

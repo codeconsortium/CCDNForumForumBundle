@@ -45,24 +45,26 @@
 
 {% block body %}
 
-{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
-
 {% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
 
-<div class="section_wrap_square">
-	<div class="section_header">
-		<h2>{{ topic.getTitle }}</h2>
-	</div>
+<div class="section_wrap_top">
+	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+</div>
+<div class="section_wrap_bottom">
+	<h2>{{ topic.getTitle }}</h2>
 	
 	{% if topic.closedBy %}
-	<div class="section_panel">
 		{{ 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') }}{{ topic.getClosedBy.getUsername }}
 		{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}{{ topic.getClosedDate |date("d/m/Y - H:i:s") }}
-	</div>
 	{% endif %}
+</div>
+
+<div class="section_wrap_standalone">
 	{% include "CCDNForumForumBundle:Post:item_post.html.twig" %}
 </div>
 
+<div class="section_wrap_standalone">
 {% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+</div>
 
 {% endblock %}

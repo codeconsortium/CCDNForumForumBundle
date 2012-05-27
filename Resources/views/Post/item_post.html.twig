@@ -1,6 +1,7 @@
 <div class="section_tool_strip" id="post_{{ post.getId }}">
 	<div class="float_left">
-		<a href="{{ path('cc_forum_post_show', {'post_id': post.getId }) }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_permalink.png') }}" alt="permalink"></a>
+		<a class="button_link_silver" href="{{ path('cc_forum_post_show', {'post_id': post.getId }) }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_permalink.png') }}" alt="permalink">#{{ post.getId }}</a>
+		<a class="button_link_silver" href="#post_{{ post.getId }}">#{{ post.getId }}</a>
 	</div>
 	<div class="float_right">
 		{% if is_granted('ROLE_USER') %}
@@ -50,9 +51,10 @@
 </div>
 
 
-<div class="section_panel">
-	<div style="display:block; float:left; width:120px; margin:0px -121px 0px 0px; padding:0px; overflow:hidden; vertical-align:top; text-align:center;">
-		<div style="margin: 0px; padding: 0px; overflow: hidden; vertical-align: top; text-align: center; z-index: 3;">
+
+	<div style="display:block; float:left; width:105px; margin:0px -106px 0px 0px; padding:0px; overflow:hidden; vertical-align:top; text-align:center;">
+		<div style="margin: 0px; padding: 5px 0; overflow: hidden; vertical-align: top; text-align: center; z-index: 3;">
+			{% spaceless %}
 			
 			{% if post.getCreatedBy %}
 				{% if post.getCreatedBy.getProfile %}
@@ -78,7 +80,7 @@
 				<img class="avatar" width="100" height="100" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" alt="avatar">
 			{% endif %}
 
-			{% spaceless %}
+{#			
 			<div class="h_align_centre">
 				<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon">
 				<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon">
@@ -86,9 +88,8 @@
 				<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon">
 				<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_star.png') }}" alt="icon">
 			</div>
-			{% endspaceless %}
+#}
 
-			{% spaceless %}
 			{% if registries[post.getCreatedBy().getId()] is defined %}
 			<div style="text-align: center;">
 				<div style="display: inline-block; margin: 0px; padding: 3px; color: #ff0000;"><span class="common_body">-{{ registries[post.getCreatedBy().getId()].getCacheKarmaNegativeCount }}&nbsp;</span></div>
@@ -98,41 +99,52 @@
 			
 			<div style="text-align: center;">{{ 'post.user.post_count' | trans({'%post_count%': registries[post.getCreatedBy().getId()].getCachePostCount()}, 'CCDNForumForumBundle') }}</div>
 			{% endif %}
+
 			{% endspaceless %}		
 		</div>
 	</div>
 	<div style="display: block; padding: 0px; overflow: hidden; vertical-align: top;">
-		<div style="display: block; float: width: 100%: right; padding: 1px; margin: 0px 0px 0px 121px; overflow: hidden; vertical-align: top;">
+		<div style="display: block; float: width: 100%: right; padding: 1px; margin: 0px 0px 0px 106px; overflow: hidden; vertical-align: top;">
 			
-			<div class="round_box" style="margin-left: 20px !important; min-height: 60px !important;">
+			<div class="round_box" style="margin-left: 20px !important; {#margin-bottom: -30px;#} min-height: 60px !important;">
+				{% spaceless %}
+				<div style="display: block; z-index: 1; margin: 0 0 -30px;">
 				<img class="text_bubble_chevron" width="20" height="30" src="{{ asset('bundles/ccdnforumforum/images/text_bubble/chevron_left.png') }}" alt="chevron">
+				</div>
 
-				<div style="position: relative;	top: -30px;	z-index: 2;	visibility: visible; overflow: visible;">
-					<a class="section_sub_header_link" href="#post_{{ post.getId }}">#{{ post.getId }}</a>
-
-					{% spaceless %}
-					<span class="">
+				<div style="display: block; z-index: 2;">
+					{# position: relative;	top: -30px;	z-index: 2; visibility: visible; overflow: visible; border: 1px solid blue; #}
+					<div class="float_left">
+					<span class="username_medium">
 						{% if post.getCreatedBy %}
 						<a href="{{ path(user_profile_route, {'user_id': post.getCreatedBy.getId } ) }}">{{ post.getCreatedBy }}</a>
-						{% else %}Guest{% endif %}
-						&nbsp;{{ post.getCreatedDate|date("d-m-Y - H:i") }}</span>
-					{% endspaceless %}
+						{% else %}
+						Guest
+						{% endif %}
+					</span>&nbsp;&nbsp;
+					<span class="item_timestamp">
+						{{ post.getCreatedDate|date("d-m-Y - H:i") }}
+					</span>
 					
 					{% if post.getEditedDate %}
-						<span class="edited_on">
-						&nbsp;{{ 'post.edited_by' |trans({}, 'CCDNForumForumBundle') }}
+						&nbsp;&nbsp;
+						<span class="item_timestamp">(
+						{{ 'post.edited_by' |trans({}, 'CCDNForumForumBundle') }}
 						{% if post.getEditedBy %}<a href="{{ path(user_profile_route, {'user_id': post.getEditedBy.getId}) }}">{{ post.getEditedBy.getUsername |title }}</a>{% else %}Guest{% endif %}
-						{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getEditedDate |date("d/m/Y - H:i:s") }}
-						</span><br>
+						{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getEditedDate |date("d-m-Y - H:i") }}
+						)</span><br>
 					{% endif %}
 
-					{% if post.getFlags.count > 0 %}
-						<span class="common_body">
-							<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" alt="icon">
-							{{ 'post.has_been_flagged' |trans({}, 'CCDNForumForumBundle') }}
-						</span>
-					{% endif %}
-					
+					</div>
+					<div class="float_right">
+						{% if post.getFlags.count > 0 %}
+							<span class="common_body">
+								<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_flag.png') }}" alt="icon">
+								{{ 'post.has_been_flagged' |trans({}, 'CCDNForumForumBundle') }}
+							</span>
+						{% endif %}						
+					</div>
+					<br><br><hr>
 					{% if post.getDeletedBy %}
 						<span class="deleted_on">
 						{{ 'post.is_deleted' | trans({}, 'CCDNForumForumBundle') }} - 
@@ -161,9 +173,10 @@
 						</span>
 					{% endif %}
 				</div>	
+				{% endspaceless %}
+				
 			</div>
 			
 		</div>
 	</div>
-
-</div>
+<br>

@@ -74,17 +74,16 @@
 
 {% block body %}
 
-{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
-
 {% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
 
-<div class="section_wrap_square">
-	<div class="section_header">
-		<h2>{{ topic.getTitle }}</h2>
-	</div>
+<div class="section_wrap_top">
+	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+</div>
+<div class="section_wrap_bottom">
+	
+	<h2>{{ topic.getTitle }}</h2>
 	
 	{% if topic.closedBy or topic.deletedBy %}
-	<div class="section_panel">
 		{% if topic.closedBy %}
 		<div class="round_box">
 			<span class="common_body">
@@ -103,15 +102,16 @@
 			</span>
 		</div>
 		{% endif %}
-	</div>
 	{% endif %}
+</div>
 
+<div class="section_wrap_standalone">
 	{% if pager.haveToPaginate %}
 	<div class="pagerfanta">
 		{{ pagerfanta(pager, 'default', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) }}
 	</div>
 	{% endif %}
-	
+
 	{% for key, post in pager.getCurrentPageResults %}
 		{% include "CCDNForumForumBundle:Post:item_post.html.twig" %}
 	{% endfor %}
@@ -123,6 +123,8 @@
 	{% endif %}
 </div>
 
-{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+<div class="section_wrap_standalone">
+	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+</div>
 
 {% endblock %}

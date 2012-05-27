@@ -1,11 +1,14 @@
-<div class="section_wrap_square">
+<div class="section_wrap_top">
+	{% spaceless %}
 	<div class="section_header">
 		<h2>
-			<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_category.png') }}" alt="icon">
+			<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_category.png') }}" alt="icon">&nbsp;
 			<a href="{{ path('cc_forum_category_show', {'category_id': category.id }) }}">{{ category.name }}</a>
 		</h2>
 	</div>
-
+	{% endspaceless %}
+</div>
+<div class="section_wrap_bottom">
 	<div class="section_table_panel">
 		<table class="common_list">
 			<thead>

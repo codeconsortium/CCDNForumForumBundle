@@ -26,22 +26,22 @@
 
 {% block body %}
 
-{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
-
 {% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
 
-<div class="section_wrap_square">
-	<div class="section_header">
-		<h2>{{ board.name }}.</h2>
-	</div>
-	
-	<div class="section_panel full_section_frame">
-		<span class="page_header_strip_description">{{ board.description }}</span>
-	</div>
+{% spaceless %}
+<div class="section_wrap_top">
+	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 </div>
+<div class="section_wrap_middle">
+	<h2>{{ board.name }}.</h2>
+</div>	
+<div class="section_wrap_bottom">
+	<span class="page_header_strip_description">{{ board.description }}</span>
+</div>
+{% endspaceless %}
 
-<div class="section_wrap_square">
-	{% if sticky_topics is not empty %}
+{% if sticky_topics is not empty %}
+<div class="section_wrap_standalone">
 	<div class="section_table_panel">
 		<table class="common_list">
 			<thead>
@@ -126,8 +126,10 @@
 			</tbody>
 		</table>
 	</div>
-	{% endif %}
-	
+</div>	
+{% endif %}
+
+<div class="section_wrap_standalone">
 	{% if pager.haveToPaginate %}
 	<div class="pagerfanta">
 	    {{ pagerfanta(pager, 'default', {'routeName':'cc_forum_board_show_paginated', 'routeParams':{'board_id':board.getId}} ) }}
@@ -224,6 +226,9 @@
 	</div>
 	{% endif %}
 </div>
-{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+
+<div class="section_wrap_standalone">
+	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+</div>
 
 {% endblock %}

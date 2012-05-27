@@ -27,26 +27,31 @@
 
 {% block body %}
 
-{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
-
 {% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
 
-<div class="section_wrap_square">
-	<div class="section_header">
-		<h2>{{ page_title }}</h2>
-	</div>
-	
+<div class="section_wrap_top">
+	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+</div>
+<div class="section_wrap_bottom">
+	<h2>{{ page_title }}</h2>
+</div>	
+
+<div class="section_wrap_standalone">
 	<div class="section_panel">
-		<div class="">
+		<div style="text-align: center;">
+			<br>
 			{{ confirmation_message | trans({}, 'CCDNForumForumBundle') }}
-			<br><br>
+			<br><br><br>
 			<a class="button_red" href="{{ path('cc_forum_post_delete_confirmed', {'post_id': post.id })}}">{{ 'post.delete.confirm_yes' | trans({}, 'CCDNForumForumBundle') }}</a>
 			&nbsp;&nbsp;&nbsp;
 			<a class="button_red" href="{{ path('cc_forum_topic_show', {'topic_id': topic.id })}}">{{ 'post.delete.confirm_no' | trans({}, 'CCDNForumForumBundle') }}</a>
+			<br>
 		</div>
 	</div>
 </div>
 
-{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+<div class="section_wrap_standalone">
+	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+</div>
 
 {% endblock %}
