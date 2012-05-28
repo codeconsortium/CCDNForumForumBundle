@@ -44,13 +44,7 @@
 	</div>
 </div>
 
-{% if preview is not empty %}
-<div class="section_wrap_standalone">
-	{% include "CCDNForumForumBundle:Post:post_preview.html.twig" %}
-</div>
-{% endif %}
-
-<div class="section_wrap_top">	
+<div class="section_wrap_standalone">	
 	<div class="section_table_panel">
 		{% form_theme form param('ccdn_forum_forum.template.theme') %}
 		<form action="{{ path('cc_forum_topic_reply', { 'topic_id': topic.id } ) }}" method="post" {{ form_enctype(form) }}>
@@ -91,7 +85,14 @@
 		</form>
 	</div>
 </div>
-<div class="section_wrap_bottom">
+
+{% if preview is not empty %}
+<div class="section_wrap_standalone">
+	{% include "CCDNForumForumBundle:Post:post_preview.html.twig" %}
+</div>
+{% endif %}
+
+<div class="section_wrap_standalone">
 	{% include 'CCDNForumForumBundle:Topic:transcript.html.twig' with {'topic': topic } %}
 </div>
 

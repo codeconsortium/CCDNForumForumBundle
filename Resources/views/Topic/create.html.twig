@@ -39,13 +39,6 @@
 	</div>
 </div>
 
-{% if preview is not empty %}
-<div class="section_wrap_standalone">
-	{% include "CCDNForumForumBundle:Post:post_preview.html.twig" %}
-</div>
-{% endif %}
-
-
 <div class="section_wrap_standalone">
 	<div class="section_table_panel">
 		{% form_theme form param('ccdn_forum_forum.template.theme') %}
@@ -97,6 +90,12 @@
 		</form>
 	</div>
 </div>
+
+{% if preview is not empty %}
+<div class="section_wrap_standalone">
+	{% include "CCDNForumForumBundle:Post:post_preview.html.twig" %}
+</div>
+{% endif %}
 
 <div class="section_wrap_standalone">
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
