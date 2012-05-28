@@ -144,7 +144,7 @@
 							</span>
 						{% endif %}						
 					</div>
-					<br><br><hr>
+					<br><hr>
 					{% if post.getDeletedBy %}
 						<span class="deleted_on">
 						{{ 'post.is_deleted' | trans({}, 'CCDNForumForumBundle') }} - 
@@ -161,7 +161,7 @@
 								<br><a href="{{ path('cc_attachment_download', {'attachment_id': post.getAttachment.getId }) }}"><img width="60" height="60" src="{{ path('cc_attachment_thumbnail', {'attachment_id': post.getAttachment.getId }) }}" alt="{{ post.getAttachment.getAttachmentOriginal }}"></a><br>
 							{% endif %}
 						</span>
-						<hr>
+						<br><hr>
 						<span class="common_body">
 							{% if post.getCreatedBy %}
 								{% if post.getCreatedBy.getProfile %}

@@ -80,9 +80,14 @@
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 </div>
 <div class="section_wrap_bottom">
+	<div class="section_header">
+		<h2>{{ topic.getTitle }}</h2>
+	</div>
 	
-	<h2>{{ topic.getTitle }}</h2>
-	
+	<div class="section_panel">
+		<div class="box_notice"><span class="label_medium">Replies:</span>&nbsp;<span class="stat_medium">{{ topic.replyCount }}</span></div>
+		<div class="box_notice"><span class="label_medium">Views:</span>&nbsp;<span class="stat_medium">{{ topic.viewCount }}</span></div>
+	</div>
 	{% if topic.closedBy or topic.deletedBy %}
 		{% if topic.closedBy %}
 		<div class="round_box">

@@ -33,7 +33,9 @@
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 </div>
 <div class="section_wrap_bottom">
+	<div class="section_header">
 	<h2>{{ 'title.flag.post' | trans({'%post_id%': post.id, '%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') }}</h2>
+	</div>
 </div>	
 
 <div class="section_wrap_standalone">
@@ -60,7 +62,7 @@
 					</tr>
 					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
 						<td class="form_tool_strip" colspan="2">
-							<input type="submit" class="widget_submit" value="{{ 'form.button.post.flag.submit' | trans({}, 'CCDNForumForumBundle') }}">
+							<input type="submit" class="button_red" value="{{ 'form.button.post.flag.submit' | trans({}, 'CCDNForumForumBundle') }}">
 						</td>
 					</tr>
 				</tbody>

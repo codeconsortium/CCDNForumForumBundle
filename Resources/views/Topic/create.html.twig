@@ -34,7 +34,9 @@
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 </div>
 <div class="section_wrap_bottom">
-	<h2>{{ 'title.topic.create' | trans({'%board_name%': board.getName }, 'CCDNForumForumBundle') }}</h2>
+	<div class="section_header">
+		<h2>{{ 'title.topic.create' | trans({'%board_name%': board.getName }, 'CCDNForumForumBundle') }}</h2>
+	</div>
 </div>
 
 {% if preview is not empty %}
@@ -85,9 +87,9 @@
 					</tr>
 					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
 						<td class="form_tool_strip" colspan="2">
-							<input type="submit" class="widget_submit" value="{{ 'form.button.post.preview' | trans({}, 'CCDNForumForumBundle') }}" name="submit_preview">
-							<input type="submit" class="widget_submit" value="{{ 'form.button.post.save_draft' | trans({}, 'CCDNForumForumBundle') }}" name="submit_draft">
-							<input type="submit" class="widget_submit_prominent" value="{{ 'form.button.topic.create' | trans({}, 'CCDNForumForumBundle') }}" name="submit_post">
+							<input type="submit" class="button_silver" value="{{ 'form.button.post.preview' | trans({}, 'CCDNForumForumBundle') }}" name="submit_preview">
+							<input type="submit" class="button_silver" value="{{ 'form.button.post.save_draft' | trans({}, 'CCDNForumForumBundle') }}" name="submit_draft">
+							<input type="submit" class="button_blue" value="{{ 'form.button.topic.create' | trans({}, 'CCDNForumForumBundle') }}" name="submit_post">
 						</td>
 					</tr>
 				</tbody>
