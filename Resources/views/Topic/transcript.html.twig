@@ -16,7 +16,6 @@
 			</div>
 			<div class="section_panel">
 				{% if post.getDeletedBy %}
-				<div class="section_wrap_square">
 					<div class="">
 						<span class="common_body">
 						{{ 'post.is_deleted' | trans({}, 'CCDNForumForumBundle') }} - 
@@ -25,15 +24,12 @@
 						{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getCreatedDate|date("d-m-Y - H:i") }}
 						</span>
 					</div>
-				</div>
 				{% else %}
-				<div class="section_wrap_square">
 					<pre>
 						<span class="common_body">
 							{{ post.getBody |raw }}
 						</span>
 					</pre>
-				</div>
 				{% endif %}					
 			</div>
 		{% endfor %}
