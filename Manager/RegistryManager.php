@@ -32,6 +32,7 @@ class RegistryManager extends BaseManager implements ManagerInterface
 	 *
 	 * @access public
 	 * @param $user
+	 * @return $this
 	 */
 	public function updateCachePostCountForUser($user)
 	{
@@ -59,6 +60,8 @@ class RegistryManager extends BaseManager implements ManagerInterface
 		}
 		
 		$this->persist($record)->flushNow();
+		
+		return $this;
 	}
 	
 
@@ -67,6 +70,7 @@ class RegistryManager extends BaseManager implements ManagerInterface
 	 *
 	 * @access public
 	 * @param $user
+	 * @return $this
 	 */
 	public function updateCacheKarmaCountForUser($user)
 	{
@@ -86,13 +90,17 @@ class RegistryManager extends BaseManager implements ManagerInterface
 		
 		
 		$this->persist($record)->flushNow();
+		
+		return $this;
 	}
 	
 	
 	
 	/**
 	 *
-	 *
+	 * @access public
+	 * @param 
+	 * @return $this
 	 */
 	public function getRegistriesForUsersAsArray($registryUserIds = array())
 	{

@@ -26,6 +26,14 @@ use CCDNForum\ForumBundle\Entity\Subscription;
 class SubscriptionManager extends BaseManager implements ManagerInterface
 {
 
+
+
+	/**
+	 *
+	 * @access public
+	 * @param $topicId, $user 
+	 * @return $this
+	 */
 	public function subscribe($topicId, $user)
 	{	
 		$subscription = $this->container->get('ccdn_forum_forum.subscription.repository')->findTopicSubscriptionByTopicAndUserId($topicId, $user->getId());
@@ -58,6 +66,13 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
 	}
 	
 	
+	
+	/**
+	 *
+	 * @access public
+	 * @param $topicId, $user 
+	 * @return $this
+	 */
 	public function unsubscribe($topicId, $user)
 	{
 		$subscription = $this->container->get('ccdn_forum_forum.subscription.repository')->findTopicSubscriptionByTopicAndUserId($topicId, $user->getId());

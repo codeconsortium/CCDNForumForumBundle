@@ -165,7 +165,7 @@ class DraftManager extends BaseManager implements ManagerInterface
 	/**
 	 *
 	 * @access public
-	 * @param $post
+	 * @param $draft
 	 * @return $this
 	 */
 	public function update($draft)
