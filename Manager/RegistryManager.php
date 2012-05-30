@@ -64,6 +64,21 @@ class RegistryManager extends BaseManager implements ManagerInterface
 		return $this;
 	}
 	
+	
+	
+	/**
+	 *
+	 * @access public
+	 * @param Array $users
+	 * @return $this
+	 */
+	public function bulkUpdateCachePostCountForUser($users)
+	{
+		foreach($users as $user)
+		{
+			$this->updateCachePostCountForUser($user);
+		}
+	}
 
 
 	/**

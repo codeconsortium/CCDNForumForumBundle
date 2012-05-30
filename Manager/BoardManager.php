@@ -31,7 +31,7 @@ class BoardManager extends BaseManager implements ManagerInterface
 	 * @param $board
 	 * @return $this
 	 */	
-	public function updateBoardStats($board)
+	public function updateStats($board)
 	{
 		$counters = $this->container->get('ccdn_forum_forum.board.repository')->getTopicAndPostCountsForBoard($board->getId());
 
@@ -39,17 +39,35 @@ class BoardManager extends BaseManager implements ManagerInterface
 		$board->setTopicCount($counters['topicCount']);
 		$board->setPostCount($counters['postCount']);
 
-		$lastPost = $this->container->get('ccdn_forum_forum.board.repository')->findLastPostForBoard($board->getId());
+		$last_topic = $this->container->get('ccdn_forum_forum.board.repository')->findLastTopicForBoard($board->getId());
 	
 		// set last_post for board
-		if ($lastPost)
+		if ($last_topic)
 		{
-			$board->setLastPost($lastPost->getLastPost());
-		} else {
-			$board->setLastPost(null);
+			$board->setLastPost( (($last_topic->getLastPost()) ? $last_topic->getLastPost() : null) );
 		}
-	
+		
 		$this->persist($board);
+		
+		return $this;
+	}
+	
+	
+	
+	/**
+	 *
+	 * @access public
+	 * @param $boards
+	 * @return $this
+	 */
+	public function bulkUpdateStats($boards)
+	{
+		foreach ($boards as $board)
+		{
+			$this->updateStats($board);
+		}
+		
+		$this->flushNow();
 		
 		return $this;
 	}

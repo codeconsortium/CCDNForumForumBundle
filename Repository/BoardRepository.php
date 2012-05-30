@@ -203,32 +203,7 @@ class BoardRepository extends EntityRepository
 	        return;
 	    }	
 	}*/
-	
-	
-	
-	/**
-	 *
-	 * @access public
-	 * @param int $topic_id
-	 */
-	public function getReplyCountsForTopic($topic_id)
-	{
-		// get reply(post) count for topic / post count for board
-		$query = $this->getEntityManager()
-			->createQuery('	
-				SELECT COUNT(DISTINCT rc.id) AS replyCount
-				FROM CCDNForumForumBundle:Topic t
-				LEFT JOIN t.posts rc
-				WHERE (t.id = :topic_id)
-				')
-			->setParameters(array('topic_id' => $topic_id));
-		
-		try {
-	        return $query->getSingleResult();
-	    } catch (\Doctrine\ORM\NoResultException $e) {
-	        return;
-	    }
-	}
+
 	
 	
 	
@@ -292,7 +267,7 @@ class BoardRepository extends EntityRepository
 	 * @access public
 	 * @param int $board_id
 	 */
-	public function findLastPostForBoard($board_id)
+	public function findLastTopicForBoard($board_id)
 	{
 		$lastPost_query = $this->getEntityManager()
 			->createQuery('

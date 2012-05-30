@@ -39,23 +39,8 @@ class PostManager extends BaseManager implements ManagerInterface
 	 * @access protected
 	 */
 	protected $postCount;
-	
-	
-	
-	/**
-	 *
-	 * @access public
-	 */
-	public function flushNow()
-	{
-		parent::flushNow();
-		
-		$user = $this->container->get('security.context')->getToken()->getUser();
 
-		$this->container->get('ccdn_forum_forum.registry.manager')->updateCachePostCountForUser($user);
-	}
-	
-	
+		
 	
 	/**
 	 *
@@ -71,26 +56,11 @@ class PostManager extends BaseManager implements ManagerInterface
 		// refresh the user so that we have an PostId to work with.
 		$this->refresh($post);
 		
-		// get the topic
-		$topic = $post->getTopic();
-		
-		// we need to return this to the controller so it
-		//  can redirect the user to the appropriate page.
-		$topic_counter = $this->container->get('ccdn_forum_forum.board.repository')->getReplyCountsForTopic($topic->getId());
-		$this->replyCount = ($topic_counter['replyCount'] - 1);
-			
-		// set the board / topic last post 
-		$topic->setLastPost($post);
-		$topic->setReplyCount($this->replyCount);
-				
-		$this->persist($topic)->flushNow();
+		// Update affected Topic stats.
+		$this->container->get('ccdn_forum_forum.topic.manager')->updateStats($post->getTopic());
 
-		$this->refresh($topic);
-
-		if ($topic->getBoard())
-		{
-			$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($topic->getBoard())->flushNow();			
-		}
+		// Update the cached post count of the post author.
+		$this->container->get('ccdn_forum_forum.registry.manager')->updateCachePostCountForUser($post->getCreatedBy());
 		
 		return $this;
 	}	
@@ -121,32 +91,34 @@ class PostManager extends BaseManager implements ManagerInterface
 	 */
 	public function softDelete($post, $user)
 	{
-		$post->setDeletedBy($user);
-		$post->setDeletedDate(new \DateTime());
-		
-		$topic = $post->getTopic();
-		
-		// if this is the first post and only post, then
-		// soft delete the topic aswell.
-		if ($topic->getReplyCount() == 0)
+		// Don't overwite previous users accountability.
+		if ( ! $post->getDeletedBy() && ! $post->getDeletedDate())
 		{
-			$topic->setDeletedBy($user);
-			$topic->setDeletedDate(new \DateTime());
-			$topic->setClosedBy($user);
-			$topic->setClosedDate(new \DateTime());
-	
-			// we must persist and flush before we can get accurate counter information.
-			$this->persist($topic, $post)->flushNow();
-
-			if ($topic->getBoard())
+			$post->setDeletedBy($user);
+			$post->setDeletedDate(new \DateTime());
+		
+			$topic = $post->getTopic();
+		
+			// if this is the first post and only post, then soft delete the topic aswell.
+			if ($topic->getReplyCount() < 1)
 			{
-				$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($topic->getBoard())->flushNow();			
+				// Don't overwite previous users accountability.
+				if ( ! $topic->getDeletedBy() && ! $topic->getDeletedDate())
+				{
+					$topic->setDeletedBy($user);
+					$topic->setDeletedDate(new \DateTime());
+			
+					$this->persist($topic);
+				}
 			}
+			
+			// update the record
+			$this->persist($post)->flushNow();
+	
+			// Update affected Topic stats.
+			$this->container->get('ccdn_forum_forum.topic.manager')->updateStats($post->getTopic())->flushNow();
 		}
 		
-		// update the record
-		$this->persist($post);
-	
 		return $this;
 	}
 	
@@ -163,7 +135,25 @@ class PostManager extends BaseManager implements ManagerInterface
 		$post->setDeletedBy(null);
 		$post->setDeletedDate(null);
 		
-		$this->persist($post);
+		$topic = $post->getTopic();
+		
+		// if this is the first post and only post,
+		// then restore the topic aswell.
+		if ($topic->getReplyCount() == 0)
+		{
+			$topic->setDeletedBy(null);
+			$topic->setDeletedDate(null);
+			$topic->setClosedBy(null);
+			$topic->setClosedDate(null);
+			
+			$this->persist($topic);
+		}
+		
+		// update the record
+		$this->persist($post)->flushNow();
+		
+		// Update affected Topic stats.
+		$this->container->get('ccdn_forum_forum.topic.manager')->updateStats($post->getTopic())->flushNow();
 		
 		return $this;
 	}

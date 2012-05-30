@@ -260,24 +260,53 @@ class TopicRepository extends EntityRepository
 	        return null;
 	    }	
 	}
-
-
-/*	
-	public function getTopicForeignCounters($topic_id)
+	
+	
+	
+	/**
+	 *
+	 * @access public
+	 * @param int $topic_id
+	 */
+	public function getReplyCountForTopic($topic_id)
 	{
-		// get topic / post count
-		$counter_query = $this->getEntityManager()
-			->createQuery('	
-				SELECT COUNT(p.id) AS postCount
-				FROM CCDNForumForumBundle:Post p
-				WHERE p.topic = :id')
-			->setParameter('id', $topic_id);
-			
+
+		$qb = $this->getEntityManager()->createQueryBuilder();
+
+		$query = $qb
+			->add('select', 'count(p.id)')
+			->add('from', 'CCDNForumForumBundle:Post p')
+			->add('where', 'p.topic = ?1')
+			->setParameter(1, $topic_id)
+			->getQuery();
+
 		try {
-	        return $counter_query->getsingleResult();
+	        return $query->getSingleScalarResult();
 	    } catch (\Doctrine\ORM\NoResultException $e) {
-	        return;
+	        return null;
 	    }
 	}
-	*/
+	public function getLastPostForTopic($topic_id)
+	{
+		$qb = $this->getEntityManager()->createQueryBuilder();
+
+		$query = $qb
+			->add('select', 'p')
+			->add('from', 'CCDNForumForumBundle:Post p')
+			->add('where', 'p.topic = ?1')
+			->add('orderBy', 'p.created_date DESC')
+			->setMaxResults(1)
+			->setParameter(1, $topic_id)
+			->getQuery();
+
+		try {
+			return $query->getSingleResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    } catch (\Doctrine\ORM\NonUniqueResultException $e) {
+			return null;
+		}
+		
+	}
+
 }

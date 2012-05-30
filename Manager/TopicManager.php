@@ -31,21 +31,6 @@ class TopicManager extends BaseManager implements ManagerInterface
 	 * @access protected
 	 */
 	protected $counters;
-
-	
-	
-	/**
-	 *
-	 * @access public
-	 */
-	public function flushNow()
-	{
-		parent::flushNow();
-		
-		$user = $this->container->get('security.context')->getToken()->getUser();
-
-		$this->container->get('ccdn_forum_forum.registry.manager')->updateCachePostCountForUser($user);
-	}
 	
 	
 	
@@ -57,24 +42,32 @@ class TopicManager extends BaseManager implements ManagerInterface
 	 */	
 	public function insert($post)
 	{
-		// insert a new row
+		// insert a new row.
 		$this->persist($post)->flushNow();
 		
 		// refresh the user so that we have an PostId to work with.
 		$this->refresh($post);
 		
-		// get the topic
+		// get the topic.
 		$topic = $post->getTopic();	
 
-		// set topic last_post and first_post, last_post for board
+		// set topic last_post and first_post, board's last_post.
 		$topic->setFirstPost($post);
 		$topic->setLastPost($post);
 
+		// persist and refresh after a flush to get topic id.
 		$this->persist($topic)->flushNow();
 		
 		$this->refresh($topic);
 		
-		$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($topic->getBoard())->flushNow();			
+		if ($topic->getBoard())
+		{
+			// Update affected Board stats.
+			$this->container->get('ccdn_forum_forum.board.manager')->updateStats($topic->getBoard())->flushNow();			
+		}
+		
+		// Update the cached post count of the post author.
+		$this->container->get('ccdn_forum_forum.registry.manager')->updateCachePostCountForUser($post->getCreatedBy());
 		
 		return $this;
 	}
@@ -105,15 +98,18 @@ class TopicManager extends BaseManager implements ManagerInterface
 	 */
 	public function softDelete($topic, $user)
 	{
-		$topic->setDeletedBy($user);
-		$topic->setDeletedDate(new \DateTime());
-		$topic->setClosedBy($user);
-		$topic->setClosedDate(new \DateTime());
+		// Don't overwite previous users accountability.
+		if ( ! $topic->getDeletedBy() && ! $topic->getDeletedDate())
+		{
+			$topic->setDeletedBy($user);
+			$topic->setDeletedDate(new \DateTime());
 		
-		// update the record before doing record counts
-		$this->persist($topic)->flushNow();
+			// update the record before doing record counts
+			$this->persist($topic)->flushNow();
 		
-		$this->container->get('ccdn_forum_forum.board.manager')->updateBoardStats($topic->getBoard())->flushNow();
+			// Update affected Topic stats.
+			$this->updateStats($topic);		
+		}
 		
 		return $this;
 	}
@@ -131,9 +127,43 @@ class TopicManager extends BaseManager implements ManagerInterface
 		$topic->setDeletedBy(null);
 		$topic->setDeletedDate(null);
 		
-		$this->persist($topic);
+		$this->persist($topic)->flushNow();
+		
+		// Update affected Topic stats.
+		$this->updateStats($topic);
 		
 		return $this;
+	}
+	
+	
+	
+	/**
+	 *
+	 * @access public
+	 * @param $topic
+	 * @return $this
+	 */
+	public function updateStats($topic)
+	{
+		$topic_repository = $this->container->get('ccdn_forum_forum.topic.repository');
+		
+		// Gets stats.
+		$topic_reply_count = $topic_repository->getReplyCountForTopic($topic->getId());	
+		$topic_last_post = $topic_repository->getLastPostForTopic($topic->getId());
+			
+		// Set the board / topic last post. 
+		$topic->setReplyCount( (($topic_reply_count) ? --$topic_reply_count : 0) );		
+		$topic->setLastPost( (($topic_last_post) ? $topic_last_post : null) );
+				
+		$this->persist($topic)->flushNow();
+
+		if ($topic->getBoard())
+		{
+			// Update affected Board stats.
+			$this->container->get('ccdn_forum_forum.board.manager')->updateStats($topic->getBoard())->flushNow();
+		}
+		
+		return $this;	
 	}
 	
 	
