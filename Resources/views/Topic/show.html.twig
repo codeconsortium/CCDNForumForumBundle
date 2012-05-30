@@ -118,7 +118,7 @@
 	{% endif %}
 
 	{% for key, post in pager.getCurrentPageResults %}
-		{% include "CCDNForumForumBundle:Post:item_post.html.twig" %}
+		{% include "CCDNForumForumBundle:Post:item_post.html.twig" with {'key': key} %}
 	{% endfor %}
 
 	{% if pager.haveToPaginate %}
