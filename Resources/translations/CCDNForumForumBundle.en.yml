@@ -24,17 +24,17 @@ crumbs.drafts_index: "Drafts"
 
 # Page titles:
 title.category.index: 'Forum: Index.'
-title.category.show: 'Forum: Category "%category_name%".'
-title.board.show: 'Forum: Board "%board_name%".'
-title.topic.show: 'Forum: "%topic_title%".'
-title.topic.create: 'Forum: Create topic on board "%board_name%".'
-title.topic.reply: 'Forum: Reply to topic "%topic_title%".'
-title.topic.edit: 'Forum: Edit topic "%topic_title%".'
-title.topic.delete: 'Forum: Delete topic "%topic_title%".'
-title.post.show: 'Forum: #%post_id% for topic "%topic_title%".'
-title.post.edit: 'Forum: Edit post #%post_id% of topic "%topic_title%".'
-title.post.delete: 'Forum: Delete #%post_id% for topic "%topic_title%".'
-title.flag.post: 'Forum: Flag post #%post_id%. for topic "%topic_title%".'
+title.category.show: 'Forum: Category - %category_name%.'
+title.board.show: 'Forum: Board - %board_name%.'
+title.topic.show: 'Forum: %topic_title%.'
+title.topic.create: 'Forum: Create topic on board: %board_name%.'
+title.topic.reply: 'Forum: Reply to topic: %topic_title%.'
+title.topic.edit: 'Forum: Edit topic: %topic_title%.'
+title.topic.delete: 'Forum: Delete topic: %topic_title%.'
+title.post.show: 'Forum: Post #%post_id% for topic: %topic_title%.'
+title.post.edit: 'Forum: Edit post #%post_id% of topic: %topic_title%.'
+title.post.delete: 'Forum: Delete #%post_id% for topic: %topic_title%.'
+title.flag.post: 'Forum: Flag post #%post_id% for topic: %topic_title%.'
 title.drafts: 'Drafts.'
 title.subscriptions.show: 'Subscriptions.'
 
@@ -55,12 +55,12 @@ link.topic.change_board: Change Board
 link.draft.delete: Delete
 link.draft.publish: Edit & Publish
 
-flash.post.edit.success: 'Post: #%post_id% of topic: "%topic_title%" edited successfully.'
-flash.post.delete.success: 'Post: #%post_id% deleted successfully.'
-flash.post.flagged.success: 'You flagged the post: #%post_id% of topic: "%topic_title%".'
+flash.post.edit.success: 'Successfully edited #%post_id% of topic: %topic_title%.'
+flash.post.delete.success: 'Deleted post: #%post_id%.'
+flash.post.flagged.success: 'You flagged the post: #%post_id% of topic: %topic_title%.'
 
-flash.topic.create.success: 'You posted the new topic: "%topic_title%".'
-flash.topic.reply.success: 'You posted a reply to the topic: "%topic_title%".'
+flash.topic.create.success: 'You posted the new topic: %topic_title%.'
+flash.topic.reply.success: 'You posted a reply to the topic: %topic_title%.'
 
 flash.draft.save.success: "Draft saved successfully."
 
@@ -117,7 +117,7 @@ generic.posted_at: 'Posted at '
 post.has_been_flagged: 'This post has been flagged!'
 actioned.at: ' at '
 
-topic.transcript: '"%topic_title%" Transcript.'
+topic.transcript: 'Transcript of: %topic_title%.'
 
 post.user.post_count: %post_count% Posts
 post.is_deleted: This post has been removed.
