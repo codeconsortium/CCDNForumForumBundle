@@ -412,6 +412,14 @@ class PostController extends ContainerAware
 		{	// you cannot reply/edit/delete/flag a post if it is locked
 			throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
 		}
+
+		if ($post->getCreatedBy())
+		{
+			if ($post->getCreatedBy()->getId() == $user->getId())
+			{
+				throw new AccessDeniedException('You cannot flag your own posts!');
+			}
+		}
 		
 		$formHandler = $this->container->get('ccdn_forum_forum.flag.form.handler')->setDefaultValues(array('post' => $post, 'user' => $user));
 					
