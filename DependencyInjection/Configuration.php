@@ -60,6 +60,7 @@ class Configuration implements ConfigurationInterface
 		$this->addTopicSection($rootNode);
 		$this->addPostSection($rootNode);
 		$this->addDraftSection($rootNode);
+		$this->addSubscriptionSection($rootNode);
 		
         return $treeBuilder;
     }
@@ -103,6 +104,7 @@ class Configuration implements ConfigurationInterface
 				->arrayNode('board')
 					->children()
 						->scalarNode('topics_per_page')->defaultValue('40')->end()
+						->scalarNode('truncate_topic_title')->defaultValue('50')->end()
 						->arrayNode('layout_templates')
 							->children()
 								->scalarNode('show')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
@@ -180,6 +182,32 @@ class Configuration implements ConfigurationInterface
 				->arrayNode('draft')
 					->children()
 						->scalarNode('drafts_per_page')->defaultValue('40')->end()
+						->scalarNode('truncate_topic_title')->defaultValue('80')->end()
+						->arrayNode('layout_templates')
+							->children()
+								->scalarNode('list')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+							->end()
+						->end()
+					->end()
+				->end()
+			->end();
+	}
+	
+	
+
+	/**
+	 *
+	 * @access private
+	 * @param ArrayNodeDefinition $node
+	 */
+	private function addSubscriptionSection(ArrayNodeDefinition $node)
+	{
+		$node
+			->children()
+				->arrayNode('subscription')
+					->children()
+						->scalarNode('topics_per_page')->defaultValue('40')->end()
+						->scalarNode('truncate_topic_title')->defaultValue('50')->end()
 						->arrayNode('layout_templates')
 							->children()
 								->scalarNode('list')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()

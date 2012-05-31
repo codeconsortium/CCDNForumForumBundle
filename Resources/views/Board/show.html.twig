@@ -84,7 +84,7 @@
 						</td>
 						<td class="left">
 							<span class="table_data">
-								<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}">{{ topic.getTitle }}</a>
+								<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}" title="{{ topic.getTitle }}">{{ truncDot(topic.getTitle, param('ccdn_forum_forum.board.truncate_topic_title')) }}</a>
 								<br>
 
 								{% if topic.getFirstPost %}
@@ -178,7 +178,7 @@
 							</td>
 							<td class="left">
 								<span class="table_data">
-									<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}">{{ topic.getTitle }}</a>
+									<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}" title="{{ topic.getTitle }}">{{ truncDot(topic.getTitle, param('ccdn_forum_forum.board.truncate_topic_title')) }}</a>
 									<br>
 
 									{% if topic.getFirstPost %}

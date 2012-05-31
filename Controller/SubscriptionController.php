@@ -46,7 +46,7 @@ class SubscriptionController extends ContainerAware
 		$subscriptions = $this->container->get('ccdn_forum_forum.subscription.repository')->findForUserById($user->getId());
 
 		// deal with pagination.
-		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.topics_per_page');
+		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.subscription.topics_per_page');
 		$subscriptions->setMaxPerPage($topics_per_page);
 		$subscriptions->setCurrentPage($page, false, true);
 	

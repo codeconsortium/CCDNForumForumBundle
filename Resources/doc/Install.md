@@ -109,11 +109,12 @@ ccdn_forum_forum:
             index: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
             show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
     board:
-        topics_per_page: 40
+        topics_per_page: 4
+        truncate_topic_title: 50
         layout_templates:
             show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
     topic:
-        posts_per_page: 10
+        posts_per_page: 5
         layout_templates:
             create: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
             reply: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
@@ -127,6 +128,12 @@ ccdn_forum_forum:
             delete_post: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
     draft:
         drafts_per_page: 10
+        truncate_topic_title: 80
+        layout_templates:
+            list: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
+    subscription:
+        topics_per_page: 40
+        truncate_topic_title: 50
         layout_templates:
             list: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
 

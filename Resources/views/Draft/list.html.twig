@@ -60,7 +60,7 @@
 							{% else %}
 							<td class="left">
 								<span class="table_data">
-								<b>Topic:</b>&nbsp;{{ draft.getTitle }}
+								<b>Topic:</b>&nbsp;{{ truncDot(draft.getTitle, param('ccdn_forum_forum.draft.truncate_topic_title')) }}
 								</span>
 							</td>
 							<td class="left">

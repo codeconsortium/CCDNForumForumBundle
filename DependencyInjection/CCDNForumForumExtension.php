@@ -55,6 +55,8 @@ class CCDNForumForumExtension extends Extension
 		$this->getTopicSection($container, $config);
 		$this->getPostSection($container, $config);
 		$this->getDraftSection($container, $config);
+		$this->getSubscriptionSection($container, $config);
+		
     }
 	
 	
@@ -90,6 +92,7 @@ class CCDNForumForumExtension extends Extension
 	private function getBoardSection($container, $config)
 	{
 		$container->setParameter('ccdn_forum_forum.board.topics_per_page', $config['board']['topics_per_page']);
+		$container->setParameter('ccdn_forum_forum.board.truncate_topic_title', $config['board']['truncate_topic_title']);
 		$container->setParameter('ccdn_forum_forum.board.layout_templates.show', $config['board']['layout_templates']['show']);
 	}
 	
@@ -134,7 +137,22 @@ class CCDNForumForumExtension extends Extension
 	private function getDraftSection($container, $config)
 	{
 		$container->setParameter('ccdn_forum_forum.draft.drafts_per_page', $config['draft']['drafts_per_page']);
+		$container->setParameter('ccdn_forum_forum.draft.truncate_topic_title', $config['draft']['truncate_topic_title']);
 		$container->setParameter('ccdn_forum_forum.draft.layout_templates.list', $config['draft']['layout_templates']['list']);
 	}
-		
+	
+	
+	
+	/**
+	 *
+	 * @access private
+	 * @param $container, $config
+	 */	
+	private function getSubscriptionSection($container, $config)
+	{
+		$container->setParameter('ccdn_forum_forum.subscription.topics_per_page', $config['subscription']['topics_per_page']);
+		$container->setParameter('ccdn_forum_forum.subscription.truncate_topic_title', $config['subscription']['truncate_topic_title']);
+		$container->setParameter('ccdn_forum_forum.subscription.layout_templates.list', $config['subscription']['layout_templates']['list']);
+	}
+	
 }
