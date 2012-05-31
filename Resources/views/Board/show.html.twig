@@ -25,9 +25,24 @@
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 </div>
 <div class="section_wrap_middle">
-	<div class="section_header">
-		<h2>{{ board.name }}.</h2>
+	{% spaceless %}
+	<div class="float_left">
+		<div class="section_header">
+			<h2>{{ board.name }}.</h2>
+		</div>
+		
+		<div class="section_panel">
+			<div class="box_notice"><span class="label_medium">{{ 'board.topic_count' |trans({}, 'CCDNForumForumBundle') }}</span>&nbsp;<span class="stat_medium">{{ board.topicCount }}</span></div>
+			<div class="box_notice"><span class="label_medium">{{ 'board.post_count' |trans({}, 'CCDNForumForumBundle') }}</span>&nbsp;<span class="stat_medium">{{ board.postCount }}</span></div>
+		</div>
 	</div>
+	
+	<div class="float_right">
+		<div class="section_panel">
+			
+		</div>	
+	</div>
+	{% endspaceless %}
 </div>	
 <div class="section_wrap_bottom">
 	<span class="page_header_strip_description">{{ board.description }}</span>

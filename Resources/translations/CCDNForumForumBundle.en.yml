@@ -98,8 +98,11 @@ board.table.head.closed_on: 'Closed On'
 board.table.head.deleted_by: 'Deleted By'
 board.table.head.deleted_on: 'Deleted On'
 
-board.table.body.reply_count: 'Replies: '
-board.table.body.view_count: 'Viewed: '
+topic.reply_count: 'Replies: '
+topic.view_count: 'Viewed: '
+board.topic_count: 'Topics: '
+board.post_count: 'Posts: '
+
 info.not_applicable: N/A
 
 subscriptions.table.empty: 'You are not subscribed to any topics.'
