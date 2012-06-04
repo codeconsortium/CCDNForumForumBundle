@@ -11,7 +11,7 @@
 					{% else %}Guest{% endif %}
 				</div>
 				<div class="column h_align_right">
-					<span class="common_body">&nbsp;{{ 'generic.posted_at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getCreatedDate|date("d-m-Y - H:i") }}</span>	
+					<span class="item_timestamp">&nbsp;{{ 'generic.posted_at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getCreatedDate |date(param('ccdn_forum_forum.transcript.post_creation_datetime_format')) }}</span>	
 				</div>
 			</div>
 			<div class="section_panel">
@@ -21,7 +21,7 @@
 						{{ 'post.is_deleted' | trans({}, 'CCDNForumForumBundle') }} - 
 						{{ 'post.deleted_by' |trans({}, 'CCDNForumForumBundle') }}
 						{% if post.getDeletedBy %}{{ post.getDeletedBy.getUsername }}{% else %}Guest{% endif %}
-						{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getCreatedDate|date("d-m-Y - H:i") }}
+						{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getDeletedDate |date(param('ccdn_forum_forum.transcript.post_deleted_datetime_format')) }}
 						</span>
 					</div>
 				{% else %}

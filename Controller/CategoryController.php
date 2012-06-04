@@ -35,10 +35,9 @@ class CategoryController extends ContainerAware
     {
 		$categories = $this->container->get('ccdn_forum_forum.category.repository')->findAllJoinedToBoard();
 		
-		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.topics_per_page');
+		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 		
 		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-			->add($this->container->get('translator')->trans('crumbs.dashboard', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_dashboard_index'), "sitemap")
 			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home");
 		
 		return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Category:index.html.' . $this->getEngine(), array(
@@ -65,10 +64,9 @@ class CategoryController extends ContainerAware
 			throw NotFoundhttpException('No such category exists!');
 		}
 		
-		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.topics_per_page');
+		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 		
 		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-			->add($this->container->get('translator')->trans('crumbs.dashboard', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_dashboard_index'), "sitemap")
 			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
 			->add($category->getName(), $this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category_id)), "category");
 		

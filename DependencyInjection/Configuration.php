@@ -50,7 +50,6 @@ class Configuration implements ConfigurationInterface
 				->arrayNode('template')
 					->children()
 						->scalarNode('engine')->defaultValue('twig')->end()
-						->scalarNode('theme')->defaultValue('CCDNForumForumBundle:Form:fields.html.twig')->end()
 					->end()
 				->end()
 			->end();
@@ -59,8 +58,10 @@ class Configuration implements ConfigurationInterface
 		$this->addBoardSection($rootNode);
 		$this->addTopicSection($rootNode);
 		$this->addPostSection($rootNode);
+		$this->addItemPostSection($rootNode);
 		$this->addDraftSection($rootNode);
 		$this->addSubscriptionSection($rootNode);
+		$this->addTranscriptSection($rootNode);
 		
         return $treeBuilder;
     }
@@ -77,12 +78,20 @@ class Configuration implements ConfigurationInterface
 		$node
 			->children()
 				->arrayNode('category')
-					->children()
-						->arrayNode('layout_templates')
+					->addDefaultsIfNotSet()
+					->canBeUnset()
+					->children()					
+						->scalarNode('last_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+						->arrayNode('index')
+							->addDefaultsIfNotSet()
 							->children()
-								->scalarNode('index')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
-								->scalarNode('show')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
-								
+								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+							->end()
+						->end()
+						->arrayNode('show')
+							->addDefaultsIfNotSet()
+							->children()
+								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
 							->end()
 						->end()
 					->end()
@@ -102,12 +111,17 @@ class Configuration implements ConfigurationInterface
 		$node
 			->children()
 				->arrayNode('board')
+					->addDefaultsIfNotSet()
+					->canBeUnset()
 					->children()
-						->scalarNode('topics_per_page')->defaultValue('40')->end()
-						->scalarNode('truncate_topic_title')->defaultValue('50')->end()
-						->arrayNode('layout_templates')
+						->arrayNode('show')
+							->addDefaultsIfNotSet()
 							->children()
-								->scalarNode('show')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('topics_per_page')->defaultValue('40')->end()
+								->scalarNode('topic_title_truncate')->defaultValue('50')->end()
+								->scalarNode('first_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+								->scalarNode('last_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
 							->end()
 						->end()
 					->end()
@@ -127,17 +141,34 @@ class Configuration implements ConfigurationInterface
 		$node
 			->children()
 				->arrayNode('topic')
+					->addDefaultsIfNotSet()
+					->canBeUnset()
 					->children()
-						->scalarNode('posts_per_page')->defaultValue('20')->end()
-						->arrayNode('layout_templates')
+						->arrayNode('show')
+							->addDefaultsIfNotSet()
 							->children()
-								->scalarNode('create')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
-								->scalarNode('reply')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
-								->scalarNode('show')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('posts_per_page')->defaultValue('20')->end()
+								->scalarNode('topic_closed_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+								->scalarNode('topic_deleted_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+							->end()
+						->end()
+						->arrayNode('create')
+							->addDefaultsIfNotSet()
+							->children()
+								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('form_theme')->defaultValue('CCDNForumForumBundle:Form:fields.html.twig')->end()
+							->end()
+						->end()
+						->arrayNode('reply')
+							->addDefaultsIfNotSet()
+							->children()
+								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('form_theme')->defaultValue('CCDNForumForumBundle:Form:fields.html.twig')->end()
 							->end()
 						->end()
 					->end()
-				->end()
+				->end()					
 			->end();
 	}
 	
@@ -153,23 +184,75 @@ class Configuration implements ConfigurationInterface
 		$node
 			->children()
 				->arrayNode('post')
+					->addDefaultsIfNotSet()
+					->canBeUnset()
 					->children()
-						->arrayNode('layout_templates')
+						->arrayNode('show')
+							->addDefaultsIfNotSet()
 							->children()
-								->scalarNode('show')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
-								->scalarNode('flag')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
-								->scalarNode('edit_topic')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
-								->scalarNode('edit_post')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
-								->scalarNode('delete_post')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('topic_closed_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+								->scalarNode('topic_deleted_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+							->end()
+						->end()
+						->arrayNode('flag')
+							->addDefaultsIfNotSet()
+							->children()
+								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('form_theme')->defaultValue('CCDNForumForumBundle:Form:fields.html.twig')->end()
+							->end()
+						->end()
+						->arrayNode('edit_topic')
+							->addDefaultsIfNotSet()
+							->children()
+								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('form_theme')->defaultValue('CCDNForumForumBundle:Form:fields.html.twig')->end()
+							->end()
+						->end()
+						->arrayNode('edit_post')
+							->addDefaultsIfNotSet()
+							->children()
+								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('form_theme')->defaultValue('CCDNForumForumBundle:Form:fields.html.twig')->end()
+							->end()
+						->end()
+						->arrayNode('delete_post')
+							->addDefaultsIfNotSet()
+							->children()
+								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
 							->end()
 						->end()
 					->end()
 				->end()
 			->end();
 	}
-
 	
 
+
+	/**
+	 *
+	 * @access private
+	 * @param ArrayNodeDefinition $node
+	 */	
+	private function addItemPostSection(ArrayNodeDefinition $node)
+	{
+		$node
+			->children()
+				->arrayNode('item_post')
+					->addDefaultsIfNotSet()
+					->canBeUnset()
+					->children()
+						->scalarNode('post_created_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+						->scalarNode('post_edited_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+						->scalarNode('post_locked_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+						->scalarNode('post_deleted_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+					->end()
+				->end()
+			->end();
+	}
+	
+	
+	
 	/**
 	 *
 	 * @access private
@@ -180,12 +263,16 @@ class Configuration implements ConfigurationInterface
 		$node
 			->children()
 				->arrayNode('draft')
+					->addDefaultsIfNotSet()
+					->canBeUnset()
 					->children()
-						->scalarNode('drafts_per_page')->defaultValue('40')->end()
-						->scalarNode('truncate_topic_title')->defaultValue('80')->end()
-						->arrayNode('layout_templates')
+						->arrayNode('list')
+							->addDefaultsIfNotSet()
 							->children()
-								->scalarNode('list')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('drafts_per_page')->defaultValue('40')->end()
+								->scalarNode('topic_title_truncate')->defaultValue('80')->end()
+								->scalarNode('creation_datetime_format')->defaultValue('d-m-Y - H:i')->end()
 							->end()
 						->end()
 					->end()
@@ -205,14 +292,41 @@ class Configuration implements ConfigurationInterface
 		$node
 			->children()
 				->arrayNode('subscription')
+					->addDefaultsIfNotSet()
+					->canBeUnset()
 					->children()
-						->scalarNode('topics_per_page')->defaultValue('40')->end()
-						->scalarNode('truncate_topic_title')->defaultValue('50')->end()
-						->arrayNode('layout_templates')
+						->arrayNode('list')
+							->addDefaultsIfNotSet()
 							->children()
-								->scalarNode('list')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
+								->scalarNode('topics_per_page')->defaultValue('40')->end()
+								->scalarNode('topic_title_truncate')->defaultValue('50')->end()
+								->scalarNode('first_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+								->scalarNode('last_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
 							->end()
 						->end()
+					->end()
+				->end()
+			->end();
+	}
+
+
+
+	/**
+	 *
+	 * @access private
+	 * @param ArrayNodeDefinition $node
+	 */
+	private function addTranscriptSection(ArrayNodeDefinition $node)
+	{
+		$node
+			->children()
+				->arrayNode('transcript')
+					->addDefaultsIfNotSet()
+					->canBeUnset()
+					->children()
+						->scalarNode('post_creation_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+						->scalarNode('post_deleted_datetime_format')->defaultValue('d-m-Y - H:i')->end()
 					->end()
 				->end()
 			->end();

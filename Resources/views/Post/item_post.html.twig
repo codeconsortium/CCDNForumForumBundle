@@ -124,7 +124,7 @@
 							{% endif %}
 						</span>&nbsp;&nbsp;
 						<span class="item_timestamp">
-							{{ post.getCreatedDate|date("d-m-Y - H:i") }}
+							{{ post.getCreatedDate |date(param('ccdn_forum_forum.item_post.post_created_datetime_format')) }}
 						</span>
 					
 						{% if post.getEditedDate %}
@@ -132,7 +132,7 @@
 							<span class="item_timestamp">(
 							{{ 'post.edited_by' |trans({}, 'CCDNForumForumBundle') }}
 							{% if post.getEditedBy %}<a href="{{ path(user_profile_route, {'user_id': post.getEditedBy.getId}) }}">{{ post.getEditedBy.getUsername |title }}</a>{% else %}Guest{% endif %}
-							{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getEditedDate |date("d-m-Y - H:i") }}
+							{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getEditedDate |date(param('ccdn_forum_forum.item_post.post_edited_datetime_format')) }}
 							)</span><br>
 						{% endif %}
 					</div>
@@ -153,7 +153,7 @@
 						{{ 'post.is_deleted' | trans({}, 'CCDNForumForumBundle') }} - 
 						{{ 'post.deleted_by' |trans({}, 'CCDNForumForumBundle') }}
 						{% if post.getDeletedBy %}{{ post.getDeletedBy.getUsername |title }}{% else %}Guest{% endif %}
-						{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getCreatedDate|date("d/m/Y - H:i:s") }}
+						{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getDeletedDate |date(param('ccdn_forum_forum.item_post.post_deleted_datetime_format')) }}
 						</span>
 					{% else %}
 						<span class="common_body">

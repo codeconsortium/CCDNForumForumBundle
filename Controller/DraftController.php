@@ -46,12 +46,11 @@ class DraftController extends ContainerAware
 		$draftsPaginated = $this->container->get('ccdn_forum_forum.draft.repository')->findDraftsPaginated($user->getId());
 		
 		// deal with pagination.
-		$draftsPerPage = $this->container->getParameter('ccdn_forum_forum.draft.drafts_per_page');
+		$draftsPerPage = $this->container->getParameter('ccdn_forum_forum.draft.list.drafts_per_page');
 		$draftsPaginated->setMaxPerPage($draftsPerPage);
 		$draftsPaginated->setCurrentPage($page, false, true);
 		
 		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-			->add($this->container->get('translator')->trans('crumbs.dashboard', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_dashboard_index'), "sitemap")
 			->add($this->container->get('translator')->trans('crumbs.drafts_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_drafts_list'), "home");
 		
 		return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Draft:list.html.' . $this->getEngine(), array(

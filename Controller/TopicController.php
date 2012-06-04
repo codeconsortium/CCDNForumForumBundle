@@ -47,7 +47,7 @@ class TopicController extends ContainerAware
 		$topic = $this->container->get('ccdn_forum_forum.topic.repository')->findByIdWithBoardAndCategory($topic_id);
 		$posts_paginated = $this->container->get('ccdn_forum_forum.post.repository')->findPostsForTopicByIdPaginated($topic_id);
 		
-		$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
+		$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 		$posts_paginated->setMaxPerPage($posts_per_page);
 		$posts_paginated->setCurrentPage($page, false, true);		
 
@@ -103,7 +103,6 @@ class TopicController extends ContainerAware
 		$category = $board->getCategory();
 		
 		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')	
-			->add($this->container->get('translator')->trans('crumbs.dashboard', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_dashboard_index'), "sitemap")
 			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
 			->add($category->getName(), $this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
 			->add($board->getName(), $this->container->get('router')->generate('cc_forum_board_show', array('board_id' => $board->getId())), "board")
@@ -208,7 +207,6 @@ class TopicController extends ContainerAware
 		$category = $board->getCategory();
 		
 		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-			->add($this->container->get('translator')->trans('crumbs.dashboard', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_dashboard_index'), "sitemap")
 			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
 			->add($category->getName(), $this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
 			->add($board->getName(), $this->container->get('router')->generate('cc_forum_board_show', array('board_id' => $board->getId())), "board")
@@ -308,7 +306,7 @@ class TopicController extends ContainerAware
 			if ($formHandler->process())	
 			{				
 				// page of the last post
-				$posts_per_topic_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
+				$posts_per_topic_page = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 				$counters = $formHandler->getCounters();
 				$page = ceil(++$counters['replyCount'] / $posts_per_topic_page);
 
@@ -324,7 +322,6 @@ class TopicController extends ContainerAware
 		$category = $board->getCategory();
 		
 		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-			->add($this->container->get('translator')->trans('crumbs.dashboard', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_dashboard_index'), "sitemap")
 			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
 			->add($category->getName(), $this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
 			->add($board->getName(), $this->container->get('router')->generate('cc_forum_board_show', array('board_id' => $board->getId())), "board")

@@ -1,4 +1,4 @@
-{% extends param('ccdn_forum_forum.draft.layout_templates.list') %}
+{% extends param('ccdn_forum_forum.draft.list.layout_template') %}
 
 {% block stylesheets %}
 	{{ parent() }}
@@ -60,7 +60,7 @@
 							{% else %}
 							<td class="left">
 								<span class="table_data">
-								<b>Topic:</b>&nbsp;{{ truncDot(draft.getTitle, param('ccdn_forum_forum.draft.truncate_topic_title')) }}
+								<b>Topic:</b>&nbsp;{{ truncDot(draft.getTitle, param('ccdn_forum_forum.draft.list.topic_title_truncate')) }}
 								</span>
 							</td>
 							<td class="left">
@@ -77,8 +77,8 @@
 							</td>
 							{% endif %}
 							<td class="center">
-								<span class="table_data">
-								{{ draft.getCreatedDate|date("d/m/Y - H:i:s") }}
+								<span class="table_timestamp">
+								{{ draft.getCreatedDate |date(param('ccdn_forum_forum.draft.list.creation_datetime_format')) }}
 								</span>
 							</td>
 							<td class="center">

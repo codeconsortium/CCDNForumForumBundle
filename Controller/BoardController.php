@@ -48,7 +48,7 @@ class BoardController extends ContainerAware
 		$stickyTopics = $this->container->get('ccdn_forum_forum.topic.repository')->findStickyTopicsForBoardById($board_id);		
 
 		// deal with pagination.
-		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.topics_per_page');
+		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 		$topics_paginated->setMaxPerPage($topics_per_page);
 		$topics_paginated->setCurrentPage($page, false, true);
 
@@ -59,13 +59,12 @@ class BoardController extends ContainerAware
 		}
 		
 		// this is necessary for working out the last page for each topic.
-		$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
+		$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 		
 		// setup bread crumbs.
 		$category = $board->getCategory();
 		
 		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-			->add($this->container->get('translator')->trans('crumbs.dashboard', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_dashboard_index'), "sitemap")
 			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
 			->add($category->getName(), $this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
 			->add($board->getName(), $this->container->get('router')->generate('cc_forum_board_show', array('board_id' => $board_id)), "board");

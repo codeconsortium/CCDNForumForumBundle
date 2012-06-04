@@ -1,4 +1,4 @@
-{% extends param('ccdn_forum_forum.post.layout_templates.show') %}
+{% extends param('ccdn_forum_forum.post.show.layout_template') %}
 
 {% block stylesheets %}
 	{{ parent() }}
@@ -43,14 +43,61 @@
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 </div>
 <div class="section_wrap_bottom">
-	<div class="section_header">
-		<h2>{{ topic.getTitle }}</h2>
+	{% spaceless %}
+	
+	<div class="float_left">
+		<div class="section_header">
+			<h2>{{ topic.getTitle }} #{{ post.getId }}</h2>
+		</div>
+		
+		<div class="section_panel">
+			<div class="box_notice"><span class="label_medium">{{ 'topic.reply_count' |trans({}, 'CCDNForumForumBundle') }}</span>&nbsp;<span class="stat_medium">{{ topic.replyCount }}</span></div>
+			<div class="box_notice"><span class="label_medium">{{ 'topic.view_count' |trans({}, 'CCDNForumForumBundle') }}</span>&nbsp;<span class="stat_medium">{{ topic.viewCount }}</span></div>
+		</div>
 	</div>
 	
-	{% if topic.closedBy %}
-		{{ 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') }}{{ topic.getClosedBy.getUsername }}
-		{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}{{ topic.getClosedDate |date("d/m/Y - H:i:s") }}
-	{% endif %}
+	<div class="float_right">
+		<div class="section_panel">
+	
+			{% if topic.closedDate %}
+			<div class="box_warning">
+				<div class="float_left" style="padding:5px !important;">
+					<img class="icon32" width="32" height="32" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_locked.png') }}" alt="icon">
+				</div>
+				<div class="float_right">
+					<span class="stat_medium">
+					{{ 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') }}
+					{% if topic.getClosedBy %}<a href="{{ path(user_profile_route, {'user_id': topic.getClosedBy.getId } ) }}">{{ topic.getClosedBy.getUsername }}</a>{% else %}Unknown{% endif %}<br>
+					{{ topic.getClosedDate |date(param('ccdn_forum_forum.post.show.topic_closed_datetime_format')) }}
+					</span>
+				</div>
+			</div>
+			{% endif %}
+	
+			{% if topic.deletedDate %}
+			<div class="box_severe">
+				<div class="float_left" style="padding:5px !important;">
+					<img class="icon32" width="32" height="32" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_trash.png') }}" alt="icon">
+				</div>
+				<div class="float_right">
+					<span class="stat_medium">
+					{{ 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') }}
+					{% if topic.getDeletedBy %}<a href="{{ path(user_profile_route, {'user_id': topic.getDeletedBy.getId } ) }}">{{ topic.getDeletedBy.getUsername }}</a>{% else %}Unknown{% endif %}<br>
+					{{ topic.getDeletedDate |date(param('ccdn_forum_forum.post.show.topic_deleted_datetime_format')) }}
+					</span>
+				</div>
+			</div>
+			{% endif %}
+			
+{#			{% if not topic.deletedDate or not topic.closedDate %}
+			<div class="section_tool_strip">
+				<a class="button_red" href="{{ path('cc_forum_topic_reply', {'topic_id': topic.getId }) }}">{{ 'link.post.reply' | trans({}, 'CCDNForumForumBundle') }}</a>
+			</div>
+			{% endif %} #}
+		</div>
+	</div>
+	
+	{% endspaceless %}
 </div>
 
 <div class="section_wrap_standalone">

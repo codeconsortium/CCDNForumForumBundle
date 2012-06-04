@@ -1,4 +1,4 @@
-{% extends param('ccdn_forum_forum.topic.layout_templates.reply') %}
+{% extends param('ccdn_forum_forum.topic.reply.layout_template') %}
 
 {% block stylesheets %}
 	{{ parent() }}
@@ -38,7 +38,7 @@
 
 <div class="section_wrap_standalone">	
 	<div class="section_table_panel">
-		{% form_theme form param('ccdn_forum_forum.template.theme') %}
+		{% form_theme form param('ccdn_forum_forum.topic.reply.form_theme') %}
 		<form action="{{ path('cc_forum_topic_reply', { 'topic_id': topic.id } ) }}" method="post" {{ form_enctype(form) }}>
 			{{ form_row(form._token) }}
 			<div class="errors">{{ form_errors(form) }}</div>

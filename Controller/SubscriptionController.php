@@ -46,20 +46,19 @@ class SubscriptionController extends ContainerAware
 		$subscriptions = $this->container->get('ccdn_forum_forum.subscription.repository')->findForUserById($user->getId());
 
 		// deal with pagination.
-		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.subscription.topics_per_page');
+		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.subscription.list.topics_per_page');
 		$subscriptions->setMaxPerPage($topics_per_page);
 		$subscriptions->setCurrentPage($page, false, true);
 	
 		// this is necessary for working out the last page for each topic.
-		$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.posts_per_page');
+		$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 		
 		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-			->add($this->container->get('translator')->trans('crumbs.dashboard', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_dashboard_index'), "sitemap")
 			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
 			->add($this->container->get('translator')->trans('crumbs.topic.subscriptions', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_subscriptions'), "bookmark");
 
 		
-		return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Subscription:show.html.' . $this->getEngine(), array(
+		return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Subscription:list.html.' . $this->getEngine(), array(
 			'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
 			'crumbs' => $crumb_trail,
 			'pager' => $subscriptions,

@@ -103,39 +103,6 @@ ccdn_forum_forum:
         profile_route: cc_profile_show_by_id
     template:
         engine: twig
-        theme: CCDNForumForumBundle:Form:fields.html.twig
-    category:
-        layout_templates:
-            index: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-    board:
-        topics_per_page: 4
-        truncate_topic_title: 50
-        layout_templates:
-            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-    topic:
-        posts_per_page: 5
-        layout_templates:
-            create: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            reply: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-    post:
-        layout_templates:
-            show: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            flag: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            edit_post: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            edit_topic: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-            delete_post: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-    draft:
-        drafts_per_page: 10
-        truncate_topic_title: 80
-        layout_templates:
-            list: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
-    subscription:
-        topics_per_page: 40
-        truncate_topic_title: 50
-        layout_templates:
-            list: CCDNComponentCommonBundle:Layout:layout_body_left.html.twig
 
 ```
 
@@ -182,4 +149,5 @@ Installation should now be complete!
 
 If you need further help/support, have suggestions or want to contribute please join the community at [Code Consortium](http://www.codeconsortium.com)
 
-[Return back to the docs index](http://github.com/codeconsortium/CCDNForumForumBundle/blob/master/Resources/doc/index.md).
+- [Return back to the docs index](index.md).
+- [Configuration Reference](configuration_reference.md).

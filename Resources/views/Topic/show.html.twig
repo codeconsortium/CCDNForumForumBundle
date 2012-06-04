@@ -1,4 +1,4 @@
-{% extends param('ccdn_forum_forum.topic.layout_templates.show') %}
+{% extends param('ccdn_forum_forum.topic.show.layout_template') %}
 
 {% block stylesheets %}
 	{{ parent() }}
@@ -97,7 +97,7 @@
 					<span class="stat_medium">
 					{{ 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') }}
 					{% if topic.getClosedBy %}<a href="{{ path(user_profile_route, {'user_id': topic.getClosedBy.getId } ) }}">{{ topic.getClosedBy.getUsername }}</a>{% else %}Unknown{% endif %}<br>
-					{{ topic.getClosedDate |date("d-m-Y - H:i") }}
+					{{ topic.getClosedDate |date(param('ccdn_forum_forum.topic.show.closed_deleted_datetime_format')) }}
 					</span>
 				</div>
 			</div>
@@ -112,7 +112,7 @@
 					<span class="stat_medium">
 						{{ 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') }}
 						{% if topic.getDeletedBy %}<a href="{{ path(user_profile_route, {'user_id': topic.getDeletedBy.getId } ) }}">{{ topic.getDeletedBy.getUsername }}</a>{% else %}Unknown{% endif %}<br>
-						{{ topic.getDeletedDate |date("d-m-Y - H:i") }}
+						{{ topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) }}
 					</span>
 				</div>
 			</div>

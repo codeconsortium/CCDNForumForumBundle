@@ -1,3 +1,4 @@
+{% spaceless %}
 <tr class="{{ cycler(['row_odd', 'row_even'], 'board') }}">
 	<td class="icon32">
 		<img class="icon32" width="32" height="32" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_board.png') }}" alt="icon">
@@ -27,9 +28,9 @@
 				{% endif %}
 				<br>
 				{% if page < 2 %}
-					{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': board.getLastPost.getTopic.getId } ) }}#{{ board.getLastPost.getId }}">{{ board.getLastPost.getCreatedDate|date("d/m/Y - H:i:s") }}</a>
+					{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': board.getLastPost.getTopic.getId } ) }}#{{ board.getLastPost.getId }}">{{ board.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.category.last_post_datetime_format')) }}</a>
 				{% else %}
-					{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': board.getLastPost.getTopic.getId, 'page':page } ) }}#{{ board.getLastPost.getId }}">{{ board.getLastPost.getCreatedDate|date("d/m/Y - H:i:s") }}</a>
+					{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': board.getLastPost.getTopic.getId, 'page':page } ) }}#{{ board.getLastPost.getId }}">{{ board.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.category.last_post_datetime_format')) }}</a>
 				{% endif %}
 			{% else %}
 				{{ 'info.not_applicable' | trans({}, 'CCDNForumForumBundle') }}
@@ -40,3 +41,4 @@
 		</span>
 	</td>
 </tr>
+{% endspaceless %}
