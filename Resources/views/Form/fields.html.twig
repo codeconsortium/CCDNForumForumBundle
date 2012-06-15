@@ -1,6 +1,6 @@
 {% block field_label %}
 {% spaceless %}
-	{% set attr = attr|merge({ 'class': attr.class|default('') ~ 'widget_label'}) %}
+	{% set attr = attr|merge({ 'class': attr.class|default('') ~ 'control-label'}) %}
     <label for="{{ id }}" {{ block('widget_attributes') }}>{{ label }}</label>
 {% endspaceless %}
 {% endblock field_label %}
@@ -9,12 +9,12 @@
 
 {% block field_widget %}
     {% set type = type|default('text') %}
-	{% set attr = attr|merge({ 'class': attr.class|default('') ~ 'widget_text'}) %}
+	{% set attr = attr|merge({ 'class': attr.class|default('') ~ 'input-xlarge span8'}) %}
     <input type="{{ type }}" {{ block('widget_attributes') }} value="{{ value }}">
 {% endblock field_widget %}
 
 
 {% block textarea_widget %}
-	{% set attr = attr|merge({ 'class': attr.class|default('') ~ 'widget_textarea'}) %}
+	{% set attr = attr|merge({ 'class': attr.class|default('') ~ 'text-xlarge span8', 'style': attr.style|default('') ~ 'height:250px;'}) %}
     <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
 {% endblock textarea_widget %}

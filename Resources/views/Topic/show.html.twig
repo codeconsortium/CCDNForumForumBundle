@@ -3,137 +3,80 @@
 {% block stylesheets %}
 	{{ parent() }}
 	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('bundles/ccdncomponentcommon/css/speech_bubble.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('bundles/ccdncomponentbbcode/css/bbcode.css') }}" rel="stylesheet" type="text/css">	
 {% endblock %}
 
-{% block title %}{{ 'title.topic.show' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') }}{% endblock %}
+{% block title %}{{ 'title.topic.show' | trans({'%topic_title%': topic.getTitle |capitalize}, 'CCDNForumForumBundle') }}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
 
-	<div class="sidebar">
-		<div class="sidebar_header"><span class="sidebar_header">{{ 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') }}</span></div>
-		<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_forum_topic_reply', {'topic_id': topic.getId }) }}">{{ 'sidebar.link.reply_to_topic' | trans({}, 'CCDNForumForumBundle') }}</a></div>
-		<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_forum_topic_create', {'board_id': board.getId }) }}">{{ 'sidebar.link.create_new_topic' | trans({}, 'CCDNForumForumBundle') }}</a></div>
-		{% if is_granted('ROLE_USER') %}
-			{% if subscription is defined %}
-				{% if subscription is not null %}
-					{% if subscription.subscribed == true %}
-						<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_forum_subscriptions_unsubscribe', {'topic_id': topic.getId }) }}">{{ 'sidebar.link.topic_unsubscribe' | trans({}, 'CCDNForumForumBundle') }}</a></div>
-					{% else %}
-						<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_forum_subscriptions_subscribe', {'topic_id': topic.getId }) }}">{{ 'sidebar.link.topic_subscribe' | trans({}, 'CCDNForumForumBundle') }}</a></div>						
-					{% endif %}
-				{% else %}
-					<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_forum_subscriptions_subscribe', {'topic_id': topic.getId }) }}">{{ 'sidebar.link.topic_subscribe' | trans({}, 'CCDNForumForumBundle') }}</a></div>						
-				{% endif %}
-			{% else %}
-				<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_forum_subscriptions_subscribe', {'topic_id': topic.getId }) }}">{{ 'sidebar.link.topic_subscribe' | trans({}, 'CCDNForumForumBundle') }}</a></div>		
-			{% endif %}
-		{% endif %}
-	</div>
-
-	{% if is_granted('ROLE_MODERATOR') %}
-	<div class="sidebar">
-		<div class="sidebar_header"><span class="sidebar_header">{{ 'sidebar.header.moderator_tools' | trans({}, 'CCDNForumForumBundle') }}</span></div>
-		<div class="sidebar_panel">
-			{% if topic.closedBy %}
-				<a class="sidebar" href="{{ path('cc_moderator_forum_topic_reopen', {'topic_id': topic.getId }) }}">{{ 'link.topic.reopen' | trans({}, 'CCDNForumForumBundle') }}</a>
-			{% else %}
-				<a class="sidebar" href="{{ path('cc_moderator_forum_topic_close', {'topic_id': topic.getId }) }}">{{ 'link.topic.close' | trans({}, 'CCDNForumForumBundle') }}</a>
-			{% endif %}
-		</div>
-		<div class="sidebar_panel">
-			<a class="sidebar" href="{{ path('cc_moderator_forum_topic_change_board', {'topic_id': topic.getId }) }}">{{ 'link.topic.change_board' | trans({}, 'CCDNForumForumBundle') }}</a>
-		</div>
-		<div class="sidebar_panel">
-			{% if topic.deletedBy %}
-				<a class="sidebar" href="{{ path('cc_moderator_forum_topic_restore', {'topic_id': topic.getId }) }}">{{ 'link.topic.restore' |trans({}, 'CCDNForumForumBundle') }}</a>
-			{% else %}
-				<a class="sidebar" href="{{ path('cc_moderator_forum_topic_delete', {'topic_id': topic.getId }) }}">{{ 'link.topic.delete' |trans({}, 'CCDNForumForumBundle') }}</a>
-			{% endif %}
-		</div>
-		<div class="sidebar_panel">
-			{% if topic.isSticky %}
-				<a class="sidebar" href="{{ path('cc_moderator_forum_topic_unsticky', {'topic_id': topic.getId }) }}">{{ 'link.topic.unsticky' |trans({}, 'CCDNForumModeratorBundle') }}</a>
-			{% else %}
-				<a class="sidebar" href="{{ path('cc_moderator_forum_topic_sticky', {'topic_id': topic.getId }) }}">{{ 'link.topic.sticky' |trans({}, 'CCDNForumModeratorBundle') }}</a>
-			{% endif %}
-		</div>
-	</div>
-	{% endif %}
-
+	{% include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' %}
+	
 {% endblock %}
+
+{% block sidebar_actions %}
+	{{ parent() }}
+	
+	{% include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' %}
+	
+{% endblock %}
+
 
 {% block body %}
 
-{% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
+	{% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
+	
+	{% if topic.closedDate %}
+	<div class="alert alert-error">
+		{{ 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') }}
+		{% if topic.getClosedBy %}<a href="{{ path(user_profile_route, {'user_id': topic.getClosedBy.getId } ) }}">{{ topic.getClosedBy.getUsername }}</a>{% else %}Unknown{% endif %}
+		{{ topic.getClosedDate |date(param('ccdn_forum_forum.topic.show.topic_closed_datetime_format')) }}
+	</div>
+	{% endif %}
 
-<div class="section_wrap_top">
+	{% if topic.deletedDate %}
+	<div class="alert alert-error">
+		{{ 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') }}
+		{% if topic.getDeletedBy %}<a href="{{ path(user_profile_route, {'user_id': topic.getDeletedBy.getId } ) }}">{{ topic.getDeletedBy.getUsername }}</a>{% else %}Unknown{% endif %}
+		{{ topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) }}
+	</div>
+	{% endif %}
+	
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
-</div>
-<div class="section_wrap_bottom">
-	{% spaceless %}
-	
-	<div class="float_left">
-		<div class="section_header">
-			<h2>{{ topic.getTitle }}</h2>
-		</div>
-		
-		<div class="section_panel">
-			<div class="box_notice"><span class="label_medium">{{ 'topic.reply_count' |trans({}, 'CCDNForumForumBundle') }}</span>&nbsp;<span class="stat_medium">{{ topic.replyCount }}</span></div>
-			<div class="box_notice"><span class="label_medium">{{ 'topic.view_count' |trans({}, 'CCDNForumForumBundle') }}</span>&nbsp;<span class="stat_medium">{{ topic.viewCount }}</span></div>
-		</div>
-	</div>
-	
-	<div class="float_right">
-		<div class="section_panel">
-	
-			{% if topic.closedDate %}
-			<div class="box_warning">
-				<div class="float_left" style="padding:5px !important;">
-					<img class="icon32" width="32" height="32" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_locked.png') }}" alt="icon">
-				</div>
-				<div class="float_right">
-					<span class="stat_medium">
-					{{ 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') }}
-					{% if topic.getClosedBy %}<a href="{{ path(user_profile_route, {'user_id': topic.getClosedBy.getId } ) }}">{{ topic.getClosedBy.getUsername }}</a>{% else %}Unknown{% endif %}<br>
-					{{ topic.getClosedDate |date(param('ccdn_forum_forum.topic.show.closed_deleted_datetime_format')) }}
-					</span>
-				</div>
-			</div>
-			{% endif %}
-	
-			{% if topic.deletedDate %}
-			<div class="box_severe">
-				<div class="float_left" style="padding:5px !important;">
-					<img class="icon32" width="32" height="32" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_trash.png') }}" alt="icon">
-				</div>
-				<div class="float_right">
-					<span class="stat_medium">
-						{{ 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') }}
-						{% if topic.getDeletedBy %}<a href="{{ path(user_profile_route, {'user_id': topic.getDeletedBy.getId } ) }}">{{ topic.getDeletedBy.getUsername }}</a>{% else %}Unknown{% endif %}<br>
-						{{ topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) }}
-					</span>
-				</div>
-			</div>
-			{% endif %}
-			
-{#			{% if not topic.deletedDate or not topic.closedDate %}
-			<div class="section_tool_strip">
-				<a class="button_red" href="{{ path('cc_forum_topic_reply', {'topic_id': topic.getId }) }}">{{ 'link.post.reply' | trans({}, 'CCDNForumForumBundle') }}</a>
-			</div>
-			{% endif %} #}
-		</div>
-	</div>
-	
-	{% endspaceless %}
-</div>
 
-<div class="section_wrap_standalone">
+	{% spaceless %}
+			
+		<div class="well" style="padding: 10px;">
+			<h2>{{ truncDot(topic.getTitle |capitalize, 70) }}</h2>
+			
+			<hr>
+			
+			<span class="badge badge-info">{{ 'topic.reply_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ topic.replyCount }}</span>&nbsp;
+			<span class="badge badge-info">{{ 'topic.view_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ topic.viewCount }}</span>&nbsp;
+
+			{% if topic.closedDate %}
+			<span class="label label-important">
+				{{ 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') }}
+				{% if topic.getClosedBy %}{{ topic.getClosedBy.getUsername }}{% else %}Unknown{% endif %}
+				{{ topic.getClosedDate |date(param('ccdn_forum_forum.topic.show.topic_closed_datetime_format')) }}
+			</span>&nbsp;
+			{% endif %}
+
+			{% if topic.deletedDate %}
+			<span class="label label-important">
+				{{ 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') }}
+				{% if topic.getDeletedBy %}{{ topic.getDeletedBy.getUsername }}{% else %}Unknown{% endif %}
+				{{ topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) }}
+			</span>&nbsp;
+			{% endif %}
+		</div>
+			
+	{% endspaceless %}
+
 	{% if pager.haveToPaginate %}
-	<div class="pagerfanta">
-		{{ pagerfanta(pager, 'default', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) }}
-	</div>
+		{{ pagerfanta(pager, 'twitter_bootstrap', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) }}
 	{% endif %}
 
 	{% for key, post in pager.getCurrentPageResults %}
@@ -141,14 +84,9 @@
 	{% endfor %}
 
 	{% if pager.haveToPaginate %}
-	<div class="pagerfanta">
-		{{ pagerfanta(pager, 'default', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) }}
-	</div>
+		{{ pagerfanta(pager, 'twitter_bootstrap', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) }}
 	{% endif %}
-</div>
 
-<div class="section_wrap_standalone">
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
-</div>
 
 {% endblock %}

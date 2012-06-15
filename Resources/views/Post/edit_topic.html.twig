@@ -3,6 +3,7 @@
 {% block stylesheets %}
 	{{ parent() }}
 	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('bundles/ccdncomponentcommon/css/speech_bubble.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('bundles/ccdncomponentbbcode/css/bbcode.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
@@ -16,92 +17,85 @@
 {% block sidebar %}
 	{{ parent() }}
 
-	<div class="sidebar">
-		<div class="sidebar_header"><span class="sidebar_header">{{ 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') }}</span></div>
-		<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_forum_topic_reply', {'topic_id': post.getTopic.getId }) }}">{{ 'sidebar.link.reply_to_topic' | trans({}, 'CCDNForumForumBundle') }}</a></div>
-		<div class="sidebar_panel"><a class="sidebar" href="{{ path('cc_forum_topic_create', {'board_id': post.getTopic.getBoard.getId }) }}">{{ 'sidebar.link.create_new_topic' | trans({}, 'CCDNForumForumBundle') }}</a></div>
-	</div>
+	{% include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' %}
+		
+{% endblock %}
+
+{% block sidebar_actions %}
+	{{ parent() }}
+	
+	{% include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' %}
 	
 {% endblock %}
+
 
 {% block body %}
 
 {% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
 
-<div class="section_wrap_top">
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
-</div>
-<div class="section_wrap_bottom">
-	<div class="section_header">
-		<h2>{{ 'title.topic.edit' | trans({'%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') }}</h2>
-	</div>
-</div>
 
-<div class="section_wrap_standalone">
-	<div class="section_table_panel">
-		{% form_theme form param('ccdn_forum_forum.post.edit_topic.form_theme') %}
-		<form action="{{ path('cc_forum_post_edit', { 'post_id': post.id } ) }}" method="post" {{ form_enctype(form) }}>
-			{{ form_row(form._token) }}
-			<div class="errors">{{ form_errors(form) }}</div>
-			<table class="common_list">
-				<tbody>
-					{% if is_granted('ROLE_MODERATOR') %}
-					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="form_label">{{ form_label(form.Topic.board, null, { 'label': 'form.label.topic.board'| trans({}, 'CCDNForumForumBundle')}) }}</td>
-						<td class="form_widget">
+	<h2>{{ 'title.topic.edit' | trans({'%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') }}</h2>
+
+	<div class="well">
+	{% form_theme form param('ccdn_forum_forum.post.edit_topic.form_theme') %}
+	
+		<form action="{{ path('cc_forum_post_edit', { 'post_id': post.id } ) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+			<fieldset>
+				
+				<div class="control-group"><div class="controls row-fluid">{{ form_row(form._token) }}</div></div>
+				
+				{% if is_granted('ROLE_MODERATOR') %}
+					<div class="control-group">
+						{{ form_label(form.Topic.board, null, { 'label': 'form.label.topic.board'| trans({}, 'CCDNForumForumBundle')}) }}
+						<div class="controls row-fluid">
 							{{ form_errors(form.Topic.board) }}
 							{{ form_widget(form.Topic.board) }}
-						</td>
-					</tr>
-					{% endif %}
-					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="form_label">{{ form_label(form.Topic.title, null, { 'label': 'form.label.topic.title'| trans({}, 'CCDNForumForumBundle')}) }}</td>
-						<td class="form_widget">
-							{{ form_errors(form.Topic.title) }}
-							{{ form_widget(form.Topic.title) }}
-						</td>
-					</tr>
-					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="form_label">{{ form_label(form.body, null, { 'label': 'form.label.post.body'| trans({}, 'CCDNForumForumBundle')}) }}</td>
-						<td class="form_widget">
-							{{ form_errors(form.body) }}
-							{% form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' %}
-							{{ form_widget(form.body) }}
-						</td>
-					</tr>
-					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="form_label">{{ form_label(form.attachment, null, { 'label': 'form.label.post.attachment'| trans({}, 'CCDNForumForumBundle')}) }}</td>
-						<td class="form_widget">
-							{{ form_errors(form.attachment) }}
-							{{ form_widget(form.attachment) }}
-							&nbsp;<a target="_blank" href="{{ path('cc_attachment_index') }}">{{ 'link.attachments_manager' | trans({}, 'CCDNComponentAttachmentBundle') }}</a>
-							&nbsp;<a target="_blank" href="{{ path('cc_attachment_upload') }}">{{ 'link.upload' | trans({}, 'CCDNComponentAttachmentBundle') }}</a>
-						</td>
-					</tr>
-					<tr class="{{ cycler(['row_odd', 'row_even'], 'cycle') }}">
-						<td class="form_tool_strip" colspan="2">
-							<input type="submit" class="button_silver" value="{{ 'form.button.post.preview' | trans({}, 'CCDNForumForumBundle') }}" name="submit_preview">
-							<input type="submit" class="button_blue" value="{{ 'form.button.post.edit' | trans({}, 'CCDNForumForumBundle') }}" name="submit_post">							
-						</td>
-					</tr>
-				</tbody>
-			</table>
+						</div>
+					</div>
+				{% endif %}
+				
+				<div class="control-group">
+					{{ form_label(form.Topic.title, null, { 'label': 'form.label.topic.title'| trans({}, 'CCDNForumForumBundle')}) }}
+					<div class="controls row-fluid">
+						{{ form_errors(form.Topic.title) }}
+						{{ form_widget(form.Topic.title) }}
+					</div>
+				</div>
+				
+				<div class="control-group">
+					{{ form_label(form.body, null, { 'label': 'form.label.post.body'| trans({}, 'CCDNForumForumBundle')}) }}
+					<div class="controls row-fluid">
+						{{ form_errors(form.body) }}
+{#						{% form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' %} #}
+						{{ form_widget(form.body) }}
+					</div>
+				</div>
+				
+				<div class="control-group">
+					{{ form_label(form.attachment, null, { 'label': 'form.label.post.attachment'| trans({}, 'CCDNForumForumBundle')}) }}
+					<div class="controls row-fluid">
+						{{ form_errors(form.attachment) }}
+						{{ form_widget(form.attachment) }}
+						&nbsp;<a target="_blank" href="{{ path('cc_attachment_index') }}">{{ 'link.attachments.manager' | trans({}, 'CCDNComponentAttachmentBundle') }}</a>
+						&nbsp;<a target="_blank" href="{{ path('cc_attachment_upload') }}">{{ 'link.attachments.upload' | trans({}, 'CCDNComponentAttachmentBundle') }}</a>
+					</div>
+				</div>
+				
+				<div class="form-actions">
+					<input type="submit" class="btn btn-primary" value="{{ 'form.button.post.edit' | trans({}, 'CCDNForumForumBundle') }}" name="submit_post">							
+					<input type="submit" class="btn" value="{{ 'form.button.post.preview' | trans({}, 'CCDNForumForumBundle') }}" name="submit_preview">
+				</div>
+			</fieldset>
 		</form>
 	</div>
-</div>
+	
+	{% if preview is not empty %}
+		{% include "CCDNForumForumBundle:Post:post_preview.html.twig" %}
+	{% endif %}
 
-{% if preview is not empty %}
-<div class="section_wrap_standalone">
-	{% include "CCDNForumForumBundle:Post:post_preview.html.twig" %}
-</div>
-{% endif %}
-
-<div class="section_wrap_standalone">
 	{% include 'CCDNForumForumBundle:Topic:transcript.html.twig' with {'topic': topic } %}
-</div>
 
-<div class="section_wrap_standalone">
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
-</div>
 
 {% endblock %}

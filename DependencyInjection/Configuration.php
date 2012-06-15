@@ -118,7 +118,7 @@ class Configuration implements ConfigurationInterface
 							->addDefaultsIfNotSet()
 							->children()
 								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_left.html.twig')->end()
-								->scalarNode('topics_per_page')->defaultValue('40')->end()
+								->scalarNode('topics_per_page')->defaultValue('5')->end()
 								->scalarNode('topic_title_truncate')->defaultValue('50')->end()
 								->scalarNode('first_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
 								->scalarNode('last_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()

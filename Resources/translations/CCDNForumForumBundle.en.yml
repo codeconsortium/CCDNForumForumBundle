@@ -2,12 +2,17 @@ layout.header_links.forum: 'Forum'
 
 category.index: Forum Index
 
+sidebar.header.navigation: Navigation
+sidebar.link.forum_index: Index
+sidebar.link.subscriptions: Subscriptions
+sidebar.link.drafts: Drafts
+
 sidebar.header.tools: Tools
-sidebar.link.reply_to_topic: Reply to topic      
-sidebar.link.post_new_topic: Post New Topic
 sidebar.link.create_new_topic: Create New Topic
+sidebar.link.reply_to_topic: Reply to topic      
 sidebar.link.topic_subscribe: Subscribe
 sidebar.link.topic_unsubscribe: Unsubscribe
+
 sidebar.header.moderator_tools: Moderator Tools
 
 # crumbs:
@@ -39,6 +44,7 @@ title.drafts: 'Drafts.'
 title.subscriptions.show: 'Subscriptions.'
 
 # links & button links
+link.user.message: Send Private Message
 link.post.flag: Flag
 link.post.edit: Edit
 link.post.reply: Reply
@@ -70,6 +76,9 @@ flash.draft.board_does_not_exist: 'The board you are trying to post to no longer
 flash.subscription.topic.subscribed: 'You subscribed to the topic %topic_title%.'
 flash.subscription.topic.unsubscribed: 'You unsubscribed from the topic %topic_title%'
 flash.subscription.topic.not.found: 'Topic could not be subscribed to because it was not found! Sorry about that.'
+
+badge.topic.closed: 'closed'
+
 
 # show:
 categories.empty: 'There are no categories.'
@@ -118,6 +127,7 @@ topic.closed_by: 'Topic closed by '
 topic.deleted_by: 'Topic deleted by '
 generic.posted_at: 'Posted at '
 post.has_been_flagged: 'This post has been flagged!'
+post.has_been_locked: 'This post has been locked!'
 actioned.at: ' at '
 
 topic.transcript: 'Transcript of: %topic_title%.'
