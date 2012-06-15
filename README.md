@@ -15,6 +15,10 @@ This file is part of the CCDNForum Bundle(s)
 
 Available on github <http://www.github.com/codeconsortium/>
 
+Theme and Sprite graphics courtesy of [twitter bootstrap](http://twitter.github.com/bootstrap/index.html) and [GLYPHICONS](http://glyphicons.com/).
+
+Other graphics are works of CodeConsortium.
+
 For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 
