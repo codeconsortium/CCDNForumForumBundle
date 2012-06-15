@@ -46,6 +46,7 @@ ForumBundle Provides the following features:
 14. Complimentary [KarmaBundle](http://github.com/codeconsortium/CCDNForumKarmaBundle) provides Post ratings giving a user an overall Karma rating.
 15. Complimentary [AttachmentBundle](http://github.com/codeconsortium/AttachmentBundle) allows file attachments to Posts.
 16. Complimentary [CrumbTrailBundle](http://github.com/codeconsortium/CrumbTrailBundle) allows easy backtracking and logical hierarchical navigation.
+17. Utilises Twitter-Bootstrap interface by default.
 
 You will need the complimentary bundles for this bundle to work, which are listed in the dependencies of the installation documentation.
 
