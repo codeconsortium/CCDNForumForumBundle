@@ -65,6 +65,16 @@ class PostController extends ContainerAware
 		
 		$registries = $this->container->get('ccdn_forum_forum.registry.manager')->getRegistriesForUsersAsArray($registryUserIds);
 		
+		//
+		// get the topic subscriptions
+		//
+		if ($user && $post->getTopic())
+		{
+			$subscription = $this->container->get('ccdn_forum_forum.subscription.repository')->findTopicSubscriptionByTopicAndUserId($post->getTopic()->getId(), $user->getId());
+		} else {
+			$subscription = null;
+		}
+		
 		// setup crumb trail.
 		$topic = $post->getTopic();
 		$board = $topic->getBoard();
@@ -84,6 +94,7 @@ class PostController extends ContainerAware
 			'topic' => $topic,
 			'post' => $post,
 			'registries' => $registries,
+			'subscription' => $subscription,
 		));
 	}
 	

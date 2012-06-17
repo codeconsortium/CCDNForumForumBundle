@@ -68,7 +68,7 @@ class TopicController extends ContainerAware
 		$this->container->get('ccdn_forum_forum.topic.repository')->incrementViewCounter($topic);
 		
 		// get the topic subscriptions
-		if ( ! $user)
+		if ($user)
 		{
 			$subscription = $this->container->get('ccdn_forum_forum.subscription.repository')->findTopicSubscriptionByTopicAndUserId($topic_id, $user->getId());
 		} else {

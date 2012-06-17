@@ -3,7 +3,6 @@
 
 		{% if is_granted('ROLE_USER') %}
 		<div class="sidebar">
-	{#		<ul class="nav nav-list" style="padding: 8px 0 8px !important;">#}
 			{% if subscription is defined %}
 				{% if subscription is not null %}
 					{% if subscription.subscribed == true %}
@@ -22,7 +21,6 @@
 
 		{% if is_granted('ROLE_MODERATOR') %}
 			<div class="sidebar">
-	{#			<li class="nav-header">{{ 'sidebar.header.moderator_tools' | trans({}, 'CCDNForumForumBundle') }}</li>#}
 				{% if topic.isSticky %}
 					<a class="btn btn-warning" href="{{ path('cc_moderator_forum_topic_unsticky', {'topic_id': topic.getId }) }}"><i class="icon-white icon-bullhorn"></i>&nbsp;{{ 'link.topic.unsticky' |trans({}, 'CCDNForumModeratorBundle') }}</a>
 				{% else %}

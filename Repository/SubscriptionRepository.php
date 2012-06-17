@@ -59,7 +59,7 @@ class SubscriptionRepository extends EntityRepository
 			->createQuery('
 				SELECT s, t FROM CCDNForumForumBundle:Subscription s
 				LEFT JOIN s.topic t
-				WHERE t.id = :topicId AND s.owned_by = :userId')
+				WHERE s.topic = :topicId AND s.owned_by = :userId')
 			->setParameters(array('topicId' => $topicId, 'userId' => $userId));
 					
 		try {
