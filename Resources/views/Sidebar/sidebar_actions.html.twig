@@ -8,7 +8,7 @@
 					{% if subscription.subscribed == true %}
 						<a class="btn" href="{{ path('cc_forum_subscriptions_unsubscribe', {'topic_id': topic.getId }) }}"><i class="icon-eye-close"></i>&nbsp;{{ 'sidebar.link.topic_unsubscribe' | trans({}, 'CCDNForumForumBundle') }}</a>
 					{% else %}
-						<a class="btn" href="{{ path('cc_forum_subscriptions_subscribe', {'topic_id': topic.getId }) }}"><i class="icon-eye-close"></i>&nbsp;{{ 'sidebar.link.topic_subscribe' | trans({}, 'CCDNForumForumBundle') }}</a>
+						<a class="btn" href="{{ path('cc_forum_subscriptions_subscribe', {'topic_id': topic.getId }) }}"><i class="icon-eye-open"></i>&nbsp;{{ 'sidebar.link.topic_subscribe' | trans({}, 'CCDNForumForumBundle') }}</a>
 					{% endif %}
 				{% else %}
 					<a class="btn" href="{{ path('cc_forum_subscriptions_subscribe', {'topic_id': topic.getId }) }}"><i class="icon-eye-open"></i>&nbsp;{{ 'sidebar.link.topic_subscribe' | trans({}, 'CCDNForumForumBundle') }}</a>						
