@@ -68,7 +68,7 @@ class PostController extends ContainerAware
 		//
 		// get the topic subscriptions
 		//
-		if ($user && $post->getTopic())
+		if ($this->container->get('security.context')->isGranted('ROLE_USER') && $post->getTopic())
 		{
 			$subscription = $this->container->get('ccdn_forum_forum.subscription.repository')->findTopicSubscriptionByTopicAndUserId($post->getTopic()->getId(), $user->getId());
 		} else {
