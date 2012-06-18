@@ -9,44 +9,44 @@
 	<div class="pull-right">
 		{% if is_granted('ROLE_USER') %}
 			{% if post.getCreatedBy %}
-			<a class="btn" href="{{ path('cc_message_message_compose_to', {'user_id': post.getCreatedBy.getId }) }}" data-toggle="tooltip" title="{{ 'link.user.message' | trans({}, 'CCDNForumForumBundle') }}"><i class="icon-envelope"></i></a>
+			<a class="btn" href="{{ path('cc_message_message_compose_to', {'user_id': post.getCreatedBy.getId }) }}" data-tip="bottom" title="{{ 'link.user.message' | trans({}, 'CCDNForumForumBundle') }}"><i class="icon-envelope"></i></a>
 			{% endif %}
 			
-			<a class="btn" href="{{ path('cc_forum_topic_reply', {'topic_id': post.getTopic.getId }) }}" data-toggle="tooltip" title="{{ 'link.post.reply' | trans({}, 'CCDNForumForumBundle') }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_comment.png') }}" alt="{{ 'link.post.reply' | trans({}, 'CCDNForumForumBundle') }}"></a>
-			<a class="btn" href="{{ path('cc_forum_topic_reply_with_quote', {'topic_id': post.getTopic.getId, 'quote_id': post.getId }) }}" data-toggle="tooltip" title="{{ 'link.post.quote' | trans({}, 'CCDNForumForumBundle') }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_quote.png') }}" alt="{{ 'link.post.quote' | trans({}, 'CCDNForumForumBundle') }}"></a>	
+			<a class="btn" href="{{ path('cc_forum_topic_reply', {'topic_id': post.getTopic.getId }) }}" data-tip="bottom" title="{{ 'link.post.reply' | trans({}, 'CCDNForumForumBundle') }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_comment.png') }}" alt="{{ 'link.post.reply' | trans({}, 'CCDNForumForumBundle') }}"></a>
+			<a class="btn" href="{{ path('cc_forum_topic_reply_with_quote', {'topic_id': post.getTopic.getId, 'quote_id': post.getId }) }}" data-tip="bottom" title="{{ 'link.post.quote' | trans({}, 'CCDNForumForumBundle') }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_quote.png') }}" alt="{{ 'link.post.quote' | trans({}, 'CCDNForumForumBundle') }}"></a>	
 
 			{% if post.getCreatedBy %}	
 				{% if post.getCreatedBy.getId != user.getId %}
-				<a class="btn" href="{{ path('cc_forum_karma_rate', {'post_id': post.getId }) }}" data-toggle="tooltip" title="{{ 'link.post.rate' | trans({}, 'CCDNForumKarmaBundle') }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_karma.png') }}" alt="{{ 'link.post.rate' | trans({}, 'CCDNForumKarmaBundle') }}"></a>
+				<a class="btn" href="{{ path('cc_forum_karma_rate', {'post_id': post.getId }) }}" data-tip="bottom" title="{{ 'link.post.rate' | trans({}, 'CCDNForumKarmaBundle') }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_karma.png') }}" alt="{{ 'link.post.rate' | trans({}, 'CCDNForumKarmaBundle') }}"></a>
 				{% endif %}
 
 				{% if post.getCreatedBy.getId == user.getId and not is_granted('ROLE_MODERATOR') %}
-				<a class="btn" href="{{ path('cc_forum_post_edit', {'post_id': post.getId }) }}" data-toggle="tooltip" title="{{ 'link.post.edit' | trans({}, 'CCDNForumForumBundle') }}"><i class="icon-pencil"></i></a>
+				<a class="btn" href="{{ path('cc_forum_post_edit', {'post_id': post.getId }) }}" data-tip="bottom" title="{{ 'link.post.edit' | trans({}, 'CCDNForumForumBundle') }}"><i class="icon-pencil"></i></a>
 					{% if not post.getDeletedBy %}
-					<a class="btn btn-danger" href="{{ path('cc_forum_post_delete', {'post_id': post.getId }) }}" data-toggle="tooltip" title="{{ 'link.post.delete' | trans({}, 'CCDNForumForumBundle') }}"><i class="icon-trash"></i></a>
+					<a class="btn btn-danger" href="{{ path('cc_forum_post_delete', {'post_id': post.getId }) }}" data-tip="bottom" title="{{ 'link.post.delete' | trans({}, 'CCDNForumForumBundle') }}"><i class="icon-trash"></i></a>
 					{% endif %}
 				{% endif %}
 			{% endif %}
 		
 			{% if is_granted('ROLE_MODERATOR') %}
-			<a class="btn" href="{{ path('cc_forum_post_edit', {'post_id': post.getId }) }}" data-toggle="tooltip" title="{{ 'link.post.edit' | trans({}, 'CCDNForumForumBundle') }}"><i class="icon-pencil"></i></a>
+			<a class="btn" href="{{ path('cc_forum_post_edit', {'post_id': post.getId }) }}" data-tip="bottom" title="{{ 'link.post.edit' | trans({}, 'CCDNForumForumBundle') }}"><i class="icon-pencil"></i></a>
 			
 				{% if post.getDeletedBy %}
-				<a class="btn btn-danger" href="{{ path('cc_moderator_forum_post_restore', {'post_id': post.getId }) }}" data-toggle="tooltip" title="{{ 'link.post.restore' | trans({}, 'CCDNForumForumBundle') }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_link.png') }}" alt="{{ 'link.post.restore' | trans({}, 'CCDNForumForumBundle') }}"></a>
+				<a class="btn btn-danger" href="{{ path('cc_moderator_forum_post_restore', {'post_id': post.getId }) }}" data-tip="bottom" title="{{ 'link.post.restore' | trans({}, 'CCDNForumForumBundle') }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_link.png') }}" alt="{{ 'link.post.restore' | trans({}, 'CCDNForumForumBundle') }}"></a>
 				{% else %}
-				<a class="btn btn-danger" href="{{ path('cc_forum_post_delete', {'post_id': post.getId }) }}" data-toggle="tooltip" title="{{ 'link.post.delete' | trans({}, 'CCDNForumForumBundle') }}"><i class="icon-white icon-trash"></i></a>				
+				<a class="btn btn-danger" href="{{ path('cc_forum_post_delete', {'post_id': post.getId }) }}" data-tip="bottom" title="{{ 'link.post.delete' | trans({}, 'CCDNForumForumBundle') }}"><i class="icon-white icon-trash"></i></a>				
 				{% endif %}
 				
 				{% if post.getLockedBy %}
-				<a class="btn btn-danger" href="{{ path('cc_moderator_forum_post_unlock', {'post_id': post.getId }) }}" data-toggle="tooltip" title="{{ 'link.post.unlock' | trans({}, 'CCDNForumForumBundle') }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_unlocked.png') }}" alt="{{ 'link.post.unlock' | trans({}, 'CCDNForumForumBundle') }}"></a>
+				<a class="btn btn-danger" href="{{ path('cc_moderator_forum_post_unlock', {'post_id': post.getId }) }}" data-tip="bottom" title="{{ 'link.post.unlock' | trans({}, 'CCDNForumForumBundle') }}"><img class="button_16x16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_unlocked.png') }}" alt="{{ 'link.post.unlock' | trans({}, 'CCDNForumForumBundle') }}"></a>
 				{% else %}
-				<a class="btn btn-danger" href="{{ path('cc_moderator_forum_post_lock', {'post_id': post.getId }) }}" data-toggle="tooltip" title="{{ 'link.post.lock' | trans({}, 'CCDNForumForumBundle') }}"><i class="icon-white icon-lock"></i></a>
+				<a class="btn btn-danger" href="{{ path('cc_moderator_forum_post_lock', {'post_id': post.getId }) }}" data-tip="bottom" title="{{ 'link.post.lock' | trans({}, 'CCDNForumForumBundle') }}"><i class="icon-white icon-lock"></i></a>
 				{% endif %}
 			{% endif %}
 			
 			{% if post.getCreatedBy %}	
 				{% if post.getCreatedBy.getId != user.getId %}				
-				<a class="btn btn-danger" href="{{ path('cc_forum_post_flag', {'post_id': post.getId }) }}" data-toggle="tooltip" title="{{ 'link.post.flag' | trans({}, 'CCDNForumForumBundle') }}"><i class="icon-white icon-flag"></i></a>
+				<a class="btn btn-danger" href="{{ path('cc_forum_post_flag', {'post_id': post.getId }) }}" data-tip="bottom" title="{{ 'link.post.flag' | trans({}, 'CCDNForumForumBundle') }}"><i class="icon-white icon-flag"></i></a>
 				{% endif %}
 			{% endif %}
 		{% endif %}
