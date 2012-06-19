@@ -55,8 +55,8 @@ class RegistryManager extends BaseManager implements ManagerInterface
 			$record->setCacheKarmaNegativeCount(0);
 		} else {
 			$record->setCachePostCount($postCount['postCount']);
-			$record->setCacheKarmaPositiveCount($karmaCount['positiveCount']);
-			$record->setCacheKarmaNegativeCount($karmaCount['negativeCount']);
+			$record->setCacheKarmaPositiveCount($karmaCount['karmaPositiveCount']);
+			$record->setCacheKarmaNegativeCount($karmaCount['karmaNegativeCount']);
 		}
 		
 		$this->persist($record)->flushNow();
