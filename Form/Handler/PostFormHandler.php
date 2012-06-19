@@ -153,11 +153,11 @@ class PostFormHandler
 		{
 			case self::NORMAL:
 				$this->mode = self::NORMAL;
-				$this->manager = $this->container->get('ccdn_forum_forum.topic.manager');
+				$this->manager = $this->container->get('ccdn_forum_forum.post.manager');
 			break;
 			case self::PREVIEW:
 				$this->mode = self::PREVIEW;
-				$this->manager = $this->container->get('ccdn_forum_forum.topic.manager');
+				$this->manager = $this->container->get('ccdn_forum_forum.post.manager');
 			break;
 			case self::DRAFT:
 				$this->mode = self::DRAFT;

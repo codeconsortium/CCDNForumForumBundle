@@ -34,6 +34,7 @@ class PostManager extends BaseManager implements ManagerInterface
 	 */
 	public function insert($post)
 	{
+
 		// insert a new row
 		$this->persist($post)->flushNow();
 

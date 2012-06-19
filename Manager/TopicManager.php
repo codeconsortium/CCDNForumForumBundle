@@ -24,14 +24,6 @@ use CCDNComponent\CommonBundle\Manager\BaseManager;
 class TopicManager extends BaseManager implements ManagerInterface
 {
 	
-
-	
-	/**
-	 *
-	 * @access protected
-	 */
-	protected $counters;
-	
 	
 	
 	/**
@@ -145,15 +137,16 @@ class TopicManager extends BaseManager implements ManagerInterface
 	 */
 	public function updateStats($topic)
 	{
-		$topic_repository = $this->container->get('ccdn_forum_forum.topic.repository');
+		$topicRepository = $this->container->get('ccdn_forum_forum.topic.repository');
+		$postRepository = $this->container->get('ccdn_forum_forum.post.repository');
 		
 		// Gets stats.
-		$topic_reply_count = $topic_repository->getReplyCountForTopic($topic->getId());	
-		$topic_last_post = $topic_repository->getLastPostForTopic($topic->getId());
-			
+		$topicReplyCount = $postRepository->getPostCountForTopicById($topic->getId());	
+		$topicLastPost = $topicRepository->getLastPostForTopic($topic->getId());
+
 		// Set the board / topic last post. 
-		$topic->setReplyCount( (($topic_reply_count) ? --$topic_reply_count : 0) );		
-		$topic->setLastPost( (($topic_last_post) ? $topic_last_post : null) );
+		$topic->setReplyCount( (($topicReplyCount) ? --$topicReplyCount : 0) );		
+		$topic->setLastPost( (($topicLastPost) ? $topicLastPost : null) );
 				
 		$this->persist($topic)->flushNow();
 
