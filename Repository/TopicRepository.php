@@ -134,36 +134,6 @@ class TopicRepository extends EntityRepository
 	        return null;
 	    }
 	}
-	
-	
-	
-	/**
-	 *
-	 * @access public
-	 * @param int $topic_id
-	 * CURRENT ISSUE with Pagerfanta: https://github.com/whiteoctober/Pagerfanta/pull/51
-	 */
-/*	public function findOneByIdJoinedToPostsPaginated($topic_id)
-	{
-		
-		$query = $this->getEntityManager()
-			->createQuery('
-				SELECT t, p	FROM CCDNForumForumBundle:Topic t
-				INNER JOIN t.posts p
-				LEFT JOIN p.created_by u
-				LEFT JOIN p.registry r
-				WHERE t.id = :id
-				GROUP BY p.id
-				ORDER BY p.created_date ASC')
-			->setParameter('id', $topic_id);
-					
-		try {
-			return new Pagerfanta(new DoctrineORMAdapter($query));
-	        //return $query->getSingleResult();
-	    } catch (\Doctrine\ORM\NoResultException $e) {
-	        return null;
-	    }
-	}*/
 
 
 
@@ -288,7 +258,6 @@ class TopicRepository extends EntityRepository
 	    } catch (\Doctrine\ORM\NonUniqueResultException $e) {
 			return null;
 		}
-		
 	}
 
 }

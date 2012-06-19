@@ -61,63 +61,6 @@ class BoardRepository extends EntityRepository
 	 * @access public
 	 * @param int $board_id
 	 */	
-/*	public function findOneByIdJoinedWithTopics($board_id)
-	{	
-		$query = $this->getEntityManager()
-			->createQuery('
-				SELECT b, t, fp, lp FROM CCDNForumForumBundle:Board b
-				LEFT JOIN b.topics t
-				LEFT JOIN t.last_post lp
-				LEFT JOIN t.first_post fp
-				WHERE b.id = :id AND t.deleted_by IS NULL
-				GROUP BY t.id
-				ORDER BY lp.created_date DESC')
-				
-			->setParameter('id', $board_id);
-		
-		try {
-			return new Pagerfanta(new DoctrineORMAdapter($query));
-//	        return $query->getSingleResult();
-	    } catch (\Doctrine\ORM\NoResultException $e) {
-	        return null;
-	    }	
-	}*/
-	
-
-	
-	/**
-	 *
-	 * @access public
-	 * @param int $board_id
-	 */
-/*	public function findOneByIdJoinedWithTopicsForModerators($board_id)
-	{	
-		$query = $this->getEntityManager()
-			->createQuery('
-				SELECT b, t, fp, lp FROM CCDNForumForumBundle:Board b
-				LEFT JOIN b.topics t
-				LEFT JOIN t.last_post lp
-				LEFT JOIN t.first_post fp
-				WHERE b.id = :id
-				GROUP BY t.id
-				ORDER BY lp.created_date DESC')
-			->setParameter('id', $board_id);
-
-		try {
-			return new Pagerfanta(new DoctrineORMAdapter($query));
-//	        return $query->getSingleResult();
-	    } catch (\Doctrine\ORM\NoResultException $e) {
-	        return null;
-	    }	
-	}*/
-	
-	
-	
-	/**
-	 *
-	 * @access public
-	 * @param int $board_id
-	 */	
 	public function findOneByIdWithCategory($boardId)
 	{	
 		$query = $this->getEntityManager()
@@ -156,54 +99,13 @@ class BoardRepository extends EntityRepository
 				WHERE t.board = :id AND t.deleted_by IS NULL
 				GROUP BY t.board')
 			->setParameter('id', $board_id);
-		/*
-		SELECT COUNT(DISTINCT t.id) AS topicCount, COUNT(DISTINCT p.id) AS postCount
-		FROM CCDNForumForumBundle:Topic t
-		LEFT JOIN t.posts p
-		WHERE t.board IN (:id) AND t.deleted_by IS NULL
-		GROUP BY t.board
-		*/
+
 		try {
 	        return $query->getSingleResult();
 	    } catch (\Doctrine\ORM\NoResultException $e) {
 	        return;
 	    }
 	}
-	
-	
-	
-	/**
-	 * When a reply to a topic is made we need to get the ReplyCounts(posts)
-	 * for Topic stats and PostCounts(posts) for board stats so that the 
-	 * PostManager can update the topic counters and boards post counters.
-	 *
-	 * THIS METHOD IS BROKEN - Bug, gives error:
-	 * Unknown column 'c2_.id' in 'on clause'
-	 * the query is broken into the 2 methods below this to work around.
-	 * could be a Doctrine issue, cannot confirm.
-	 * rc = replyCounts, bt Board Topics and pc = postCount
-	 */
-/*	public function getReplyCountsForTopicWithPostCountForBoard($topic_id, $board_id)
-	{
-		// get reply(post) count for topic / post count for board
-		$query = $this->getEntityManager()
-			->createQuery('	
-				SELECT COUNT(DISTINCT rc.id) AS replyCount, COUNT(DISTINCT pc.id) AS postCount
-				FROM CCDNForumForumBundle:Topic t, CCDNForumForumBundle:Board b
-				LEFT JOIN t.posts rc
-				LEFT JOIN b.topics bt
-				LEFT JOIN bt.posts pc
-				WHERE (t.id = :topic_id AND b.id = :board_id)
-				')
-			->setParameters(array('topic_id' => $topic_id, 'board_id' => $board_id));
-		
-		try {
-	        return $query->getSingleResult();
-	    } catch (\Doctrine\ORM\NoResultException $e) {
-	        return;
-	    }	
-	}*/
-
 	
 	
 	
