@@ -45,6 +45,8 @@ class BoardManager extends BaseManager implements ManagerInterface
 		if ($last_topic)
 		{
 			$board->setLastPost( (($last_topic->getLastPost()) ? $last_topic->getLastPost() : null) );
+		} else {
+			$board->setLastPost(null);
 		}
 		
 		$this->persist($board);
