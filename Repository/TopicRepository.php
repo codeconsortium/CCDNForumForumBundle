@@ -268,24 +268,6 @@ class TopicRepository extends EntityRepository
 	 * @access public
 	 * @param int $topic_id
 	 */
-	public function getReplyCountForTopic($topic_id)
-	{
-
-		$qb = $this->getEntityManager()->createQueryBuilder();
-
-		$query = $qb
-			->add('select', 'count(p.id)')
-			->add('from', 'CCDNForumForumBundle:Post p')
-			->add('where', 'p.topic = ?1')
-			->setParameter(1, $topic_id)
-			->getQuery();
-
-		try {
-	        return $query->getSingleScalarResult();
-	    } catch (\Doctrine\ORM\NoResultException $e) {
-	        return null;
-	    }
-	}
 	public function getLastPostForTopic($topic_id)
 	{
 		$qb = $this->getEntityManager()->createQueryBuilder();
