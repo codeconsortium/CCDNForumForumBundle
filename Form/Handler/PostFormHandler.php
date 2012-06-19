@@ -314,17 +314,5 @@ class PostFormHandler
 			return $this->manager->update($entity)->flushNow();
 		}
     }
-
-
-
-	/**
-	 *
-	 *
-	 * @access public
-	 */
-	public function getCounters()
-	{
-		return $this->manager->getCounters();
-	}
 	
 }

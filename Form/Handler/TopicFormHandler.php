@@ -114,6 +114,9 @@ class TopicFormHandler
 		$this->mode = self::NORMAL;
 		$this->manager = $this->container->get('ccdn_forum_forum.topic.manager');
 
+		// set insert as default strategy
+		$this->strategy = self::INSERT;
+		
 		$this->request = $container->get('request');
 	}
 	
@@ -207,10 +210,7 @@ class TopicFormHandler
 				$formData->getTopic()->setReplyCount(0);
 				$formData->getTopic()->setIsSticky(0);
 
-				$board = $formData->getTopic()->getBoard();
-				
-		
-				//$formData->getTopic()->setBoard($this->defaults['board']);				
+				$board = $formData->getTopic()->getBoard();				
 			}
 
 			//
@@ -328,16 +328,5 @@ class TopicFormHandler
 			return $this->manager->update($entity)->flushNow();
 		}
     }
-
-
-
-	/**
-	 *
-	 * @access public
-	 */
-	public function getCounters()
-	{
-		return $this->manager->getCounters();
-	}
 
 }

@@ -166,19 +166,4 @@ class TopicManager extends BaseManager implements ManagerInterface
 		return $this;	
 	}
 	
-	
-	
-	/**
-	 *
-	 * @access public
-	 * @return Array()
-	 */
-	public function getCounters()
-	{
-		return array(
-			'topicCount' => $this->counters['topicCount'],
-			'postCount' => $this->counters['postCount']
-		);
-	}
-	
 }

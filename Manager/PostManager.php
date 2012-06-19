@@ -23,22 +23,6 @@ use CCDNComponent\CommonBundle\Manager\BaseManager;
  */
 class PostManager extends BaseManager implements ManagerInterface
 {
-	
-	
-	
-	/**
-	 *
-	 * @access protected
-	 */
-	protected $replyCount;
-
-	
-	
-	/**
-	 *
-	 * @access protected
-	 */
-	protected $postCount;
 
 		
 	
@@ -156,20 +140,6 @@ class PostManager extends BaseManager implements ManagerInterface
 		$this->container->get('ccdn_forum_forum.topic.manager')->updateStats($post->getTopic())->flushNow();
 		
 		return $this;
-	}
-
-
-	
-	/**
-	 *
-	 * @access public
-	 * @return Array()
-	 */
-	public function getCounters()
-	{
-		return array(
-			'replyCount' => $this->replyCount,
-			'postCount' => $this->postCount);
 	}
 	
 }

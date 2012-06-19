@@ -174,6 +174,18 @@ class TopicController extends ContainerAware
 		
 		$formHandler = $this->container->get('ccdn_forum_forum.topic.insert.form.handler')->setDefaultValues($options);
 		
+		if (isset($_POST['submit_post']))
+		{
+			$formHandler->setMode($formHandler::NORMAL);
+			
+			if ($formHandler->process())	
+			{	
+				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+										
+				return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $formHandler->getForm()->getData()->getTopic()->getId() )));
+			}
+		}
+		
 		if (isset($_POST['submit_draft']))
 		{
 			$formHandler->setMode($formHandler::DRAFT);
@@ -191,17 +203,6 @@ class TopicController extends ContainerAware
 			$formHandler->setMode($formHandler::PREVIEW);
 		}
 
-		if (isset($_POST['submit_post']))
-		{
-			$formHandler->setMode($formHandler::NORMAL);
-			
-			if ($formHandler->process())	
-			{	
-				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle()), 'CCDNForumForumBundle'));
-										
-				return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $formHandler->getForm()->getData()->getTopic()->getId() )));
-			}
-		}
 		
 		// setup crumb trail.
 		$category = $board->getCategory();
@@ -282,6 +283,26 @@ class TopicController extends ContainerAware
 		
 		
 		$formHandler = $this->container->get('ccdn_forum_forum.post.insert.form.handler')->setDefaultValues($options);
+
+		if (isset($_POST['submit_post']))
+		{	
+			$formHandler->setMode($formHandler::NORMAL);
+
+			if ($formHandler->process())	
+			{				
+				// page of the last post
+				$posts_per_topic_page = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
+
+				$pageCounter = $this->container->get('ccdn_forum_forum.post.repository')->getPostCountForTopicById($topic_id);
+				
+				$page =  $pageCounter ? ceil($pageCounter / $posts_per_topic_page) : 1;
+				
+				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.topic.reply.success', array('%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle'));
+				
+				return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show_paginated_anchored', 
+					array('topic_id' => $topic_id, 'page' => $page, 'post_id' => $topic->getLastPost()->getId()) ));
+			}
+		}
 		
 		if (isset($_POST['submit_draft']))
 		{
@@ -294,29 +315,12 @@ class TopicController extends ContainerAware
 				return new RedirectResponse($this->container->get('router')->generate('cc_forum_drafts_list'));
 			}
 		}
-		
+				
 		if (isset($_POST['submit_preview']))
 		{
 			$formHandler->setMode($formHandler::PREVIEW);
 		}
-
-		if (isset($_POST['submit_post']))
-		{	
-
-			if ($formHandler->process())	
-			{				
-				// page of the last post
-				$posts_per_topic_page = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
-				$counters = $formHandler->getCounters();
-				$page = ceil(++$counters['replyCount'] / $posts_per_topic_page);
-
-				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.topic.reply.success', array('%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle'));
 				
-				return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show_paginated_anchored', 
-					array('topic_id' => $topic_id, 'page' => $page, 'post_id' => $topic->getLastPost()->getId()) ));
-			}
-		}
-		
 		// setup crumb trail.
 		$board = $topic->getBoard();
 		$category = $board->getCategory();
