@@ -109,6 +109,8 @@ board.table.head.deleted_on: 'Deleted On'
 
 topic.reply_count: 'Replies: '
 topic.view_count: 'Viewed: '
+topic.subscription_count: 'Subscribers: '
+
 board.topic_count: 'Topics: '
 board.post_count: 'Posts: '
 

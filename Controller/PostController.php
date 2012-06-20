@@ -75,6 +75,8 @@ class PostController extends ContainerAware
 			$subscription = null;
 		}
 		
+		$subscriberCount = $this->container->get('ccdn_forum_forum.subscription.repository')->getSubscriberCountForTopicById($post->getTopic()->getId());
+		
 		// setup crumb trail.
 		$topic = $post->getTopic();
 		$board = $topic->getBoard();
@@ -95,6 +97,7 @@ class PostController extends ContainerAware
 			'post' => $post,
 			'registries' => $registries,
 			'subscription' => $subscription,
+			'subscription_count' => $subscriberCount,
 		));
 	}
 	

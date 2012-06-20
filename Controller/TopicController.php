@@ -98,6 +98,8 @@ class TopicController extends ContainerAware
 		
 		$registries = $this->container->get('ccdn_forum_forum.registry.manager')->getRegistriesForUsersAsArray($registryUserIds);
 
+		$subscriberCount = $this->container->get('ccdn_forum_forum.subscription.repository')->getSubscriberCountForTopicById($topic_id);
+		
 		// setup crumb trail.
 		$board = $topic->getBoard();
 		$category = $board->getCategory();
@@ -117,6 +119,7 @@ class TopicController extends ContainerAware
 			'topic' => $topic,
 			'registries' => $registries,
 			'subscription' => $subscription,
+			'subscription_count' => $subscriberCount,
 		));
 	}
 

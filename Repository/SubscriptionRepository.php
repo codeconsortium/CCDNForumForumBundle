@@ -69,4 +69,27 @@ class SubscriptionRepository extends EntityRepository
 	    }
 	}
 	
+	
+	
+	/**
+	 *
+	 *
+	 */
+	public function getSubscriberCountForTopicById($topicId)
+	{
+		$query = $this->getEntityManager()
+			->createQuery('	
+				SELECT COUNT(s.id)
+				FROM CCDNForumForumBundle:Subscription s
+				WHERE s.topic = :id AND s.subscribed = TRUE')
+			->setParameter('id', $topicId);
+			
+		try {
+	        return $query->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    }
+	
+	}
+	
 }
