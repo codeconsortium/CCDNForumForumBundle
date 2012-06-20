@@ -47,41 +47,42 @@
 		<li><a href="{{ path('cc_forum_index') }}"><i class="icon-home"></i>&nbsp;{{ 'sidebar.link.forum_index' |trans({}, 'CCDNForumForumBundle') }}</a></li>
 	{% endif %}
 	
-	{% if route == 'cc_forum_subscriptions' %}
-		<li class="active"><a href="{{ path('cc_forum_subscriptions') }}"><i class="icon-white icon-heart"></i>&nbsp;{{ 'sidebar.link.subscriptions' | trans({}, 'CCDNForumForumBundle') }}</a></li>
-	{% else %}
-		<li><a href="{{ path('cc_forum_subscriptions') }}"><i class="icon-heart"></i>&nbsp;{{ 'sidebar.link.subscriptions' | trans({}, 'CCDNForumForumBundle') }}</a></li>
+	{% if is_granted('ROLE_USER') %}
+		{% if route == 'cc_forum_subscriptions' %}
+			<li class="active"><a href="{{ path('cc_forum_subscriptions') }}"><i class="icon-white icon-heart"></i>&nbsp;{{ 'sidebar.link.subscriptions' | trans({}, 'CCDNForumForumBundle') }}</a></li>
+		{% else %}
+			<li><a href="{{ path('cc_forum_subscriptions') }}"><i class="icon-heart"></i>&nbsp;{{ 'sidebar.link.subscriptions' | trans({}, 'CCDNForumForumBundle') }}</a></li>
+		{% endif %}
+
+		{% if route == 'cc_forum_drafts_list' %}
+			<li class="active"><a href="{{ path('cc_forum_drafts_list') }}"><i class="icon-white icon-pencil"></i>&nbsp;{{ 'sidebar.link.drafts' | trans({}, 'CCDNForumForumBundle') }}</a></li>
+		{% else %}
+			<li><a href="{{ path('cc_forum_drafts_list') }}"><i class="icon-pencil"></i>&nbsp;{{ 'sidebar.link.drafts' | trans({}, 'CCDNForumForumBundle') }}</a></li>
+		{% endif %}
 	{% endif %}
 
-	{% if route == 'cc_forum_drafts_list' %}
-		<li class="active"><a href="{{ path('cc_forum_drafts_list') }}"><i class="icon-white icon-pencil"></i>&nbsp;{{ 'sidebar.link.drafts' | trans({}, 'CCDNForumForumBundle') }}</a></li>
-	{% else %}
-		<li><a href="{{ path('cc_forum_drafts_list') }}"><i class="icon-pencil"></i>&nbsp;{{ 'sidebar.link.drafts' | trans({}, 'CCDNForumForumBundle') }}</a></li>
-	{% endif %}
 
+	{% set sidebar_categories = board_list() %}
 
-
-		{% set sidebar_categories = board_list() %}
-
-		{% if sidebar_categories is not null %}
-			{% for sidebar_category in sidebar_categories %}
-				<li class="nav-header">{{ truncDot(sidebar_category.name, 15) }}</li>
-				{% for sidebar_board in sidebar_category.boards %}
-					{% if sidebar_board is defined %}
-						{% if board is defined %}
-							{% if sidebar_board.id == board.id %}
-								<li class="active"><a href="{{ path('cc_forum_board_show', {'board_id': sidebar_board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>
-							{% else %}
-								<li><a href="{{ path('cc_forum_board_show', {'board_id': sidebar_board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>
-							{% endif %}
+	{% if sidebar_categories is not null %}
+		{% for sidebar_category in sidebar_categories %}
+			<li class="nav-header">{{ truncDot(sidebar_category.name, 15) }}</li>
+			{% for sidebar_board in sidebar_category.boards %}
+				{% if sidebar_board is defined %}
+					{% if board is defined %}
+						{% if sidebar_board.id == board.id %}
+							<li class="active"><a href="{{ path('cc_forum_board_show', {'board_id': sidebar_board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>
 						{% else %}
 							<li><a href="{{ path('cc_forum_board_show', {'board_id': sidebar_board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>
 						{% endif %}
 					{% else %}
-						<li><a href="{{ path('cc_forum_board_show', {'board_id': sidebar_board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>					
+						<li><a href="{{ path('cc_forum_board_show', {'board_id': sidebar_board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>
 					{% endif %}
-				{% endfor %}
+				{% else %}
+					<li><a href="{{ path('cc_forum_board_show', {'board_id': sidebar_board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>					
+				{% endif %}
 			{% endfor %}
-		{% endif %}
+		{% endfor %}
+	{% endif %}
 	
 {% endspaceless %}
