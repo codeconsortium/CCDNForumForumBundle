@@ -33,8 +33,8 @@ class BoardRepository extends EntityRepository
 			->createQuery('
 				SELECT b, c FROM CCDNForumForumBundle:Board b
 				INNER JOIN b.category c
-				GROUP BY c.id');
-				
+				GROUP BY c.id
+			');
 			
 		try {
 			$results = $query->getResult();

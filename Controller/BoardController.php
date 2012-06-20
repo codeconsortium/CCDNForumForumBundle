@@ -39,13 +39,12 @@ class BoardController extends ContainerAware
 
 		if ($this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{
-			$topics_paginated = $this->container->get('ccdn_forum_forum.topic.repository')->findTopicsForBoardByIdForModerators($board_id);
+			$topics_paginated = $this->container->get('ccdn_forum_forum.topic.repository')->findTopicsForBoardById($board_id, true);
+			$stickyTopics = $this->container->get('ccdn_forum_forum.topic.repository')->findStickyTopicsForBoardById($board_id, true);
 		} else {
-			$topics_paginated = $this->container->get('ccdn_forum_forum.topic.repository')->findTopicsForBoardById($board_id);		
+			$topics_paginated = $this->container->get('ccdn_forum_forum.topic.repository')->findTopicsForBoardById($board_id, false);		
+			$stickyTopics = $this->container->get('ccdn_forum_forum.topic.repository')->findStickyTopicsForBoardById($board_id, false);
 		}
-
-		// get sticky topics
-		$stickyTopics = $this->container->get('ccdn_forum_forum.topic.repository')->findStickyTopicsForBoardById($board_id);		
 
 		// deal with pagination.
 		$topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');

@@ -33,7 +33,7 @@ class TopicRepository extends EntityRepository
 	 * @access public
 	 * @param int $topicId
 	 */
-	public function findTopicsForBoardById($boardId)
+	public function findTopicsForBoardById($boardId, $includeDeleted)
 	{
 		$query = $this->getEntityManager()
 			->createQuery('
@@ -42,7 +42,9 @@ class TopicRepository extends EntityRepository
 				LEFT JOIN lp.created_by lpu
 				LEFT JOIN t.first_post fp
 				LEFT JOIN fp.created_by fpu
-				WHERE t.board = :id AND t.deleted_by IS NULL AND (t.is_sticky = false OR t.is_sticky IS NULL)
+				WHERE t.board = :id' . 
+					(($includeDeleted) ? ' AND t.deleted_by IS NULL': null) .
+				' AND (t.is_sticky = false OR t.is_sticky IS NULL)
 				GROUP BY t.id
 				ORDER BY lp.created_date DESC')
 			->setParameter('id', $boardId);
@@ -53,7 +55,7 @@ class TopicRepository extends EntityRepository
 	        return null;
 	    }
 	}
-	
+
 	
 	
 	/**
@@ -61,7 +63,7 @@ class TopicRepository extends EntityRepository
 	 * @access public
 	 * @param int $topicId
 	 */
-	public function findTopicsForBoardByIdForModerators($boardId)
+	public function findStickyTopicsForBoardById($boardId, $includeDeleted)
 	{
 		$query = $this->getEntityManager()
 			->createQuery('
@@ -70,48 +72,21 @@ class TopicRepository extends EntityRepository
 				LEFT JOIN lp.created_by lpu
 				LEFT JOIN t.first_post fp
 				LEFT JOIN fp.created_by fpu
-				WHERE t.board = :id AND (t.is_sticky = false OR t.is_sticky IS NULL)
+				WHERE t.board = :id' . 
+					(($includeDeleted) ? ' AND t.deleted_by IS NULL': null) .
+				' AND t.is_sticky = true
 				GROUP BY t.id
 				ORDER BY lp.created_date DESC')
 			->setParameter('id', $boardId);
 
-		try {
-			return new Pagerfanta(new DoctrineORMAdapter($query));
-	    } catch (\Doctrine\ORM\NoResultException $e) {
-	        return null;
-	    }
-	}
-	
-	
-	
-	/**
-	 *
-	 * @access public
-	 * @param int $topicId
-	 */
-	public function findStickyTopicsForBoardById($boardId)
-	{
-		$query = $this->getEntityManager()
-			->createQuery('
-				SELECT t, fp, lp FROM CCDNForumForumBundle:Topic t
-				LEFT JOIN t.last_post lp
-				LEFT JOIN lp.created_by lpu
-				LEFT JOIN t.first_post fp
-				LEFT JOIN fp.created_by fpu
-				WHERE t.board = :id AND t.deleted_by IS NULL AND t.is_sticky = true
-				GROUP BY t.id
-				ORDER BY lp.created_date DESC')
-			->setParameter('id', $boardId);
-
-		try {
-			//return new Pagerfanta(new DoctrineORMAdapter($query));
+		try	{
 			return $query->getResult();
 	    } catch (\Doctrine\ORM\NoResultException $e) {
 	        return null;
 	    }
 	}
 	
-	
+		
 	
 	/**
 	 *
