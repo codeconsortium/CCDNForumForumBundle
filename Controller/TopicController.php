@@ -65,7 +65,7 @@ class TopicController extends ContainerAware
 		}
 		
 		// update the view counter because you viewed the topic
-		$this->container->get('ccdn_forum_forum.topic.repository')->incrementViewCounter($topic);
+		$this->container->get('ccdn_forum_forum.topic.manager')->incrementViewCounter($topic);
 		
 		// get the topic subscriptions
 		if ($this->container->get('security.context')->isGranted('ROLE_USER'))

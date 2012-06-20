@@ -119,7 +119,6 @@ class TopicRepository extends EntityRepository
 	 */
 	public function findOneByIdJoinedToPosts($topic_id)
 	{
-		
 		$query = $this->getEntityManager()
 			->createQuery('
 				SELECT t, p	FROM CCDNForumForumBundle:Topic t
@@ -135,22 +134,6 @@ class TopicRepository extends EntityRepository
 	    } catch (\Doctrine\ORM\NoResultException $e) {
 	        return null;
 	    }
-	}
-	
-	
-	
-	/**
-	 *
-	 * @access public
-	 * @param $topic
-	 */
-	public function incrementViewCounter($topic)
-	{
-		// set the new counters
-		$topic->setViewCount($topic->getViewCount() + 1);
-
-		// inject both back into the db		
-		$this->_em->flush($topic);
 	}
 	
 	

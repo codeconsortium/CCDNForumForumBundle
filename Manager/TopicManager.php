@@ -159,4 +159,19 @@ class TopicManager extends BaseManager implements ManagerInterface
 		return $this;	
 	}
 	
+	
+	
+	/**
+	 *
+	 * @access public
+	 * @param $topic
+	 */
+	public function incrementViewCounter($topic)
+	{
+		// set the new counters
+		$topic->setViewCount($topic->getViewCount() + 1);
+
+		$this->persist($topic)->flushNow();
+	}
+	
 }
