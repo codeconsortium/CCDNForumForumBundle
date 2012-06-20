@@ -53,7 +53,6 @@ class PostRepository extends EntityRepository
 
 		try {
 			return new Pagerfanta(new DoctrineORMAdapter($query));
-	        //return $query->getSingleResult();
 	    } catch (\Doctrine\ORM\NoResultException $e) {
 	        return null;
 	    }
@@ -95,6 +94,8 @@ class PostRepository extends EntityRepository
 	        return null;
 	    }
 	}
+
+
 
 	/**
 	 *

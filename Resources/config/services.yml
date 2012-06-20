@@ -32,6 +32,8 @@ parameters:
 
     ccdn_forum_forum.dashboard.integrator.class:        CCDNForum\ForumBundle\Component\Dashboard\DashboardIntegrator
     
+    ccdn_forum_forum.board_list.extension.class:        CCDNForum\ForumBundle\Extension\BoardListExtension
+    
 services:
     
     #
@@ -171,3 +173,12 @@ services:
         arguments: [@service_container]
         tags:
             - { name: ccdn_component_dashboard.integrator }
+            
+    #
+    # Twig Extensions.
+    #
+    ccdn_forum_forum.board_list.extension:
+        class: %ccdn_forum_forum.board_list.extension.class%
+        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }

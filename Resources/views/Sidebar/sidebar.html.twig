@@ -17,6 +17,29 @@
 		{% endif %}
 	{% endif %}
 
+
+	{% if board is defined or topic is defined %}
+		<li class="nav-header">{{ 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') }}</li>
+
+		{% if board is defined %}
+			{% if route == 'cc_forum_topic_create' %}
+				<li class="active"><a href="{{ path('cc_forum_topic_create', {'board_id': board.getId }) }}"><i class="icon-white icon-asterisk"></i>&nbsp;{{ 'sidebar.link.create_new_topic' | trans({}, 'CCDNForumForumBundle') }}</a></li>
+			{% else %}
+				<li><a href="{{ path('cc_forum_topic_create', {'board_id': board.getId }) }}"><i class="icon-asterisk"></i>&nbsp;{{ 'sidebar.link.create_new_topic' | trans({}, 'CCDNForumForumBundle') }}</a></li>
+			{% endif %}
+		{% endif %}
+
+		{% if topic is defined %}
+			{% if route == 'cc_forum_topic_reply' %}
+				<li class="active"><a href="{{ path('cc_forum_topic_reply', {'topic_id': topic.getId }) }}"><i class="icon-white icon-comment"></i>&nbsp;{{ 'sidebar.link.reply_to_topic' | trans({}, 'CCDNForumForumBundle') }}</a></li>
+			{% else %}
+				<li><a href="{{ path('cc_forum_topic_reply', {'topic_id': topic.getId }) }}"><i class="icon-comment"></i>&nbsp;{{ 'sidebar.link.reply_to_topic' | trans({}, 'CCDNForumForumBundle') }}</a></li>
+			{% endif %}
+		{% endif %}
+	{% endif %}
+	
+	
+	
 	<li class="nav-header">{{ 'sidebar.header.navigation' | trans({}, 'CCDNForumForumBundle') }}</li>
 	{% if route == 'cc_forum_home_root' or route == 'cc_forum_index' or route == 'cc_forum_category_index' %}
 		<li class="active"><a href="{{ path('cc_forum_index') }}"><i class="icon-white icon-home"></i>&nbsp;{{ 'sidebar.link.forum_index' |trans({}, 'CCDNForumForumBundle') }}</a></li>
@@ -36,23 +59,25 @@
 		<li><a href="{{ path('cc_forum_drafts_list') }}"><i class="icon-pencil"></i>&nbsp;{{ 'sidebar.link.drafts' | trans({}, 'CCDNForumForumBundle') }}</a></li>
 	{% endif %}
 
-	{% if board is defined or topic is defined %}
-		<li class="nav-header">{{ 'sidebar.header.tools' | trans({}, 'CCDNForumForumBundle') }}</li>
-	{% endif %}
 
-	{% if board is defined %}
-		{% if route == 'cc_forum_topic_create' %}
-			<li class="active"><a href="{{ path('cc_forum_topic_create', {'board_id': board.getId }) }}"><i class="icon-white icon-asterisk"></i>&nbsp;{{ 'sidebar.link.create_new_topic' | trans({}, 'CCDNForumForumBundle') }}</a></li>
-		{% else %}
-			<li><a href="{{ path('cc_forum_topic_create', {'board_id': board.getId }) }}"><i class="icon-asterisk"></i>&nbsp;{{ 'sidebar.link.create_new_topic' | trans({}, 'CCDNForumForumBundle') }}</a></li>
-		{% endif %}
-	{% endif %}
 
-	{% if topic is defined %}
-		{% if route == 'cc_forum_topic_reply' %}
-			<li class="active"><a href="{{ path('cc_forum_topic_reply', {'topic_id': topic.getId }) }}"><i class="icon-white icon-comment"></i>&nbsp;{{ 'sidebar.link.reply_to_topic' | trans({}, 'CCDNForumForumBundle') }}</a></li>
-		{% else %}
-			<li><a href="{{ path('cc_forum_topic_reply', {'topic_id': topic.getId }) }}"><i class="icon-comment"></i>&nbsp;{{ 'sidebar.link.reply_to_topic' | trans({}, 'CCDNForumForumBundle') }}</a></li>
+		{% set sidebar_categories = board_list() %}
+
+		{% if sidebar_categories is not null %}
+			{% for sidebar_category in sidebar_categories %}
+				<li class="nav-header">{{ truncDot(sidebar_category.name, 15) }}</li>
+				{% for sidebar_board in sidebar_category.boards %}
+					{% if sidebar_board is defined %}
+						{% if sidebar_board.id == board.id %}
+							<li class="active"><a href="{{ path('cc_forum_board_show', {'board_id': board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>
+						{% else %}
+							<li><a href="{{ path('cc_forum_board_show', {'board_id': board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>
+						{% endif %}
+					{% else %}
+						<li><a href="{{ path('cc_forum_board_show', {'board_id': board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>					
+					{% endif %}
+				{% endfor %}
+			{% endfor %}
 		{% endif %}
-	{% endif %}
+	
 {% endspaceless %}

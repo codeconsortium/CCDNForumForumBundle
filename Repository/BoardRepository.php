@@ -27,32 +27,27 @@ class BoardRepository extends EntityRepository
 {
 
 	
-/*	public function findAllHydratedAsArray()
+	
+	/**
+	 *
+	 * @access public
+	 */
+	public function findAllBoardsGroupedByCategoryHydratedAsArray()
 	{
 		$query = $this->getEntityManager()
 			->createQuery('
-				SELECT b, c FROM CCDNForumForumBundle:Board b
-				INNER JOIN b.category c
-				GROUP BY c.id
+				SELECT c, b	
+				FROM CCDNForumForumBundle:Category c
+				LEFT JOIN c.boards b
+				ORDER BY c.list_order_priority, b.list_order_priority
 			');
-			
+						
 		try {
-			$results = $query->getResult();
-			$hydrated = array();
-			
-			//
-			// Do some custom array hydration.
-			//
-			foreach($results as $result)
-			{
-				$hydrated[$result->getCategory()->getName()][$result->getId()] = $result->getName();
-			}
-			
-	        return $hydrated;
+			return $query->getResult();	
 	    } catch (\Doctrine\ORM\NoResultException $e) {
 	        return null;
 	    }
-	}*/
+	}
 	
 	
 	
