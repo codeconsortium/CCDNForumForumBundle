@@ -197,7 +197,7 @@ class PostController extends ContainerAware
 					}
 				}
 			
-				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.post.edit.success', array('%post_id%' => $post_id, '%topic_title%' => $post->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+				$this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('flash.post.edit.success', array('%post_id%' => $post_id, '%topic_title%' => $post->getTopic()->getTitle()), 'CCDNForumForumBundle'));
 				
 				// redirect user on successful edit.
 				return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show_paginated_anchored', 
@@ -436,7 +436,7 @@ class PostController extends ContainerAware
 					
 		if ($formHandler->process())
 		{	
-			$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.post.flagged.success', array('%post_id%' => $post_id, '%topic_title%' => $post->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+			$this->container->get('session')->setFlash('warning', $this->container->get('translator')->trans('flash.post.flagged.success', array('%post_id%' => $post_id, '%topic_title%' => $post->getTopic()->getTitle()), 'CCDNForumForumBundle'));
 							
 			return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show_paginated_anchored', 
 				array('topic_id' => $post->getTopic()->getId(), 'page' => 1, 'post_id' => $post_id) ));

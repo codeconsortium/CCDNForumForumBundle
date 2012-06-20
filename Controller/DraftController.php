@@ -123,14 +123,14 @@ class DraftController extends ContainerAware
 				{
 					return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_reply_from_draft', array('topic_id' => $draft->getTopic()->getId(), 'draftId' => $draft->getId()) ));
 				} else {
-					$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.draft.topic_does_not_exist', array(), 'CCDNForumForumBundle'));				
+					$this->container->get('session')->setFlash('error', $this->container->get('translator')->trans('flash.draft.topic_does_not_exist', array(), 'CCDNForumForumBundle'));				
 				}
 			} else {
 				if ($draft->getBoard())
 				{
 					return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_create_from_draft', array('board_id' => $draft->getBoard()->getId(), 'draftId' => $draft->getId()) ));
 				} else {
-					$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.draft.board_does_not_exist', array(), 'CCDNForumForumBundle'));				
+					$this->container->get('session')->setFlash('error', $this->container->get('translator')->trans('flash.draft.board_does_not_exist', array(), 'CCDNForumForumBundle'));				
 				}
 			}
 		} else {
@@ -138,7 +138,7 @@ class DraftController extends ContainerAware
 			{
 				return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_create_from_draft', array('board_id' => $draft->getBoard()->getId(), 'draftId' => $draft->getId()) ));
 			} else {
-				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.draft.board_does_not_exist', array(), 'CCDNForumForumBundle'));				
+				$this->container->get('session')->setFlash('error', $this->container->get('translator')->trans('flash.draft.board_does_not_exist', array(), 'CCDNForumForumBundle'));				
 			}
 		}
 	

@@ -183,7 +183,7 @@ class TopicController extends ContainerAware
 			
 			if ($formHandler->process())	
 			{	
-				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+				$this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle()), 'CCDNForumForumBundle'));
 										
 				return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $formHandler->getForm()->getData()->getTopic()->getId() )));
 			}
@@ -313,7 +313,7 @@ class TopicController extends ContainerAware
 			
 			if ($formHandler->process())	
 			{
-				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.draft.save.success', array(), 'CCDNForumForumBundle'));
+				$this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('flash.draft.save.success', array(), 'CCDNForumForumBundle'));
 			
 				return new RedirectResponse($this->container->get('router')->generate('cc_forum_drafts_list'));
 			}
