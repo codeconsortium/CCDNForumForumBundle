@@ -43,7 +43,7 @@ class TopicRepository extends EntityRepository
 				LEFT JOIN t.first_post fp
 				LEFT JOIN fp.created_by fpu
 				WHERE t.board = :id' . 
-					(($includeDeleted) ? ' AND t.deleted_by IS NULL': null) .
+					(($includeDeleted) ? null : ' AND t.deleted_by IS NULL') .
 				' AND (t.is_sticky = false OR t.is_sticky IS NULL)
 				GROUP BY t.id
 				ORDER BY lp.created_date DESC')
@@ -73,7 +73,7 @@ class TopicRepository extends EntityRepository
 				LEFT JOIN t.first_post fp
 				LEFT JOIN fp.created_by fpu
 				WHERE t.board = :id' . 
-					(($includeDeleted) ? ' AND t.deleted_by IS NULL': null) .
+					(($includeDeleted) ? null : ' AND t.deleted_by IS NULL') .
 				' AND t.is_sticky = true
 				GROUP BY t.id
 				ORDER BY lp.created_date DESC')
