@@ -303,7 +303,7 @@ class PostFormHandler
 		//
 		if ($this->strategy == self::INSERT)
 		{
-			return $this->manager->insert($entity)->flushNow();
+			return $this->manager->reply($entity)->flushNow();
 		}
 		
 		//

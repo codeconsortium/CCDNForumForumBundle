@@ -32,7 +32,7 @@ class TopicManager extends BaseManager implements ManagerInterface
 	 * @param $post
 	 * @return $this
 	 */	
-	public function insert($post)
+	public function create($post)
 	{
 		// insert a new row.
 		$this->persist($post)->flushNow();

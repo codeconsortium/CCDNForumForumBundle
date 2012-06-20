@@ -320,7 +320,7 @@ class TopicFormHandler
 
 		if ($this->strategy == self::INSERT)
 		{
-			return $this->manager->insert($entity)->flushNow();		
+			return $this->manager->create($entity)->flushNow();		
 		}
 
 		if ($this->strategy == self::UPDATE)
