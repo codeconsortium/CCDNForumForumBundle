@@ -27,7 +27,7 @@ class BoardRepository extends EntityRepository
 {
 
 	
-	public function findAllHydratedAsArray()
+/*	public function findAllHydratedAsArray()
 	{
 		$query = $this->getEntityManager()
 			->createQuery('
@@ -52,7 +52,7 @@ class BoardRepository extends EntityRepository
 	    } catch (\Doctrine\ORM\NoResultException $e) {
 	        return null;
 	    }
-	}
+	}*/
 	
 	
 	
@@ -106,36 +106,9 @@ class BoardRepository extends EntityRepository
 	        return;
 	    }
 	}
+
 	
-	
-	
-	/**
-	 *
-	 * @access public
-	 * @param int $board_id
-	 */
-	public function getPostCountForBoard($board_id)
-	{
-		// get reply(post) count for topic / post count for board
-		$query = $this->getEntityManager()
-			->createQuery('	
-				SELECT COUNT(DISTINCT pc.id) AS postCount
-				FROM CCDNForumForumBundle:Board b
-				LEFT JOIN b.topics bt
-				LEFT JOIN bt.posts pc
-				WHERE (b.id = :board_id)
-				')
-			->setParameters(array('board_id' => $board_id));
 		
-		try {
-	        return $query->getSingleResult();
-	    } catch (\Doctrine\ORM\NoResultException $e) {
-	        return;
-	    }	
-	}
-	
-	
-	
 	/**
 	 *
 	 * for adminBundle
