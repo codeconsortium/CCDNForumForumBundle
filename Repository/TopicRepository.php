@@ -149,7 +149,8 @@ class TopicRepository extends EntityRepository
 	{
 		$query = $this->getEntityManager()
 			->createQuery('
-				SELECT t, fp, lp, b FROM CCDNForumForumBundle:Topic t
+				SELECT t, fp, lp, b 
+				FROM CCDNForumForumBundle:Topic t
 				LEFT JOIN t.last_post lp
 				LEFT JOIN t.first_post fp
 				LEFT JOIN t.board b

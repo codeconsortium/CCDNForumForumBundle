@@ -133,10 +133,11 @@ class PostRepository extends EntityRepository
 		
 		$query = $this->getEntityManager()
 			->createQuery('	
-				SELECT p, t
+				SELECT p, t	
 				FROM CCDNForumForumBundle:Post p
 				LEFT JOIN p.topic t
-				WHERE p.locked_by IS NOT NULL');
+				WHERE p.locked_by IS NOT NULL or t.deleted_by IS NOT NULL
+				ORDER BY p.created_date DESC');
 		
 		try {
 			return new Pagerfanta(new DoctrineORMAdapter($query));
