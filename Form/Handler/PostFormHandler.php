@@ -204,6 +204,8 @@ class PostFormHandler
 				$formData->setCreatedDate(new \DateTime());
 				$formData->setCreatedBy($this->defaults['user']);
 				$formData->setTopic($this->defaults['topic']);
+				$formData->setIsLocked(false);
+				$formData->setIsDeleted(false);
 			}
 
 			//

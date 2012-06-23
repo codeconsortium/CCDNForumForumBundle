@@ -58,7 +58,7 @@ class TopicController extends ContainerAware
 		
 		// if this topics first post is deleted, and no
 		// other posts exist then throw an NotFoundHttpException!
-		if ($topic->getDeletedBy()
+		if ($topic->getIsDeleted()
 		&& ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{
 			throw new NotFoundHttpException('No such topic exists!');
@@ -250,7 +250,7 @@ class TopicController extends ContainerAware
 			throw new NotFoundHttpException('No such topic exists!');
 		}
 		
-		if ($topic->getClosedBy() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
+		if ($topic->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{
 			throw new AccessDeniedException('This topic has been closed!');
 		}

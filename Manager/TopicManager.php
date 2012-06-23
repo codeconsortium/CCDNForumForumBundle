@@ -93,9 +93,15 @@ class TopicManager extends BaseManager implements ManagerInterface
 		// Don't overwite previous users accountability.
 		if ( ! $topic->getDeletedBy() && ! $topic->getDeletedDate())
 		{
+			$topic->setIsDeleted(true);
 			$topic->setDeletedBy($user);
 			$topic->setDeletedDate(new \DateTime());
 		
+			// Close the topic as a precaution.
+			$topic->setIsClosed(true);
+			$topic->setClosedBy($user);
+			$topic->setClosedDate(new \DateTime());
+			
 			// update the record before doing record counts
 			$this->persist($topic)->flushNow();
 		
@@ -116,6 +122,7 @@ class TopicManager extends BaseManager implements ManagerInterface
 	 */
 	public function restore($topic)
 	{
+		$topic->setIsDeleted(false);
 		$topic->setDeletedBy(null);
 		$topic->setDeletedDate(null);
 		

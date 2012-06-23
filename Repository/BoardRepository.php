@@ -91,7 +91,7 @@ class BoardRepository extends EntityRepository
 				SELECT COUNT(DISTINCT t.id) AS topicCount, COUNT(DISTINCT p.id) AS postCount
 				FROM CCDNForumForumBundle:Topic t
 				LEFT JOIN t.posts p
-				WHERE t.board = :id AND t.deleted_by IS NULL
+				WHERE t.board = :id AND t.is_deleted = FALSE AND p.is_deleted = FALSE
 				GROUP BY t.board')
 			->setParameter('id', $board_id);
 
@@ -144,7 +144,7 @@ class BoardRepository extends EntityRepository
 				SELECT t, lp 
 				FROM CCDNForumForumBundle:Topic t
 				LEFT JOIN t.last_post lp
-				WHERE t.board = :id AND t.deleted_by IS NULL
+				WHERE t.board = :id AND t.is_deleted = FALSE
 				GROUP BY t.id
 				ORDER BY lp.created_date DESC
 				')

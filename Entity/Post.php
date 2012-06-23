@@ -68,6 +68,12 @@ class Post
 	protected $edited_by;
 	
 	/**
+	 *
+	 * @ORM\Column(type="boolean", nullable=false)
+	 */
+	protected $is_deleted;
+		
+	/**
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $deleted_date;
@@ -77,7 +83,13 @@ class Post
      * @ORM\JoinColumn(name="deleted_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
 	protected $deleted_by;
-
+	
+	/**
+	 *
+	 * @ORM\Column(type="boolean", nullable=false)
+	 */
+	protected $is_locked;
+	
 	/**
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
@@ -518,4 +530,44 @@ class Post
         return $this->attachment;
     }
 
+
+    /**
+     * Set is_deleted
+     *
+     * @param boolean $isDeleted
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->is_deleted = $isDeleted;
+    }
+
+    /**
+     * Get is_deleted
+     *
+     * @return boolean 
+     */
+    public function getIsDeleted()
+    {
+        return $this->is_deleted;
+    }
+
+    /**
+     * Set is_locked
+     *
+     * @param boolean $isLocked
+     */
+    public function setIsLocked($isLocked)
+    {
+        $this->is_locked = $isLocked;
+    }
+
+    /**
+     * Get is_locked
+     *
+     * @return boolean 
+     */
+    public function getIsLocked()
+    {
+        return $this->is_locked;
+    }
 }

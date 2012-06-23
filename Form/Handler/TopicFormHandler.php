@@ -205,9 +205,13 @@ class TopicFormHandler
 			{
 				$formData->setCreatedDate(new \DateTime());
 				$formData->setCreatedBy($this->defaults['user']);
+				$formData->setIsLocked(false);
+				$formData->setIsDeleted(false);
 
 				$formData->getTopic()->setViewCount(0);
 				$formData->getTopic()->setReplyCount(0);
+				$formData->getTopic()->setIsClosed(false);
+				$formData->getTopic()->setIsDeleted(false);
 				$formData->getTopic()->setIsSticky(0);
 
 				$board = $formData->getTopic()->getBoard();				

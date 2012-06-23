@@ -68,6 +68,12 @@ class Topic
 	protected $reply_count;
 	
 	/**
+	 *
+	 * @ORM\Column(type="boolean", nullable=false)
+	 */
+	protected $is_closed;
+	
+	/**
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	protected $closed_date;
@@ -77,6 +83,12 @@ class Topic
      * @ORM\JoinColumn(name="closed_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
 	protected $closed_by;
+	
+	/**
+	 *
+	 * @ORM\Column(type="boolean", nullable=false)
+	 */
+	protected $is_deleted;
 	
 	/**
 	 * @ORM\Column(type="datetime", nullable=true)
@@ -360,5 +372,45 @@ class Topic
     public function getIsSticky()
     {
         return $this->is_sticky;
+    }
+
+    /**
+     * Set is_closed
+     *
+     * @param boolean $isClosed
+     */
+    public function setIsClosed($isClosed)
+    {
+        $this->is_closed = $isClosed;
+    }
+
+    /**
+     * Get is_closed
+     *
+     * @return boolean 
+     */
+    public function getIsClosed()
+    {
+        return $this->is_closed;
+    }
+
+    /**
+     * Set is_deleted
+     *
+     * @param boolean $isDeleted
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->is_deleted = $isDeleted;
+    }
+
+    /**
+     * Get is_deleted
+     *
+     * @return boolean 
+     */
+    public function getIsDeleted()
+    {
+        return $this->is_deleted;
     }
 }

@@ -47,7 +47,7 @@ class PostController extends ContainerAware
 		
 		// if this topics first post is deleted, and no other
 		// posts exist then throw an NotFoundHttpException!
-		if (($post->getDeletedBy() || $post->getTopic()->getDeletedBy())
+		if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted())
 		&& ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{
 			throw new NotFoundHttpException('No such post exists!');
@@ -124,20 +124,20 @@ class PostController extends ContainerAware
 
 		// if this topics first post is deleted, and no
 		// other posts exist then throw an NotFoundHttpException!
-		if (($post->getDeletedBy() || $post->getTopic()->getDeletedBy())
+		if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted())
 		&& ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{
 			throw new NotFoundHttpException('No such post exists!');
 		}
 				
 		// you cannot reply/edit/delete/flag a post if the topic is closed
-		if ($post->getTopic()->getClosedBy() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
+		if ($post->getTopic()->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{
 			throw new AccessDeniedException('This topic has been closed!');
 		}
 		
 		// you cannot reply/edit/delete/flag a post if it is locked
-		if ($post->getLockedBy() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
+		if ($post->getIsLocked() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{
 			throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
 		}
@@ -260,18 +260,18 @@ class PostController extends ContainerAware
 		
 		// if this topics first post is deleted, and no
 		// other posts exist then throw an NotFoundHttpException!
-		if (($post->getDeletedBy() || $post->getTopic()->getDeletedBy())
+		if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted())
 		&& ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{
 			throw new NotFoundHttpException('No such post exists!');
 		}
 		
-		if ($post->getTopic()->getClosedBy() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
+		if ($post->getTopic()->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{	// you cannot reply/edit/delete/flag a post if the topic is closed
 			throw new AccessDeniedException('This topic has been closed!');
 		}
 		
-		if ($post->getLockedBy() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
+		if ($post->getIsLocked() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{	// you cannot reply/edit/delete/flag a post if it is locked
 			throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
 		}		
@@ -293,8 +293,7 @@ class PostController extends ContainerAware
 		$board = $topic->getBoard();
 		$category = $board->getCategory();
 		
-		if ($post->getTopic()->getFirstPost()->getId() == $post->getId()
-		&& $post->getTopic()->getReplyCount() == 0)
+		if ($post->getTopic()->getFirstPost()->getId() == $post->getId() && $post->getTopic()->getReplyCount() == 0)
 		{	// if post is the very first post of the topic then use a topic handler so user can change topic title
 			$confirmationMessage = 'topic.delete_topic_question';
 			$crumbDelete = $this->container->get('translator')->trans('crumbs.topic.delete', array(), 'CCDNForumForumBundle');
@@ -347,19 +346,21 @@ class PostController extends ContainerAware
 		
 		// if this topics first post is deleted, and no
 		// other posts exist then throw an NotFoundHttpException!
-		if (($post->getDeletedBy() || $post->getTopic()->getDeletedBy())
+		if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted())
 		&& ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{
 			throw new NotFoundHttpException('No such post exists!');
 		}
 		
-		if ($post->getTopic()->getClosedBy() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
-		{	// you cannot reply/edit/delete/flag a post if the topic is closed
+		// you cannot reply/edit/delete/flag a post if the topic is closed
+		if ($post->getTopic()->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
+		{	
 			throw new AccessDeniedException('This topic has been closed!');
 		}
 		
-		if ($post->getLockedBy() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
-		{	// you cannot reply/edit/delete/flag a post if it is locked
+		// you cannot reply/edit/delete/flag a post if it is locked
+		if ($post->getIsLocked() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
+		{	
 			throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
 		}		
 		
@@ -408,18 +409,18 @@ class PostController extends ContainerAware
 		
 		// if this topics first post is deleted, and no
 		// other posts exist then throw an NotFoundHttpException!
-		if (($post->getDeletedBy() || $post->getTopic()->getDeletedBy())
+		if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted())
 		&& ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{
 			throw new NotFoundHttpException('No such post exists!');
 		}
 		
-		if ($post->getTopic()->getClosedBy() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
+		if ($post->getTopic()->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{	// you cannot reply/edit/delete/flag a post if the topic is closed
 			throw new AccessDeniedException('This topic has been closed!');
 		}
 		
-		if ($post->getLockedBy() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
+		if ($post->getIsLocked() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
 		{	// you cannot reply/edit/delete/flag a post if it is locked
 			throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
 		}

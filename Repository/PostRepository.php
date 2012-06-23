@@ -111,7 +111,7 @@ class PostRepository extends EntityRepository
 				SELECT p, t
 				FROM CCDNForumForumBundle:Post p
 				LEFT JOIN p.topic t
-				WHERE p.deleted_by IS NOT NULL');
+				WHERE p.is_deleted = TRUE');
 		
 		try {
 			return new Pagerfanta(new DoctrineORMAdapter($query));
@@ -136,7 +136,7 @@ class PostRepository extends EntityRepository
 				SELECT p, t	
 				FROM CCDNForumForumBundle:Post p
 				LEFT JOIN p.topic t
-				WHERE p.locked_by IS NOT NULL or t.deleted_by IS NOT NULL
+				WHERE p.is_locked = TRUE or t.is_deleted = TRUE
 				ORDER BY p.created_date DESC');
 		
 		try {
@@ -185,7 +185,7 @@ class PostRepository extends EntityRepository
 				SELECT COUNT(p.id) AS postCount
 				FROM CCDNForumForumBundle:Post p
 				LEFT JOIN p.topic t
-				WHERE p.created_by = :id AND p.deleted_by IS NULL AND t.deleted_by IS NULL')
+				WHERE p.created_by = :id AND p.is_deleted = FALSE')
 			->setParameter('id', $user_id);
 			
 		try {
