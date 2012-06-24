@@ -31,6 +31,108 @@ class TopicRepository extends EntityRepository
 	/**
 	 *
 	 * @access public
+	 */
+	public function getTableIntegrityStatus()
+	{
+		$queryOrphanedTopicCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT t.id) AS orphanedTopicCount
+				FROM CCDNForumForumBundle:Topic t
+				WHERE t.board IS NULL
+			');
+		$queryUnlinkedFirstPostCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT t.id) AS unlinkedFirstPostCount
+				FROM CCDNForumForumBundle:Topic t
+				WHERE t.first_post IS NULL AND t.reply_count > 0 
+			');
+		$queryUnlinkedLastPostCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT t.id) AS unlinkedLastPostCount
+				FROM CCDNForumForumBundle:Topic t
+				WHERE t.last_post IS NULL AND t.reply_count > 0 
+			');
+		$queryPartialClosureCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT t.id) AS partialClosureCount
+				FROM CCDNForumForumBundle:Topic t
+				WHERE t.is_closed IS NULL OR (t.is_closed = FALSE AND t.closed_by IS NOT NULL)
+			');
+		$queryPartialDeletionCount = $this->getEntityManager()
+			->createQuery('		
+				SELECT COUNT(DISTINCT t.id) AS partialDeletionCount
+				FROM CCDNForumForumBundle:Topic t
+				WHERE t.is_deleted IS NULL OR (t.is_deleted = FALSE AND t.deleted_by IS NOT NULL)
+			');
+//		$queryPartialStickyCount = $this->getEntityManager()
+//			->createQuery('		
+//				SELECT COUNT(DISTINCT t.id) AS partialStickyCount
+//				FROM CCDNForumForumBundle:Topic t
+//				WHERE b.is_sticky IS NULL OR (t.is_sticky = FALSE AND t.stickied_by IS NOT NULL)
+//			');				
+		$queryUnsetReplyCount = $this->getEntityManager()
+			->createQuery('		
+				SELECT COUNT(DISTINCT t.id) AS unsetReplyCount
+				FROM CCDNForumForumBundle:Topic t
+				WHERE t.reply_count IS NULL
+			');
+		$queryUnsetViewCount = $this->getEntityManager()
+			->createQuery('		
+				SELECT COUNT(DISTINCT t.id) AS unsetViewCount
+				FROM CCDNForumForumBundle:Topic t
+				WHERE t.view_count IS NULL
+			');
+
+		try {
+	        $result['orphanedTopicCount'] = $queryOrphanedTopicCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['orphanedTopicCount'] = '?';
+	    }
+	
+		try {
+	        $result['unlinkedFirstPostCount'] = $queryUnlinkedFirstPostCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['unlinkedFirstPostCount'] = '?';
+	    }
+
+		try {
+	        $result['unlinkedLastPostCount'] = $queryUnlinkedLastPostCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['unlinkedLastPostCount'] = '?';
+	    }
+
+		try {
+	        $result['partialClosureCount'] = $queryPartialClosureCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['partialClosureCount'] = '?';
+	    }
+
+		try {
+	        $result['partialDeletionCount'] = $queryPartialDeletionCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['partialDeletionCount'] = '?';
+	    }
+	
+		try {
+	        $result['unsetReplyCount'] = $queryUnsetReplyCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['unsetReplyCount'] = '?';
+	    }
+	
+		try {
+	        $result['unsetViewCount'] = $queryUnsetViewCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['unsetViewCount'] = '?';
+	    }
+	
+		return $result;
+	}
+	
+	
+	
+	/**
+	 *
+	 * @access public
 	 * @param int $topicId
 	 */
 	public function findTopicsForBoardById($boardId, $includeDeleted)

@@ -32,6 +32,66 @@ class BoardRepository extends EntityRepository
 	 *
 	 * @access public
 	 */
+	public function getTableIntegrityStatus()
+	{
+		$queryOrphanedBoardCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT b.id) AS orphanedBoardCount
+				FROM CCDNForumForumBundle:Board b
+				WHERE b.category IS NULL
+			');
+		$queryUnlinkedLastPostCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT b.id) AS unlinkedLastPostCount
+				FROM CCDNForumForumBundle:Board b
+				WHERE b.last_post IS NULL AND b.topic_count > 0 
+			');
+		$queryUnsetTopicCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT b.id) AS unsetTopicCount
+				FROM CCDNForumForumBundle:Board b
+				WHERE b.topic_count IS NULL
+			');
+		$queryUnsetPostCount = $this->getEntityManager()
+			->createQuery('		
+				SELECT COUNT(DISTINCT b.id) AS unsetPostCount
+				FROM CCDNForumForumBundle:Board b
+				WHERE b.post_count IS NULL
+			');				
+
+		try {
+	        $result['orphanedBoardCount'] = $queryOrphanedBoardCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['orphanedBoardCount'] = '?';
+	    }
+
+		try {
+	        $result['unlinkedLastPostCount'] = $queryUnlinkedLastPostCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['unlinkedLastPostCount'] = '?';
+	    }
+
+		try {
+	        $result['unsetTopicCount'] = $queryUnsetTopicCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['unsetTopicCount'] = '?';
+	    }
+
+		try {
+	        $result['unsetPostCount'] = $queryUnsetPostCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['unsetPostCount'] = '?';
+	    }
+	
+		return $result;
+	}
+	
+	
+	
+	/**
+	 *
+	 * @access public
+	 */
 	public function findAllBoardsGroupedByCategoryHydratedAsArray()
 	{
 		$query = $this->getEntityManager()

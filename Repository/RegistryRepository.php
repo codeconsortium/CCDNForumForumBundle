@@ -31,6 +31,66 @@ class RegistryRepository extends EntityRepository
 	/**
 	 *
 	 * @access public
+	 */
+	public function getTableIntegrityStatus()
+	{
+		$queryOrphanedRegistryCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT r.id) AS orphanedRegistryCount
+				FROM CCDNForumForumBundle:Registry r
+				WHERE r.owned_by IS NULL
+			');
+		$queryUnsetCachedPostCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT r.id) AS unsetCachedPostCount
+				FROM CCDNForumForumBundle:Registry r
+				WHERE r.cachePostCount IS NULL 
+			');
+		$queryUnsetCachedKarmaPositiveCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT r.id) AS unsetCachedKarmaPositiveCount
+				FROM CCDNForumForumBundle:Registry r
+				WHERE r.cacheKarmaPositiveCount IS NULL
+			');
+		$queryUnsetCachedKarmaNegativeCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT r.id) AS unsetCachedKarmaNegativeCount
+				FROM CCDNForumForumBundle:Registry r
+				WHERE r.cacheKarmaNegativeCount IS NULL
+			');
+
+		try {
+	        $result['orphanedRegistryCount'] = $queryOrphanedRegistryCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['orphanedRegistryCount'] = '?';
+	    }
+
+		try {
+	        $result['unsetCachedPostCount'] = $queryUnsetCachedPostCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['unsetCachedPostCount'] = '?';
+	    }
+
+		try {
+	        $result['unsetCachedKarmaPositiveCount'] = $queryUnsetCachedKarmaPositiveCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['unsetCachedKarmaPositiveCount'] = '?';
+	    }
+	
+		try {
+	        $result['unsetCachedKarmaNegativeCount'] = $queryUnsetCachedKarmaNegativeCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['unsetCachedKarmaNegativeCount'] = '?';
+	    }
+	
+		return $result;
+	}
+		
+	
+	
+	/**
+	 *
+	 * @access public
 	 * @param int $folder_id
 	 */
 	public function findRegistryRecordForUser($user_id)

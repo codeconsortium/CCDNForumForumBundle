@@ -15,6 +15,55 @@ use Pagerfanta\Pagerfanta;
 class SubscriptionRepository extends EntityRepository
 {
 	
+	
+	
+	/**
+	 *
+	 * @access public
+	 */
+	public function getTableIntegrityStatus()
+	{
+		$queryOrphanedSubscriptionCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT s.id) AS orphanedSubscriptionCount
+				FROM CCDNForumForumBundle:Subscription s
+				WHERE s.topic IS NULL
+			');
+		$queryNullSubscribedCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT s.id) AS nullSubscribedCount
+				FROM CCDNForumForumBundle:Subscription s
+				WHERE s.subscribed IS NULL 
+			');
+		$queryNullReadCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT s.id) AS nullReadCount
+				FROM CCDNForumForumBundle:Subscription s
+				WHERE s.read_it IS NULL
+			');
+
+		try {
+	        $result['orphanedSubscriptionCount'] = $queryOrphanedSubscriptionCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['orphanedSubscriptionCount'] = '?';
+	    }
+
+		try {
+	        $result['nullSubscribedCount'] = $queryNullSubscribedCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['nullSubscribedCount'] = '?';
+	    }
+
+		try {
+	        $result['nullReadCount'] = $queryNullReadCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['nullReadCount'] = '?';
+	    }
+	
+		return $result;
+	}
+	
+	
 
 	/**
 	 *

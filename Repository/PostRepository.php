@@ -31,6 +31,54 @@ class PostRepository extends EntityRepository
 	/**
 	 *
 	 * @access public
+	 */
+	public function getTableIntegrityStatus()
+	{
+		$queryOrphanedPostCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT p.id) AS orphanedPostCount
+				FROM CCDNForumForumBundle:Post p
+				WHERE p.topic IS NULL
+			');
+		$queryPartialLockCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT p.id) AS partialLockCount
+				FROM CCDNForumForumBundle:Post p
+				WHERE p.is_locked IS NULL OR (p.is_locked = FALSE AND p.locked_by IS NOT NULL) 
+			');
+		$queryPartialDeletionCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT p.id) AS partialDeletionCount
+				FROM CCDNForumForumBundle:Post p
+				WHERE p.is_deleted IS NULL OR (p.is_deleted = FALSE AND p.deleted_by IS NOT NULL)
+			');
+
+		try {
+	        $result['orphanedPostCount'] = $queryOrphanedPostCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['orphanedPostCount'] = '?';
+	    }
+
+		try {
+	        $result['partialLockCount'] = $queryPartialLockCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['partialLockCount'] = '?';
+	    }
+
+		try {
+	        $result['partialDeletionCount'] = $queryPartialDeletionCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['partialDeletionCount'] = '?';
+	    }
+	
+		return $result;
+	}
+	
+	
+	
+	/**
+	 *
+	 * @access public
 	 * @param int $topic_id
 	 */
 	public function findPostsForTopicByIdPaginated($topicId)

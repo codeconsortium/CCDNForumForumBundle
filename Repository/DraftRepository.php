@@ -20,6 +20,30 @@ class DraftRepository extends EntityRepository
 	/**
 	 *
 	 * @access public
+	 */
+	public function getTableIntegrityStatus()
+	{
+		$queryOrphanedDraftCount = $this->getEntityManager()
+			->createQuery('
+				SELECT COUNT(DISTINCT d.id) AS orphanedDraftCount
+				FROM CCDNForumForumBundle:Draft d
+				WHERE d.created_by IS NULL
+			');
+
+		try {
+	        $result['orphanedDraftCount'] = $queryOrphanedDraftCount->getSingleScalarResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        $result['orphanedDraftCount'] = '?';
+	    }
+	
+		return $result;
+	}	
+	
+	
+	
+	/**
+	 *
+	 * @access public
 	 * @param int $userId
 	 * @return Collection
 	 */
