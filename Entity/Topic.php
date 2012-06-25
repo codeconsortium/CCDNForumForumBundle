@@ -115,7 +115,7 @@ class Topic
 	protected $stickiedBy;
 	
 	/**
-	 * @ORM\Column(type="boolean", name="is_sticky", nullable=true)
+	 * @ORM\Column(type="boolean", name="is_sticky", nullable=false)
 	 */
 	protected $isSticky;
 	

@@ -212,7 +212,7 @@ class TopicFormHandler
 				$formData->getTopic()->setCachedReplyCount(0);
 				$formData->getTopic()->setIsClosed(false);
 				$formData->getTopic()->setIsDeleted(false);
-				$formData->getTopic()->setIsSticky(0);
+				$formData->getTopic()->setIsSticky(false);
 
 				$board = $formData->getTopic()->getBoard();				
 			}

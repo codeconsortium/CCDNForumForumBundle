@@ -139,7 +139,8 @@ ALTER TABLE CC_Forum_Topic
 	CHANGE closed_by_user_id fk_closed_by_user_id INT DEFAULT NULL, 
 	CHANGE deleted_by_user_id fk_deleted_by_user_id INT DEFAULT NULL, 
 	CHANGE view_count cached_view_count INT NOT NULL, 
-	CHANGE reply_count cached_reply_count INT NOT NULL;
+	CHANGE reply_count cached_reply_count INT NOT NULL,
+	CHANGE is_sticky is_sticky TINYINT(1) NOT NULL;
 ALTER TABLE CC_Forum_Topic ADD CONSTRAINT FK_B25FA06D5C4145B FOREIGN KEY (fk_board_id) REFERENCES CC_Forum_Board(id) ON DELETE SET NULL;
 ALTER TABLE CC_Forum_Topic ADD CONSTRAINT FK_B25FA063C4F1A12 FOREIGN KEY (fk_first_post_id) REFERENCES CC_Forum_Post(id) ON DELETE SET NULL;
 ALTER TABLE CC_Forum_Topic ADD CONSTRAINT FK_B25FA06CD83D7D FOREIGN KEY (fk_last_post_id) REFERENCES CC_Forum_Post(id) ON DELETE SET NULL;
