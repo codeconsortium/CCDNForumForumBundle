@@ -84,7 +84,7 @@
 									{% else %}
 										Guest
 									{% endif %}
-									{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}">{{ topic.getFirstPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.first_post_datetime_format')) }}</a>
+									{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}&nbsp;<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}">{{ relevantDateFormat(topic.getFirstPost.getCreatedDate) }}{#|date(param('ccdn_forum_forum.board.show.first_post_datetime_format'))#}</a>
 								{% endif %}
 							{% endspaceless %}
 						</td>
@@ -107,9 +107,9 @@
 									{% set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) %}
 									{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<br>
 									{% if page < 2 %}
-										<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId } ) }}#{{ topic.getLastPost.getId }}">{{ topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) }}</a>
+										<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId } ) }}#{{ topic.getLastPost.getId }}">{{ relevantDateFormat(topic.getLastPost.getCreatedDate) }}{#|date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) #}</a>
 									{% else %}
-										<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page } ) }}#{{ topic.getLastPost.getId }}">{{ topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) }}</a>
+										<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page } ) }}#{{ topic.getLastPost.getId }}">{{ relevantDateFormat(topic.getLastPost.getCreatedDate) }}{#|date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) #}</a>
 									{% endif %}
 								{% endif %}
 							{% endspaceless %}
@@ -187,7 +187,7 @@
 								{% else %}
 									Guest
 								{% endif %}
-								{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}">{{ topic.getFirstPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.first_post_datetime_format')) }}</a>
+								{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}">{{ relevantDateFormat(topic.getFirstPost.getCreatedDate) }}{#|date(param('ccdn_forum_forum.board.show.first_post_datetime_format')) #}</a>
 							{% endif %}
 						{% endspaceless %}
 					</td>
@@ -209,9 +209,9 @@
 								{% set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) %}
 								{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<br>
 								{% if page < 2 %}
-								<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId } ) }}#{{ topic.getLastPost.getId }}">{{ topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) }}</a>
+								<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId } ) }}#{{ topic.getLastPost.getId }}">{{ relevantDateFormat(topic.getLastPost.getCreatedDate) }}{#|date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) #}</a>
 								{% else %}
-								<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page } ) }}#{{ topic.getLastPost.getId }}">{{ topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) }}</a>
+								<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page } ) }}#{{ topic.getLastPost.getId }}">{{ relevantDateFormat(topic.getLastPost.getCreatedDate) }}{#|date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) #}</a>
 								{% endif %}
 							{% endif %}
 						{% endspaceless %}

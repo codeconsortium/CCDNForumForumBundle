@@ -78,7 +78,7 @@
 							{% else %}
 								Guest
 							{% endif %}
-							{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}">{{ topic.getFirstPost.getCreatedDate |date(param('ccdn_forum_forum.subscription.list.first_post_datetime_format')) }}</a>
+							{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}">{{ relevantDateFormat(topic.getFirstPost.getCreatedDate) }}{#|date(param('ccdn_forum_forum.subscription.list.first_post_datetime_format')) #}</a>
 						{% endif %}
 					</td>
 					<td class="center">
@@ -97,7 +97,7 @@
 							{% endif %}
 							{% set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) %}
 							{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<br>
-							<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page } ) }}#{{ topic.getLastPost.getId }}">{{ topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.subscription.list.last_post_datetime_format')) }}</a>
+							<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page } ) }}#{{ topic.getLastPost.getId }}">{{ relevantDateFormat(topic.getLastPost.getCreatedDate) }}{#|date(param('ccdn_forum_forum.subscription.list.last_post_datetime_format')) #}</a>
 						{% endif %}
 					</td>
 				</tr>
