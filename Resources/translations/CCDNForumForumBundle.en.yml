@@ -53,6 +53,7 @@ link.post.delete: Delete
 link.post.restore: Restore
 link.post.lock: Lock
 link.post.unlock: Unlock
+link.topic.create: Create New Topic
 link.topic.close: Close Topic
 link.topic.reopen: Reopen Topic
 link.topic.delete: Delete Topic

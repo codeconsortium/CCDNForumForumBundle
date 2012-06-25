@@ -127,9 +127,20 @@
 		</table>
 	{% endif %}
 
-	{% if pager.haveToPaginate %}
+{#	{% if pager.haveToPaginate %}
 	    {{ pagerfanta(pager, 'twitter_bootstrap', {'routeName':'cc_forum_board_show_paginated', 'routeParams':{'board_id':board.getId}} ) }}
-	{% endif %}
+	{% endif %}#}
+	
+	<div class="btn-toolbar" style="display:block;clear:both;height:75px;vertical-align:top;margin-top:0px;">
+		{% if pager.haveToPaginate %}
+			<div class="pull-left" style="display:inline-block;vertical-align:top;margin-top:0px;">
+			{{ pagerfanta(pager, 'twitter_bootstrap', {'routeName':'cc_forum_board_show_paginated', 'routeParams':{'board_id':board.getId}} ) }}
+			</div>		
+		{% endif %}
+		<div class="pull-right" style="display:inline-block;vertical-align:top;margin-top:0px;height:50px;padding-top:27px;">
+			<a class="btn-large btn-danger" href="{{ path('cc_forum_topic_create', {'board_id': board.getId }) }}"><i class="icon-white icon-asterisk"></i>&nbsp;{{ 'link.topic.create' | trans({}, 'CCDNForumForumBundle') }}</a>		
+		</div>	
+	</div>
 
 	<table class="table table-striped table-bordered">
 		<thead>
