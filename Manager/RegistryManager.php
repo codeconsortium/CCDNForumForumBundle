@@ -46,17 +46,12 @@ class RegistryManager extends BaseManager implements ManagerInterface
 		}
 		
 		$postCount = $this->container->get('ccdn_forum_forum.post.repository')->getPostCountForUserById($user->getId());
-		$karmaCount = $this->container->get('ccdn_forum_karma.karma.repository')->getKarmaCountForUserById($user->getId());
 		
 		if ( ! $postCount)
 		{
 			$record->setCachedPostCount(0);
-			$record->setCachedKarmaPositiveCount(0);																			/// <----- why are we setting the karma rating in the post count updater?
-			$record->setCachedKarmaNegativeCount(0);
 		} else {
 			$record->setCachedPostCount($postCount['postCount']);
-			$record->setCachedKarmaPositiveCount($karmaCount['karmaPositiveCount']);
-			$record->setCachedKarmaNegativeCount($karmaCount['karmaNegativeCount']);
 		}
 		
 		$this->persist($record)->flushNow();
