@@ -59,14 +59,16 @@
 			
 			{% if topic.isSticky %}
 			<span class="label label-important">
+				<i class="icon-white icon-bullhorn"></i>
 				{{ 'topic.stickied_by' | trans({}, 'CCDNForumForumBundle') }}
 				{% if topic.getStickiedBy %}{{ topic.getStickiedBy.getUsername }}{% else %}Unknown{% endif %}
 				{{ topic.getStickiedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) }}
 			</span>&nbsp;
 			{% endif %}
-			
+
 			{% if topic.isClosed %}
 			<span class="label label-important">
+				<i class="icon-white icon-lock"></i>
 				{{ 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') }}
 				{% if topic.getClosedBy %}{{ topic.getClosedBy.getUsername }}{% else %}Unknown{% endif %}
 				{{ topic.getClosedDate |date(param('ccdn_forum_forum.topic.show.topic_closed_datetime_format')) }}
@@ -75,6 +77,7 @@
 
 			{% if topic.isDeleted %}
 			<span class="label label-important">
+				<i class="icon-white icon-trash"></i>
 				{{ 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') }}
 				{% if topic.getDeletedBy %}{{ topic.getDeletedBy.getUsername }}{% else %}Unknown{% endif %}
 				{{ topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) }}

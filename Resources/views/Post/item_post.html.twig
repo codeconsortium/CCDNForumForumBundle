@@ -189,11 +189,14 @@
 						</div>
 						<div class="pull-right">
 							{% if post.getFlags.count > 0 %}
-								<i class="icon-flag" data-tooltip="bottom" title="{{ 'post.has_been_flagged' |trans({}, 'CCDNForumForumBundle') }}"></i>
+								<i class="icon-flag" data-tip="bottom" title="{{ 'post.has_been_flagged' |trans({}, 'CCDNForumForumBundle') }}"></i>
 							{% endif %}
-							{% if post.getLockedDate %}
-								<i class="icon-lock" data-tooltip="bottom" title="{{ 'post.has_been_locked' |trans({}, 'CCDNForumForumBundle') }}"></i>
-							{% endif %}						
+							{% if post.getIsLocked %}
+								<i class="icon-lock" data-tip="bottom" title="{{ 'post.has_been_locked' |trans({}, 'CCDNForumForumBundle') }}"></i>
+							{% endif %}	
+							{% if post.getIsDeleted %}					
+								<i class="icon-trash" data-tip="bottom" title="{{ 'post.has_been_deleted' |trans({}, 'CCDNForumForumBundle') }}"></i>
+							{% endif %}
 						</div>
 					</div>
 					<div style="clear: both;">
