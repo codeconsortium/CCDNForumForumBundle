@@ -60,20 +60,20 @@ class Topic
 	protected $lastPost;
 	
 	/**
-	 * @ORM\Column(type="integer", name="cached_view_count")
+	 * @ORM\Column(type="integer", name="cached_view_count", nullable=false)
 	 */
-	protected $cachedViewCount;
+	protected $cachedViewCount = 0;
 	
 	/**
-	 * @ORM\Column(type="integer", name="cached_reply_count")
+	 * @ORM\Column(type="integer", name="cached_reply_count", nullable=false)
 	 */
-	protected $cachedReplyCount;
+	protected $cachedReplyCount = 0;
 	
 	/**
 	 *
 	 * @ORM\Column(type="boolean", name="is_closed", nullable=false)
 	 */
-	protected $isClosed;
+	protected $isClosed = false;
 	
 	/**
 	 * @ORM\Column(type="datetime", name="closed_date", nullable=true)
@@ -90,7 +90,7 @@ class Topic
 	 *
 	 * @ORM\Column(type="boolean", name="is_deleted", nullable=false)
 	 */
-	protected $isDeleted;
+	protected $isDeleted = false;
 	
 	/**
 	 * @ORM\Column(type="datetime", name="deleted_date", nullable=true)
@@ -117,7 +117,7 @@ class Topic
 	/**
 	 * @ORM\Column(type="boolean", name="is_sticky", nullable=false)
 	 */
-	protected $isSticky;
+	protected $isSticky = false;
 	
 
     public function __construct()

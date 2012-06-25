@@ -56,12 +56,12 @@ class Board
 	/**
 	 * @ORM\Column(type="integer", name="cached_topic_count")
 	 */
-	protected $cachedTopicCount;
+	protected $cachedTopicCount = 0;
 	
 	/**
 	 * @ORM\Column(type="integer", name="cached_post_count")
 	 */	
-	protected $cachedPostCount;
+	protected $cachedPostCount = 0;
 	
 	/**
 	 * @ORM\OneToOne(targetEntity="Post")
@@ -72,7 +72,7 @@ class Board
 	/**
 	 * @ORM\Column(type="integer", name="list_order_priority")
 	 */
-	protected $listOrderPriority;
+	protected $listOrderPriority = 0;
 
 
 

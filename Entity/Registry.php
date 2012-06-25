@@ -40,19 +40,19 @@ class Registry
 	protected $ownedBy;
 		
 	/**
-     * @ORM\Column(type="integer", name="cached_post_count")
+     * @ORM\Column(type="integer", name="cached_post_count", nullable=false)
      */
-    protected $cachedPostCount;
+    protected $cachedPostCount = 0;
 
 	/**
-     * @ORM\Column(type="integer", name="cached_karma_positive_count")
+     * @ORM\Column(type="integer", name="cached_karma_positive_count", nullable=false)
      */
-	protected $cachedKarmaPositiveCount;
+	protected $cachedKarmaPositiveCount = 0;
 	
 	/**
-     * @ORM\Column(type="integer", name="cached_karma_negative_count")
+     * @ORM\Column(type="integer", name="cached_karma_negative_count", nullable=false)
      */
-	protected $cachedKarmaNegativeCount;
+	protected $cachedKarmaNegativeCount = 0;
 	
 	
     /**

@@ -43,14 +43,14 @@ class Subscription
 	protected $ownedBy;
 
 	/**
-	 * @ORM\Column(type="boolean", name="is_read")
+	 * @ORM\Column(type="boolean", name="is_read", nullable=false)
 	 */
-	protected $isRead;
+	protected $isRead = false;
 	
 	/**
-	 * @ORM\Column(type="boolean", name="is_subscribed")
+	 * @ORM\Column(type="boolean", name="is_subscribed", nullable=false)
 	 */
-	protected $isSubscribed;
+	protected $isSubscribed = false;
 	
     /**
      * Get id

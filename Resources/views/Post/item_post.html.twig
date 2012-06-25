@@ -118,40 +118,40 @@
 		<div style="margin: 0px; padding: 5px 0; overflow: hidden; vertical-align: top; text-align: center; z-index: 3;">
 			{% spaceless %}
 			
-			{% if post.getCreatedBy %}
-				{% if post.getCreatedBy.getProfile %}
-					{% if post.getCreatedBy.getProfile.getAvatarIsRemote %}
-						{% if post.getCreatedBy.getProfile.getAvatar %}
-							<img class="avatar" width="100" height="100" src="{{ post.getCreatedBy.getProfile.getAvatar }}" alt="avatar">
+				{% if post.getCreatedBy %}
+					{% if post.getCreatedBy.getProfile %}
+						{% if post.getCreatedBy.getProfile.getAvatarIsRemote %}
+							{% if post.getCreatedBy.getProfile.getAvatar %}
+								<img class="avatar" width="100" height="100" src="{{ post.getCreatedBy.getProfile.getAvatar }}" alt="avatar">
+							{% else %}
+								<img class="avatar" width="100" height="100" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" alt="avatar">
+							{% endif %}
 						{% else %}
-							<img class="avatar" width="100" height="100" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" alt="avatar">
+							{% if post.getCreatedBy.getProfile.getAvatar %}
+								{# later on this will reference the avatarBundle asset and append the avatar onto the end #}
+								{# e.g: {{ asset('bundles/ccdnuseravatar/images/avatars/') }}{{ post.getCreatedBy.getProfile.getAvatar }} #}
+								<img class="avatar" width="100" height="100" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" alt="avatar">
+							{% else %}
+								<img class="avatar" width="100" height="100" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" alt="avatar">
+							{% endif %}
 						{% endif %}
 					{% else %}
-						{% if post.getCreatedBy.getProfile.getAvatar %}
-							{# later on this will reference the avatarBundle asset and append the avatar onto the end #}
-							{# e.g: {{ asset('bundles/ccdnuseravatar/images/avatars/') }}{{ post.getCreatedBy.getProfile.getAvatar }} #}
-							<img class="avatar" width="100" height="100" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" alt="avatar">
-						{% else %}
-							<img class="avatar" width="100" height="100" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" alt="avatar">
-						{% endif %}
+						<img class="avatar" width="100" height="100" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" alt="avatar">
 					{% endif %}
 				{% else %}
 					<img class="avatar" width="100" height="100" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" alt="avatar">
 				{% endif %}
-			{% else %}
-				<img class="avatar" width="100" height="100" src="{{ asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') }}" alt="avatar">
-			{% endif %}
 
-			{% if registries[post.getCreatedBy().getId()] is defined %}
-			<div style="text-align: center; vertical-align: middle;">
-				<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_karma.png') }}" alt="icon">&nbsp;
-				<span class="badge badge-important">{{ registries[post.getCreatedBy().getId()].getCachedKarmaNegativeCount }}</span>&nbsp;
-				<span class="badge badge-success">{{ registries[post.getCreatedBy().getId()].getCachedKarmaPositiveCount }}</span>
-			</div>
+				{% if registries[post.getCreatedBy().getId()] is defined %}
+					<div style="text-align: center; vertical-align: middle;">
+						<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_karma.png') }}" alt="icon">&nbsp;
+						<span class="badge badge-important">{{ registries[post.getCreatedBy().getId()].getCachedKarmaNegativeCount }}</span>&nbsp;
+						<span class="badge badge-success">{{ registries[post.getCreatedBy().getId()].getCachedKarmaPositiveCount }}</span>
+					</div>
 			
-			<span class="label">{{ 'post.user.post_count' | trans({'%post_count%': registries[post.getCreatedBy().getId()].getCachedPostCount()}, 'CCDNForumForumBundle') }}</span>
-			{% endif %}
-
+					<span class="label">{{ 'post.user.post_count' | trans({'%post_count%': registries[post.getCreatedBy().getId()].getCachedPostCount()}, 'CCDNForumForumBundle') }}</span>
+				{% endif %}
+				<br><br>
 			{% endspaceless %}		
 		</div>
 	</div>

@@ -71,7 +71,7 @@ class Post
 	 *
 	 * @ORM\Column(type="boolean", name="is_deleted", nullable=false)
 	 */
-	protected $isDeleted;
+	protected $isDeleted = false;
 		
 	/**
 	 * @ORM\Column(type="datetime", name="deleted_date", nullable=true)
@@ -88,7 +88,7 @@ class Post
 	 *
 	 * @ORM\Column(type="boolean", name="is_locked", nullable=false)
 	 */
-	protected $isLocked;
+	protected $isLocked = false;
 	
 	/**
 	 * @ORM\Column(type="datetime", name="locked_date", nullable=true)
