@@ -299,6 +299,35 @@ class TopicRepository extends EntityRepository
 	 * @access public
 	 * @param int $topic_id
 	 */
+	public function getFirstPostForTopic($topic_id)
+	{
+		$qb = $this->getEntityManager()->createQueryBuilder();
+
+		$query = $qb
+			->add('select', 'p')
+			->add('from', 'CCDNForumForumBundle:Post p')
+			->add('where', 'p.topic = ?1')
+			->add('orderBy', 'p.createdDate ASC')
+			->setMaxResults(1)
+			->setParameter(1, $topic_id)
+			->getQuery();
+
+		try {
+			return $query->getSingleResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    } catch (\Doctrine\ORM\NonUniqueResultException $e) {
+			return null;
+		}
+	}	
+	
+	
+	
+	/**
+	 *
+	 * @access public
+	 * @param int $topic_id
+	 */
 	public function getLastPostForTopic($topic_id)
 	{
 		$qb = $this->getEntityManager()->createQueryBuilder();

@@ -148,11 +148,13 @@ class TopicManager extends BaseManager implements ManagerInterface
 		$postRepository = $this->container->get('ccdn_forum_forum.post.repository');
 		
 		// Gets stats.
-		$topicReplyCount = $postRepository->getPostCountForTopicById($topic->getId());	
+		$topicReplyCount = $postRepository->getPostCountForTopicById($topic->getId());
+		$topicFirstPost = $topicRepository->getFirstPostForTopic($topic->getId());
 		$topicLastPost = $topicRepository->getLastPostForTopic($topic->getId());
 
 		// Set the board / topic last post. 
 		$topic->setCachedReplyCount( (($topicReplyCount) ? --$topicReplyCount : 0) );		
+		$topic->setFirstPost( (($topicFirstPost) ? $topicFirstPost : null) );
 		$topic->setLastPost( (($topicLastPost) ? $topicLastPost : null) );
 				
 		$this->persist($topic)->flushNow();
@@ -164,6 +166,22 @@ class TopicManager extends BaseManager implements ManagerInterface
 		}
 		
 		return $this;	
+	}
+	
+	
+	
+	/**
+	 *
+	 * @access public
+	 * @param @topics
+	 * @return $this
+	 */
+	public function bulkUpdateStats($topics)
+	{
+		foreach($topics as $topic)
+		{
+			$this->updateStats($topic);
+		}		
 	}
 	
 	
