@@ -151,4 +151,8 @@ CREATE UNIQUE INDEX UNIQ_B25FA06CD83D7D ON CC_Forum_Topic (fk_last_post_id);
 CREATE INDEX IDX_B25FA06D5A466FA ON CC_Forum_Topic (fk_closed_by_user_id);
 CREATE INDEX IDX_B25FA064F5AE4DA ON CC_Forum_Topic (fk_deleted_by_user_id);
 
+ALTER TABLE CC_Forum_Topic ADD fk_stickied_by_user_id INT DEFAULT NULL, ADD stickied_date DATETIME DEFAULT NULL;
+ALTER TABLE CC_Forum_Topic ADD CONSTRAINT FK_B25FA0645768453 FOREIGN KEY (fk_stickied_by_user_id) REFERENCES fos_user(id) ON DELETE SET NULL;
+CREATE INDEX IDX_B25FA0645768453 ON CC_Forum_Topic (fk_stickied_by_user_id);
+
 set foreign_key_checks=1;

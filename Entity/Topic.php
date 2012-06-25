@@ -102,7 +102,18 @@ class Topic
      * @ORM\JoinColumn(name="fk_deleted_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
 	protected $deletedBy;
-
+	
+	/**
+	 * @ORM\Column(type="datetime", name="stickied_date", nullable=true)
+	 */
+	protected $stickiedDate;
+	
+	/**
+     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(name="fk_stickied_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+	 */
+	protected $stickiedBy;
+	
 	/**
 	 * @ORM\Column(type="boolean", name="is_sticky", nullable=true)
 	 */
@@ -416,4 +427,44 @@ class Topic
         return $this->cachedReplyCount;
     }
 
+
+    /**
+     * Set stickiedDate
+     *
+     * @param datetime $stickiedDate
+     */
+    public function setStickiedDate($stickiedDate)
+    {
+        $this->stickiedDate = $stickiedDate;
+    }
+
+    /**
+     * Get stickiedDate
+     *
+     * @return datetime 
+     */
+    public function getStickiedDate()
+    {
+        return $this->stickiedDate;
+    }
+
+    /**
+     * Set stickiedBy
+     *
+     * @param CCDNUser\UserBundle\Entity\User $stickiedBy
+     */
+    public function setStickiedBy(\CCDNUser\UserBundle\Entity\User $stickiedBy = null)
+    {
+        $this->stickiedBy = $stickiedBy;
+    }
+
+    /**
+     * Get stickiedBy
+     *
+     * @return CCDNUser\UserBundle\Entity\User 
+     */
+    public function getStickiedBy()
+    {
+        return $this->stickiedBy;
+    }
 }

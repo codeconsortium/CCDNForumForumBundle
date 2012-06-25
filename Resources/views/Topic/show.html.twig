@@ -60,6 +60,14 @@
 				<span class="badge badge-info">{{ 'topic.subscription_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ subscription_count }}</span>&nbsp;
 			{% endif %}
 
+			{% if topic.isSticky %}
+			<span class="label label-important">
+				{{ 'topic.stickied_by' | trans({}, 'CCDNForumForumBundle') }}
+				{% if topic.getStickiedBy %}{{ topic.getStickiedBy.getUsername }}{% else %}Unknown{% endif %}
+				{{ topic.getStickiedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) }}
+			</span>&nbsp;
+			{% endif %}
+
 			{% if topic.closedDate %}
 			<span class="label label-important">
 				{{ 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') }}
