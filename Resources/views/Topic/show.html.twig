@@ -47,12 +47,9 @@
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 
 	{% spaceless %}
+		<h2>{{ truncDot(topic.getTitle |capitalize, 70) }}</h2>
 			
-		<div class="well" style="padding: 10px;">
-			<h2>{{ truncDot(topic.getTitle |capitalize, 70) }}</h2>
-			
-			<hr>
-			
+		<div class="well" style="padding: 10px;">			
 			<span class="badge badge-info">{{ 'topic.reply_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ topic.cachedReplyCount }}</span>&nbsp;
 			<span class="badge badge-info">{{ 'topic.view_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ topic.cachedViewCount }}</span>&nbsp;
 
@@ -68,7 +65,7 @@
 			</span>&nbsp;
 			{% endif %}
 
-			{% if topic.closedDate %}
+			{% if topic.isClosed %}
 			<span class="label label-important">
 				{{ 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') }}
 				{% if topic.getClosedBy %}{{ topic.getClosedBy.getUsername }}{% else %}Unknown{% endif %}
@@ -76,16 +73,14 @@
 			</span>&nbsp;
 			{% endif %}
 
-			{% if topic.deletedDate %}
+			{% if topic.isDeleted %}
 			<span class="label label-important">
 				{{ 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') }}
 				{% if topic.getDeletedBy %}{{ topic.getDeletedBy.getUsername }}{% else %}Unknown{% endif %}
 				{{ topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) }}
 			</span>&nbsp;
 			{% endif %}
-			
-		</div>
-			
+		</div>			
 	{% endspaceless %}
 
 	{% if pager.haveToPaginate %}
