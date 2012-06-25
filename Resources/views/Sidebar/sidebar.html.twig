@@ -44,22 +44,24 @@
 
 	{% if sidebar_categories is not null %}
 		{% for sidebar_category in sidebar_categories %}
-			<li class="nav-header">{{ truncDot(sidebar_category.name, 15) }}</li>
-			{% for sidebar_board in sidebar_category.boards %}
-				{% if sidebar_board is defined %}
-					{% if board is defined %}
-						{% if sidebar_board.id == board.id %}
-							<li class="active"><a href="{{ path('cc_forum_board_show', {'board_id': sidebar_board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>
+			{% if sidebar_category.boards |length %}
+				<li class="nav-header">{{ truncDot(sidebar_category.name, 15) }}</li>
+				{% for sidebar_board in sidebar_category.boards %}
+					{% if sidebar_board is defined %}
+						{% if board is defined %}
+							{% if sidebar_board.id == board.id %}
+								<li class="active"><a href="{{ path('cc_forum_board_show', {'board_id': sidebar_board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>
+							{% else %}
+								<li><a href="{{ path('cc_forum_board_show', {'board_id': sidebar_board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>
+							{% endif %}
 						{% else %}
 							<li><a href="{{ path('cc_forum_board_show', {'board_id': sidebar_board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>
 						{% endif %}
 					{% else %}
-						<li><a href="{{ path('cc_forum_board_show', {'board_id': sidebar_board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>
+						<li><a href="{{ path('cc_forum_board_show', {'board_id': sidebar_board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>					
 					{% endif %}
-				{% else %}
-					<li><a href="{{ path('cc_forum_board_show', {'board_id': sidebar_board.id}) }}"><i class="icon-folder-close"></i>&nbsp;{{ truncDot(sidebar_board.name, 15) }}</a></li>					
-				{% endif %}
-			{% endfor %}
+				{% endfor %}
+			{% endif %}
 		{% endfor %}
 	{% endif %}
 	
