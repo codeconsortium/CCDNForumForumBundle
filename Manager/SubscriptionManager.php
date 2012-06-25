@@ -53,10 +53,10 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
 			
 			$subscription->setOwnedBy($user);
 			$subscription->setTopic($topic);
-			$subscription->setReadIt(true);
+			$subscription->setIsRead(true);
 		}
 		
-		$subscription->setSubscribed(true);
+		$subscription->setIsSubscribed(true);
 		
 		$this->persist($subscription);
 
@@ -82,8 +82,8 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
 			return $this;
 		}
 		
-		$subscription->setSubscribed(false);
-		$subscription->setReadIt(true);
+		$subscription->setIsSubscribed(false);
+		$subscription->setIsRead(true);
 		
 		$this->persist($subscription);
 		

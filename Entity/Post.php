@@ -35,7 +35,7 @@ class Post
 	
     /**
      * @ORM\ManyToOne(targetEntity="Topic", inversedBy="posts", cascade={"persist"})
-     * @ORM\JoinColumn(name="topic_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_topic_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $topic;
 	
@@ -46,60 +46,60 @@ class Post
 	protected $body;
 	
 	/**
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime", name="created_date")
 	 */
-	protected $created_date;
+	protected $createdDate;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", inversedBy="forum_posts", cascade={"persist"})
-     * @ORM\JoinColumn(name="created_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_created_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $created_by;
+	protected $createdBy;
 	
 	/**
-	 * @ORM\Column(type="datetime", nullable=true)
+	 * @ORM\Column(type="datetime", name="edited_date", nullable=true)
 	 */
-	protected $edited_date;
+	protected $editedDate;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="edited_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_edited_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */	
-	protected $edited_by;
+	protected $editedBy;
 	
 	/**
 	 *
-	 * @ORM\Column(type="boolean", nullable=false)
+	 * @ORM\Column(type="boolean", name="is_deleted", nullable=false)
 	 */
-	protected $is_deleted;
+	protected $isDeleted;
 		
 	/**
-	 * @ORM\Column(type="datetime", nullable=true)
+	 * @ORM\Column(type="datetime", name="deleted_date", nullable=true)
 	 */
-	protected $deleted_date;
+	protected $deletedDate;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="deleted_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_deleted_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $deleted_by;
+	protected $deletedBy;
 	
 	/**
 	 *
-	 * @ORM\Column(type="boolean", nullable=false)
+	 * @ORM\Column(type="boolean", name="is_locked", nullable=false)
 	 */
-	protected $is_locked;
+	protected $isLocked;
 	
 	/**
-	 * @ORM\Column(type="datetime", nullable=true)
+	 * @ORM\Column(type="datetime", name="locked_date", nullable=true)
 	 */
-	protected $locked_date;
+	protected $lockedDate;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="locked_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_locked_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $locked_by;
+	protected $lockedBy;
 	
 	/**
      * @ORM\OneToMany(targetEntity="CCDNForum\ForumBundle\Entity\Flag", mappedBy="post", cascade={"remove"})
@@ -108,7 +108,7 @@ class Post
 
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNComponent\AttachmentBundle\Entity\Attachment", cascade={"persist"})
-     * @ORM\JoinColumn(name="attachment_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
 	protected $attachment;
 	
@@ -169,7 +169,7 @@ class Post
      */
     public function setCreatedDate($createdDate)
     {
-        $this->created_date = $createdDate;
+        $this->createdDate = $createdDate;
     }
 
     /**
@@ -179,27 +179,7 @@ class Post
      */
     public function getCreatedDate()
     {
-        return $this->created_date;
-    }
-
-    /**
-     * Set creator_user_id
-     *
-     * @param integer $creatorUserId
-     */
-    public function setCreatorUserId($creatorUserId)
-    {
-        $this->creator_user_id = $creatorUserId;
-    }
-
-    /**
-     * Get creator_user_id
-     *
-     * @return integer 
-     */
-    public function getCreatorUserId()
-    {
-        return $this->creator_user_id;
+        return $this->createdDate;
     }
 
     /**
@@ -209,7 +189,7 @@ class Post
      */
     public function setEditedDate($editedDate)
     {
-        $this->edited_date = $editedDate;
+        $this->editedDate = $editedDate;
     }
 
     /**
@@ -219,27 +199,7 @@ class Post
      */
     public function getEditedDate()
     {
-        return $this->edited_date;
-    }
-
-    /**
-     * Set editor_user_id
-     *
-     * @param integer $editorUserId
-     */
-    public function setEditorUserId($editorUserId)
-    {
-        $this->editor_user_id = $editorUserId;
-    }
-
-    /**
-     * Get editor_user_id
-     *
-     * @return integer 
-     */
-    public function getEditorUserId()
-    {
-        return $this->editor_user_id;
+        return $this->editedDate;
     }
 
     /**
@@ -249,7 +209,7 @@ class Post
      */
     public function setDeletedDate($deletedDate)
     {
-        $this->deleted_date = $deletedDate;
+        $this->deletedDate = $deletedDate;
     }
 
     /**
@@ -259,29 +219,8 @@ class Post
      */
     public function getDeletedDate()
     {
-        return $this->deleted_date;
+        return $this->deletedDate;
     }
-
-    /**
-     * Set deleter_user_id
-     *
-     * @param integer $deleterUserId
-     */
-    public function setDeleterUserId($deleterUserId)
-    {
-        $this->deleter_user_id = $deleterUserId;
-    }
-
-    /**
-     * Get deleter_user_id
-     *
-     * @return integer 
-     */
-    public function getDeleterUserId()
-    {
-        return $this->deleter_user_id;
-    }
-
 
     /**
      * Set topic
@@ -303,87 +242,6 @@ class Post
         return $this->topic;
     }
 
-
-    /**
-     * Set editor_user
-     *
-     * @param integer $editorUser
-     */
-    public function setEditorUser($editorUser)
-    {
-        $this->editor_user = $editorUser;
-    }
-
-    /**
-     * Get editor_user
-     *
-     * @return integer 
-     */
-    public function getEditorUser()
-    {
-        return $this->editor_user;
-    }
-
-    /**
-     * Set deleter_user
-     *
-     * @param integer $deleterUser
-     */
-    public function setDeleterUser($deleterUser)
-    {
-        $this->deleter_user = $deleterUser;
-    }
-
-    /**
-     * Get deleter_user
-     *
-     * @return integer 
-     */
-    public function getDeleterUser()
-    {
-        return $this->deleter_user;
-    }
-
-    /**
-     * Set creator_user
-     *
-     * @param CCDNUser\UserBundle\Entity\User $creatorUser
-     */
-    public function setCreatorUser(\CCDNUser\UserBundle\Entity\User $creatorUser)
-    {
-        $this->creator_user = $creatorUser;
-    }
-
-    /**
-     * Get creator_user
-     *
-     * @return CCDNUser\UserBundle\Entity\User 
-     */
-    public function getCreatorUser()
-    {
-        return $this->creator_user;
-    }
-
-    /**
-     * Set creator
-     *
-     * @param CCDNUser\UserBundle\Entity\User $creator
-     */
-    public function setCreator(\CCDNUser\UserBundle\Entity\User $creator)
-    {
-        $this->creator = $creator;
-    }
-
-    /**
-     * Get creator
-     *
-     * @return CCDNUser\UserBundle\Entity\User 
-     */
-    public function getCreator()
-    {
-        return $this->creator;
-    }
-
     /**
      * Set created_by
      *
@@ -391,7 +249,7 @@ class Post
      */
     public function setCreatedBy(\CCDNUser\UserBundle\Entity\User $createdBy)
     {
-        $this->created_by = $createdBy;
+        $this->createdBy = $createdBy;
     }
 
     /**
@@ -401,7 +259,7 @@ class Post
      */
     public function getCreatedBy()
     {
-        return $this->created_by;
+        return $this->createdBy;
     }
 
     /**
@@ -411,7 +269,7 @@ class Post
      */
     public function setEditedBy(\CCDNUser\UserBundle\Entity\User $editedBy = null)
     {
-        $this->edited_by = $editedBy;
+        $this->editedBy = $editedBy;
     }
 
     /**
@@ -421,7 +279,7 @@ class Post
      */
     public function getEditedBy()
     {
-        return $this->edited_by;
+        return $this->editedBy;
     }
 
     /**
@@ -431,7 +289,7 @@ class Post
      */
     public function setDeletedBy(\CCDNUser\UserBundle\Entity\User $deletedBy = null)
     {
-        $this->deleted_by = $deletedBy;
+        $this->deletedBy = $deletedBy;
     }
 
     /**
@@ -441,7 +299,7 @@ class Post
      */
     public function getDeletedBy()
     {
-        return $this->deleted_by;
+        return $this->deletedBy;
     }
 
     /**
@@ -451,7 +309,7 @@ class Post
      */
     public function setLockedDate($lockedDate)
     {
-        $this->locked_date = $lockedDate;
+        $this->lockedDate = $lockedDate;
     }
 
     /**
@@ -461,7 +319,7 @@ class Post
      */
     public function getLockedDate()
     {
-        return $this->locked_date;
+        return $this->lockedDate;
     }
 
     /**
@@ -471,7 +329,7 @@ class Post
      */
     public function setLockedBy(\CCDNUser\UserBundle\Entity\User $lockedBy = null)
     {
-        $this->locked_by = $lockedBy;
+        $this->lockedBy = $lockedBy;
     }
 
     /**
@@ -481,8 +339,9 @@ class Post
      */
     public function getLockedBy()
     {
-        return $this->locked_by;
+        return $this->lockedBy;
     }
+
     public function __construct()
     {
         $this->flags = new \Doctrine\Common\Collections\ArrayCollection();
@@ -538,7 +397,7 @@ class Post
      */
     public function setIsDeleted($isDeleted)
     {
-        $this->is_deleted = $isDeleted;
+        $this->isDeleted = $isDeleted;
     }
 
     /**
@@ -548,7 +407,7 @@ class Post
      */
     public function getIsDeleted()
     {
-        return $this->is_deleted;
+        return $this->isDeleted;
     }
 
     /**
@@ -558,7 +417,7 @@ class Post
      */
     public function setIsLocked($isLocked)
     {
-        $this->is_locked = $isLocked;
+        $this->isLocked = $isLocked;
     }
 
     /**
@@ -568,6 +427,7 @@ class Post
      */
     public function getIsLocked()
     {
-        return $this->is_locked;
+        return $this->isLocked;
     }
+
 }

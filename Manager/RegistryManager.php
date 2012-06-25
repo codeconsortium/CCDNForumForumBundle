@@ -50,13 +50,13 @@ class RegistryManager extends BaseManager implements ManagerInterface
 		
 		if ( ! $postCount)
 		{
-			$record->setCachePostCount(0);
-			$record->setCacheKarmaPositiveCount(0);
-			$record->setCacheKarmaNegativeCount(0);
+			$record->setCachedPostCount(0);
+			$record->setCachedKarmaPositiveCount(0);																			/// <----- why are we setting the karma rating in the post count updater?
+			$record->setCachedKarmaNegativeCount(0);
 		} else {
-			$record->setCachePostCount($postCount['postCount']);
-			$record->setCacheKarmaPositiveCount($karmaCount['karmaPositiveCount']);
-			$record->setCacheKarmaNegativeCount($karmaCount['karmaNegativeCount']);
+			$record->setCachedPostCount($postCount['postCount']);
+			$record->setCachedKarmaPositiveCount($karmaCount['karmaPositiveCount']);
+			$record->setCachedKarmaNegativeCount($karmaCount['karmaNegativeCount']);
 		}
 		
 		$this->persist($record)->flushNow();
@@ -100,9 +100,8 @@ class RegistryManager extends BaseManager implements ManagerInterface
 		
 		$karmaCount = $this->container->get('ccdn_forum_karma.karma.repository')->getKarmaCountForUserById($user->getId());
 		
-		$record->setCacheKarmaPositiveCount($karmaCount['karmaPositiveCount']);
-		$record->setCacheKarmaNegativeCount($karmaCount['karmaNegativeCount']);
-		
+		$record->setCachedKarmaPositiveCount($karmaCount['karmaPositiveCount']);
+		$record->setCachedKarmaNegativeCount($karmaCount['karmaNegativeCount']);
 		
 		$this->persist($record)->flushNow();
 		

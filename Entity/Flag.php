@@ -32,7 +32,7 @@ class Flag
 	
     /**
      * @ORM\ManyToOne(targetEntity="CCDNForum\ForumBundle\Entity\Post", inversedBy="flags", cascade={"persist"})
-     * @ORM\JoinColumn(name="post_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_post_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $post;
 	
@@ -47,31 +47,31 @@ class Flag
 	protected $description;
 	
 	/**
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime", name="flagged_date")
 	 */
-	protected $flagged_date;
+	protected $flaggedDate;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="flagged_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_flagged_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $flagged_by;
+	protected $flaggedBy;
 	
 	/**
-	 * @ORM\Column(type="datetime", nullable=true)
+	 * @ORM\Column(type="datetime", name="moderated_date", nullable=true)
 	 */
-	protected $moderated_date;
+	protected $moderatedDate;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="moderated_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_moderated_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $moderated_by;
+	protected $moderatedBy;
 
 	/**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text", name="moderators_note", nullable=true)
      */
-	protected $moderators_note;
+	protected $moderatorsNote;
 		
 	/**
      * @ORM\Column(type="integer", nullable=true)
@@ -115,7 +115,7 @@ class Flag
      */
     public function setFlaggedDate($flaggedDate)
     {
-        $this->flagged_date = $flaggedDate;
+        $this->flaggedDate = $flaggedDate;
     }
 
     /**
@@ -125,7 +125,7 @@ class Flag
      */
     public function getFlaggedDate()
     {
-        return $this->flagged_date;
+        return $this->flaggedDate;
     }
 
     /**
@@ -155,7 +155,7 @@ class Flag
      */
     public function setFlaggedBy(\CCDNUser\UserBundle\Entity\User $flaggedBy)
     {
-        $this->flagged_by = $flaggedBy;
+        $this->flaggedBy = $flaggedBy;
     }
 
     /**
@@ -165,7 +165,7 @@ class Flag
      */
     public function getFlaggedBy()
     {
-        return $this->flagged_by;
+        return $this->flaggedBy;
     }
 
     /**
@@ -175,7 +175,7 @@ class Flag
      */
     public function setModeratorsNote($moderatorsNote)
     {
-        $this->moderators_note = $moderatorsNote;
+        $this->moderatorsNote = $moderatorsNote;
     }
 
     /**
@@ -185,7 +185,7 @@ class Flag
      */
     public function getModeratorsNote()
     {
-        return $this->moderators_note;
+        return $this->moderatorsNote;
     }
 
     /**
@@ -215,7 +215,7 @@ class Flag
      */
     public function setModeratedBy(\CCDNUser\UserBundle\Entity\User $moderatedBy)
     {
-        $this->moderated_by = $moderatedBy;
+        $this->moderatedBy = $moderatedBy;
     }
 
     /**
@@ -225,7 +225,7 @@ class Flag
      */
     public function getModeratedBy()
     {
-        return $this->moderated_by;
+        return $this->moderatedBy;
     }
 
     /**
@@ -235,7 +235,7 @@ class Flag
      */
     public function setModeratedDate($moderatedDate)
     {
-        $this->moderated_date = $moderatedDate;
+        $this->moderatedDate = $moderatedDate;
     }
 
     /**
@@ -245,7 +245,7 @@ class Flag
      */
     public function getModeratedDate()
     {
-        return $this->moderated_date;
+        return $this->moderatedDate;
     }
 
     /**

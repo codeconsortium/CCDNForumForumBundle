@@ -37,7 +37,7 @@ class CategoryRepository extends EntityRepository
 				SELECT c, b	
 				FROM CCDNForumForumBundle:Category c
 				LEFT JOIN c.boards b
-				ORDER BY c.list_order_priority, b.list_order_priority
+				ORDER BY c.listOrderPriority, b.listOrderPriority
 			');
 						
 		try {
@@ -63,7 +63,7 @@ class CategoryRepository extends EntityRepository
 				FROM CCDNForumForumBundle:Category c
 				LEFT JOIN c.boards b
 				WHERE c.id = :id
-				ORDER BY c.list_order_priority, b.list_order_priority
+				ORDER BY c.listOrderPriority, b.listOrderPriority
 			')
 			->setParameter('id', $category_id);	
 			
@@ -88,7 +88,7 @@ class CategoryRepository extends EntityRepository
 			->createQuery('
 				SELECT c
 				FROM CCDNForumForumBundle:Category c
-				ORDER BY c.list_order_priority ASC');
+				ORDER BY c.listOrderPriority ASC');
 
 		try {
 			return $categories_query->getResult();

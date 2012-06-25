@@ -37,7 +37,7 @@ class Topic
 
     /**
      * @ORM\ManyToOne(targetEntity="Board", inversedBy="topics")
-     * @ORM\JoinColumn(name="board_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_board_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $board;
 	
@@ -49,62 +49,64 @@ class Topic
 
 	/**
 	 * @ORM\OneToOne(targetEntity="Post", cascade={"remove"})
+	 * @ORM\JoinColumn(name="fk_first_post_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $first_post;
+	protected $firstPost;
 		
 	/**
 	 * @ORM\OneToOne(targetEntity="Post", cascade={"remove"})
+	 * @ORM\JoinColumn(name="fk_last_post_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $last_post;
+	protected $lastPost;
 	
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", name="cached_view_count")
 	 */
-	protected $view_count;
+	protected $cachedViewCount;
 	
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", name="cached_reply_count")
 	 */
-	protected $reply_count;
-	
-	/**
-	 *
-	 * @ORM\Column(type="boolean", nullable=false)
-	 */
-	protected $is_closed;
-	
-	/**
-	 * @ORM\Column(type="datetime", nullable=true)
-	 */
-	protected $closed_date;
-	
-	/**
-     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="closed_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $closed_by;
+	protected $cachedReplyCount;
 	
 	/**
 	 *
-	 * @ORM\Column(type="boolean", nullable=false)
+	 * @ORM\Column(type="boolean", name="is_closed", nullable=false)
 	 */
-	protected $is_deleted;
+	protected $isClosed;
 	
 	/**
-	 * @ORM\Column(type="datetime", nullable=true)
+	 * @ORM\Column(type="datetime", name="closed_date", nullable=true)
 	 */
-	protected $deleted_date;
+	protected $closedDate;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="deleted_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_closed_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $deleted_by;
+	protected $closedBy;
+	
+	/**
+	 *
+	 * @ORM\Column(type="boolean", name="is_deleted", nullable=false)
+	 */
+	protected $isDeleted;
+	
+	/**
+	 * @ORM\Column(type="datetime", name="deleted_date", nullable=true)
+	 */
+	protected $deletedDate;
+	
+	/**
+     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(name="fk_deleted_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+	 */
+	protected $deletedBy;
 
 	/**
-	 * @ORM\Column(type="boolean", nullable=true)
+	 * @ORM\Column(type="boolean", name="is_sticky", nullable=true)
 	 */
-	protected $is_sticky;
+	protected $isSticky;
 	
 
     public function __construct()
@@ -165,53 +167,13 @@ class Topic
     }
 
     /**
-     * Set view_count
-     *
-     * @param integer $viewCount
-     */
-    public function setViewCount($viewCount)
-    {
-        $this->view_count = $viewCount;
-    }
-
-    /**
-     * Get view_count
-     *
-     * @return integer 
-     */
-    public function getViewCount()
-    {
-        return $this->view_count;
-    }
-
-    /**
-     * Set reply_count
-     *
-     * @param integer $replyCount
-     */
-    public function setReplyCount($replyCount)
-    {
-        $this->reply_count = $replyCount;
-    }
-
-    /**
-     * Get reply_count
-     *
-     * @return integer 
-     */
-    public function getReplyCount()
-    {
-        return $this->reply_count;
-    }
-
-    /**
      * Set last_post
      *
      * @param CCDNForum\ForumBundle\Entity\Post $lastPost
      */
     public function setLastPost(\CCDNForum\ForumBundle\Entity\Post $lastPost = null)
     {
-        $this->last_post = $lastPost;
+        $this->lastPost = $lastPost;
     }
 
     /**
@@ -221,7 +183,7 @@ class Topic
      */
     public function getLastPost()
     {
-        return $this->last_post;
+        return $this->lastPost;
     }
 
     /**
@@ -251,7 +213,7 @@ class Topic
      */
     public function setFirstPost(\CCDNForum\ForumBundle\Entity\Post $firstPost = null)
     {
-        $this->first_post = $firstPost;
+        $this->firstPost = $firstPost;
     }
 
     /**
@@ -261,7 +223,7 @@ class Topic
      */
     public function getFirstPost()
     {
-        return $this->first_post;
+        return $this->firstPost;
     }
 
     /**
@@ -281,7 +243,7 @@ class Topic
      */
     public function setClosedDate($closedDate)
     {
-        $this->closed_date = $closedDate;
+        $this->closedDate = $closedDate;
     }
 
     /**
@@ -291,7 +253,7 @@ class Topic
      */
     public function getClosedDate()
     {
-        return $this->closed_date;
+        return $this->closedDate;
     }
 
     /**
@@ -301,7 +263,7 @@ class Topic
      */
     public function setClosedBy(\CCDNUser\UserBundle\Entity\User $closedBy = null)
     {
-        $this->closed_by = $closedBy;
+        $this->closedBy = $closedBy;
     }
 
     /**
@@ -311,7 +273,7 @@ class Topic
      */
     public function getClosedBy()
     {
-        return $this->closed_by;
+        return $this->closedBy;
     }
 
     /**
@@ -321,7 +283,7 @@ class Topic
      */
     public function setDeletedDate($deletedDate)
     {
-        $this->deleted_date = $deletedDate;
+        $this->deletedDate = $deletedDate;
     }
 
     /**
@@ -331,7 +293,7 @@ class Topic
      */
     public function getDeletedDate()
     {
-        return $this->deleted_date;
+        return $this->deletedDate;
     }
 
     /**
@@ -341,7 +303,7 @@ class Topic
      */
     public function setDeletedBy(\CCDNUser\UserBundle\Entity\User $deletedBy = null)
     {
-        $this->deleted_by = $deletedBy;
+        $this->deletedBy = $deletedBy;
     }
 
     /**
@@ -351,7 +313,7 @@ class Topic
      */
     public function getDeletedBy()
     {
-        return $this->deleted_by;
+        return $this->deletedBy;
     }
 
     /**
@@ -361,7 +323,7 @@ class Topic
      */
     public function setIsSticky($isSticky)
     {
-        $this->is_sticky = $isSticky;
+        $this->isSticky = $isSticky;
     }
 
     /**
@@ -371,7 +333,7 @@ class Topic
      */
     public function getIsSticky()
     {
-        return $this->is_sticky;
+        return $this->isSticky;
     }
 
     /**
@@ -381,7 +343,7 @@ class Topic
      */
     public function setIsClosed($isClosed)
     {
-        $this->is_closed = $isClosed;
+        $this->isClosed = $isClosed;
     }
 
     /**
@@ -391,7 +353,7 @@ class Topic
      */
     public function getIsClosed()
     {
-        return $this->is_closed;
+        return $this->isClosed;
     }
 
     /**
@@ -401,7 +363,7 @@ class Topic
      */
     public function setIsDeleted($isDeleted)
     {
-        $this->is_deleted = $isDeleted;
+        $this->isDeleted = $isDeleted;
     }
 
     /**
@@ -411,6 +373,47 @@ class Topic
      */
     public function getIsDeleted()
     {
-        return $this->is_deleted;
+        return $this->isDeleted;
     }
+
+    /**
+     * Set cachedViewCount
+     *
+     * @param integer $cachedViewCount
+     */
+    public function setCachedViewCount($cachedViewCount)
+    {
+        $this->cachedViewCount = $cachedViewCount;
+    }
+
+    /**
+     * Get cachedViewCount
+     *
+     * @return integer 
+     */
+    public function getCachedViewCount()
+    {
+        return $this->cachedViewCount;
+    }
+
+    /**
+     * Set cachedReplyCount
+     *
+     * @param integer $cachedReplyCount
+     */
+    public function setCachedReplyCount($cachedReplyCount)
+    {
+        $this->cachedReplyCount = $cachedReplyCount;
+    }
+
+    /**
+     * Get cachedReplyCount
+     *
+     * @return integer 
+     */
+    public function getCachedReplyCount()
+    {
+        return $this->cachedReplyCount;
+    }
+
 }

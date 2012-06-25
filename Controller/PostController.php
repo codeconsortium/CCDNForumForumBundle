@@ -293,7 +293,7 @@ class PostController extends ContainerAware
 		$board = $topic->getBoard();
 		$category = $board->getCategory();
 		
-		if ($post->getTopic()->getFirstPost()->getId() == $post->getId() && $post->getTopic()->getReplyCount() == 0)
+		if ($post->getTopic()->getFirstPost()->getId() == $post->getId() && $post->getTopic()->getCachedReplyCount() == 0)
 		{	// if post is the very first post of the topic then use a topic handler so user can change topic title
 			$confirmationMessage = 'topic.delete_topic_question';
 			$crumbDelete = $this->container->get('translator')->trans('crumbs.topic.delete', array(), 'CCDNForumForumBundle');

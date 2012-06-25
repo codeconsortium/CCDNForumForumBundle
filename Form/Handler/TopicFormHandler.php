@@ -208,8 +208,8 @@ class TopicFormHandler
 				$formData->setIsLocked(false);
 				$formData->setIsDeleted(false);
 
-				$formData->getTopic()->setViewCount(0);
-				$formData->getTopic()->setReplyCount(0);
+				$formData->getTopic()->setCachedViewCount(0);
+				$formData->getTopic()->setCachedReplyCount(0);
 				$formData->getTopic()->setIsClosed(false);
 				$formData->getTopic()->setIsDeleted(false);
 				$formData->getTopic()->setIsSticky(0);

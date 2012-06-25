@@ -27,7 +27,7 @@ class DraftRepository extends EntityRepository
 			->createQuery('
 				SELECT COUNT(DISTINCT d.id) AS orphanedDraftCount
 				FROM CCDNForumForumBundle:Draft d
-				WHERE d.created_by IS NULL
+				WHERE d.createdBy IS NULL
 			');
 
 		try {
@@ -54,8 +54,8 @@ class DraftRepository extends EntityRepository
 			->createQuery('
 				SELECT d
 				FROM CCDNForumForumBundle:Draft d
-				WHERE d.created_by = :id
-				ORDER BY d.created_date ASC
+				WHERE d.createdBy = :id
+				ORDER BY d.createdDate ASC
 				')
 			->setParameter('id', $userId);
 
@@ -81,7 +81,7 @@ class DraftRepository extends EntityRepository
 			->createQuery('	
 				SELECT d
 				FROM CCDNForumForumBundle:Draft d
-				WHERE d.id = :draftId AND d.created_by = :userId')
+				WHERE d.id = :draftId AND d.createdBy = :userId')
 			->setParameters(array('draftId' => $draftId, 'userId' => $userId));
 			
 		try {

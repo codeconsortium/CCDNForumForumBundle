@@ -96,7 +96,7 @@ class PostManager extends BaseManager implements ManagerInterface
 				$topic = $post->getTopic();
 		
 				// if this is the first post and only post, then soft delete the topic aswell.
-				if ($topic->getReplyCount() < 1)
+				if ($topic->getCachedReplyCount() < 1)
 				{
 					// Don't overwite previous users accountability.
 					if ( ! $topic->getDeletedBy() && ! $topic->getDeletedDate())
@@ -145,7 +145,7 @@ class PostManager extends BaseManager implements ManagerInterface
 		
 			// if this is the first post and only post,
 			// then restore the topic aswell.
-			if ($topic->getReplyCount() < 1)
+			if ($topic->getCachedReplyCount() < 1)
 			{
 				$topic->setIsDeleted(false);
 				$topic->setDeletedBy(null);

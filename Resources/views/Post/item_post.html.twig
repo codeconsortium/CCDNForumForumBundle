@@ -145,11 +145,11 @@
 			{% if registries[post.getCreatedBy().getId()] is defined %}
 			<div style="text-align: center; vertical-align: middle;">
 				<img class="icon16" width="16" height="16" src="{{ asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_karma.png') }}" alt="icon">&nbsp;
-				<span class="badge badge-important">{{ registries[post.getCreatedBy().getId()].getCacheKarmaNegativeCount }}</span>&nbsp;
-				<span class="badge badge-success">{{ registries[post.getCreatedBy().getId()].getCacheKarmaPositiveCount }}</span>
+				<span class="badge badge-important">{{ registries[post.getCreatedBy().getId()].getCachedKarmaNegativeCount }}</span>&nbsp;
+				<span class="badge badge-success">{{ registries[post.getCreatedBy().getId()].getCachedKarmaPositiveCount }}</span>
 			</div>
 			
-			<span class="label">{{ 'post.user.post_count' | trans({'%post_count%': registries[post.getCreatedBy().getId()].getCachePostCount()}, 'CCDNForumForumBundle') }}</span>
+			<span class="label">{{ 'post.user.post_count' | trans({'%post_count%': registries[post.getCreatedBy().getId()].getCachedPostCount()}, 'CCDNForumForumBundle') }}</span>
 			{% endif %}
 
 			{% endspaceless %}		

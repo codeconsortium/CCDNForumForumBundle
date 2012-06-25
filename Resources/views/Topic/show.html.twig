@@ -53,8 +53,8 @@
 			
 			<hr>
 			
-			<span class="badge badge-info">{{ 'topic.reply_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ topic.replyCount }}</span>&nbsp;
-			<span class="badge badge-info">{{ 'topic.view_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ topic.viewCount }}</span>&nbsp;
+			<span class="badge badge-info">{{ 'topic.reply_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ topic.cachedReplyCount }}</span>&nbsp;
+			<span class="badge badge-info">{{ 'topic.view_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ topic.cachedViewCount }}</span>&nbsp;
 
 			{% if subscription_count is defined %}
 				<span class="badge badge-info">{{ 'topic.subscription_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ subscription_count }}</span>&nbsp;

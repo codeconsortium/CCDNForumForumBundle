@@ -82,10 +82,10 @@
 						{% endif %}
 					</td>
 					<td class="center">
-						{{ topic.getReplyCount }}
+						{{ topic.getCachedReplyCount }}
 					</td>
 					<td class="center">
-						{{ topic.getViewCount }}
+						{{ topic.getCachedViewCount }}
 					</td>
 					<td class="center">
 						{% if topic.getLastPost %}
@@ -95,7 +95,7 @@
 							{% else %}
 								Guest
 							{% endif %}
-							{% set page = divCeil((topic.getReplyCount + 1), posts_per_page) %}
+							{% set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) %}
 							{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<br>
 							<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page } ) }}#{{ topic.getLastPost.getId }}">{{ topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.subscription.list.last_post_datetime_format')) }}</a>
 						{% endif %}

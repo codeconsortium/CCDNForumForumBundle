@@ -152,7 +152,7 @@ class TopicManager extends BaseManager implements ManagerInterface
 		$topicLastPost = $topicRepository->getLastPostForTopic($topic->getId());
 
 		// Set the board / topic last post. 
-		$topic->setReplyCount( (($topicReplyCount) ? --$topicReplyCount : 0) );		
+		$topic->setCachedReplyCount( (($topicReplyCount) ? --$topicReplyCount : 0) );		
 		$topic->setLastPost( (($topicLastPost) ? $topicLastPost : null) );
 				
 		$this->persist($topic)->flushNow();
@@ -176,7 +176,7 @@ class TopicManager extends BaseManager implements ManagerInterface
 	public function incrementViewCounter($topic)
 	{
 		// set the new counters
-		$topic->setViewCount($topic->getViewCount() + 1);
+		$topic->setCachedViewCount($topic->getCachedViewCount() + 1);
 
 		$this->persist($topic)->flushNow();
 	}

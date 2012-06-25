@@ -33,13 +33,13 @@ class SubscriptionRepository extends EntityRepository
 			->createQuery('
 				SELECT COUNT(DISTINCT s.id) AS nullSubscribedCount
 				FROM CCDNForumForumBundle:Subscription s
-				WHERE s.subscribed IS NULL 
+				WHERE s.isSubscribed IS NULL 
 			');
 		$queryNullReadCount = $this->getEntityManager()
 			->createQuery('
 				SELECT COUNT(DISTINCT s.id) AS nullReadCount
 				FROM CCDNForumForumBundle:Subscription s
-				WHERE s.read_it IS NULL
+				WHERE s.isRead IS NULL
 			');
 
 		try {
@@ -77,13 +77,13 @@ class SubscriptionRepository extends EntityRepository
 			->createQuery('
 				SELECT s, t, fp, lp, b, c FROM CCDNForumForumBundle:Subscription s 
 				LEFT JOIN s.topic t
-				LEFT JOIN t.last_post lp
-				LEFT JOIN lp.created_by lpu
-				LEFT JOIN t.first_post fp
-				LEFT JOIN fp.created_by fpu
+				LEFT JOIN t.lastPost lp
+				LEFT JOIN lp.createdBy lpu
+				LEFT JOIN t.firstPost fp
+				LEFT JOIN fp.createdBy fpu
 				LEFT JOIN t.board b
 				LEFT JOIN b.category c
-				WHERE s.owned_by = :userId AND s.subscribed = true 
+				WHERE s.ownedBy = :userId AND s.isSubscribed = true 
 				GROUP BY t.id
 				ORDER BY t.id ASC')
 			->setParameter('userId', $userId);
@@ -108,7 +108,7 @@ class SubscriptionRepository extends EntityRepository
 			->createQuery('
 				SELECT s, t FROM CCDNForumForumBundle:Subscription s
 				LEFT JOIN s.topic t
-				WHERE s.topic = :topicId AND s.owned_by = :userId')
+				WHERE s.topic = :topicId AND s.ownedBy = :userId')
 			->setParameters(array('topicId' => $topicId, 'userId' => $userId));
 					
 		try {
@@ -130,7 +130,7 @@ class SubscriptionRepository extends EntityRepository
 			->createQuery('	
 				SELECT COUNT(s.id)
 				FROM CCDNForumForumBundle:Subscription s
-				WHERE s.topic = :id AND s.subscribed = TRUE')
+				WHERE s.topic = :id AND s.isSubscribed = TRUE')
 			->setParameter('id', $topicId);
 			
 		try {

@@ -34,8 +34,8 @@
 		<div class="well">
 			{{ board.description }}
 			<hr>
-			<span class="badge badge-info">{{ 'board.topic_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ board.topicCount }}</span>&nbsp;
-			<span class="badge badge-info">{{ 'board.post_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ board.postCount }}</span>
+			<span class="badge badge-info">{{ 'board.topic_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ board.cachedTopicCount }}</span>&nbsp;
+			<span class="badge badge-info">{{ 'board.post_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ board.cachedPostCount }}</span>
 		</div>
 	{% endspaceless %}
 
@@ -89,10 +89,10 @@
 							{% endspaceless %}
 						</td>
 						<td class="center">
-							{{ topic.getReplyCount }}
+							{{ topic.getCachedReplyCount }}
 						</td>
 						<td class="center">
-							{{ topic.getViewCount }}
+							{{ topic.getCachedViewCount }}
 						</td>
 						<td class="center">
 							{% spaceless %}
@@ -104,7 +104,7 @@
 										Guest
 									{% endif %}
 									
-									{% set page = divCeil((topic.getReplyCount + 1), posts_per_page) %}
+									{% set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) %}
 									{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<br>
 									{% if page < 2 %}
 										<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId } ) }}#{{ topic.getLastPost.getId }}">{{ topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) }}</a>
@@ -181,10 +181,10 @@
 						{% endspaceless %}
 					</td>
 					<td class="center">
-						{{ topic.getReplyCount }}
+						{{ topic.getCachedReplyCount }}
 					</td>
 					<td class="center">
-						{{ topic.getViewCount }}
+						{{ topic.getCachedViewCount }}
 					</td>
 					<td class="center">
 						{% spaceless %}
@@ -195,7 +195,7 @@
 								{% else %}
 									Guest
 								{% endif %}
-								{% set page = divCeil((topic.getReplyCount + 1), posts_per_page) %}
+								{% set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) %}
 								{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<br>
 								{% if page < 2 %}
 								<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId } ) }}#{{ topic.getLastPost.getId }}">{{ topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) }}</a>

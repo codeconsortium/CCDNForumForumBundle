@@ -44,25 +44,25 @@ class TopicRepository extends EntityRepository
 			->createQuery('
 				SELECT COUNT(DISTINCT t.id) AS unlinkedFirstPostCount
 				FROM CCDNForumForumBundle:Topic t
-				WHERE t.first_post IS NULL AND t.reply_count > 0 
+				WHERE t.firstPost IS NULL AND t.cachedReplyCount > 0 
 			');
 		$queryUnlinkedLastPostCount = $this->getEntityManager()
 			->createQuery('
 				SELECT COUNT(DISTINCT t.id) AS unlinkedLastPostCount
 				FROM CCDNForumForumBundle:Topic t
-				WHERE t.last_post IS NULL AND t.reply_count > 0 
+				WHERE t.lastPost IS NULL AND t.cachedReplyCount > 0 
 			');
 		$queryPartialClosureCount = $this->getEntityManager()
 			->createQuery('
 				SELECT COUNT(DISTINCT t.id) AS partialClosureCount
 				FROM CCDNForumForumBundle:Topic t
-				WHERE t.is_closed IS NULL OR (t.is_closed = FALSE AND t.closed_by IS NOT NULL)
+				WHERE t.isClosed IS NULL OR (t.isClosed = FALSE AND t.closedBy IS NOT NULL)
 			');
 		$queryPartialDeletionCount = $this->getEntityManager()
 			->createQuery('		
 				SELECT COUNT(DISTINCT t.id) AS partialDeletionCount
 				FROM CCDNForumForumBundle:Topic t
-				WHERE t.is_deleted IS NULL OR (t.is_deleted = FALSE AND t.deleted_by IS NOT NULL)
+				WHERE t.isDeleted IS NULL OR (t.isDeleted = FALSE AND t.deletedBy IS NOT NULL)
 			');
 //		$queryPartialStickyCount = $this->getEntityManager()
 //			->createQuery('		
@@ -74,13 +74,13 @@ class TopicRepository extends EntityRepository
 			->createQuery('		
 				SELECT COUNT(DISTINCT t.id) AS unsetReplyCount
 				FROM CCDNForumForumBundle:Topic t
-				WHERE t.reply_count IS NULL
+				WHERE t.cachedReplyCount IS NULL
 			');
 		$queryUnsetViewCount = $this->getEntityManager()
 			->createQuery('		
 				SELECT COUNT(DISTINCT t.id) AS unsetViewCount
 				FROM CCDNForumForumBundle:Topic t
-				WHERE t.view_count IS NULL
+				WHERE t.cachedViewCount IS NULL
 			');
 
 		try {
@@ -140,15 +140,15 @@ class TopicRepository extends EntityRepository
 		$query = $this->getEntityManager()
 			->createQuery('
 				SELECT t, fp, lp FROM CCDNForumForumBundle:Topic t
-				LEFT JOIN t.last_post lp
-				LEFT JOIN lp.created_by lpu
-				LEFT JOIN t.first_post fp
-				LEFT JOIN fp.created_by fpu
+				LEFT JOIN t.lastPost lp
+				LEFT JOIN lp.createdBy lpu
+				LEFT JOIN t.firstPost fp
+				LEFT JOIN fp.createdBy fpu
 				WHERE t.board = :id' . 
-					(($includeDeleted) ? null : ' AND t.is_deleted = FALSE') .
-				' AND t.is_sticky = FALSE
+					(($includeDeleted) ? null : ' AND t.isDeleted = FALSE') .
+				' AND t.isSticky = FALSE
 				GROUP BY t.id
-				ORDER BY lp.created_date DESC')
+				ORDER BY lp.createdDate DESC')
 			->setParameter('id', $boardId);
 
 		try {
@@ -170,15 +170,15 @@ class TopicRepository extends EntityRepository
 		$query = $this->getEntityManager()
 			->createQuery('
 				SELECT t, fp, lp FROM CCDNForumForumBundle:Topic t
-				LEFT JOIN t.last_post lp
-				LEFT JOIN lp.created_by lpu
-				LEFT JOIN t.first_post fp
-				LEFT JOIN fp.created_by fpu
+				LEFT JOIN t.lastPost lp
+				LEFT JOIN lp.createdBy lpu
+				LEFT JOIN t.firstPost fp
+				LEFT JOIN fp.createdBy fpu
 				WHERE t.board = :id' . 
-					(($includeDeleted) ? null : ' AND t.is_deleted = FALSE') .
-				' AND t.is_sticky = TRUE
+					(($includeDeleted) ? null : ' AND t.isDeleted = FALSE') .
+				' AND t.isSticky = TRUE
 				GROUP BY t.id
-				ORDER BY lp.created_date DESC')
+				ORDER BY lp.createdDate DESC')
 			->setParameter('id', $boardId);
 
 		try	{
@@ -225,10 +225,10 @@ class TopicRepository extends EntityRepository
 			->createQuery('
 				SELECT t, p	FROM CCDNForumForumBundle:Topic t
 				INNER JOIN t.posts p
-				LEFT JOIN p.created_by u
+				LEFT JOIN p.createdBy u
 				WHERE t.id = :id
 				GROUP BY p.id
-				ORDER BY p.created_date ASC')
+				ORDER BY p.createdDate ASC')
 			->setParameter('id', $topic_id);
 					
 		try {
@@ -253,12 +253,12 @@ class TopicRepository extends EntityRepository
 			->createQuery('
 				SELECT t, fp, lp, b 
 				FROM CCDNForumForumBundle:Topic t
-				LEFT JOIN t.last_post lp
-				LEFT JOIN t.first_post fp
+				LEFT JOIN t.lastPost lp
+				LEFT JOIN t.firstPost fp
 				LEFT JOIN t.board b
-				WHERE t.is_closed = TRUE OR t.is_deleted = TRUE
+				WHERE t.isClosed = TRUE OR t.isDeleted = TRUE
 				GROUP BY t.id
-				ORDER BY lp.created_date DESC');
+				ORDER BY lp.createdDate DESC');
 	
 		try {
 			return new Pagerfanta(new DoctrineORMAdapter($query));
@@ -307,7 +307,7 @@ class TopicRepository extends EntityRepository
 			->add('select', 'p')
 			->add('from', 'CCDNForumForumBundle:Post p')
 			->add('where', 'p.topic = ?1')
-			->add('orderBy', 'p.created_date DESC')
+			->add('orderBy', 'p.createdDate DESC')
 			->setMaxResults(1)
 			->setParameter(1, $topic_id)
 			->getQuery();

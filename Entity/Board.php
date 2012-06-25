@@ -32,7 +32,7 @@ class Board
 		
 	/**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="boards")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_category_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $category;
 
@@ -54,24 +54,25 @@ class Board
 	protected $description;
 
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", name="cached_topic_count")
 	 */
-	protected $topic_count;
+	protected $cachedTopicCount;
 	
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", name="cached_post_count")
 	 */	
-	protected $post_count;
+	protected $cachedPostCount;
 	
 	/**
 	 * @ORM\OneToOne(targetEntity="Post")
+	 * @ORM\JoinColumn(name="fk_last_post_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $last_post;
+	protected $lastPost;
 	
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", name="list_order_priority")
 	 */
-	protected $list_order_priority;
+	protected $listOrderPriority;
 
 
 
@@ -131,46 +132,6 @@ class Board
     }
 
     /**
-     * Set topic_count
-     *
-     * @param integer $topicCount
-     */
-    public function setTopicCount($topicCount)
-    {
-        $this->topic_count = $topicCount;
-    }
-
-    /**
-     * Get topic_count
-     *
-     * @return integer 
-     */
-    public function getTopicCount()
-    {
-        return $this->topic_count;
-    }
-
-    /**
-     * Set post_count
-     *
-     * @param integer $postCount
-     */
-    public function setPostCount($postCount)
-    {
-        $this->post_count = $postCount;
-    }
-
-    /**
-     * Get post_count
-     *
-     * @return integer 
-     */
-    public function getPostCount()
-    {
-        return $this->post_count;
-    }
-
-    /**
      * Set category
      *
      * @param CCDNForum\ForumBundle\Entity\Category $category
@@ -217,7 +178,7 @@ class Board
      */
     public function setLastPost(\CCDNForum\ForumBundle\Entity\Post $lastPost = null)
     {
-        $this->last_post = $lastPost;
+        $this->lastPost = $lastPost;
     }
 
     /**
@@ -227,7 +188,7 @@ class Board
      */
     public function getLastPost()
     {
-        return $this->last_post;
+        return $this->lastPost;
     }
 
     /**
@@ -247,7 +208,7 @@ class Board
      */
     public function setListOrderPriority($listOrderPriority)
     {
-        $this->list_order_priority = $listOrderPriority;
+        $this->listOrderPriority = $listOrderPriority;
     }
 
     /**
@@ -257,6 +218,47 @@ class Board
      */
     public function getListOrderPriority()
     {
-        return $this->list_order_priority;
+        return $this->listOrderPriority;
     }
+
+    /**
+     * Set cachedTopicCount
+     *
+     * @param integer $cachedTopicCount
+     */
+    public function setCachedTopicCount($cachedTopicCount)
+    {
+        $this->cachedTopicCount = $cachedTopicCount;
+    }
+
+    /**
+     * Get cachedTopicCount
+     *
+     * @return integer 
+     */
+    public function getCachedTopicCount()
+    {
+        return $this->cachedTopicCount;
+    }
+
+    /**
+     * Set cachedPostCount
+     *
+     * @param integer $cachedPostCount
+     */
+    public function setCachedPostCount($cachedPostCount)
+    {
+        $this->cachedPostCount = $cachedPostCount;
+    }
+
+    /**
+     * Get cachedPostCount
+     *
+     * @return integer 
+     */
+    public function getCachedPostCount()
+    {
+        return $this->cachedPostCount;
+    }
+
 }

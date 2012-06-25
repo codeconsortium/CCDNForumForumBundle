@@ -35,24 +35,24 @@ class Registry
 
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $owned_by;
+	protected $ownedBy;
 		
 	/**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="cached_post_count")
      */
-    protected $cachePostCount;
+    protected $cachedPostCount;
 
 	/**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="cached_karma_positive_count")
      */
-	protected $cacheKarmaPositiveCount;
+	protected $cachedKarmaPositiveCount;
 	
 	/**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="cached_karma_negative_count")
      */
-	protected $cacheKarmaNegativeCount;
+	protected $cachedKarmaNegativeCount;
 	
 	
     /**
@@ -66,28 +66,6 @@ class Registry
     }
 
     /**
-     * Set cachePostCount
-     *
-     * @param integer $cachePostCount
-     * @return Registry
-     */
-    public function setCachePostCount($cachePostCount)
-    {
-        $this->cachePostCount = $cachePostCount;
-        return $this;
-    }
-
-    /**
-     * Get cachePostCount
-     *
-     * @return integer 
-     */
-    public function getCachePostCount()
-    {
-        return $this->cachePostCount;
-    }
-
-    /**
      * Set owned_by
      *
      * @param CCDNUser\UserBundle\Entity\User $ownedBy
@@ -95,7 +73,7 @@ class Registry
      */
     public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)
     {
-        $this->owned_by = $ownedBy;
+        $this->ownedBy = $ownedBy;
         return $this;
     }
 
@@ -106,46 +84,66 @@ class Registry
      */
     public function getOwnedBy()
     {
-        return $this->owned_by;
+        return $this->ownedBy;
     }
 
     /**
-     * Set cacheKarmaPositiveCount
+     * Set cachedPostCount
      *
-     * @param integer $cacheKarmaPositiveCount
+     * @param integer $cachedPostCount
      */
-    public function setCacheKarmaPositiveCount($cacheKarmaPositiveCount)
+    public function setCachedPostCount($cachedPostCount)
     {
-        $this->cacheKarmaPositiveCount = $cacheKarmaPositiveCount;
+        $this->cachedPostCount = $cachedPostCount;
     }
 
     /**
-     * Get cacheKarmaPositiveCount
-     *
-     * @return integer 
-     */
-    public function getCacheKarmaPositiveCount()
-    {
-        return $this->cacheKarmaPositiveCount;
-    }
-
-    /**
-     * Set cacheKarmaNegativeCount
-     *
-     * @param integer $cacheKarmaNegativeCount
-     */
-    public function setCacheKarmaNegativeCount($cacheKarmaNegativeCount)
-    {
-        $this->cacheKarmaNegativeCount = $cacheKarmaNegativeCount;
-    }
-
-    /**
-     * Get cacheKarmaNegativeCount
+     * Get cachedPostCount
      *
      * @return integer 
      */
-    public function getCacheKarmaNegativeCount()
+    public function getCachedPostCount()
     {
-        return $this->cacheKarmaNegativeCount;
+        return $this->cachedPostCount;
+    }
+
+    /**
+     * Set cachedKarmaPositiveCount
+     *
+     * @param integer $cachedKarmaPositiveCount
+     */
+    public function setCachedKarmaPositiveCount($cachedKarmaPositiveCount)
+    {
+        $this->cachedKarmaPositiveCount = $cachedKarmaPositiveCount;
+    }
+
+    /**
+     * Get cachedKarmaPositiveCount
+     *
+     * @return integer 
+     */
+    public function getCachedKarmaPositiveCount()
+    {
+        return $this->cachedKarmaPositiveCount;
+    }
+
+    /**
+     * Set cachedKarmaNegativeCount
+     *
+     * @param integer $cachedKarmaNegativeCount
+     */
+    public function setCachedKarmaNegativeCount($cachedKarmaNegativeCount)
+    {
+        $this->cachedKarmaNegativeCount = $cachedKarmaNegativeCount;
+    }
+
+    /**
+     * Get cachedKarmaNegativeCount
+     *
+     * @return integer 
+     */
+    public function getCachedKarmaNegativeCount()
+    {
+        return $this->cachedKarmaNegativeCount;
     }
 }

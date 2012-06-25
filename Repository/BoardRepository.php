@@ -44,19 +44,19 @@ class BoardRepository extends EntityRepository
 			->createQuery('
 				SELECT COUNT(DISTINCT b.id) AS unlinkedLastPostCount
 				FROM CCDNForumForumBundle:Board b
-				WHERE b.last_post IS NULL AND b.topic_count > 0 
+				WHERE b.lastPost IS NULL AND b.cachedTopicCount > 0 
 			');
 		$queryUnsetTopicCount = $this->getEntityManager()
 			->createQuery('
 				SELECT COUNT(DISTINCT b.id) AS unsetTopicCount
 				FROM CCDNForumForumBundle:Board b
-				WHERE b.topic_count IS NULL
+				WHERE b.cachedTopicCount IS NULL
 			');
 		$queryUnsetPostCount = $this->getEntityManager()
 			->createQuery('		
 				SELECT COUNT(DISTINCT b.id) AS unsetPostCount
 				FROM CCDNForumForumBundle:Board b
-				WHERE b.post_count IS NULL
+				WHERE b.cachedPostCount IS NULL
 			');				
 
 		try {
@@ -99,7 +99,7 @@ class BoardRepository extends EntityRepository
 				SELECT c, b	
 				FROM CCDNForumForumBundle:Category c
 				LEFT JOIN c.boards b
-				ORDER BY c.list_order_priority, b.list_order_priority
+				ORDER BY c.listOrderPriority, b.listOrderPriority
 			');
 						
 		try {
@@ -151,7 +151,7 @@ class BoardRepository extends EntityRepository
 				SELECT COUNT(DISTINCT t.id) AS topicCount, COUNT(DISTINCT p.id) AS postCount
 				FROM CCDNForumForumBundle:Topic t
 				LEFT JOIN t.posts p
-				WHERE t.board = :id AND t.is_deleted = FALSE AND p.is_deleted = FALSE
+				WHERE t.board = :id AND t.isDeleted = FALSE AND p.isDeleted = FALSE
 				GROUP BY t.board')
 			->setParameter('id', $board_id);
 
@@ -179,7 +179,7 @@ class BoardRepository extends EntityRepository
 				SELECT b
 				FROM CCDNForumForumBundle:Board b
 				WHERE b.category = :id
-				ORDER BY b.list_order_priority ASC
+				ORDER BY b.listOrderPriority ASC
 				')
 			->setParameter('id', $category_id);
 
@@ -203,10 +203,10 @@ class BoardRepository extends EntityRepository
 			->createQuery('
 				SELECT t, lp 
 				FROM CCDNForumForumBundle:Topic t
-				LEFT JOIN t.last_post lp
-				WHERE t.board = :id AND t.is_deleted = FALSE
+				LEFT JOIN t.lastPost lp
+				WHERE t.board = :id AND t.isDeleted = FALSE
 				GROUP BY t.id
-				ORDER BY lp.created_date DESC
+				ORDER BY lp.createdDate DESC
 				')
 			->setParameter('id', $board_id)
 			->setMaxResults(1);

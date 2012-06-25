@@ -35,7 +35,7 @@ class Draft
 	
     /**
      * @ORM\ManyToOne(targetEntity="Board")
-     * @ORM\JoinColumn(name="board_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_board_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $board;
 	
@@ -46,7 +46,7 @@ class Draft
 	
     /**
      * @ORM\ManyToOne(targetEntity="Topic", cascade={"persist"})
-     * @ORM\JoinColumn(name="topic_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_topic_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $topic;
 	
@@ -56,19 +56,19 @@ class Draft
 	protected $body;
 	
 	/**
-	 * @ORM\Column(type="datetime")
+	 * @ORM\Column(type="datetime", name="created_date")
 	 */
-	protected $created_date;
+	protected $createdDate;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="created_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_created_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $created_by;
+	protected $createdBy;
 
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNComponent\AttachmentBundle\Entity\Attachment", cascade={"persist"})
-     * @ORM\JoinColumn(name="attachment_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
 	protected $attachment;
 	
@@ -111,7 +111,7 @@ class Draft
      */
     public function setCreatedDate($createdDate)
     {
-        $this->created_date = $createdDate;
+        $this->createdDate = $createdDate;
     }
 
     /**
@@ -121,7 +121,7 @@ class Draft
      */
     public function getCreatedDate()
     {
-        return $this->created_date;
+        return $this->createdDate;
     }
 
     /**
@@ -151,7 +151,7 @@ class Draft
      */
     public function setCreatedBy(\CCDNUser\UserBundle\Entity\User $createdBy)
     {
-        $this->created_by = $createdBy;
+        $this->createdBy = $createdBy;
     }
 
     /**
@@ -161,7 +161,7 @@ class Draft
      */
     public function getCreatedBy()
     {
-        return $this->created_by;
+        return $this->createdBy;
     }
 
     /**

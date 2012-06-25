@@ -38,25 +38,25 @@ class RegistryRepository extends EntityRepository
 			->createQuery('
 				SELECT COUNT(DISTINCT r.id) AS orphanedRegistryCount
 				FROM CCDNForumForumBundle:Registry r
-				WHERE r.owned_by IS NULL
+				WHERE r.ownedBy IS NULL
 			');
 		$queryUnsetCachedPostCount = $this->getEntityManager()
 			->createQuery('
 				SELECT COUNT(DISTINCT r.id) AS unsetCachedPostCount
 				FROM CCDNForumForumBundle:Registry r
-				WHERE r.cachePostCount IS NULL 
+				WHERE r.cachedPostCount IS NULL 
 			');
 		$queryUnsetCachedKarmaPositiveCount = $this->getEntityManager()
 			->createQuery('
 				SELECT COUNT(DISTINCT r.id) AS unsetCachedKarmaPositiveCount
 				FROM CCDNForumForumBundle:Registry r
-				WHERE r.cacheKarmaPositiveCount IS NULL
+				WHERE r.cachedKarmaPositiveCount IS NULL
 			');
 		$queryUnsetCachedKarmaNegativeCount = $this->getEntityManager()
 			->createQuery('
 				SELECT COUNT(DISTINCT r.id) AS unsetCachedKarmaNegativeCount
 				FROM CCDNForumForumBundle:Registry r
-				WHERE r.cacheKarmaNegativeCount IS NULL
+				WHERE r.cachedKarmaNegativeCount IS NULL
 			');
 
 		try {
@@ -99,7 +99,7 @@ class RegistryRepository extends EntityRepository
 			->createQuery('	
 				SELECT r
 				FROM CCDNForumForumBundle:Registry r
-				WHERE r.owned_by = :id
+				WHERE r.ownedBy = :id
 				')
 			->setParameter('id', $user_id);
 
@@ -125,7 +125,7 @@ class RegistryRepository extends EntityRepository
 		$query = $qb
 			->add('select', 'r')
 			->from('CCDNForumForumBundle:Registry', 'r')
-			->where($qb->expr()->in('r.owned_by', '?1'))
+			->where($qb->expr()->in('r.ownedBy', '?1'))
 			->setParameters(array('1' => array_values($registryUserIds)))
 			->getQuery();
 

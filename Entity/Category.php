@@ -44,9 +44,9 @@ class Category
 
 
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", name="list_order_priority")
 	 */
-	protected $list_order_priority;
+	protected $listOrderPriority;
 	
 	
     public function __construct()
@@ -123,7 +123,7 @@ class Category
      */
     public function setListOrderPriority($listOrderPriority)
     {
-        $this->list_order_priority = $listOrderPriority;
+        $this->listOrderPriority = $listOrderPriority;
     }
 
     /**
@@ -133,6 +133,6 @@ class Category
      */
     public function getListOrderPriority()
     {
-        return $this->list_order_priority;
+        return $this->listOrderPriority;
     }
 }

@@ -44,13 +44,13 @@ class PostRepository extends EntityRepository
 			->createQuery('
 				SELECT COUNT(DISTINCT p.id) AS partialLockCount
 				FROM CCDNForumForumBundle:Post p
-				WHERE p.is_locked IS NULL OR (p.is_locked = FALSE AND p.locked_by IS NOT NULL) 
+				WHERE p.isLocked IS NULL OR (p.isLocked = FALSE AND p.lockedBy IS NOT NULL) 
 			');
 		$queryPartialDeletionCount = $this->getEntityManager()
 			->createQuery('
 				SELECT COUNT(DISTINCT p.id) AS partialDeletionCount
 				FROM CCDNForumForumBundle:Post p
-				WHERE p.is_deleted IS NULL OR (p.is_deleted = FALSE AND p.deleted_by IS NOT NULL)
+				WHERE p.isDeleted IS NULL OR (p.isDeleted = FALSE AND p.deletedBy IS NOT NULL)
 			');
 
 		try {
@@ -88,14 +88,14 @@ class PostRepository extends EntityRepository
 			->createQuery('
 				SELECT p, t FROM CCDNForumForumBundle:Post p
 				LEFT JOIN p.topic t
-				LEFT JOIN p.created_by u
-				LEFT JOIN p.edited_by eu
-				LEFT JOIN p.deleted_by du
-				LEFT JOIN p.locked_by lu
+				LEFT JOIN p.createdBy u
+				LEFT JOIN p.editedBy eu
+				LEFT JOIN p.deletedBy du
+				LEFT JOIN p.lockedBy lu
 				LEFT JOIN p.attachment pa
 				WHERE p.topic = :id
 				GROUP BY p.id
-				ORDER BY p.created_date ASC
+				ORDER BY p.createdDate ASC
 			')
 			->setParameter('id', $topicId);
 
@@ -132,7 +132,7 @@ class PostRepository extends EntityRepository
 				SELECT p, t, fp
 				FROM CCDNForumForumBundle:Post p
 				LEFT JOIN p.topic t
-				LEFT JOIN t.first_post fp
+				LEFT JOIN t.firstPost fp
 				WHERE p.id = :id')
 			->setParameter('id', $post_id);
 			
@@ -159,7 +159,7 @@ class PostRepository extends EntityRepository
 				SELECT p, t
 				FROM CCDNForumForumBundle:Post p
 				LEFT JOIN p.topic t
-				WHERE p.is_deleted = TRUE');
+				WHERE p.isDeleted = TRUE');
 		
 		try {
 			return new Pagerfanta(new DoctrineORMAdapter($query));
@@ -184,8 +184,8 @@ class PostRepository extends EntityRepository
 				SELECT p, t	
 				FROM CCDNForumForumBundle:Post p
 				LEFT JOIN p.topic t
-				WHERE p.is_locked = TRUE or t.is_deleted = TRUE
-				ORDER BY p.created_date DESC');
+				WHERE p.isLocked = TRUE or t.isDeleted = TRUE
+				ORDER BY p.createdDate DESC');
 		
 		try {
 			return new Pagerfanta(new DoctrineORMAdapter($query));
@@ -233,7 +233,7 @@ class PostRepository extends EntityRepository
 				SELECT COUNT(p.id) AS postCount
 				FROM CCDNForumForumBundle:Post p
 				LEFT JOIN p.topic t
-				WHERE p.created_by = :id AND p.is_deleted = FALSE')
+				WHERE p.createdBy = :id AND p.isDeleted = FALSE')
 			->setParameter('id', $user_id);
 			
 		try {

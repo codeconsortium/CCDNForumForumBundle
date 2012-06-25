@@ -32,25 +32,25 @@ class Subscription
 	
     /**
      * @ORM\ManyToOne(targetEntity="Topic", cascade={"persist"})
-     * @ORM\JoinColumn(name="topic_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_topic_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $topic;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $owned_by;
+	protected $ownedBy;
 
 	/**
-	 * @ORM\Column(type="boolean")
+	 * @ORM\Column(type="boolean", name="is_read")
 	 */
-	protected $read_it;
+	protected $isRead;
 	
 	/**
-	 * @ORM\Column(type="boolean")
+	 * @ORM\Column(type="boolean", name="is_subscribed")
 	 */
-	protected $subscribed;
+	protected $isSubscribed;
 	
     /**
      * Get id
@@ -89,7 +89,7 @@ class Subscription
      */
     public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy)
     {
-        $this->owned_by = $ownedBy;
+        $this->ownedBy = $ownedBy;
     }
 
     /**
@@ -99,46 +99,46 @@ class Subscription
      */
     public function getOwnedBy()
     {
-        return $this->owned_by;
+        return $this->ownedBy;
     }
 
     /**
-     * Set read_it
+     * Set isRead
      *
-     * @param boolean $readIt
+     * @param boolean $isRead
      */
-    public function setReadIt($readIt)
+    public function setIsRead($isRead)
     {
-        $this->read_it = $readIt;
+        $this->isRead = $isRead;
     }
 
     /**
-     * Get read_it
-     *
-     * @return boolean 
-     */
-    public function getReadIt()
-    {
-        return $this->read_it;
-    }
-
-    /**
-     * Set subscribed
-     *
-     * @param boolean $subscribed
-     */
-    public function setSubscribed($subscribed)
-    {
-        $this->subscribed = $subscribed;
-    }
-
-    /**
-     * Get subscribed
+     * Get isRead
      *
      * @return boolean 
      */
-    public function getSubscribed()
+    public function getIsRead()
     {
-        return $this->subscribed;
+        return $this->isRead;
+    }
+
+    /**
+     * Set isSubscribed
+     *
+     * @param boolean $isSubscribed
+     */
+    public function setIsSubscribed($isSubscribed)
+    {
+        $this->isSubscribed = $isSubscribed;
+    }
+
+    /**
+     * Get isSubscribed
+     *
+     * @return boolean 
+     */
+    public function getIsSubscribed()
+    {
+        return $this->isSubscribed;
     }
 }
