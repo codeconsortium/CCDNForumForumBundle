@@ -38,9 +38,11 @@
 		<form action="{{ path('cc_forum_post_flag', { 'post_id': post.id } ) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 			<fieldset>
 				
+				{{ form_errors(form) }}
+				
 				<div class="control-group"><div class="controls row-fluid">{{ form_row(form._token) }}</div></div>
 			
-				<div class="control-group">
+				<div class="control-group{{ (form.reason.vars.errors|length > 0) ? ' error': '' }}">
 					{{ form_label(form.reason, null, { 'label': 'form.label.post.flag.reason'| trans({}, 'CCDNForumForumBundle') }) }}
 					<div class="controls row-fluid">
 						{{ form_errors(form.reason) }}
@@ -48,7 +50,7 @@
 					</div>
 				</div>
 				
-				<div class="control-group">
+				<div class="control-group{{ (form.description.vars.errors|length > 0) ? ' error': '' }}">
 					{{ form_label(form.description, null, { 'label': 'form.label.post.flag.description'| trans({}, 'CCDNForumForumBundle') }) }}
 					<div class="controls row-fluid">
 						{{ form_errors(form.description) }}

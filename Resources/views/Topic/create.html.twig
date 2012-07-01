@@ -37,15 +37,19 @@
 
 	<h2>{{ 'title.topic.create' | trans({'%board_name%': board.getName }, 'CCDNForumForumBundle') }}</h2>
 
+	
+	
 	<div class="well">
 		{% form_theme form param('ccdn_forum_forum.topic.create.form_theme') %}
 		
 		<form action="{{ path('cc_forum_topic_create', { 'board_id': board.id } ) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 			<fieldset>
+		
+				{{ form_errors(form) }}
 				
 				<div class="control-group"><div class="controls row-fluid">{{ form_row(form._token) }}</div></div>
 			
-				<div class="control-group">
+				<div class="control-group{{ (form.Topic.board.vars.errors|length > 0) ? ' error': '' }}">
 					{{ form_label(form.Topic.board, null, { 'label': 'form.label.topic.board'| trans({}, 'CCDNForumForumBundle')}) }}
 					<div class="controls row-fluid">
 						{{ form_errors(form.Topic.board) }}
@@ -53,7 +57,7 @@
 					</div>
 				</div>
 			
-				<div class="control-group">
+				<div class="control-group{{ (form.Topic.title.vars.errors|length > 0) ? ' error': '' }}">
 					{{ form_label(form.Topic.title, null, { 'label': 'form.label.topic.title'| trans({}, 'CCDNForumForumBundle')}) }}
 					<div class="controls row-fluid">
 						{{ form_errors(form.Topic.title) }}
@@ -61,7 +65,7 @@
 					</div>
 				</div>
 			
-				<div class="control-group">
+				<div class="control-group{{ (form.body.vars.errors|length > 0) ? ' error': '' }}">
 					{{ form_label(form.body, null, { 'label': 'form.label.post.body'| trans({}, 'CCDNForumForumBundle')}) }}
 					<div class="controls row-fluid">
 						{{ form_errors(form.body) }}
@@ -70,7 +74,7 @@
 					</div>
 				</div>
 			
-				<div class="control-group">
+				<div class="control-group{{ (form.attachment.vars.errors|length > 0) ? ' error': '' }}">
 					{{ form_label(form.attachment, null, { 'label': 'form.label.post.attachment'| trans({}, 'CCDNForumForumBundle')}) }}
 					<div class="controls row-fluid">
 						{{ form_errors(form.attachment) }}

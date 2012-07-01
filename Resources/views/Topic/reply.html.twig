@@ -43,6 +43,8 @@
 		<form action="{{ path('cc_forum_topic_reply', { 'topic_id': topic.id } ) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 			<fieldset>
 				
+				{{ form_errors(form) }}
+				
 				<div class="control-group"><div class="controls row-fluid">{{ form_row(form._token) }}</div></div>
 
 				<div class="control-group">
@@ -52,7 +54,7 @@
 					</div>
 				</div>
 			
-				<div class="control-group">
+				<div class="control-group{{ (form.body.vars.errors|length > 0) ? ' error': '' }}">
 					{{ form_label(form.body, null, { 'label': 'form.label.post.body'| trans({}, 'CCDNForumForumBundle') }) }}
 					<div class="controls row-fluid">
 						{{ form_errors(form.body) }}
@@ -61,7 +63,7 @@
 					</div>
 				</div>
 			
-				<div class="control-group">
+				<div class="control-group{{ (form.attachment.vars.errors|length > 0) ? ' error': '' }}">
 					{{ form_label(form.attachment, null, { 'label': 'form.label.post.attachment'| trans({}, 'CCDNForumForumBundle')}) }}
 					<div class="controls row-fluid">
 						{{ form_errors(form.attachment) }}
