@@ -84,7 +84,7 @@
 									{% else %}
 										Guest
 									{% endif %}
-									{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}&nbsp;<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}">{{ relevantDateFormat(topic.getFirstPost.getCreatedDate) }}{#|date(param('ccdn_forum_forum.board.show.first_post_datetime_format'))#}</a>
+									&nbsp;<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}"><abbr class="timestamper" title="{{ topic.getFirstPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') }}">{{ topic.getFirstPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.first_post_datetime_format')) }}</abbr></a>
 								{% endif %}
 							{% endspaceless %}
 						</td>
@@ -105,11 +105,11 @@
 									{% endif %}
 									
 									{% set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) %}
-									{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<br>
+									<br>
 									{% if page < 2 %}
-										<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId } ) }}#{{ topic.getLastPost.getId }}">{{ relevantDateFormat(topic.getLastPost.getCreatedDate) }}{#|date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) #}</a>
+										<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId } ) }}#{{ topic.getLastPost.getId }}"><abbr class="timestamper" title="{{ topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') }}">{{ topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) }}</abbr></a>
 									{% else %}
-										<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page } ) }}#{{ topic.getLastPost.getId }}">{{ relevantDateFormat(topic.getLastPost.getCreatedDate) }}{#|date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) #}</a>
+										<a href="{{ path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page } ) }}#{{ topic.getLastPost.getId }}"><abbr class="timestamper" title="{{ topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') }}">{{ topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) }}</abbr></a>
 									{% endif %}
 								{% endif %}
 							{% endspaceless %}
@@ -175,7 +175,7 @@
 					<td class="left">
 						{% spaceless %}
 							{% if topic.getClosedDate %}
-							<span class="label label-important">{{ 'badge.topic.closed' |trans({}, 'CCDNForumForumBundle') }}</span>&nbsp;
+								<span class="label label-important">{{ 'badge.topic.closed' |trans({}, 'CCDNForumForumBundle') }}</span>&nbsp;
 							{% endif %}
 							<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}" title="{{ topic.getTitle }}">{{ truncDot(topic.getTitle, param('ccdn_forum_forum.board.show.topic_title_truncate')) }}</a>
 							<br>
@@ -187,7 +187,7 @@
 								{% else %}
 									Guest
 								{% endif %}
-								{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}">{{ relevantDateFormat(topic.getFirstPost.getCreatedDate) }}{#|date(param('ccdn_forum_forum.board.show.first_post_datetime_format')) #}</a>
+								&nbsp;<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}"><abbr class="timestamper" title="{{ topic.getFirstPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') }}">{{ topic.getFirstPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.first_post_datetime_format')) }}</abbr></a>
 							{% endif %}
 						{% endspaceless %}
 					</td>
@@ -207,11 +207,11 @@
 									Guest
 								{% endif %}
 								{% set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) %}
-								{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<br>
+								<br>
 								{% if page < 2 %}
-								<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId } ) }}#{{ topic.getLastPost.getId }}">{{ relevantDateFormat(topic.getLastPost.getCreatedDate) }}{#|date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) #}</a>
+								<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId } ) }}#{{ topic.getLastPost.getId }}"><abbr class="timestamper" title="{{ topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') }}">{{ topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) }}</abbr></a>
 								{% else %}
-								<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page } ) }}#{{ topic.getLastPost.getId }}">{{ relevantDateFormat(topic.getLastPost.getCreatedDate) }}{#|date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) #}</a>
+								<a href="{{ path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page } ) }}#{{ topic.getLastPost.getId }}"><abbr class="timestamper" title="{{ topic.getLastTopic.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') }}">{{ topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) }}</abbr></a>
 								{% endif %}
 							{% endif %}
 						{% endspaceless %}

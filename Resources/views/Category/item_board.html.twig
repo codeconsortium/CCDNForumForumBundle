@@ -27,9 +27,9 @@
 				{% endif %}
 				<br>
 				{% if page < 2 %}
-					{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show', {'topic_id': board.getLastPost.getTopic.getId } ) }}#{{ board.getLastPost.getId }}">{{ relevantDateFormat(board.getLastPost.getCreatedDate) }}{#|date(param('ccdn_forum_forum.category.last_post_datetime_format')) #}</a>
+					<a href="{{ path('cc_forum_topic_show', {'topic_id': board.getLastPost.getTopic.getId } ) }}#{{ board.getLastPost.getId }}"><abbr class="timestamper" title="{{ board.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') }}">{{ board.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.category.last_post_datetime_format')) }}</abbr></a>
 				{% else %}
-					{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a class="date_link_small" href="{{ path('cc_forum_topic_show_paginated', {'topic_id': board.getLastPost.getTopic.getId, 'page':page } ) }}#{{ board.getLastPost.getId }}">{{ relevantDateFormat(board.getLastPost.getCreatedDate) }}{#|date(param('ccdn_forum_forum.category.last_post_datetime_format')) #}</a>
+					<a href="{{ path('cc_forum_topic_show_paginated', {'topic_id': board.getLastPost.getTopic.getId, 'page':page } ) }}#{{ board.getLastPost.getId }}"><abbr class="timestamper" title="{{ board.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') }}">{{ board.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.category.last_post_datetime_format')) }}</abbr></a>
 				{% endif %}
 			{% else %}
 				{{ 'info.not_applicable' | trans({}, 'CCDNForumForumBundle') }}

@@ -1,6 +1,6 @@
 {#{% if key is defined %}{% if key != 0 %}<hr>{% endif %}{% endif %}#}
 <hr>
-<div style="display: block; clear: both; padding-bottom:40px;" id="post_{{ post.getId }}">
+<div style="display: block; clear: both; padding-bottom:5px;" id="post_{{ post.getId }}">
 	
 	<div class="btn-toolbar" style="margin-top:0px;vertical-align:top;">
 		
@@ -167,24 +167,22 @@
 				<div class="content">
 					<div style="clear:both;">
 						<div class="pull-left">
-							<span class="username_medium">
-								{% if post.getCreatedBy %}
-								<a href="{{ path(user_profile_route, {'user_id': post.getCreatedBy.getId } ) }}">{{ post.getCreatedBy |title }}</a>
-								{% else %}
-								Guest
-								{% endif %}
-							</span>&nbsp;&nbsp;
-							<span class="item_timestamp">
-								{{ relevantDateFormat(post.getCreatedDate) }}{#|date(param('ccdn_forum_forum.item_post.post_created_datetime_format')) #}
-							</span>
+							{% if post.getCreatedBy %}
+							<a href="{{ path(user_profile_route, {'user_id': post.getCreatedBy.getId } ) }}">{{ post.getCreatedBy |title }}</a>
+							{% else %}
+							Guest
+							{% endif %}
+							&nbsp;
+							<abbr class="timestamper label" style="display:inline-block;" title="{{ post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') }}">{{ post.getCreatedDate |date(param('ccdn_forum_forum.item_post.post_created_datetime_format')) }}</abbr>
 					
 							{% if post.getEditedDate %}
 								&nbsp;&nbsp;
-								<span class="item_timestamp">(
-								{{ 'post.edited_by' |trans({}, 'CCDNForumForumBundle') }}
-								{% if post.getEditedBy %}<a href="{{ path(user_profile_route, {'user_id': post.getEditedBy.getId}) }}">{{ post.getEditedBy.getUsername |title }}</a>{% else %}Guest{% endif %}
-								{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}{{ relevantDateFormat(post.getEditedDate) }}{#|date(param('ccdn_forum_forum.item_post.post_edited_datetime_format')) #}
-								)</span>
+								<span class="label" style="display:inline-block;">
+									{{ 'post.edited_by' |trans({}, 'CCDNForumForumBundle') }}
+									{% if post.getEditedBy %}<a href="{{ path(user_profile_route, {'user_id': post.getEditedBy.getId}) }}">{{ post.getEditedBy.getUsername |title }}</a>{% else %}Guest{% endif %}
+									{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}
+									<abbr class="timestamper" title="{{ post.getEditedDate |date('Y-m-d H:i:s T Z', 'Europe/London') }}">{{ post.getEditedDate |date(param('ccdn_forum_forum.item_post.post_edited_datetime_format')) }}</abbr>
+								</span>
 							{% endif %}
 						</div>
 						<div class="pull-right">
@@ -200,7 +198,7 @@
 						</div>
 					</div>
 					<div style="clear: both;">
-						<hr>
+						<br>
 						{% if post.getDeletedBy %}
 							<span class="deleted_on">
 							{{ 'post.is_deleted' | trans({}, 'CCDNForumForumBundle') }} - 
