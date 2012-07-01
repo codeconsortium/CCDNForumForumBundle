@@ -83,7 +83,7 @@ class SubscriptionRepository extends EntityRepository
 				LEFT JOIN fp.createdBy fpu
 				LEFT JOIN t.board b
 				LEFT JOIN b.category c
-				WHERE s.ownedBy = :userId AND s.isSubscribed = true 
+				WHERE s.ownedBy = :userId AND s.isSubscribed = true AND t.isDeleted != TRUE 
 				GROUP BY t.id
 				ORDER BY t.id ASC')
 			->setParameter('userId', $userId);

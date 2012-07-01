@@ -37,7 +37,7 @@ class Post
      * @ORM\ManyToOne(targetEntity="Topic", inversedBy="posts", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_topic_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $topic;
+    protected $topic = null;
 	
 	/**
      * @ORM\Column(type="text")
@@ -54,7 +54,7 @@ class Post
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", inversedBy="forum_posts", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_created_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $createdBy;
+	protected $createdBy = null;
 	
 	/**
 	 * @ORM\Column(type="datetime", name="edited_date", nullable=true)
@@ -65,7 +65,7 @@ class Post
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_edited_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */	
-	protected $editedBy;
+	protected $editedBy = null;
 	
 	/**
 	 *
@@ -82,7 +82,7 @@ class Post
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_deleted_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $deletedBy;
+	protected $deletedBy = null;
 	
 	/**
 	 *
@@ -99,7 +99,7 @@ class Post
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_locked_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $lockedBy;
+	protected $lockedBy = null;
 	
 	/**
      * @ORM\OneToMany(targetEntity="CCDNForum\ForumBundle\Entity\Flag", mappedBy="post", cascade={"remove"})
@@ -110,7 +110,7 @@ class Post
      * @ORM\ManyToOne(targetEntity="CCDNComponent\AttachmentBundle\Entity\Attachment", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $attachment;
+	protected $attachment = null;
 	
     /**
      * Get id
@@ -227,7 +227,7 @@ class Post
      *
      * @param CCDNForum\ForumBundle\Entity\Topic $topic
      */
-    public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic)
+    public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic = null)
     {
         $this->topic = $topic;
     }
@@ -247,7 +247,7 @@ class Post
      *
      * @param CCDNUser\UserBundle\Entity\User $createdBy
      */
-    public function setCreatedBy(\CCDNUser\UserBundle\Entity\User $createdBy)
+    public function setCreatedBy(\CCDNUser\UserBundle\Entity\User $createdBy = null)
     {
         $this->createdBy = $createdBy;
     }

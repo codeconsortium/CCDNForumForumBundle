@@ -34,7 +34,7 @@ class Board
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="boards")
      * @ORM\JoinColumn(name="fk_category_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $category;
+    protected $category = null;
 
 	/**
      * @ORM\OneToMany(targetEntity="Topic", mappedBy="board", cascade={"remove"})
@@ -67,7 +67,7 @@ class Board
 	 * @ORM\OneToOne(targetEntity="Post")
 	 * @ORM\JoinColumn(name="fk_last_post_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $lastPost;
+	protected $lastPost = null;
 	
 	/**
 	 * @ORM\Column(type="integer", name="list_order_priority")
@@ -136,7 +136,7 @@ class Board
      *
      * @param CCDNForum\ForumBundle\Entity\Category $category
      */
-    public function setCategory(\CCDNForum\ForumBundle\Entity\Category $category)
+    public function setCategory(\CCDNForum\ForumBundle\Entity\Category $category = null)
     {
         $this->category = $category;
     }

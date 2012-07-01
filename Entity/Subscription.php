@@ -34,13 +34,13 @@ class Subscription
      * @ORM\ManyToOne(targetEntity="Topic", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_topic_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $topic;
+    protected $topic = null;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $ownedBy;
+	protected $ownedBy = null;
 
 	/**
 	 * @ORM\Column(type="boolean", name="is_read", nullable=false)
@@ -67,7 +67,7 @@ class Subscription
      *
      * @param CCDNForum\ForumBundle\Entity\Topic $topic
      */
-    public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic)
+    public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic = null)
     {
         $this->topic = $topic;
     }
@@ -87,7 +87,7 @@ class Subscription
      *
      * @param CCDNUser\UserBundle\Entity\User $ownedBy
      */
-    public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy)
+    public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)
     {
         $this->ownedBy = $ownedBy;
     }

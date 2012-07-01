@@ -34,7 +34,7 @@ class Flag
      * @ORM\ManyToOne(targetEntity="CCDNForum\ForumBundle\Entity\Post", inversedBy="flags", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_post_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $post;
+    protected $post = null;
 	
 	/**
 	 * @ORM\Column(type="integer")
@@ -55,7 +55,7 @@ class Flag
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="fk_flagged_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $flaggedBy;
+	protected $flaggedBy = null;
 	
 	/**
 	 * @ORM\Column(type="datetime", name="moderated_date", nullable=true)
@@ -66,7 +66,7 @@ class Flag
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="fk_moderated_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $moderatedBy;
+	protected $moderatedBy = null;
 
 	/**
      * @ORM\Column(type="text", name="moderators_note", nullable=true)
@@ -133,7 +133,7 @@ class Flag
      *
      * @param CCDNForum\ForumBundle\Entity\Post $post
      */
-    public function setPost(\CCDNForum\ForumBundle\Entity\Post $post)
+    public function setPost(\CCDNForum\ForumBundle\Entity\Post $post = null)
     {
         $this->post = $post;
     }
@@ -153,7 +153,7 @@ class Flag
      *
      * @param CCDNUser\UserBundle\Entity\User $flaggedBy
      */
-    public function setFlaggedBy(\CCDNUser\UserBundle\Entity\User $flaggedBy)
+    public function setFlaggedBy(\CCDNUser\UserBundle\Entity\User $flaggedBy = null)
     {
         $this->flaggedBy = $flaggedBy;
     }
@@ -213,7 +213,7 @@ class Flag
      *
      * @param CCDNUser\UserBundle\Entity\User $moderatedBy
      */
-    public function setModeratedBy(\CCDNUser\UserBundle\Entity\User $moderatedBy)
+    public function setModeratedBy(\CCDNUser\UserBundle\Entity\User $moderatedBy = null)
     {
         $this->moderatedBy = $moderatedBy;
     }

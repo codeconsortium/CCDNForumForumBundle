@@ -39,7 +39,7 @@ class Topic
      * @ORM\ManyToOne(targetEntity="Board", inversedBy="topics")
      * @ORM\JoinColumn(name="fk_board_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $board;
+    protected $board = null;
 	
 	/**
 	 * @ORM\Column(type="string", length=100)
@@ -51,13 +51,13 @@ class Topic
 	 * @ORM\OneToOne(targetEntity="Post", cascade={"remove"})
 	 * @ORM\JoinColumn(name="fk_first_post_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $firstPost;
+	protected $firstPost = null;
 		
 	/**
 	 * @ORM\OneToOne(targetEntity="Post", cascade={"remove"})
 	 * @ORM\JoinColumn(name="fk_last_post_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $lastPost;
+	protected $lastPost = null;
 	
 	/**
 	 * @ORM\Column(type="integer", name="cached_view_count", nullable=false)
@@ -84,7 +84,7 @@ class Topic
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_closed_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $closedBy;
+	protected $closedBy = null;
 	
 	/**
 	 *
@@ -101,7 +101,7 @@ class Topic
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_deleted_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $deletedBy;
+	protected $deletedBy = null;
 	
 	/**
 	 * @ORM\Column(type="datetime", name="stickied_date", nullable=true)
@@ -112,7 +112,7 @@ class Topic
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_stickied_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $stickiedBy;
+	protected $stickiedBy = null;
 	
 	/**
 	 * @ORM\Column(type="boolean", name="is_sticky", nullable=false)
@@ -162,7 +162,7 @@ class Topic
      *
      * @param CCDNForum\ForumBundle\Entity\Board $board
      */
-    public function setBoard(\CCDNForum\ForumBundle\Entity\Board $board)
+    public function setBoard(\CCDNForum\ForumBundle\Entity\Board $board = null)
     {
         $this->board = $board;
     }

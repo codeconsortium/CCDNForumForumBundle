@@ -37,7 +37,7 @@ class Registry
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
 	 */
-	protected $ownedBy;
+	protected $ownedBy = null;
 		
 	/**
      * @ORM\Column(type="integer", name="cached_post_count", nullable=false)
