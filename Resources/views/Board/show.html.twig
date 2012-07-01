@@ -75,7 +75,7 @@
 								{% if topic.getClosedDate %}
 								<span class="label label-important">{{ 'badge.topic.closed' |trans({}, 'CCDNForumForumBundle') }}</span>&nbsp;
 								{% endif %}
-								<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}" title="{{ topic.getTitle }}">{{ truncDot(topic.getTitle, param('ccdn_forum_forum.board.show.topic_title_truncate')) }}</a>
+								<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}" title="{{ topic.getTitle }}">{{ truncDot(topic.getTitle, param('ccdn_forum_forum.board.show.topic_title_truncate')) |title }}</a>
 								<br>
 								{% if topic.getFirstPost %}
 									{{ 'post.posted_by' | trans({}, 'CCDNForumForumBundle') }}
@@ -177,7 +177,7 @@
 							{% if topic.getClosedDate %}
 								<span class="label label-important">{{ 'badge.topic.closed' |trans({}, 'CCDNForumForumBundle') }}</span>&nbsp;
 							{% endif %}
-							<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}" title="{{ topic.getTitle }}">{{ truncDot(topic.getTitle, param('ccdn_forum_forum.board.show.topic_title_truncate')) }}</a>
+							<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}" title="{{ topic.getTitle }}">{{ truncDot(topic.getTitle, param('ccdn_forum_forum.board.show.topic_title_truncate')) | title }}</a>
 							<br>
 
 							{% if topic.getFirstPost %}
