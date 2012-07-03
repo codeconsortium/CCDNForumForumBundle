@@ -1,3 +1,7 @@
+Upgrading CCDNForum ForumBundle to 1.1.2
+=========================================
+
+Run this SQL to upgrade.
 
 ```sql
 set foreign_key_checks=0;

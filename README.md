@@ -56,21 +56,20 @@ Before installation of this bundle, you can download the [Sandbox](https://githu
 
 Documentation can be found in the `Resources/doc/index.md` file in this bundle:
 
-[Read the Documentation](index.md).
+[Read the Documentation](http://github.com/codeconsortium/CCDNForumForumBundle/blob/master/Resources/doc/index.md).
 
 ## Installation.
 
-All the installation instructions are located in [documentation](install.md).
+All the installation instructions are located in [documentation](http://github.com/codeconsortium/CCDNForumForumBundle/blob/master/Resources/doc/install.md).
 
 ## Upgrading.
 
 **Warning:**
 
-> Please take care when updating your database, check the output SQL before applying it.
-> Do NOT use the CLI to force an update, data will be lost if you do!
-> Always backup your database before updating.
+> Do NOT use the CLI doctrine/symfony console utility to force an update, data will be lost if you do!
+> Manually run the sql update in the upgrading docs. Always backup your database before updating.
 
-To upgrade to version 1.1.2 please read the [upgrading to version 1.1.2 guide](upgrading_to_1_1_2.md).
+To upgrade to version 1.1.2 please read the [upgrading to version 1.1.2 guide](http://github.com/codeconsortium/CCDNForumForumBundle/blob/v1.1.2/Resources/doc/upgrading_to_1_1_2.md).
 
 ## License.
 
