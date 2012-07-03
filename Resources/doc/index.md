@@ -22,3 +22,4 @@ For more information about translations, check [Symfony documentation](http://sy
 
 - [Installing CCDNForum ForumBundle for Symfony 2.0.11](install.md).
 - [Configuration Reference](configuration_reference.md).
+- [Upgrading to version 1.1.2](upgrading_to_1_1_2.md).

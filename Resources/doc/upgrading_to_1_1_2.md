@@ -1,5 +1,6 @@
-set foreign_key_checks=0;
 
+```sql
+set foreign_key_checks=0;
 
 ALTER TABLE CC_Forum_Board DROP FOREIGN KEY FK_CE330F5A12469DE2;
 ALTER TABLE CC_Forum_Board DROP FOREIGN KEY FK_CE330F5A2D053F64;
@@ -157,3 +158,6 @@ ALTER TABLE CC_Forum_Topic ADD CONSTRAINT FK_B25FA0645768453 FOREIGN KEY (fk_sti
 CREATE INDEX IDX_B25FA0645768453 ON CC_Forum_Topic (fk_stickied_by_user_id);
 
 set foreign_key_checks=1;
+```
+
+- [Return back to the docs index](index.md).

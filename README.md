@@ -62,6 +62,16 @@ Documentation can be found in the `Resources/doc/index.md` file in this bundle:
 
 All the installation instructions are located in [documentation](install.md).
 
+## Upgrading.
+
+**Warning:**
+
+> Please take care when updating your database, check the output SQL before applying it.
+> Do NOT use the CLI to force an update, data will be lost if you do!
+> Always backup your database before updating.
+
+To upgrade to version 1.1.2 please read the [upgrading to version 1.1.2 guide](upgrading_to_1_1_2.md).
+
 ## License.
 
 This software is licensed under the MIT license. See the complete license file in the bundle:
