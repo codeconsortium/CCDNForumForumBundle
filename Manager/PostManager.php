@@ -32,7 +32,7 @@ class PostManager extends BaseManager implements ManagerInterface
 	 * @param $post
 	 * @return $this
 	 */
-	public function reply($post)
+	public function create($post)
 	{
 
 		// insert a new row

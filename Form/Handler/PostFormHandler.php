@@ -301,15 +301,15 @@ class PostFormHandler
 	protected function onSuccess($entity)
     {
 		//
-		// INSERT topic
+		// INSERT post
 		//
 		if ($this->strategy == self::INSERT)
 		{
-			return $this->manager->reply($entity)->flushNow();
+			return $this->manager->create($entity)->flushNow();
 		}
 		
 		//
-		// UPDATE topic
+		// UPDATE post
 		//
 		if ($this->strategy == self::UPDATE)
 		{

@@ -119,7 +119,7 @@ class DraftManager extends BaseManager implements ManagerInterface
 	 * @param $post
 	 * @return $this
 	 */
-	public function insert($post)
+	public function create($post)
 	{
 		$user = $this->container->get('security.context')->getToken()->getUser();
 		
