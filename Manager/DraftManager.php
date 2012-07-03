@@ -99,20 +99,9 @@ class DraftManager extends BaseManager implements ManagerInterface
 		
 		return null;
 	}
+
 	
-	
-	
-	/**
-	 *
-	 * @access public
-	 */
-	public function flushNow()
-	{
-		parent::flushNow();		
-	}
-	
-	
-	
+		
 	/**
 	 *
 	 * @access public
