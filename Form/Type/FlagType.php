@@ -80,6 +80,7 @@ class FlagType extends AbstractType
             'csrf_field_name' => '_token',
             // a unique key to help generate the secret token
             'intention'       => 'flag_item',
+			'validation_groups' => 'flag',
 		);
 	}
 

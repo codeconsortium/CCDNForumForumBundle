@@ -99,6 +99,7 @@ class TopicType extends AbstractType
             'csrf_field_name' => '_token',
             // a unique key to help generate the secret token
             'intention'       => 'topic_item',
+			'validation_groups' => 'topic',
 		);
 	}
 	

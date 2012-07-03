@@ -41,7 +41,6 @@ class Post
 	
 	/**
      * @ORM\Column(type="text")
-	 * @Assert\NotBlank()
      */
 	protected $body;
 	

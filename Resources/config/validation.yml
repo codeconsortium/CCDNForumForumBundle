@@ -1,0 +1,22 @@
+CCDNForum\ForumBundle\Entity\Topic:
+    properties:
+        board:
+            - NotNull: { groups: [topic] }
+        title:
+            - NotBlank: { groups: [topic] }
+            - MinLength: { limit: 20, groups: [topic] }
+    
+CCDNForum\ForumBundle\Entity\Post:
+    properties:
+        body:
+            - NotBlank: {  groups: [topic, post] }
+            - MinLength: { limit: 50, groups: [topic, post] }
+    
+CCDNForum\ForumBundle\Entity\Flag:
+    properties:
+        reason:
+            - NotNull: { groups: [flag] }
+        description:
+            - NotBlank: { groups: [flag] }
+            - MinLength: { limit: 20, groups: [flag] }
+

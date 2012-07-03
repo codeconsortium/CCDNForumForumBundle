@@ -43,7 +43,6 @@ class Topic
 	
 	/**
 	 * @ORM\Column(type="string", length=100)
-	 * @Assert\NotBlank(message = "Title must not be blank!")
 	 */
 	protected $title;
 

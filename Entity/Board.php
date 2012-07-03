@@ -43,13 +43,11 @@ class Board
     
 	/**
      * @ORM\Column(type="string", length=100)
-	 * @Assert\NotBlank(message = "Board name must not be blank!")
      */
 	protected $name;
 	
 	/**
      * @ORM\Column(type="text")
-	 * @Assert\NotBlank(message = "Description must not be blank!")
      */
 	protected $description;
 

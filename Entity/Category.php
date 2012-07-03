@@ -15,6 +15,7 @@ namespace CCDNForum\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use CCDNForum\ForumBundle\Entity\Board;
 //use CCDNForum\ForumBundle\Entity\Topic;
@@ -41,7 +42,6 @@ class Category
      * @ORM\Column(type="string", length=100)
      */
 	protected $name;
-
 
 	/**
 	 * @ORM\Column(type="integer", name="list_order_priority")

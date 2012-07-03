@@ -146,6 +146,7 @@ class PostType extends AbstractType
             'csrf_field_name' => '_token',
             // a unique key to help generate the secret token
             'intention'       => 'post_item',
+			'validation_groups' => 'post',
 		);
 	}
 
