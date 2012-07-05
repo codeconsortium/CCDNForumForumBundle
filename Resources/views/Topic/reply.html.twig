@@ -9,7 +9,7 @@
 
 {% block javascripts %}
 	{{ parent() }}
-	<script src="{{ asset('bundles/ccdncomponentbbcode/js/jquery.bbcode.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/ccdncomponentbbcode/js/jquery.bbeditor.js') }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block title %}{{ 'title.topic.reply' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') }}{% endblock %}
@@ -58,7 +58,7 @@
 					{{ form_label(form.body, null, { 'label': 'form.label.post.body'| trans({}, 'CCDNForumForumBundle') }) }}
 					<div class="controls row-fluid">
 						{{ form_errors(form.body) }}
-			{#			{% form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' %}#}
+						{% form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' %}
 						{{ form_widget(form.body) }}
 					</div>
 				</div>
