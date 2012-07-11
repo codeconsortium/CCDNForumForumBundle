@@ -4,7 +4,7 @@ CCDNForum\ForumBundle\Entity\Topic:
             - NotNull: { groups: [topic] }
         title:
             - NotBlank: { groups: [topic] }
-            - MinLength: { limit: 20, groups: [topic] }
+            - MinLength: { limit: 10, groups: [topic] }
     
 CCDNForum\ForumBundle\Entity\Post:
     properties:
@@ -18,5 +18,5 @@ CCDNForum\ForumBundle\Entity\Flag:
             - NotNull: { groups: [flag] }
         description:
             - NotBlank: { groups: [flag] }
-            - MinLength: { limit: 20, groups: [flag] }
+            - MinLength: { limit: 10, groups: [flag] }
 

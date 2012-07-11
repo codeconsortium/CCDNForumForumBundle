@@ -9,7 +9,7 @@
 
 {% block javascripts %}
 	{{ parent() }}
-	<script src="{{ asset('bundles/ccdncomponentbbcode/js/jquery.bbeditor.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/ccdncomponentbbcode/js/jquery.bbeditor.js') }}" type="text/javascript"></script>	
 {% endblock %}
 
 {% block title %}{{ 'title.topic.create' | trans({'%board_name%': board.getName }, 'CCDNForumForumBundle') }}{% endblock %}
