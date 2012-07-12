@@ -30,13 +30,17 @@
 
 	{% spaceless %}
 		<h2>{{ board.name }}.</h2>
+		
+		<br>
 
-		<div class="well">
-			{{ board.description }}
-			<hr>
-			<span class="badge badge-info">{{ 'board.topic_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ board.cachedTopicCount }}</span>&nbsp;
-			<span class="badge badge-info">{{ 'board.post_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ board.cachedPostCount }}</span>
-		</div>
+		{{ board.description }}
+		
+		<br><br>
+
+		<span class="badge badge-info">{{ 'board.topic_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ board.cachedTopicCount }}</span>&nbsp;
+		<span class="badge badge-info">{{ 'board.post_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ board.cachedPostCount }}</span>
+
+		<hr>
 	{% endspaceless %}
 
 	{% if sticky_topics is not empty %}
