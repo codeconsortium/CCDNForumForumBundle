@@ -38,50 +38,48 @@
 
 	<h2>{{ 'title.topic.reply' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') }}</h2>
 
-	<div class="well">
-		{% form_theme form param('ccdn_forum_forum.topic.reply.form_theme') %}
-		
-		<form action="{{ path('cc_forum_topic_reply', { 'topic_id': topic.id } ) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-			<fieldset>
-				
-				{{ form_errors(form) }}
-				
-				<div class="control-group"><div class="controls row-fluid">{{ form_row(form._token) }}</div></div>
+	{% form_theme form param('ccdn_forum_forum.topic.reply.form_theme') %}
+	
+	<form action="{{ path('cc_forum_topic_reply', { 'topic_id': topic.id } ) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+		<fieldset>
+			
+			{{ form_errors(form) }}
+			
+			<div class="control-group"><div class="controls row-fluid">{{ form_row(form._token) }}</div></div>
 
-				<div class="control-group">
-					<label for="topic_title" class="control-label">{{ 'form.label.topic.title' | trans({}, 'CCDNForumForumBundle') }}</label>
-					<div class="controls row-fluid">
-						<input type="text" id="topic_title" value="{{ topic.getTitle }}" disabled class="input-xlarge span8">
-					</div>
+			<div class="control-group">
+				<label for="topic_title" class="control-label">{{ 'form.label.topic.title' | trans({}, 'CCDNForumForumBundle') }}</label>
+				<div class="controls row-fluid">
+					<input type="text" id="topic_title" value="{{ topic.getTitle }}" disabled class="input-xlarge span8">
 				</div>
-			
-				<div class="control-group{{ (form.body.vars.errors|length > 0) ? ' error': '' }}">
-					{{ form_label(form.body, null, { 'label': 'form.label.post.body'| trans({}, 'CCDNForumForumBundle') }) }}
-					<div class="controls row-fluid">
-						{{ form_errors(form.body) }}
-						{% form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' %}
-						{{ form_widget(form.body) }}
-					</div>
+			</div>
+		
+			<div class="control-group{{ (form.body.vars.errors|length > 0) ? ' error': '' }}">
+				{{ form_label(form.body, null, { 'label': 'form.label.post.body'| trans({}, 'CCDNForumForumBundle') }) }}
+				<div class="controls row-fluid">
+					{{ form_errors(form.body) }}
+					{% form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' %}
+					{{ form_widget(form.body) }}
 				</div>
-			
-				<div class="control-group{{ (form.attachment.vars.errors|length > 0) ? ' error': '' }}">
-					{{ form_label(form.attachment, null, { 'label': 'form.label.post.attachment'| trans({}, 'CCDNForumForumBundle')}) }}
-					<div class="controls row-fluid">
-						{{ form_errors(form.attachment) }}
-						{{ form_widget(form.attachment) }}
-						&nbsp;<a target="_blank" href="{{ path('cc_attachment_index') }}">{{ 'link.attachments.manager' | trans({}, 'CCDNComponentAttachmentBundle') }}</a>
-						&nbsp;<a target="_blank" href="{{ path('cc_attachment_upload') }}">{{ 'link.attachments.upload' | trans({}, 'CCDNComponentAttachmentBundle') }}</a>
-					</div>
+			</div>
+		
+			<div class="control-group{{ (form.attachment.vars.errors|length > 0) ? ' error': '' }}">
+				{{ form_label(form.attachment, null, { 'label': 'form.label.post.attachment'| trans({}, 'CCDNForumForumBundle')}) }}
+				<div class="controls row-fluid">
+					{{ form_errors(form.attachment) }}
+					{{ form_widget(form.attachment) }}
+					&nbsp;<a target="_blank" href="{{ path('cc_attachment_index') }}">{{ 'link.attachments.manager' | trans({}, 'CCDNComponentAttachmentBundle') }}</a>
+					&nbsp;<a target="_blank" href="{{ path('cc_attachment_upload') }}">{{ 'link.attachments.upload' | trans({}, 'CCDNComponentAttachmentBundle') }}</a>
 				</div>
-			
-				<div class="form-actions">
-					<input type="submit" class="btn btn-primary" value="{{ 'form.button.topic.reply' | trans({}, 'CCDNForumForumBundle') }}" name="submit_post">						
-					<input type="submit" class="btn" value="{{ 'form.button.post.preview' | trans({}, 'CCDNForumForumBundle') }}" name="submit_preview">
-					<input type="submit" class="btn" value="{{ 'form.button.post.save_draft' | trans({}, 'CCDNForumForumBundle') }}" name="submit_draft">
-				</div>
-			</fieldset>
-		</form>
-	</div>
+			</div>
+		
+			<div class="form-actions">
+				<input type="submit" class="btn btn-primary" value="{{ 'form.button.topic.reply' | trans({}, 'CCDNForumForumBundle') }}" name="submit_post">						
+				<input type="submit" class="btn" value="{{ 'form.button.post.preview' | trans({}, 'CCDNForumForumBundle') }}" name="submit_preview">
+				<input type="submit" class="btn" value="{{ 'form.button.post.save_draft' | trans({}, 'CCDNForumForumBundle') }}" name="submit_draft">
+			</div>
+		</fieldset>
+	</form>
 
 	{% if preview is not empty %}
 		{% include "CCDNForumForumBundle:Post:post_preview.html.twig" with {'post': preview} %}
