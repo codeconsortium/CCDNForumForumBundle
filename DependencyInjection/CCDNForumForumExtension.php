@@ -29,7 +29,17 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class CCDNForumForumExtension extends Extension
 {
-
+	
+	
+	
+    /**
+     * {@inheritDoc}
+     */
+	public function getAlias()
+	{
+		return 'ccdn_forum_forum';
+	}
+	
 
 
     /**
@@ -59,16 +69,6 @@ class CCDNForumForumExtension extends Extension
 		$this->getSubscriptionSection($container, $config);
 		$this->getTranscriptSection($container, $config);
     }
-	
-	
-	
-    /**
-     * {@inheritDoc}
-     */
-	public function getAlias()
-	{
-		return 'ccdn_forum_forum';
-	}
 	
 	
 	
