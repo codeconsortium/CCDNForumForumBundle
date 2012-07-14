@@ -2,90 +2,92 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css">
-	<link href="{{ asset('bundles/ccdncomponentcommon/css/speech_bubble.css') }}" rel="stylesheet" type="text/css">
-	<link href="{{ asset('bundles/ccdncomponentbbcode/css/bbcode.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{- asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') -}}" rel="stylesheet" type="text/css">
+	<link href="{{- asset('bundles/ccdncomponentcommon/css/speech_bubble.css') -}}" rel="stylesheet" type="text/css">
+	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
-	<script src="{{ asset('bundles/ccdncomponentbbcode/js/jquery.bbeditor.js') }}" type="text/javascript"></script>
+	<script src="{{- asset('bundles/ccdncomponentbbcode/js/jquery.bbeditor.js') -}}" type="text/javascript"></script>
 {% endblock %}
 
-{% block title %}{{ 'title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') }}{% endblock %}
+{% block title %}{{- 'title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
 
-	{% include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' %}
+	{%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
 
 {% endblock %}
 
 {% block sidebar_actions %}
 	{{ parent() }}
 	
-	{% include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' %}
+	{%- include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' -%}
 	
 {% endblock %}
 
 
 {% block body %}
 
-{% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
+	{%- spaceless -%}
+	
+	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
 
-	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
 	<h2>{{- 'title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}</h2>
 
-	{%- spaceless -%}
-		{%- form_theme form param('ccdn_forum_forum.post.edit_post.form_theme') -%}
-		<form action="{{- path('cc_forum_post_edit', { 'post_id': post.id } ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-			<fieldset>
-			
-				{{- form_errors(form) -}}
-			
-				<div class="control-group"><div class="controls row-fluid">{{- form_row(form._token) -}}</div></div>
+	{%- form_theme form param('ccdn_forum_forum.post.edit_post.form_theme') -%}
+	<form action="{{- path('cc_forum_post_edit', { 'post_id': post.id } ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+		<fieldset>
 		
-				<div class="control-group">
-					<label for="topic_title" class="control-label">{{- 'form.label.topic.title' | trans({}, 'CCDNForumForumBundle') -}}</label>
-					<div class="controls row-fluid">
-						<input type="text" id="topic_title" value="{{- post.getTopic.getTitle -}}" disabled class="input-xlarge span8">
-					</div>
-				</div>
-
-				<div class="control-group{{- (form.body.vars.errors|length > 0) ? ' error': '' -}}">
-					{{- form_label(form.body, null, { 'label': 'form.label.post.body' | trans({}, 'CCDNForumForumBundle') }) -}}
-					<div class="controls row-fluid">
-						{{- form_errors(form.body) -}}
-						{%- form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' -%}
-						{{- form_widget(form.body) -}}
-					</div>
-				</div>
+			{{- form_errors(form) -}}
 		
-				<div class="control-group{{- (form.attachment.vars.errors|length > 0) ? ' error': '' -}}">
-					{{- form_label(form.attachment, null, { 'label': 'form.label.post.attachment'| trans({}, 'CCDNForumForumBundle')}) -}}</td>
-					<div class="controls row-fluid">
-						{{- form_errors(form.attachment) -}}
-						{{- form_widget(form.attachment) -}}
-						&nbsp;<a target="_blank" href="{{- path('cc_attachment_index') -}}">{{- 'link.attachments.manager' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
-						&nbsp;<a target="_blank" href="{{- path('cc_attachment_upload') -}}">{{- 'link.attachments.upload' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
-					</div>
-				</div>
-		
-				<div class="form-actions">
-					<input type="submit" class="btn btn-primary" value="{{- 'form.button.post.edit' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_post">&nbsp;
-					<input type="submit" class="btn" value="{{- 'form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">
-				</div>
-			</fieldset>
-		</form>
-	{%- endspaceless -%}
+			<div class="control-group"><div class="controls row-fluid">{{- form_row(form._token) -}}</div></div>
 	
-	{% if preview is not empty %}
-		{% include "CCDNForumForumBundle:Post:post_preview.html.twig" %}
-	{% endif %}
+			<div class="control-group">
+				<label for="topic_title" class="control-label">{{- 'form.label.topic.title' | trans({}, 'CCDNForumForumBundle') -}}</label>
+				<div class="controls row-fluid">
+					<input type="text" id="topic_title" value="{{- post.getTopic.getTitle -}}" disabled class="input-xlarge span8">
+				</div>
+			</div>
 
-	{% include 'CCDNForumForumBundle:Topic:transcript.html.twig' with {'topic': topic } %}
+			<div class="control-group{{- (form.body.vars.errors|length > 0) ? ' error': '' -}}">
+				{{- form_label(form.body, null, { 'label': 'form.label.post.body' | trans({}, 'CCDNForumForumBundle') }) -}}
+				<div class="controls row-fluid">
+					{{- form_errors(form.body) -}}
+					{%- form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' -%}
+					{{- form_widget(form.body) -}}
+				</div>
+			</div>
+	
+			<div class="control-group{{- (form.attachment.vars.errors|length > 0) ? ' error': '' -}}">
+				{{- form_label(form.attachment, null, { 'label': 'form.label.post.attachment'| trans({}, 'CCDNForumForumBundle')}) -}}</td>
+				<div class="controls row-fluid">
+					{{- form_errors(form.attachment) -}}
+					{{- form_widget(form.attachment) -}}
+					&nbsp;<a target="_blank" href="{{- path('cc_attachment_index') -}}">{{- 'link.attachments.manager' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
+					&nbsp;<a target="_blank" href="{{- path('cc_attachment_upload') -}}">{{- 'link.attachments.upload' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
+				</div>
+			</div>
+	
+			<div class="form-actions">
+				<input type="submit" class="btn btn-primary" value="{{- 'form.button.post.edit' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_post">&nbsp;
+				<input type="submit" class="btn" value="{{- 'form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">
+			</div>
+		</fieldset>
+	</form>
+	
+	{%- if preview is not empty -%}
+		{%- include "CCDNForumForumBundle:Post:post_preview.html.twig" -%}
+	{%- endif -%}
 
-	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+	{%- include 'CCDNForumForumBundle:Topic:transcript.html.twig' with {'topic': topic } -%}
+
+	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
+
+	{%- endspaceless -%}
 
 {% endblock %}

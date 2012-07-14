@@ -2,50 +2,52 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{- asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
-{% block title %}{{ page_title }}{% endblock %}
+{% block title %}{{- page_title -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
 
-	{% include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' %}
+	{%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
 	
 {% endblock %}
 
 {% block sidebar_actions %}
 	{{ parent() }}
 	
-	{% include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' %}
-	
+	{%- include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' -%}
+
 {% endblock %}
 
 
 {% block body %}
 
-	{% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
+	{%- spaceless -%}
 
-	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
+
+	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
 	<h2>{{- page_title -}}</h2>
 
-	{%- spaceless -%}
-		<div class="form-confirmation">
-		
-			<div class="form-question">
-				<h3>{{- confirmation_message | trans({}, 'CCDNForumForumBundle') -}}</h3>
-			</div>
-		
-			<div class="form-answer">
-				<a class="btn btn-danger" href="{{- path('cc_forum_post_delete_confirmed', {'post_id': post.id }) -}}">{{- 'post.delete.confirm_yes' | trans({}, 'CCDNForumForumBundle') -}}</a>
-				&nbsp;&nbsp;&nbsp;
-				<a class="btn" href="{{- path('cc_forum_topic_show', {'topic_id': topic.id }) -}}">{{- 'post.delete.confirm_no' | trans({}, 'CCDNForumForumBundle') -}}</a>
-			</div>
-		
+	<div class="form-confirmation">
+	
+		<div class="form-question">
+			<h3>{{- confirmation_message | trans({}, 'CCDNForumForumBundle') -}}</h3>
 		</div>
-	{%- endspaceless -%}
+	
+		<div class="form-answer">
+			<a class="btn btn-danger" href="{{- path('cc_forum_post_delete_confirmed', {'post_id': post.id }) -}}">{{- 'post.delete.confirm_yes' | trans({}, 'CCDNForumForumBundle') -}}</a>
+			&nbsp;&nbsp;&nbsp;
+			<a class="btn" href="{{- path('cc_forum_topic_show', {'topic_id': topic.id }) -}}">{{- 'post.delete.confirm_no' | trans({}, 'CCDNForumForumBundle') -}}</a>
+		</div>
+	
+	</div>
 
-	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
+
+	{%- endspaceless -%}
 
 {% endblock %}

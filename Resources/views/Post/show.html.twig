@@ -2,93 +2,94 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css">
-	<link href="{{ asset('bundles/ccdncomponentcommon/css/speech_bubble.css') }}" rel="stylesheet" type="text/css">
-	<link href="{{ asset('bundles/ccdncomponentbbcode/css/bbcode.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{- asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') -}}" rel="stylesheet" type="text/css">
+	<link href="{{- asset('bundles/ccdncomponentcommon/css/speech_bubble.css') -}}" rel="stylesheet" type="text/css">
+	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
-{% block title %}{{ 'title.post.show' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle |capitalize }, 'CCDNForumForumBundle') }}{% endblock %}
+{% block title %}{{- 'title.post.show' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle |capitalize }, 'CCDNForumForumBundle') -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
 
-	{% include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' %}
+	{%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
 	
 {% endblock %}
 
 {% block sidebar_actions %}
 	{{ parent() }}
 	
-	{% include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' %}
+	{%- include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' -%}
 	
 {% endblock %}
 
 
 {% block body %}
 
-	{% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
+	{%- spaceless -%}
 
-	{% if topic.closedDate %}
+	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
+
+	{%- if topic.closedDate -%}
 	<div class="alert alert-error">
-		{{ 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') }}
-		{% if topic.getClosedBy %}<a href="{{ path(user_profile_route, {'user_id': topic.getClosedBy.getId } ) }}">{{ topic.getClosedBy.getUsername }}</a>{% else %}Unknown{% endif %}
-		{{ topic.getClosedDate |date(param('ccdn_forum_forum.topic.show.topic_closed_datetime_format')) }}
+		{{- 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}
+		{%- if topic.getClosedBy -%}<a href="{{- path(user_profile_route, {'user_id': topic.getClosedBy.getId } ) -}}">{{- topic.getClosedBy.getUsername -}}</a>{%- else -%}Unknown{%- endif -%}
+		{{- topic.getClosedDate |date(param('ccdn_forum_forum.topic.show.topic_closed_datetime_format')) -}}
 	</div>
-	{% endif %}
+	{%- endif -%}
 
-	{% if topic.deletedDate %}
+	{%- if topic.deletedDate -%}
 	<div class="alert alert-error">
-		{{ 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') }}
-		{% if topic.getDeletedBy %}<a href="{{ path(user_profile_route, {'user_id': topic.getDeletedBy.getId } ) }}">{{ topic.getDeletedBy.getUsername }}</a>{% else %}Unknown{% endif %}
-		{{ topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) }}
+		{{- 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}
+		{%- if topic.getDeletedBy -%}<a href="{{- path(user_profile_route, {'user_id': topic.getDeletedBy.getId }) -}}">{{- topic.getDeletedBy.getUsername -}}</a>{%- else -%}Unknown{%- endif -%}
+		{{- topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) -}}
 	</div>
-	{% endif %}
+	{%- endif -%}
 	
-	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 	
-	{% spaceless %}	
-		<h2>{{ truncDot(topic.getTitle |capitalize, 70) }}</h2>
-		
-		<br>	
-
-		<span class="badge badge-info">{{ 'topic.reply_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ topic.cachedReplyCount }}</span>&nbsp;
-		<span class="badge badge-info">{{ 'topic.view_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ topic.cachedViewCount }}</span>&nbsp;
-
-		{% if subscription_count is defined %}
-			<span class="badge badge-info">{{ 'topic.subscription_count' |trans({}, 'CCDNForumForumBundle') }}&nbsp;{{ subscription_count }}</span>&nbsp;
-		{% endif %}
-		
-		{% if topic.isSticky %}
-		<span class="label label-important">
-			<i class="icon-white icon-bullhorn"></i>
-			{{ 'topic.stickied_by' | trans({}, 'CCDNForumForumBundle') }}
-			{% if topic.getStickiedBy %}{{ topic.getStickiedBy.getUsername }}{% else %}Unknown{% endif %}
-			{{ topic.getStickiedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) }}
-		</span>&nbsp;
-		{% endif %}
-
-		{% if topic.isClosed %}
-		<span class="label label-important">
-			<i class="icon-white icon-lock"></i>
-			{{ 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') }}
-			{% if topic.getClosedBy %}{{ topic.getClosedBy.getUsername }}{% else %}Unknown{% endif %}
-			{{ topic.getClosedDate |date(param('ccdn_forum_forum.topic.show.topic_closed_datetime_format')) }}
-		</span>&nbsp;
-		{% endif %}
-
-		{% if topic.isDeleted %}
-		<span class="label label-important">
-			<i class="icon-white icon-trash"></i>
-			{{ 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') }}
-			{% if topic.getDeletedBy %}{{ topic.getDeletedBy.getUsername }}{% else %}Unknown{% endif %}
-			{{ topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) }}
-		</span>&nbsp;
-		{% endif %}
-
-	{% endspaceless %}
+	<h2>{{- truncDot(topic.getTitle |capitalize, 70) -}}</h2>
 	
-	{% include "CCDNForumForumBundle:Post:item_post.html.twig" %}
+	<br>	
 
-	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+	<span class="badge badge-info">{{- 'topic.reply_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- topic.cachedReplyCount -}}</span>&nbsp;
+	<span class="badge badge-info">{{- 'topic.view_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- topic.cachedViewCount -}}</span>&nbsp;
+
+	{%- if subscription_count is defined -%}
+		<span class="badge badge-info">{{- 'topic.subscription_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- subscription_count -}}</span>&nbsp;
+	{%- endif -%}
+	
+	{%- if topic.isSticky -%}
+	<span class="label label-important">
+		<i class="icon-white icon-bullhorn"></i>
+		{{- 'topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}
+		{%- if topic.getStickiedBy -%}{{- topic.getStickiedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}
+		{{- topic.getStickiedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) -}}
+	</span>&nbsp;
+	{%- endif -%}
+
+	{%- if topic.isClosed -%}
+	<span class="label label-important">
+		<i class="icon-white icon-lock"></i>
+		{{- 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}
+		{%- if topic.getClosedBy -%}{{- topic.getClosedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}
+		{{- topic.getClosedDate |date(param('ccdn_forum_forum.topic.show.topic_closed_datetime_format')) -}}
+	</span>&nbsp;
+	{%- endif -%}
+
+	{%- if topic.isDeleted -%}
+	<span class="label label-important">
+		<i class="icon-white icon-trash"></i>
+		{{- 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}
+		{%- if topic.getDeletedBy -%}{{- topic.getDeletedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}
+		{{- topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) -}}
+	</span>&nbsp;
+	{%- endif -%}
+	
+	{%- include "CCDNForumForumBundle:Post:item_post.html.twig" -%}
+
+	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
+
+	{%- endspaceless -%}
 
 {% endblock %}

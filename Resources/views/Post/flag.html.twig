@@ -2,70 +2,72 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css">
-	<link href="{{ asset('bundles/ccdncomponentcommon/css/speech_bubble.css') }}" rel="stylesheet" type="text/css">
-	<link href="{{ asset('bundles/ccdncomponentbbcode/css/bbcode.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{- asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') -}}" rel="stylesheet" type="text/css">
+	<link href="{{- asset('bundles/ccdncomponentcommon/css/speech_bubble.css') -}}" rel="stylesheet" type="text/css">
+	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
-{% block title %}{{ 'title.flag.post' | trans({'%post_id%': post.id, '%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') }}{% endblock %}
+{% block title %}{{- 'title.flag.post' | trans({'%post_id%': post.id, '%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
 
-	{% include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' %}
+	{%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
 	
 {% endblock %}
 
 {% block sidebar_actions %}
 	{{ parent() }}
 	
-	{% include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' %}
+	{%- include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' -%}
 	
 {% endblock %}
 
 
 {% block body %}
 
-	{% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
+	{%- spaceless -%}
+	
+	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
 
-	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
 	<h2>{{- 'title.flag.post' | trans({'%post_id%': post.id, '%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}</h2>
 
-	{%- spaceless -%}
-		{%- form_theme form param('ccdn_forum_forum.post.flag.form_theme') -%}
-		<form action="{{- path('cc_forum_post_flag', { 'post_id': post.id } ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-			<fieldset>
-			
-				{{- form_errors(form) -}}
-			
-				<div class="control-group"><div class="controls row-fluid">{{- form_row(form._token) -}}</div></div>
+	{%- form_theme form param('ccdn_forum_forum.post.flag.form_theme') -%}
+	<form action="{{- path('cc_forum_post_flag', { 'post_id': post.id } ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+		<fieldset>
 		
-				<div class="control-group{{- (form.reason.vars.errors|length > 0) ? ' error': '' -}}">
-					{{- form_label(form.reason, null, { 'label': 'form.label.post.flag.reason'| trans({}, 'CCDNForumForumBundle') }) -}}
-					<div class="controls row-fluid">
-						{{- form_errors(form.reason) -}}
-						{{- form_widget(form.reason) -}}
-					</div>
-				</div>
-			
-				<div class="control-group{{- (form.description.vars.errors|length > 0) ? ' error': '' -}}">
-					{{- form_label(form.description, null, { 'label': 'form.label.post.flag.description'| trans({}, 'CCDNForumForumBundle') }) -}}
-					<div class="controls row-fluid">
-						{{- form_errors(form.description) -}}
-						{{- form_widget(form.description) -}}
-					</div>
-				</div>
-			
-				<div class="form-actions">
-					<input type="submit" class="btn btn-danger" value="{{- 'form.button.post.flag.submit' | trans({}, 'CCDNForumForumBundle') -}}">
-				</div>
-			</fieldset>
-		</form>
-	{%- endspaceless -%}
+			{{- form_errors(form) -}}
+		
+			<div class="control-group"><div class="controls row-fluid">{{- form_row(form._token) -}}</div></div>
 	
-	{% include "CCDNForumForumBundle:Post:item_post.html.twig" %}
+			<div class="control-group{{- (form.reason.vars.errors|length > 0) ? ' error': '' -}}">
+				{{- form_label(form.reason, null, { 'label': 'form.label.post.flag.reason'| trans({}, 'CCDNForumForumBundle') }) -}}
+				<div class="controls row-fluid">
+					{{- form_errors(form.reason) -}}
+					{{- form_widget(form.reason) -}}
+				</div>
+			</div>
+		
+			<div class="control-group{{- (form.description.vars.errors|length > 0) ? ' error': '' -}}">
+				{{- form_label(form.description, null, { 'label': 'form.label.post.flag.description'| trans({}, 'CCDNForumForumBundle') }) -}}
+				<div class="controls row-fluid">
+					{{- form_errors(form.description) -}}
+					{{- form_widget(form.description) -}}
+				</div>
+			</div>
+		
+			<div class="form-actions">
+				<input type="submit" class="btn btn-danger" value="{{- 'form.button.post.flag.submit' | trans({}, 'CCDNForumForumBundle') -}}">
+			</div>
+		</fieldset>
+	</form>
+	
+	{%- include "CCDNForumForumBundle:Post:item_post.html.twig" -%}
 
-	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
+
+	{%- endspaceless -%}
 
 {% endblock %}
