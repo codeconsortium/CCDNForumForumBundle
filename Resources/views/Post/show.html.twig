@@ -6,7 +6,7 @@
 	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
-{% block title %}{{- 'title.post.show' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle |capitalize }, 'CCDNForumForumBundle') -}}{% endblock %}
+{% block title %}{{- truncDot('title.post.show' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle |capitalize }, 'CCDNForumForumBundle'), param('ccdn_forum_forum.seo.title_length')) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}

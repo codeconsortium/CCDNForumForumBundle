@@ -5,7 +5,7 @@
 	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
-{% block title %}{{- 'title.drafts' | trans({}, 'CCDNForumForumBundle' ) -}}{% endblock %}
+{% block title %}{{- truncDot('title.drafts' | trans({}, 'CCDNForumForumBundle'), param('ccdn_forum_forum.seo.title_length')) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}

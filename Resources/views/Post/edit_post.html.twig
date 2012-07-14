@@ -11,7 +11,7 @@
 	<script src="{{- asset('bundles/ccdncomponentbbcode/js/jquery.bbeditor.js') -}}" type="text/javascript"></script>
 {% endblock %}
 
-{% block title %}{{- 'title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}{% endblock %}
+{% block title %}{{- truncDot('title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle'), param('ccdn_forum_forum.seo.title_length')) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}

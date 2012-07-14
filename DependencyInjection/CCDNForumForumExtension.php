@@ -49,6 +49,7 @@ class CCDNForumForumExtension extends Extension
 		
 		$container->setParameter('ccdn_forum_forum.user.profile_route', $config['user']['profile_route']);
 		
+		$this->getSEOSection($container, $config);
 		$this->getCategorySection($container, $config);
 		$this->getBoardSection($container, $config);
 		$this->getTopicSection($container, $config);
@@ -69,6 +70,18 @@ class CCDNForumForumExtension extends Extension
 		return 'ccdn_forum_forum';
 	}
 	
+	
+	
+	/**
+	 *
+	 * @access protected
+	 * @param $container, $config
+	 */
+	protected function getSEOSection($container, $config)
+	{
+	    $container->setParameter('ccdn_forum_forum.seo.title_length', $config['seo']['title_length']);
+	}
+
 
 
 	/**

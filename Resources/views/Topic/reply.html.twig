@@ -12,7 +12,7 @@
 	<script src="{{- asset('bundles/ccdncomponentbbcode/js/jquery.bbeditor.js') -}}" type="text/javascript"></script>
 {% endblock %}
 
-{% block title %}{{- 'title.topic.reply' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}{% endblock %}
+{% block title %}{{- truncDot('title.topic.reply' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle'), param('ccdn_forum_forum.seo.title_length')) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}

@@ -6,7 +6,7 @@
 	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
-{% block title %}{{- 'title.flag.post' | trans({'%post_id%': post.id, '%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}{% endblock %}
+{% block title %}{{- truncDot('title.flag.post' | trans({'%post_id%': post.id, '%topic_title%': topic.getTitle }, 'CCDNForumForumBundle'), param('ccdn_forum_forum.seo.title_length')) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
