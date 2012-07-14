@@ -300,7 +300,7 @@ class TopicController extends ContainerAware
 				
 				$page =  $pageCounter ? ceil($pageCounter / $posts_per_topic_page) : 1;
 				
-				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.topic.reply.success', array('%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle'));
+				$this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('flash.topic.reply.success', array('%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle'));
 				
 				return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show_paginated_anchored', 
 					array('topic_id' => $topic_id, 'page' => $page, 'post_id' => $topic->getLastPost()->getId()) ));
