@@ -78,7 +78,7 @@
 					{{- draft.getCreatedDate |date(param('ccdn_forum_forum.draft.list.creation_datetime_format')) -}}
 				</td>
 				<td class="center">
-					<a class="btn btn-danger" href="{{- path('cc_forum_draft_delete', {'draftId': draft.getId }) -}}">{{- 'link.draft.delete' | trans({}, 'CCDNForumForumBundle') -}}</a>
+					<a class="btn btn-danger" href="{{- path('cc_forum_draft_delete', {'draftId': draft.getId }) -}}">{{- 'link.draft.delete' | trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
 					<a class="btn btn-primary" href="{{- path('cc_forum_draft_publish', {'draftId': draft.getId }) -}}">{{- 'link.draft.publish' | trans({}, 'CCDNForumForumBundle') -}}</a>
 				</td>
 			</tr>
