@@ -140,6 +140,7 @@ post.user.post_count: %post_count% Posts
 post.is_deleted: This post has been removed.
 
 # form
+form.field.required: 'This field is required'
 form.label.topic.title: 'Title: '
 form.label.topic.board: 'Board:'
 form.label.post.body: 'Body: '

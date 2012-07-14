@@ -3,7 +3,7 @@
 		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ 'control-label'}) -%}
 	    <label for="{{- id -}}" {{ block('widget_attributes') -}}>{{- label -}}
 		{%- if required -%}
-			<span style="color:#f00;" title="{{- 'form.field.required' |trans({}, 'CCDNUserUserBundle') -}}">*</span>
+			<span style="color:#f00;" title="{{- 'form.field.required' |trans({}, 'CCDNForumForumBundle') -}}">*</span>
 		{%- endif -%}
 		</label>
 	{%- endspaceless -%}
