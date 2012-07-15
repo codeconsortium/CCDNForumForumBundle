@@ -91,8 +91,8 @@
 			{{ pagerfanta(pager, 'twitter_bootstrap', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) }}
 			</div>		
 		{%- endif -%}
-		<div class="pull-right" style="display:inline-block;vertical-align:top;margin-top:0px;height:50px;padding-top:27px;">
-			<a class="btn btn-large btn-danger" rel="nofollow" href="{{- path('cc_forum_topic_reply', {'topic_id': topic.getId }) -}}"><i class="icon-white icon-comment"></i>&nbsp;{{- 'link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}</a>
+		<div class="pull-right" style="display:inline-block;height:36px;line-height:18px;margin:18px 0;">
+			<a class="btn btn-large btn-danger" style="vertical-align:middle;margin:0 0 9px 25px;" rel="nofollow" href="{{- path('cc_forum_topic_reply', {'topic_id': topic.getId }) -}}"><i class="icon-white icon-comment"></i>&nbsp;{{- 'link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}</a>
 		</div>
 	</div>
 

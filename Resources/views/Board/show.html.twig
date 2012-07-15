@@ -128,12 +128,12 @@
 
 	<div class="btn-toolbar" style="display:block;clear:both;height:75px;vertical-align:top;margin-top:0px;">
 		{%- if pager.haveToPaginate -%}
-			<div class="pull-left" style="display:inline-block;vertical-align:top;margin-top:0px;">
+			<div class="pull-left" style="display:inline-block;">
 			{{- pagerfanta(pager, 'twitter_bootstrap', {'routeName':'cc_forum_board_show_paginated', 'routeParams':{'board_id':board.getId}} ) -}}
 			</div>
 		{%- endif -%}
-		<div class="pull-right" style="display:inline-block;vertical-align:top;margin-top:0px;height:50px;padding-top:27px;">
-			<a class="btn btn-large btn-danger" rel="nofollow" href="{{- path('cc_forum_topic_create', {'board_id': board.getId }) -}}"><i class="icon-white icon-asterisk"></i>&nbsp;{{- 'link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}</a>		
+		<div class="pull-right" style="display:inline-block;height:36px;line-height:18px;margin:18px 0;">
+			<a class="btn btn-large btn-danger" style="vertical-align:middle;margin:0 0 9px 25px;" rel="nofollow" href="{{- path('cc_forum_topic_create', {'board_id': board.getId }) -}}"><i class="icon-white icon-asterisk"></i>&nbsp;{{- 'link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}</a>		
 		</div>
 	</div>
 
