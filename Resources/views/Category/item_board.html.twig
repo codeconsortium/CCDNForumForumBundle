@@ -4,7 +4,7 @@
 		<img class="icon32" width="32" height="32" src="{{- asset('bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_board.png') -}}" alt="icon">
 	</td>
 	<td class="left">
-		<h4><a href="{{- path('cc_forum_board_show', {'board_id': board.getId }) -}}">{{- board.getName -}}</a></h4>
+		<h4><abbr title="{{- board.getName -}}"><a href="{{- path('cc_forum_board_show', {'board_id': board.getId }) -}}">{{- truncDot(board.getName, param('ccdn_forum_forum.seo.title_length')) -}}</a></abbr></h4>
 		<span class="common_body">
 			{{- BBCode(board.getDescription | raw) | raw -}}	
 		</span>

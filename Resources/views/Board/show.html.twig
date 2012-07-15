@@ -29,7 +29,7 @@
 
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
-	<h2>{{- board.name -}}.</h2>
+	<h2><abbr title="{{- board.name -}}">{{- truncDot(board.name, param('ccdn_forum_forum.seo.title_length')) -}}.</abbr></h2>
 	
 	<br>
 
@@ -77,7 +77,7 @@
 							{%- if topic.getClosedDate -%}
 							<span class="label label-important">{{- 'badge.topic.closed' |trans({}, 'CCDNForumForumBundle') -}}</span>&nbsp;
 							{%- endif -%}
-							<a href="{{- path('cc_forum_topic_show', {'topic_id': topic.getId }) -}}" title="{{- topic.getTitle -}}">{{- truncDot(topic.getTitle, param('ccdn_forum_forum.board.show.topic_title_truncate')) |title -}}</a>
+							<abbr title="{{- topic.getTitle -}}"><a href="{{- path('cc_forum_topic_show', {'topic_id': topic.getId }) -}}">{{- truncDot(topic.getTitle, param('ccdn_forum_forum.board.show.topic_title_truncate')) |title -}}</a></abbr>
 							<br>
 							{%- if topic.getFirstPost -%}
 								{{- 'post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
@@ -133,7 +133,7 @@
 			</div>
 		{%- endif -%}
 		<div class="pull-right" style="display:inline-block;vertical-align:top;margin-top:0px;height:50px;padding-top:27px;">
-			<a class="btn btn-large btn-danger" href="{{- path('cc_forum_topic_create', {'board_id': board.getId }) -}}"><i class="icon-white icon-asterisk"></i>&nbsp;{{- 'link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}</a>		
+			<a class="btn btn-large btn-danger" rel="nofollow" href="{{- path('cc_forum_topic_create', {'board_id': board.getId }) -}}"><i class="icon-white icon-asterisk"></i>&nbsp;{{- 'link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}</a>		
 		</div>
 	</div>
 
@@ -171,7 +171,7 @@
 						{%- if topic.getClosedDate -%}
 							<span class="label label-important">{{- 'badge.topic.closed' |trans({}, 'CCDNForumForumBundle') -}}</span>&nbsp;
 						{%- endif -%}
-						<a href="{{- path('cc_forum_topic_show', {'topic_id': topic.getId }) -}}" title="{{- topic.getTitle -}}">{{- truncDot(topic.getTitle, param('ccdn_forum_forum.board.show.topic_title_truncate')) | title -}}</a>
+						<abbr title="{{- topic.getTitle -}}"><a href="{{- path('cc_forum_topic_show', {'topic_id': topic.getId }) -}}">{{- truncDot(topic.getTitle, param('ccdn_forum_forum.board.show.topic_title_truncate')) | title -}}</a></abbr>
 						<br>
 
 						{%- if topic.getFirstPost -%}
