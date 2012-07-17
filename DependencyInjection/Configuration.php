@@ -60,6 +60,7 @@ class Configuration implements ConfigurationInterface
 		$this->addTopicSection($rootNode);
 		$this->addPostSection($rootNode);
 		$this->addItemPostSection($rootNode);
+		$this->addItemSignatureSection($rootNode);
 		$this->addDraftSection($rootNode);
 		$this->addSubscriptionSection($rootNode);
 		$this->addTranscriptSection($rootNode);
@@ -104,6 +105,7 @@ class Configuration implements ConfigurationInterface
 					->canBeUnset()
 					->children()					
 						->scalarNode('last_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+						->scalarNode('enable_bbcode')->defaultValue(true)->end()
 						->arrayNode('index')
 							->addDefaultsIfNotSet()
 							->children()
@@ -180,6 +182,7 @@ class Configuration implements ConfigurationInterface
 							->children()
 								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
 								->scalarNode('form_theme')->defaultValue('CCDNForumForumBundle:Form:fields.html.twig')->end()
+								->scalarNode('enable_bbcode')->defaultValue(true)->end()
 							->end()
 						->end()
 						->arrayNode('reply')
@@ -187,6 +190,7 @@ class Configuration implements ConfigurationInterface
 							->children()
 								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
 								->scalarNode('form_theme')->defaultValue('CCDNForumForumBundle:Form:fields.html.twig')->end()
+								->scalarNode('enable_bbcode')->defaultValue(true)->end()
 							->end()
 						->end()
 					->end()
@@ -229,6 +233,7 @@ class Configuration implements ConfigurationInterface
 							->children()
 								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
 								->scalarNode('form_theme')->defaultValue('CCDNForumForumBundle:Form:fields.html.twig')->end()
+								->scalarNode('enable_bbcode')->defaultValue(true)->end()
 							->end()
 						->end()
 						->arrayNode('edit_post')
@@ -236,6 +241,7 @@ class Configuration implements ConfigurationInterface
 							->children()
 								->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
 								->scalarNode('form_theme')->defaultValue('CCDNForumForumBundle:Form:fields.html.twig')->end()
+								->scalarNode('enable_bbcode')->defaultValue(true)->end()
 							->end()
 						->end()
 						->arrayNode('delete_post')
@@ -268,6 +274,28 @@ class Configuration implements ConfigurationInterface
 						->scalarNode('post_edited_datetime_format')->defaultValue('d-m-Y - H:i')->end()
 						->scalarNode('post_locked_datetime_format')->defaultValue('d-m-Y - H:i')->end()
 						->scalarNode('post_deleted_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+						->scalarNode('enable_bbcode')->defaultValue(true)->end()
+					->end()
+				->end()
+			->end();
+	}
+	
+
+
+	/**
+	 *
+	 * @access private
+	 * @param ArrayNodeDefinition $node
+	 */	
+	private function addItemSignatureSection(ArrayNodeDefinition $node)
+	{
+		$node
+			->children()
+				->arrayNode('item_signature')
+					->addDefaultsIfNotSet()
+					->canBeUnset()
+					->children()
+						->scalarNode('enable_bbcode')->defaultValue(true)->end()
 					->end()
 				->end()
 			->end();

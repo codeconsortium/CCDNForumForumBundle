@@ -65,6 +65,7 @@ class CCDNForumForumExtension extends Extension
 		$this->getTopicSection($container, $config);
 		$this->getPostSection($container, $config);
 		$this->getItemPostSection($container, $config);
+		$this->getItemSignatureSection($container, $config);
 		$this->getDraftSection($container, $config);
 		$this->getSubscriptionSection($container, $config);
 		$this->getTranscriptSection($container, $config);
@@ -92,6 +93,7 @@ class CCDNForumForumExtension extends Extension
 	private function getCategorySection($container, $config)
 	{
 		$container->setParameter('ccdn_forum_forum.category.last_post_datetime_format', $config['category']['last_post_datetime_format']);
+		$container->setParameter('ccdn_forum_forum.category.enable_bbcode', $config['category']['enable_bbcode']);
 		$container->setParameter('ccdn_forum_forum.category.index.layout_template', $config['category']['index']['layout_template']);
 		$container->setParameter('ccdn_forum_forum.category.show.layout_template', $config['category']['show']['layout_template']);
 	}
@@ -128,9 +130,12 @@ class CCDNForumForumExtension extends Extension
 
 		$container->setParameter('ccdn_forum_forum.topic.create.layout_template', $config['topic']['create']['layout_template']);
 		$container->setParameter('ccdn_forum_forum.topic.create.form_theme', $config['topic']['create']['form_theme']);
+		$container->setParameter('ccdn_forum_forum.topic.create.enable_bbcode', $config['topic']['create']['enable_bbcode']);
 		
 		$container->setParameter('ccdn_forum_forum.topic.reply.layout_template', $config['topic']['reply']['layout_template']);
 		$container->setParameter('ccdn_forum_forum.topic.reply.form_theme', $config['topic']['reply']['form_theme']);
+		$container->setParameter('ccdn_forum_forum.topic.reply.enable_bbcode', $config['topic']['reply']['enable_bbcode']);
+		
 	}
 	
 	
@@ -171,6 +176,21 @@ class CCDNForumForumExtension extends Extension
 		$container->setParameter('ccdn_forum_forum.item_post.post_edited_datetime_format', $config['item_post']['post_edited_datetime_format']);
 		$container->setParameter('ccdn_forum_forum.item_post.post_locked_datetime_format', $config['item_post']['post_locked_datetime_format']);
 		$container->setParameter('ccdn_forum_forum.item_post.post_deleted_datetime_format', $config['item_post']['post_deleted_datetime_format']);	
+		$container->setParameter('ccdn_forum_forum.item_post.enable_bbcode', $config['item_post']['enable_bbcode']);
+	
+	}
+	
+	
+
+	/**
+	 *
+	 * @access private
+	 * @param $container, $config
+	 */
+	private function getItemSignatureSection($container, $config)
+	{
+		$container->setParameter('ccdn_forum_forum.item_signature.enable_bbcode', $config['item_signature']['enable_bbcode']);
+		
 	}
 	
 	

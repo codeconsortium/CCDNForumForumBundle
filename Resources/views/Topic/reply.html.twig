@@ -58,7 +58,9 @@
 				{{- form_label(form.body, null, { 'label': 'form.label.post.body'| trans({}, 'CCDNForumForumBundle') }) -}}
 				<div class="controls row-fluid">
 					{{- form_errors(form.body) -}}
-					{%- form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' -%}
+					{%- if param('ccdn_forum_forum.topic.reply.enable_bbcode') -%}
+						{%- form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' -%}
+					{%- endif -%}
 					{{- form_widget(form.body) -}}
 				</div>
 			</div>

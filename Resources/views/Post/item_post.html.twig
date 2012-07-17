@@ -207,7 +207,12 @@
 							</span>
 						{%- else -%}
 							<span class="common_body">
-								{{- BBCode(post.getBody | raw) | raw -}}<br>
+								{%- if param('ccdn_forum_forum.item_post.enable_bbcode') -%}
+									{{- BBCode(post.getBody | raw) | raw -}}
+								{%- else -%}
+									{{- post.getBody -}}
+								{%- endif -%}
+								<br>
 							</span>
 							<span class="common_body">
 								{%- if post.getAttachment -%}
@@ -219,7 +224,11 @@
 								{%- if post.getCreatedBy -%}
 									{%- if post.getCreatedBy.getProfile -%}
 										{%- if post.getCreatedBy.getProfile.getSignature -%}
-											{{- BBCode(post.getCreatedBy.getProfile.getSignature | raw) | raw -}}
+											{%- if param('ccdn_forum_forum.item_signature.enable_bbcode') -%}
+												{{- BBCode(post.getCreatedBy.getProfile.getSignature | raw) | raw -}}
+											{%- else -%}
+												{{- post.getCreatedBy.getProfile.getSignature -}}
+											{%- endif -%}
 										{%- endif -%}
 									{%- endif -%}
 								{%- endif -%}

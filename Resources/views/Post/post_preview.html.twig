@@ -58,7 +58,11 @@
 					<div style="clear: both;">
 						<hr>
 						<span class="common_body">
-							{{ BBCode(post.getBody | raw) | raw}}<br>
+							{%- if param('ccdn_forum_forum.item_post.enable_bbcode') -%}
+								{{- BBCode(post.getBody | raw) | raw -}}
+							{%- else -%}
+								{{- post.getBody -}}
+							{%- endif -%}
 						</span>
 						<span class="common_body">
 							{%- if post.getAttachment -%}

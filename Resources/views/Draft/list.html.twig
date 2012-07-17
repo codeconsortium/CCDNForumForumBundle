@@ -85,7 +85,7 @@
 			<tr class="{{- cycle(['row_odd', 'row_even'], row) -}}">
 				<td class="left" colspan="5">
 					<span class="common_body">
-						{{- BBCode(draft.body | raw | slice(0, 200)) | raw -}}&nbsp;...
+						{{- draft.body | slice(0, 200) -}}&nbsp;...
 					</span>
 				</td>
 			</tr>
