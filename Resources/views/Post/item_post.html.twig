@@ -207,7 +207,7 @@
 							</span>
 						{%- else -%}
 							<span class="common_body">
-								{%- if param('ccdn_forum_forum.item_post.enable_bbcode') -%}
+								{%- if param('ccdn_forum_forum.item_post.enable_bb_parser') -%}
 									{{- BBCode(post.getBody | raw) | raw -}}
 								{%- else -%}
 									{{- post.getBody -}}
@@ -224,7 +224,7 @@
 								{%- if post.getCreatedBy -%}
 									{%- if post.getCreatedBy.getProfile -%}
 										{%- if post.getCreatedBy.getProfile.getSignature -%}
-											{%- if param('ccdn_forum_forum.item_signature.enable_bbcode') -%}
+											{%- if param('ccdn_forum_forum.item_signature.enable_bb_parser') -%}
 												{{- BBCode(post.getCreatedBy.getProfile.getSignature | raw) | raw -}}
 											{%- else -%}
 												{{- post.getCreatedBy.getProfile.getSignature -}}
