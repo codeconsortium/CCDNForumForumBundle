@@ -1,94 +1,70 @@
-<div style="display: block; clear: both;">
-	<div style="display:block; float:left; width:105px; margin:0px -106px 0px 0px; padding:0px; overflow:hidden; vertical-align:top; text-align:center;">
-		<div style="margin: 0px; padding: 5px 0; overflow: hidden; vertical-align: top; text-align: center; z-index: 3;">
-			{%- spaceless -%}
+{%- spaceless -%}
+	<div style="display: block; clear: both;">
+		<div style="display:block; float:left; width:105px; margin:0px -106px 0px 0px; padding:0px; overflow:hidden; vertical-align:top; text-align:center;">
+			<div style="margin: 0px; padding: 5px 0; overflow: hidden; vertical-align: top; text-align: center; z-index: 3;">
 			
-			{%- if post.getCreatedBy -%}
-				{%- if post.getCreatedBy.getProfile -%}
-					{%- if post.getCreatedBy.getProfile.getAvatarIsRemote -%}
-						{%- if post.getCreatedBy.getProfile.getAvatar -%}
-							<img class="avatar" width="100" height="100" src="{{- post.getCreatedBy.getProfile.getAvatar -}}" alt="avatar">
-						{%- else -%}
-							<img class="avatar" width="100" height="100" src="{{- asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') -}}" alt="avatar">
-						{%- endif -%}
-					{%- else -%}
-						{%- if post.getCreatedBy.getProfile.getAvatar -%}
-							{# later on this will reference the avatarBundle asset and append the avatar onto the end #}
-							{# e.g: {{ asset('bundles/ccdnuseravatar/images/avatars/') }}{{ post.getCreatedBy.getProfile.getAvatar }} #}
-							<img class="avatar" width="100" height="100" src="{{- asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') -}}" alt="avatar">
-						{%- else -%}
-							<img class="avatar" width="100" height="100" src="{{- asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') -}}" alt="avatar">
-						{%- endif -%}
-					{%- endif -%}
-				{%- else -%}
-					<img class="avatar" width="100" height="100" src="{{- asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') -}}" alt="avatar">
-				{%- endif -%}
-			{%- else -%}
-				<img class="avatar" width="100" height="100" src="{{- asset('bundles/ccdncomponentcommon/images/profile/anonymous_avatar.gif') -}}" alt="avatar">
-			{%- endif -%}
+				{%- include 'CCDNUserProfileBundle:Avatar:item_avatar.html.twig' with {'user': post.getCreatedBy} -%}
 
-			{%- endspaceless -%}
+			</div>
 		</div>
-	</div>
-	<div style="display: block; padding: 0px; overflow: hidden; vertical-align: top;">
-		<div style="display: block; padding: 1px; margin: 0px 0px 0px 106px; overflow: hidden; vertical-align: top;">
+		<div style="display: block; padding: 0px; overflow: hidden; vertical-align: top;">
+			<div style="display: block; padding: 1px; margin: 0px 0px 0px 106px; overflow: hidden; vertical-align: top;">
 			
-			<div class="speech_bubble">
-				{%- spaceless -%}
-				<div class="chevron">
-					<img width="20" height="30" src="{{- asset('bundles/ccdnforumforum/images/text_bubble/chevron_left.png') -}}" alt="chevron">
-				</div>
-
-				<div class="content">
-					<div style="clear:both;">
-						<div class="pull-left">
-							<span class="">
-								{%- if post.getCreatedBy -%}
-								<a href="{{- path(user_profile_route, {'user_id': post.getCreatedBy.getId }) -}}">{{- post.getCreatedBy |title -}}</a>
-								{%- else -%}
-								Guest
-								{%- endif -%}
-							</span>&nbsp;&nbsp;
-							<span class="item_timestamp">
-								{{- post.getCreatedDate |date(param('ccdn_forum_forum.item_post.post_created_datetime_format')) -}}
-							</span>
-
-						</div>
+				<div class="speech_bubble">
+					<div class="chevron">
+						<img width="20" height="30" src="{{- asset('bundles/ccdnforumforum/images/text_bubble/chevron_left.png') -}}" alt="chevron">
 					</div>
-					<div style="clear: both;">
-						<hr>
-						<span class="common_body">
-							{%- if param('ccdn_forum_forum.item_post.enable_bb_parser') -%}
-								{{- BBCode(post.getBody | raw) | raw -}}
-							{%- else -%}
-								{{- post.getBody -}}
-							{%- endif -%}
-						</span>
-						<span class="common_body">
-							{%- if post.getAttachment -%}
-								<br><a href="{{- path('cc_attachment_download', {'attachment_id': post.getAttachment.getId }) -}}"><img width="60" height="60" src="{{- path('cc_attachment_thumbnail', {'attachment_id': post.getAttachment.getId }) -}}" alt="{{- post.getAttachment.getAttachmentOriginal -}}"></a><br>
-							{%- endif -%}
-						</span>
-						<br><hr>
-						<span class="common_body">
-							{%- if post.getCreatedBy -%}
-								{%- if post.getCreatedBy.getProfile -%}
-									{%- if post.getCreatedBy.getProfile.getSignature -%}
-										{%- if param('ccdn_forum_forum.item_signature.enable_bb_parser') -%}
-											{{- BBCode(post.getCreatedBy.getProfile.getSignature | raw) | raw -}}
-										{%- else -%}
-											{{- post.getCreatedBy.getProfile.getSignature -}}
+
+					<div class="content">
+						<div style="clear:both;">
+							<div class="pull-left">
+								<span class="">
+									{%- if post.getCreatedBy -%}
+									<a href="{{- path(user_profile_route, {'user_id': post.getCreatedBy.getId }) -}}">{{- post.getCreatedBy |title -}}</a>
+									{%- else -%}
+									Guest
+									{%- endif -%}
+								</span>&nbsp;&nbsp;
+								<span class="item_timestamp">
+									{{- post.getCreatedDate |date(param('ccdn_forum_forum.item_post.post_created_datetime_format')) -}}
+								</span>
+
+							</div>
+						</div>
+						<div style="clear: both;">
+							<hr>
+							<span class="common_body">
+								{%- if param('ccdn_forum_forum.item_post.enable_bb_parser') -%}
+									{{- BBCode(post.getBody | raw) | raw -}}
+								{%- else -%}
+									{{- post.getBody -}}
+								{%- endif -%}
+							</span>
+							<span class="common_body">
+								{%- if post.getAttachment -%}
+									<br><a href="{{- path('cc_attachment_download', {'attachment_id': post.getAttachment.getId }) -}}"><img width="60" height="60" src="{{- path('cc_attachment_thumbnail', {'attachment_id': post.getAttachment.getId }) -}}" alt="{{- post.getAttachment.getAttachmentOriginal -}}"></a><br>
+								{%- endif -%}
+							</span>
+							<br><hr>
+							<span class="common_body">
+								{%- if post.getCreatedBy -%}
+									{%- if post.getCreatedBy.getProfile -%}
+										{%- if post.getCreatedBy.getProfile.getSignature -%}
+											{%- if param('ccdn_forum_forum.item_signature.enable_bb_parser') -%}
+												{{- BBCode(post.getCreatedBy.getProfile.getSignature | raw) | raw -}}
+											{%- else -%}
+												{{- post.getCreatedBy.getProfile.getSignature -}}
+											{%- endif -%}
 										{%- endif -%}
 									{%- endif -%}
 								{%- endif -%}
-							{%- endif -%}
-						</span>
-					</div>	
-				</div>
-				{%- endspaceless -%}
+							</span>
+						</div>	
+					</div>
 				
-			</div>
+				</div>
 			
+			</div>
 		</div>
 	</div>
-</div>
+{%- endspaceless -%}
