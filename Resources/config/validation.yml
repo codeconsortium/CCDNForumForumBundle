@@ -13,7 +13,7 @@ CCDNForum\ForumBundle\Entity\Post:
         body:
             - Type: { type: string, groups: [topic, post] }
             - NotBlank: {  groups: [topic, post] }
-            - MinLength: { limit: 50, groups: [topic, post] }
+            - MinLength: { limit: 20, groups: [topic, post] }
             - MaxLength: { limit: 10000, groups: [topic, post] }
     
 CCDNForum\ForumBundle\Entity\Flag:
