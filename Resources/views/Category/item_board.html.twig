@@ -6,11 +6,7 @@
 	<td class="left">
 		<h4><abbr title="{{- board.getName -}}"><a href="{{- path('cc_forum_board_show', {'board_id': board.getId }) -}}">{{- truncDot(board.getName, param('ccdn_forum_forum.seo.title_length')) -}}</a></abbr></h4>
 		<span class="common_body">
-			{%- if param('ccdn_forum_forum.category.enable_bb_parser') -%}
-				{{- BBCode(board.getDescription | raw) | raw -}}	
-			{%- else -%}
-				{{- board.getDescription -}}
-			{%- endif -%}
+			{{- BBCode(board.getDescription | raw, param('ccdn_forum_forum.item_board.enable_bb_parser')) | raw -}}	
 		</span>
 	</td>
 	<td class="center" style="width: 100px;">

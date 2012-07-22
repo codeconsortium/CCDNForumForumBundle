@@ -59,6 +59,7 @@ class Configuration implements ConfigurationInterface
 		$this->addBoardSection($rootNode);
 		$this->addTopicSection($rootNode);
 		$this->addPostSection($rootNode);
+		$this->addItemBoardSection($rootNode);
 		$this->addItemPostSection($rootNode);
 		$this->addItemSignatureSection($rootNode);
 		$this->addDraftSection($rootNode);
@@ -105,7 +106,6 @@ class Configuration implements ConfigurationInterface
 					->canBeUnset()
 					->children()					
 						->scalarNode('last_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-						->scalarNode('enable_bb_parser')->defaultValue(true)->end()
 						->arrayNode('index')
 							->addDefaultsIfNotSet()
 							->children()
@@ -256,6 +256,27 @@ class Configuration implements ConfigurationInterface
 			->end();
 	}
 	
+	
+	
+	/**
+	 *
+	 * @access private
+	 * @param ArrayNodeDefinition $node
+	 */
+	private function addItemBoardSection(ArrayNodeDefinition $node)
+	{
+		$node
+			->children()
+				->arrayNode('item_board')
+					->addDefaultsIfNotSet()
+					->canBeUnset()
+					->children()
+						->scalarNode('enable_bb_parser')->defaultValue(true)->end()
+					->end()
+				->end()
+			->end();
+	}
+
 
 
 	/**

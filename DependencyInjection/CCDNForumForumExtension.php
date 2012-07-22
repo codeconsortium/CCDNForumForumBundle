@@ -64,8 +64,11 @@ class CCDNForumForumExtension extends Extension
 		$this->getBoardSection($container, $config);
 		$this->getTopicSection($container, $config);
 		$this->getPostSection($container, $config);
+		
+		$this->getItemBoardSection($container, $config);
 		$this->getItemPostSection($container, $config);
 		$this->getItemSignatureSection($container, $config);
+		
 		$this->getDraftSection($container, $config);
 		$this->getSubscriptionSection($container, $config);
 		$this->getTranscriptSection($container, $config);
@@ -93,7 +96,7 @@ class CCDNForumForumExtension extends Extension
 	private function getCategorySection($container, $config)
 	{
 		$container->setParameter('ccdn_forum_forum.category.last_post_datetime_format', $config['category']['last_post_datetime_format']);
-		$container->setParameter('ccdn_forum_forum.category.enable_bb_parser', $config['category']['enable_bb_parser']);
+//		$container->setParameter('ccdn_forum_forum.category.enable_bb_parser', $config['category']['enable_bb_parser']);
 		$container->setParameter('ccdn_forum_forum.category.index.layout_template', $config['category']['index']['layout_template']);
 		$container->setParameter('ccdn_forum_forum.category.show.layout_template', $config['category']['show']['layout_template']);
 	}
@@ -165,6 +168,19 @@ class CCDNForumForumExtension extends Extension
 		$container->setParameter('ccdn_forum_forum.post.delete_post.layout_template', $config['post']['delete_post']['layout_template']);
 	}
 	
+	
+
+	/**
+	 *
+	 * @access private
+	 * @param $container, $config
+	 */
+	private function getItemBoardSection($container, $config)
+	{
+		$container->setParameter('ccdn_forum_forum.item_board.enable_bb_parser', $config['item_board']['enable_bb_parser']);
+		
+	}
+		
 	
 
 	/**

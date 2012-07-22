@@ -16,7 +16,6 @@ ccdn_forum_forum:
 		title_length: 67
     category:
         last_post_datetime_format: "d-m-Y - H:i"
-		enable_bb_parser: true
         index:
             layout_template: CCDNComponentCommonBundle:Layout:layout_body_right.html.twig
         show:
@@ -61,6 +60,8 @@ ccdn_forum_forum:
 			enable_bb_editor: true
         delete_post:
             layout_template: CCDNComponentCommonBundle:Layout:layout_body_right.html.twig
+	item_board:
+		enable_bb_parser: true
     item_post:
         post_created_datetime_format: "d-m-Y - H:i"
         post_edited_datetime_format: "d-m-Y - H:i"

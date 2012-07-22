@@ -24,7 +24,7 @@
 				</span>
 			{%- else -%}
 				<span class="common_body">
-					{{- post.getBody |raw -}}
+					{{- BBCode(post.getBody |raw, false) |raw -}}
 				</span>
 			{%- endif -%}					
 		</div>
