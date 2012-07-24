@@ -78,9 +78,9 @@
 
 	{%- if topic.isDeleted -%}
 	<span class="label label-important">
-		<i class="icon-white icon-trash"></i>
-		{{- 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}
-		{%- if topic.getDeletedBy -%}{{- topic.getDeletedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}
+		<i class="icon-white icon-trash"></i>&nbsp;
+		{{- 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
+		{%- if topic.getDeletedBy -%}{{- topic.getDeletedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
 		{{- topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) -}}
 	</span>&nbsp;
 	{%- endif -%}
