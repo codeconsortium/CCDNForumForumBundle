@@ -95,7 +95,7 @@ class PostType extends AbstractType
 		    'class' => 'CCDNComponentAttachmentBundle:Attachment',
 //		    'query_builder' => $this->container->get('ccdn_component_attachment.attachment.repository')->findForUserByIdAsQB($userId),
 			'choices' => $attachments,
-		    'property' => 'attachment_original',
+		    'property' => 'filename_original',
 			'required' => false,
 			)
 		);
