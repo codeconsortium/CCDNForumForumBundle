@@ -7,7 +7,7 @@ CCDNForum\ForumBundle\Entity\Topic:
             - NotBlank: { groups: [topic] }
             - MinLength: { limit: 10, groups: [topic] }
             - MaxLength: { limit: 255, groups: [topic] }
-    
+
 CCDNForum\ForumBundle\Entity\Post:
     properties:
         body:
@@ -15,7 +15,7 @@ CCDNForum\ForumBundle\Entity\Post:
             - NotBlank: {  groups: [topic, post] }
             - MinLength: { limit: 15, groups: [topic, post] }
             - MaxLength: { limit: 10000, groups: [topic, post] }
-    
+
 CCDNForum\ForumBundle\Entity\Flag:
     properties:
         reason:
@@ -25,4 +25,3 @@ CCDNForum\ForumBundle\Entity\Flag:
             - NotBlank: { groups: [flag] }
             - MinLength: { limit: 5, groups: [flag] }
             - MaxLength: { limit: 5000, groups: [flag] }
-

@@ -16,15 +16,15 @@
 			{%- endif -%}
 		{%- endif -%}
 	{%- endif -%}
-	
-	
+
+
 	<li class="nav-header">{{- 'sidebar.header.navigation' | trans({}, 'CCDNForumForumBundle') -}}</li>
 	{%- if route == 'cc_forum_home_root' or route == 'cc_forum_index' or route == 'cc_forum_category_index' -%}
 		<li class="active"><a href="{{- path('cc_forum_index') -}}"><i class="icon-white icon-home"></i>&nbsp;{{- 'sidebar.link.forum_index' |trans({}, 'CCDNForumForumBundle') -}}</a></li>
-	{%- else -%}	
+	{%- else -%}
 		<li><a href="{{- path('cc_forum_index') -}}"><i class="icon-home"></i>&nbsp;{{- 'sidebar.link.forum_index' |trans({}, 'CCDNForumForumBundle') -}}</a></li>
 	{%- endif -%}
-	
+
 	{%- if is_granted('ROLE_USER') -%}
 		{%- if route == 'cc_forum_subscriptions' -%}
 			<li class="active"><a rel="nofollow" href="{{- path('cc_forum_subscriptions') -}}"><i class="icon-white icon-heart"></i>&nbsp;{{- 'sidebar.link.subscriptions' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
@@ -58,14 +58,14 @@
 							<li><a href="{{- path('cc_forum_board_show', {'board_id': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}"><i class="icon-folder-close"></i>&nbsp;{{- truncDot(sidebar_board.name, 15) -}}</a></li>
 						{%- endif -%}
 					{%- else -%}
-						<li><a href="{{- path('cc_forum_board_show', {'board_id': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}"><i class="icon-folder-close"></i>&nbsp;{{- truncDot(sidebar_board.name, 15) -}}</a></li>					
+						<li><a href="{{- path('cc_forum_board_show', {'board_id': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}"><i class="icon-folder-close"></i>&nbsp;{{- truncDot(sidebar_board.name, 15) -}}</a></li>
 					{%- endif -%}
 				{%- endfor -%}
 			{%- endif -%}
 		{%- endfor -%}
 	{%- endif -%}
-	
-	
+
+
 
 	{%- if board is defined or topic is defined -%}
 		{%- if is_granted('ROLE_USER') -%}
@@ -88,5 +88,5 @@
 			{%- endif -%}
 		{%- endif -%}
 	{%- endif -%}
-	
+
 {%- endspaceless -%}

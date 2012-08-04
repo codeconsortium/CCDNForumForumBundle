@@ -3,8 +3,8 @@
 /*
  * This file is part of the CCDNForum ForumBundle
  *
- * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/> 
- * 
+ * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
+ *
  * Available on github <http://www.github.com/codeconsortium/>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -14,8 +14,6 @@
 namespace CCDNForum\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 
 use CCDNUser\UserBundle\Entity\User;
 
@@ -25,40 +23,39 @@ use CCDNUser\UserBundle\Entity\User;
  */
 class Registry
 {
-	
-	/**
+
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-	protected $id;
+    protected $id;
 
-	/**
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $ownedBy = null;
-		
-	/**
+     */
+    protected $ownedBy = null;
+
+    /**
      * @ORM\Column(type="integer", name="cached_post_count", nullable=false)
      */
     protected $cachedPostCount = 0;
 
-	/**
+    /**
      * @ORM\Column(type="integer", name="cached_karma_positive_count", nullable=false)
      */
-	protected $cachedKarmaPositiveCount = 0;
-	
-	/**
+    protected $cachedKarmaPositiveCount = 0;
+
+    /**
      * @ORM\Column(type="integer", name="cached_karma_negative_count", nullable=false)
      */
-	protected $cachedKarmaNegativeCount = 0;
-	
-	
+    protected $cachedKarmaNegativeCount = 0;
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -68,19 +65,20 @@ class Registry
     /**
      * Set owned_by
      *
-     * @param CCDNUser\UserBundle\Entity\User $ownedBy
+     * @param  CCDNUser\UserBundle\Entity\User $ownedBy
      * @return Registry
      */
     public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)
     {
         $this->ownedBy = $ownedBy;
+
         return $this;
     }
 
     /**
      * Get owned_by
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getOwnedBy()
     {
@@ -100,7 +98,7 @@ class Registry
     /**
      * Get cachedPostCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getCachedPostCount()
     {
@@ -120,7 +118,7 @@ class Registry
     /**
      * Get cachedKarmaPositiveCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getCachedKarmaPositiveCount()
     {
@@ -140,7 +138,7 @@ class Registry
     /**
      * Get cachedKarmaNegativeCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getCachedKarmaNegativeCount()
     {

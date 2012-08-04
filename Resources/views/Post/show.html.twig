@@ -12,14 +12,14 @@
 	{{ parent() }}
 
 	{%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
-	
+
 {% endblock %}
 
 {% block sidebar_actions %}
 	{{ parent() }}
-	
+
 	{%- include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' -%}
-	
+
 {% endblock %}
 
 
@@ -44,12 +44,12 @@
 		{{- topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) -}}
 	</div>
 	{%- endif -%}
-	
+
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
-	
+
 	<h2><abbr title="{{- topic.getTitle -}}">{{- truncDot(topic.getTitle |capitalize, 70) -}}</abbr></h2>
-	
-	<br>	
+
+	<br>
 
 	<span class="badge badge-info">{{- 'topic.reply_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- topic.cachedReplyCount -}}</span>&nbsp;
 	<span class="badge badge-info">{{- 'topic.view_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- topic.cachedViewCount -}}</span>&nbsp;
@@ -57,7 +57,7 @@
 	{%- if subscription_count is defined -%}
 		<span class="badge badge-info">{{- 'topic.subscription_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- subscription_count -}}</span>&nbsp;
 	{%- endif -%}
-	
+
 	{%- if topic.isSticky -%}
 	<span class="label label-important">
 		<i class="icon-white icon-bullhorn"></i>&nbsp;
@@ -84,7 +84,7 @@
 		{{- topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) -}}
 	</span>&nbsp;
 	{%- endif -%}
-	
+
 	{%- include "CCDNForumForumBundle:Post:item_post.html.twig" -%}
 
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}

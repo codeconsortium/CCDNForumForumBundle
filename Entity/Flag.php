@@ -3,8 +3,8 @@
 /*
  * This file is part of the CCDN ForumBundle
  *
- * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/> 
- * 
+ * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
+ *
  * Available on github <http://www.github.com/codeconsortium/>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -14,8 +14,6 @@
 namespace CCDNForum\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\FlagRepository")
@@ -23,65 +21,65 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Flag
 {
-	/**
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-	protected $id;
-	
+    protected $id;
+
     /**
      * @ORM\ManyToOne(targetEntity="CCDNForum\ForumBundle\Entity\Post", inversedBy="flags", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_post_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $post = null;
-	
-	/**
-	 * @ORM\Column(type="integer")
-	 */
-	protected $reason;
-	
-	/**
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $reason;
+
+    /**
      * @ORM\Column(type="text")
      */
-	protected $description;
-	
-	/**
-	 * @ORM\Column(type="datetime", name="flagged_date")
-	 */
-	protected $flaggedDate;
-	
-	/**
+    protected $description;
+
+    /**
+     * @ORM\Column(type="datetime", name="flagged_date")
+     */
+    protected $flaggedDate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="fk_flagged_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $flaggedBy = null;
-	
-	/**
-	 * @ORM\Column(type="datetime", name="moderated_date", nullable=true)
-	 */
-	protected $moderatedDate;
-	
-	/**
+     */
+    protected $flaggedBy = null;
+
+    /**
+     * @ORM\Column(type="datetime", name="moderated_date", nullable=true)
+     */
+    protected $moderatedDate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="fk_moderated_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $moderatedBy = null;
+     */
+    protected $moderatedBy = null;
 
-	/**
+    /**
      * @ORM\Column(type="text", name="moderators_note", nullable=true)
      */
-	protected $moderatorsNote;
-		
-	/**
+    protected $moderatorsNote;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      */
-	protected $status;
-	
+    protected $status;
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -101,7 +99,7 @@ class Flag
     /**
      * Get reason
      *
-     * @return text 
+     * @return text
      */
     public function getReason()
     {
@@ -121,7 +119,7 @@ class Flag
     /**
      * Get flagged_date
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getFlaggedDate()
     {
@@ -141,7 +139,7 @@ class Flag
     /**
      * Get post
      *
-     * @return CCDNForum\ForumBundle\Entity\Post 
+     * @return CCDNForum\ForumBundle\Entity\Post
      */
     public function getPost()
     {
@@ -161,7 +159,7 @@ class Flag
     /**
      * Get flagged_by
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getFlaggedBy()
     {
@@ -181,7 +179,7 @@ class Flag
     /**
      * Get moderators_note
      *
-     * @return text 
+     * @return text
      */
     public function getModeratorsNote()
     {
@@ -201,7 +199,7 @@ class Flag
     /**
      * Get status
      *
-     * @return integer 
+     * @return integer
      */
     public function getStatus()
     {
@@ -221,7 +219,7 @@ class Flag
     /**
      * Get moderated_by
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getModeratedBy()
     {
@@ -241,7 +239,7 @@ class Flag
     /**
      * Get moderated_date
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getModeratedDate()
     {
@@ -261,7 +259,7 @@ class Flag
     /**
      * Get description
      *
-     * @return text 
+     * @return text
      */
     public function getDescription()
     {

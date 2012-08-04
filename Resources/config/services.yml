@@ -1,5 +1,5 @@
 parameters:
-    
+
     ccdn_forum_forum.category.repository.class:         CCDNForum\ForumBundle\Repository\CategoryRepository
     ccdn_forum_forum.board.repository.class:            CCDNForum\ForumBundle\Repository\BoardRepository
     ccdn_forum_forum.topic.repository.class:            CCDNForum\ForumBundle\Repository\TopicRepository
@@ -17,104 +17,104 @@ parameters:
     ccdn_forum_forum.draft.manager.class:               CCDNForum\ForumBundle\Manager\DraftManager
     ccdn_forum_forum.subscription.manager.class:        CCDNForum\ForumBundle\Manager\SubscriptionManager
     ccdn_forum_forum.flag.manager.class:                CCDNForum\ForumBundle\Manager\FlagManager
-        
+
     ccdn_forum_forum.post.form.type.class:              CCDNForum\ForumBundle\Form\Type\PostType
     ccdn_forum_forum.post.insert.form.handler.class:    CCDNForum\ForumBundle\Form\Handler\PostFormHandler
     ccdn_forum_forum.post.update.form.handler.class:    CCDNForum\ForumBundle\Form\Handler\PostFormHandler
-    
+
     ccdn_forum_forum.topic.form.type.class:             CCDNForum\ForumBundle\Form\Type\TopicType
     ccdn_forum_forum.topic.insert.form.handler.class:   CCDNForum\ForumBundle\Form\Handler\TopicFormHandler
     ccdn_forum_forum.topic.update.form.handler.class:   CCDNForum\ForumBundle\Form\Handler\TopicFormHandler
-    
+
     ccdn_forum_forum.flag.form.type.class:              CCDNForum\ForumBundle\Form\Type\FlagType
     ccdn_forum_forum.flag.form.handler.class:           CCDNForum\ForumBundle\Form\Handler\FlagFormHandler
     ccdn_forum_forum.flag.form.default_choices.class:   CCDNForum\ForumBundle\Form\ChoiceDefaults\FlagChoices
 
     ccdn_forum_forum.dashboard.integrator.class:        CCDNForum\ForumBundle\Component\Dashboard\DashboardIntegrator
-    
+
     ccdn_forum_forum.board_list.extension.class:        CCDNForum\ForumBundle\Extension\BoardListExtension
-    
+
 services:
-    
+
     #
     # Repositories.
     #
     ccdn_forum_forum.category.repository:
         class: %ccdn_forum_forum.category.repository.class%
         factory_service: doctrine.orm.default_entity_manager
-        factory_method: getRepository 
+        factory_method: getRepository
         arguments:
             - 'CCDNForum\ForumBundle\Entity\Category'
     ccdn_forum_forum.board.repository:
         class: %ccdn_forum_forum.board.repository.class%
         factory_service: doctrine.orm.default_entity_manager
-        factory_method: getRepository 
+        factory_method: getRepository
         arguments:
             - 'CCDNForum\ForumBundle\Entity\Board'
     ccdn_forum_forum.topic.repository:
         class: %ccdn_forum_forum.topic.repository.class%
         factory_service: doctrine.orm.default_entity_manager
-        factory_method: getRepository 
+        factory_method: getRepository
         arguments:
             - 'CCDNForum\ForumBundle\Entity\Topic'
     ccdn_forum_forum.post.repository:
         class: %ccdn_forum_forum.post.repository.class%
         factory_service: doctrine.orm.default_entity_manager
-        factory_method: getRepository 
+        factory_method: getRepository
         arguments:
             - 'CCDNForum\ForumBundle\Entity\Post'
     ccdn_forum_forum.flag.repository:
         class: %ccdn_forum_forum.flag.repository.class%
         factory_service: doctrine.orm.default_entity_manager
-        factory_method: getRepository 
+        factory_method: getRepository
         arguments:
             - 'CCDNForum\ForumBundle\Entity\Flag'
     ccdn_forum_forum.draft.repository:
         class: %ccdn_forum_forum.draft.repository.class%
         factory_service: doctrine.orm.default_entity_manager
-        factory_method: getRepository 
+        factory_method: getRepository
         arguments:
             - 'CCDNForum\ForumBundle\Entity\Draft'
     ccdn_forum_forum.registry.repository:
         class: %ccdn_forum_forum.registry.repository.class%
         factory_service: doctrine.orm.default_entity_manager
-        factory_method: getRepository 
+        factory_method: getRepository
         arguments:
             - 'CCDNForum\ForumBundle\Entity\Registry'
     ccdn_forum_forum.subscription.repository:
         class: %ccdn_forum_forum.subscription.repository.class%
         factory_service: doctrine.orm.default_entity_manager
-        factory_method: getRepository 
+        factory_method: getRepository
         arguments:
             - 'CCDNForum\ForumBundle\Entity\Subscription'
-       
+
     #
     # Managers.
-    #     
+    #
 #    category.manager:
 #        class:  %ccdn_forum_forum.category.manager.class%
-#        arguments:  [@doctrine, @service_container]        
+#        arguments:  [@doctrine, @service_container]
     ccdn_forum_forum.board.manager:
         class:  %ccdn_forum_forum.board.manager.class%
-        arguments:  [@doctrine, @service_container]        
+        arguments:  [@doctrine, @service_container]
     ccdn_forum_forum.topic.manager:
         class:  %ccdn_forum_forum.topic.manager.class%
         arguments:  [@doctrine, @service_container]
     ccdn_forum_forum.post.manager:
         class:  %ccdn_forum_forum.post.manager.class%
-        arguments:  [@doctrine, @service_container]              
+        arguments:  [@doctrine, @service_container]
     ccdn_forum_forum.registry.manager:
         class: %ccdn_forum_forum.registry.manager.class%
         arguments: [@doctrine, @service_container]
     ccdn_forum_forum.draft.manager:
         class: %ccdn_forum_forum.draft.manager.class%
-        arguments: [@doctrine, @service_container]    
+        arguments: [@doctrine, @service_container]
     ccdn_forum_forum.subscription.manager:
         class: %ccdn_forum_forum.subscription.manager.class%
-        arguments: [@doctrine, @service_container]    
+        arguments: [@doctrine, @service_container]
     ccdn_forum_forum.flag.manager:
         class:  %ccdn_forum_forum.flag.manager.class%
-        arguments:  [@doctrine, @service_container]    
+        arguments:  [@doctrine, @service_container]
 
 
     #
@@ -133,7 +133,7 @@ services:
         arguments:  [@form.factory, @service_container]
         calls:
             - [ useUpdateStrategy, []]
-    
+
     #
     # Topic Forms.
     #
@@ -150,14 +150,14 @@ services:
         arguments:  [@form.factory, @service_container]
         calls:
             - [ useUpdateStrategy, []]
-        
+
 
     #
     # Flag Forms.
     #
     ccdn_forum_forum.flag.form.type:
         class:  %ccdn_forum_forum.flag.form.type.class%
-        arguments:  [@doctrine]        
+        arguments:  [@doctrine]
     ccdn_forum_forum.flag.form.handler:
         class:  %ccdn_forum_forum.flag.form.handler.class%
         arguments:  [@form.factory, @service_container, @ccdn_forum_forum.flag.manager]
@@ -173,7 +173,7 @@ services:
         arguments: [@service_container]
         tags:
             - { name: ccdn_component_dashboard.integrator }
-            
+
     #
     # Twig Extensions.
     #

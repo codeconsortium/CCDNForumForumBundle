@@ -2,22 +2,22 @@
 <h3>{{- 'topic.transcript' |trans({'%topic_title%': topic.getTitle}, 'CCDNForumForumBundle') -}}</h3>
 
 <div class="well" style="height:300px; clear:both; display:block; overflow:scroll;">
-	{% for post in topic.getPosts %}					
+	{% for post in topic.getPosts %}
 		<div class="btn-toolbar" style="clear:both;">
-			<div class="pull-left">					
+			<div class="pull-left">
 				{%- if post.getCreatedBy -%}
 				<a href="{{- path(user_profile_route, {'user_id': post.getCreatedBy.getId } ) -}}">{{- post.getCreatedBy -}}</a>
 				{%- else -%}Guest{%- endif -%}
 			</div>
 			<div class="pull-right">
-				<span class="span3">{{- 'generic.posted_at' |trans({}, 'CCDNForumForumBundle') -}}{{- post.getCreatedDate |date(param('ccdn_forum_forum.transcript.post_creation_datetime_format')) -}}</span>	
+				<span class="span3">{{- 'generic.posted_at' |trans({}, 'CCDNForumForumBundle') -}}{{- post.getCreatedDate |date(param('ccdn_forum_forum.transcript.post_creation_datetime_format')) -}}</span>
 			</div>
 		</div>
 		<div style="clear:both;">
 			<br>
 			{%- if post.getDeletedBy -%}
 				<span class="common_body">
-				{{- 'post.is_deleted' | trans({}, 'CCDNForumForumBundle') -}} - 
+				{{- 'post.is_deleted' | trans({}, 'CCDNForumForumBundle') -}} -
 				{{- 'post.deleted_by' |trans({}, 'CCDNForumForumBundle') -}}
 				{%- if post.getDeletedBy -%}{{- post.getDeletedBy.getUsername -}}{%- else -%}Guest{%- endif -%}
 				{{- 'actioned.at' |trans({}, 'CCDNForumForumBundle') -}}{{- post.getDeletedDate |date(param('ccdn_forum_forum.transcript.post_deleted_datetime_format')) -}}
@@ -26,7 +26,7 @@
 				<span class="common_body">
 					{{- BBCode(post.getBody |raw, false) |raw -}}
 				</span>
-			{%- endif -%}					
+			{%- endif -%}
 		</div>
 		<hr>
 	{% endfor %}

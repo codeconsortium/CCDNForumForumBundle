@@ -8,23 +8,23 @@
 
 {% block sidebar %}
 	{{ parent() }}
-	
+
 	{%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
 
 {% endblock %}
 
 {% block sidebar_actions %}
 	{{ parent() }}
-	
+
 	{%- include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' -%}
-	
+
 {% endblock %}
 
 
 {% block body %}
 
 	{%- spaceless -%}
-	
+
 	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
 
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}

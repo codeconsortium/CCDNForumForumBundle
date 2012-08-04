@@ -3,8 +3,8 @@
 /*
  * This file is part of the CCDN ForumBundle
  *
- * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/> 
- * 
+ * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
+ *
  * Available on github <http://www.github.com/codeconsortium/>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -15,7 +15,6 @@ namespace CCDNForum\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\BoardRepository")
@@ -23,66 +22,64 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Board
 {
-	/**
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-	protected $id;
-		
-	/**
+    protected $id;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="boards")
      * @ORM\JoinColumn(name="fk_category_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $category = null;
 
-	/**
+    /**
      * @ORM\OneToMany(targetEntity="Topic", mappedBy="board", cascade={"remove"})
      */
     protected $topics;
-    
-	/**
+
+    /**
      * @ORM\Column(type="string", length=100)
      */
-	protected $name;
-	
-	/**
+    protected $name;
+
+    /**
      * @ORM\Column(type="text")
      */
-	protected $description;
+    protected $description;
 
-	/**
-	 * @ORM\Column(type="integer", name="cached_topic_count")
-	 */
-	protected $cachedTopicCount = 0;
-	
-	/**
-	 * @ORM\Column(type="integer", name="cached_post_count")
-	 */	
-	protected $cachedPostCount = 0;
-	
-	/**
-	 * @ORM\OneToOne(targetEntity="Post")
-	 * @ORM\JoinColumn(name="fk_last_post_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $lastPost = null;
-	
-	/**
-	 * @ORM\Column(type="integer", name="list_order_priority")
-	 */
-	protected $listOrderPriority = 0;
+    /**
+     * @ORM\Column(type="integer", name="cached_topic_count")
+     */
+    protected $cachedTopicCount = 0;
 
+    /**
+     * @ORM\Column(type="integer", name="cached_post_count")
+     */
+    protected $cachedPostCount = 0;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Post")
+     * @ORM\JoinColumn(name="fk_last_post_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $lastPost = null;
+
+    /**
+     * @ORM\Column(type="integer", name="list_order_priority")
+     */
+    protected $listOrderPriority = 0;
 
     public function __construct()
     {
         $this->topics = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -102,7 +99,7 @@ class Board
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -122,7 +119,7 @@ class Board
     /**
      * Get description
      *
-     * @return text 
+     * @return text
      */
     public function getDescription()
     {
@@ -142,7 +139,7 @@ class Board
     /**
      * Get category
      *
-     * @return CCDNForum\ForumBundle\Entity\Category 
+     * @return CCDNForum\ForumBundle\Entity\Category
      */
     public function getCategory()
     {
@@ -162,7 +159,7 @@ class Board
     /**
      * Get topics
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getTopics()
     {
@@ -182,7 +179,7 @@ class Board
     /**
      * Get last_post
      *
-     * @return CCDNForum\ForumBundle\Entity\Post 
+     * @return CCDNForum\ForumBundle\Entity\Post
      */
     public function getLastPost()
     {
@@ -212,7 +209,7 @@ class Board
     /**
      * Get list_order_priority
      *
-     * @return integer 
+     * @return integer
      */
     public function getListOrderPriority()
     {
@@ -232,7 +229,7 @@ class Board
     /**
      * Get cachedTopicCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getCachedTopicCount()
     {
@@ -252,7 +249,7 @@ class Board
     /**
      * Get cachedPostCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getCachedPostCount()
     {

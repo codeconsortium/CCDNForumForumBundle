@@ -3,7 +3,7 @@
 {% block stylesheets %}
 	{{ parent() }}
 	<link href="{{- asset('bundles/ccdncomponentcommon/css/speech_bubble.css') -}}" rel="stylesheet" type="text/css">
-	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">	
+	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block title %}{{- truncDot('title.topic.show' | trans({'%topic_title%': topic.getTitle |capitalize}, 'CCDNForumForumBundle'), param('ccdn_forum_forum.seo.title_length')) -}}{% endblock %}
@@ -12,23 +12,23 @@
 	{{ parent() }}
 
 	{%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
-	
+
 {% endblock %}
 
 {% block sidebar_actions %}
 	{{ parent() }}
-	
+
 	{%- include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' -%}
-	
+
 {% endblock %}
 
 
 {% block body %}
 
 	{%- spaceless -%}
-	
+
 	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
-	
+
 	{%- if topic.closedDate -%}
 	<div class="alert alert-error">
 		{{- 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
@@ -44,11 +44,11 @@
 		{{- topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) -}}
 	</div>
 	{%- endif -%}
-	
+
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 
 	<h2><abbr title="{{- topic.getTitle -}}">{{- truncDot(topic.getTitle |capitalize, 70) -}}</abbr></h2>
-		
+
 	<br>
 
 	<span class="badge badge-info">{{- 'topic.reply_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- topic.cachedReplyCount -}}</span>&nbsp;
@@ -89,7 +89,7 @@
 		{%- if pager.haveToPaginate -%}
 			<div class="pull-left" style="display:inline-block;vertical-align:top;margin-top:0px;">
 			{{ pagerfanta(pager, 'twitter_bootstrap', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) }}
-			</div>		
+			</div>
 		{%- endif -%}
 		<div class="pull-right" style="display:inline-block;height:36px;line-height:18px;margin:18px 0;">
 			<a class="btn btn-large btn-danger" style="vertical-align:middle;margin:0 0 9px 25px;" rel="nofollow" href="{{- path('cc_forum_topic_reply', {'topic_id': topic.getId }) -}}"><i class="icon-white icon-comment"></i>&nbsp;{{- 'link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}</a>

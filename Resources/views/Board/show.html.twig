@@ -10,14 +10,14 @@
 	{{ parent() }}
 
 	{%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
-		
+
 {% endblock %}
 
 {% block sidebar_actions %}
 	{{ parent() }}
-	
+
 	{%- include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' -%}
-	
+
 {% endblock %}
 
 
@@ -30,11 +30,11 @@
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
 	<h2><abbr title="{{- board.name -}}">{{- truncDot(board.name, param('ccdn_forum_forum.seo.title_length')) -}}.</abbr></h2>
-	
+
 	<br>
 
-	{{- BBCode(board.getDescription | raw, param('ccdn_forum_forum.item_board.enable_bb_parser')) | raw -}}	
-	
+	{{- BBCode(board.getDescription | raw, param('ccdn_forum_forum.item_board.enable_bb_parser')) | raw -}}
+
 	<br><br>
 
 	<span class="badge badge-info">{{- 'board.topic_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- board.cachedTopicCount -}}</span>&nbsp;
@@ -71,7 +71,7 @@
 						</td>
 						<td class="center">
 							{# use custom icons below, will be later specified in the create topic form #}
-							<a href="{{- path('cc_forum_topic_show', {'topic_id': topic.getId }) -}}"><i class="icon-bullhorn"></i></a>					
+							<a href="{{- path('cc_forum_topic_show', {'topic_id': topic.getId }) -}}"><i class="icon-bullhorn"></i></a>
 						</td>
 						<td class="left">
 							{%- if topic.getClosedDate -%}
@@ -103,7 +103,7 @@
 								{%- else -%}
 									Guest
 								{%- endif -%}
-								
+
 								{%- set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) -%}
 								<br>
 								{%- if page < 2 -%}
@@ -133,7 +133,7 @@
 			</div>
 		{%- endif -%}
 		<div class="pull-right" style="display:inline-block;height:36px;line-height:18px;margin:18px 0;">
-			<a class="btn btn-large btn-danger" style="vertical-align:middle;margin:0 0 9px 25px;" rel="nofollow" href="{{- path('cc_forum_topic_create', {'board_id': board.getId }) -}}"><i class="icon-white icon-asterisk"></i>&nbsp;{{- 'link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}</a>		
+			<a class="btn btn-large btn-danger" style="vertical-align:middle;margin:0 0 9px 25px;" rel="nofollow" href="{{- path('cc_forum_topic_create', {'board_id': board.getId }) -}}"><i class="icon-white icon-asterisk"></i>&nbsp;{{- 'link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}</a>
 		</div>
 	</div>
 
@@ -145,7 +145,7 @@
 				<th class="left">{{- 'board.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') -}}</th>
 				<th class="center" style="width: 80px;">{{- 'board.table.head.reply_count' | trans({}, 'CCDNForumForumBundle') -}}</th>
 				<th class="center" style="width: 80px;">{{- 'board.table.head.view_count' | trans({}, 'CCDNForumForumBundle') -}}</th>
-				<th class="center" style="width: 170px;">{{- 'board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') -}}</th>	
+				<th class="center" style="width: 170px;">{{- 'board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') -}}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -165,7 +165,7 @@
 					</td>
 					<td class="center">
 						{# use custom icons below, will be later specified in the create topic form #}
-						<a href="{{- path('cc_forum_topic_show', {'topic_id': topic.getId }) -}}"><i class="icon-comment"></i></a>					
+						<a href="{{- path('cc_forum_topic_show', {'topic_id': topic.getId }) -}}"><i class="icon-comment"></i></a>
 					</td>
 					<td class="left">
 						{%- if topic.getClosedDate -%}
@@ -218,7 +218,7 @@
 		{%- endfor -%}
 		</tbody>
 	</table>
-		
+
 	{%- if pager.haveToPaginate -%}
 	    {{- pagerfanta(pager, 'twitter_bootstrap', {'routeName':'cc_forum_board_show_paginated', 'routeParams':{'board_id':board.getId}} ) -}}
 	{%- endif -%}

@@ -3,8 +3,8 @@
 /*
  * This file is part of the CCDN ForumBundle
  *
- * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/> 
- * 
+ * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
+ *
  * Available on github <http://www.github.com/codeconsortium/>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -14,8 +14,6 @@
 namespace CCDNForum\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNUser\UserBundle\Entity\User;
@@ -26,58 +24,56 @@ use CCDNUser\UserBundle\Entity\User;
  */
 class Draft
 {
-	/**
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-	protected $id;
-	
+    protected $id;
+
     /**
      * @ORM\ManyToOne(targetEntity="Board")
      * @ORM\JoinColumn(name="fk_board_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $board;
-	
-	/**
-	 * @ORM\Column(type="string", length=100, nullable=true)
-	 */
-	protected $title;
-	
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $title;
+
     /**
      * @ORM\ManyToOne(targetEntity="Topic", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_topic_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $topic = null;
-	
-	/**
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
-	protected $body;
-	
-	/**
-	 * @ORM\Column(type="datetime", name="created_date")
-	 */
-	protected $createdDate;
-	
-	/**
+    protected $body;
+
+    /**
+     * @ORM\Column(type="datetime", name="created_date")
+     */
+    protected $createdDate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_created_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $createdBy = null;
+     */
+    protected $createdBy = null;
 
-	/**
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNComponent\AttachmentBundle\Entity\Attachment", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $attachment = null;
-	
-
+     */
+    protected $attachment = null;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -97,7 +93,7 @@ class Draft
     /**
      * Get body
      *
-     * @return text 
+     * @return text
      */
     public function getBody()
     {
@@ -117,7 +113,7 @@ class Draft
     /**
      * Get created_date
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedDate()
     {
@@ -137,7 +133,7 @@ class Draft
     /**
      * Get topic
      *
-     * @return CCDNForum\ForumBundle\Entity\Topic 
+     * @return CCDNForum\ForumBundle\Entity\Topic
      */
     public function getTopic()
     {
@@ -157,7 +153,7 @@ class Draft
     /**
      * Get created_by
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getCreatedBy()
     {
@@ -177,7 +173,7 @@ class Draft
     /**
      * Get attachment
      *
-     * @return CCDNComponent\AttachmentBundle\Entity\Attachment 
+     * @return CCDNComponent\AttachmentBundle\Entity\Attachment
      */
     public function getAttachment()
     {
@@ -197,7 +193,7 @@ class Draft
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -217,7 +213,7 @@ class Draft
     /**
      * Get board
      *
-     * @return CCDNForum\ForumBundle\Entity\Board 
+     * @return CCDNForum\ForumBundle\Entity\Board
      */
     public function getBoard()
     {

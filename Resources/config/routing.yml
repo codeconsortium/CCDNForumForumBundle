@@ -4,26 +4,26 @@ cc_forum_home_root:
 
 #
 # Categories.
-#        
+#
 cc_forum_index:
     pattern: /{_locale}/forum
     defaults: { _controller: CCDNForumForumBundle:Category:index, _locale: en }
-        
+
 cc_forum_category_index:
     pattern: /{_locale}/forum/index
     defaults: { _controller: CCDNForumForumBundle:Category:index, _locale: en }
-        
+
 cc_forum_category_show:
     pattern: /{_locale}/forum/category/{category_id}
     defaults: { _controller: CCDNForumForumBundle:Category:show, _locale: en }
-        
+
 #
 # Boards.
 #
 cc_forum_board_show_paginated:
     pattern: /{_locale}/forum/board/{board_id}/page/{page}
     defaults: { _controller: CCDNForumForumBundle:Board:show, _locale: en, page: 1 }
-        
+
 cc_forum_board_show:
     pattern: /{_locale}/forum/board/{board_id}
     defaults: { _controller: CCDNForumForumBundle:Board:show, _locale: en, page: 1 }
@@ -34,23 +34,23 @@ cc_forum_board_show:
 cc_forum_topic_show_paginated:
     pattern: /{_locale}/forum/topic/{topic_id}/page/{page}
     defaults: { _controller: CCDNForumForumBundle:Topic:show, _locale: en, page: 1 }
-        
+
 # item anchored below is only for use in creating a path, not for a request!
 cc_forum_topic_show_paginated_anchored:
     pattern: /{_locale}/forum/topic/{topic_id}/page/{page}#{post_id}
-        
+
 cc_forum_topic_show:
     pattern: /{_locale}/forum/topic/{topic_id}
     defaults: { _controller: CCDNForumForumBundle:Topic:show, _locale: en, page: 1 }
-        
+
 cc_forum_topic_create:
     pattern: /{_locale}/forum/topic/create/for/board/{board_id}
     defaults: { _controller: CCDNForumForumBundle:Topic:create, _locale: en, draftId: 0 }
-        
+
 cc_forum_topic_create_from_draft:
     pattern: /{_locale}/forum/topic/create/for/board/{board_id}/from/draft/{draftId}
     defaults: { _controller: CCDNForumForumBundle:Topic:create, _locale: en, draftId: 0 }
-        
+
 cc_forum_topic_reply:
     pattern: /{_locale}/forum/topic/{topic_id}/reply
     defaults: { _controller: CCDNForumForumBundle:Topic:reply, _locale: en, quote_id: 0, draftId: 0 }
@@ -81,7 +81,7 @@ cc_forum_post_delete:
 cc_forum_post_delete_confirmed:
     pattern: /{_locale}/forum/post/{post_id}/delete/confirm
     defaults: { _controller: CCDNForumForumBundle:Post:deleteConfirmed, _locale: en }
-    
+
 #
 # Drafts.
 #
@@ -104,7 +104,7 @@ cc_forum_draft_delete:
 cc_forum_draft_publish:
     pattern: /{_locale}/forum/draft/{draftId}/publish
     defaults: { _controller: CCDNForumForumBundle:Draft:publish, _locale: en }
-    
+
 #
 # Flags.
 #
@@ -118,15 +118,15 @@ cc_forum_post_flag:
 cc_forum_subscriptions:
     pattern: /{_locale}/forum/subscriptions
     defaults: { _controller: CCDNForumForumBundle:Subscription:show, _locale: en, page: 1 }
-    
+
 cc_forum_subscriptions_paginated:
     pattern: /{_locale}/forum/subscriptions/page/{page}
     defaults: { _controller: CCDNForumForumBundle:Subscription:show, _locale: en, page: 1 }
-    
+
 cc_forum_subscriptions_subscribe:
     pattern: /{_locale}/forum/subscriptions/topic/{topic_id}/subscribe
-    defaults: { _controller: CCDNForumForumBundle:Subscription:subscribe, _locale: en }    
-    
+    defaults: { _controller: CCDNForumForumBundle:Subscription:subscribe, _locale: en }
+
 cc_forum_subscriptions_unsubscribe:
     pattern: /{_locale}/forum/subscriptions/topic/{topic_id}/unsubscribe
-    defaults: { _controller: CCDNForumForumBundle:Subscription:unsubscribe, _locale: en }    
+    defaults: { _controller: CCDNForumForumBundle:Subscription:unsubscribe, _locale: en }

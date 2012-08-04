@@ -8,23 +8,23 @@
 
 {% block sidebar %}
 	{{ parent() }}
-	
+
 	{%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
-	
+
 {% endblock %}
 
 {% block sidebar_actions %}
 	{{ parent() }}
-	
+
 	{%- include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' -%}
-	
+
 {% endblock %}
 
 
 {% block body %}
 
 	{%- spaceless -%}
-	
+
 	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
 
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
@@ -34,7 +34,7 @@
 	{%- if pager.haveToPaginate -%}
 	    {{- pagerfanta(pager, 'twitter_bootstrap', {'routeName':'cc_forum_subscriptions_paginated', 'routeParams':{}} ) -}}
 	{%- endif -%}
-	
+
 	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>
@@ -43,7 +43,7 @@
 				<th class="left">{{- 'board.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') -}}</th>
 				<th class="center" style="width: 100px;">{{- 'board.table.head.reply_count' | trans({}, 'CCDNForumForumBundle') -}}</th>
 				<th class="center" style="width: 100px;">{{- 'board.table.head.view_count' | trans({}, 'CCDNForumForumBundle') -}}</th>
-				<th class="center" style="width: 170px;">{{- 'board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') -}}</th>	
+				<th class="center" style="width: 170px;">{{- 'board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') -}}</th>
 			</tr>
 		</thead>
 		<tbody>
