@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the CCDN ForumBundle
+ * This file is part of the CCDNForum ForumBundle
  *
  * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
  *
@@ -13,8 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Manager;
 
-use CCDNComponent\CommonBundle\Manager\ManagerInterface;
-use CCDNComponent\CommonBundle\Manager\BaseManager;
+use CCDNForum\ForumBundle\Manager\ManagerInterface;
+use CCDNForum\ForumBundle\Manager\BaseManager;
 
 /**
  *
@@ -33,7 +33,7 @@ class TopicManager extends BaseManager implements ManagerInterface
     public function create($post)
     {
         // insert a new row.
-        $this->persist($post)->flushNow();
+        $this->persist($post)->flush();
 
         // refresh the user so that we have an PostId to work with.
         $this->refresh($post);
@@ -46,13 +46,13 @@ class TopicManager extends BaseManager implements ManagerInterface
         $topic->setLastPost($post);
 
         // persist and refresh after a flush to get topic id.
-        $this->persist($topic)->flushNow();
+        $this->persist($topic)->flush();
 
         $this->refresh($topic);
 
         if ($topic->getBoard()) {
             // Update affected Board stats.
-            $this->container->get('ccdn_forum_forum.board.manager')->updateStats($topic->getBoard())->flushNow();
+            $this->container->get('ccdn_forum_forum.board.manager')->updateStats($topic->getBoard())->flush();
         }
 
         // Update the cached post count of the post author.
@@ -99,7 +99,7 @@ class TopicManager extends BaseManager implements ManagerInterface
             $topic->setClosedDate(new \DateTime());
 
             // update the record before doing record counts
-            $this->persist($topic)->flushNow();
+            $this->persist($topic)->flush();
 
             // Update affected Topic stats.
             $this->updateStats($topic);
@@ -120,7 +120,7 @@ class TopicManager extends BaseManager implements ManagerInterface
         $topic->setDeletedBy(null);
         $topic->setDeletedDate(null);
 
-        $this->persist($topic)->flushNow();
+        $this->persist($topic)->flush();
 
         // Update affected Topic stats.
         $this->updateStats($topic);
@@ -149,11 +149,11 @@ class TopicManager extends BaseManager implements ManagerInterface
         $topic->setFirstPost( (($topicFirstPost) ? $topicFirstPost : null) );
         $topic->setLastPost( (($topicLastPost) ? $topicLastPost : null) );
 
-        $this->persist($topic)->flushNow();
+        $this->persist($topic)->flush();
 
         if ($topic->getBoard()) {
             // Update affected Board stats.
-            $this->container->get('ccdn_forum_forum.board.manager')->updateStats($topic->getBoard())->flushNow();
+            $this->container->get('ccdn_forum_forum.board.manager')->updateStats($topic->getBoard())->flush();
         }
 
         return $this;
@@ -182,7 +182,7 @@ class TopicManager extends BaseManager implements ManagerInterface
         // set the new counters
         $topic->setCachedViewCount($topic->getCachedViewCount() + 1);
 
-        $this->persist($topic)->flushNow();
+        $this->persist($topic)->flush();
     }
 
 }

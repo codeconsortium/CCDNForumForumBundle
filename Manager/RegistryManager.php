@@ -13,8 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Manager;
 
-use CCDNComponent\CommonBundle\Manager\ManagerInterface;
-use CCDNComponent\CommonBundle\Manager\BaseManager;
+use CCDNForum\ForumBundle\Manager\ManagerInterface;
+use CCDNForum\ForumBundle\Manager\BaseManager;
 
 use CCDNForum\ForumBundle\Entity\Registry;
 
@@ -50,7 +50,7 @@ class RegistryManager extends BaseManager implements ManagerInterface
             $record->setCachedPostCount($postCount['postCount']);
         }
 
-        $this->persist($record)->flushNow();
+        $this->persist($record)->flush();
 
         return $this;
     }
@@ -89,7 +89,7 @@ class RegistryManager extends BaseManager implements ManagerInterface
         $record->setCachedKarmaPositiveCount($karmaCount['karmaPositiveCount']);
         $record->setCachedKarmaNegativeCount($karmaCount['karmaNegativeCount']);
 
-        $this->persist($record)->flushNow();
+        $this->persist($record)->flush();
 
         return $this;
     }

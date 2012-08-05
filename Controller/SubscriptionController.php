@@ -70,7 +70,7 @@ class SubscriptionController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $this->container->get('ccdn_forum_forum.subscription.manager')->subscribe($topic_id, $user)->flushNow();
+        $this->container->get('ccdn_forum_forum.subscription.manager')->subscribe($topic_id, $user)->flush();
 
         return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $topic_id)) );
     }
@@ -83,7 +83,7 @@ class SubscriptionController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $this->container->get('ccdn_forum_forum.subscription.manager')->unsubscribe($topic_id, $user)->flushNow();
+        $this->container->get('ccdn_forum_forum.subscription.manager')->unsubscribe($topic_id, $user)->flush();
 
         return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $topic_id)) );
     }

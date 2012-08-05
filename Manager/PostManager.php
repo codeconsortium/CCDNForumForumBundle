@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the CCDN ForumBundle
+ * This file is part of the CCDNForum ForumBundle
  *
  * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
  *
@@ -13,8 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Manager;
 
-use CCDNComponent\CommonBundle\Manager\ManagerInterface;
-use CCDNComponent\CommonBundle\Manager\BaseManager;
+use CCDNForum\ForumBundle\Manager\ManagerInterface;
+use CCDNForum\ForumBundle\Manager\BaseManager;
 
 /**
  *
@@ -34,7 +34,7 @@ class PostManager extends BaseManager implements ManagerInterface
     {
 
         // insert a new row
-        $this->persist($post)->flushNow();
+        $this->persist($post)->flush();
 
         // refresh the user so that we have an PostId to work with.
         $this->refresh($post);
@@ -82,7 +82,7 @@ class PostManager extends BaseManager implements ManagerInterface
             $post->setLockedDate(new \DateTime());
 
             // update the record
-            $this->persist($post)->flushNow();
+            $this->persist($post)->flush();
 
             if ($post->getTopic()) {
                 $topic = $post->getTopic();
@@ -100,10 +100,10 @@ class PostManager extends BaseManager implements ManagerInterface
                         $topic->setClosedBy($user);
                         $topic->setClosedDate(new \DateTime());
 
-                        $this->persist($topic)->flushNow();
+                        $this->persist($topic)->flush();
 
                         // Update affected Topic stats.
-                        $this->container->get('ccdn_forum_forum.topic.manager')->updateStats($post->getTopic())->flushNow();
+                        $this->container->get('ccdn_forum_forum.topic.manager')->updateStats($post->getTopic())->flush();
                     }
                 }
             }
@@ -125,7 +125,7 @@ class PostManager extends BaseManager implements ManagerInterface
         $post->setDeletedDate(null);
 
         // update the record
-        $this->persist($post)->flushNow();
+        $this->persist($post)->flush();
 
         if ($post->getTopic()) {
             $topic = $post->getTopic();
@@ -137,10 +137,10 @@ class PostManager extends BaseManager implements ManagerInterface
                 $topic->setDeletedBy(null);
                 $topic->setDeletedDate(null);
 
-                $this->persist($topic)->flushNow();
+                $this->persist($topic)->flush();
 
                 // Update affected Topic stats.
-                $this->container->get('ccdn_forum_forum.topic.manager')->updateStats($post->getTopic())->flushNow();
+                $this->container->get('ccdn_forum_forum.topic.manager')->updateStats($post->getTopic())->flush();
             }
         }
 

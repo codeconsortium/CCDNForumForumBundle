@@ -75,7 +75,7 @@ class DraftController extends ContainerAware
         }
 
         if ($draft) {
-            $this->container->get('ccdn_forum_forum.draft.manager')->remove($draft)->flushNow();
+            $this->container->get('ccdn_forum_forum.draft.manager')->remove($draft)->flush();
         }
 
         return new RedirectResponse($this->container->get('router')->generate('cc_forum_drafts_list'));

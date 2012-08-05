@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use CCDNComponent\CommonBundle\Manager\ManagerInterface;
+use CCDNForum\ForumBundle\Manager\ManagerInterface;
 
 /**
  *
@@ -279,11 +279,11 @@ class TopicFormHandler
     {
 
         if ($this->strategy == self::INSERT) {
-            return $this->manager->create($entity)->flushNow();
+            return $this->manager->create($entity)->flush();
         }
 
         if ($this->strategy == self::UPDATE) {
-            return $this->manager->update($entity)->flushNow();
+            return $this->manager->update($entity)->flush();
         }
     }
 

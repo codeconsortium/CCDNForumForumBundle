@@ -350,7 +350,7 @@ class PostController extends ContainerAware
             }
         }
 
-        $this->container->get('ccdn_forum_forum.post.manager')->softDelete($post, $user)->flushNow();
+        $this->container->get('ccdn_forum_forum.post.manager')->softDelete($post, $user)->flush();
 
         // set flash message
         $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.post.delete.success', array('%post_id%' => $post_id), 'CCDNForumForumBundle'));
