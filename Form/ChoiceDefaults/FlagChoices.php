@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the CCDN ForumBundle
+ * This file is part of the CCDNForum ForumBundle
  *
  * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
  *
@@ -32,7 +32,7 @@ class FlagChoices //extends ContainerAware
 
     /**
      *
-     * this is used for various forms / views needing these choices for the reason field.
+     * This is used for various forms / views needing these choices for the reason field.
      *
      * @access protected
      */
@@ -47,7 +47,7 @@ class FlagChoices //extends ContainerAware
 
     /**
      *
-     * this is used for various forms / views needing these choices for the reason field.
+     * This is used for various forms / views needing these choices for the reason field.
      *
      * @access protected
      */

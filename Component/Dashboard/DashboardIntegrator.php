@@ -34,6 +34,9 @@ class DashboardIntegrator extends BaseIntegrator implements IntegratorInterface
      *				[AUTH String] (optional)
      *				[URL_LINK String]
      *				[URL_NAME String]
+	 * 
+	 * @access public
+	 * @return Array()
      */
     public function getResources()
     {

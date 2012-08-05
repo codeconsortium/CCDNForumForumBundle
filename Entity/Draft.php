@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the CCDN ForumBundle
+ * This file is part of the CCDNForum ForumBundle
  *
  * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
  *
@@ -24,6 +24,7 @@ use CCDNUser\UserBundle\Entity\User;
  */
 class Draft
 {
+	
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the CCDN ForumBundle
+ * This file is part of the CCDNForum ForumBundle
  *
  * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
  *
@@ -25,6 +25,7 @@ use CCDNForum\ForumBundle\Entity\Board;
  */
 class Category
 {
+	
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
