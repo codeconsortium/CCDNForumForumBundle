@@ -43,7 +43,7 @@
 	<hr>
 
 	{%- if sticky_topics is not empty -%}
-		<table class="table table-striped table-bordered">
+		<table class="table">
 			<thead>
 				<tr>
 					<th class="center" style="width: 18px;"></th>
@@ -57,63 +57,7 @@
 			<tbody>
 			{%- for row, topic in sticky_topics -%}
 				{%- if not topic.getDeletedBy or is_granted('ROLE_MODERATOR') -%}
-					<tr class="{{- cycle(['row_odd', 'row_even'], row) -}}">
-						<td class="center">
-						{%- if topic.getDeletedDate -%}
-							<i class="icon-trash"></i>
-						{%- else -%}
-							{%- if topic.getClosedDate -%}
-								<i class="icon-lock"></i>
-							{%- else -%}
-								{# else if not closed, then if new posts add special icon here #}
-							{%- endif -%}
-						{%- endif -%}
-						</td>
-						<td class="center">
-							{# use custom icons below, will be later specified in the create topic form #}
-							<a href="{{- path('cc_forum_topic_show', {'topic_id': topic.getId }) -}}"><i class="icon-bullhorn"></i></a>
-						</td>
-						<td class="left">
-							{%- if topic.getClosedDate -%}
-							<span class="label label-important">{{- 'badge.topic.closed' |trans({}, 'CCDNForumForumBundle') -}}</span>&nbsp;
-							{%- endif -%}
-							<abbr title="{{- topic.getTitle -}}"><a href="{{- path('cc_forum_topic_show', {'topic_id': topic.getId }) -}}">{{- truncDot(topic.getTitle, param('ccdn_forum_forum.board.show.topic_title_truncate')) |title -}}</a></abbr>
-							<br>
-							{%- if topic.getFirstPost -%}
-								{{- 'post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
-								{%- if topic.getFirstPost.getCreatedBy -%}
-									<a href="{{- path(user_profile_route, {'user_id': topic.getFirstPost.getCreatedBy.getId }) -}}">{{- topic.getFirstPost.getCreatedBy |title -}}</a>
-								{%- else -%}
-									Guest
-								{%- endif -%}
-								&nbsp;<a href="{{- path('cc_forum_topic_show', {'topic_id': topic.getId }) -}}"><abbr class="timestamper" title="{{- topic.getFirstPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- topic.getFirstPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.first_post_datetime_format')) -}}</abbr></a>
-							{%- endif -%}
-						</td>
-						<td class="center">
-							{{- topic.getCachedReplyCount -}}
-						</td>
-						<td class="center">
-							{{- topic.getCachedViewCount -}}
-						</td>
-						<td class="center">
-							{%- if topic.getLastPost -%}
-								{{- 'post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
-								{%- if topic.getLastPost.getCreatedBy -%}
-									<a href="{{- path(user_profile_route, {'user_id': topic.getLastPost.getCreatedBy.getId }) -}}">{{- topic.getLastPost.getCreatedBy |title -}}</a>
-								{%- else -%}
-									Guest
-								{%- endif -%}
-
-								{%- set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) -%}
-								<br>
-								{%- if page < 2 -%}
-									<a href="{{- path('cc_forum_topic_show', {'topic_id': topic.getId } ) -}}#{{- topic.getLastPost.getId -}}"><abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) -}}</abbr></a>
-								{%- else -%}
-									<a href="{{- path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page }) -}}#{{- topic.getLastPost.getId -}}"><abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) -}}</abbr></a>
-								{%- endif -%}
-							{%- endif -%}
-						</td>
-					</tr>
+					{%- include 'CCDNForumForumBundle:Board:item_topic_list.html.twig' -%}
 				{%- endif -%}
 			{%- else -%}
 				<tr>
@@ -137,7 +81,7 @@
 		</div>
 	</div>
 
-	<table class="table table-striped table-bordered">
+	<table class="table">
 		<thead>
 			<tr>
 				<th class="center" style="width: 18px;"></th>
@@ -151,63 +95,7 @@
 		<tbody>
 		{%- for row, topic in pager.getCurrentPageResults -%}
 			{%- if not topic.getDeletedBy or is_granted('ROLE_MODERATOR') -%}
-				<tr class="{{- cycle(['row_odd', 'row_even'], row) -}}">
-					<td class="center">
-					{%- if topic.getDeletedDate -%}
-						<i class="icon-trash"></i>
-					{%- else -%}
-						{%- if topic.getClosedDate -%}
-							<i class="icon-lock"></i>
-						{%- else -%}
-							{# else if not closed, then if new posts add special icon here #}
-						{%- endif -%}
-					{%- endif -%}
-					</td>
-					<td class="center">
-						{# use custom icons below, will be later specified in the create topic form #}
-						<a href="{{- path('cc_forum_topic_show', {'topic_id': topic.getId }) -}}"><i class="icon-comment"></i></a>
-					</td>
-					<td class="left">
-						{%- if topic.getClosedDate -%}
-							<span class="label label-important">{{- 'badge.topic.closed' |trans({}, 'CCDNForumForumBundle') -}}</span>&nbsp;
-						{%- endif -%}
-						<abbr title="{{- topic.getTitle -}}"><a href="{{- path('cc_forum_topic_show', {'topic_id': topic.getId }) -}}">{{- truncDot(topic.getTitle, param('ccdn_forum_forum.board.show.topic_title_truncate')) | title -}}</a></abbr>
-						<br>
-
-						{%- if topic.getFirstPost -%}
-							{{- 'post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
-							{%- if topic.getFirstPost.getCreatedBy -%}
-								<a href="{{- path(user_profile_route, {'user_id': topic.getFirstPost.getCreatedBy.getId }) -}}">{{- topic.getFirstPost.getCreatedBy |title -}}</a>
-							{%- else -%}
-								Guest
-							{%- endif -%}
-							&nbsp;<a href="{{- path('cc_forum_topic_show', {'topic_id': topic.getId }) -}}"><abbr class="timestamper" title="{{- topic.getFirstPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- topic.getFirstPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.first_post_datetime_format')) -}}</abbr></a>
-						{%- endif -%}
-					</td>
-					<td class="center">
-						{{- topic.getCachedReplyCount -}}
-					</td>
-					<td class="center">
-						{{- topic.getCachedViewCount -}}
-					</td>
-					<td class="center">
-						{%- if topic.getLastPost -%}
-							{{- 'post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
-							{%- if topic.getLastPost.getCreatedBy -%}
-								<a href="{{- path(user_profile_route, {'user_id': topic.getLastPost.getCreatedBy.getId }) -}}">{{- topic.getLastPost.getCreatedBy |title -}}</a>
-							{%- else -%}
-								Guest
-							{%- endif -%}
-							{%- set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) -%}
-							<br>
-							{%- if page < 2 -%}
-							<a href="{{- path('cc_forum_topic_show', {'topic_id': topic.getId }) -}}#{{- topic.getLastPost.getId -}}"><abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) -}}</abbr></a>
-							{%- else -%}
-							<a href="{{- path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page }) -}}#{{- topic.getLastPost.getId -}}"><abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.board.show.last_post_datetime_format')) -}}</abbr></a>
-							{%- endif -%}
-						{%- endif -%}
-					</td>
-				</tr>
+				{%- include 'CCDNForumForumBundle:Board:item_topic_list.html.twig' -%}
 			{%- endif -%}
 		{%- else -%}
 			<tr>

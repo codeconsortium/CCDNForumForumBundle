@@ -1,5 +1,5 @@
 {%- spaceless -%}
-<tr class="{{- cycler(['row_odd', 'row_even'], 'board') -}}">
+<tr class="{{- cycler(['row_odd', 'row_even'], 'board') }} marked_read">
 	<td class="center">
 		<img class="icon32" width="32" height="32" src="{{- asset('bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_board.png') -}}" alt="icon">
 	</td>
@@ -31,11 +31,7 @@
 				{%- else -%}
 					<a href="{{- path('cc_forum_topic_show_paginated', {'topic_id': board.getLastPost.getTopic.getId, 'page':page }) -}}#{{- board.getLastPost.getId -}}"><abbr class="timestamper" title="{{- board.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- board.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.category.last_post_datetime_format')) -}}</abbr></a>
 				{%- endif -%}
-			{%- else -%}
-				{{- 'info.not_applicable' | trans({}, 'CCDNForumForumBundle') -}}
 			{%- endif -%}
-		{%- else -%}
-			{{- 'info.not_applicable' | trans({}, 'CCDNForumForumBundle') -}}
 		{%- endif -%}
 	</td>
 </tr>
