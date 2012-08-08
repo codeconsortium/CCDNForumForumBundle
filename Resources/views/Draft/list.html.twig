@@ -31,11 +31,16 @@
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
 	<h2>{{- 'title.drafts' | trans({}, 'CCDNForumForumBundle' ) -}}</h2>
-
-	{%- if pager.haveToPaginate -%}
-	    {{- pagerfanta(pager, 'twitter_bootstrap', {'routeName':'cc_forum_drafts_list_paginated', 'routeParams':{}} ) -}}
-	{%- endif -%}
-
+	
+	<div class="btn-toolbar" style="display:block !important;clear:both !important;">
+		{%- if pager.haveToPaginate -%}
+			<div class="pull-right">
+	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'cc_forum_drafts_list_paginated', 'routeParams':{}} ) -}}
+			</div>
+		{%- endif -%}
+		<br><br>
+	</div>
+	
 	<table class="table">
 		<thead>
 			<tr>
@@ -97,9 +102,14 @@
 		</tbody>
 	</table>
 
-	{%- if pager.haveToPaginate -%}
-	    {{- pagerfanta(pager, 'twitter_bootstrap', {'routeName':'cc_forum_drafts_list_paginated', 'routeParams':{}} ) -}}
-	{%- endif -%}
+	<div class="btn-toolbar" style="display:block !important;clear:both !important;">
+		{%- if pager.haveToPaginate -%}
+			<div class="pull-right">
+	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'cc_forum_drafts_list_paginated', 'routeParams':{}} ) -}}
+			</div>
+		{%- endif -%}
+		<br><br>
+	</div>
 
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 

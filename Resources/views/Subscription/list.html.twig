@@ -31,10 +31,15 @@
 
 	<h2>{{- 'title.subscriptions.show' | trans({}, 'CCDNForumForumBundle' ) -}}</h2>
 
-	{%- if pager.haveToPaginate -%}
-	    {{- pagerfanta(pager, 'twitter_bootstrap', {'routeName':'cc_forum_subscriptions_paginated', 'routeParams':{}} ) -}}
-	{%- endif -%}
-
+	<div class="btn-toolbar" style="display:block !important;clear:both !important;">
+		{%- if pager.haveToPaginate -%}
+			<div class="pull-right">
+	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'cc_forum_subscriptions_paginated', 'routeParams':{}} ) -}}
+			</div>
+		{%- endif -%}
+		<br><br>
+	</div>
+	
 	<table class="table">
 		<thead>
 			<tr>
@@ -61,10 +66,15 @@
 		{%- endfor -%}
 		</tbody>
 	</table>
-
-	{%- if pager.haveToPaginate -%}
-	    {{- pagerfanta(pager, 'twitter_bootstrap', {'routeName':'cc_forum_subscriptions_paginated', 'routeParams':{}} ) -}}
-	{%- endif -%}
+	
+	<div class="btn-toolbar" style="display:block !important;clear:both !important;">
+		{%- if pager.haveToPaginate -%}
+			<div class="pull-right">
+	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'cc_forum_subscriptions_paginated', 'routeParams':{}} ) -}}
+			</div>
+		{%- endif -%}
+		<br><br>
+	</div>
 
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
