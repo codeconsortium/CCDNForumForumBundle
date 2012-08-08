@@ -87,11 +87,11 @@
 	
 	<div class="btn-toolbar" style="display:block !important;clear:both !important;">
 		<div class="pull-left">
-			<a class="btn btn-danger" rel="nofollow" href="{{- path('cc_forum_topic_reply', {'topic_id': topic.getId }) -}}"><i class="icon-white icon-comment"></i>&nbsp;{{- 'link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}</a>
+			<a class="btn btn-danger" rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply', {'topic_id': topic.getId }) -}}"><i class="icon-white icon-comment"></i>&nbsp;{{- 'link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}</a>
 		</div>
 		{%- if pager.haveToPaginate -%}
 			<div class="pull-right">
-	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) -}}
+	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) -}}
 			</div>
 		{%- endif -%}
 		<br><br>
@@ -105,7 +105,7 @@
 	<div class="btn-toolbar" style="display:block !important;clear:both !important;">
 		{%- if pager.haveToPaginate -%}
 			<div class="pull-right">
-	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'cc_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) -}}
+	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) -}}
 			</div>
 		{%- endif -%}
 		<br><br>

@@ -50,8 +50,8 @@ class SubscriptionController extends ContainerAware
         $posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 
         $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
-            ->add($this->container->get('translator')->trans('crumbs.topic.subscriptions', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_subscriptions'), "bookmark");
+            ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
+            ->add($this->container->get('translator')->trans('crumbs.topic.subscriptions', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_subscription_list'), "bookmark");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Subscription:list.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
@@ -72,7 +72,7 @@ class SubscriptionController extends ContainerAware
 
         $this->container->get('ccdn_forum_forum.subscription.manager')->subscribe($topic_id, $user)->flush();
 
-        return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $topic_id)) );
+        return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topic_id' => $topic_id)) );
     }
 
     public function unsubscribeAction($topic_id)
@@ -85,7 +85,7 @@ class SubscriptionController extends ContainerAware
 
         $this->container->get('ccdn_forum_forum.subscription.manager')->unsubscribe($topic_id, $user)->flush();
 
-        return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $topic_id)) );
+        return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topic_id' => $topic_id)) );
     }
 
     /**

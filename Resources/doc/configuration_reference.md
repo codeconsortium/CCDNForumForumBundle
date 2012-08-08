@@ -9,7 +9,7 @@ All available configuration options are listed below with their default values.
 #
 ccdn_forum_forum:
     user:
-        profile_route: cc_profile_show_by_id
+        profile_route: ccdn_user_profile_show_by_id
     template:
         engine: twig
 	seo:

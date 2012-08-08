@@ -43,7 +43,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('user')
                     ->children()
-                        ->scalarNode('profile_route')->defaultValue('cc_profile_show_by_id')->end()
+                        ->scalarNode('profile_route')->defaultValue('ccdn_user_profile_show_by_id')->end()
                     ->end()
                 ->end()
                 ->arrayNode('template')

@@ -1,132 +1,132 @@
-cc_forum_home_root:
+ccdn_forum_forum_home_root:
     pattern: /
     defaults: { _controller: CCDNForumForumBundle:Category:index, _locale: en }
 
 #
 # Categories.
 #
-cc_forum_index:
+ccdn_forum_forum_index:
     pattern: /{_locale}/forum
     defaults: { _controller: CCDNForumForumBundle:Category:index, _locale: en }
 
-cc_forum_category_index:
+ccdn_forum_forum_category_index:
     pattern: /{_locale}/forum/index
     defaults: { _controller: CCDNForumForumBundle:Category:index, _locale: en }
 
-cc_forum_category_show:
+ccdn_forum_forum_category_show:
     pattern: /{_locale}/forum/category/{category_id}
     defaults: { _controller: CCDNForumForumBundle:Category:show, _locale: en }
 
 #
 # Boards.
 #
-cc_forum_board_show_paginated:
+ccdn_forum_forum_board_show:
+    pattern: /{_locale}/forum/board/{board_id}
+    defaults: { _controller: CCDNForumForumBundle:Board:show, _locale: en, page: 1 }
+ccdn_forum_forum_board_show_paginated:
     pattern: /{_locale}/forum/board/{board_id}/page/{page}
     defaults: { _controller: CCDNForumForumBundle:Board:show, _locale: en, page: 1 }
 
-cc_forum_board_show:
-    pattern: /{_locale}/forum/board/{board_id}
-    defaults: { _controller: CCDNForumForumBundle:Board:show, _locale: en, page: 1 }
 
 #
 # Topics.
 #
-cc_forum_topic_show_paginated:
+ccdn_forum_forum_topic_show:
+    pattern: /{_locale}/forum/topic/{topic_id}
+    defaults: { _controller: CCDNForumForumBundle:Topic:show, _locale: en, page: 1 }
+    
+ccdn_forum_forum_topic_show_paginated:
     pattern: /{_locale}/forum/topic/{topic_id}/page/{page}
     defaults: { _controller: CCDNForumForumBundle:Topic:show, _locale: en, page: 1 }
 
 # item anchored below is only for use in creating a path, not for a request!
-cc_forum_topic_show_paginated_anchored:
+ccdn_forum_forum_topic_show_paginated_anchored:
     pattern: /{_locale}/forum/topic/{topic_id}/page/{page}#{post_id}
 
-cc_forum_topic_show:
-    pattern: /{_locale}/forum/topic/{topic_id}
-    defaults: { _controller: CCDNForumForumBundle:Topic:show, _locale: en, page: 1 }
-
-cc_forum_topic_create:
+ccdn_forum_forum_topic_create:
     pattern: /{_locale}/forum/topic/create/for/board/{board_id}
     defaults: { _controller: CCDNForumForumBundle:Topic:create, _locale: en, draftId: 0 }
 
-cc_forum_topic_create_from_draft:
+ccdn_forum_forum_topic_create_from_draft:
     pattern: /{_locale}/forum/topic/create/for/board/{board_id}/from/draft/{draftId}
     defaults: { _controller: CCDNForumForumBundle:Topic:create, _locale: en, draftId: 0 }
 
-cc_forum_topic_reply:
+ccdn_forum_forum_topic_reply:
     pattern: /{_locale}/forum/topic/{topic_id}/reply
     defaults: { _controller: CCDNForumForumBundle:Topic:reply, _locale: en, quote_id: 0, draftId: 0 }
 
-cc_forum_topic_reply_from_draft:
+ccdn_forum_forum_topic_reply_from_draft:
     pattern: /{_locale}/forum/topic/{topic_id}/reply/from/draft/{draftId}
     defaults: { _controller: CCDNForumForumBundle:Topic:reply, _locale: en, quote_id: 0, draftId: 0 }
 
-cc_forum_topic_reply_with_quote:
+ccdn_forum_forum_topic_reply_with_quote:
     pattern: /{_locale}/forum/topic/{topic_id}/reply/quote/{quote_id}
     defaults: { _controller: CCDNForumForumBundle:Topic:reply, _locale: en, quote_id: 0, draftId: 0 }
 
 #
 # Posts.
 #
-cc_forum_post_show:
+ccdn_forum_forum_post_show:
     pattern: /{_locale}/forum/post/{post_id}
     defaults: { _controller: CCDNForumForumBundle:Post:show, _locale: en }
 
-cc_forum_post_edit:
+ccdn_forum_forum_post_edit:
     pattern: /{_locale}/forum/post/{post_id}/edit
     defaults: { _controller: CCDNForumForumBundle:Post:edit, _locale: en }
 
-cc_forum_post_delete:
+ccdn_forum_forum_post_delete:
     pattern: /{_locale}/forum/post/{post_id}/delete
     defaults: { _controller: CCDNForumForumBundle:Post:delete, _locale: en }
 
-cc_forum_post_delete_confirmed:
+ccdn_forum_forum_post_delete_confirmed:
     pattern: /{_locale}/forum/post/{post_id}/delete/confirm
     defaults: { _controller: CCDNForumForumBundle:Post:deleteConfirmed, _locale: en }
 
 #
 # Drafts.
 #
-cc_forum_drafts_list:
+ccdn_forum_forum_draft_list:
     pattern: /{_locale}/forum/drafts
     defaults: { _controller: CCDNForumForumBundle:Draft:list, _locale: en, page: 1 }
 
-cc_forum_drafts_list_paginated:
+ccdn_forum_forum_draft_list_paginated:
     pattern: /{_locale}/forum/drafts/page/{page}
     defaults: { _controller: CCDNForumForumBundle:Draft:list, _locale: en, page: 1 }
 
-cc_forum_draft_show:
+ccdn_forum_forum_draft_show:
     pattern: /{_locale}/forum/draft/{draftId}/show
     defaults: { _controller: CCDNForumForumBundle:Draft:show, _locale: en }
 
-cc_forum_draft_delete:
+ccdn_forum_forum_draft_delete:
     pattern: /{_locale}/forum/draft/{draftId}/delete
     defaults: { _controller: CCDNForumForumBundle:Draft:delete, _locale: en }
 
-cc_forum_draft_publish:
+ccdn_forum_forum_draft_publish:
     pattern: /{_locale}/forum/draft/{draftId}/publish
     defaults: { _controller: CCDNForumForumBundle:Draft:publish, _locale: en }
 
 #
 # Flags.
 #
-cc_forum_post_flag:
+ccdn_forum_forum_post_flag:
     pattern: /{_locale}/forum/post/{post_id}/flag
     defaults: { _controller: CCDNForumForumBundle:Post:flag, _locale: en }
 
 #
 # Subscriptions.
 #
-cc_forum_subscriptions:
+ccdn_forum_forum_subscription_list:
     pattern: /{_locale}/forum/subscriptions
     defaults: { _controller: CCDNForumForumBundle:Subscription:show, _locale: en, page: 1 }
 
-cc_forum_subscriptions_paginated:
+ccdn_forum_forum_subscription_list_paginated:
     pattern: /{_locale}/forum/subscriptions/page/{page}
     defaults: { _controller: CCDNForumForumBundle:Subscription:show, _locale: en, page: 1 }
 
-cc_forum_subscriptions_subscribe:
+ccdn_forum_forum_subscription_subscribe:
     pattern: /{_locale}/forum/subscriptions/topic/{topic_id}/subscribe
     defaults: { _controller: CCDNForumForumBundle:Subscription:subscribe, _locale: en }
 
-cc_forum_subscriptions_unsubscribe:
+ccdn_forum_forum_subscription_unsubscribe:
     pattern: /{_locale}/forum/subscriptions/topic/{topic_id}/unsubscribe
     defaults: { _controller: CCDNForumForumBundle:Subscription:unsubscribe, _locale: en }

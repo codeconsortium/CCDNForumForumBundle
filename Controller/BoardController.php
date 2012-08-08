@@ -60,9 +60,9 @@ class BoardController extends ContainerAware
         $category = $board->getCategory();
 
         $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
-            ->add($category->getName(), $this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
-            ->add($board->getName(), $this->container->get('router')->generate('cc_forum_board_show', array('board_id' => $board_id)), "board");
+            ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
+            ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('category_id' => $category->getId())), "category")
+            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('board_id' => $board_id)), "board");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Board:show.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),

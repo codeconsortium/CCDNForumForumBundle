@@ -36,7 +36,7 @@ class CategoryController extends ContainerAware
         $topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
         $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home");
+            ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Category:index.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
@@ -64,8 +64,8 @@ class CategoryController extends ContainerAware
         $topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
         $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
-            ->add($category->getName(), $this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category_id)), "category");
+            ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
+            ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('category_id' => $category_id)), "category");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Category:show.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),

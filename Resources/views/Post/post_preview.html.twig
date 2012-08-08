@@ -39,7 +39,7 @@
 							</span>
 							<span class="common_body">
 								{%- if post.getAttachment -%}
-									<br><a href="{{- path('cc_attachment_download', {'attachment_id': post.getAttachment.getId }) -}}"><img width="60" height="60" src="{{- path('cc_attachment_thumbnail', {'attachment_id': post.getAttachment.getId }) -}}" alt="{{- post.getAttachment.getFilenameOriginal -}}"></a><br>
+									<br><a href="{{- path('ccdn_component_attachment_download', {'attachment_id': post.getAttachment.getId }) -}}"><img width="60" height="60" src="{{- path('ccdn_component_attachment_thumbnail', {'attachment_id': post.getAttachment.getId }) -}}" alt="{{- post.getAttachment.getFilenameOriginal -}}"></a><br>
 								{%- endif -%}
 							</span>
 							<br><hr>
