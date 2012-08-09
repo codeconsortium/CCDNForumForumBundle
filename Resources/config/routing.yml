@@ -1,7 +1,3 @@
-ccdn_forum_forum_home_root:
-    pattern: /
-    defaults: { _controller: CCDNForumForumBundle:Category:index, _locale: en }
-
 #
 # Categories.
 #

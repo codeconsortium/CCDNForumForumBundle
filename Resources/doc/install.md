@@ -145,6 +145,14 @@ Change the layout template you wish to use for each page by changing the configs
 
 ## Next Steps.
 
+If you want to have the forum appear as your home page, add this route to your app/config/routing.yml:
+
+``` yaml
+ccdn_forum_forum_home_root:
+    pattern: /
+    defaults: { _controller: CCDNForumForumBundle:Category:index, _locale: en }
+```
+
 Installation should now be complete!
 
 If you need further help/support, have suggestions or want to contribute please join the community at [Code Consortium](http://www.codeconsortium.com)
