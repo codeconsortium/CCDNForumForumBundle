@@ -48,9 +48,9 @@ class CategoryRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param int $category_id
+     * @param Int $categoryId
      */
-    public function findOneByIdJoinedToBoard($category_id)
+    public function findOneByIdJoinedToBoard($categoryId)
     {
 
         $query = $this->getEntityManager()
@@ -61,7 +61,7 @@ class CategoryRepository extends EntityRepository
                 WHERE c.id = :id
                 ORDER BY c.listOrderPriority, b.listOrderPriority
             ')
-            ->setParameter('id', $category_id);
+            ->setParameter('id', $categoryId);
 
         try {
             return $query->getSingleResult();
@@ -78,14 +78,14 @@ class CategoryRepository extends EntityRepository
      */
     public function findCategoriesOrderedByPriority()
     {
-        $categories_query = $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery('
                 SELECT c
                 FROM CCDNForumForumBundle:Category c
                 ORDER BY c.listOrderPriority ASC');
 
         try {
-            return $categories_query->getResult();
+            return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }

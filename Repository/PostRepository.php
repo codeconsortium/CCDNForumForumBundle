@@ -75,7 +75,7 @@ class PostRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param int $topic_id
+     * @param Int $topicId
      */
     public function findPostsForTopicByIdPaginated($topicId)
     {
@@ -116,9 +116,9 @@ class PostRepository extends EntityRepository
      *
      *
      * @access public
-     * @param int $post_id
+     * @param Int $postId
      */
-    public function findPostForEditing($post_id)
+    public function findPostForEditing($postId)
     {
 
         $query = $this->getEntityManager()
@@ -128,7 +128,7 @@ class PostRepository extends EntityRepository
                 LEFT JOIN p.topic t
                 LEFT JOIN t.firstPost fp
                 WHERE p.id = :id')
-            ->setParameter('id', $post_id);
+            ->setParameter('id', $postId);
 
         try {
             return $query->getsingleResult();
@@ -211,7 +211,7 @@ class PostRepository extends EntityRepository
      *
      *
      */
-    public function getPostCountForUserById($user_id)
+    public function getPostCountForUserById($userId)
     {
 
         $query = $this->getEntityManager()
@@ -220,7 +220,7 @@ class PostRepository extends EntityRepository
                 FROM CCDNForumForumBundle:Post p
                 LEFT JOIN p.topic t
                 WHERE p.createdBy = :id AND p.isDeleted = FALSE')
-            ->setParameter('id', $user_id);
+            ->setParameter('id', $userId);
 
         try {
             return $query->getsingleResult();
@@ -233,9 +233,9 @@ class PostRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param int $topic_id
+     * @param Int $topicId
      */
-    public function getPostCountForTopicById($topic_id)
+    public function getPostCountForTopicById($topicId)
     {
 
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -244,7 +244,7 @@ class PostRepository extends EntityRepository
             ->add('select', 'count(p.id)')
             ->add('from', 'CCDNForumForumBundle:Post p')
             ->add('where', 'p.topic = ?1')
-            ->setParameter(1, $topic_id)
+            ->setParameter(1, $topicId)
             ->getQuery();
 
         try {

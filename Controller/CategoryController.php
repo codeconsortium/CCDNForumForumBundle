@@ -27,58 +27,58 @@ class CategoryController extends ContainerAware
     /**
      *
      * @access public
-     * @return RedirectResponse|RenderResponse
+     * @return RenderResponse
      */
     public function indexAction()
     {
         $categories = $this->container->get('ccdn_forum_forum.category.repository')->findAllJoinedToBoard();
 
-        $topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
+        $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
-        $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
+        $crumbs = $this->container->get('ccdn_component_crumb.trail')
             ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Category:index.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
-            'crumbs' => $crumb_trail,
+            'crumbs' => $crumbs,
             'categories' => $categories,
-            'topics_per_page' => $topics_per_page,
-            ));
+            'topics_per_page' => $topicsPerPage,
+        ));
     }
 
     /**
      *
      * @access public
-     * @param $category_id
-     * @return RedirectResponse|RenderResponse
+     * @param Int $categoryId
+     * @return RenderResponse
      */
-    public function showAction($category_id)
+    public function showAction($categoryId)
     {
 
-        $category = $this->container->get('ccdn_forum_forum.category.repository')->findOneByIdJoinedToBoard($category_id);
+        $category = $this->container->get('ccdn_forum_forum.category.repository')->findOneByIdJoinedToBoard($categoryId);
 
         if (! $category) {
             throw NotFoundhttpException('No such category exists!');
         }
 
-        $topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
+        $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
-        $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
+        $crumbs = $this->container->get('ccdn_component_crumb.trail')
             ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('category_id' => $category_id)), "category");
+            ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $categoryId)), "category");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Category:show.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
-            'crumbs' => $crumb_trail,
+            'crumbs' => $crumbs,
             'category' => $category,
-            'topics_per_page' => $topics_per_page,
-            ));
+            'topics_per_page' => $topicsPerPage,
+        ));
     }
 
     /**
      *
      * @access protected
-     * @return string
+     * @return String
      */
     protected function getEngine()
     {

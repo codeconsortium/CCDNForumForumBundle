@@ -29,20 +29,20 @@ class PostController extends ContainerAware
     /**
      *
      * @access public
-     * @param $post_id
-     * @return RedirectResponse|RenderResponse
+     * @param Int $postId
+     * @return RenderResponse
      */
-    public function showAction($post_id)
+    public function showAction($postId)
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $post = $this->container->get('ccdn_forum_forum.post.repository')->find($post_id);
+        $post = $this->container->get('ccdn_forum_forum.post.repository')->find($postId);
 
         if (! $post) {
             throw new NotFoundHttpException('No such post exists!');
         }
 
-        // if this topics first post is deleted, and no other
+        // If this topics first post is deleted, and no other
         // posts exist then throw an NotFoundHttpException!
         if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted())
         && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
@@ -51,7 +51,7 @@ class PostController extends ContainerAware
         }
 
         //
-        // Get post counts for users
+        // Get post counts for users.
         //
         if ($post->getCreatedBy()) {
             $registryUserIds = array($post->getCreatedBy()->getId());
@@ -62,7 +62,7 @@ class PostController extends ContainerAware
         $registries = $this->container->get('ccdn_forum_forum.registry.manager')->getRegistriesForUsersAsArray($registryUserIds);
 
         //
-        // get the topic subscriptions
+        // Get the topic subscriptions.
         //
         if ($this->container->get('security.context')->isGranted('ROLE_USER') && $post->getTopic()) {
             $subscription = $this->container->get('ccdn_forum_forum.subscription.repository')->findTopicSubscriptionByTopicAndUserId($post->getTopic()->getId(), $user->getId());
@@ -77,17 +77,17 @@ class PostController extends ContainerAware
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
-        $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
+        $crumbs = $this->container->get('ccdn_component_crumb.trail')
             ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('category_id' => $category->getId())), "category")
-            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('board_id' => $board->getId())), "board")
-            ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topic_id' => $topic->getId())), "communication")
-            ->add('#' . $post->getId(), $this->container->get('router')->generate('ccdn_forum_forum_post_show', array('post_id' => $post->getId())), "comment");
+            ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
+            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
+            ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
+            ->add('#' . $post->getId(), $this->container->get('router')->generate('ccdn_forum_forum_post_show', array('postId' => $post->getId())), "comment");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:show.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
             'user'	=> $user,
-            'crumbs' => $crumb_trail,
+            'crumbs' => $crumbs,
             'topic' => $topic,
             'post' => $post,
             'registries' => $registries,
@@ -99,10 +99,10 @@ class PostController extends ContainerAware
     /**
      *
      * @access public
-     * @param $post_id
+     * @param Int $postId
      * @return RedirectResponse|RenderResponse
      */
-    public function editAction($post_id)
+    public function editAction($postId)
     {
         if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException('You do not have permission to use this resource!');
@@ -110,7 +110,7 @@ class PostController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $post = $this->container->get('ccdn_forum_forum.post.repository')->findPostForEditing($post_id);
+        $post = $this->container->get('ccdn_forum_forum.post.repository')->findPostForEditing($postId);
 
         if (! $post) {
             throw new NotFoundHttpException('No such post exists!');
@@ -175,17 +175,17 @@ class PostController extends ContainerAware
 
                 foreach ($topic->getPosts() as $index => $postTest) {					// <------------- move this shit to the Post or TopicEntityManager?
                     if ($post->getId() == $postTest->getId()) {
-                        $posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
-                        $page = ceil($index / $posts_per_page);
+                        $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
+                        $page = ceil($index / $postsPerPage);
                         break;
                     }
                 }
 
-                $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('flash.post.edit.success', array('%post_id%' => $post_id, '%topic_title%' => $post->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+                $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('flash.post.edit.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle()), 'CCDNForumForumBundle'));
 
                 // redirect user on successful edit.
                 return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show_paginated_anchored',
-                    array('topic_id' => $topic->getId(), 'page' => $page, 'post_id' => $post->getId() ) ));
+                    array('topicId' => $topic->getId(), 'page' => $page, 'postId' => $post->getId() ) ));
             }
         }
 
@@ -194,12 +194,12 @@ class PostController extends ContainerAware
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
-        $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
+        $crumbs = $this->container->get('ccdn_component_crumb.trail')
             ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(),	$this->container->get('router')->generate('ccdn_forum_forum_category_show', array('category_id' => $category->getId())), "category")
-            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('board_id' => $board->getId())), "board")
-            ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topic_id' => $topic->getId())), "communication")
-            ->add($this->container->get('translator')->trans('crumbs.post.edit', array(), 'CCDNForumForumBundle') . $post->getId(), $this->container->get('router')->generate('ccdn_forum_forum_topic_reply', array('topic_id' => $topic->getId())), "edit");
+            ->add($category->getName(),	$this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
+            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
+            ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
+            ->add($this->container->get('translator')->trans('crumbs.post.edit', array(), 'CCDNForumForumBundle') . $post->getId(), $this->container->get('router')->generate('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())), "edit");
 
         if ($post->getTopic()->getFirstPost()->getId() == $post->getId()) {	// render edit_topic if first post
             $template = 'CCDNForumForumBundle:Post:edit_topic.html.' . $this->getEngine();
@@ -214,7 +214,7 @@ class PostController extends ContainerAware
             'board' => $board,
             'topic' => $topic,
             'post' => $post,
-            'crumbs' => $crumb_trail,
+            'crumbs' => $crumbs,
             'preview' => $formHandler->getForm()->getData(),
             'form' => $formHandler->getForm()->createView(),
         ));
@@ -223,10 +223,10 @@ class PostController extends ContainerAware
     /**
      *
      * @access public
-     * @param $post_id
+     * @param Int $postId
      * @return RedirectResponse|RenderResponse
      */
-    public function deleteAction($post_id)
+    public function deleteAction($postId)
     {
         if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException('You do not have permission to use this resource!');
@@ -234,7 +234,7 @@ class PostController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $post = $this->container->get('ccdn_forum_forum.post.repository')->findPostForEditing($post_id);
+        $post = $this->container->get('ccdn_forum_forum.post.repository')->findPostForEditing($postId);
 
         if (! $post) {
             throw new NotFoundHttpException('No such post exists!');
@@ -283,12 +283,12 @@ class PostController extends ContainerAware
         }
 
         // setup crumb trail.
-        $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
+        $crumbs = $this->container->get('ccdn_component_crumb.trail')
             ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(),	$this->container->get('router')->generate('ccdn_forum_forum_category_show', array('category_id' => $category->getId())), "category")
-            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('board_id' => $board->getId())), "board")
-            ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topic_id' => $topic->getId())), "communication")
-            ->add($crumbDelete, $this->container->get('router')->generate('ccdn_forum_forum_topic_reply', array('topic_id' => $topic->getId())), "trash");
+            ->add($category->getName(),	$this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
+            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
+            ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
+            ->add($crumbDelete, $this->container->get('router')->generate('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())), "trash");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:delete_post.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
@@ -296,17 +296,17 @@ class PostController extends ContainerAware
             'confirmation_message' => $confirmationMessage,
             'topic' => $topic,
             'post' => $post,
-            'crumbs' => $crumb_trail,
+            'crumbs' => $crumbs,
         ));
     }
 
     /**
      *
      * @access public
-     * @param $post_id
-     * @return RedirectResponse|RenderResponse
+     * @param Int $postId
+     * @return RedirectResponse
      */
-    public function deleteConfirmedAction($post_id)
+    public function deleteConfirmedAction($postId)
     {
         if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException('You do not have permission to use this resource!');
@@ -314,7 +314,7 @@ class PostController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $post = $this->container->get('ccdn_forum_forum.post.repository')->findPostForEditing($post_id);
+        $post = $this->container->get('ccdn_forum_forum.post.repository')->findPostForEditing($postId);
 
         if (! $post) {
             throw new NotFoundHttpException('No such post exists!');
@@ -353,19 +353,19 @@ class PostController extends ContainerAware
         $this->container->get('ccdn_forum_forum.post.manager')->softDelete($post, $user)->flush();
 
         // set flash message
-        $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.post.delete.success', array('%post_id%' => $post_id), 'CCDNForumForumBundle'));
+        $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.post.delete.success', array('%post_id%' => $postId), 'CCDNForumForumBundle'));
 
         // forward user
-        return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topic_id' => $post->getTopic()->getId()) ));
+        return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
     }
 
     /**
      *
      * @access public
-     * @param $post_id
+     * @param Int $postId
      * @return RedirectResponse|RenderResponse
      */
-    public function flagAction($post_id)
+    public function flagAction($postId)
     {
         if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
             throw new AccessDeniedException('You do not have permission to flag posts!');
@@ -373,7 +373,7 @@ class PostController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $post = $this->container->get('ccdn_forum_forum.post.repository')->find($post_id);
+        $post = $this->container->get('ccdn_forum_forum.post.repository')->find($postId);
 
         if (! $post) {
             throw new NotFoundHttpException('No such post exists!');
@@ -404,10 +404,10 @@ class PostController extends ContainerAware
         $formHandler = $this->container->get('ccdn_forum_forum.flag.form.handler')->setDefaultValues(array('post' => $post, 'user' => $user));
 
         if ($formHandler->process()) {
-            $this->container->get('session')->setFlash('warning', $this->container->get('translator')->trans('flash.post.flagged.success', array('%post_id%' => $post_id, '%topic_title%' => $post->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+            $this->container->get('session')->setFlash('warning', $this->container->get('translator')->trans('flash.post.flagged.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle()), 'CCDNForumForumBundle'));
 
             return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show_paginated_anchored',
-                array('topic_id' => $post->getTopic()->getId(), 'page' => 1, 'post_id' => $post_id) ));
+                array('topicId' => $post->getTopic()->getId(), 'page' => 1, 'postId' => $postId) ));
         }
 
         // setup crumb trail.
@@ -415,19 +415,19 @@ class PostController extends ContainerAware
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
-        $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
+        $crumbs = $this->container->get('ccdn_component_crumb.trail')
             ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(),	$this->container->get('router')->generate('ccdn_forum_forum_category_show', array('category_id' => $category->getId())), "category")
-            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('board_id' => $board->getId())), "board")
-            ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topic_id' => $topic->getId())), "communication")
-            ->add($this->container->get('translator')->trans('crumbs.post.flag', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_post_flag', array('post_id' => $post_id)), "flag");
+            ->add($category->getName(),	$this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
+            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
+            ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
+            ->add($this->container->get('translator')->trans('crumbs.post.flag', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_post_flag', array('postId' => $postId)), "flag");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:flag.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
             'user' => $user,
             'topic' => $topic,
             'post' => $post,
-            'crumbs' => $crumb_trail,
+            'crumbs' => $crumbs,
             'form' => $formHandler->getForm()->createView(),
         ));
     }
@@ -435,7 +435,7 @@ class PostController extends ContainerAware
     /**
      *
      * @access protected
-     * @return string
+     * @return String
      */
     protected function getEngine()
     {

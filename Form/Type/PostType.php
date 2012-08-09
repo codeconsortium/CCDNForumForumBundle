@@ -46,13 +46,14 @@ class PostType extends AbstractType
 
     /**
      *
-     *
+     * @access public
+	 * @param $container
      */
-    public function __construct($service_container)
+    public function __construct($container)
     {
         $this->defaults = array();
 
-        $this->container = $service_container;
+        $this->container = $container;
     }
 
     /**

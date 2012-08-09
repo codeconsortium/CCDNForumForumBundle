@@ -39,7 +39,7 @@
 	<h2>{{- 'title.topic.edit' | trans({'%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}</h2>
 
 	{%- form_theme form param('ccdn_forum_forum.post.edit_topic.form_theme') -%}
-	<form action="{{- path('ccdn_forum_forum_post_edit', { 'post_id': post.id } ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+	<form action="{{- path('ccdn_forum_forum_post_edit', { 'postId': post.id } ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 		<fieldset>
 
 			{{- form_errors(form) -}}

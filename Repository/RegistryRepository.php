@@ -87,9 +87,9 @@ class RegistryRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param int $folder_id
+     * @param Int $userId
      */
-    public function findRegistryRecordForUser($user_id)
+    public function findRegistryRecordForUser($userId)
     {
         $query = $this->getEntityManager()
             ->createQuery('
@@ -97,7 +97,7 @@ class RegistryRepository extends EntityRepository
                 FROM CCDNForumForumBundle:Registry r
                 WHERE r.ownedBy = :id
                 ')
-            ->setParameter('id', $user_id);
+            ->setParameter('id', $userId);
 
         try {
             return $query->getSingleResult();
@@ -107,9 +107,6 @@ class RegistryRepository extends EntityRepository
     }
 
     /**
-     *
-     *
-     *
      *
      * @access public
      */

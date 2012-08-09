@@ -207,9 +207,9 @@ class TopicRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param int $topic_id
+     * @param Int $topicId
      */
-    public function findOneByIdJoinedToPosts($topic_id)
+    public function findOneByIdJoinedToPosts($topicId)
     {
         $query = $this->getEntityManager()
             ->createQuery('
@@ -219,7 +219,7 @@ class TopicRepository extends EntityRepository
                 WHERE t.id = :id
                 GROUP BY p.id
                 ORDER BY p.createdDate ASC')
-            ->setParameter('id', $topic_id);
+            ->setParameter('id', $topicId);
 
         try {
             return $query->getSingleResult();
@@ -281,9 +281,9 @@ class TopicRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param int $topic_id
+     * @param Int $topicId
      */
-    public function getFirstPostForTopic($topic_id)
+    public function getFirstPostForTopic($topicId)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -293,7 +293,7 @@ class TopicRepository extends EntityRepository
             ->add('where', 'p.topic = ?1')
             ->add('orderBy', 'p.createdDate ASC')
             ->setMaxResults(1)
-            ->setParameter(1, $topic_id)
+            ->setParameter(1, $topicId)
             ->getQuery();
 
         try {
@@ -308,9 +308,9 @@ class TopicRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param int $topic_id
+     * @param Int $topicId
      */
-    public function getLastPostForTopic($topic_id)
+    public function getLastPostForTopic($topicId)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -320,7 +320,7 @@ class TopicRepository extends EntityRepository
             ->add('where', 'p.topic = ?1')
             ->add('orderBy', 'p.createdDate DESC')
             ->setMaxResults(1)
-            ->setParameter(1, $topic_id)
+            ->setParameter(1, $topicId)
             ->getQuery();
 
         try {

@@ -62,7 +62,7 @@
 				</td>
 				{%- if draft.getTopic -%}
 				<td class="left" colspan="2">
-					<b>Reply:</b>&nbsp;<a href="{{- path('ccdn_forum_forum_topic_show', {'topic_id': draft.getTopic.getId }) -}}">{{- draft.getTopic.getTitle -}}</a>
+					<b>Reply:</b>&nbsp;<a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': draft.getTopic.getId }) -}}">{{- draft.getTopic.getTitle -}}</a>
 				</td>
 				{%- else -%}
 				<td class="left">
@@ -70,7 +70,7 @@
 				</td>
 				<td class="left">
 					{%- if draft.getBoard -%}
-						<a href="{{- path('ccdn_forum_forum_board_show', {'board_id': draft.getBoard.getId}) -}}">
+						<a href="{{- path('ccdn_forum_forum_board_show', {'boardId': draft.getBoard.getId}) -}}">
 							<img class="icon16" width="16" height="16" src="{{- asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_board.png') -}}" alt="icon">&nbsp;
 							{{- draft.getBoard.getName -}}
 						</a>

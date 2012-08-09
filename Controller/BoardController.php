@@ -27,26 +27,26 @@ class BoardController extends ContainerAware
     /**
      *
      * @access public
-     * @param $board_id, $page
+     * @param Int $boardId, Int $page
      * @return RedirectResponse|RenderResponse
      */
-    public function showAction($board_id, $page)
+    public function showAction($boardId, $page)
     {
 
-        $board = $this->container->get('ccdn_forum_forum.board.repository')->findOneByIdWithCategory($board_id);
+        $board = $this->container->get('ccdn_forum_forum.board.repository')->findOneByIdWithCategory($boardId);
 
         if ($this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
-            $topics_paginated = $this->container->get('ccdn_forum_forum.topic.repository')->findTopicsForBoardById($board_id, true);
-            $stickyTopics = $this->container->get('ccdn_forum_forum.topic.repository')->findStickyTopicsForBoardById($board_id, true);
+            $topicsPager = $this->container->get('ccdn_forum_forum.topic.repository')->findTopicsForBoardById($boardId, true);
+            $stickyTopics = $this->container->get('ccdn_forum_forum.topic.repository')->findStickyTopicsForBoardById($boardId, true);
         } else {
-            $topics_paginated = $this->container->get('ccdn_forum_forum.topic.repository')->findTopicsForBoardById($board_id, false);
-            $stickyTopics = $this->container->get('ccdn_forum_forum.topic.repository')->findStickyTopicsForBoardById($board_id, false);
+            $topicsPager = $this->container->get('ccdn_forum_forum.topic.repository')->findTopicsForBoardById($boardId, false);
+            $stickyTopics = $this->container->get('ccdn_forum_forum.topic.repository')->findStickyTopicsForBoardById($boardId, false);
         }
 
         // deal with pagination.
-        $topics_per_page = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
-        $topics_paginated->setMaxPerPage($topics_per_page);
-        $topics_paginated->setCurrentPage($page, false, true);
+        $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
+        $topicsPager->setMaxPerPage($topicsPerPage);
+        $topicsPager->setCurrentPage($page, false, true);
 
         // check board exists.
         if (! $board) {
@@ -54,31 +54,30 @@ class BoardController extends ContainerAware
         }
 
         // this is necessary for working out the last page for each topic.
-        $posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
+        $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 
         // setup bread crumbs.
         $category = $board->getCategory();
 
-        $crumb_trail = $this->container->get('ccdn_component_crumb.trail')
+        $crumbs = $this->container->get('ccdn_component_crumb.trail')
             ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('category_id' => $category->getId())), "category")
-            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('board_id' => $board_id)), "board");
+            ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
+            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $boardId)), "board");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Board:show.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
-            'crumbs' => $crumb_trail,
+            'crumbs' => $crumbs,
             'board' => $board,
-            'pager' => $topics_paginated,
-            'posts_per_page' => $posts_per_page,
+            'pager' => $topicsPager,
+            'posts_per_page' => $postsPerPage,
             'sticky_topics' => $stickyTopics,
-            ));
-
+        ));
     }
 
     /**
      *
      * @access protected
-     * @return string
+     * @return String
      */
     protected function getEngine()
     {

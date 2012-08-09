@@ -32,7 +32,7 @@
 	{%- if topic.closedDate -%}
 	<div class="alert alert-error">
 		{{- 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
-		{%- if topic.getClosedBy -%}<a href="{{- path(user_profile_route, {'user_id': topic.getClosedBy.getId } ) -}}">{{- topic.getClosedBy.getUsername -}}</a>{%- else -%}Unknown{%- endif -%}&nbsp;
+		{%- if topic.getClosedBy -%}<a href="{{- path(user_profile_route, {'userId': topic.getClosedBy.getId } ) -}}">{{- topic.getClosedBy.getUsername -}}</a>{%- else -%}Unknown{%- endif -%}&nbsp;
 		{{- topic.getClosedDate |date(param('ccdn_forum_forum.topic.show.topic_closed_datetime_format')) -}}
 	</div>
 	{%- endif -%}
@@ -40,7 +40,7 @@
 	{%- if topic.deletedDate -%}
 	<div class="alert alert-error">
 		{{- 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
-		{%- if topic.getDeletedBy -%}<a href="{{- path(user_profile_route, {'user_id': topic.getDeletedBy.getId } ) -}}">{{- topic.getDeletedBy.getUsername -}}</a>{%- else -%}Unknown{%- endif -%}&nbsp;
+		{%- if topic.getDeletedBy -%}<a href="{{- path(user_profile_route, {'userId': topic.getDeletedBy.getId } ) -}}">{{- topic.getDeletedBy.getUsername -}}</a>{%- else -%}Unknown{%- endif -%}&nbsp;
 		{{- topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) -}}
 	</div>
 	{%- endif -%}
@@ -87,11 +87,11 @@
 	
 	<div class="btn-toolbar" style="display:block !important;clear:both !important;">
 		<div class="pull-left">
-			<a class="btn btn-danger" rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply', {'topic_id': topic.getId }) -}}"><i class="icon-white icon-comment"></i>&nbsp;{{- 'link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}</a>
+			<a class="btn btn-danger" rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply', {'topicId': topic.getId }) -}}"><i class="icon-white icon-comment"></i>&nbsp;{{- 'link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}</a>
 		</div>
 		{%- if pager.haveToPaginate -%}
 			<div class="pull-right">
-	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) -}}
+	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_topic_show_paginated', 'routeParams':{'topicId':topic.getId}} ) -}}
 			</div>
 		{%- endif -%}
 		<br><br>
@@ -105,7 +105,7 @@
 	<div class="btn-toolbar" style="display:block !important;clear:both !important;">
 		{%- if pager.haveToPaginate -%}
 			<div class="pull-right">
-	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_topic_show_paginated', 'routeParams':{'topic_id':topic.getId}} ) -}}
+	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_topic_show_paginated', 'routeParams':{'topicId':topic.getId}} ) -}}
 			</div>
 		{%- endif -%}
 		<br><br>

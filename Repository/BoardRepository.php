@@ -106,7 +106,7 @@ class BoardRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param int $board_id
+     * @param Int $boardId
      */
     public function findOneByIdWithCategory($boardId)
     {
@@ -131,9 +131,9 @@ class BoardRepository extends EntityRepository
      *
      *
      * @access public
-     * @param int $board_id
+     * @param Int $boardId
      */
-    public function getTopicAndPostCountsForBoard($board_id)
+    public function getTopicAndPostCountsForBoard($boardId)
     {
         // get topic / post count
         $query = $this->getEntityManager()
@@ -143,7 +143,7 @@ class BoardRepository extends EntityRepository
                 LEFT JOIN t.posts p
                 WHERE t.board = :id AND t.isDeleted = FALSE AND p.isDeleted = FALSE
                 GROUP BY t.board')
-            ->setParameter('id', $board_id);
+            ->setParameter('id', $boardId);
 
         try {
             return $query->getSingleResult();
@@ -157,22 +157,22 @@ class BoardRepository extends EntityRepository
      * for adminBundle
      *
      * @access public
-     * @param int $category_id
+     * @param Int $categoryId
      */
-    public function findBoardsOrderedByPriorityInCategory($category_id)
+    public function findBoardsOrderedByPriorityInCategory($categoryId)
     {
 
-        $boards_query = $this->getEntityManager()
+        $query = $this->getEntityManager()
             ->createQuery('
                 SELECT b
                 FROM CCDNForumForumBundle:Board b
                 WHERE b.category = :id
                 ORDER BY b.listOrderPriority ASC
                 ')
-            ->setParameter('id', $category_id);
+            ->setParameter('id', $categoryId);
 
         try {
-            return $boards_query->getResult();
+            return $query->getResult();
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
@@ -181,9 +181,9 @@ class BoardRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param int $board_id
+     * @param Int $boardId
      */
-    public function findLastTopicForBoard($board_id)
+    public function findLastTopicForBoard($boardId)
     {
         $lastPost_query = $this->getEntityManager()
             ->createQuery('
@@ -194,7 +194,7 @@ class BoardRepository extends EntityRepository
                 GROUP BY t.id
                 ORDER BY lp.createdDate DESC
                 ')
-            ->setParameter('id', $board_id)
+            ->setParameter('id', $boardId)
             ->setMaxResults(1);
 
         try {
