@@ -1,7 +1,7 @@
 {%- spaceless -%}
 <hr>
 
-<div style="border-left:5px solid #99caff;">
+<div style="border-left:5px solid #99caff;padding-top:1px;padding-bottom:5px;">
 	<div style="display:block;clear:both;min-height:120px;" id="post_{{- post.getId -}}">
 		
 		<div style="display:block;float:left;width:105px;margin:0px -106px 0px 0px;padding:0px;overflow:hidden;vertical-align:top;text-align:center;">
@@ -13,10 +13,10 @@
 		</div>
 	
 		<div style="display:block;padding:0px;overflow:hidden;vertical-align:top;">
-			<div style="display:block;clear:both;padding:1px;margin:0px 0px 0px 106px;overflow:hidden;vertical-align:bottom;">
+			<div style="display:block;clear:both;padding:1px;margin:0px 0px 0px 106px;overflow:hidden;vertical-align:middle;">
 			
 				<div style="display:block;clear:both;float:none;">
-					<div class="pull-left">
+					<div class="pull-left" style="vertical-align:bottom;">
 						{%- if post.getCreatedBy -%}
 							<a href="{{- path(user_profile_route, {'userId': post.getCreatedBy.getId } ) -}}">{{- post.getCreatedBy |title -}}</a>
 						{%- else -%}
