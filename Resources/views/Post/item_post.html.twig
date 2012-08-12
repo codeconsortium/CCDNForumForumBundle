@@ -99,7 +99,7 @@
 
 										{%- if post.getCreatedBy -%}
 											{%- if post.getCreatedBy.getId != user.getId -%}
-												<li><a rel="nofollow" href="{{- path('ccdn_forum_karma_rate', {'postId': post.getId }) -}}"><img class="button_16x16" width="16" height="16" src="{{- asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_karma.png') -}}" alt="{{- 'link.post.rate' | trans({}, 'CCDNForumKarmaBundle') -}}">&nbsp;{{- 'link.post.rate' | trans({}, 'CCDNForumKarmaBundle') -}}</a></li>
+												<li><a rel="nofollow" href="{{- path('ccdn_forum_karma_rate', {'postId': post.getId }) -}}"><img class="button_16x16" width="16" height="16" src="{{- asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_karma.png') -}}" alt="{{- 'ccdn_forum_karma.link.post.rate' | trans({}, 'CCDNForumKarmaBundle') -}}">&nbsp;{{- 'ccdn_forum_karma.link.post.rate' | trans({}, 'CCDNForumKarmaBundle') -}}</a></li>
 											{%- endif -%}
 
 											{%- if post.getCreatedBy.getId == user.getId and not is_granted('ROLE_MODERATOR') -%}
