@@ -1,0 +1,43 @@
+{%- spaceless -%}
+	{%- if topic is defined -%}
+
+		{%- if is_granted('ROLE_USER') -%}
+			{%- if subscription is defined -%}
+				{%- if subscription is not null -%}
+					{%- if subscription.isSubscribed == true -%}
+						<a class="btn" href="{{- path('ccdn_forum_forum_subscription_unsubscribe', {'topicId': topic.getId }) -}}"><i class="icon-eye-close"></i>&nbsp;{{- 'ccdn_forum_forum.sidebar.link.topic_unsubscribe' | trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+					{%- else -%}
+						<a class="btn" href="{{- path('ccdn_forum_forum_subscription_subscribe', {'topicId': topic.getId }) -}}"><i class="icon-eye-open"></i>&nbsp;{{- 'ccdn_forum_forum.sidebar.link.topic_subscribe' | trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+					{%- endif -%}
+				{%- else -%}
+					<a class="btn" href="{{- path('ccdn_forum_forum_subscription_subscribe', {'topicId': topic.getId }) -}}"><i class="icon-eye-open"></i>&nbsp;{{- 'ccdn_forum_forum.sidebar.link.topic_subscribe' | trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+				{%- endif -%}
+			{%- else -%}
+				<a class="btn" href="{{- path('ccdn_forum_forum_subscription_subscribe', {'topicId': topic.getId }) -}}"><i class="icon-eye-open"></i>&nbsp;{{- 'ccdn_forum_forum.sidebar.link.topic_subscribe' | trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+			{%- endif -%}
+		{%- endif -%}
+
+		{%- if is_granted('ROLE_MODERATOR') -%}
+			{%- if topic.isSticky -%}
+				<a class="btn btn-warning" href="{{- path('ccdn_forum_moderator_topic_unsticky', {'topicId': topic.getId }) -}}"><i class="icon-white icon-bullhorn"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.unsticky' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+			{%- else -%}
+				<a class="btn btn-warning" href="{{- path('ccdn_forum_moderator_topic_sticky', {'topicId': topic.getId }) -}}"><i class="icon-white icon-bullhorn"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.sticky' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+			{%- endif -%}
+
+			<a class="btn btn-warning" href="{{- path('ccdn_forum_moderator_topic_change_board', {'topicId': topic.getId }) -}}"><i class="icon-white icon-move"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.change_board' | trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+
+			{%- if topic.closedBy -%}
+				<a class="btn btn-warning" href="{{- path('ccdn_forum_moderator_topic_reopen', {'topicId': topic.getId }) -}}"><i class="icon-white icon-lock"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.reopen' | trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+			{%- else -%}
+				<a class="btn btn-danger" href="{{- path('ccdn_forum_moderator_topic_close', {'topicId': topic.getId }) -}}"><i class="icon-white icon-lock"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.close' | trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+			{%- endif -%}
+
+			{%- if topic.deletedBy -%}
+				<a class="btn btn-warning" href="{{- path('ccdn_forum_moderator_topic_restore', {'topicId': topic.getId }) -}}"><i class="icon-white icon-trash"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.restore' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+			{%- else -%}
+				<a class="btn btn-danger" href="{{- path('ccdn_forum_moderator_topic_delete', {'topicId': topic.getId }) -}}"><i class="icon-white icon-trash"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.delete' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+			{%- endif -%}
+		{%- endif -%}
+
+	{%- endif -%}
+{%- endspaceless -%}

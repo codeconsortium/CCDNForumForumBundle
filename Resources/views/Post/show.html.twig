@@ -15,13 +15,6 @@
 
 {% endblock %}
 
-{% block sidebar_actions %}
-	{{ parent() }}
-
-	{%- include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' -%}
-
-{% endblock %}
-
 
 {% block body %}
 
@@ -85,6 +78,10 @@
 	</span>&nbsp;
 	{%- endif -%}
 
+	<div class="btn-toolbar">
+		{%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
+	</div>
+	
 	{%- include "CCDNForumForumBundle:Post:item_post.html.twig" -%}
 
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}

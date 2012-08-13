@@ -84,6 +84,8 @@ ccdn_forum_forum.link.topic.restore: 'Restore Topic'
 ccdn_forum_forum.link.topic.change_board: 'Change Board'
 ccdn_forum_forum.link.draft.delete: 'Delete'
 ccdn_forum_forum.link.draft.publish: 'Edit & Publish'
+ccdn_forum_forum.link.topic.sticky: 'Sticky'
+ccdn_forum_forum.link.topic.unsticky: 'Unsticky'
 
 #
 # Forms.
