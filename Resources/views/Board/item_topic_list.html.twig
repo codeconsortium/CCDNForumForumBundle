@@ -23,7 +23,7 @@
 		</td>
 		<td class="left">
 			{%- if topic.getClosedDate -%}
-				<span class="label label-important">{{- 'badge.topic.closed' |trans({}, 'CCDNForumForumBundle') -}}</span>&nbsp;
+				<span class="label label-important">{{- 'ccdn_forum_forum.badge.topic.closed' |trans({}, 'CCDNForumForumBundle') -}}</span>&nbsp;
 			{%- endif -%}
 			
 			<abbr title="{{- topic.getTitle -}}"><a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.getId }) -}}">{{- truncDot(topic.getTitle, param('ccdn_forum_forum.board.show.topic_title_truncate')) |title -}}</a></abbr>
@@ -31,7 +31,7 @@
 			<br>
 			
 			{%- if topic.getFirstPost -%}
-				{{- 'post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
+				{{- 'ccdn_forum_forum.post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
 				{%- if topic.getFirstPost.getCreatedBy -%}
 					<a href="{{- path(user_profile_route, {'userId': topic.getFirstPost.getCreatedBy.getId }) -}}">{{- topic.getFirstPost.getCreatedBy |title -}}</a>
 				{%- else -%}
@@ -48,7 +48,7 @@
 		</td>
 		<td class="center">
 			{%- if topic.getLastPost -%}
-				{{- 'post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
+				{{- 'ccdn_forum_forum.post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
 				{%- if topic.getLastPost.getCreatedBy -%}
 					<a href="{{- path(user_profile_route, {'userId': topic.getLastPost.getCreatedBy.getId }) -}}">{{- topic.getLastPost.getCreatedBy |title -}}</a>
 				{%- else -%}

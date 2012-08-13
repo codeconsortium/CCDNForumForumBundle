@@ -6,7 +6,7 @@
 	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
-{% block title %}{{- truncDot('title.post.show' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle |capitalize }, 'CCDNForumForumBundle'), param('ccdn_forum_forum.seo.title_length')) -}}{% endblock %}
+{% block title %}{{- truncDot('ccdn_forum_forum.title.post.show' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle |capitalize }, 'CCDNForumForumBundle'), param('ccdn_forum_forum.seo.title_length')) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
@@ -31,7 +31,7 @@
 
 	{%- if topic.closedDate -%}
 	<div class="alert alert-error">&nbsp;
-		{{- 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
+		{{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
 		{%- if topic.getClosedBy -%}<a href="{{- path(user_profile_route, {'userId': topic.getClosedBy.getId } ) -}}">{{- topic.getClosedBy.getUsername -}}</a>{%- else -%}Unknown{%- endif -%}&nbsp;
 		{{- topic.getClosedDate |date(param('ccdn_forum_forum.topic.show.topic_closed_datetime_format')) -}}
 	</div>
@@ -39,7 +39,7 @@
 
 	{%- if topic.deletedDate -%}
 	<div class="alert alert-error">&nbsp;
-		{{- 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
+		{{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
 		{%- if topic.getDeletedBy -%}<a href="{{- path(user_profile_route, {'userId': topic.getDeletedBy.getId }) -}}">{{- topic.getDeletedBy.getUsername -}}</a>{%- else -%}Unknown{%- endif -%}&nbsp;
 		{{- topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) -}}
 	</div>
@@ -51,17 +51,17 @@
 
 	<br>
 
-	<span class="badge badge-info">{{- 'topic.reply_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- topic.cachedReplyCount -}}</span>&nbsp;
-	<span class="badge badge-info">{{- 'topic.view_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- topic.cachedViewCount -}}</span>&nbsp;
+	<span class="badge badge-info">{{- 'ccdn_forum_forum.topic.reply_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- topic.cachedReplyCount -}}</span>&nbsp;
+	<span class="badge badge-info">{{- 'ccdn_forum_forum.topic.view_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- topic.cachedViewCount -}}</span>&nbsp;
 
 	{%- if subscription_count is defined -%}
-		<span class="badge badge-info">{{- 'topic.subscription_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- subscription_count -}}</span>&nbsp;
+		<span class="badge badge-info">{{- 'ccdn_forum_forum.topic.subscription_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- subscription_count -}}</span>&nbsp;
 	{%- endif -%}
 
 	{%- if topic.isSticky -%}
 	<span class="label label-important">
 		<i class="icon-white icon-bullhorn"></i>&nbsp;
-		{{- 'topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
+		{{- 'ccdn_forum_forum.topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
 		{%- if topic.getStickiedBy -%}{{- topic.getStickiedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
 		{{- topic.getStickiedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) -}}
 	</span>&nbsp;
@@ -70,7 +70,7 @@
 	{%- if topic.isClosed -%}
 	<span class="label label-important">
 		<i class="icon-white icon-lock"></i>&nbsp;
-		{{- 'topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
+		{{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
 		{%- if topic.getClosedBy -%}{{- topic.getClosedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
 		{{- topic.getClosedDate |date(param('ccdn_forum_forum.topic.show.topic_closed_datetime_format')) -}}
 	</span>&nbsp;
@@ -79,7 +79,7 @@
 	{%- if topic.isDeleted -%}
 	<span class="label label-important">
 		<i class="icon-white icon-trash"></i>&nbsp;
-		{{- 'topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
+		{{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
 		{%- if topic.getDeletedBy -%}{{- topic.getDeletedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
 		{{- topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) -}}
 	</span>&nbsp;

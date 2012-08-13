@@ -40,7 +40,7 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
             $topic = $this->container->get('ccdn_forum_forum.topic.repository')->findOneById($topicId);
 
             if (! $topic) {
-                $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.subscription.topic.not.found', array(), 'CCDNForumForumBundle'));
+                $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.subscription.topic.not.found', array(), 'CCDNForumForumBundle'));
 
                 return $this;
             }
@@ -56,7 +56,7 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
 
         $this->persist($subscription);
 
-        $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.subscription.topic.subscribed', array('%topic_title%' => $subscription->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+        $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.subscription.topic.subscribed', array('%topic_title%' => $subscription->getTopic()->getTitle()), 'CCDNForumForumBundle'));
 
         return $this;
     }
@@ -80,7 +80,7 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
 
         $this->persist($subscription);
 
-        $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.subscription.topic.unsubscribed', array('%topic_title%' => $subscription->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+        $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.subscription.topic.unsubscribed', array('%topic_title%' => $subscription->getTopic()->getTitle()), 'CCDNForumForumBundle'));
 
         return $this;
     }

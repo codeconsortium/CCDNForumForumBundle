@@ -28,9 +28,9 @@
 						{%- if post.getEditedDate -%}
 							&nbsp;&nbsp;
 							<span class="label" style="display:inline-block;">
-								{{- 'post.edited_by' |trans({}, 'CCDNForumForumBundle') -}}
+								{{- 'ccdn_forum_forum.post.edited_by' |trans({}, 'CCDNForumForumBundle') -}}
 								{%- if post.getEditedBy -%}<a href="{{- path(user_profile_route, {'userId': post.getEditedBy.getId}) -}}">{{- post.getEditedBy.getUsername |title -}}</a>{%- else -%}Guest{%- endif -%}
-								{{- 'actioned.at' |trans({}, 'CCDNForumForumBundle') -}}
+								{{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}
 								<abbr class="timestamper" title="{{- post.getEditedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- post.getEditedDate |date(param('ccdn_forum_forum.item_post.post_edited_datetime_format')) -}}</abbr>
 							</span>
 						{%- endif -%}
@@ -39,10 +39,10 @@
 					<div class="pull-right">
 						<div class="btn-toolbar" style="margin-top:0px;margin-bottom:0px;vertical-align:top;">
 							{%- if post.getFlags.count > 0 -%}
-								<i class="icon-flag" style="vertical-align:top;margin-top:6px;" data-tip="bottom" title="{{- 'post.has_been_flagged' |trans({}, 'CCDNForumForumBundle') -}}"></i>&nbsp;
+								<i class="icon-flag" style="vertical-align:top;margin-top:6px;" data-tip="bottom" title="{{- 'ccdn_forum_forum.post.has_been_flagged' |trans({}, 'CCDNForumForumBundle') -}}"></i>&nbsp;
 							{%- endif -%}
 							{%- if post.getIsLocked -%}
-								<i class="icon-lock" style="vertical-align:top;margin-top:6px;" data-tip="bottom" title="{{- 'post.has_been_locked' |trans({}, 'CCDNForumForumBundle') -}}"></i>&nbsp;
+								<i class="icon-lock" style="vertical-align:top;margin-top:6px;" data-tip="bottom" title="{{- 'ccdn_forum_forum.post.has_been_locked' |trans({}, 'CCDNForumForumBundle') -}}"></i>&nbsp;
 							{%- endif -%}	
 							{%- if post.getIsDeleted -%}
 								<i class="icon-trash" style="vertical-align:top;margin-top:6px;" data-tip="bottom" title="{{- 'post.has_been_deleted' |trans({}, 'CCDNForumForumBundle') -}}"></i>&nbsp;
@@ -68,7 +68,7 @@
 							<span class="badge badge-success">{{- registries[post.getCreatedBy().getId()].getCachedKarmaPositiveCount -}}</span>
 						</div>#}
 
-						<span class="label">{{- 'post.user.post_count' | trans({'%post_count%': registries[post.getCreatedBy().getId()].getCachedPostCount()}, 'CCDNForumForumBundle') -}}</span>
+						<span class="label">{{- 'ccdn_forum_forum.post.user.post_count' | trans({'%post_count%': registries[post.getCreatedBy().getId()].getCachedPostCount()}, 'CCDNForumForumBundle') -}}</span>
 						
 					</div>
 				</div>
@@ -87,15 +87,15 @@
 							<div class="btn-toolbar" style="margin-top:0px;padding:0px;vertical-align:top;overflow:visible;">
 	
 								{%- if post.getCreatedBy -%}
-									<a class="btn" style="vertical-align:top;" rel="nofollow" href="{{- path('ccdn_message_message_mail_compose_to', {'userId': post.getCreatedBy.getId }) -}}" data-tip="bottom" title="{{- 'link.user.message' | trans({}, 'CCDNForumForumBundle') -}}"><i class="icon-envelope"></i></a>&nbsp;
+									<a class="btn" style="vertical-align:top;" rel="nofollow" href="{{- path('ccdn_message_message_mail_compose_to', {'userId': post.getCreatedBy.getId }) -}}" data-tip="bottom" title="{{- 'ccdn_forum_forum.link.user.message' | trans({}, 'CCDNForumForumBundle') -}}"><i class="icon-envelope"></i></a>&nbsp;
 								{%- endif -%}
 						
 								<div class="btn-group">
 									<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i>&nbsp;<span class="caret"></span></a>
 									<ul class="dropdown-menu pull-right" style="z-index:15;">
 		
-										<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply', {'topicId': post.getTopic.getId }) -}}"><i class="icon-pencil"></i>&nbsp;{{- 'link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
-										<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply_with_quote', {'topicId': post.getTopic.getId, 'quoteId': post.getId }) -}}"><i class="icon-pencil"></i>&nbsp;{{- 'link.post.quote' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
+										<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply', {'topicId': post.getTopic.getId }) -}}"><i class="icon-pencil"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
+										<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply_with_quote', {'topicId': post.getTopic.getId, 'quoteId': post.getId }) -}}"><i class="icon-pencil"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.quote' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
 
 										{%- if post.getCreatedBy -%}
 											{%- if post.getCreatedBy.getId != user.getId -%}
@@ -103,32 +103,32 @@
 											{%- endif -%}
 
 											{%- if post.getCreatedBy.getId == user.getId and not is_granted('ROLE_MODERATOR') -%}
-												<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_post_edit', {'postId': post.getId }) -}}"><i class="icon-pencil"></i>&nbsp;{{- 'link.post.edit' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
+												<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_post_edit', {'postId': post.getId }) -}}"><i class="icon-pencil"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.edit' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
 												{%- if not post.getDeletedBy -%}
-													<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_post_delete', {'postId': post.getId }) -}}"><i class="icon-trash"></i>&nbsp;{{- 'link.post.delete' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
+													<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_post_delete', {'postId': post.getId }) -}}"><i class="icon-trash"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.delete' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
 												{%- endif -%}
 											{%- endif -%}
 										{%- endif -%}
 	
 										{%- if is_granted('ROLE_MODERATOR') -%}
-										<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_post_edit', {'postId': post.getId }) -}}"><i class="icon-pencil"></i>&nbsp;{{- 'link.post.edit' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
+										<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_post_edit', {'postId': post.getId }) -}}"><i class="icon-pencil"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.edit' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
 		
 											{%- if post.getDeletedBy -%}
-												<li><a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_restore', {'postId': post.getId }) -}}"><i class="icon-trash"></i>&nbsp;{{- 'link.post.restore' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
+												<li><a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_restore', {'postId': post.getId }) -}}"><i class="icon-trash"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.restore' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
 											{%- else -%}
-												<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_post_delete', {'postId': post.getId }) -}}"><i class="icon-trash"></i>&nbsp;{{- 'link.post.delete' | trans({}, 'CCDNForumForumBundle') -}}</a></li>				
+												<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_post_delete', {'postId': post.getId }) -}}"><i class="icon-trash"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.delete' | trans({}, 'CCDNForumForumBundle') -}}</a></li>				
 											{%- endif -%}
 			
 											{%- if post.getLockedBy -%}
-												<li><a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_unlock', {'postId': post.getId }) -}}"><i class="icon-lock"></i>&nbsp;{{- 'link.post.unlock' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
+												<li><a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_unlock', {'postId': post.getId }) -}}"><i class="icon-lock"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.unlock' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
 											{%- else -%}
-												<li><a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_lock', {'postId': post.getId }) -}}"><i class="icon-lock"></i>&nbsp;{{- 'link.post.lock' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
+												<li><a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_lock', {'postId': post.getId }) -}}"><i class="icon-lock"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.lock' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
 											{%- endif -%}
 										{%- endif -%}
 		
 										{%- if post.getCreatedBy -%}	
 											{%- if post.getCreatedBy.getId != user.getId -%}				
-												<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_post_flag', {'postId': post.getId }) -}}"><i class="icon-flag"></i>&nbsp;{{- 'link.post.flag' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
+												<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_post_flag', {'postId': post.getId }) -}}"><i class="icon-flag"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.flag' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
 											{%- endif -%}
 										{%- endif -%}
 									</ul>
@@ -139,10 +139,10 @@
 					
 			{%- if post.getDeletedBy -%}
 				<span class="deleted_on">
-				{{- 'post.is_deleted' | trans({}, 'CCDNForumForumBundle') -}} - 
-				{{- 'post.deleted_by' |trans({}, 'CCDNForumForumBundle') -}}
+				{{- 'ccdn_forum_forum.post.is_deleted' | trans({}, 'CCDNForumForumBundle') -}} - 
+				{{- 'ccdn_forum_forum.post.deleted_by' |trans({}, 'CCDNForumForumBundle') -}}
 				{%- if post.getDeletedBy -%}{{- post.getDeletedBy.getUsername |title -}}{%- else -%}Guest{%- endif -%}
-				{{- 'actioned.at' |trans({}, 'CCDNForumForumBundle') -}}{{- relevantDateFormat(post.getDeletedDate) -}}{#|date(param('ccdn_forum_forum.item_post.post_deleted_datetime_format')) #}
+				{{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}{{- relevantDateFormat(post.getDeletedDate) -}}{#|date(param('ccdn_forum_forum.item_post.post_deleted_datetime_format')) #}
 				</span>
 			{%- else -%}
 				<span class="common_body">

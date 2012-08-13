@@ -78,7 +78,7 @@ class PostController extends ContainerAware
         $category = $board->getCategory();
 
         $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
+            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
             ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
             ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
             ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
@@ -181,7 +181,7 @@ class PostController extends ContainerAware
                     }
                 }
 
-                $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('flash.post.edit.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+                $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.post.edit.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle()), 'CCDNForumForumBundle'));
 
                 // redirect user on successful edit.
                 return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show_paginated_anchored',
@@ -195,11 +195,11 @@ class PostController extends ContainerAware
         $category = $board->getCategory();
 
         $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
+            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
             ->add($category->getName(),	$this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
             ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
             ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
-            ->add($this->container->get('translator')->trans('crumbs.post.edit', array(), 'CCDNForumForumBundle') . $post->getId(), $this->container->get('router')->generate('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())), "edit");
+            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.post.edit', array(), 'CCDNForumForumBundle') . $post->getId(), $this->container->get('router')->generate('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())), "edit");
 
         if ($post->getTopic()->getFirstPost()->getId() == $post->getId()) {	// render edit_topic if first post
             $template = 'CCDNForumForumBundle:Post:edit_topic.html.' . $this->getEngine();
@@ -273,18 +273,18 @@ class PostController extends ContainerAware
         $category = $board->getCategory();
 
         if ($post->getTopic()->getFirstPost()->getId() == $post->getId() && $post->getTopic()->getCachedReplyCount() == 0) {	// if post is the very first post of the topic then use a topic handler so user can change topic title
-            $confirmationMessage = 'topic.delete_topic_question';
-            $crumbDelete = $this->container->get('translator')->trans('crumbs.topic.delete', array(), 'CCDNForumForumBundle');
-            $pageTitle = $this->container->get('translator')->trans('title.topic.delete', array('%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle');
+            $confirmationMessage = 'ccdn_forum_forum.topic.delete_topic_question';
+            $crumbDelete = $this->container->get('translator')->trans('ccdn_forum_forum.crumbs.topic.delete', array(), 'CCDNForumForumBundle');
+            $pageTitle = $this->container->get('translator')->trans('ccdn_forum_forum.title.topic.delete', array('%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle');
         } else {
-            $confirmationMessage = 'post.delete_post_question';
-            $crumbDelete = $this->container->get('translator')->trans('crumbs.post.delete', array(), 'CCDNForumForumBundle') . $post->getId();
-            $pageTitle = $this->container->get('translator')->trans('title.post.delete', array('%post_id%' => $post->getId(), '%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle');
+            $confirmationMessage = 'ccdn_forum_forum.post.delete_post_question';
+            $crumbDelete = $this->container->get('translator')->trans('ccdn_forum_forum.crumbs.post.delete', array(), 'CCDNForumForumBundle') . $post->getId();
+            $pageTitle = $this->container->get('translator')->trans('ccdn_forum_forum.title.post.delete', array('%post_id%' => $post->getId(), '%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle');
         }
 
         // setup crumb trail.
         $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
+            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
             ->add($category->getName(),	$this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
             ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
             ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
@@ -353,7 +353,7 @@ class PostController extends ContainerAware
         $this->container->get('ccdn_forum_forum.post.manager')->softDelete($post, $user)->flush();
 
         // set flash message
-        $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.post.delete.success', array('%post_id%' => $postId), 'CCDNForumForumBundle'));
+        $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.post.delete.success', array('%post_id%' => $postId), 'CCDNForumForumBundle'));
 
         // forward user
         return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
@@ -404,7 +404,7 @@ class PostController extends ContainerAware
         $formHandler = $this->container->get('ccdn_forum_forum.flag.form.handler')->setDefaultValues(array('post' => $post, 'user' => $user));
 
         if ($formHandler->process()) {
-            $this->container->get('session')->setFlash('warning', $this->container->get('translator')->trans('flash.post.flagged.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+            $this->container->get('session')->setFlash('warning', $this->container->get('translator')->trans('ccdn_forum_forum.flash.post.flagged.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle()), 'CCDNForumForumBundle'));
 
             return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show_paginated_anchored',
                 array('topicId' => $post->getTopic()->getId(), 'page' => 1, 'postId' => $postId) ));
@@ -416,11 +416,11 @@ class PostController extends ContainerAware
         $category = $board->getCategory();
 
         $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
+            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
             ->add($category->getName(),	$this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
             ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
             ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
-            ->add($this->container->get('translator')->trans('crumbs.post.flag', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_post_flag', array('postId' => $postId)), "flag");
+            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.post.flag', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_post_flag', array('postId' => $postId)), "flag");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:flag.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),

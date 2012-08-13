@@ -4,7 +4,7 @@
 	{{ parent() }}
 {% endblock %}
 
-{% block title %}{{- truncDot('title.category.show' | trans({'%category_name%': category.name}, 'CCDNForumForumBundle'), param('ccdn_forum_forum.seo.title_length')) -}}{% endblock %}
+{% block title %}{{- truncDot('ccdn_forum_forum.title.category.show' | trans({'%category_name%': category.name}, 'CCDNForumForumBundle'), param('ccdn_forum_forum.seo.title_length')) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}

@@ -6,7 +6,7 @@
 	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
-{% block title %}{{- truncDot('title.flag.post' | trans({'%post_id%': post.id, '%topic_title%': topic.getTitle }, 'CCDNForumForumBundle'), param('ccdn_forum_forum.seo.title_length')) -}}{% endblock %}
+{% block title %}{{- truncDot('ccdn_forum_forum.title.flag.post' | trans({'%post_id%': post.id, '%topic_title%': topic.getTitle }, 'CCDNForumForumBundle'), param('ccdn_forum_forum.seo.title_length')) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
@@ -31,7 +31,7 @@
 
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
-	<h2>{{- 'title.flag.post' | trans({'%post_id%': post.id, '%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}</h2>
+	<h2>{{- 'ccdn_forum_forum.title.flag.post' | trans({'%post_id%': post.id, '%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}</h2>
 
 	{%- form_theme form param('ccdn_forum_forum.post.flag.form_theme') -%}
 	<form action="{{- path('ccdn_forum_forum_post_flag', { 'postId': post.id } ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
@@ -42,7 +42,7 @@
 			<div class="control-group"><div class="controls row-fluid">{{- form_row(form._token) -}}</div></div>
 
 			<div class="control-group{{- (form.reason.vars.errors|length > 0) ? ' error': '' -}}">
-				{{- form_label(form.reason, null, { 'label': 'form.label.post.flag.reason'| trans({}, 'CCDNForumForumBundle') }) -}}
+				{{- form_label(form.reason, null, { 'label': 'ccdn_forum_forum.form.label.post.flag.reason'| trans({}, 'CCDNForumForumBundle') }) -}}
 				<div class="controls row-fluid">
 					{{- form_errors(form.reason) -}}
 					{{- form_widget(form.reason) -}}
@@ -50,7 +50,7 @@
 			</div>
 
 			<div class="control-group{{- (form.description.vars.errors|length > 0) ? ' error': '' -}}">
-				{{- form_label(form.description, null, { 'label': 'form.label.post.flag.description'| trans({}, 'CCDNForumForumBundle') }) -}}
+				{{- form_label(form.description, null, { 'label': 'ccdn_forum_forum.form.label.post.flag.description'| trans({}, 'CCDNForumForumBundle') }) -}}
 				<div class="controls row-fluid">
 					{{- form_errors(form.description) -}}
 					{{- form_widget(form.description) -}}
@@ -58,7 +58,7 @@
 			</div>
 
 			<div class="form-actions">
-				<input type="submit" class="btn btn-danger" value="{{- 'form.button.post.flag.submit' | trans({}, 'CCDNForumForumBundle') -}}">
+				<input type="submit" class="btn btn-danger" value="{{- 'ccdn_forum_forum.form.button.post.flag.submit' | trans({}, 'CCDNForumForumBundle') -}}">
 			</div>
 		</fieldset>
 	</form>

@@ -50,8 +50,8 @@ class SubscriptionController extends ContainerAware
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 
         $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($this->container->get('translator')->trans('crumbs.topic.subscriptions', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_subscription_list'), "bookmark");
+            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
+            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.topic.subscriptions', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_subscription_list'), "bookmark");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Subscription:list.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),

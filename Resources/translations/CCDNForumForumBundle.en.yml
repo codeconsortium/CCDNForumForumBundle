@@ -1,177 +1,179 @@
-layout.header_links.forum: 'Forum'
+#
+# Layout Header Link Labeks.
+#
+ccdn_forum_forum.layout.header_links.forum: 'Forum'
 
-category.index: Forum Index
+#
+# Page Titles.
+#
+ccdn_forum_forum.title.category.index: 'Forum: Index.'
+ccdn_forum_forum.title.category.show: 'Forum: Category - %category_name%.'
+ccdn_forum_forum.title.board.show: 'Forum: Board - %board_name%.'
+ccdn_forum_forum.title.topic.show: 'Forum: %topic_title%.'
+ccdn_forum_forum.title.topic.create: 'Forum: Create topic on board: %board_name%.'
+ccdn_forum_forum.title.topic.reply: 'Forum: Reply to topic: %topic_title%.'
+ccdn_forum_forum.title.topic.edit: 'Forum: Edit topic: %topic_title%.'
+ccdn_forum_forum.title.topic.delete: 'Forum: Delete topic: %topic_title%.'
+ccdn_forum_forum.title.post.show: 'Forum: Post #%post_id% for topic: %topic_title%.'
+ccdn_forum_forum.title.post.edit: 'Forum: Edit post #%post_id% of topic: %topic_title%.'
+ccdn_forum_forum.title.post.delete: 'Forum: Delete #%post_id% for topic: %topic_title%.'
+ccdn_forum_forum.title.flag.post: 'Forum: Flag post #%post_id% for topic: %topic_title%.'
+ccdn_forum_forum.title.drafts.show: 'Drafts.'
+ccdn_forum_forum.title.subscriptions.show: 'Subscriptions.'
 
-sidebar.header.navigation: Navigation
-sidebar.link.forum_index: Index
-sidebar.link.subscriptions: Subscriptions
-sidebar.link.drafts: Drafts
+#
+# Crumbs.
+#
+ccdn_forum_forum.crumbs.dashboard: 'Dashboard'
+ccdn_forum_forum.crumbs.forum_index: 'Forum Index'
+ccdn_forum_forum.crumbs.topic.create: 'Create New Topic'
+ccdn_forum_forum.crumbs.topic.reply: 'Reply to Topic'
+ccdn_forum_forum.crumbs.topic.delete: "Delete Topic: "
+ccdn_forum_forum.crumbs.topic.subscriptions: 'Subscriptions'
+ccdn_forum_forum.crumbs.post.edit: "Edit Post: #"
+ccdn_forum_forum.crumbs.post.flag: "Flag Post: #"
+ccdn_forum_forum.crumbs.post.delete: "Delete Post: #"
+ccdn_forum_forum.crumbs.drafts_index: "Drafts"
 
-sidebar.header.tools: Tools
-sidebar.link.create_new_topic: Create New Topic
-sidebar.link.reply_to_topic: Reply to topic
-sidebar.link.topic_subscribe: Subscribe
-sidebar.link.topic_unsubscribe: Unsubscribe
+#
+# Flash Messages.
+#
+ccdn_forum_forum.flash.post.edit.success: 'Successfully edited #%post_id% of topic: %topic_title%.'
+ccdn_forum_forum.flash.post.delete.success: 'Deleted post: #%post_id%.'
+ccdn_forum_forum.flash.post.flagged.success: 'You flagged the post: #%post_id% of topic: %topic_title%.'
+ccdn_forum_forum.flash.topic.create.success: 'You posted the new topic: %topic_title%.'
+ccdn_forum_forum.flash.topic.reply.success: 'You posted a reply to the topic: %topic_title%.'
+ccdn_forum_forum.flash.draft.save.success: "Draft saved successfully."
+ccdn_forum_forum.flash.draft.topic_does_not_exist: 'The topic you are trying to reply to no longer exists.'
+ccdn_forum_forum.flash.draft.board_does_not_exist: 'The board you are trying to post to no longer exists.'
+ccdn_forum_forum.flash.subscription.topic.subscribed: 'You subscribed to the topic %topic_title%.'
+ccdn_forum_forum.flash.subscription.topic.unsubscribed: 'You unsubscribed from the topic %topic_title%'
+ccdn_forum_forum.flash.subscription.topic.not.found: 'Topic could not be subscribed to because it was not found! Sorry about that.'
 
-sidebar.header.moderator_tools: Moderator Tools
+#
+# Sidebar.
+#
+ccdn_forum_forum.sidebar.header.navigation: 'Navigation'
+ccdn_forum_forum.sidebar.link.forum_index: 'Index'
+ccdn_forum_forum.sidebar.link.subscriptions: 'Subscriptions'
+ccdn_forum_forum.sidebar.link.drafts: 'Drafts'
+ccdn_forum_forum.sidebar.header.tools: 'Tools'
+ccdn_forum_forum.sidebar.link.create_new_topic: 'Create New Topic'
+ccdn_forum_forum.sidebar.link.reply_to_topic: 'Reply to topic'
+ccdn_forum_forum.sidebar.link.topic_subscribe: 'Subscribe'
+ccdn_forum_forum.sidebar.link.topic_unsubscribe: 'Unsubscribe'
+ccdn_forum_forum.sidebar.header.moderator_tools: 'Moderator Tools'
 
-# crumbs:
-crumbs.dashboard: Dashboard
-crumbs.forum_index: Forum Index
-crumbs.topic.create: Create New Topic
-crumbs.topic.reply: Reply to Topic
-crumbs.topic.delete: "Delete Topic: "
-crumbs.topic.subscriptions: 'Subscriptions'
-crumbs.post.edit: "Edit Post: #"
-crumbs.post.flag: "Flag Post: #"
-crumbs.post.delete: "Delete Post: #"
-crumbs.drafts_index: "Drafts"
+#
+# Link Labels.
+#
+ccdn_forum_forum.link.user.message: 'Send Private Message'
+ccdn_forum_forum.link.post.flag: 'Flag'
+ccdn_forum_forum.link.post.edit: 'Edit'
+ccdn_forum_forum.link.post.reply: 'Reply'
+ccdn_forum_forum.link.post.quote: 'Quote'
+ccdn_forum_forum.link.post.delete: 'Delete'
+ccdn_forum_forum.link.post.restore: 'Restore'
+ccdn_forum_forum.link.post.lock: 'Lock'
+ccdn_forum_forum.link.post.unlock: 'Unlock'
+ccdn_forum_forum.link.topic.create: 'Create New Topic'
+ccdn_forum_forum.link.topic.close: 'Close Topic'
+ccdn_forum_forum.link.topic.reopen: 'Reopen Topic'
+ccdn_forum_forum.link.topic.delete: 'Delete Topic'
+ccdn_forum_forum.link.topic.restore: 'Restore Topic'
+ccdn_forum_forum.link.topic.change_board: 'Change Board'
+ccdn_forum_forum.link.draft.delete: 'Delete'
+ccdn_forum_forum.link.draft.publish: 'Edit & Publish'
 
-# Page titles:
-title.category.index: 'Forum: Index.'
-title.category.show: 'Forum: Category - %category_name%.'
-title.board.show: 'Forum: Board - %board_name%.'
-title.topic.show: 'Forum: %topic_title%.'
-title.topic.create: 'Forum: Create topic on board: %board_name%.'
-title.topic.reply: 'Forum: Reply to topic: %topic_title%.'
-title.topic.edit: 'Forum: Edit topic: %topic_title%.'
-title.topic.delete: 'Forum: Delete topic: %topic_title%.'
-title.post.show: 'Forum: Post #%post_id% for topic: %topic_title%.'
-title.post.edit: 'Forum: Edit post #%post_id% of topic: %topic_title%.'
-title.post.delete: 'Forum: Delete #%post_id% for topic: %topic_title%.'
-title.flag.post: 'Forum: Flag post #%post_id% for topic: %topic_title%.'
-title.drafts: 'Drafts.'
-title.subscriptions.show: 'Subscriptions.'
+#
+# Forms.
+#
+ccdn_forum_forum.form.field.is_required: 'This field is required'
+ccdn_forum_forum.form.label.topic.title: 'Title: '
+ccdn_forum_forum.form.label.topic.board: 'Board:'
+ccdn_forum_forum.form.label.post.body: 'Body: '
+ccdn_forum_forum.form.label.post.attachment: 'Attachment: '
+ccdn_forum_forum.form.button.topic.create: 'Post Topic'
+ccdn_forum_forum.form.button.topic.reply: 'Post Reply'
+ccdn_forum_forum.form.button.post.edit: 'Update'
+ccdn_forum_forum.form.button.post.preview: 'Preview'
+ccdn_forum_forum.form.button.post.save_draft: 'Save Draft'
+ccdn_forum_forum.form.label.post.flag.reason: 'Reason: '
+ccdn_forum_forum.form.label.post.flag.description: 'Description of issue: '
+ccdn_forum_forum.form.button.post.flag.submit: 'Submit Flag'
+ccdn_forum_forum.form.button.cancel: 'Cancel'
 
-# links & button links
-link.user.message: Send Private Message
-link.post.flag: Flag
-link.post.edit: Edit
-link.post.reply: Reply
-link.post.quote: Quote
-link.post.delete: Delete
-link.post.restore: Restore
-link.post.lock: Lock
-link.post.unlock: Unlock
-link.topic.create: Create New Topic
-link.topic.close: Close Topic
-link.topic.reopen: Reopen Topic
-link.topic.delete: Delete Topic
-link.topic.restore: Restore Topic
-link.topic.change_board: Change Board
-link.draft.delete: Delete
-link.draft.publish: Edit & Publish
+#
+# Table Labels.
+#
+ccdn_forum_forum.categories.empty: 'There are no categories.'
+ccdn_forum_forum.category.table.empty: 'There are no boards for this category.'
+ccdn_forum_forum.board.table.empty: 'No topics for this board, be the first to post one!'
+ccdn_forum_forum.board.table.body.topic_count: 'Topics: '
+ccdn_forum_forum.board.table.body.post_count: 'Posts: '
+ccdn_forum_forum.board.table.head.board: 'Board'
+ccdn_forum_forum.board.table.head.topic_count: 'Topics'
+ccdn_forum_forum.board.table.head.post_count: 'Posts'
+ccdn_forum_forum.board.table.head.topic_title: 'Topic'
+ccdn_forum_forum.board.table.head.reply_count: 'Replies'
+ccdn_forum_forum.board.table.head.view_count: 'Views'
+ccdn_forum_forum.board.table.head.last_post: 'Last Post'
+ccdn_forum_forum.board.table.head.post_number: 'Post #'
+ccdn_forum_forum.board.table.head.created_by: 'Created By'
+ccdn_forum_forum.board.table.head.created_on: 'Created On'
+ccdn_forum_forum.board.table.head.locked_by: 'Locked By'
+ccdn_forum_forum.board.table.head.locked_on: 'Locked On'
+ccdn_forum_forum.board.table.head.closed_by: 'Closed By'
+ccdn_forum_forum.board.table.head.closed_on: 'Closed On'
+ccdn_forum_forum.board.table.head.deleted_by: 'Deleted By'
+ccdn_forum_forum.board.table.head.deleted_on: 'Deleted On'
+ccdn_forum_forum.subscriptions.table.empty: 'You are not subscribed to any topics.'
+ccdn_forum_forum.drafts.table.head.topic_title: "Topic"
+ccdn_forum_forum.drafts.table.empty: 'No drafts found.'
 
-flash.post.edit.success: 'Successfully edited #%post_id% of topic: %topic_title%.'
-flash.post.delete.success: 'Deleted post: #%post_id%.'
-flash.post.flagged.success: 'You flagged the post: #%post_id% of topic: %topic_title%.'
-
-flash.topic.create.success: 'You posted the new topic: %topic_title%.'
-flash.topic.reply.success: 'You posted a reply to the topic: %topic_title%.'
-
-flash.draft.save.success: "Draft saved successfully."
-
-flash.draft.topic_does_not_exist: 'The topic you are trying to reply to no longer exists.'
-flash.draft.board_does_not_exist: 'The board you are trying to post to no longer exists.'
-
-flash.subscription.topic.subscribed: 'You subscribed to the topic %topic_title%.'
-flash.subscription.topic.unsubscribed: 'You unsubscribed from the topic %topic_title%'
-flash.subscription.topic.not.found: 'Topic could not be subscribed to because it was not found! Sorry about that.'
-
-badge.topic.closed: 'closed'
-
-
-# show:
-categories.empty: 'There are no categories.'
-category.table.empty: 'There are no boards for this category.'
-board.table.empty: 'No topics for this board, be the first to post one!'
-
-# show:
-board.table.body.topic_count: 'Topics: '
-board.table.body.post_count: 'Posts: '
-
-board.table.head.board: 'Board'
-board.table.head.topic_count: 'Topics'
-board.table.head.post_count: 'Posts'
-
-board.table.head.topic_title: Topic
-board.table.head.reply_count: Replies
-board.table.head.view_count: Views
-board.table.head.last_post: Last Post
-board.table.head.post_number: 'Post #'
-board.table.head.created_by: 'Created By'
-board.table.head.created_on: 'Created On'
-board.table.head.locked_by: 'Locked By'
-board.table.head.locked_on: 'Locked On'
-board.table.head.closed_by: 'Closed By'
-board.table.head.closed_on: 'Closed On'
-board.table.head.deleted_by: 'Deleted By'
-board.table.head.deleted_on: 'Deleted On'
-
-topic.reply_count: 'Replies: '
-topic.view_count: 'Viewed: '
-topic.subscription_count: 'Subscribers: '
-
-board.topic_count: 'Topics: '
-board.post_count: 'Posts: '
-
-info.not_applicable: N/A
-
-subscriptions.table.empty: 'You are not subscribed to any topics.'
-
-drafts.table.head.topic_title: "Topic"
-drafts.table.empty: 'No drafts found.'
-# show:
-post.posted_by: 'Posted by '
-post.edited_by: 'Edited by '
-post.locked_by: 'Locked by '
-post.deleted_by: 'Deleted by '
-topic.closed_by: 'Topic closed by '
-topic.deleted_by: 'Topic deleted by '
-topic.stickied_by: 'Stickied by '
-generic.posted_at: 'Posted at '
-post.has_been_flagged: 'This post has been flagged!'
-post.has_been_locked: 'This post has been locked!'
-actioned.at: ' at '
-
-topic.transcript: 'Transcript of: %topic_title%.'
-
-post.user.post_count: %post_count% Posts
-post.is_deleted: This post has been removed.
-
-# form
-form.field.required: 'This field is required'
-form.label.topic.title: 'Title: '
-form.label.topic.board: 'Board:'
-form.label.post.body: 'Body: '
-form.label.post.attachment: 'Attachment: '
-form.button.topic.create: Post Topic
-form.button.topic.reply: Post Reply
-form.button.post.edit: Update
-form.button.post.preview: Preview
-form.button.post.save_draft: Save Draft
+#
+# Generic.
+#
+ccdn_forum_forum.category.index: 'Forum Index'
+ccdn_forum_forum.topic.reply_count: 'Replies: '
+ccdn_forum_forum.topic.view_count: 'Viewed: '
+ccdn_forum_forum.topic.subscription_count: 'Subscribers: '
+ccdn_forum_forum.board.topic_count: 'Topics: '
+ccdn_forum_forum.board.post_count: 'Posts: '
+ccdn_forum_forum.info.not_applicable: 'N/A'
+ccdn_forum_forum.post.posted_by: 'Posted by '
+ccdn_forum_forum.post.edited_by: 'Edited by '
+ccdn_forum_forum.post.locked_by: 'Locked by '
+ccdn_forum_forum.post.deleted_by: 'Deleted by '
+ccdn_forum_forum.topic.closed_by: 'Topic closed by '
+ccdn_forum_forum.topic.deleted_by: 'Topic deleted by '
+ccdn_forum_forum.topic.stickied_by: 'Stickied by '
+ccdn_forum_forum.generic.posted_at: 'Posted at '
+ccdn_forum_forum.post.has_been_flagged: 'This post has been flagged!'
+ccdn_forum_forum.post.has_been_locked: 'This post has been locked!'
+ccdn_forum_forum.generic.actioned_at: ' at '
+ccdn_forum_forum.topic.transcript: 'Transcript of: %topic_title%.'
+ccdn_forum_forum.post.user.post_count: '%post_count% Posts'
+ccdn_forum_forum.post.is_deleted: 'This post has been removed.'
+ccdn_forum_forum.badge.topic.closed: 'Closed'
 
 # delete:
-topic.delete_topic_question: Are you sure you want to delete this topic?
-post.delete_post_question: Are you sure you want to delete this post?
-post.delete.confirm_yes: Yes
-post.delete.confirm_no: No
+ccdn_forum_forum.topic.delete_topic_question: 'Are you sure you want to delete this topic?'
+ccdn_forum_forum.post.delete_post_question: 'Are you sure you want to delete this post?'
+ccdn_forum_forum.post.delete.confirm_yes: 'Yes'
+ccdn_forum_forum.post.delete.confirm_no: 'No'
 
 # flag
-form.label.post.flag.reason: 'Reason: '
-form.label.post.flag.description: 'Description of issue: '
-form.button.post.flag.submit: Submit Flag
+flag.reasons.spam: 'Spam'
+flag.reasons.age_inappropriate_content: 'Inappropriate content'
+flag.reasons.aggressive_attitude: 'Aggressive attitude'
+flag.reasons.hate_speech: 'Hate speech'
+flag.reasons.condoning_provoking_violence: 'Condoning or provoking violence'
+flag.reasons.offensive_content: 'Offensive content'
 
-flag.reasons.spam: Spam
-flag.reasons.age_inappropriate_content: Inappropriate content
-flag.reasons.aggressive_attitude: Aggressive attitude
-flag.reasons.hate_speech: Hate speech
-flag.reasons.condoning_provoking_violence: Condoning or provoking violence
-flag.reasons.offensive_content: Offensive content
-
-flag.statuses.open: Open
-flag.statuses.being_investigated: Being investigated
-flag.statuses.closed_resolved: Closed / resolved
-flag.statuses.closed_unresolvable: Closed / unresolvable
-flag.statuses.closed_no_issue: Closed / no issue
-flag.statuses.closed_pending_review: Closed / pending review
+flag.statuses.open: 'Open'
+flag.statuses.being_investigated: 'Being investigated'
+flag.statuses.closed_resolved: 'Closed / resolved'
+flag.statuses.closed_unresolvable: 'Closed / unresolvable'
+flag.statuses.closed_no_issue: 'Closed / no issue'
+flag.statuses.closed_pending_review: 'Closed / pending review'

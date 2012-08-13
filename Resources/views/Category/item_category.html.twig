@@ -5,10 +5,10 @@
 	<thead>
 		<tr>
 			<th class="center" style="width: 32px;"></th>
-			<th class="left">{{- 'board.table.head.board' | trans({}, 'CCDNForumForumBundle') -}}</th>
-			<th class="center" style="width: 60px;">{{- 'board.table.head.topic_count' | trans({}, 'CCDNForumForumBundle') -}}</th>
-			<th class="center" style="width: 60px;">{{- 'board.table.head.post_count' | trans({}, 'CCDNForumForumBundle') -}}</th>
-			<th class="center" style="width: 170px;">{{- 'board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') -}}</th>
+			<th class="left">{{- 'ccdn_forum_forum.board.table.head.board' | trans({}, 'CCDNForumForumBundle') -}}</th>
+			<th class="center" style="width: 60px;">{{- 'ccdn_forum_forum.board.table.head.topic_count' | trans({}, 'CCDNForumForumBundle') -}}</th>
+			<th class="center" style="width: 60px;">{{- 'ccdn_forum_forum.board.table.head.post_count' | trans({}, 'CCDNForumForumBundle') -}}</th>
+			<th class="center" style="width: 170px;">{{- 'ccdn_forum_forum.board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') -}}</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -17,7 +17,7 @@
 	{%- else -%}
 		<tr>
 			<td class="center" colspan="5" style="width:100%;">
-				{{- 'category.table.empty' | trans({}, 'CCDNForumForumBundle') -}}
+				{{- 'ccdn_forum_forum.category.table.empty' | trans({}, 'CCDNForumForumBundle') -}}
 			</td>
 		</tr>
 	{%- endfor -%}

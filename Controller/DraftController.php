@@ -54,7 +54,7 @@ class DraftController extends ContainerAware
         $draftsPaginated->setCurrentPage($page, false, true);
 
         $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('crumbs.drafts_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_draft_list'), "home");
+            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.drafts_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_draft_list'), "home");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Draft:list.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
@@ -124,20 +124,20 @@ class DraftController extends ContainerAware
                 if ($draft->getBoard()) {
                     return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_reply_from_draft', array('topicId' => $draft->getTopic()->getId(), 'draftId' => $draft->getId()) ));
                 } else {
-                    $this->container->get('session')->setFlash('error', $this->container->get('translator')->trans('flash.draft.topic_does_not_exist', array(), 'CCDNForumForumBundle'));
+                    $this->container->get('session')->setFlash('error', $this->container->get('translator')->trans('ccdn_forum_forum.flash.draft.topic_does_not_exist', array(), 'CCDNForumForumBundle'));
                 }
             } else {
                 if ($draft->getBoard()) {
                     return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_create_from_draft', array('boardId' => $draft->getBoard()->getId(), 'draftId' => $draft->getId()) ));
                 } else {
-                    $this->container->get('session')->setFlash('error', $this->container->get('translator')->trans('flash.draft.board_does_not_exist', array(), 'CCDNForumForumBundle'));
+                    $this->container->get('session')->setFlash('error', $this->container->get('translator')->trans('ccdn_forum_forum.flash.draft.board_does_not_exist', array(), 'CCDNForumForumBundle'));
                 }
             }
         } else {
             if ($draft->getBoard()) {
                 return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_create_from_draft', array('boardId' => $draft->getBoard()->getId(), 'draftId' => $draft->getId()) ));
             } else {
-                $this->container->get('session')->setFlash('error', $this->container->get('translator')->trans('flash.draft.board_does_not_exist', array(), 'CCDNForumForumBundle'));
+                $this->container->get('session')->setFlash('error', $this->container->get('translator')->trans('ccdn_forum_forum.flash.draft.board_does_not_exist', array(), 'CCDNForumForumBundle'));
             }
         }
 
