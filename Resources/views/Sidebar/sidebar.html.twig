@@ -50,15 +50,15 @@
 					{%- if sidebar_board is defined -%}
 						{%- if board is defined -%}
 							{%- if sidebar_board.id == board.id and route != 'ccdn_forum_forum_topic_create' and route != 'ccdn_forum_forum_topic_reply' -%}
-								<li class="active"><a href="{{- path('ccdn_forum_forum_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}"><i class="icon-white icon-folder-close"></i>&nbsp;{{- truncDot(sidebar_board.name, 15) -}}</a></li>
+								<li class="active"><a href="{{- path('ccdn_forum_forum_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}"><i class="icon-white icon-folder-close"></i>&nbsp;{{- truncDot(sidebar_board.name, 20) -}}</a></li>
 							{%- else -%}
-								<li><a href="{{- path('ccdn_forum_forum_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}"><i class="icon-folder-close"></i>&nbsp;{{- truncDot(sidebar_board.name, 15) -}}</a></li>
+								<li><a href="{{- path('ccdn_forum_forum_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}"><i class="icon-folder-close"></i>&nbsp;{{- truncDot(sidebar_board.name, 20) -}}</a></li>
 							{%- endif -%}
 						{%- else -%}
-							<li><a href="{{- path('ccdn_forum_forum_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}"><i class="icon-folder-close"></i>&nbsp;{{- truncDot(sidebar_board.name, 15) -}}</a></li>
+							<li><a href="{{- path('ccdn_forum_forum_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}"><i class="icon-folder-close"></i>&nbsp;{{- truncDot(sidebar_board.name, 20) -}}</a></li>
 						{%- endif -%}
 					{%- else -%}
-						<li><a href="{{- path('ccdn_forum_forum_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}"><i class="icon-folder-close"></i>&nbsp;{{- truncDot(sidebar_board.name, 15) -}}</a></li>
+						<li><a href="{{- path('ccdn_forum_forum_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}"><i class="icon-folder-close"></i>&nbsp;{{- truncDot(sidebar_board.name, 20) -}}</a></li>
 					{%- endif -%}
 				{%- endfor -%}
 			{%- endif -%}
