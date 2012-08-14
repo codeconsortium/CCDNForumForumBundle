@@ -18,25 +18,39 @@
 		{%- endif -%}
 
 		{%- if is_granted('ROLE_MODERATOR') -%}
-			{%- if topic.isSticky -%}
-				<a class="btn btn-warning" href="{{- path('ccdn_forum_moderator_topic_unsticky', {'topicId': topic.getId }) -}}"><i class="icon-white icon-bullhorn"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.unsticky' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
-			{%- else -%}
-				<a class="btn btn-warning" href="{{- path('ccdn_forum_moderator_topic_sticky', {'topicId': topic.getId }) -}}"><i class="icon-white icon-bullhorn"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.sticky' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
-			{%- endif -%}
+			<div class="btn-group" style="margin-bottom:0px;vertical-align:bottom;">
+				<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+					<i class="icon-wrench"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic_admin' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;
+					<span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+					{%- if topic.isSticky -%}
+						<a href="{{- path('ccdn_forum_moderator_topic_unsticky', {'topicId': topic.getId }) -}}"><i class="icon-bullhorn"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.unsticky' |trans({}, 'CCDNForumForumBundle') -}}</a>
+					{%- else -%}
+						<a href="{{- path('ccdn_forum_moderator_topic_sticky', {'topicId': topic.getId }) -}}"><i class="icon-bullhorn"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.sticky' |trans({}, 'CCDNForumForumBundle') -}}</a>
+					{%- endif -%}
+					</li>
+					
+					<li><a href="{{- path('ccdn_forum_moderator_topic_change_board', {'topicId': topic.getId }) -}}"><i class="icon-move"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.change_board' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
 
-			<a class="btn btn-warning" href="{{- path('ccdn_forum_moderator_topic_change_board', {'topicId': topic.getId }) -}}"><i class="icon-white icon-move"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.change_board' | trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
-
-			{%- if topic.closedBy -%}
-				<a class="btn btn-warning" href="{{- path('ccdn_forum_moderator_topic_reopen', {'topicId': topic.getId }) -}}"><i class="icon-white icon-lock"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.reopen' | trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
-			{%- else -%}
-				<a class="btn btn-danger" href="{{- path('ccdn_forum_moderator_topic_close', {'topicId': topic.getId }) -}}"><i class="icon-white icon-lock"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.close' | trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
-			{%- endif -%}
-
-			{%- if topic.deletedBy -%}
-				<a class="btn btn-warning" href="{{- path('ccdn_forum_moderator_topic_restore', {'topicId': topic.getId }) -}}"><i class="icon-white icon-trash"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.restore' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
-			{%- else -%}
-				<a class="btn btn-danger" href="{{- path('ccdn_forum_moderator_topic_delete', {'topicId': topic.getId }) -}}"><i class="icon-white icon-trash"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.delete' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
-			{%- endif -%}
+					<li>
+					{%- if topic.closedBy -%}
+						<a href="{{- path('ccdn_forum_moderator_topic_reopen', {'topicId': topic.getId }) -}}"><i class="icon-lock"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.reopen' | trans({}, 'CCDNForumForumBundle') -}}</a>
+					{%- else -%}
+						<a href="{{- path('ccdn_forum_moderator_topic_close', {'topicId': topic.getId }) -}}"><i class="icon-lock"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.close' | trans({}, 'CCDNForumForumBundle') -}}</a>
+					{%- endif -%}
+					</li>
+					
+					<li>
+					{%- if topic.deletedBy -%}
+						<a href="{{- path('ccdn_forum_moderator_topic_restore', {'topicId': topic.getId }) -}}"><i class="icon-trash"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.restore' |trans({}, 'CCDNForumForumBundle') -}}</a>
+					{%- else -%}
+						<a href="{{- path('ccdn_forum_moderator_topic_delete', {'topicId': topic.getId }) -}}"><i class="icon-trash"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.delete' |trans({}, 'CCDNForumForumBundle') -}}</a>
+					{%- endif -%}
+					</li>
+				</ul>
+			</div>
 		{%- endif -%}
 
 	{%- endif -%}
