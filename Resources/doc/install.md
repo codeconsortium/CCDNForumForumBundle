@@ -1,4 +1,4 @@
-Installing CCDNForum ForumBundle 1.0
+Installing CCDNForum ForumBundle 1.2
 ====================================
 
 
@@ -8,15 +8,15 @@ Installing CCDNForum ForumBundle 1.0
 2. [EWZTimeBundle](http://github.com/excelwebzone/EWZRecaptchaBundle).
 3. [PagerFanta](http://github.com/whiteoctober/Pagerfanta).
 4. [PagerFantaBundle](http://github.com/whiteoctober/WhiteOctoberPagerfantaBundle).
-5. [CCDNComponent CommonBundle](http://github.com/codeconsortium/CommonBundle).
-6. [CCDNComponent BBCodeBundle](http://github.com/codeconsortium/BBCodeBundle).
-7. [lib-geshi](http://github.com/codeconsortium/lib-geshi).
-8. [CCDNComponent CrumbTrailBundle](http://github.com/codeconsortium/CrumbTrailBundle).
-9. [CCDNComponent DashboardBundle](http://github.com/codeconsortium/DashboardBundle).
-10. [CCDNComponent AttachmentBundle](http://github.com/codeconsortium/AttachmentBundle).
-11. [CCDNForum AdminBundle](http://github.com/codeconsortium/CCDNForumForumBundle).
-12. [CCDNForum KarmaBundle](http://github.com/codeconsortium/CCDNForumKarmaBundle).
-13. [CCDNForum ModeratorBundle](http://github.com/codeconsortium/CCDNForumModeratorBundle).
+5. [lib-geshi](http://github.com/codeconsortium/lib-geshi).
+6. [CCDNComponent CommonBundle](http://github.com/codeconsortium/CommonBundle/tree/v1.2).
+7. [CCDNComponent BBCodeBundle](http://github.com/codeconsortium/BBCodeBundle/tree/v1.2).
+8. [CCDNComponent CrumbTrailBundle](http://github.com/codeconsortium/CrumbTrailBundle/tree/v1.2).
+9. [CCDNComponent DashboardBundle](http://github.com/codeconsortium/DashboardBundle/tree/v1.2).
+10. [CCDNComponent AttachmentBundle](http://github.com/codeconsortium/AttachmentBundle/tree/v1.2).
+11. [CCDNForum AdminBundle](http://github.com/codeconsortium/CCDNForumForumBundle/tree/v1.2).
+12. [CCDNForum KarmaBundle](http://github.com/codeconsortium/CCDNForumKarmaBundle/tree/v1.2).
+13. [CCDNForum ModeratorBundle](http://github.com/codeconsortium/CCDNForumModeratorBundle/tree/v1.2).
 
 ## Installation:
 
@@ -41,7 +41,7 @@ Append the following to end of your deps file (found in the root of your Symfony
 [CCDNForum_ForumBundle]
     git=http://github.com/codeconsortium/CCDNForumForumBundle.git
     target=/bundles/CCDNForum/ForumBundle
-
+    version=v1.2
 ```
 
 ### Step 2: Register bundles with autoload.php.
@@ -88,8 +88,13 @@ CCDNForumForumBundle:
     resource: "@CCDNForumForumBundle/Resources/config/routing.yml"
     prefix: /
 
+ccdn_forum_forum_home_root:
+    pattern: /
+    defaults: { _controller: CCDNForumForumBundle:Category:index, _locale: en }
 ```
-	
+
+You can change the route of the standalone route to any route you like, it is included for convenience.
+
 ### Step 6: Update your app/config/config.yml.
 
 In your app/config/config.yml add:    
