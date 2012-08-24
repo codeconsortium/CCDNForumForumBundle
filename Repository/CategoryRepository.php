@@ -48,6 +48,27 @@ class CategoryRepository extends EntityRepository
     /**
      *
      * @access public
+     */
+    public function findCategoryByName($name)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('
+                SELECT c
+                FROM CCDNForumForumBundle:Category c
+                WHERE c.name = :name
+            ')
+			->setParameter('name', $name);
+
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+	}
+	
+    /**
+     *
+     * @access public
      * @param Int $categoryId
      */
     public function findOneByIdJoinedToBoard($categoryId)
