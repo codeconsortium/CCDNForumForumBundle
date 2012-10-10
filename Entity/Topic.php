@@ -118,6 +118,12 @@ class Topic
      */
     protected $isSticky = false;
 
+	/**
+	 *
+     * @ORM\OneToMany(targetEntity="Subscription", mappedBy="topic", cascade={"remove"})
+	 */
+	protected $subscriptions;
+	
     public function __construct()
     {
         $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
@@ -461,5 +467,25 @@ class Topic
     public function getStickiedBy()
     {
         return $this->stickiedBy;
+    }
+
+    /**
+     * Add subscriptions
+     *
+     * @param CCDNForum\ForumBundle\Entity\Subscription $subscriptions
+     */
+    public function addSubscription(\CCDNForum\ForumBundle\Entity\Subscription $subscriptions)
+    {
+        $this->subscriptions[] = $subscriptions;
+    }
+
+    /**
+     * Get subscriptions
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getSubscriptions()
+    {
+        return $this->subscriptions;
     }
 }
