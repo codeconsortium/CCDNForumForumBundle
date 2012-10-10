@@ -124,12 +124,12 @@ class PostController extends ContainerAware
             throw new NotFoundHttpException('No such post exists!');
         }
 
-        // you cannot reply/edit/delete/flag a post if the topic is closed
+        // you cannot reply/edit/delete a post if the topic is closed
         if ($post->getTopic()->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
             throw new AccessDeniedException('This topic has been closed!');
         }
 
-        // you cannot reply/edit/delete/flag a post if it is locked
+        // you cannot reply/edit/delete a post if it is locked
         if ($post->getIsLocked() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
             throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
         }
@@ -248,11 +248,11 @@ class PostController extends ContainerAware
             throw new NotFoundHttpException('No such post exists!');
         }
 
-        if ($post->getTopic()->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {	// you cannot reply/edit/delete/flag a post if the topic is closed
+        if ($post->getTopic()->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {	// you cannot reply/edit/delete a post if the topic is closed
             throw new AccessDeniedException('This topic has been closed!');
         }
 
-        if ($post->getIsLocked() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {	// you cannot reply/edit/delete/flag a post if it is locked
+        if ($post->getIsLocked() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {	// you cannot reply/edit/delete a post if it is locked
             throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
         }
 
@@ -328,12 +328,12 @@ class PostController extends ContainerAware
             throw new NotFoundHttpException('No such post exists!');
         }
 
-        // you cannot reply/edit/delete/flag a post if the topic is closed
+        // you cannot reply/edit/delete a post if the topic is closed
         if ($post->getTopic()->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
             throw new AccessDeniedException('This topic has been closed!');
         }
 
-        // you cannot reply/edit/delete/flag a post if it is locked
+        // you cannot reply/edit/delete a post if it is locked
         if ($post->getIsLocked() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
             throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
         }
@@ -357,79 +357,6 @@ class PostController extends ContainerAware
 
         // forward user
         return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
-    }
-
-    /**
-     *
-     * @access public
-     * @param Int $postId
-     * @return RedirectResponse|RenderResponse
-     */
-    public function flagAction($postId)
-    {
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException('You do not have permission to flag posts!');
-        }
-
-        $user = $this->container->get('security.context')->getToken()->getUser();
-
-        $post = $this->container->get('ccdn_forum_forum.post.repository')->find($postId);
-
-        if (! $post) {
-            throw new NotFoundHttpException('No such post exists!');
-        }
-
-        // if this topics first post is deleted, and no
-        // other posts exist then throw an NotFoundHttpException!
-        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted())
-        && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
-        {
-            throw new NotFoundHttpException('No such post exists!');
-        }
-
-        if ($post->getTopic()->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {	// you cannot reply/edit/delete/flag a post if the topic is closed
-            throw new AccessDeniedException('This topic has been closed!');
-        }
-
-        if ($post->getIsLocked() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {	// you cannot reply/edit/delete/flag a post if it is locked
-            throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
-        }
-
-        if ($post->getCreatedBy()) {
-            if ($post->getCreatedBy()->getId() == $user->getId()) {
-                throw new AccessDeniedException('You cannot flag your own posts!');
-            }
-        }
-
-        $formHandler = $this->container->get('ccdn_forum_forum.flag.form.handler')->setDefaultValues(array('post' => $post, 'user' => $user));
-
-        if ($formHandler->process()) {
-            $this->container->get('session')->setFlash('warning', $this->container->get('translator')->trans('ccdn_forum_forum.flash.post.flagged.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle()), 'CCDNForumForumBundle'));
-
-            return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show_paginated_anchored',
-                array('topicId' => $post->getTopic()->getId(), 'page' => 1, 'postId' => $postId) ));
-        }
-
-        // setup crumb trail.
-        $topic = $post->getTopic();
-        $board = $topic->getBoard();
-        $category = $board->getCategory();
-
-        $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(),	$this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
-            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
-            ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
-            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.post.flag', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_post_flag', array('postId' => $postId)), "flag");
-
-        return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:flag.html.' . $this->getEngine(), array(
-            'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
-            'user' => $user,
-            'topic' => $topic,
-            'post' => $post,
-            'crumbs' => $crumbs,
-            'form' => $formHandler->getForm()->createView(),
-        ));
     }
 
     /**

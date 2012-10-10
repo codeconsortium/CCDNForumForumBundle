@@ -102,13 +102,6 @@ ccdn_forum_forum_draft_publish:
     defaults: { _controller: CCDNForumForumBundle:Draft:publish, _locale: en }
 
 #
-# Flags.
-#
-ccdn_forum_forum_post_flag:
-    pattern: /{_locale}/forum/post/{postId}/flag
-    defaults: { _controller: CCDNForumForumBundle:Post:flag, _locale: en }
-
-#
 # Subscriptions.
 #
 ccdn_forum_forum_subscription_list:

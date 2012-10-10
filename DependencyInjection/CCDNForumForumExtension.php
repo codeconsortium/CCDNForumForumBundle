@@ -140,9 +140,6 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.post.show.topic_closed_datetime_format', $config['post']['show']['topic_closed_datetime_format']);
         $container->setParameter('ccdn_forum_forum.post.show.topic_deleted_datetime_format', $config['post']['show']['topic_deleted_datetime_format']);
 
-        $container->setParameter('ccdn_forum_forum.post.flag.layout_template', $config['post']['flag']['layout_template']);
-        $container->setParameter('ccdn_forum_forum.post.flag.form_theme', $config['post']['flag']['form_theme']);
-
         $container->setParameter('ccdn_forum_forum.post.edit_topic.layout_template', $config['post']['edit_topic']['layout_template']);
         $container->setParameter('ccdn_forum_forum.post.edit_topic.form_theme', $config['post']['edit_topic']['form_theme']);
         $container->setParameter('ccdn_forum_forum.post.edit_topic.enable_bb_editor', $config['post']['edit_topic']['enable_bb_editor']);

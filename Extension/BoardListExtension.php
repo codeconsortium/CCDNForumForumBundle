@@ -59,7 +59,6 @@ class BoardListExtension extends \Twig_Extension
         $boards = $this->container->get('ccdn_forum_forum.board.repository')->findAllBoardsGroupedByCategoryHydratedAsArray();
 
         return $boards;
-        //echo '</div></div></div><pre>' . print_r($boards, true) . '</pre>'; die();
     }
 
     /**

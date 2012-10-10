@@ -101,11 +101,6 @@ class Post
     protected $lockedBy = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="CCDNForum\ForumBundle\Entity\Flag", mappedBy="post", cascade={"remove"})
-     */
-    protected $flags;
-
-    /**
      * @ORM\ManyToOne(targetEntity="CCDNComponent\AttachmentBundle\Entity\Attachment", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="id", onDelete="SET NULL")
      */
@@ -343,27 +338,6 @@ class Post
 
     public function __construct()
     {
-        $this->flags = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add flags
-     *
-     * @param CCDNForum\ForumBundle\Entity\Flag $flags
-     */
-    public function addFlag(\CCDNForum\ForumBundle\Entity\Flag $flags)
-    {
-        $this->flags[] = $flags;
-    }
-
-    /**
-     * Get flags
-     *
-     * @return Doctrine\Common\Collections\Collection
-     */
-    public function getFlags()
-    {
-        return $this->flags;
     }
 
     /**

@@ -46,10 +46,6 @@ ccdn_forum_forum:
             layout_template: CCDNComponentCommonBundle:Layout:layout_body_right.html.twig
             topic_closed_datetime_format: "d-m-Y - H:i"
             topic_deleted_datetime_format: "d-m-Y - H:i"
-        flag:
-            layout_template: CCDNComponentCommonBundle:Layout:layout_body_right.html.twig
-            form_theme: CCDNForumForumBundle:Form:fields.html.twig
-			enable_bb_editor: true
         edit_topic:
             layout_template: CCDNComponentCommonBundle:Layout:layout_body_right.html.twig
             form_theme: CCDNForumForumBundle:Form:fields.html.twig
