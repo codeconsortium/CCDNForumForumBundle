@@ -40,7 +40,7 @@
 
 	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 
-	<h2><abbr title="{{- topic.getTitle -}}">{{- truncDot(topic.getTitle |capitalize, 70) -}}</abbr></h2>
+	<h2 title="{{- topic.getTitle -}}">{{- truncDot(topic.getTitle |capitalize, 70) -}}</h2>
 
 	<br>
 

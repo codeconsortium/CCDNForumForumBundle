@@ -26,7 +26,7 @@
 				<span class="label label-important">{{- 'ccdn_forum_forum.badge.topic.closed' |trans({}, 'CCDNForumForumBundle') -}}</span>&nbsp;
 			{%- endif -%}
 			
-			<abbr title="{{- topic.getTitle -}}"><a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.getId }) -}}">{{- truncDot(topic.getTitle, param('ccdn_forum_forum.board.show.topic_title_truncate')) |title -}}</a></abbr>
+			<a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.getId }) -}}" title="{{- topic.getTitle -}}">{{- truncDot(topic.getTitle, param('ccdn_forum_forum.board.show.topic_title_truncate')) |title -}}</a>
 			
 			<br>
 			

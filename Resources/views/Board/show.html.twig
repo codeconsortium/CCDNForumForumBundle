@@ -22,7 +22,7 @@
 
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
-	<h2><abbr title="{{- board.name -}}">{{- truncDot(board.name, param('ccdn_forum_forum.seo.title_length')) -}}.</abbr></h2>
+	<h2 title="{{- board.name -}}">{{- truncDot(board.name, param('ccdn_forum_forum.seo.title_length')) -}}.</h2>
 
 	<br>
 
