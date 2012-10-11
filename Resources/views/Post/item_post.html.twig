@@ -102,21 +102,24 @@
 					</div>
 				</div>
 						
-				{%- if registries[post.getCreatedBy().getId()] is defined -%}
 				<div style="display:block;float:none;clear:right;">
 					<div class="pull-left">
-						
-						{#<div style="clear:both;text-align:left;vertical-align:middle;">
-							<img class="icon16" width="16" height="16" src="{{- asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_karma.png') -}}" alt="icon">&nbsp;
-							<span class="badge badge-important">{{- registries[post.getCreatedBy().getId()].getCachedKarmaNegativeCount -}}</span>&nbsp;
-							<span class="badge badge-success">{{- registries[post.getCreatedBy().getId()].getCachedKarmaPositiveCount -}}</span>
-						</div>#}
+						{%- if registries[post.getCreatedBy().getId()] is defined -%}												
+							{#<div style="clear:both;text-align:left;vertical-align:middle;">
+								<img class="icon16" width="16" height="16" src="{{- asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_karma.png') -}}" alt="icon">&nbsp;
+								<span class="badge badge-important">{{- registries[post.getCreatedBy().getId()].getCachedKarmaNegativeCount -}}</span>&nbsp;
+								<span class="badge badge-success">{{- registries[post.getCreatedBy().getId()].getCachedKarmaPositiveCount -}}</span>
+							</div>#}
 
-						<span class="label">{{- 'ccdn_forum_forum.post.user.post_count' | trans({'%post_count%': registries[post.getCreatedBy().getId()].getCachedPostCount()}, 'CCDNForumForumBundle') -}}</span>
-						
+							<span class="label">{{- 'ccdn_forum_forum.post.user.post_count' | trans({'%post_count%': registries[post.getCreatedBy().getId()].getCachedPostCount()}, 'CCDNForumForumBundle') -}}</span>
+						{%- endif -%}
+
+						{%- if post.getCreatedBy() -%}
+							<br>
+							{%- include 'CCDNUserProfileBundle:Account:item_role_badge.html.twig' with {'user': post.getCreatedBy(), } -%}
+						{%- endif -%}
 					</div>
 				</div>
-				{%- endif -%}
 				
 			</div>
 		</div>
