@@ -18,7 +18,7 @@
 				<div style="display:block;float:none;clear:right;">
 					<div class="pull-left" style="padding:5px;vertical-align:bottom;">
 						{%- if post.getCreatedBy -%}
-							<a href="{{- path(user_profile_route, {'userId': post.getCreatedBy.getId } ) -}}">{{- post.getCreatedBy |title -}}</a>
+							{{- 'ccdn_forum_forum.post.posted_by' |trans({}, 'CCDNForumForumBundle') -}}<a href="{{- path(user_profile_route, {'userId': post.getCreatedBy.getId } ) -}}">{{- post.getCreatedBy |title -}}</a>
 						{%- else -%}
 							Guest
 						{%- endif -%}
@@ -39,10 +39,10 @@
 					<div class="pull-right">
 						<div class="btn-toolbar" style="margin-top:0px;margin-bottom:0px;vertical-align:top;">
 							{%- if post.getIsLocked -%}
-								<i class="icon-lock" style="vertical-align:top;margin-top:6px;" data-tip="bottom" title="{{- 'ccdn_forum_forum.post.has_been_locked' |trans({}, 'CCDNForumForumBundle') -}}"></i>&nbsp;
+								<i class="icon-lock" style="vertical-align:top;margin-top:6px;" data-tip="bottom" title="{{- 'ccdn_forum_forum.post.has_been_locked' |trans({}, 'CCDNForumForumBundle') -}}"></i>&nbsp;&nbsp;
 							{%- endif -%}	
 							{%- if post.getIsDeleted -%}
-								<i class="icon-trash" style="vertical-align:top;margin-top:6px;" data-tip="bottom" title="{{- 'post.has_been_deleted' |trans({}, 'CCDNForumForumBundle') -}}"></i>&nbsp;
+								<i class="icon-trash" style="vertical-align:top;margin-top:6px;" data-tip="bottom" title="{{- 'ccdn_forum_forum.post.has_been_deleted' |trans({}, 'CCDNForumForumBundle') -}}"></i>&nbsp;&nbsp;
 							{%- endif -%}
 
 							{%- if is_granted('ROLE_USER') -%}
