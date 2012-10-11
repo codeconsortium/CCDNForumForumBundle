@@ -7,7 +7,7 @@
 		<div style="display:block;float:left;width:110px;margin:0px -115px 0px 0px;padding:0px;overflow:hidden;vertical-align:top;text-align:center;">
 			<div style="margin:0px;padding:5px 0;overflow:hidden;vertical-align:top;text-align:center;z-index:3;">
 
-					{%- include 'CCDNUserProfileBundle:Avatar:item_avatar.html.twig' with {'user': post.getCreatedBy, 'scale_x':80, 'scale_y':80} -%}
+				{%- include 'CCDNUserProfileBundle:Avatar:item_avatar.html.twig' with {'user': post.getCreatedBy, 'scale_x':80, 'scale_y':80, 'border': 1, 'padding': 4, } -%}
 				
 			</div>
 		</div>
