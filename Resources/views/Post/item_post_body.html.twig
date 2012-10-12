@@ -1,21 +1,54 @@
 {%- spaceless -%}
 
-	<span class="common_body">
-		{{- BBCode(post.getBody | raw, param('ccdn_forum_forum.item_post.enable_bb_parser')) | raw -}}<br>
-	</span>
-	<span class="common_body">
-		{%- if post.getAttachment -%}
-			<br><a href="{{- path('ccdn_component_attachment_download', {'attachmentId': post.getAttachment.getId }) -}}"><img width="60" height="60" src="{{- path('ccdn_component_attachment_thumbnail', {'attachmentId': post.getAttachment.getId }) -}}" alt="{{- post.getAttachment.getAttachmentOriginal -}}"></a><br>
+	{%- if post.getIsDeleted -%}
+		<span class="alert alert-warning" style="display:block;">
+		<i class="icon-trash"></i>&nbsp;
+		{{- 'ccdn_forum_forum.post.is_deleted' | trans({}, 'CCDNForumForumBundle') -}}&nbsp; 
+		{{- 'ccdn_forum_forum.post.deleted_by' |trans({}, 'CCDNForumForumBundle') -}}
+		{%- if post.getDeletedBy -%}<a href="{{- path(user_profile_route, {'userId': post.getDeletedBy.getId }) -}}">{{- post.getDeletedBy.getUsername |title -}}</a>{%- else -%}Guest{%- endif -%}
+		{{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}{{- relevantDateFormat(post.getDeletedDate) -}}{#|date(param('ccdn_forum_forum.item_post.post_deleted_datetime_format')) #}
+		</span>
+	{%- endif -%}
+
+	{%- if post.getIsDeleted == false or is_granted('ROLE_MODERATOR') -%}
+		{%- if post.getIsDeleted == true -%}
+			<div class="accordion" id="post_{{- post.getId() -}}">
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#post_{{- post.getId() -}}" href="#post_{{- post.getId() -}}_body">{{- 'ccdn_forum_forum.post.show_hide' |trans({}, 'CCDNForumForumBundle') -}}</a>
+					</div>
+					<div id="post_{{- post.getId() -}}_body" class="accordion-body collapse">
+						<div class="accordion-inner">
 		{%- endif -%}
-	</span>
-	{%- if post.getCreatedBy -%}
-		{%- if post.getCreatedBy.getProfile -%}
-			{%- if post.getCreatedBy.getProfile.getSignature -%}
-				<br><hr>
-				<span class="common_body">
-					{{- BBCode(post.getCreatedBy.getProfile.getSignature | raw, param('ccdn_forum_forum.item_signature.enable_bb_parser')) | raw -}}
-				</span>
+				
+
+
+		<span class="common_body">
+			{{- BBCode(post.getBody | raw, param('ccdn_forum_forum.item_post.enable_bb_parser')) | raw -}}<br>
+		</span>
+		<span class="common_body">
+			{%- if post.getAttachment -%}
+				<br><a href="{{- path('ccdn_component_attachment_download', {'attachmentId': post.getAttachment.getId }) -}}"><img width="60" height="60" src="{{- path('ccdn_component_attachment_thumbnail', {'attachmentId': post.getAttachment.getId }) -}}" alt="{{- post.getAttachment.getAttachmentOriginal -}}"></a><br>
 			{%- endif -%}
+		</span>
+		{%- if post.getCreatedBy -%}
+			{%- if post.getCreatedBy.getProfile -%}
+				{%- if post.getCreatedBy.getProfile.getSignature -%}
+					<br><hr>
+					<span class="common_body">
+						{{- BBCode(post.getCreatedBy.getProfile.getSignature | raw, param('ccdn_forum_forum.item_signature.enable_bb_parser')) | raw -}}
+					</span>
+				{%- endif -%}
+			{%- endif -%}
+		{%- endif -%}
+
+
+			
+		{%- if post.getIsDeleted == true -%}			
+						</div>
+					</div>
+				</div>
+			</div>
 		{%- endif -%}
 	{%- endif -%}
 
