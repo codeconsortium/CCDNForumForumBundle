@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Extension;
+namespace CCDNForum\ForumBundle\Component\TwigExtension;
 
 /**
  *
