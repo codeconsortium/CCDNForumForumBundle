@@ -204,4 +204,26 @@ class BoardRepository extends EntityRepository
         }
     }
 
+    /**
+     *
+     * @access public
+     * @param Int $boardId
+     */
+    public function countBoardsForCategory($categoryId)
+    {
+        $boardCountQuery = $this->getEntityManager()
+			->createQuery('
+	            SELECT COUNT(b.id)
+	            FROM CCDNForumForumBundle:Board b
+	            WHERE b.category = :id
+            ')
+            ->setParameter('id', $categoryId);
+
+        try {
+            return $boardCountQuery->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+			return 0;
+        }
+    }
+
 }

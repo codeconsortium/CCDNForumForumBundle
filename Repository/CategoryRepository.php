@@ -112,4 +112,26 @@ class CategoryRepository extends EntityRepository
         }
     }
 
+    /**
+     *
+     * for ADMIN
+     *
+     * @access public
+     */
+    public function countCategories()
+    {
+	
+		$categoryCountQuery = $this->getEntityManager()
+			->createQuery('
+	            SELECT COUNT(c.id)
+	            FROM CCDNForumForumBundle:Category c
+			');
+
+        try {
+            return $categoryCountQuery->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+			return 0;
+        }
+    }
+
 }
