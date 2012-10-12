@@ -1,7 +1,7 @@
 {%- spaceless -%}
 <tr class="{{- cycler(['row_odd', 'row_even'], 'board') }} marked_read">
 	<td class="center">
-		<img class="icon32" width="32" height="32" src="{{- asset('bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_board.png') -}}" alt="icon">
+		<i class="icon-folder-close" style="margin-top:10px;"></i>
 	</td>
 	<td class="left">
 		<h4><a href="{{- path('ccdn_forum_forum_board_show', {'boardId': board.getId }) -}}" title="{{- board.getName -}}">{{- truncDot(board.getName, param('ccdn_forum_forum.seo.title_length')) -}}</a></h4>
