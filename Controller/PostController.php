@@ -165,15 +165,7 @@ class PostController extends ContainerAware
             if ($formHandler->process()) {	// get posts for determining the page of the edited post
                 $topic = $post->getTopic();
 
-                // scan for matching post in order and find its index to divide by items per page
-
-                // Reece Fowell.
-                // The loop below, could be better written by adding a query to the repo to retrieve
-                // posts but only the id column and created date, then sorting by date and hydrating
-                // as array instead of collection. Then find array entry via id without a loop, possible
-                // php function, maybe array_walk?? This should return the index in the array.
-
-                foreach ($topic->getPosts() as $index => $postTest) {					// <------------- move this shit to the Post or TopicEntityManager?
+                foreach ($topic->getPosts() as $index => $postTest) {
                     if ($post->getId() == $postTest->getId()) {
                         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
                         $page = ceil($index / $postsPerPage);
