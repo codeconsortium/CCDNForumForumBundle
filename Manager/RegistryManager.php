@@ -35,14 +35,14 @@ class RegistryManager extends BaseManager implements ManagerInterface
     public function updateCachePostCountForUser($user)
     {
 
-        $record = $this->container->get('ccdn_forum_forum.registry.repository')->findRegistryRecordForUser($user->getId());
+        $record = $this->container->get('ccdn_forum_forum.repository.registry')->findRegistryRecordForUser($user->getId());
 
         if (! $record) {
             $record = new Registry();
             $record->setOwnedBy($user);
         }
 
-        $postCount = $this->container->get('ccdn_forum_forum.post.repository')->getPostCountForUserById($user->getId());
+        $postCount = $this->container->get('ccdn_forum_forum.repository.post')->getPostCountForUserById($user->getId());
 
         if (! $postCount) {
             $record->setCachedPostCount(0);
@@ -77,14 +77,14 @@ class RegistryManager extends BaseManager implements ManagerInterface
     public function updateCacheKarmaCountForUser($user)
     {
 
-        $record = $this->container->get('ccdn_forum_forum.registry.repository')->findRegistryRecordForUser($user->getId());
+        $record = $this->container->get('ccdn_forum_forum.repository.registry')->findRegistryRecordForUser($user->getId());
 
         if (! $record) {
             $record = new Registry();
             $record->setOwnedBy($user);
         }
 
-        $karmaCount = $this->container->get('ccdn_forum_karma.karma.repository')->getKarmaCountForUserById($user->getId());
+        $karmaCount = $this->container->get('ccdn_forum_karma.repository.karma')->getKarmaCountForUserById($user->getId());
 
         $record->setCachedKarmaPositiveCount($karmaCount['karmaPositiveCount']);
         $record->setCachedKarmaNegativeCount($karmaCount['karmaNegativeCount']);
@@ -103,7 +103,7 @@ class RegistryManager extends BaseManager implements ManagerInterface
     public function getRegistriesForUsersAsArray($registryUserIds = array())
     {
 
-        $registriesTemp = $this->container->get('ccdn_forum_forum.registry.repository')->getPostCountsForUsers($registryUserIds);
+        $registriesTemp = $this->container->get('ccdn_forum_forum.repository.registry')->getPostCountsForUsers($registryUserIds);
 
         //
         // Sort the registries so that the [id] is the key of the parent key.

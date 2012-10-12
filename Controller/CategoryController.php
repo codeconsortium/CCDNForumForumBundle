@@ -31,7 +31,7 @@ class CategoryController extends ContainerAware
      */
     public function indexAction()
     {
-        $categories = $this->container->get('ccdn_forum_forum.category.repository')->findAllJoinedToBoard();
+        $categories = $this->container->get('ccdn_forum_forum.repository.category')->findAllJoinedToBoard();
 
         $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
@@ -55,7 +55,7 @@ class CategoryController extends ContainerAware
     public function showAction($categoryId)
     {
 
-        $category = $this->container->get('ccdn_forum_forum.category.repository')->findOneByIdJoinedToBoard($categoryId);
+        $category = $this->container->get('ccdn_forum_forum.repository.category')->findOneByIdJoinedToBoard($categoryId);
 
         if (! $category) {
             throw NotFoundhttpException('No such category exists!');

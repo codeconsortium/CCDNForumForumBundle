@@ -56,7 +56,7 @@ class BoardListExtension extends \Twig_Extension
      */
     public function boardList()
     {
-        $boards = $this->container->get('ccdn_forum_forum.board.repository')->findAllBoardsGroupedByCategoryHydratedAsArray();
+        $boards = $this->container->get('ccdn_forum_forum.repository.board')->findAllBoardsGroupedByCategoryHydratedAsArray();
 
         return $boards;
     }

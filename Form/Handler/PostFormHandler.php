@@ -94,7 +94,7 @@ class PostFormHandler
 
         // topic manager is the default unless the mode is changed.
         $this->mode = self::NORMAL;
-        $this->manager = $this->container->get('ccdn_forum_forum.post.manager');
+        $this->manager = $this->container->get('ccdn_forum_forum.manager.post');
 
         $this->request = $container->get('request');
     }
@@ -127,15 +127,15 @@ class PostFormHandler
         switch ($mode) {
             case self::NORMAL:
                 $this->mode = self::NORMAL;
-                $this->manager = $this->container->get('ccdn_forum_forum.post.manager');
+                $this->manager = $this->container->get('ccdn_forum_forum.manager.post');
             break;
             case self::PREVIEW:
                 $this->mode = self::PREVIEW;
-                $this->manager = $this->container->get('ccdn_forum_forum.post.manager');
+                $this->manager = $this->container->get('ccdn_forum_forum.manager.post');
             break;
             case self::DRAFT:
                 $this->mode = self::DRAFT;
-                $this->manager = $this->container->get('ccdn_forum_forum.draft.manager');
+                $this->manager = $this->container->get('ccdn_forum_forum.manager.draft');
             break;
         }
     }
@@ -218,7 +218,7 @@ class PostFormHandler
     {
 
         if (! $this->form) {
-            $postType = $this->container->get('ccdn_forum_forum.post.form.type');
+            $postType = $this->container->get('ccdn_forum_forum.form.type.post');
             $postType->setDefaultValues($this->defaults);
 
             //

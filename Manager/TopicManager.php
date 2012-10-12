@@ -52,11 +52,11 @@ class TopicManager extends BaseManager implements ManagerInterface
 
         if ($topic->getBoard()) {
             // Update affected Board stats.
-            $this->container->get('ccdn_forum_forum.board.manager')->updateStats($topic->getBoard())->flush();
+            $this->container->get('ccdn_forum_forum.manager.board')->updateStats($topic->getBoard())->flush();
         }
 
         // Update the cached post count of the post author.
-        $this->container->get('ccdn_forum_forum.registry.manager')->updateCachePostCountForUser($post->getCreatedBy());
+        $this->container->get('ccdn_forum_forum.manager.registry')->updateCachePostCountForUser($post->getCreatedBy());
 
         return $this;
     }
@@ -136,8 +136,8 @@ class TopicManager extends BaseManager implements ManagerInterface
      */
     public function updateStats($topic)
     {
-        $topicRepository = $this->container->get('ccdn_forum_forum.topic.repository');
-        $postRepository = $this->container->get('ccdn_forum_forum.post.repository');
+        $topicRepository = $this->container->get('ccdn_forum_forum.repository.topic');
+        $postRepository = $this->container->get('ccdn_forum_forum.repository.post');
 
         // Gets stats.
         $topicReplyCount = $postRepository->getPostCountForTopicById($topic->getId());
@@ -153,7 +153,7 @@ class TopicManager extends BaseManager implements ManagerInterface
 
         if ($topic->getBoard()) {
             // Update affected Board stats.
-            $this->container->get('ccdn_forum_forum.board.manager')->updateStats($topic->getBoard())->flush();
+            $this->container->get('ccdn_forum_forum.manager.board')->updateStats($topic->getBoard())->flush();
         }
 
         return $this;

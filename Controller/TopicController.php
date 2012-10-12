@@ -40,9 +40,9 @@ class TopicController extends ContainerAware
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $topic = $this->container->get('ccdn_forum_forum.topic.repository')->findByIdWithBoardAndCategory($topicId);
+        $topic = $this->container->get('ccdn_forum_forum.repository.topic')->findByIdWithBoardAndCategory($topicId);
 
-        $postsPager = $this->container->get('ccdn_forum_forum.post.repository')->findPostsForTopicByIdPaginated($topicId);
+        $postsPager = $this->container->get('ccdn_forum_forum.repository.post')->findPostsForTopicByIdPaginated($topicId);
 
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
         $postsPager->setMaxPerPage($postsPerPage);
@@ -61,11 +61,11 @@ class TopicController extends ContainerAware
         }
 
         // update the view counter because you viewed the topic
-        $this->container->get('ccdn_forum_forum.topic.manager')->incrementViewCounter($topic);
+        $this->container->get('ccdn_forum_forum.manager.topic')->incrementViewCounter($topic);
 
         // get the topic subscriptions
         if ($this->container->get('security.context')->isGranted('ROLE_USER')) {
-            $subscription = $this->container->get('ccdn_forum_forum.subscription.repository')->findTopicSubscriptionByTopicAndUserId($topicId, $user->getId());
+            $subscription = $this->container->get('ccdn_forum_forum.repository.subscription')->findTopicSubscriptionByTopicAndUserId($topicId, $user->getId());
         } else {
             $subscription = null;
         }
@@ -87,9 +87,9 @@ class TopicController extends ContainerAware
             }
         }
 
-        $registries = $this->container->get('ccdn_forum_forum.registry.manager')->getRegistriesForUsersAsArray($registryUserIds);
+        $registries = $this->container->get('ccdn_forum_forum.manager.registry')->getRegistriesForUsersAsArray($registryUserIds);
 
-        $subscriberCount = $this->container->get('ccdn_forum_forum.subscription.repository')->getSubscriberCountForTopicById($topicId);
+        $subscriberCount = $this->container->get('ccdn_forum_forum.repository.subscription')->getSubscriberCountForTopicById($topicId);
 
         // setup crumb trail.
         $board = $topic->getBoard();
@@ -131,7 +131,7 @@ class TopicController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $board = $this->container->get('ccdn_forum_forum.board.repository')->find($boardId);
+        $board = $this->container->get('ccdn_forum_forum.repository.board')->find($boardId);
 
         if (! $board) {
             throw new NotFoundHttpException('No such board exists!');
@@ -146,7 +146,7 @@ class TopicController extends ContainerAware
         // Publishing drafts
         //
         if ($draftId != 0) {
-            $draft = $this->container->get('ccdn_forum_forum.draft.manager')->getDraft($draftId);
+            $draft = $this->container->get('ccdn_forum_forum.manager.draft')->getDraft($draftId);
 
             if (array_key_exists('post', $draft) && array_key_exists('topic', $draft)) {
                 if (is_object($draft['topic']) && $draft['topic'] instanceof Topic && is_object($draft['post']) && $draft['post'] instanceof Post) {
@@ -161,7 +161,7 @@ class TopicController extends ContainerAware
 
         }
 
-        $formHandler = $this->container->get('ccdn_forum_forum.topic.insert.form.handler')->setDefaultValues($options);
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_create')->setDefaultValues($options);
 
         if (isset($_POST['submit_post'])) {
             $formHandler->setMode($formHandler::NORMAL);
@@ -223,7 +223,7 @@ class TopicController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $topic = $this->container->get('ccdn_forum_forum.topic.repository')->findOneByIdJoinedToPosts($topicId);
+        $topic = $this->container->get('ccdn_forum_forum.repository.topic')->findOneByIdJoinedToPosts($topicId);
 
         if (! $topic) {
             throw new NotFoundHttpException('No such topic exists!');
@@ -237,7 +237,7 @@ class TopicController extends ContainerAware
         // Set the form handler options
         //
         if ( ! empty($quoteId)) {
-            $quote = $this->container->get('ccdn_forum_forum.post.repository')->find($quoteId);
+            $quote = $this->container->get('ccdn_forum_forum.repository.post')->find($quoteId);
         }
 
         $options = array('topic' => $topic,	'user' => $user, 'quote' => (empty($quote) ? null : $quote));
@@ -246,7 +246,7 @@ class TopicController extends ContainerAware
         // Publishing drafts
         //
         if ($draftId != 0) {
-            $draft = $this->container->get('ccdn_forum_forum.draft.manager')->getDraft($draftId);
+            $draft = $this->container->get('ccdn_forum_forum.manager.draft')->getDraft($draftId);
 
             if (is_object($draft) && $draft instanceof Post) {
                 $options['post'] = $draft;
@@ -257,7 +257,7 @@ class TopicController extends ContainerAware
             }
         }
 
-        $formHandler = $this->container->get('ccdn_forum_forum.post.insert.form.handler')->setDefaultValues($options);
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_create')->setDefaultValues($options);
 
         if (isset($_POST['submit_post'])) {
             $formHandler->setMode($formHandler::NORMAL);
@@ -266,7 +266,7 @@ class TopicController extends ContainerAware
                 // page of the last post
                 $postsPerTopicPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 
-                $pageCounter = $this->container->get('ccdn_forum_forum.post.repository')->getPostCountForTopicById($topicId);
+                $pageCounter = $this->container->get('ccdn_forum_forum.repository.post')->getPostCountForTopicById($topicId);
 
                 $page =  $pageCounter ? ceil($pageCounter / $postsPerTopicPage) : 1;
 

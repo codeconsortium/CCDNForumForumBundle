@@ -39,7 +39,7 @@ class SubscriptionController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $subscriptions = $this->container->get('ccdn_forum_forum.subscription.repository')->findForUserById($user->getId());
+        $subscriptions = $this->container->get('ccdn_forum_forum.repository.subscription')->findForUserById($user->getId());
 
         // deal with pagination.
         $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.subscription.list.topics_per_page');
@@ -76,7 +76,7 @@ class SubscriptionController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $this->container->get('ccdn_forum_forum.subscription.manager')->subscribe($topicId, $user)->flush();
+        $this->container->get('ccdn_forum_forum.manager.subscription')->subscribe($topicId, $user)->flush();
 
         return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topicId)) );
     }
@@ -95,7 +95,7 @@ class SubscriptionController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $this->container->get('ccdn_forum_forum.subscription.manager')->unsubscribe($topicId, $user)->flush();
+        $this->container->get('ccdn_forum_forum.manager.subscription')->unsubscribe($topicId, $user)->flush();
 
         return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topicId)) );
     }

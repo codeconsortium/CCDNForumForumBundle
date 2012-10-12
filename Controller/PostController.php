@@ -36,7 +36,7 @@ class PostController extends ContainerAware
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $post = $this->container->get('ccdn_forum_forum.post.repository')->find($postId);
+        $post = $this->container->get('ccdn_forum_forum.repository.post')->find($postId);
 
         if (! $post) {
             throw new NotFoundHttpException('No such post exists!');
@@ -59,18 +59,18 @@ class PostController extends ContainerAware
             $registryUserIds = array();
         }
 
-        $registries = $this->container->get('ccdn_forum_forum.registry.manager')->getRegistriesForUsersAsArray($registryUserIds);
+        $registries = $this->container->get('ccdn_forum_forum.manager.registry')->getRegistriesForUsersAsArray($registryUserIds);
 
         //
         // Get the topic subscriptions.
         //
         if ($this->container->get('security.context')->isGranted('ROLE_USER') && $post->getTopic()) {
-            $subscription = $this->container->get('ccdn_forum_forum.subscription.repository')->findTopicSubscriptionByTopicAndUserId($post->getTopic()->getId(), $user->getId());
+            $subscription = $this->container->get('ccdn_forum_forum.repository.subscription')->findTopicSubscriptionByTopicAndUserId($post->getTopic()->getId(), $user->getId());
         } else {
             $subscription = null;
         }
 
-        $subscriberCount = $this->container->get('ccdn_forum_forum.subscription.repository')->getSubscriberCountForTopicById($post->getTopic()->getId());
+        $subscriberCount = $this->container->get('ccdn_forum_forum.repository.subscription')->getSubscriberCountForTopicById($post->getTopic()->getId());
 
         // setup crumb trail.
         $topic = $post->getTopic();
@@ -110,7 +110,7 @@ class PostController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $post = $this->container->get('ccdn_forum_forum.post.repository')->findPostForEditing($postId);
+        $post = $this->container->get('ccdn_forum_forum.repository.post')->findPostForEditing($postId);
 
         if (! $post) {
             throw new NotFoundHttpException('No such post exists!');
@@ -148,13 +148,13 @@ class PostController extends ContainerAware
         }
 
         if ($post->getTopic()->getFirstPost()->getId() == $post->getId()) {	// if post is the very first post of the topic then use a topic handler so user can change topic title
-            $formHandler = $this->container->get('ccdn_forum_forum.topic.update.form.handler')->setDefaultValues(array('post' => $post, 'user' => $user));
+            $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_update')->setDefaultValues(array('post' => $post, 'user' => $user));
 
             if ($this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
                 $formHandler->setDefaultValues(array('board' => $post->getTopic()->getBoard()));
             }
         } else {
-            $formHandler = $this->container->get('ccdn_forum_forum.post.update.form.handler')->setDefaultValues(array('post' => $post, 'user' => $user));
+            $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_update')->setDefaultValues(array('post' => $post, 'user' => $user));
         }
 
         if (isset($_POST['submit_preview'])) {
@@ -234,7 +234,7 @@ class PostController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $post = $this->container->get('ccdn_forum_forum.post.repository')->findPostForEditing($postId);
+        $post = $this->container->get('ccdn_forum_forum.repository.post')->findPostForEditing($postId);
 
         if (! $post) {
             throw new NotFoundHttpException('No such post exists!');
@@ -314,7 +314,7 @@ class PostController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $post = $this->container->get('ccdn_forum_forum.post.repository')->findPostForEditing($postId);
+        $post = $this->container->get('ccdn_forum_forum.repository.post')->findPostForEditing($postId);
 
         if (! $post) {
             throw new NotFoundHttpException('No such post exists!');
@@ -350,7 +350,7 @@ class PostController extends ContainerAware
             }
         }
 
-        $this->container->get('ccdn_forum_forum.post.manager')->softDelete($post, $user)->flush();
+        $this->container->get('ccdn_forum_forum.manager.post')->softDelete($post, $user)->flush();
 
         // set flash message
         $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.post.delete.success', array('%post_id%' => $postId), 'CCDNForumForumBundle'));

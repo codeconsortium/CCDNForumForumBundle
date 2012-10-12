@@ -33,14 +33,14 @@ class BoardController extends ContainerAware
     public function showAction($boardId, $page)
     {
 
-        $board = $this->container->get('ccdn_forum_forum.board.repository')->findOneByIdWithCategory($boardId);
+        $board = $this->container->get('ccdn_forum_forum.repository.board')->findOneByIdWithCategory($boardId);
 
         if ($this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
-            $topicsPager = $this->container->get('ccdn_forum_forum.topic.repository')->findTopicsForBoardById($boardId, true);
-            $stickyTopics = $this->container->get('ccdn_forum_forum.topic.repository')->findStickyTopicsForBoardById($boardId, true);
+            $topicsPager = $this->container->get('ccdn_forum_forum.repository.topic')->findTopicsForBoardById($boardId, true);
+            $stickyTopics = $this->container->get('ccdn_forum_forum.repository.topic')->findStickyTopicsForBoardById($boardId, true);
         } else {
-            $topicsPager = $this->container->get('ccdn_forum_forum.topic.repository')->findTopicsForBoardById($boardId, false);
-            $stickyTopics = $this->container->get('ccdn_forum_forum.topic.repository')->findStickyTopicsForBoardById($boardId, false);
+            $topicsPager = $this->container->get('ccdn_forum_forum.repository.topic')->findTopicsForBoardById($boardId, false);
+            $stickyTopics = $this->container->get('ccdn_forum_forum.repository.topic')->findStickyTopicsForBoardById($boardId, false);
         }
 
         // deal with pagination.

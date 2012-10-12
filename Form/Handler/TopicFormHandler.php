@@ -94,7 +94,7 @@ class TopicFormHandler
 
         // topic manager is the default unless the mode is changed.
         $this->mode = self::NORMAL;
-        $this->manager = $this->container->get('ccdn_forum_forum.topic.manager');
+        $this->manager = $this->container->get('ccdn_forum_forum.manager.topic');
 
         // set insert as default strategy
         $this->strategy = self::INSERT;
@@ -130,15 +130,15 @@ class TopicFormHandler
         switch ($mode) {
             case self::NORMAL:
                 $this->mode = self::NORMAL;
-                $this->manager = $this->container->get('ccdn_forum_forum.topic.manager');
+                $this->manager = $this->container->get('ccdn_forum_forum.manager.topic');
             break;
             case self::PREVIEW:
                 $this->mode = self::PREVIEW;
-                $this->manager = $this->container->get('ccdn_forum_forum.topic.manager');
+                $this->manager = $this->container->get('ccdn_forum_forum.manager.topic');
             break;
             case self::DRAFT:
                 $this->mode = self::DRAFT;
-                $this->manager = $this->container->get('ccdn_forum_forum.draft.manager');
+                $this->manager = $this->container->get('ccdn_forum_forum.manager.draft');
             break;
         }
     }
@@ -225,9 +225,9 @@ class TopicFormHandler
     {
 
         if (! $this->form) {
-            $postType = $this->container->get('ccdn_forum_forum.post.form.type');
+            $postType = $this->container->get('ccdn_forum_forum.form.type.post');
             $postType->setDefaultValues($this->defaults);
-            $topicType = $this->container->get('ccdn_forum_forum.topic.form.type');
+            $topicType = $this->container->get('ccdn_forum_forum.form.type.topic');
 
             // set for insert method
             if ($this->strategy == self::INSERT) {

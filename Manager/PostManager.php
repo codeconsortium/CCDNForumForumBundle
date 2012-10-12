@@ -40,10 +40,10 @@ class PostManager extends BaseManager implements ManagerInterface
         $this->refresh($post);
 
         // Update affected Topic stats.
-        $this->container->get('ccdn_forum_forum.topic.manager')->updateStats($post->getTopic());
+        $this->container->get('ccdn_forum_forum.manager.topic')->updateStats($post->getTopic());
 
         // Update the cached post count of the post author.
-        $this->container->get('ccdn_forum_forum.registry.manager')->updateCachePostCountForUser($post->getCreatedBy());
+        $this->container->get('ccdn_forum_forum.manager.registry')->updateCachePostCountForUser($post->getCreatedBy());
 
         return $this;
     }
@@ -103,7 +103,7 @@ class PostManager extends BaseManager implements ManagerInterface
                         $this->persist($topic)->flush();
 
                         // Update affected Topic stats.
-                        $this->container->get('ccdn_forum_forum.topic.manager')->updateStats($post->getTopic())->flush();
+                        $this->container->get('ccdn_forum_forum.manager.topic')->updateStats($post->getTopic())->flush();
                     }
                 }
             }
@@ -140,7 +140,7 @@ class PostManager extends BaseManager implements ManagerInterface
                 $this->persist($topic)->flush();
 
                 // Update affected Topic stats.
-                $this->container->get('ccdn_forum_forum.topic.manager')->updateStats($post->getTopic())->flush();
+                $this->container->get('ccdn_forum_forum.manager.topic')->updateStats($post->getTopic())->flush();
             }
         }
 

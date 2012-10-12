@@ -41,7 +41,7 @@ class DraftManager extends BaseManager implements ManagerInterface
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $draft = $this->container->get('ccdn_forum_forum.draft.repository')->findOneByIdForUserById($draftId, $user->getId());
+        $draft = $this->container->get('ccdn_forum_forum.repository.draft')->findOneByIdForUserById($draftId, $user->getId());
 
         if (! $draft) {
             return null;

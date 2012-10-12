@@ -46,7 +46,7 @@ class DraftController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $draftsPaginated = $this->container->get('ccdn_forum_forum.draft.repository')->findDraftsPaginated($user->getId());
+        $draftsPaginated = $this->container->get('ccdn_forum_forum.repository.draft')->findDraftsPaginated($user->getId());
 
         // deal with pagination.
         $draftsPerPage = $this->container->getParameter('ccdn_forum_forum.draft.list.drafts_per_page');
@@ -80,14 +80,14 @@ class DraftController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $draft = $this->container->get('ccdn_forum_forum.draft.repository')->findOneByIdForUserById($draftId, $user->getId());
+        $draft = $this->container->get('ccdn_forum_forum.repository.draft')->findOneByIdForUserById($draftId, $user->getId());
 
         if (! $draft) {
             throw new NotFoundHttpException('No such draft exists!');
         }
 
         if ($draft) {
-            $this->container->get('ccdn_forum_forum.draft.manager')->remove($draft)->flush();
+            $this->container->get('ccdn_forum_forum.manager.draft')->remove($draft)->flush();
         }
 
         return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_draft_list'));
@@ -110,7 +110,7 @@ class DraftController extends ContainerAware
 
         $user = $this->container->get('security.context')->getToken()->getUser();
 
-        $draft = $this->container->get('ccdn_forum_forum.draft.repository')->findOneByIdForUserById($draftId, $user->getId());
+        $draft = $this->container->get('ccdn_forum_forum.repository.draft')->findOneByIdForUserById($draftId, $user->getId());
 
         if (! $draft) {
             throw new NotFoundHttpException('No such draft exists!');
