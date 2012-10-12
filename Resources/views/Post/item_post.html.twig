@@ -141,12 +141,12 @@
 
 			{%- if post.getIsDeleted == false or is_granted('ROLE_MODERATOR') -%}
 				{%- if post.getIsDeleted == true -%}
-					<div class="accordion" id="post_{{- post.id -}}">
+					<div class="accordion" id="post_{{- post.getId() -}}">
 						<div class="accordion-group">
 							<div class="accordion-heading">
-								<a class="accordion-toggle" data-toggle="collapse" data-parent="#post_{{- post.id -}}" href="#post_{{- post.id -}}_body">{{- 'ccdn_forum_forum.post.show_hide' |trans({}, 'CCDNForumForumBundle') -}}</a>
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#post_{{- post.getId() -}}" href="#post_{{- post.getId() -}}_body">{{- 'ccdn_forum_forum.post.show_hide' |trans({}, 'CCDNForumForumBundle') -}}</a>
 							</div>
-							<div id="post_{{- post.id -}}_body" class="accordion-body collapse">
+							<div id="post_{{- post.getId() -}}_body" class="accordion-body collapse">
 								<div class="accordion-inner">
 				{%- endif -%}
 				
