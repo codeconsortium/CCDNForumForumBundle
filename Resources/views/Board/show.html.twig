@@ -1,10 +1,10 @@
-{% extends param('ccdn_forum_forum.board.show.layout_template') %}
+{% extends ccdn_forum_forum.board.show.layout_template %}
 
 {% block stylesheets %}
 	{{ parent() }}
 {% endblock %}
 
-{% block title %}{{- truncDot('ccdn_forum_forum.title.board.show' | trans({'%board_name%': board.name}, 'CCDNForumForumBundle'), param('ccdn_forum_forum.seo.title_length')) -}}{% endblock %}
+{% block title %}{{- truncDot('ccdn_forum_forum.title.board.show' | trans({'%board_name%': board.name}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
@@ -22,11 +22,11 @@
 
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
-	<h2 title="{{- board.name -}}">{{- truncDot(board.name, param('ccdn_forum_forum.seo.title_length')) -}}.</h2>
+	<h2 title="{{- board.name -}}">{{- truncDot(board.name, ccdn_forum_forum.seo.title_length) -}}.</h2>
 
 	<br>
 
-	{{- BBCode(board.getDescription | raw, param('ccdn_forum_forum.item_board.enable_bb_parser')) | raw -}}
+	{{- BBCode(board.getDescription | raw, ccdn_forum_forum.item_board.enable_bb_parser) | raw -}}
 
 	<br><br>
 

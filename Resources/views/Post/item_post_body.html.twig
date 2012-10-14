@@ -6,7 +6,7 @@
 		{{- 'ccdn_forum_forum.post.is_deleted' | trans({}, 'CCDNForumForumBundle') -}}&nbsp; 
 		{{- 'ccdn_forum_forum.post.deleted_by' |trans({}, 'CCDNForumForumBundle') -}}
 		{%- if post.getDeletedBy -%}<a href="{{- path(user_profile_route, {'userId': post.getDeletedBy.getId }) -}}">{{- post.getDeletedBy.getUsername |title -}}</a>{%- else -%}Guest{%- endif -%}
-		{{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}{{- relevantDateFormat(post.getDeletedDate) -}}{#|date(param('ccdn_forum_forum.item_post.post_deleted_datetime_format')) #}
+		{{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}{{- relevantDateFormat(post.getDeletedDate) -}}{#|date(ccdn_forum_forum.item_post.post_deleted_datetime_format) #}
 		</span>
 	{%- endif -%}
 
@@ -24,7 +24,7 @@
 
 
 		<span class="common_body">
-			{{- BBCode(post.getBody | raw, param('ccdn_forum_forum.item_post.enable_bb_parser')) | raw -}}<br>
+			{{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}<br>
 		</span>
 		<span class="common_body">
 			{%- if post.getAttachment -%}
@@ -36,7 +36,7 @@
 				{%- if post.getCreatedBy.getProfile.getSignature -%}
 					<br><hr>
 					<span class="common_body">
-						{{- BBCode(post.getCreatedBy.getProfile.getSignature | raw, param('ccdn_forum_forum.item_signature.enable_bb_parser')) | raw -}}
+						{{- BBCode(post.getCreatedBy.getProfile.getSignature | raw, ccdn_forum_forum.item_signature.enable_bb_parser) | raw -}}
 					</span>
 				{%- endif -%}
 			{%- endif -%}

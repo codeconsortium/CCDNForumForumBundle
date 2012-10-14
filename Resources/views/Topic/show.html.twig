@@ -1,4 +1,4 @@
-{% extends param('ccdn_forum_forum.topic.show.layout_template') %}
+{% extends ccdn_forum_forum.topic.show.layout_template %}
 
 {% block stylesheets %}
 	{{ parent() }}
@@ -6,7 +6,7 @@
 	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
-{% block title %}{{- truncDot('ccdn_forum_forum.title.topic.show' | trans({'%topic_title%': topic.getTitle |capitalize}, 'CCDNForumForumBundle'), param('ccdn_forum_forum.seo.title_length')) -}}{% endblock %}
+{% block title %}{{- truncDot('ccdn_forum_forum.title.topic.show' | trans({'%topic_title%': topic.getTitle |capitalize}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
@@ -26,7 +26,7 @@
 	<div class="alert alert-error">
 		{{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
 		{%- if topic.getClosedBy -%}<a href="{{- path(user_profile_route, {'userId': topic.getClosedBy.getId } ) -}}">{{- topic.getClosedBy.getUsername -}}</a>{%- else -%}Unknown{%- endif -%}&nbsp;
-		{{- topic.getClosedDate |date(param('ccdn_forum_forum.topic.show.topic_closed_datetime_format')) -}}
+		{{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.topic_closed_datetime_format) -}}
 	</div>
 	{%- endif -%}
 
@@ -34,7 +34,7 @@
 	<div class="alert alert-error">
 		{{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
 		{%- if topic.getDeletedBy -%}<a href="{{- path(user_profile_route, {'userId': topic.getDeletedBy.getId } ) -}}">{{- topic.getDeletedBy.getUsername -}}</a>{%- else -%}Unknown{%- endif -%}&nbsp;
-		{{- topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) -}}
+		{{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
 	</div>
 	{%- endif -%}
 
@@ -56,7 +56,7 @@
 		<i class="icon-white icon-bullhorn"></i>&nbsp;
 		{{- 'ccdn_forum_forum.topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
 		{%- if topic.getStickiedBy -%}{{- topic.getStickiedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
-		{{- topic.getStickiedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) -}}
+		{{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
 	</span>&nbsp;
 	{%- endif -%}
 
@@ -65,7 +65,7 @@
 		<i class="icon-white icon-lock"></i>&nbsp;
 		{{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
 		{%- if topic.getClosedBy -%}{{- topic.getClosedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
-		{{- topic.getClosedDate |date(param('ccdn_forum_forum.topic.show.topic_closed_datetime_format')) -}}
+		{{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.topic_closed_datetime_format) -}}
 	</span>&nbsp;
 	{%- endif -%}
 
@@ -74,7 +74,7 @@
 		<i class="icon-white icon-trash"></i>&nbsp;
 		{{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
 		{%- if topic.getDeletedBy -%}{{- topic.getDeletedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
-		{{- topic.getDeletedDate |date(param('ccdn_forum_forum.topic.show.topic_deleted_datetime_format')) -}}
+		{{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
 	</span>&nbsp;
 	{%- endif -%}
 	

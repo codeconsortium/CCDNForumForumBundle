@@ -1,10 +1,10 @@
-{% extends param('ccdn_forum_forum.category.index.layout_template') %}
+{% extends ccdn_forum_forum.category.index.layout_template %}
 
 {% block stylesheets %}
 	{{ parent() }}
 {% endblock %}
 
-{% block title %}{{- truncDot('ccdn_forum_forum.title.category.index' | trans({}, 'CCDNForumForumBundle'), param('ccdn_forum_forum.seo.title_length')) -}}{% endblock %}
+{% block title %}{{- truncDot('ccdn_forum_forum.title.category.index' | trans({}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}

@@ -26,7 +26,7 @@
 									{%- endif -%}
 								</span>&nbsp;&nbsp;
 								<span class="item_timestamp">
-									{{- post.getCreatedDate |date(param('ccdn_forum_forum.item_post.post_created_datetime_format')) -}}
+									{{- post.getCreatedDate |date(ccdn_forum_forum.item_post.post_created_datetime_format) -}}
 								</span>
 
 							</div>
@@ -34,7 +34,7 @@
 						<div style="clear: both;">
 							<hr>
 							<span class="common_body">
-								{{- BBCode(post.getBody | raw, param('ccdn_forum_forum.item_post.enable_bb_parser')) | raw -}}
+								{{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}
 								<br>
 							</span>
 							<span class="common_body">
@@ -47,7 +47,7 @@
 								{%- if post.getCreatedBy -%}
 									{%- if post.getCreatedBy.getProfile -%}
 										{%- if post.getCreatedBy.getProfile.getSignature -%}
-											{{- BBCode(post.getCreatedBy.getProfile.getSignature | raw, param('ccdn_forum_forum.item_signature.enable_bb_parser')) | raw -}}
+											{{- BBCode(post.getCreatedBy.getProfile.getSignature | raw, ccdn_forum_forum.item_signature.enable_bb_parser) | raw -}}
 										{%- endif -%}
 									{%- endif -%}
 								{%- endif -%}

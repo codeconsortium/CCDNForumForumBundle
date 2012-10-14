@@ -1,11 +1,11 @@
-{% extends param('ccdn_forum_forum.draft.list.layout_template') %}
+{% extends ccdn_forum_forum.draft.list.layout_template %}
 
 {% block stylesheets %}
 	{{ parent() }}
 	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
-{% block title %}{{- truncDot('ccdn_forum_forum.title.drafts.show' | trans({}, 'CCDNForumForumBundle'), param('ccdn_forum_forum.seo.title_length')) -}}{% endblock %}
+{% block title %}{{- truncDot('ccdn_forum_forum.title.drafts.show' | trans({}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
@@ -59,7 +59,7 @@
 				</td>
 				{%- else -%}
 				<td class="left">
-					<b>Topic:</b>&nbsp;{{- truncDot(draft.getTitle, param('ccdn_forum_forum.draft.list.topic_title_truncate')) -}}
+					<b>Topic:</b>&nbsp;{{- truncDot(draft.getTitle, ccdn_forum_forum.draft.list.topic_title_truncate) -}}
 				</td>
 				<td class="left">
 					{%- if draft.getBoard -%}
@@ -71,7 +71,7 @@
 				</td>
 				{%- endif -%}
 				<td class="center">
-					{{- draft.getCreatedDate |date(param('ccdn_forum_forum.draft.list.creation_datetime_format')) -}}
+					{{- draft.getCreatedDate |date(ccdn_forum_forum.draft.list.creation_datetime_format) -}}
 				</td>
 				<td class="center">
 					<a class="btn btn-danger" href="{{- path('ccdn_forum_forum_draft_delete', {'draftId': draft.getId }) -}}">{{- 'ccdn_forum_forum.link.draft.delete' | trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;

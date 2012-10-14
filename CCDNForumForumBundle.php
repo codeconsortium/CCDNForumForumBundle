@@ -23,4 +23,96 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class CCDNForumForumBundle extends Bundle
 {
 
+	public function boot()
+	{
+		$twig = $this->container->get('twig');	
+		$twig->addGlobal('ccdn_forum_forum', array(
+			'seo' => array(
+				'title_length' => $this->container->getParameter('ccdn_forum_forum.seo.title_length'),
+			),
+			'category' => array(
+				'last_post_datetime_format' => $this->container->getParameter('ccdn_forum_forum.category.last_post_datetime_format'),
+				'index' => array(
+					'layout_template' => $this->container->getParameter('ccdn_forum_forum.category.index.layout_template'),
+				),
+				'show' => array(
+					'layout_template' => $this->container->getParameter('ccdn_forum_forum.category.show.layout_template'),
+				),
+			),
+			'board' => array(
+				'show' => array(
+					'layout_template' => $this->container->getParameter('ccdn_forum_forum.board.show.layout_template'),
+					'topic_title_truncate' => $this->container->getParameter('ccdn_forum_forum.board.show.topic_title_truncate'),
+					'first_post_datetime_format' => $this->container->getParameter('ccdn_forum_forum.board.show.first_post_datetime_format'),
+					'last_post_datetime_format' => $this->container->getParameter('ccdn_forum_forum.board.show.last_post_datetime_format'),
+				),
+			),
+			'item_board' => array(
+				'enable_bb_parser' => $this->container->getParameter('ccdn_forum_forum.item_board.enable_bb_parser'),
+				
+			),
+			'topic' => array(
+				'show' => array(
+					'layout_template' => $this->container->getParameter('ccdn_forum_forum.topic.show.layout_template'),
+					'topic_closed_datetime_format' => $this->container->getParameter('ccdn_forum_forum.topic.show.topic_closed_datetime_format'),
+					'topic_deleted_datetime_format' => $this->container->getParameter('ccdn_forum_forum.topic.show.topic_deleted_datetime_format'),
+				),
+				'create' => array(
+					'layout_template' => $this->container->getParameter('ccdn_forum_forum.topic.create.layout_template'),
+					'form_theme' => $this->container->getParameter('ccdn_forum_forum.topic.create.form_theme'),
+					'enable_bb_editor' => $this->container->getParameter('ccdn_forum_forum.topic.create.enable_bb_editor'),
+				),
+				'reply' => array(
+					'layout_template' => $this->container->getParameter('ccdn_forum_forum.topic.reply.layout_template'),
+					'form_theme' => $this->container->getParameter('ccdn_forum_forum.topic.reply.form_theme'),
+					'enable_bb_editor' => $this->container->getParameter('ccdn_forum_forum.topic.reply.enable_bb_editor'),
+				),
+			),
+			'post' => array(
+				'show' => array(
+					'layout_template' => $this->container->getParameter('ccdn_forum_forum.post.show.layout_template'),
+				),
+				'edit_post' => array(
+					'layout_template' => $this->container->getParameter('ccdn_forum_forum.post.edit_post.layout_template'),
+					'form_theme' => $this->container->getParameter('ccdn_forum_forum.post.edit_post.form_theme'),
+					'enable_bb_editor' => $this->container->getParameter('ccdn_forum_forum.post.edit_post.enable_bb_editor'),
+				),
+				'edit_topic' => array(
+					'layout_template' => $this->container->getParameter('ccdn_forum_forum.post.edit_topic.layout_template'),
+					'form_theme' => $this->container->getParameter('ccdn_forum_forum.post.edit_topic.form_theme'),
+					'enable_bb_editor' => $this->container->getParameter('ccdn_forum_forum.post.edit_topic.enable_bb_editor'),
+				),
+				'delete_post' => array(
+					'layout_template' => $this->container->getParameter('ccdn_forum_forum.post.delete_post.layout_template'),
+				),
+			),
+			'item_post' => array(
+				'post_created_datetime_format' => $this->container->getParameter('ccdn_forum_forum.item_post.post_created_datetime_format'),
+				'post_edited_datetime_format' => $this->container->getParameter('ccdn_forum_forum.item_post.post_edited_datetime_format'),
+				'post_deleted_datetime_format' => $this->container->getParameter('ccdn_forum_forum.item_post.post_deleted_datetime_format'),
+				'enable_bb_parser' => $this->container->getParameter('ccdn_forum_forum.item_post.enable_bb_parser'),
+			),
+			'item_signature' => array(
+				'enable_bb_parser' => $this->container->getParameter('ccdn_forum_forum.item_signature.enable_bb_parser'),
+			),
+			'transcript' => array(
+				'post_creation_datetime_format' => $this->container->getParameter('ccdn_forum_forum.transcript.post_creation_datetime_format'),
+				'post_deleted_datetime_format' => $this->container->getParameter('ccdn_forum_forum.transcript.post_deleted_datetime_format'),
+			),
+			'draft' => array(
+				'list' => array(
+					'layout_template' => $this->container->getParameter('ccdn_forum_forum.draft.list.layout_template'),
+					'topic_title_truncate' => $this->container->getParameter('ccdn_forum_forum.draft.list.topic_title_truncate'),
+					'creation_datetime_format' => $this->container->getParameter('ccdn_forum_forum.draft.list.creation_datetime_format'),
+				),
+			),
+			'subscription' => array(
+				'list' => array(
+					'layout_template' => $this->container->getParameter('ccdn_forum_forum.subscription.list.layout_template'),
+				),
+			),
+		));
+
+	}
+
 }

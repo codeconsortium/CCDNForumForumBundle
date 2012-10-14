@@ -4,9 +4,9 @@
 		<i class="icon-folder-close" style="margin-top:10px;"></i>
 	</td>
 	<td class="left">
-		<h4><a href="{{- path('ccdn_forum_forum_board_show', {'boardId': board.getId }) -}}" title="{{- board.getName -}}">{{- truncDot(board.getName, param('ccdn_forum_forum.seo.title_length')) -}}</a></h4>
+		<h4><a href="{{- path('ccdn_forum_forum_board_show', {'boardId': board.getId }) -}}" title="{{- board.getName -}}">{{- truncDot(board.getName, ccdn_forum_forum.seo.title_length) -}}</a></h4>
 		<span class="common_body">
-			{{- BBCode(board.getDescription | raw, param('ccdn_forum_forum.item_board.enable_bb_parser')) | raw -}}
+			{{- BBCode(board.getDescription | raw, ccdn_forum_forum.item_board.enable_bb_parser) | raw -}}
 		</span>
 	</td>
 	<td class="center" style="width: 100px;">
@@ -27,9 +27,9 @@
 				{%- endif -%}
 				<br>
 				{%- if page < 2 -%}
-					<a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': board.getLastPost.getTopic.getId } ) -}}#{{- board.getLastPost.getId -}}"><abbr class="timestamper" title="{{- board.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- board.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.category.last_post_datetime_format')) -}}</abbr></a>
+					<a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': board.getLastPost.getTopic.getId } ) -}}#{{- board.getLastPost.getId -}}"><abbr class="timestamper" title="{{- board.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- board.getLastPost.getCreatedDate |date(ccdn_forum_forum.category.last_post_datetime_format) -}}</abbr></a>
 				{%- else -%}
-					<a href="{{- path('ccdn_forum_forum_topic_show_paginated', {'topicId': board.getLastPost.getTopic.getId, 'page':page }) -}}#{{- board.getLastPost.getId -}}"><abbr class="timestamper" title="{{- board.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- board.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.category.last_post_datetime_format')) -}}</abbr></a>
+					<a href="{{- path('ccdn_forum_forum_topic_show_paginated', {'topicId': board.getLastPost.getTopic.getId, 'page':page }) -}}#{{- board.getLastPost.getId -}}"><abbr class="timestamper" title="{{- board.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- board.getLastPost.getCreatedDate |date(ccdn_forum_forum.category.last_post_datetime_format) -}}</abbr></a>
 				{%- endif -%}
 			{%- endif -%}
 		{%- endif -%}

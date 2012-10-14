@@ -23,7 +23,7 @@
 							Guest
 						{%- endif -%}
 						&nbsp;&nbsp;
-						<abbr class="timestamper label" style="display:inline-block;" title="{{- post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- post.getCreatedDate |date(param('ccdn_forum_forum.item_post.post_created_datetime_format')) -}}</abbr>
+						<abbr class="timestamper label" style="display:inline-block;" title="{{- post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- post.getCreatedDate |date(ccdn_forum_forum.item_post.post_created_datetime_format) -}}</abbr>
 			
 						{%- if post.getEditedDate -%}
 							&nbsp;&nbsp;
@@ -31,7 +31,7 @@
 								{{- 'ccdn_forum_forum.post.edited_by' |trans({}, 'CCDNForumForumBundle') -}}
 								{%- if post.getEditedBy -%}<a href="{{- path(user_profile_route, {'userId': post.getEditedBy.getId}) -}}">{{- post.getEditedBy.getUsername |title -}}</a>{%- else -%}Guest{%- endif -%}
 								{{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}
-								<abbr class="timestamper" title="{{- post.getEditedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- post.getEditedDate |date(param('ccdn_forum_forum.item_post.post_edited_datetime_format')) -}}</abbr>
+								<abbr class="timestamper" title="{{- post.getEditedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- post.getEditedDate |date(ccdn_forum_forum.item_post.post_edited_datetime_format) -}}</abbr>
 							</span>
 						{%- endif -%}
 					</div>

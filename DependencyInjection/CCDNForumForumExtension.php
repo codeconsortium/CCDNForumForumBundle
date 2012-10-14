@@ -43,6 +43,7 @@ class CCDNForumForumExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+
         $processor = new Processor();
         $configuration = new Configuration();
 
@@ -50,7 +51,7 @@ class CCDNForumForumExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-
+		
         $container->setParameter('ccdn_forum_forum.template.engine', $config['template']['engine']);
 
         $container->setParameter('ccdn_forum_forum.user.profile_route', $config['user']['profile_route']);
@@ -70,6 +71,12 @@ class CCDNForumForumExtension extends Extension
         $this->getTranscriptSection($container, $config);
     }
 
+	protected function getServices()
+	{
+		
+	}
+	
+	
     /**
      *
      * @access protected

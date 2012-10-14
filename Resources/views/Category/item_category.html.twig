@@ -1,5 +1,5 @@
 {%- spaceless -%}
-<h2><a href="{{- path('ccdn_forum_forum_category_show', {'categoryId': category.id }) -}}" title="{{- category.name -}}">{{- truncDot(category.name, param('ccdn_forum_forum.seo.title_length')) -}}</a></h2>
+<h2><a href="{{- path('ccdn_forum_forum_category_show', {'categoryId': category.id }) -}}" title="{{- category.name -}}">{{- truncDot(category.name, ccdn_forum_forum.seo.title_length) -}}</a></h2>
 
 <table class="table">
 	<thead>

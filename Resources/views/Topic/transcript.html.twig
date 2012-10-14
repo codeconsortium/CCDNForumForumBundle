@@ -10,7 +10,7 @@
 				{%- else -%}Guest{%- endif -%}
 			</div>
 			<div class="pull-right">
-				<span class="span3">{{- 'ccdn_forum_forum.generic.posted_at' |trans({}, 'CCDNForumForumBundle') -}}{{- post.getCreatedDate |date(param('ccdn_forum_forum.transcript.post_creation_datetime_format')) -}}</span>
+				<span class="span3">{{- 'ccdn_forum_forum.generic.posted_at' |trans({}, 'CCDNForumForumBundle') -}}{{- post.getCreatedDate |date(ccdn_forum_forum.transcript.post_creation_datetime_format) -}}</span>
 			</div>
 		</div>
 		<div style="clear:both;">
@@ -20,7 +20,7 @@
 				{{- 'ccdn_forum_forum.post.is_deleted' | trans({}, 'CCDNForumForumBundle') -}} -
 				{{- 'ccdn_forum_forum.post.deleted_by' |trans({}, 'CCDNForumForumBundle') -}}
 				{%- if post.getDeletedBy -%}{{- post.getDeletedBy.getUsername -}}{%- else -%}Guest{%- endif -%}
-				{{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}{{- post.getDeletedDate |date(param('ccdn_forum_forum.transcript.post_deleted_datetime_format')) -}}
+				{{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}{{- post.getDeletedDate |date(ccdn_forum_forum.transcript.post_deleted_datetime_format) -}}
 				</span>
 			{%- else -%}
 				<span class="common_body">
