@@ -32,7 +32,7 @@ class DraftController extends ContainerAware
     /**
      *
      * @access public
-     * @param Int $page
+     * @param int $page
      * @return RenderResponse
      */
     public function listAction($page)
@@ -66,7 +66,7 @@ class DraftController extends ContainerAware
     /**
      *
      * @access public
-     * @param Int $draftId
+     * @param int $draftId
      * @return RedirectResponse
      */
     public function deleteAction($draftId)
@@ -96,7 +96,7 @@ class DraftController extends ContainerAware
     /**
      *
      * @access public
-     * @param $draftId
+     * @param int $draftId
      * @return RedirectResponse
      */
     public function publishAction($draftId)
@@ -147,7 +147,7 @@ class DraftController extends ContainerAware
     /**
      *
      * @access protected
-     * @return String
+     * @return string
      */
     protected function getEngine()
     {

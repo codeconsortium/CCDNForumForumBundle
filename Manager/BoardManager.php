@@ -27,8 +27,8 @@ class BoardManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $board
-     * @return $this
+     * @param Board $board
+     * @return self
      */
     public function updateStats($board)
     {
@@ -56,7 +56,7 @@ class BoardManager extends BaseManager implements ManagerInterface
      *
      * @access public
      * @param $boards
-     * @return $this
+     * @return self
      */
     public function bulkUpdateStats($boards)
     {

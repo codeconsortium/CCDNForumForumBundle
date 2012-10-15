@@ -87,7 +87,7 @@ class RegistryRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param Int $userId
+     * @param int $userId
      */
     public function findRegistryRecordForUser($userId)
     {
@@ -109,6 +109,7 @@ class RegistryRepository extends EntityRepository
     /**
      *
      * @access public
+	 * @param array $registryUserIds
      */
     public function getPostCountsForUsers($registryUserIds)
     {

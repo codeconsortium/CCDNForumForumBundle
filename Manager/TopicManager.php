@@ -27,8 +27,8 @@ class TopicManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $post
-     * @return $this
+     * @param Post $post
+     * @return self
      */
     public function create($post)
     {
@@ -66,8 +66,8 @@ class TopicManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $topic
-     * @return $this
+     * @param Topic $topic
+     * @return self
      */
     public function update($topic)
     {
@@ -82,8 +82,8 @@ class TopicManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $topic, $user
-     * @return $this
+     * @param Topic $topic, $user
+     * @return self
      */
     public function softDelete($topic, $user)
     {
@@ -111,8 +111,8 @@ class TopicManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $topic
-     * @return $this
+     * @param Topic $topic
+     * @return self
      */
     public function restore($topic)
     {
@@ -131,8 +131,8 @@ class TopicManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $topic
-     * @return $this
+     * @param Topic $topic
+     * @return self
      */
     public function updateStats($topic)
     {
@@ -162,8 +162,8 @@ class TopicManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param @topics
-     * @return $this
+     * @param array $topics
+     * @return self
      */
     public function bulkUpdateStats($topics)
     {
@@ -175,7 +175,7 @@ class TopicManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $topic
+     * @param Topic $topic
      */
     public function incrementViewCounter($topic)
     {

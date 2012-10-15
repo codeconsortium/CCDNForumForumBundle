@@ -29,7 +29,7 @@ class PostController extends ContainerAware
     /**
      *
      * @access public
-     * @param Int $postId
+     * @param int $postId
      * @return RenderResponse
      */
     public function showAction($postId)
@@ -99,7 +99,7 @@ class PostController extends ContainerAware
     /**
      *
      * @access public
-     * @param Int $postId
+     * @param int $postId
      * @return RedirectResponse|RenderResponse
      */
     public function editAction($postId)
@@ -215,7 +215,7 @@ class PostController extends ContainerAware
     /**
      *
      * @access public
-     * @param Int $postId
+     * @param int $postId
      * @return RedirectResponse|RenderResponse
      */
     public function deleteAction($postId)
@@ -295,7 +295,7 @@ class PostController extends ContainerAware
     /**
      *
      * @access public
-     * @param Int $postId
+     * @param int $postId
      * @return RedirectResponse
      */
     public function deleteConfirmedAction($postId)
@@ -354,7 +354,7 @@ class PostController extends ContainerAware
     /**
      *
      * @access protected
-     * @return String
+     * @return string
      */
     protected function getEngine()
     {

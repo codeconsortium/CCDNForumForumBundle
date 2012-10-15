@@ -75,7 +75,7 @@ class PostRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param Int $topicId
+     * @param int $topicId
      */
     public function findPostsForTopicByIdPaginated($topicId)
     {
@@ -116,7 +116,7 @@ class PostRepository extends EntityRepository
      *
      *
      * @access public
-     * @param Int $postId
+     * @param int $postId
      */
     public function findPostForEditing($postId)
     {
@@ -209,7 +209,8 @@ class PostRepository extends EntityRepository
 
     /**
      *
-     *
+ 	 * @access public
+     * @param int $userId
      */
     public function getPostCountForUserById($userId)
     {
@@ -233,7 +234,7 @@ class PostRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param Int $topicId
+     * @param int $topicId
      */
     public function getPostCountForTopicById($topicId)
     {

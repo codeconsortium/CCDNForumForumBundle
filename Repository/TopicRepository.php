@@ -207,7 +207,7 @@ class TopicRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param Int $topicId
+     * @param int $topicId
      */
     public function findOneByIdJoinedToPosts($topicId)
     {
@@ -281,7 +281,7 @@ class TopicRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param Int $topicId
+     * @param int $topicId
      */
     public function getFirstPostForTopic($topicId)
     {
@@ -308,7 +308,7 @@ class TopicRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param Int $topicId
+     * @param int $topicId
      */
     public function getLastPostForTopic($topicId)
     {

@@ -49,7 +49,7 @@ class CategoryController extends ContainerAware
     /**
      *
      * @access public
-     * @param Int $categoryId
+     * @param int $categoryId
      * @return RenderResponse
      */
     public function showAction($categoryId)
@@ -78,7 +78,7 @@ class CategoryController extends ContainerAware
     /**
      *
      * @access protected
-     * @return String
+     * @return string
      */
     protected function getEngine()
     {

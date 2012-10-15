@@ -106,7 +106,7 @@ class BoardRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param Int $boardId
+     * @param int $boardId
      */
     public function findOneByIdWithCategory($boardId)
     {
@@ -131,7 +131,7 @@ class BoardRepository extends EntityRepository
      *
      *
      * @access public
-     * @param Int $boardId
+     * @param int $boardId
      */
     public function getTopicAndPostCountsForBoard($boardId)
     {
@@ -157,7 +157,7 @@ class BoardRepository extends EntityRepository
      * for adminBundle
      *
      * @access public
-     * @param Int $categoryId
+     * @param int $categoryId
      */
     public function findBoardsOrderedByPriorityInCategory($categoryId)
     {
@@ -181,7 +181,7 @@ class BoardRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param Int $boardId
+     * @param int $boardId
      */
     public function findLastTopicForBoard($boardId)
     {
@@ -207,7 +207,7 @@ class BoardRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param Int $boardId
+     * @param int $boardId
      */
     public function countBoardsForCategory($categoryId)
     {

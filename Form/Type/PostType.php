@@ -59,7 +59,8 @@ class PostType extends AbstractType
     /**
      *
      * @access public
-     * @param Array() $options
+     * @param array $defaults
+	 * @return self
      */
     public function setDefaultValues(array $defaults = null)
     {
@@ -71,7 +72,7 @@ class PostType extends AbstractType
     /**
      *
      * @access public
-     * @param FormBuilder $builder, Array() $options
+     * @param FormBuilder $builder, array $options
      */
     public function buildForm(FormBuilder $builder, array $options)
     {
@@ -94,7 +95,7 @@ class PostType extends AbstractType
     /**
      *
      * @access public
-     * @return String
+     * @return string
      */
     public function getQuote()
     {
@@ -116,10 +117,9 @@ class PostType extends AbstractType
 
     /**
      *
-     * for creating and replying to topics
-     *
      * @access public
-     * @param Array() $options
+     * @param array $options
+	 * @return array
      */
     public function getDefaultOptions(array $options)
     {

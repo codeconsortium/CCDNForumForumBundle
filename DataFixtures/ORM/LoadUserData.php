@@ -30,6 +30,11 @@ use CCDNForum\ForumBundle\Entity\Post;
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 {
 
+	/**
+	 *
+	 * @access public
+	 * @param ObjectManager $manager
+	 */
     public function load(ObjectManager $manager)
     {
 		//
@@ -106,6 +111,11 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 		$this->addReference('forum-post', $post);
     }
 
+	/**
+	 *
+	 * @access public
+	 * @return int
+	 */
 	public function getOrder()
 	{
 		return 4;

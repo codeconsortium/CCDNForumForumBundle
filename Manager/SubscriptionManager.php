@@ -29,8 +29,8 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $topicId, $user
-     * @return $this
+     * @param int $topicId, $user
+     * @return self
      */
     public function subscribe($topicId, $user)
     {
@@ -64,8 +64,8 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $topicId, $user
-     * @return $this
+     * @param int $topicId, $user
+     * @return self
      */
     public function unsubscribe($topicId, $user)
     {

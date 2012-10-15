@@ -28,7 +28,8 @@ class BoardListExtension extends \Twig_Extension
     protected $container;
 
     /**
-     *
+     * 
+	 * @access public
      */
     public function __construct($container)
     {
@@ -38,7 +39,7 @@ class BoardListExtension extends \Twig_Extension
     /**
      *
      * @access public
-     * @return Array()
+     * @return array
      */
     public function getFunctions()
     {
@@ -51,8 +52,7 @@ class BoardListExtension extends \Twig_Extension
      * Gets all boards available with their categories.
      *
      * @access public
-     * @param  object $user
-     * @return int
+     * @return array
      */
     public function boardList()
     {

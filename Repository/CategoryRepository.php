@@ -69,7 +69,7 @@ class CategoryRepository extends EntityRepository
     /**
      *
      * @access public
-     * @param Int $categoryId
+     * @param int $categoryId
      */
     public function findOneByIdJoinedToBoard($categoryId)
     {

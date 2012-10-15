@@ -28,7 +28,7 @@ class SubscriptionController extends ContainerAware
     /**
      *
      * @access public
-     * @param Int $page
+     * @param int $page
      * @return RenderResponse
      */
     public function showAction($page)
@@ -65,7 +65,7 @@ class SubscriptionController extends ContainerAware
     /**
      *
      * @access public
-     * @param Int $topicId
+     * @param int $topicId
      * @return RedirectResponse
      */
     public function subscribeAction($topicId)
@@ -84,7 +84,7 @@ class SubscriptionController extends ContainerAware
     /**
      *
      * @access public
-     * @param Int $topicId
+     * @param int $topicId
      * @return RedirectResponse
      */
     public function unsubscribeAction($topicId)
@@ -103,7 +103,7 @@ class SubscriptionController extends ContainerAware
     /**
      *
      * @access protected
-     * @return String
+     * @return string
      */
     protected function getEngine()
     {

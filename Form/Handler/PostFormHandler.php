@@ -143,8 +143,8 @@ class PostFormHandler
     /**
      *
      * @access public
-     * @param Array() $options
-     * @return $this
+     * @param array $defaults
+     * @return self
      */
     public function setDefaultValues(array $defaults = null)
     {

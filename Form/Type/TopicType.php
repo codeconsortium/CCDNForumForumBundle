@@ -33,7 +33,8 @@ class TopicType extends AbstractType
     /**
      *
      * @access public
-     * @param array() $defaults
+     * @param array $defaults
+	 * @return self
      */
     public function setDefaultValues(array $defaults = null)
     {
@@ -45,7 +46,7 @@ class TopicType extends AbstractType
     /**
      *
      * @access public
-     * @param FormBuilder $builder, Array() $options
+     * @param FormBuilder $builder, array $options
      */
     public function buildForm(FormBuilder $builder, array $options)
     {
@@ -73,10 +74,9 @@ class TopicType extends AbstractType
 
     /**
      *
-     * for creating and replying to topics
-     *
      * @access public
-     * @param Array() $options
+     * @param array $options
+	 * @return array
      */
     public function getDefaultOptions(array $options)
     {

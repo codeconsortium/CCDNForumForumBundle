@@ -26,17 +26,16 @@ class DashboardIntegrator extends BaseIntegrator implements IntegratorInterface
 
     /**
      *
-     *
      * Structure of $resources
-     * 	[DASHBOARD_PAGE String]
-     * 		[CATEGORY_NAME String]
-     *			[ROUTE_FOR_LINK String]
-     *				[AUTH String] (optional)
-     *				[URL_LINK String]
-     *				[URL_NAME String]
+     * 	[DASHBOARD_PAGE <string>]
+     * 		[CATEGORY_NAME <string>]
+     *			[ROUTE_FOR_LINK <string>]
+     *				[AUTH <string>] (optional)
+     *				[URL_LINK <string>]
+     *				[URL_NAME <string>]
 	 * 
 	 * @access public
-	 * @return Array()
+	 * @return array $resources
      */
     public function getResources()
     {

@@ -34,8 +34,8 @@ class DraftManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  Int             $draftId
-     * @return null|Post|Array
+     * @param int $draftId
+     * @return null|Post|array
      */
     public function getDraft($draftId)
     {
@@ -96,7 +96,7 @@ class DraftManager extends BaseManager implements ManagerInterface
      *
      * @access public
      * @param $post
-     * @return $this
+     * @return self
      */
     public function create($post)
     {
@@ -138,8 +138,8 @@ class DraftManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $draft
-     * @return $this
+     * @param Draft $draft
+     * @return self
      */
     public function update($draft)
     {

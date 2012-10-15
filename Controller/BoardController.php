@@ -27,7 +27,7 @@ class BoardController extends ContainerAware
     /**
      *
      * @access public
-     * @param Int $boardId, Int $page
+     * @param int $boardId, int $page
      * @return RedirectResponse|RenderResponse
      */
     public function showAction($boardId, $page)
@@ -77,7 +77,7 @@ class BoardController extends ContainerAware
     /**
      *
      * @access protected
-     * @return String
+     * @return string
      */
     protected function getEngine()
     {

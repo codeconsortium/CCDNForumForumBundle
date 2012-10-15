@@ -33,7 +33,7 @@ class TopicController extends ContainerAware
     /**
      *
      * @access public
-     * @param Int $topicId, Int $page
+     * @param int $topicId, int $page
      * @return RedirectResponse|RenderResponse
      */
     public function showAction($topicId, $page)
@@ -117,7 +117,7 @@ class TopicController extends ContainerAware
     /**
      *
      * @access public
-     * @param Int $boardId, Int $draftId
+     * @param int $boardId, int $draftId
      * @return RedirectResponse|RenderResponse
      */
     public function createAction($boardId, $draftId)
@@ -209,7 +209,7 @@ class TopicController extends ContainerAware
     /**
      *
      * @access public
-     * @param Int $topicId, Int $quoteId, Int $draftId
+     * @param int $topicId, int $quoteId, int $draftId
      * @return RedirectResponse|RenderResponse
      */
     public function replyAction($topicId, $quoteId, $draftId)
@@ -315,7 +315,7 @@ class TopicController extends ContainerAware
     /**
      *
      * @access protected
-     * @return String
+     * @return string
      */
     protected function getEngine()
     {

@@ -27,8 +27,8 @@ class PostManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $post
-     * @return $this
+     * @param Post $post
+     * @return self
      */
     public function create($post)
     {
@@ -51,8 +51,8 @@ class PostManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $post
-     * @return $this
+     * @param Post $post
+     * @return self
      */
     public function update($post)
     {
@@ -65,8 +65,8 @@ class PostManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $post, $user
-     * @return $this
+     * @param Post $post, $user
+     * @return self
      */
     public function softDelete($post, $user)
     {
@@ -115,8 +115,8 @@ class PostManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $post
-     * @return $this
+     * @param Post $post
+     * @return self
      */
     public function restore($post)
     {
