@@ -58,6 +58,7 @@
 				</div>
 			</div>
 
+			{%- form_theme form ccdn_forum_forum.topic.reply.form_theme -%}
 			<div class="control-group{{- (form.attachment.vars.errors|length > 0) ? ' error': '' -}}">
 				{{- form_label(form.attachment, null, { 'label': 'ccdn_forum_forum.form.label.post.attachment'| trans({}, 'CCDNForumForumBundle')}) -}}
 				<div class="controls row-fluid">
