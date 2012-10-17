@@ -46,18 +46,21 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
             }
 
             $subscription = new Subscription();
+		}
+		
+		if ( ! $subscription->getIsSubscribed())
+		{
+	        $subscription->setIsSubscribed(true);
 
             $subscription->setOwnedBy($user);
             $subscription->setTopic($topic);
             $subscription->setIsRead(true);
-        }
 
-        $subscription->setIsSubscribed(true);
+	        $this->persist($subscription)->flush();
 
-        $this->persist($subscription);
-
-        $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.subscription.topic.subscribed', array('%topic_title%' => $subscription->getTopic()->getTitle()), 'CCDNForumForumBundle'));
-
+        	$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.subscription.topic.subscribed', array('%topic_title%' => $subscription->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+		}
+		
         return $this;
     }
 
