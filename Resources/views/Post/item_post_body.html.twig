@@ -22,22 +22,17 @@
 		{%- endif -%}
 				
 
+		{{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}<br>
 
-		<span class="common_body">
-			{{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}<br>
-		</span>
-		<span class="common_body">
-			{%- if post.getAttachment -%}
-				<br><a href="{{- path('ccdn_component_attachment_download', {'attachmentId': post.getAttachment.getId }) -}}"><img width="60" height="60" src="{{- path('ccdn_component_attachment_thumbnail', {'attachmentId': post.getAttachment.getId }) -}}" alt="{{- post.getAttachment.getFilenameOriginal -}}"></a><br>
-			{%- endif -%}
-		</span>
+		{%- if post.getAttachment -%}
+			<br><a href="{{- path('ccdn_component_attachment_download', {'attachmentId': post.getAttachment.getId }) -}}"><img width="60" height="60" src="{{- path('ccdn_component_attachment_thumbnail', {'attachmentId': post.getAttachment.getId }) -}}" alt="{{- post.getAttachment.getFilenameOriginal -}}"></a><br>
+		{%- endif -%}
+
 		{%- if post.getCreatedBy -%}
 			{%- if post.getCreatedBy.getProfile -%}
 				{%- if post.getCreatedBy.getProfile.getSignature -%}
 					<br><hr>
-					<span class="common_body">
-						{{- BBCode(post.getCreatedBy.getProfile.getSignature | raw, ccdn_forum_forum.item_signature.enable_bb_parser) | raw -}}
-					</span>
+					{{- BBCode(post.getCreatedBy.getProfile.getSignature | raw, ccdn_forum_forum.item_signature.enable_bb_parser) | raw -}}
 				{%- endif -%}
 			{%- endif -%}
 		{%- endif -%}
