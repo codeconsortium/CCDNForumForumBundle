@@ -28,7 +28,7 @@
 		</span>
 		<span class="common_body">
 			{%- if post.getAttachment -%}
-				<br><a href="{{- path('ccdn_component_attachment_download', {'attachmentId': post.getAttachment.getId }) -}}"><img width="60" height="60" src="{{- path('ccdn_component_attachment_thumbnail', {'attachmentId': post.getAttachment.getId }) -}}" alt="{{- post.getAttachment.getAttachmentOriginal -}}"></a><br>
+				<br><a href="{{- path('ccdn_component_attachment_download', {'attachmentId': post.getAttachment.getId }) -}}"><img width="60" height="60" src="{{- path('ccdn_component_attachment_thumbnail', {'attachmentId': post.getAttachment.getId }) -}}" alt="{{- post.getAttachment.getFilenameOriginal -}}"></a><br>
 			{%- endif -%}
 		</span>
 		{%- if post.getCreatedBy -%}
