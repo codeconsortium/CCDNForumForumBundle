@@ -1,10 +1,10 @@
 <?php
 
 /*
- * This file is part of the CCDN ForumBundle
+ * This file is part of the CCDNForum ForumBundle
  *
- * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/> 
- * 
+ * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
+ *
  * Available on github <http://www.github.com/codeconsortium/>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -15,7 +15,6 @@ namespace CCDNForum\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 
 use CCDNForum\ForumBundle\Entity\Board;
 //use CCDNForum\ForumBundle\Entity\Topic;
@@ -26,40 +25,38 @@ use CCDNForum\ForumBundle\Entity\Board;
  */
 class Category
 {
-	/**
+	
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-	protected $id;
-	
-	/**
+    protected $id;
+
+    /**
      * @ORM\OneToMany(targetEntity="Board", mappedBy="category", cascade={"remove"})
      */
     protected $boards;
 
-	/**
+    /**
      * @ORM\Column(type="string", length=100)
      */
-	protected $name;
+    protected $name;
 
-	/**
-	 * @ORM\Column(type="integer", name="list_order_priority")
-	 */
-	protected $listOrderPriority;
-	
-	
+    /**
+     * @ORM\Column(type="integer", name="list_order_priority")
+     */
+    protected $listOrderPriority;
+
     public function __construct()
     {
         $this->boards = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -79,13 +76,13 @@ class Category
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
         return $this->name;
     }
-    
+
     /**
      * Add boards
      *
@@ -99,7 +96,7 @@ class Category
     /**
      * Get boards
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getBoards()
     {
@@ -129,7 +126,7 @@ class Category
     /**
      * Get list_order_priority
      *
-     * @return integer 
+     * @return integer
      */
     public function getListOrderPriority()
     {

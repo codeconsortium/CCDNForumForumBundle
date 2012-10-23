@@ -1,10 +1,10 @@
 <?php
 
 /*
- * This file is part of the CCDN ForumBundle
+ * This file is part of the CCDNForum ForumBundle
  *
- * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/> 
- * 
+ * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
+ *
  * Available on github <http://www.github.com/codeconsortium/>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -15,7 +15,6 @@ namespace CCDNForum\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\TopicRepository")
@@ -23,14 +22,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Topic
 {
-	/**
+	
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-	protected $id;
-	
-	/**
+    protected $id;
+
+    /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="topic", cascade={"remove"})
      */
     protected $posts;
@@ -40,102 +40,105 @@ class Topic
      * @ORM\JoinColumn(name="fk_board_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $board = null;
-	
-	/**
-	 * @ORM\Column(type="string", length=100)
-	 */
-	protected $title;
 
-	/**
-	 * @ORM\OneToOne(targetEntity="Post", cascade={"remove"})
-	 * @ORM\JoinColumn(name="fk_first_post_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $firstPost = null;
-		
-	/**
-	 * @ORM\OneToOne(targetEntity="Post", cascade={"remove"})
-	 * @ORM\JoinColumn(name="fk_last_post_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $lastPost = null;
-	
-	/**
-	 * @ORM\Column(type="integer", name="cached_view_count", nullable=false)
-	 */
-	protected $cachedViewCount = 0;
-	
-	/**
-	 * @ORM\Column(type="integer", name="cached_reply_count", nullable=false)
-	 */
-	protected $cachedReplyCount = 0;
-	
-	/**
-	 *
-	 * @ORM\Column(type="boolean", name="is_closed", nullable=false)
-	 */
-	protected $isClosed = false;
-	
-	/**
-	 * @ORM\Column(type="datetime", name="closed_date", nullable=true)
-	 */
-	protected $closedDate;
-	
-	/**
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $title;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Post", cascade={"remove"})
+     * @ORM\JoinColumn(name="fk_first_post_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $firstPost = null;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Post", cascade={"remove"})
+     * @ORM\JoinColumn(name="fk_last_post_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $lastPost = null;
+
+    /**
+     * @ORM\Column(type="integer", name="cached_view_count", nullable=false)
+     */
+    protected $cachedViewCount = 0;
+
+    /**
+     * @ORM\Column(type="integer", name="cached_reply_count", nullable=false)
+     */
+    protected $cachedReplyCount = 0;
+
+    /**
+     *
+     * @ORM\Column(type="boolean", name="is_closed", nullable=false)
+     */
+    protected $isClosed = false;
+
+    /**
+     * @ORM\Column(type="datetime", name="closed_date", nullable=true)
+     */
+    protected $closedDate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_closed_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $closedBy = null;
-	
-	/**
-	 *
-	 * @ORM\Column(type="boolean", name="is_deleted", nullable=false)
-	 */
-	protected $isDeleted = false;
-	
-	/**
-	 * @ORM\Column(type="datetime", name="deleted_date", nullable=true)
-	 */
-	protected $deletedDate;
-	
-	/**
+     */
+    protected $closedBy = null;
+
+    /**
+     *
+     * @ORM\Column(type="boolean", name="is_deleted", nullable=false)
+     */
+    protected $isDeleted = false;
+
+    /**
+     * @ORM\Column(type="datetime", name="deleted_date", nullable=true)
+     */
+    protected $deletedDate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_deleted_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $deletedBy = null;
-	
-	/**
-	 * @ORM\Column(type="datetime", name="stickied_date", nullable=true)
-	 */
-	protected $stickiedDate;
-	
-	/**
+     */
+    protected $deletedBy = null;
+
+    /**
+     * @ORM\Column(type="datetime", name="stickied_date", nullable=true)
+     */
+    protected $stickiedDate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_stickied_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $stickiedBy = null;
-	
-	/**
-	 * @ORM\Column(type="boolean", name="is_sticky", nullable=false)
-	 */
-	protected $isSticky = false;
-	
+     */
+    protected $stickiedBy = null;
 
+    /**
+     * @ORM\Column(type="boolean", name="is_sticky", nullable=false)
+     */
+    protected $isSticky = false;
+
+	/**
+	 *
+     * @ORM\OneToMany(targetEntity="Subscription", mappedBy="topic", cascade={"remove"})
+	 */
+	protected $subscriptions;
+	
     public function __construct()
     {
         $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
-    
+
     /**
      * Add posts
      *
@@ -149,7 +152,7 @@ class Topic
     /**
      * Get posts
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getPosts()
     {
@@ -169,7 +172,7 @@ class Topic
     /**
      * Get board
      *
-     * @return CCDNForum\ForumBundle\Entity\Board 
+     * @return CCDNForum\ForumBundle\Entity\Board
      */
     public function getBoard()
     {
@@ -189,7 +192,7 @@ class Topic
     /**
      * Get last_post
      *
-     * @return CCDNForum\ForumBundle\Entity\Post 
+     * @return CCDNForum\ForumBundle\Entity\Post
      */
     public function getLastPost()
     {
@@ -209,7 +212,7 @@ class Topic
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -229,7 +232,7 @@ class Topic
     /**
      * Get first_post
      *
-     * @return CCDNForum\ForumBundle\Entity\Post 
+     * @return CCDNForum\ForumBundle\Entity\Post
      */
     public function getFirstPost()
     {
@@ -259,7 +262,7 @@ class Topic
     /**
      * Get closed_date
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getClosedDate()
     {
@@ -279,7 +282,7 @@ class Topic
     /**
      * Get closed_by
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getClosedBy()
     {
@@ -299,7 +302,7 @@ class Topic
     /**
      * Get deleted_date
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDeletedDate()
     {
@@ -319,7 +322,7 @@ class Topic
     /**
      * Get deleted_by
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getDeletedBy()
     {
@@ -339,7 +342,7 @@ class Topic
     /**
      * Get is_sticky
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsSticky()
     {
@@ -359,7 +362,7 @@ class Topic
     /**
      * Get is_closed
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsClosed()
     {
@@ -379,7 +382,7 @@ class Topic
     /**
      * Get is_deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsDeleted()
     {
@@ -399,7 +402,7 @@ class Topic
     /**
      * Get cachedViewCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getCachedViewCount()
     {
@@ -419,13 +422,12 @@ class Topic
     /**
      * Get cachedReplyCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getCachedReplyCount()
     {
         return $this->cachedReplyCount;
     }
-
 
     /**
      * Set stickiedDate
@@ -440,7 +442,7 @@ class Topic
     /**
      * Get stickiedDate
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getStickiedDate()
     {
@@ -460,10 +462,30 @@ class Topic
     /**
      * Get stickiedBy
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getStickiedBy()
     {
         return $this->stickiedBy;
+    }
+
+    /**
+     * Add subscriptions
+     *
+     * @param CCDNForum\ForumBundle\Entity\Subscription $subscriptions
+     */
+    public function addSubscription(\CCDNForum\ForumBundle\Entity\Subscription $subscriptions)
+    {
+        $this->subscriptions[] = $subscriptions;
+    }
+
+    /**
+     * Get subscriptions
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getSubscriptions()
+    {
+        return $this->subscriptions;
     }
 }

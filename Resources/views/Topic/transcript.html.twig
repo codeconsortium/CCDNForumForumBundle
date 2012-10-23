@@ -1,66 +1,34 @@
-{% spaceless %}
-<h3>{{ 'topic.transcript' |trans({'%topic_title%': topic.getTitle}, 'CCDNForumForumBundle') }}</h3>
+{%- spaceless -%}
+<h3>{{- 'ccdn_forum_forum.topic.transcript' |trans({'%topic_title%': topic.getTitle}, 'CCDNForumForumBundle') -}}</h3>
 
 <div class="well" style="height:300px; clear:both; display:block; overflow:scroll;">
-	{% for post in topic.getPosts %}					
+	{% for post in topic.getPosts %}
 		<div class="btn-toolbar" style="clear:both;">
-			<div class="pull-left">					
-				{% if post.getCreatedBy %}
-				<a href="{{ path(user_profile_route, {'user_id': post.getCreatedBy.getId } ) }}">{{ post.getCreatedBy }}</a>
-				{% else %}Guest{% endif %}
+			<div class="pull-left">
+				{%- if post.getCreatedBy -%}
+				<a href="{{- path(user_profile_route, {'userId': post.getCreatedBy.getId } ) -}}">{{- post.getCreatedBy -}}</a>
+				{%- else -%}Guest{%- endif -%}
 			</div>
 			<div class="pull-right">
-				<span class="span3">{{ 'generic.posted_at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getCreatedDate |date(param('ccdn_forum_forum.transcript.post_creation_datetime_format')) }}</span>	
+				<span class="span3">{{- 'ccdn_forum_forum.generic.posted_at' |trans({}, 'CCDNForumForumBundle') -}}{{- post.getCreatedDate |date(ccdn_forum_forum.transcript.post_creation_datetime_format) -}}</span>
 			</div>
 		</div>
 		<div style="clear:both;">
 			<br>
-			{% if post.getDeletedBy %}
+			{%- if post.getDeletedBy -%}
 				<span class="common_body">
-				{{ 'post.is_deleted' | trans({}, 'CCDNForumForumBundle') }} - 
-				{{ 'post.deleted_by' |trans({}, 'CCDNForumForumBundle') }}
-				{% if post.getDeletedBy %}{{ post.getDeletedBy.getUsername }}{% else %}Guest{% endif %}
-				{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getDeletedDate |date(param('ccdn_forum_forum.transcript.post_deleted_datetime_format')) }}
+				{{- 'ccdn_forum_forum.post.is_deleted' | trans({}, 'CCDNForumForumBundle') -}} -
+				{{- 'ccdn_forum_forum.post.deleted_by' |trans({}, 'CCDNForumForumBundle') -}}
+				{%- if post.getDeletedBy -%}{{- post.getDeletedBy.getUsername -}}{%- else -%}Guest{%- endif -%}
+				{{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}{{- post.getDeletedDate |date(ccdn_forum_forum.transcript.post_deleted_datetime_format) -}}
 				</span>
-			{% else %}
+			{%- else -%}
 				<span class="common_body">
-					{{ post.getBody |raw }}
+					{{- BBCode(post.getBody |raw, false) |raw -}}
 				</span>
-			{% endif %}					
+			{%- endif -%}
 		</div>
 		<hr>
 	{% endfor %}
 </div>
-{% endspaceless %}
-
-{#
-<div style="clear: both;">
-	<hr>
-	{% if post.getDeletedBy %}
-		<span class="deleted_on">
-		{{ 'post.is_deleted' | trans({}, 'CCDNForumForumBundle') }} - 
-		{{ 'post.deleted_by' |trans({}, 'CCDNForumForumBundle') }}
-		{% if post.getDeletedBy %}{{ post.getDeletedBy.getUsername |title }}{% else %}Guest{% endif %}
-		{{ 'actioned.at' |trans({}, 'CCDNForumForumBundle') }}{{ post.getDeletedDate |date(param('ccdn_forum_forum.item_post.post_deleted_datetime_format')) }}
-		</span>
-	{% else %}
-		<span class="common_body">
-			{{ BBCode(post.getBody | raw) | raw}}<br>
-		</span>
-		<span class="common_body">
-			{% if post.getAttachment %}
-				<br><a href="{{ path('cc_attachment_download', {'attachment_id': post.getAttachment.getId }) }}"><img width="60" height="60" src="{{ path('cc_attachment_thumbnail', {'attachment_id': post.getAttachment.getId }) }}" alt="{{ post.getAttachment.getAttachmentOriginal }}"></a><br>
-			{% endif %}
-		</span>
-		<br><hr>
-		<span class="common_body">
-			{% if post.getCreatedBy %}
-				{% if post.getCreatedBy.getProfile %}
-					{% if post.getCreatedBy.getProfile.getSignature %}
-						{{ BBCode(post.getCreatedBy.getProfile.getSignature | raw) | raw }}
-					{% endif %}
-				{% endif %}
-			{% endif %}
-		</span>
-	{% endif %}
-</div>#}
+{%- endspaceless -%}

@@ -1,10 +1,10 @@
 <?php
 
 /*
- * This file is part of the CCDN ForumBundle
+ * This file is part of the CCDNForum ForumBundle
  *
- * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/> 
- * 
+ * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
+ *
  * Available on github <http://www.github.com/codeconsortium/>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -14,344 +14,310 @@
 namespace CCDNForum\ForumBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
 
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
 use CCDNForum\ForumBundle\Entity\Draft;
 
 /**
- * 
- * @author Reece Fowell <reece@codeconsortium.com> 
+ *
+ * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
 class TopicController extends ContainerAware
 {
 
+    /**
+     *
+     * @access public
+     * @param int $topicId, int $page
+     * @return RedirectResponse|RenderResponse
+     */
+    public function showAction($topicId, $page)
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser();
 
-	/**
-	 *
-	 * @access public
-	 * @param $topic_id, $page
-	 * @return RedirectResponse|RenderResponse
-	 */
-	public function showAction($topic_id, $page)
-	{
-		
-		$user = $this->container->get('security.context')->getToken()->getUser();
-		
-		$topic = $this->container->get('ccdn_forum_forum.topic.repository')->findByIdWithBoardAndCategory($topic_id);
-		$posts_paginated = $this->container->get('ccdn_forum_forum.post.repository')->findPostsForTopicByIdPaginated($topic_id);
-		
-		$posts_per_page = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
-		$posts_paginated->setMaxPerPage($posts_per_page);
-		$posts_paginated->setCurrentPage($page, false, true);		
+        $topic = $this->container->get('ccdn_forum_forum.repository.topic')->findByIdWithBoardAndCategory($topicId);
 
-		if ( ! $topic || ! $posts_paginated->getCurrentPageResults())
-		{
-			throw new NotFoundHttpException('No such topic exists!');
-		}
-		
-		// if this topics first post is deleted, and no
-		// other posts exist then throw an NotFoundHttpException!
-		if ($topic->getIsDeleted()
-		&& ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
-		{
-			throw new NotFoundHttpException('No such topic exists!');
-		}
-		
-		// update the view counter because you viewed the topic
-		$this->container->get('ccdn_forum_forum.topic.manager')->incrementViewCounter($topic);
-		
-		// get the topic subscriptions
-		if ($this->container->get('security.context')->isGranted('ROLE_USER'))
-		{
-			$subscription = $this->container->get('ccdn_forum_forum.subscription.repository')->findTopicSubscriptionByTopicAndUserId($topic_id, $user->getId());
-		} else {
-			$subscription = null;
-		}
-		
-		//
-		// Get post counts for users
-		//
-		if (count($posts_paginated->getCurrentPageResults()) > 0)
-		{
-			$registryUserIds = array();
-		
-			foreach ($posts_paginated->getCurrentPageResults() as $key => $post)
-			{
-				if ($post->getCreatedBy())
-				{
-					$id = $post->getCreatedBy()->getId();
-				
-					if (! array_key_exists($id, $registryUserIds))
-					{
-						$registryUserIds[] = $id;				
-					}
-				}
-			}
-		}
-		
-		$registries = $this->container->get('ccdn_forum_forum.registry.manager')->getRegistriesForUsersAsArray($registryUserIds);
+        $postsPager = $this->container->get('ccdn_forum_forum.repository.post')->findPostsForTopicByIdPaginated($topicId);
 
-		$subscriberCount = $this->container->get('ccdn_forum_forum.subscription.repository')->getSubscriberCountForTopicById($topic_id);
-		
-		// setup crumb trail.
-		$board = $topic->getBoard();
-		$category = $board->getCategory();
-		
-		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')	
-			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
-			->add($category->getName(), $this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
-			->add($board->getName(), $this->container->get('router')->generate('cc_forum_board_show', array('board_id' => $board->getId())), "board")
-			->add($topic->getTitle(), $this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $topic->getId())), "communication");
-		
-		return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Topic:show.html.' . $this->getEngine(), array(
-			'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
-			'user'	=> $user,
-			'crumbs' => $crumb_trail,
-			'pager' => $posts_paginated,
-			'board' => $board,
-			'topic' => $topic,
-			'registries' => $registries,
-			'subscription' => $subscription,
-			'subscription_count' => $subscriberCount,
-		));
-	}
+        $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
+        $postsPager->setMaxPerPage($postsPerPage);
+        $postsPager->setCurrentPage($page, false, true);
 
+        if ( ! $topic || ! $postsPager->getCurrentPageResults()) {
+            throw new NotFoundHttpException('No such topic exists!');
+        }
 
-	/**
-	 *
-	 * @access public
-	 * @param $board_id
-	 * @return RedirectResponse|RenderResponse
-	 */
-	public function createAction($board_id, $draftId)
-	{
-		//
-		//	Invalidate this action / redirect if user should not have access to it
-		//
-		if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
-			throw new AccessDeniedException('You do not have permission to use this resource!');
-		}
-		
-		$user = $this->container->get('security.context')->getToken()->getUser();
-		
-		$board = $this->container->get('ccdn_forum_forum.board.repository')->find($board_id);
-		
-		if ( ! $board) {
-			throw new NotFoundHttpException('No such board exists!');
-		}
+        // if this topics first post is deleted, and no
+        // other posts exist then throw an NotFoundHttpException!
+        if ($topic->getIsDeleted()
+        && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
+        {
+            throw new NotFoundHttpException('No such topic exists!');
+        }
 
-		//
-		// Set the form handler options
-		//
-		$options = array('board' => $board,	'user' => $user);
-		
-		//
-		// Publishing drafts
-		//
-		if ($draftId != 0)
-		{
-			$draft = $this->container->get('ccdn_forum_forum.draft.manager')->getDraft($draftId);
+        // update the view counter because you viewed the topic
+        $this->container->get('ccdn_forum_forum.manager.topic')->incrementViewCounter($topic);
 
-			if (array_key_exists('post', $draft) && array_key_exists('topic', $draft))
-			{
-				if (is_object($draft['topic']) && $draft['topic'] instanceof Topic && is_object($draft['post']) && $draft['post'] instanceof Post)
-				{
-					$options['topic'] = $draft['topic'];
-					$options['post'] = $draft['post'];
-				} else {
-					if (is_object($draft) && $draft instanceof Post)
-					{
-						return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_reply_from_draft', array('topic_id' => $draft->getTopic()->getId(), 'draftId' => $draft->getId()) ));
-					}
-				}
-			}
-			
-		}
-		
-		$formHandler = $this->container->get('ccdn_forum_forum.topic.insert.form.handler')->setDefaultValues($options);
-		
-		if (isset($_POST['submit_post']))
-		{
-			$formHandler->setMode($formHandler::NORMAL);
-			
-			if ($formHandler->process())	
-			{	
-				$this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle()), 'CCDNForumForumBundle'));
-										
-				return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $formHandler->getForm()->getData()->getTopic()->getId() )));
-			}
-		}
-		
-		if (isset($_POST['submit_draft']))
-		{
-			$formHandler->setMode($formHandler::DRAFT);
-			
-			if ($formHandler->process())	
-			{
-				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.draft.save.success', array(), 'CCDNForumForumBundle'));
-			
-				return new RedirectResponse($this->container->get('router')->generate('cc_forum_drafts_list'));
-			}
-		}
-		
-		if (isset($_POST['submit_preview']))
-		{
-			$formHandler->setMode($formHandler::PREVIEW);
-		}
+        // get the topic subscriptions
+        if ($this->container->get('security.context')->isGranted('ROLE_USER')) {
+            $subscription = $this->container->get('ccdn_forum_forum.repository.subscription')->findTopicSubscriptionByTopicAndUserId($topicId, $user->getId());
+        } else {
+            $subscription = null;
+        }
 
-		
-		// setup crumb trail.
-		$category = $board->getCategory();
-		
-		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
-			->add($category->getName(), $this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
-			->add($board->getName(), $this->container->get('router')->generate('cc_forum_board_show', array('board_id' => $board->getId())), "board")
-			->add($this->container->get('translator')->trans('crumbs.topic.create', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_topic_create', array('board_id' => $board->getId())), "edit");
+        //
+        // Get post counts for users
+        //
+        if (count($postsPager->getCurrentPageResults()) > 0) {
+            $registryUserIds = array();
 
-		return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Topic:create.html.' . $this->getEngine(), array(
-			'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
-			'user' => $user,
-			'crumbs' => $crumb_trail,
-			'board' => $board,
-			'preview' => $formHandler->getForm()->getData(),
-			'form' => $formHandler->getForm()->createView(),
-		));
-	}
-	
-	
-	/**
-	 *
-	 * @access public
-	 * @param $topic_id, $quote_id
-	 * @return RedirectResponse|RenderResponse
-	 */	
-	public function replyAction($topic_id, $quote_id, $draftId)
-	{
-		//
-		// 	Invalidate this action / redirect if user should not have access to it
-		//
-		if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
-			throw new AccessDeniedException('You do not have permission to use this resource!');
-		}
-		
-		$user = $this->container->get('security.context')->getToken()->getUser();
-		
-		$topic = $this->container->get('ccdn_forum_forum.topic.repository')->findOneByIdJoinedToPosts($topic_id);
-		
-		if ( ! $topic) {
-			throw new NotFoundHttpException('No such topic exists!');
-		}
-		
-		if ($topic->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
-		{
-			throw new AccessDeniedException('This topic has been closed!');
-		}
-		
-		
-		//
-		// Set the form handler options
-		//
-		if ( ! empty($quote_id))
-		{
-			$quote = $this->container->get('ccdn_forum_forum.post.repository')->find($quote_id);		
-		}
+            foreach ($postsPager->getCurrentPageResults() as $key => $post) {
+                if ($post->getCreatedBy()) {
+                    $id = $post->getCreatedBy()->getId();
 
-		$options = array('topic' => $topic,	'user' => $user, 'quote' => (empty($quote) ? null : $quote));
-		
-		//
-		// Publishing drafts
-		//
-		if ($draftId != 0)
-		{
-			$draft = $this->container->get('ccdn_forum_forum.draft.manager')->getDraft($draftId);
+                    if (! array_key_exists($id, $registryUserIds)) {
+                        $registryUserIds[] = $id;
+                    }
+                }
+            }
+        }
 
-			if (is_object($draft) && $draft instanceof Post)
-			{
-				$options['post'] = $draft;
-			} else {
-				if (is_object($draft) && $draft instanceof Topic)
-				{
-					return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_create_from_draft', array('board_id' => $draft->getBoard()->getId(), 'draftId' => $draft->getId()) ));
-				}
-			}
-		}
-		
-		
-		$formHandler = $this->container->get('ccdn_forum_forum.post.insert.form.handler')->setDefaultValues($options);
+        $registries = $this->container->get('ccdn_forum_forum.manager.registry')->getRegistriesForUsersAsArray($registryUserIds);
 
-		if (isset($_POST['submit_post']))
-		{	
-			$formHandler->setMode($formHandler::NORMAL);
+        $subscriberCount = $this->container->get('ccdn_forum_forum.repository.subscription')->getSubscriberCountForTopicById($topicId);
 
-			if ($formHandler->process())	
-			{				
-				// page of the last post
-				$posts_per_topic_page = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
+        // setup crumb trail.
+        $board = $topic->getBoard();
+        $category = $board->getCategory();
 
-				$pageCounter = $this->container->get('ccdn_forum_forum.post.repository')->getPostCountForTopicById($topic_id);
-				
-				$page =  $pageCounter ? ceil($pageCounter / $posts_per_topic_page) : 1;
-				
-				$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('flash.topic.reply.success', array('%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle'));
-				
-				return new RedirectResponse($this->container->get('router')->generate('cc_forum_topic_show_paginated_anchored', 
-					array('topic_id' => $topic_id, 'page' => $page, 'post_id' => $topic->getLastPost()->getId()) ));
-			}
-		}
-		
-		if (isset($_POST['submit_draft']))
-		{
-			$formHandler->setMode($formHandler::DRAFT);
-			
-			if ($formHandler->process())	
-			{
-				$this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('flash.draft.save.success', array(), 'CCDNForumForumBundle'));
-			
-				return new RedirectResponse($this->container->get('router')->generate('cc_forum_drafts_list'));
-			}
-		}
-				
-		if (isset($_POST['submit_preview']))
-		{
-			$formHandler->setMode($formHandler::PREVIEW);
-		}
-				
-		// setup crumb trail.
-		$board = $topic->getBoard();
-		$category = $board->getCategory();
-		
-		$crumb_trail = $this->container->get('ccdn_component_crumb.trail')
-			->add($this->container->get('translator')->trans('crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_category_index'), "home")
-			->add($category->getName(), $this->container->get('router')->generate('cc_forum_category_show', array('category_id' => $category->getId())), "category")
-			->add($board->getName(), $this->container->get('router')->generate('cc_forum_board_show', array('board_id' => $board->getId())), "board")
-			->add($topic->getTitle(), $this->container->get('router')->generate('cc_forum_topic_show', array('topic_id' => $topic->getId())), "communication")
-			->add($this->container->get('translator')->trans('crumbs.topic.reply', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('cc_forum_topic_reply', array('topic_id' => $topic->getId())), "edit");
-			
-		return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Topic:reply.html.' . $this->getEngine(), array(
-			'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
-			'user' => $user,
-			'crumbs' => $crumb_trail,
-			'topic' => $topic,
-			'preview' => $formHandler->getForm()->getData(),
-			'form' => $formHandler->getForm()->createView(),
-		));
-	}
+        $crumbs = $this->container->get('ccdn_component_crumb.trail')
+            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
+            ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
+            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
+            ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication");
 
+        return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Topic:show.html.' . $this->getEngine(), array(
+            'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
+            'user'	=> $user,
+            'crumbs' => $crumbs,
+            'pager' => $postsPager,
+            'board' => $board,
+            'topic' => $topic,
+            'registries' => $registries,
+            'subscription' => $subscription,
+            'subscription_count' => $subscriberCount,
+        ));
+    }
 
-	/**
-	 *
-	 * @access protected
-	 * @return string
-	 */
-	protected function getEngine()
+    /**
+     *
+     * @access public
+     * @param int $boardId, int $draftId
+     * @return RedirectResponse|RenderResponse
+     */
+    public function createAction($boardId, $draftId)
+    {
+        //
+        //	Invalidate this action / redirect if user should not have access to it
+        //
+        if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException('You do not have permission to use this resource!');
+        }
+
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        $board = $this->container->get('ccdn_forum_forum.repository.board')->find($boardId);
+
+        if (! $board) {
+            throw new NotFoundHttpException('No such board exists!');
+        }
+
+        //
+        // Set the form handler options
+        //
+        $options = array('board' => $board,	'user' => $user);
+
+        //
+        // Publishing drafts
+        //
+        if ($draftId != 0) {
+            $draft = $this->container->get('ccdn_forum_forum.manager.draft')->getDraft($draftId);
+
+            if (array_key_exists('post', $draft) && array_key_exists('topic', $draft)) {
+                if (is_object($draft['topic']) && $draft['topic'] instanceof Topic && is_object($draft['post']) && $draft['post'] instanceof Post) {
+                    $options['topic'] = $draft['topic'];
+                    $options['post'] = $draft['post'];
+                } else {
+                    if (is_object($draft) && $draft instanceof Post) {
+                        return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_reply_from_draft', array('topicId' => $draft->getTopic()->getId(), 'draftId' => $draft->getId()) ));
+                    }
+                }
+            }
+
+        }
+
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_create')->setDefaultValues($options);
+
+        if (isset($_POST['submit_post'])) {
+            $formHandler->setMode($formHandler::NORMAL);
+
+            if ($formHandler->process()) {
+                $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+
+                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $formHandler->getForm()->getData()->getTopic()->getId() )));
+            }
+        }
+
+        if (isset($_POST['submit_draft'])) {
+            $formHandler->setMode($formHandler::DRAFT);
+
+            if ($formHandler->process()) {
+                $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.draft.save.success', array(), 'CCDNForumForumBundle'));
+
+                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_draft_list'));
+            }
+        }
+
+        if (isset($_POST['submit_preview'])) {
+            $formHandler->setMode($formHandler::PREVIEW);
+        }
+
+        // setup crumb trail.
+        $category = $board->getCategory();
+
+        $crumbs = $this->container->get('ccdn_component_crumb.trail')
+            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
+            ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
+            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
+            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.topic.create', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_topic_create', array('boardId' => $board->getId())), "edit");
+
+        return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Topic:create.html.' . $this->getEngine(), array(
+            'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
+            'user' => $user,
+            'crumbs' => $crumbs,
+            'board' => $board,
+            'preview' => $formHandler->getForm()->getData(),
+            'form' => $formHandler->getForm()->createView(),
+        ));
+    }
+
+    /**
+     *
+     * @access public
+     * @param int $topicId, int $quoteId, int $draftId
+     * @return RedirectResponse|RenderResponse
+     */
+    public function replyAction($topicId, $quoteId, $draftId)
+    {
+        //
+        // 	Invalidate this action / redirect if user should not have access to it
+        //
+        if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
+            throw new AccessDeniedException('You do not have permission to use this resource!');
+        }
+
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        $topic = $this->container->get('ccdn_forum_forum.repository.topic')->findOneByIdJoinedToPosts($topicId);
+
+        if (! $topic) {
+            throw new NotFoundHttpException('No such topic exists!');
+        }
+
+        if ($topic->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
+            throw new AccessDeniedException('This topic has been closed!');
+        }
+
+        //
+        // Set the form handler options
+        //
+        if ( ! empty($quoteId)) {
+            $quote = $this->container->get('ccdn_forum_forum.repository.post')->find($quoteId);
+        }
+
+        $options = array('topic' => $topic,	'user' => $user, 'quote' => (empty($quote) ? null : $quote));
+
+        //
+        // Publishing drafts
+        //
+        if ($draftId != 0) {
+            $draft = $this->container->get('ccdn_forum_forum.manager.draft')->getDraft($draftId);
+
+            if (is_object($draft) && $draft instanceof Post) {
+                $options['post'] = $draft;
+            } else {
+                if (is_object($draft) && $draft instanceof Topic) {
+                    return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_create_from_draft', array('boardId' => $draft->getBoard()->getId(), 'draftId' => $draft->getId()) ));
+                }
+            }
+        }
+
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_create')->setDefaultValues($options);
+
+        if (isset($_POST['submit_post'])) {
+            $formHandler->setMode($formHandler::NORMAL);
+
+            if ($formHandler->process()) {
+                // page of the last post
+                $postsPerTopicPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
+
+                $pageCounter = $this->container->get('ccdn_forum_forum.repository.post')->getPostCountForTopicById($topicId);
+
+                $page =  $pageCounter ? ceil($pageCounter / $postsPerTopicPage) : 1;
+
+                $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.topic.reply.success', array('%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle'));
+
+                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show_paginated_anchored',
+                    array('topicId' => $topicId, 'page' => $page, 'postId' => $topic->getLastPost()->getId()) ));
+            }
+        }
+
+        if (isset($_POST['submit_draft'])) {
+            $formHandler->setMode($formHandler::DRAFT);
+
+            if ($formHandler->process()) {
+                $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.draft.save.success', array(), 'CCDNForumForumBundle'));
+
+                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_draft_list'));
+            }
+        }
+
+        if (isset($_POST['submit_preview'])) {
+            $formHandler->setMode($formHandler::PREVIEW);
+        }
+
+        // setup crumb trail.
+        $board = $topic->getBoard();
+        $category = $board->getCategory();
+
+        $crumbs = $this->container->get('ccdn_component_crumb.trail')
+            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
+            ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
+            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
+            ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
+            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.topic.reply', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())), "edit");
+
+        return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Topic:reply.html.' . $this->getEngine(), array(
+            'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
+            'user' => $user,
+            'crumbs' => $crumbs,
+            'topic' => $topic,
+            'preview' => $formHandler->getForm()->getData(),
+            'form' => $formHandler->getForm()->createView(),
+        ));
+    }
+
+    /**
+     *
+     * @access protected
+     * @return string
+     */
+    protected function getEngine()
     {
         return $this->container->getParameter('ccdn_forum_forum.template.engine');
     }

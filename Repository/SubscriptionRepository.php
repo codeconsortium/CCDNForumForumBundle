@@ -14,131 +14,123 @@ use Pagerfanta\Pagerfanta;
  */
 class SubscriptionRepository extends EntityRepository
 {
-	
-	
-	
-	/**
-	 *
-	 * @access public
-	 */
-	public function getTableIntegrityStatus()
-	{
-		$queryOrphanedSubscriptionCount = $this->getEntityManager()
-			->createQuery('
-				SELECT COUNT(DISTINCT s.id) AS orphanedSubscriptionCount
-				FROM CCDNForumForumBundle:Subscription s
-				WHERE s.topic IS NULL
-			');
-		$queryNullSubscribedCount = $this->getEntityManager()
-			->createQuery('
-				SELECT COUNT(DISTINCT s.id) AS nullSubscribedCount
-				FROM CCDNForumForumBundle:Subscription s
-				WHERE s.isSubscribed IS NULL 
-			');
-		$queryNullReadCount = $this->getEntityManager()
-			->createQuery('
-				SELECT COUNT(DISTINCT s.id) AS nullReadCount
-				FROM CCDNForumForumBundle:Subscription s
-				WHERE s.isRead IS NULL
-			');
 
-		try {
-	        $result['orphanedSubscriptionCount'] = $queryOrphanedSubscriptionCount->getSingleScalarResult();
-	    } catch (\Doctrine\ORM\NoResultException $e) {
-	        $result['orphanedSubscriptionCount'] = '?';
-	    }
+    /**
+     *
+     * @access public
+     */
+    public function getTableIntegrityStatus()
+    {
+        $queryOrphanedSubscriptionCount = $this->getEntityManager()
+            ->createQuery('
+                SELECT COUNT(DISTINCT s.id) AS orphanedSubscriptionCount
+                FROM CCDNForumForumBundle:Subscription s
+                WHERE s.topic IS NULL
+            ');
+        $queryNullSubscribedCount = $this->getEntityManager()
+            ->createQuery('
+                SELECT COUNT(DISTINCT s.id) AS nullSubscribedCount
+                FROM CCDNForumForumBundle:Subscription s
+                WHERE s.isSubscribed IS NULL
+            ');
+        $queryNullReadCount = $this->getEntityManager()
+            ->createQuery('
+                SELECT COUNT(DISTINCT s.id) AS nullReadCount
+                FROM CCDNForumForumBundle:Subscription s
+                WHERE s.isRead IS NULL
+            ');
 
-		try {
-	        $result['nullSubscribedCount'] = $queryNullSubscribedCount->getSingleScalarResult();
-	    } catch (\Doctrine\ORM\NoResultException $e) {
-	        $result['nullSubscribedCount'] = '?';
-	    }
+        try {
+            $result['orphanedSubscriptionCount'] = $queryOrphanedSubscriptionCount->getSingleScalarResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            $result['orphanedSubscriptionCount'] = '?';
+        }
 
-		try {
-	        $result['nullReadCount'] = $queryNullReadCount->getSingleScalarResult();
-	    } catch (\Doctrine\ORM\NoResultException $e) {
-	        $result['nullReadCount'] = '?';
-	    }
-	
-		return $result;
-	}
-	
-	
+        try {
+            $result['nullSubscribedCount'] = $queryNullSubscribedCount->getSingleScalarResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            $result['nullSubscribedCount'] = '?';
+        }
 
-	/**
-	 *
-	 * @access public
-	 * @param int $status_code
-	 */	
-	public function findForUserById($userId)
-	{
+        try {
+            $result['nullReadCount'] = $queryNullReadCount->getSingleScalarResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            $result['nullReadCount'] = '?';
+        }
 
-		$query = $this->getEntityManager()
-			->createQuery('
-				SELECT s, t, fp, lp, b, c FROM CCDNForumForumBundle:Subscription s 
-				LEFT JOIN s.topic t
-				LEFT JOIN t.lastPost lp
-				LEFT JOIN lp.createdBy lpu
-				LEFT JOIN t.firstPost fp
-				LEFT JOIN fp.createdBy fpu
-				LEFT JOIN t.board b
-				LEFT JOIN b.category c
-				WHERE s.ownedBy = :userId AND s.isSubscribed = true AND t.isDeleted != TRUE 
-				GROUP BY t.id
-				ORDER BY t.id ASC')
-			->setParameter('userId', $userId);
-		
-		try {
-			return new Pagerfanta(new DoctrineORMAdapter($query));
-	    } catch (\Doctrine\ORM\NoResultException $e) {
-	        return null;
-	    }
-	}
-	
+        return $result;
+    }
 
+    /**
+     *
+     * @access public
+     * @param int $status_code
+     */
+    public function findForUserById($userId)
+    {
 
-	/**
-	 *
-	 * @access public
-	 * @param int $topicId, int $userId
-	 */
-	public function findTopicSubscriptionByTopicAndUserId($topicId, $userId)
-	{
-		$query = $this->getEntityManager()
-			->createQuery('
-				SELECT s, t FROM CCDNForumForumBundle:Subscription s
-				LEFT JOIN s.topic t
-				WHERE s.topic = :topicId AND s.ownedBy = :userId')
-			->setParameters(array('topicId' => $topicId, 'userId' => $userId));
-					
-		try {
-	        return $query->getSingleResult();
-	    } catch (\Doctrine\ORM\NoResultException $e) {
-	        return null;
-	    }
-	}
-	
-	
-	
-	/**
-	 *
-	 *
-	 */
-	public function getSubscriberCountForTopicById($topicId)
-	{
-		$query = $this->getEntityManager()
-			->createQuery('	
-				SELECT COUNT(s.id)
-				FROM CCDNForumForumBundle:Subscription s
-				WHERE s.topic = :id AND s.isSubscribed = TRUE')
-			->setParameter('id', $topicId);
-			
-		try {
-	        return $query->getSingleScalarResult();
-	    } catch (\Doctrine\ORM\NoResultException $e) {
-	        return null;
-	    }
-	
-	}
-	
+        $query = $this->getEntityManager()
+            ->createQuery('
+                SELECT s, t, fp, lp, b, c FROM CCDNForumForumBundle:Subscription s
+                LEFT JOIN s.topic t
+                LEFT JOIN t.lastPost lp
+                LEFT JOIN lp.createdBy lpu
+                LEFT JOIN t.firstPost fp
+                LEFT JOIN fp.createdBy fpu
+                LEFT JOIN t.board b
+                LEFT JOIN b.category c
+                WHERE s.ownedBy = :userId AND s.isSubscribed = true AND t.isDeleted != TRUE
+                GROUP BY t.id
+                ORDER BY t.id ASC')
+            ->setParameter('userId', $userId);
+
+        try {
+            return new Pagerfanta(new DoctrineORMAdapter($query));
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    /**
+     *
+     * @access public
+     * @param int $topicId, int $userId
+     */
+    public function findTopicSubscriptionByTopicAndUserId($topicId, $userId)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('
+                SELECT s, t FROM CCDNForumForumBundle:Subscription s
+                LEFT JOIN s.topic t
+                WHERE s.topic = :topicId AND s.ownedBy = :userId')
+            ->setParameters(array('topicId' => $topicId, 'userId' => $userId));
+
+        try {
+            return $query->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    /**
+     *
+     *
+     */
+    public function getSubscriberCountForTopicById($topicId)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('
+                SELECT COUNT(s.id)
+                FROM CCDNForumForumBundle:Subscription s
+                WHERE s.topic = :id AND s.isSubscribed = TRUE')
+            ->setParameter('id', $topicId);
+
+        try {
+            return $query->getSingleScalarResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+
+    }
+
 }

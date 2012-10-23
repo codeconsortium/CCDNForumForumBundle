@@ -1,50 +1,61 @@
 {% block field_label %}
-{% spaceless %}
-	{% set attr = attr|merge({ 'class': attr.class|default('') ~ 'control-label'}) %}
-    <label for="{{ id }}" {{ block('widget_attributes') }}>{{- label -}}{%- if required -%}
-		<span style="color:#f00;" title="{{ 'form.field.required' |trans({}, 'CCDNUserUserBundle') }}">*</span>
-	{%- endif -%}</label>
-{% endspaceless %}
+	{%- spaceless -%}
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' control-label'}) -%}
+	    <label for="{{- id -}}" {{ block('widget_attributes') -}}>{{- label -}}
+		{%- if required -%}
+			<span style="color:#f00;" title="{{- 'ccdn_forum_forum.form.field.is_required' |trans({}, 'CCDNForumForumBundle') -}}">*</span>
+		{%- endif -%}
+		</label>
+	{%- endspaceless -%}
 {% endblock field_label %}
 
 
 
 {% block field_widget %}
-    {% set type = type|default('text') %}
-	{% set attr = attr|merge({ 'class': attr.class|default('') ~ 'input-xlarge span8'}) %}
-    <input type="{{ type }}" {{ block('widget_attributes') }} value="{{ value }}">
+	{%- spaceless -%}
+	    {%- set type = type|default('text') -%}
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' input-xlarge span8'}) -%}
+	    <input type="{{- type -}}" value="{{- value -}}" {{ block('widget_attributes') -}}>
+	{%- endspaceless -%}
 {% endblock field_widget %}
 
 
+
 {% block textarea_widget %}
-	{% set attr = attr|merge({ 'class': attr.class|default('') ~ 'text-xlarge span8', 'style': attr.style|default('') ~ 'height:250px;'}) %}
-    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+	{%- spaceless -%}
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' text-xlarge span8', 'style': attr.style|default('') ~ 'height:250px;'}) -%}
+	    <textarea {{ block('widget_attributes') -}}>{{- value -}}</textarea>
+	{%- endspaceless -%}
 {% endblock textarea_widget %}
 
+
+
 {% block field_errors %}{# errors for next to each field #}
-{%- spaceless -%}
-    {% if errors|length > 0 %}
-	<div class="alert alert-error span8">
-	    <ul>
-	        {% for error in errors %}
-	            <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
-	        {% endfor %}
-	    </ul>
-	</div>
-    {%- endif -%}
-{% endspaceless %}
+	{%- spaceless -%}
+	    {%- if errors|length > 0 -%}
+		<div class="alert alert-error span8">
+		    <ul>
+		        {%- for error in errors -%}
+		            <li>{{- error.messageTemplate|trans(error.messageParameters, 'validators') -}}</li>
+		        {%- endfor -%}
+		    </ul>
+		</div>
+	    {%- endif -%}
+	{%- endspaceless -%}
 {% endblock field_errors %}
 
+
+
 {% block form_errors %}{# for the overall form #}
-{%- spaceless -%}
-    {% if errors|length > 0 %}
-	<div class="alert alert-error span8">
-	    <ul>
-	        {% for error in errors %}
-	            <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
-	        {% endfor %}
-	    </ul>
-	</div>
-    {%- endif -%}
-{% endspaceless %}
+	{%- spaceless -%}
+	    {%- if errors|length > 0 -%}
+		<div class="alert alert-error span8">
+		    <ul>
+		        {%- for error in errors -%}
+		            <li>{{- error.messageTemplate|trans(error.messageParameters, 'validators') -}}</li>
+		        {%- endfor -%}
+		    </ul>
+		</div>
+	    {%- endif -%}
+	{%- endspaceless -%}
 {% endblock form_errors %}

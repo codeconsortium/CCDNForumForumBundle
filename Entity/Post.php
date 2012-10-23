@@ -1,10 +1,10 @@
 <?php
 
 /*
- * This file is part of the CCDN ForumBundle
+ * This file is part of the CCDNForum ForumBundle
  *
- * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/> 
- * 
+ * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
+ *
  * Available on github <http://www.github.com/codeconsortium/>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -15,7 +15,6 @@ namespace CCDNForum\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNUser\UserBundle\Entity\User;
@@ -26,95 +25,91 @@ use CCDNUser\UserBundle\Entity\User;
  */
 class Post
 {
-	/**
+	
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-	protected $id;
-	
+    protected $id;
+
     /**
      * @ORM\ManyToOne(targetEntity="Topic", inversedBy="posts", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_topic_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $topic = null;
-	
-	/**
+
+    /**
      * @ORM\Column(type="text")
      */
-	protected $body;
-	
-	/**
-	 * @ORM\Column(type="datetime", name="created_date")
-	 */
-	protected $createdDate;
-	
-	/**
+    protected $body;
+
+    /**
+     * @ORM\Column(type="datetime", name="created_date")
+     */
+    protected $createdDate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", inversedBy="forum_posts", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_created_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $createdBy = null;
-	
-	/**
-	 * @ORM\Column(type="datetime", name="edited_date", nullable=true)
-	 */
-	protected $editedDate;
-	
-	/**
+     */
+    protected $createdBy = null;
+
+    /**
+     * @ORM\Column(type="datetime", name="edited_date", nullable=true)
+     */
+    protected $editedDate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_edited_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */	
-	protected $editedBy = null;
-	
-	/**
-	 *
-	 * @ORM\Column(type="boolean", name="is_deleted", nullable=false)
-	 */
-	protected $isDeleted = false;
-		
-	/**
-	 * @ORM\Column(type="datetime", name="deleted_date", nullable=true)
-	 */
-	protected $deletedDate;
-	
-	/**
+     */
+    protected $editedBy = null;
+
+    /**
+     *
+     * @ORM\Column(type="boolean", name="is_deleted", nullable=false)
+     */
+    protected $isDeleted = false;
+
+    /**
+     * @ORM\Column(type="datetime", name="deleted_date", nullable=true)
+     */
+    protected $deletedDate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_deleted_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $deletedBy = null;
-	
-	/**
-	 *
-	 * @ORM\Column(type="boolean", name="is_locked", nullable=false)
-	 */
-	protected $isLocked = false;
-	
-	/**
-	 * @ORM\Column(type="datetime", name="locked_date", nullable=true)
-	 */
-	protected $lockedDate;
-	
-	/**
+     */
+    protected $deletedBy = null;
+
+    /**
+     *
+     * @ORM\Column(type="boolean", name="is_locked", nullable=false)
+     */
+    protected $isLocked = false;
+
+    /**
+     * @ORM\Column(type="datetime", name="locked_date", nullable=true)
+     */
+    protected $lockedDate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_locked_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $lockedBy = null;
-	
-	/**
-     * @ORM\OneToMany(targetEntity="CCDNForum\ForumBundle\Entity\Flag", mappedBy="post", cascade={"remove"})
      */
-	protected $flags;
+    protected $lockedBy = null;
 
-	/**
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNComponent\AttachmentBundle\Entity\Attachment", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $attachment = null;
-	
+     */
+    protected $attachment = null;
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -134,7 +129,7 @@ class Post
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -154,7 +149,7 @@ class Post
     /**
      * Get body
      *
-     * @return text 
+     * @return text
      */
     public function getBody()
     {
@@ -174,7 +169,7 @@ class Post
     /**
      * Get created_date
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedDate()
     {
@@ -194,7 +189,7 @@ class Post
     /**
      * Get edited_date
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getEditedDate()
     {
@@ -214,7 +209,7 @@ class Post
     /**
      * Get deleted_date
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDeletedDate()
     {
@@ -234,7 +229,7 @@ class Post
     /**
      * Get topic
      *
-     * @return CCDNForum\ForumBundle\Entity\Topic 
+     * @return CCDNForum\ForumBundle\Entity\Topic
      */
     public function getTopic()
     {
@@ -254,7 +249,7 @@ class Post
     /**
      * Get created_by
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getCreatedBy()
     {
@@ -274,7 +269,7 @@ class Post
     /**
      * Get edited_by
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getEditedBy()
     {
@@ -294,7 +289,7 @@ class Post
     /**
      * Get deleted_by
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getDeletedBy()
     {
@@ -314,7 +309,7 @@ class Post
     /**
      * Get locked_date
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getLockedDate()
     {
@@ -334,7 +329,7 @@ class Post
     /**
      * Get locked_by
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getLockedBy()
     {
@@ -343,51 +338,30 @@ class Post
 
     public function __construct()
     {
-        $this->flags = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Add flags
-     *
-     * @param CCDNForum\ForumBundle\Entity\Flag $flags
-     */
-    public function addFlag(\CCDNForum\ForumBundle\Entity\Flag $flags)
-    {
-        $this->flags[] = $flags;
-    }
-
-    /**
-     * Get flags
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getFlags()
-    {
-        return $this->flags;
     }
 
     /**
      * Set attachment
      *
-     * @param CCDNComponent\AttachmentBundle\Entity\Attachment $attachment
+     * @param  CCDNComponent\AttachmentBundle\Entity\Attachment $attachment
      * @return Post
      */
     public function setAttachment(\CCDNComponent\AttachmentBundle\Entity\Attachment $attachment = null)
     {
         $this->attachment = $attachment;
+
         return $this;
     }
 
     /**
      * Get attachment
      *
-     * @return CCDNComponent\AttachmentBundle\Entity\Attachment 
+     * @return CCDNComponent\AttachmentBundle\Entity\Attachment
      */
     public function getAttachment()
     {
         return $this->attachment;
     }
-
 
     /**
      * Set is_deleted
@@ -402,7 +376,7 @@ class Post
     /**
      * Get is_deleted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsDeleted()
     {
@@ -422,7 +396,7 @@ class Post
     /**
      * Get is_locked
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsLocked()
     {

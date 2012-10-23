@@ -1,10 +1,10 @@
 <?php
 
 /*
- * This file is part of the CCDN ForumBundle
+ * This file is part of the CCDNForum ForumBundle
  *
- * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/> 
- * 
+ * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
+ *
  * Available on github <http://www.github.com/codeconsortium/>
  *
  * For the full copyright and license information, please view the LICENSE
@@ -14,8 +14,6 @@
 namespace CCDNForum\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\SubscriptionRepository")
@@ -23,39 +21,40 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Subscription
 {
-	/**
+	
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-	protected $id;
-	
+    protected $id;
+
     /**
      * @ORM\ManyToOne(targetEntity="Topic", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_topic_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $topic = null;
-	
-	/**
+
+    /**
      * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-	 */
-	protected $ownedBy = null;
+     */
+    protected $ownedBy = null;
 
-	/**
-	 * @ORM\Column(type="boolean", name="is_read", nullable=false)
-	 */
-	protected $isRead = false;
-	
-	/**
-	 * @ORM\Column(type="boolean", name="is_subscribed", nullable=false)
-	 */
-	protected $isSubscribed = false;
-	
+    /**
+     * @ORM\Column(type="boolean", name="is_read", nullable=false)
+     */
+    protected $isRead = false;
+
+    /**
+     * @ORM\Column(type="boolean", name="is_subscribed", nullable=false)
+     */
+    protected $isSubscribed = false;
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -75,7 +74,7 @@ class Subscription
     /**
      * Get topic
      *
-     * @return CCDNForum\ForumBundle\Entity\Topic 
+     * @return CCDNForum\ForumBundle\Entity\Topic
      */
     public function getTopic()
     {
@@ -95,7 +94,7 @@ class Subscription
     /**
      * Get owned_by
      *
-     * @return CCDNUser\UserBundle\Entity\User 
+     * @return CCDNUser\UserBundle\Entity\User
      */
     public function getOwnedBy()
     {
@@ -115,7 +114,7 @@ class Subscription
     /**
      * Get isRead
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsRead()
     {
@@ -135,7 +134,7 @@ class Subscription
     /**
      * Get isSubscribed
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsSubscribed()
     {

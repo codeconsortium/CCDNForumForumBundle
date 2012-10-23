@@ -1,122 +1,76 @@
-{% extends param('ccdn_forum_forum.subscription.list.layout_template') %}
+{% extends ccdn_forum_forum.subscription.list.layout_template %}
 
 {% block stylesheets %}
 	{{ parent() }}
-	<link href="{{ asset('bundles/ccdncomponentcrumbtrail/css/crumbs.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}
 
-{% block title %}{{ 'title.subscriptions.show' | trans({}, 'CCDNForumForumBundle' ) }}{% endblock %}
+{% block title %}{{- truncDot('ccdn_forum_forum.title.subscriptions.show' | trans({}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
 
 {% block sidebar %}
 	{{ parent() }}
-	
-	{% include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' %}
-	
-{% endblock %}
 
-{% block sidebar_actions %}
-	{{ parent() }}
-	
-	{% include 'CCDNForumForumBundle:Sidebar:sidebar_actions.html.twig' %}
-	
+	{%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
+
 {% endblock %}
 
 
 {% block body %}
 
-	{% include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' %}
+	{%- spaceless -%}
 
-	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
 
-	<h2>{{ 'title.subscriptions.show' | trans({}, 'CCDNForumForumBundle' ) }}</h2>
+	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
-	{% if pager.haveToPaginate %}
-	    {{ pagerfanta(pager, 'twitter_bootstrap', {'routeName':'cc_forum_subscriptions_paginated', 'routeParams':{}} ) }}
-	{% endif %}
+	<h2>{{- 'ccdn_forum_forum.title.subscriptions.show' | trans({}, 'CCDNForumForumBundle' ) -}}</h2>
+
+	<div class="btn-toolbar" style="display:block !important;clear:both !important;">
+		{%- if pager.haveToPaginate -%}
+			<div class="pull-right">
+	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_subscription_list_paginated', 'routeParams':{}} ) -}}
+			</div>
+		{%- endif -%}
+		<br><br>
+	</div>
 	
-	{% spaceless %}
-	<table class="table table-striped table-bordered">
+	<table class="table">
 		<thead>
 			<tr>
 				<th class="center" style="width:18px;"></th>
 				<th class="center" style="width:18px;"></th>
-				<th class="left">{{ 'board.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') }}</th>
-				<th class="center" style="width: 100px;">{{ 'board.table.head.reply_count' | trans({}, 'CCDNForumForumBundle') }}</th>
-				<th class="center" style="width: 100px;">{{ 'board.table.head.view_count' | trans({}, 'CCDNForumForumBundle') }}</th>
-				<th class="center" style="width: 170px;">{{ 'board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') }}</th>	
+				<th class="left">{{- 'ccdn_forum_forum.board.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') -}}</th>
+				<th class="center" style="width: 100px;">{{- 'ccdn_forum_forum.board.table.head.reply_count' | trans({}, 'CCDNForumForumBundle') -}}</th>
+				<th class="center" style="width: 100px;">{{- 'ccdn_forum_forum.board.table.head.view_count' | trans({}, 'CCDNForumForumBundle') -}}</th>
+				<th class="center" style="width: 170px;">{{- 'ccdn_forum_forum.board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') -}}</th>
 			</tr>
 		</thead>
 		<tbody>
-		{% for row, subscription in pager.getCurrentPageResults %}
-			{% set topic = subscription.getTopic %}
-			{% if not topic.getDeletedBy or is_granted('ROLE_MODERATOR') %}
-				<tr class="{{ cycle(['row_odd', 'row_even'], row) }}">
-					<td class="center">
-					{% if topic.getClosedDate %}
-						<i class="icon-lock"></i>
-					{% else %}
-						{# else if not closed, then if new posts add special icon here #}
-					{% endif %}
-					{% if topic.getDeletedDate %}
-						<i class="icon-trash"></i>
-					{% else %}
-						{# else if not closed, then if new posts add special icon here #}
-					{% endif %}
-					</td>
-					<td class="center">
-						{# use custom icons below, will be later specified in the create topic form #}
-						<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}"><i class="icon-comment"></i></a>					
-					</td>
-					<td class="left">
-						<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}" title="{{ topic.getTitle }}">{{ truncDot(topic.getTitle, param('ccdn_forum_forum.subscription.list.topic_title_truncate')) }}</a>
-						<br>
-
-						{% if topic.getFirstPost %}
-							{{ 'post.posted_by' | trans({}, 'CCDNForumForumBundle') }}
-							{% if topic.getFirstPost.getCreatedBy %}
-								<a href="{{ path(user_profile_route, {'user_id': topic.getFirstPost.getCreatedBy.getId } ) }}">{{ topic.getFirstPost.getCreatedBy |title }}</a>
-							{% else %}
-								Guest
-							{% endif %}
-							{{ 'actioned.at' | trans({}, 'CCDNForumForumBundle') }}<a href="{{ path('cc_forum_topic_show', {'topic_id': topic.getId }) }}"><abbr class="timestamper" title="{{ topic.getFirstPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') }}">{{ topic.getFirstPost.getCreatedDate |date(param('ccdn_forum_forum.subscription.list.first_post_datetime_format')) }}</abbr></a>
-						{% endif %}
-					</td>
-					<td class="center">
-						{{ topic.getCachedReplyCount }}
-					</td>
-					<td class="center">
-						{{ topic.getCachedViewCount }}
-					</td>
-					<td class="center">
-						{% if topic.getLastPost %}
-							{{ 'post.posted_by' | trans({}, 'CCDNForumForumBundle') }}
-							{% if topic.getLastPost.getCreatedBy %}
-								<a href="{{ path(user_profile_route, {'user_id': topic.getLastPost.getCreatedBy.getId } ) }}">{{ topic.getLastPost.getCreatedBy |title }}</a>
-							{% else %}
-								Guest
-							{% endif %}
-							{% set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) %}
-							<br>
-							<a href="{{ path('cc_forum_topic_show_paginated', {'topic_id': topic.getId, 'page':page } ) }}#{{ topic.getLastPost.getId }}"><abbr class="timestamper" title="{{ topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') }}">{{ topic.getLastPost.getCreatedDate |date(param('ccdn_forum_forum.subscription.list.last_post_datetime_format')) }}</abbr></a>
-						{% endif %}
-					</td>
-				</tr>
-			{% endif %}
-		{% else %}
+		{%- for row, subscription in pager.getCurrentPageResults -%}
+			{%- set topic = subscription.getTopic -%}
+			{%- if not topic.getDeletedBy or is_granted('ROLE_MODERATOR') -%}
+				{%- include 'CCDNForumForumBundle:Board:item_topic_list.html.twig' -%}
+			{%- endif -%}
+		{%- else -%}
 			<tr>
 				<td class="center" colspan="6">
-					{{ 'subscriptions.table.empty' | trans({}, 'CCDNForumForumBundle') }}
+					{{- 'ccdn_forum_forum.subscriptions.table.empty' | trans({}, 'CCDNForumForumBundle') -}}
 				</td>
 			</tr>
-		{% endfor %}
+		{%- endfor -%}
 		</tbody>
 	</table>
-	{% endspaceless %}
+	
+	<div class="btn-toolbar" style="display:block !important;clear:both !important;">
+		{%- if pager.haveToPaginate -%}
+			<div class="pull-right">
+	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_subscription_list_paginated', 'routeParams':{}} ) -}}
+			</div>
+		{%- endif -%}
+		<br><br>
+	</div>
 
-	{% if pager.haveToPaginate %}
-	    {{ pagerfanta(pager, 'twitter_bootstrap', {'routeName':'cc_forum_subscriptions_paginated', 'routeParams':{}} ) }}
-	{% endif %}
+	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
-	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+	{%- endspaceless -%}
 
 {% endblock %}
