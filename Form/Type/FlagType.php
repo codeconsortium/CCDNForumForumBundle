@@ -14,7 +14,7 @@
 namespace CCDNForum\ForumBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * 
@@ -52,7 +52,7 @@ class FlagType extends AbstractType
 	 * @access public
 	 * @param FormBuilder $builder, Array() $options
 	 */
-	public function buildForm(FormBuilder $builder, array $options)
+	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 	
 		$builder
