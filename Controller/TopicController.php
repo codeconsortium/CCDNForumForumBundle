@@ -163,6 +163,20 @@ class TopicController extends ContainerAware
 
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_create')->setDefaultValues($options);
 
+	    if (isset($_POST['submit_draft'])) {
+	        $formHandler->setMode($formHandler::DRAFT);
+
+	        if ($formHandler->process()) {
+	            $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.draft.save.success', array(), 'CCDNForumForumBundle'));
+
+	            return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_draft_list'));
+	        }
+	    }
+	
+	    if (isset($_POST['submit_preview'])) {
+            $formHandler->setMode($formHandler::PREVIEW);
+        }
+
 		// Flood Control.
 		if ( ! $this->container->get('ccdn_forum_forum.component.flood_control')->isFlooded())
 		{
@@ -177,23 +191,9 @@ class TopicController extends ContainerAware
 	                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $formHandler->getForm()->getData()->getTopic()->getId() )));
 	            }
 	        }
-
-	        if (isset($_POST['submit_draft'])) {
-	            $formHandler->setMode($formHandler::DRAFT);
-
-	            if ($formHandler->process()) {
-	                $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.draft.save.success', array(), 'CCDNForumForumBundle'));
-
-	                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_draft_list'));
-	            }
-	        }
 		} else {
 			$this->container->get('session')->setFlash('warning', $this->container->get('translator')->trans('ccdn_forum_forum.flash.topic.flood_control', array(), 'CCDNForumForumBundle'));
 		}
-		
-        if (isset($_POST['submit_preview'])) {
-            $formHandler->setMode($formHandler::PREVIEW);
-        }
 
         // setup crumb trail.
         $category = $board->getCategory();
@@ -267,6 +267,20 @@ class TopicController extends ContainerAware
 
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_create')->setDefaultValues($options);
 
+		if (isset($_POST['submit_draft'])) {
+	        $formHandler->setMode($formHandler::DRAFT);
+
+	        if ($formHandler->process()) {
+	            $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.draft.save.success', array(), 'CCDNForumForumBundle'));
+
+	            return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_draft_list'));
+	        }
+	    }
+		
+        if (isset($_POST['submit_preview'])) {
+            $formHandler->setMode($formHandler::PREVIEW);
+        }
+	
 		// Flood Control.
 		if ( ! $this->container->get('ccdn_forum_forum.component.flood_control')->isFlooded())
 		{
@@ -289,23 +303,9 @@ class TopicController extends ContainerAware
 	                    array('topicId' => $topicId, 'page' => $page, 'postId' => $topic->getLastPost()->getId()) ));
 	            }
 	        }
-
-	        if (isset($_POST['submit_draft'])) {
-	            $formHandler->setMode($formHandler::DRAFT);
-
-	            if ($formHandler->process()) {
-	                $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.draft.save.success', array(), 'CCDNForumForumBundle'));
-
-	                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_draft_list'));
-	            }
-	        }
 		} else {
 			$this->container->get('session')->setFlash('warning', $this->container->get('translator')->trans('ccdn_forum_forum.flash.topic.flood_control', array(), 'CCDNForumForumBundle'));
 		}
-		
-        if (isset($_POST['submit_preview'])) {
-            $formHandler->setMode($formHandler::PREVIEW);
-        }
 		
         // setup crumb trail.
         $board = $topic->getBoard();
