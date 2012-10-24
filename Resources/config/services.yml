@@ -27,7 +27,8 @@ parameters:
     ccdn_forum_forum.component.dashboard.integrator.class:      CCDNForum\ForumBundle\Component\Dashboard\DashboardIntegrator
 
     ccdn_forum_forum.component.twig_extension.board_list.class: CCDNForum\ForumBundle\Component\TwigExtension\BoardListExtension
-
+    ccdn_forum_forum.component.flood_control.class:             CCDNForum\ForumBundle\Component\FloodControl
+    
 services:
 
     #
@@ -152,3 +153,7 @@ services:
         arguments: [@service_container]
         tags:
             - { name: twig.extension }
+
+    ccdn_forum_forum.component.flood_control:
+        class: %ccdn_forum_forum.component.flood_control.class%
+        arguments: [@session, @service_container]

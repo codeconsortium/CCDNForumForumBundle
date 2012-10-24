@@ -121,6 +121,9 @@ class CCDNForumForumExtension extends Extension
      */
     private function getTopicSection($container, $config)
     {
+		$container->setParameter('ccdn_forum_forum.topic.flood_control.post_limit', $config['topic']['flood_control']['post_limit']);
+		$container->setParameter('ccdn_forum_forum.topic.flood_control.block_for_minutes', $config['topic']['flood_control']['block_for_minutes']);
+		
         $container->setParameter('ccdn_forum_forum.topic.show.layout_template', $config['topic']['show']['layout_template']);
         $container->setParameter('ccdn_forum_forum.topic.show.posts_per_page', $config['topic']['show']['posts_per_page']);
         $container->setParameter('ccdn_forum_forum.topic.show.topic_closed_datetime_format', $config['topic']['show']['topic_closed_datetime_format']);
