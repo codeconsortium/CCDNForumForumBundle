@@ -76,7 +76,6 @@ class FloodControl extends ContainerAware
 
         $timeLimit = new \DateTime('-' . $blockInMinutes . ' minutes');
 
-        // Only load from the db if the session is not found.
         if ($this->session->has('flood_control_forum_post_count')) {
             $attempts = $this->session->get('flood_control_forum_post_count');
 
