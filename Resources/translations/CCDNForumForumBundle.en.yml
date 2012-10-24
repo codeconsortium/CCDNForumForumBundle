@@ -46,7 +46,7 @@ ccdn_forum_forum.flash.draft.board_does_not_exist: 'The board you are trying to 
 ccdn_forum_forum.flash.subscription.topic.subscribed: 'You subscribed to the topic %topic_title%.'
 ccdn_forum_forum.flash.subscription.topic.unsubscribed: 'You unsubscribed from the topic %topic_title%'
 ccdn_forum_forum.flash.subscription.topic.not.found: 'Topic could not be subscribed to because it was not found! Sorry about that.'
-ccdn_forum_forum.flash.topic.flood_control: 'Flood Control - You have posted too many topics at once, take a break before posting again.'
+ccdn_forum_forum.flash.topic.flood_control: 'Flood Control - You have posted too much at once, take a break before posting again.'
 
 #
 # Sidebar.
