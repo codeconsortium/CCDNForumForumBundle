@@ -29,6 +29,8 @@ parameters:
     ccdn_forum_forum.component.twig_extension.board_list.class: CCDNForum\ForumBundle\Component\TwigExtension\BoardListExtension
     ccdn_forum_forum.component.flood_control.class:             CCDNForum\ForumBundle\Component\FloodControl
     
+    ccdn_forum_forum.component.menu_builder.menu.class:         CCDNForum\ForumBundle\Component\MenuBuilder\Menu
+    
 services:
 
     #
@@ -157,3 +159,12 @@ services:
     ccdn_forum_forum.component.flood_control:
         class: %ccdn_forum_forum.component.flood_control.class%
         arguments: [@session, @service_container]
+        
+    #
+    # Menu Builder.
+    #
+    ccdn_forum_forum.component.menu_builder.menu:
+        class: %ccdn_forum_forum.component.menu_builder.menu.class%
+        tags:
+            - { name: ccdn_component_menu.menu_builder }
+    
