@@ -14,4 +14,4 @@ CCDNForum\ForumBundle\Entity\Post:
             - Type: { type: string, groups: [topic, post] }
             - NotBlank: {  groups: [topic, post] }
             - MinLength: { limit: 15, groups: [topic, post] }
-            - MaxLength: { limit: 10000, groups: [topic, post] }
+            - MaxLength: { limit: 30000, groups: [topic, post] }
