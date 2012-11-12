@@ -46,6 +46,7 @@ ccdn_forum_forum.flash.draft.board_does_not_exist: 'The board you are trying to 
 ccdn_forum_forum.flash.subscription.topic.subscribed: 'You subscribed to the topic %topic_title%.'
 ccdn_forum_forum.flash.subscription.topic.unsubscribed: 'You unsubscribed from the topic %topic_title%'
 ccdn_forum_forum.flash.subscription.topic.not.found: 'Topic could not be subscribed to because it was not found! Sorry about that.'
+ccdn_forum_forum.flash.topic.flood_control: 'Flood Control - You have posted too much at once, take a break before posting again.'
 
 #
 # Sidebar.
@@ -146,7 +147,7 @@ ccdn_forum_forum.post.locked_by: 'Locked by '
 ccdn_forum_forum.post.deleted_by: 'Deleted by '
 ccdn_forum_forum.post.has_been_locked: 'This post has been locked!'
 ccdn_forum_forum.post.has_been_deleted: 'This post has been deleted!'
-ccdn_forum_forum.post.user.post_count: '{0} No Posts Yet|{1} %post_count% Post |]2, Inf] %post_count% Posts'
+ccdn_forum_forum.post.user.post_count: '{0} No Posts Yet|{1} %post_count% Post |[2, Inf] %post_count% Posts'
 ccdn_forum_forum.post.show_hide: 'Show Original Post'
 ccdn_forum_forum.post.is_deleted: 'This post has been removed.'
 ccdn_forum_forum.generic.posted_at: 'Posted at '

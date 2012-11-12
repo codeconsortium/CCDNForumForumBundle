@@ -163,29 +163,37 @@ class TopicController extends ContainerAware
 
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_create')->setDefaultValues($options);
 
-        if (isset($_POST['submit_post'])) {
-            $formHandler->setMode($formHandler::NORMAL);
+	    if (isset($_POST['submit_draft'])) {
+	        $formHandler->setMode($formHandler::DRAFT);
 
-            if ($formHandler->process()) {
-                $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+	        if ($formHandler->process()) {
+	            $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.draft.save.success', array(), 'CCDNForumForumBundle'));
 
-                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $formHandler->getForm()->getData()->getTopic()->getId() )));
-            }
-        }
-
-        if (isset($_POST['submit_draft'])) {
-            $formHandler->setMode($formHandler::DRAFT);
-
-            if ($formHandler->process()) {
-                $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.draft.save.success', array(), 'CCDNForumForumBundle'));
-
-                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_draft_list'));
-            }
-        }
-
-        if (isset($_POST['submit_preview'])) {
+	            return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_draft_list'));
+	        }
+	    }
+	
+	    if (isset($_POST['submit_preview'])) {
             $formHandler->setMode($formHandler::PREVIEW);
         }
+
+		// Flood Control.
+		if ( ! $this->container->get('ccdn_forum_forum.component.flood_control')->isFlooded())
+		{
+	        if (isset($_POST['submit_post'])) {
+	            $formHandler->setMode($formHandler::NORMAL);
+
+	            if ($formHandler->process()) {
+	                $this->container->get('ccdn_forum_forum.component.flood_control')->incrementCounter();
+
+					$this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+
+	                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $formHandler->getForm()->getData()->getTopic()->getId() )));
+	            }
+	        }
+		} else {
+			$this->container->get('session')->setFlash('warning', $this->container->get('translator')->trans('ccdn_forum_forum.flash.topic.flood_control', array(), 'CCDNForumForumBundle'));
+		}
 
         // setup crumb trail.
         $category = $board->getCategory();
@@ -259,38 +267,46 @@ class TopicController extends ContainerAware
 
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_create')->setDefaultValues($options);
 
-        if (isset($_POST['submit_post'])) {
-            $formHandler->setMode($formHandler::NORMAL);
+		if (isset($_POST['submit_draft'])) {
+	        $formHandler->setMode($formHandler::DRAFT);
 
-            if ($formHandler->process()) {
-                // page of the last post
-                $postsPerTopicPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
+	        if ($formHandler->process()) {
+	            $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.draft.save.success', array(), 'CCDNForumForumBundle'));
 
-                $pageCounter = $this->container->get('ccdn_forum_forum.repository.post')->getPostCountForTopicById($topicId);
-
-                $page =  $pageCounter ? ceil($pageCounter / $postsPerTopicPage) : 1;
-
-                $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.topic.reply.success', array('%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle'));
-
-                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show_paginated_anchored',
-                    array('topicId' => $topicId, 'page' => $page, 'postId' => $topic->getLastPost()->getId()) ));
-            }
-        }
-
-        if (isset($_POST['submit_draft'])) {
-            $formHandler->setMode($formHandler::DRAFT);
-
-            if ($formHandler->process()) {
-                $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.draft.save.success', array(), 'CCDNForumForumBundle'));
-
-                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_draft_list'));
-            }
-        }
-
+	            return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_draft_list'));
+	        }
+	    }
+		
         if (isset($_POST['submit_preview'])) {
             $formHandler->setMode($formHandler::PREVIEW);
         }
+	
+		// Flood Control.
+		if ( ! $this->container->get('ccdn_forum_forum.component.flood_control')->isFlooded())
+		{
+	        if (isset($_POST['submit_post'])) {
+	            $formHandler->setMode($formHandler::NORMAL);
 
+	            if ($formHandler->process()) {
+					$this->container->get('ccdn_forum_forum.component.flood_control')->incrementCounter();
+					
+	                // page of the last post
+	                $postsPerTopicPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
+
+	                $pageCounter = $this->container->get('ccdn_forum_forum.repository.post')->getPostCountForTopicById($topicId);
+
+	                $page =  $pageCounter ? ceil($pageCounter / $postsPerTopicPage) : 1;
+
+	                $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.topic.reply.success', array('%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle'));
+
+	                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show_paginated_anchored',
+	                    array('topicId' => $topicId, 'page' => $page, 'postId' => $topic->getLastPost()->getId()) ));
+	            }
+	        }
+		} else {
+			$this->container->get('session')->setFlash('warning', $this->container->get('translator')->trans('ccdn_forum_forum.flash.topic.flood_control', array(), 'CCDNForumForumBundle'));
+		}
+		
         // setup crumb trail.
         $board = $topic->getBoard();
         $category = $board->getCategory();
