@@ -28,6 +28,9 @@ ccdn_forum_forum:
             first_post_datetime_format: "d-m-Y - H:i"
             last_post_datetime_format: "d-m-Y - H:i"
     topic:
+		flood_control:
+			post_limit: 4
+			block_for_minutes: 1
         show:
             layout_template: CCDNComponentCommonBundle:Layout:layout_body_right.html.twig
             posts_per_page: 5        
