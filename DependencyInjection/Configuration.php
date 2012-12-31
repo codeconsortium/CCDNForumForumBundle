@@ -42,11 +42,13 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('user')
+			        ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('profile_route')->defaultValue('ccdn_user_profile_show_by_id')->end()
                     ->end()
                 ->end()
                 ->arrayNode('template')
+			        ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('engine')->defaultValue('twig')->end()
                     ->end()
@@ -95,6 +97,7 @@ class Configuration implements ConfigurationInterface
     private function addCategorySection(ArrayNodeDefinition $node)
     {
         $node
+	        ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('category')
                     ->addDefaultsIfNotSet()
