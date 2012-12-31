@@ -14,7 +14,7 @@
 namespace CCDNForum\ForumBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 use CCDNForum\ForumBundle\Entity\Post;
 
@@ -72,9 +72,9 @@ class PostType extends AbstractType
     /**
      *
      * @access public
-     * @param FormBuilder $builder, array $options
+     * @param FormBuilderInterface $builder, array $options
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('body', 'textarea', array(
             'data' => $this->getQuote(),
