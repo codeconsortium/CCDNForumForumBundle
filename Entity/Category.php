@@ -21,30 +21,27 @@ use CCDNForum\ForumBundle\Entity\Board;
 
 /**
  * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\CategoryRepository")
- * @ORM\Table(name="CC_Forum_Category")
  */
 class Category
 {
 	
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var integer $id
      */
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Board", mappedBy="category", cascade={"remove"})
+     * @var ArrayCollection $boards
      */
     protected $boards;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @var string $name
      */
     protected $name;
 
     /**
-     * @ORM\Column(type="integer", name="list_order_priority")
+     * @var integer $listOrderPriority
      */
     protected $listOrderPriority;
 

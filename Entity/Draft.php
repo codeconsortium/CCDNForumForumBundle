@@ -20,54 +20,47 @@ use CCDNUser\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\DraftRepository")
- * @ORM\Table(name="CC_Forum_Draft")
  */
 class Draft
 {
 	
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var integer $id
      */
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Board")
-     * @ORM\JoinColumn(name="fk_board_id", referencedColumnName="id", onDelete="SET NULL")
+     * @var Board $board
      */
     protected $board;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @var string $title
      */
     protected $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Topic", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_topic_id", referencedColumnName="id", onDelete="SET NULL")
+     * @var Topic $topic
      */
     protected $topic = null;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @var string $body
      */
     protected $body;
 
     /**
-     * @ORM\Column(type="datetime", name="created_date")
+     * @var \Datetime $createdDate
      */
     protected $createdDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_created_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @var User $createdBy
      */
     protected $createdBy = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CCDNComponent\AttachmentBundle\Entity\Attachment", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="id", onDelete="SET NULL")
+     * @var Attachment $attachment
      */
     protected $attachment = null;
 

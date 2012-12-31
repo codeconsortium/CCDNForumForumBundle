@@ -1,0 +1,97 @@
+CCDNForum\ForumBundle\Entity\Post:
+    type: entity
+    table: CC_Forum_Post
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+
+
+
+/**
+ * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\PostRepository")
+ * @ORM\Table(name="CC_Forum_Post")
+ */
+class Post
+{
+
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Topic", inversedBy="posts", cascade={"persist"})
+     * @ORM\JoinColumn(name="fk_topic_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $topic = null;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $body;
+
+    /**
+     * @ORM\Column(type="datetime", name="created_date")
+     */
+    protected $createdDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", inversedBy="forum_posts", cascade={"persist"})
+     * @ORM\JoinColumn(name="fk_created_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $createdBy = null;
+
+    /**
+     * @ORM\Column(type="datetime", name="edited_date", nullable=true)
+     */
+    protected $editedDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(name="fk_edited_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $editedBy = null;
+
+    /**
+     *
+     * @ORM\Column(type="boolean", name="is_deleted", nullable=false)
+     */
+    protected $isDeleted = false;
+
+    /**
+     * @ORM\Column(type="datetime", name="deleted_date", nullable=true)
+     */
+    protected $deletedDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(name="fk_deleted_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $deletedBy = null;
+
+    /**
+     *
+     * @ORM\Column(type="boolean", name="is_locked", nullable=false)
+     */
+    protected $isLocked = false;
+
+    /**
+     * @ORM\Column(type="datetime", name="locked_date", nullable=true)
+     */
+    protected $lockedDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(name="fk_locked_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $lockedBy = null;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CCDNComponent\AttachmentBundle\Entity\Attachment", cascade={"persist"})
+     * @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $attachment = null;

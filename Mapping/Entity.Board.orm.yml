@@ -1,0 +1,38 @@
+CCDNForum\ForumBundle\Entity\Board:
+    type: entity
+    table: CC_Forum_Board
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+        description:
+            type: text
+        cachedTopicCount:
+            type: integer
+        cachedPostCount:
+            type: integer
+        listOrderPriority:
+            type: integer
+    oneToMany:
+        topics:
+            targetEntity: "CCDNForum\ForumBundle\Entity\Topic"
+            mappedBy: board
+            cascade: ["remove"]
+    manyToOne:
+        category:
+            targetEntity: "CCDNForum\ForumBundle\Entity\Category"
+            inversedBy: "boards"
+            joinColumn:
+                name: fk_category_id
+                referencedColumnName: id
+                onDelete: SET NULL
+    oneToOne:
+        lastPost:
+            targetEntity: "CCDNForum\ForumBundle\Entity\Post"
+            joinColumn:
+                name: fk_last_post_id
+                referencedColumnName: id
+                onDelete: SET NULL

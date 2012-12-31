@@ -18,57 +18,52 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\BoardRepository")
- * @ORM\Table(name="CC_Forum_Board")
  */
 class Board
 {
 	
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var integer $id
      */
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="boards")
-     * @ORM\JoinColumn(name="fk_category_id", referencedColumnName="id", onDelete="SET NULL")
+     * @var Category $category
      */
     protected $category = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="Topic", mappedBy="board", cascade={"remove"})
+     * @var ArrayCollection $topic
      */
     protected $topics;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @var string name
      */
     protected $name;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string $description
      */
     protected $description;
 
     /**
-     * @ORM\Column(type="integer", name="cached_topic_count")
+     * @var integer $cachedTopicCount
      */
     protected $cachedTopicCount = 0;
 
     /**
-     * @ORM\Column(type="integer", name="cached_post_count")
+     * @var integer $cachedPostCount
      */
     protected $cachedPostCount = 0;
 
     /**
-     * @ORM\OneToOne(targetEntity="Post")
-     * @ORM\JoinColumn(name="fk_last_post_id", referencedColumnName="id", onDelete="SET NULL")
+     * @var Post $lastPost
      */
     protected $lastPost = null;
 
     /**
-     * @ORM\Column(type="integer", name="list_order_priority")
+     * @var integer $listOrderPriority
      */
     protected $listOrderPriority = 0;
 

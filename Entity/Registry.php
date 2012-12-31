@@ -19,36 +19,32 @@ use CCDNUser\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\RegistryRepository")
- * @ORM\Table(name="CC_Forum_Registry")
  */
 class Registry
 {
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var integer $id
      */
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @var User $ownedBy
      */
     protected $ownedBy = null;
 
     /**
-     * @ORM\Column(type="integer", name="cached_post_count", nullable=false)
+     * @var integer $cachedPostCount
      */
     protected $cachedPostCount = 0;
 
     /**
-     * @ORM\Column(type="integer", name="cached_karma_positive_count", nullable=false)
+     * @var integer $cachedKarmaPositiveCount
      */
     protected $cachedKarmaPositiveCount = 0;
 
     /**
-     * @ORM\Column(type="integer", name="cached_karma_negative_count", nullable=false)
+     * @var integer $cachedKarmaNegativeCount
      */
     protected $cachedKarmaNegativeCount = 0;
 

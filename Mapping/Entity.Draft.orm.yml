@@ -1,0 +1,47 @@
+CCDNForum\ForumBundle\Entity\Draft:
+    type: entity
+    table: CC_Forum_Draft
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        title:
+            type: string
+            nullable: true
+        body:
+            type: text
+            nullable: true
+        createdDate:
+            type: datetime
+            name: "created_date"
+        createdBy:
+        attachment:
+    manyToOne:
+        board:
+            targetEntity: CCDNForum\ForumBundle\Entity\Board
+            joinColumn:
+                name: fk_board_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        topic:
+            targetEntity: CCDNForum\ForumBundle\Entity\Topic
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_topic_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        createdBy:
+            targetEntity: CCDNUser\UserBundle\Entity\User
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_created_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        attachment:
+            targetEntity: CCDNComponent\AttachmentBundle\Entity\Attachment
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_attachment_id
+                referencedColumnName: id
+                onDelete: SET NULL

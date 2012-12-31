@@ -1,0 +1,18 @@
+CCDNForum\ForumBundle\Entity\Category:
+    type: entity
+    table: CC_Forum_Category
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+        listOrderPriority:
+            type: integer
+            name: "list_order_priority"
+    oneToMany:
+        boards:
+            targetEntity: CCDNForum\ForumBundle\Entity\Board
+            mappedBy: category
+            cascade: ["remove"]

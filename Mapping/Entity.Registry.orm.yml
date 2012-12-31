@@ -1,0 +1,28 @@
+CCDNForum\ForumBundle\Entity\Registry:
+    type: entity
+    table: CC_Forum_Registry
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        cachedPostCount:
+            type: integer
+            name: "cached_post_count"
+            nullable: false
+        cachedKarmaPositiveCount:
+            type: integer
+            name: "cached_karma_positive_count"
+            nullable: false
+        cached_karma_negative_count:
+            type: integer
+            name: "cached_karma_negative_count"
+            nullable: false
+    manyToOne:
+        ownedBy:
+            targetEntity: CCDNUser\UserBundle\Entity\User
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_owned_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
