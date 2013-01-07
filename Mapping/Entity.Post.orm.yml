@@ -11,6 +11,10 @@ CCDNForum\ForumBundle\Entity\Post:
         createdDate:
             type: datetime
             name: "created_date"
+        editedDate:
+            type: datetime
+            name: edited_date
+            nullable: true
         isDeleted:
             type: boolean
             name: "is_deleted"
@@ -18,10 +22,6 @@ CCDNForum\ForumBundle\Entity\Post:
         deletedDate:
             type: datetime
             name: deleted_date
-            nullable: true
-        editedDate:
-            type: datetime
-            name: edited_date
             nullable: true
         isLocked:
             type: boolean
@@ -31,68 +31,46 @@ CCDNForum\ForumBundle\Entity\Post:
             type: datetime
             name: "locked_date"
             nullable: true
-
-#    manyToOne:
-#        board:
-#            targetEntity: CCDNForum\ForumBundle\Entity\Board
-#            joinColumn:
-#                name: fk_board_id
-#                referencedColumnName: id
-#                onDelete: SET NULL
-#        topic:
-#            targetEntity: CCDNForum\ForumBundle\Entity\Topic
-#            cascade: ["persist"]
-#            joinColumn:
-#                name: fk_topic_id
-#                referencedColumnName: id
-#                onDelete: SET NULL
-#        createdBy:
-#            targetEntity: CCDNUser\UserBundle\Entity\User
-#            cascade: ["persist"]
-#            joinColumn:
-#                name: fk_created_by_user_id
-#                referencedColumnName: id
-#                onDelete: SET NULL
-#        attachment:
-#            targetEntity: CCDNComponent\AttachmentBundle\Entity\Attachment
-#            cascade: ["persist"]
-#            joinColumn:
-#                name: fk_attachment_id
-#                referencedColumnName: id
-#                onDelete: SET NULL
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Topic", inversedBy="posts", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_topic_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $topic = null;
-
-    /*
-     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", inversedBy="forum_posts", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_created_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $createdBy = null;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_edited_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $editedBy = null;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_deleted_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $deletedBy = null;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_locked_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $lockedBy = null;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="CCDNComponent\AttachmentBundle\Entity\Attachment", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $attachment = null;
+    manyToOne:
+        topic:
+            targetEntity: CCDNForum\ForumBundle\Entity\Topic
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_topic_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        createdBy:
+            targetEntity: CCDNUser\UserBundle\Entity\User
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_created_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        editedBy:
+            targetEntity: CCDNUser\UserBundle\Entity\User
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_created_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        deletedBy:
+            targetEntity: CCDNUser\UserBundle\Entity\User
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_created_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        lockedBy:
+            targetEntity: CCDNUser\UserBundle\Entity\User
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_created_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        attachment:
+            targetEntity: CCDNComponent\AttachmentBundle\Entity\Attachment
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_attachment_id
+                referencedColumnName: id
+                onDelete: SET NULL

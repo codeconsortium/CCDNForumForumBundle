@@ -23,29 +23,19 @@ use CCDNUser\UserBundle\Entity\User;
 class Registry
 {
 
-    /**
-     * @var integer $id
-     */
+    /** @var integer $id */
     protected $id;
 
-    /**
-     * @var User $ownedBy
-     */
+    /** @var User $ownedBy */
     protected $ownedBy = null;
 
-    /**
-     * @var integer $cachedPostCount
-     */
+    /** @var integer $cachedPostCount */
     protected $cachedPostCount = 0;
 
-    /**
-     * @var integer $cachedKarmaPositiveCount
-     */
+    /** @var integer $cachedKarmaPositiveCount */
     protected $cachedKarmaPositiveCount = 0;
 
-    /**
-     * @var integer $cachedKarmaNegativeCount
-     */
+    /** @var integer $cachedKarmaNegativeCount */
     protected $cachedKarmaNegativeCount = 0;
 
     /**

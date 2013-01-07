@@ -17,38 +17,23 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\SubscriptionRepository")
- * @ORM\Table(name="CC_Forum_Subscription")
  */
 class Subscription
 {
 	
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    /** @var integer $id */
     protected $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Topic", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_topic_id", referencedColumnName="id", onDelete="SET NULL")
-     */
+    /** @var CCDNForum\ForumBundle\Entity\Topic $topic */
     protected $topic = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-     */
+    /** @var CCDNUser\UserBundle\Entity\User $ownedBy */
     protected $ownedBy = null;
 
-    /**
-     * @ORM\Column(type="boolean", name="is_read", nullable=false)
-     */
+    /** @var Boolean $isRead */
     protected $isRead = false;
 
-    /**
-     * @ORM\Column(type="boolean", name="is_subscribed", nullable=false)
-     */
+    /** @var Boolean $isSubscribed */
     protected $isSubscribed = false;
 
     /**
