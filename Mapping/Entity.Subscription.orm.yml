@@ -6,43 +6,20 @@ CCDNForum\ForumBundle\Entity\Subscription:
             type: integer
             generator: { strategy: AUTO }
     fields:
+        isRead:
+        isSubscribed:
+    manyToOne:
+        ownedBy:
+            targetEntity: "CCDNUser\UserBundle\Entity\User"
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_owned_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
         topic:
-            targetEntity:
-
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\SubscriptionRepository")
- * @ORM\Table(name="CC_Forum_Subscription")
- */
-class Subscription
-{
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Topic", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_topic_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $topic = null;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_owned_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $ownedBy = null;
-
-    /**
-     * @ORM\Column(type="boolean", name="is_read", nullable=false)
-     */
-    protected $isRead = false;
-
-    /**
-     * @ORM\Column(type="boolean", name="is_subscribed", nullable=false)
-     */
-    protected $isSubscribed = false;
+            targetEntity: "CCDNForum\ForumBundle\Entity\Topic"
+            cascade: ["persist"]
+            joinColumn:
+                name: fk_topic_id
+                referencedColumnName: id
+                onDelete: SET NULL

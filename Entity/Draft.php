@@ -24,44 +24,28 @@ use CCDNUser\UserBundle\Entity\User;
 class Draft
 {
 	
-    /**
-     * @var integer $id
-     */
+    /** @var integer $id */
     protected $id;
 
-    /**
-     * @var Board $board
-     */
+    /** @var Board $board */
     protected $board;
 
-    /**
-     * @var string $title
-     */
+    /** @var string $title */
     protected $title;
 
-    /**
-     * @var Topic $topic
-     */
+    /** @var Topic $topic */
     protected $topic = null;
 
-    /**
-     * @var string $body
-     */
+    /** @var string $body */
     protected $body;
 
-    /**
-     * @var \Datetime $createdDate
-     */
+    /** @var \Datetime $createdDate */
     protected $createdDate;
 
-    /**
-     * @var User $createdBy
-     */
+    /** @var User $createdBy */
     protected $createdBy = null;
 
-    /**
-     * @var Attachment $attachment
-     */
+    /** @var Attachment $attachment */
     protected $attachment = null;
 
     /**
