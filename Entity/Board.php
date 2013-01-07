@@ -22,49 +22,31 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Board
 {
 	
-    /**
-     * @var integer $id
-     */
+    /** @var integer $id */
     protected $id;
 
-    /**
-     * @var Category $category
-     */
+    /** @var Category $category */
     protected $category = null;
 
-    /**
-     * @var ArrayCollection $topic
-     */
+    /** @var ArrayCollection $topic */
     protected $topics;
 
-    /**
-     * @var string name
-     */
+    /** @var string name */
     protected $name;
 
-    /**
-     * @var string $description
-     */
+    /** @var string $description */
     protected $description;
 
-    /**
-     * @var integer $cachedTopicCount
-     */
+    /** @var integer $cachedTopicCount */
     protected $cachedTopicCount = 0;
 
-    /**
-     * @var integer $cachedPostCount
-     */
+    /** @var integer $cachedPostCount */
     protected $cachedPostCount = 0;
 
-    /**
-     * @var Post $lastPost
-     */
+    /** @var Post $lastPost */
     protected $lastPost = null;
 
-    /**
-     * @var integer $listOrderPriority
-     */
+    /** @var integer $listOrderPriority */
     protected $listOrderPriority = 0;
 
     public function __construct()

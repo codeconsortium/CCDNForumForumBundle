@@ -6,114 +6,92 @@ CCDNForum\ForumBundle\Entity\Topic:
             type: integer
             generator: { strategy: AUTO }
     fields:
-
-
-
-
-/**
- * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\TopicRepository")
- * @ORM\Table(name="CC_Forum_Topic")
- */
-class Topic
-{
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="topic", cascade={"remove"})
-     */
-    protected $posts;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Board", inversedBy="topics")
-     * @ORM\JoinColumn(name="fk_board_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $board = null;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    protected $title;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Post", cascade={"remove"})
-     * @ORM\JoinColumn(name="fk_first_post_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $firstPost = null;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Post", cascade={"remove"})
-     * @ORM\JoinColumn(name="fk_last_post_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $lastPost = null;
-
-    /**
-     * @ORM\Column(type="integer", name="cached_view_count", nullable=false)
-     */
-    protected $cachedViewCount = 0;
-
-    /**
-     * @ORM\Column(type="integer", name="cached_reply_count", nullable=false)
-     */
-    protected $cachedReplyCount = 0;
-
-    /**
-     *
-     * @ORM\Column(type="boolean", name="is_closed", nullable=false)
-     */
-    protected $isClosed = false;
-
-    /**
-     * @ORM\Column(type="datetime", name="closed_date", nullable=true)
-     */
-    protected $closedDate;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_closed_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $closedBy = null;
-
-    /**
-     *
-     * @ORM\Column(type="boolean", name="is_deleted", nullable=false)
-     */
-    protected $isDeleted = false;
-
-    /**
-     * @ORM\Column(type="datetime", name="deleted_date", nullable=true)
-     */
-    protected $deletedDate;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_deleted_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $deletedBy = null;
-
-    /**
-     * @ORM\Column(type="datetime", name="stickied_date", nullable=true)
-     */
-    protected $stickiedDate;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="CCDNUser\UserBundle\Entity\User", cascade={"persist"})
-     * @ORM\JoinColumn(name="fk_stickied_by_user_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $stickiedBy = null;
-
-    /**
-     * @ORM\Column(type="boolean", name="is_sticky", nullable=false)
-     */
-    protected $isSticky = false;
-
-	/**
-	 *
-     * @ORM\OneToMany(targetEntity="Subscription", mappedBy="topic", cascade={"remove"})
-	 */
-	protected $subscriptions;
+        title:
+            type: string
+            length: 100
+        cachedViewCount:
+            type: integer
+            name: "cached_view_count"
+            nullable: false
+        cachedReplyCount:
+            type: integer
+            name: "cached_reply_count"
+            nullable: false
+        isClosed:
+            type: boolean
+            name: "is_closed"
+            nullable: false
+        closedDate:
+            type: datetime
+            name: "closed_date"
+            nullable: true
+        isDeleted:
+            type: boolean
+            name: "is_deleted"
+            nullable: false
+        deletedDate:
+            type: datetime
+            name: "deleted_date"
+            nullable: true
+        isSticky:
+            type: boolean
+            name: "is_sticky"
+            nullable: false
+        stickiedDate:
+            type: datetime
+            name: "stickied_date"
+            nullable: true
+    oneToMany:
+        posts:
+            targetEntity: "CCDNForum\ForumBundle\Entity\Post"
+            mappedBy: topic
+            cascade: ["remove"]
+            onDelete: SET NULL
+        subscriptions:
+            targetEntity: "CCDNForum\ForumBundle\Entity\Subscription"
+            mappedBy: topic
+            cascade: ["remove"]
+            onDelete: SET NULL
+    manyToOne:
+        board:
+            targetEntity: "CCDNForum\ForumBundle\Entity\Board"
+            cascade: ["remove"]
+            joinColumn:
+                name: fk_board_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        firstPost:
+            targetEntity: "CCDNForum\ForumBundle\Entity\Post"
+            cascade: ["remove"]
+            joinColumn:
+                name: fk_first_post_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        lastPost:
+            targetEntity: "CCDNForum\ForumBundle\Entity\Post"
+            cascade: ["remove"]
+            joinColumn:
+                name: fk_last_post_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        closedBy:
+            targetEntity: "CCDNUser\UserBundle\Entity\User"
+            cascade: ["remove"]
+            joinColumn:
+                name: fk_closed_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        deletedBy:
+            targetEntity: "CCDNUser\UserBundle\Entity\User"
+            cascade: ["remove"]
+            joinColumn:
+                name: fk_deleted_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL
+        stickiedBy:
+            targetEntity: "CCDNUser\UserBundle\Entity\User"
+            cascade: ["remove"]
+            joinColumn:
+                name: fk_sticked_by_user_id
+                referencedColumnName: id
+                onDelete: SET NULL

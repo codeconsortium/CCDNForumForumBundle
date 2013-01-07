@@ -17,7 +17,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNForum\ForumBundle\Entity\Board;
-//use CCDNForum\ForumBundle\Entity\Topic;
 
 /**
  * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\CategoryRepository")
@@ -25,24 +24,16 @@ use CCDNForum\ForumBundle\Entity\Board;
 class Category
 {
 	
-    /**
-     * @var integer $id
-     */
+    /** @var integer $id */
     protected $id;
 
-    /**
-     * @var ArrayCollection $boards
-     */
+    /** @var ArrayCollection $boards */
     protected $boards;
 
-    /**
-     * @var string $name
-     */
+    /** @var string $name */
     protected $name;
 
-    /**
-     * @var integer $listOrderPriority
-     */
+    /** @var integer $listOrderPriority */
     protected $listOrderPriority;
 
     public function __construct()
