@@ -15,19 +15,15 @@ namespace CCDNForum\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use CCDNUser\UserBundle\Entity\User;
+//use CCDNUser\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\RegistryRepository")
  */
 class Registry
 {
-
     /** @var integer $id */
     protected $id;
-
-    /** @var User $ownedBy */
-    protected $ownedBy = null;
 
     /** @var integer $cachedPostCount */
     protected $cachedPostCount = 0;
@@ -46,29 +42,6 @@ class Registry
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set owned_by
-     *
-     * @param  CCDNUser\UserBundle\Entity\User $ownedBy
-     * @return Registry
-     */
-    public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)
-    {
-        $this->ownedBy = $ownedBy;
-
-        return $this;
-    }
-
-    /**
-     * Get owned_by
-     *
-     * @return CCDNUser\UserBundle\Entity\User
-     */
-    public function getOwnedBy()
-    {
-        return $this->ownedBy;
     }
 
     /**

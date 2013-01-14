@@ -18,11 +18,11 @@ CCDNForum\ForumBundle\Entity\Registry:
             type: integer
             name: "cached_karma_negative_count"
             nullable: false
-    manyToOne:
-        ownedBy:
-            targetEntity: CCDNUser\UserBundle\Entity\User
-            cascade: ["persist"]
-            joinColumn:
-                name: fk_owned_by_user_id
-                referencedColumnName: id
-                onDelete: SET NULL
+#    manyToOne:
+#        ownedBy:
+#            targetEntity: CCDNUser\UserBundle\Entity\User
+#            cascade: ["persist"]
+#            joinColumn:
+#                name: fk_owned_by_user_id
+#                referencedColumnName: id
+#                onDelete: SET NULL

@@ -20,15 +20,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Subscription
 {
-	
     /** @var integer $id */
     protected $id;
-
-    /** @var CCDNForum\ForumBundle\Entity\Topic $topic */
-    protected $topic = null;
-
-    /** @var CCDNUser\UserBundle\Entity\User $ownedBy */
-    protected $ownedBy = null;
 
     /** @var Boolean $isRead */
     protected $isRead = false;
@@ -44,46 +37,6 @@ class Subscription
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set topic
-     *
-     * @param CCDNForum\ForumBundle\Entity\Topic $topic
-     */
-    public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic = null)
-    {
-        $this->topic = $topic;
-    }
-
-    /**
-     * Get topic
-     *
-     * @return CCDNForum\ForumBundle\Entity\Topic
-     */
-    public function getTopic()
-    {
-        return $this->topic;
-    }
-
-    /**
-     * Set owned_by
-     *
-     * @param CCDNUser\UserBundle\Entity\User $ownedBy
-     */
-    public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)
-    {
-        $this->ownedBy = $ownedBy;
-    }
-
-    /**
-     * Get owned_by
-     *
-     * @return CCDNUser\UserBundle\Entity\User
-     */
-    public function getOwnedBy()
-    {
-        return $this->ownedBy;
     }
 
     /**

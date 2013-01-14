@@ -7,15 +7,21 @@ CCDNForum\ForumBundle\Entity\Subscription:
             generator: { strategy: AUTO }
     fields:
         isRead:
+            type: boolean
+            name: 'is_read'
+            nullable: false
         isSubscribed:
+            type: boolean
+            name: 'is_subscribed'
+            nullable: false
     manyToOne:
-        ownedBy:
-            targetEntity: "CCDNUser\UserBundle\Entity\User"
-            cascade: ["persist"]
-            joinColumn:
-                name: fk_owned_by_user_id
-                referencedColumnName: id
-                onDelete: SET NULL
+#        ownedBy:
+#            targetEntity: "CCDNUser\UserBundle\Entity\User"
+#            cascade: ["persist"]
+#            joinColumn:
+#                name: fk_owned_by_user_id
+#                referencedColumnName: id
+#                onDelete: SET NULL
         topic:
             targetEntity: "CCDNForum\ForumBundle\Entity\Topic"
             cascade: ["persist"]

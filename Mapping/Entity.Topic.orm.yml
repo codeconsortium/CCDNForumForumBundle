@@ -74,24 +74,24 @@ CCDNForum\ForumBundle\Entity\Topic:
                 name: fk_last_post_id
                 referencedColumnName: id
                 onDelete: SET NULL
-        closedBy:
-            targetEntity: "CCDNUser\UserBundle\Entity\User"
-            cascade: ["remove"]
-            joinColumn:
-                name: fk_closed_by_user_id
-                referencedColumnName: id
-                onDelete: SET NULL
-        deletedBy:
-            targetEntity: "CCDNUser\UserBundle\Entity\User"
-            cascade: ["remove"]
-            joinColumn:
-                name: fk_deleted_by_user_id
-                referencedColumnName: id
-                onDelete: SET NULL
-        stickiedBy:
-            targetEntity: "CCDNUser\UserBundle\Entity\User"
-            cascade: ["remove"]
-            joinColumn:
-                name: fk_sticked_by_user_id
-                referencedColumnName: id
-                onDelete: SET NULL
+#        closedBy:
+#            targetEntity: "CCDNUser\UserBundle\Entity\User"
+#            cascade: ["remove"]
+#            joinColumn:
+#                name: fk_closed_by_user_id
+#                referencedColumnName: id
+#                onDelete: SET NULL
+#        deletedBy:
+#            targetEntity: "CCDNUser\UserBundle\Entity\User"
+#            cascade: ["remove"]
+#            joinColumn:
+#                name: fk_deleted_by_user_id
+#                referencedColumnName: id
+#                onDelete: SET NULL
+#        stickiedBy:
+#            targetEntity: "CCDNUser\UserBundle\Entity\User"
+#            cascade: ["remove"]
+#            joinColumn:
+#                name: fk_sticked_by_user_id
+#                referencedColumnName: id
+#                onDelete: SET NULL

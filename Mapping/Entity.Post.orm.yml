@@ -39,38 +39,38 @@ CCDNForum\ForumBundle\Entity\Post:
                 name: fk_topic_id
                 referencedColumnName: id
                 onDelete: SET NULL
-        createdBy:
-            targetEntity: CCDNUser\UserBundle\Entity\User
-            cascade: ["persist"]
-            joinColumn:
-                name: fk_created_by_user_id
-                referencedColumnName: id
-                onDelete: SET NULL
-        editedBy:
-            targetEntity: CCDNUser\UserBundle\Entity\User
-            cascade: ["persist"]
-            joinColumn:
-                name: fk_created_by_user_id
-                referencedColumnName: id
-                onDelete: SET NULL
-        deletedBy:
-            targetEntity: CCDNUser\UserBundle\Entity\User
-            cascade: ["persist"]
-            joinColumn:
-                name: fk_created_by_user_id
-                referencedColumnName: id
-                onDelete: SET NULL
-        lockedBy:
-            targetEntity: CCDNUser\UserBundle\Entity\User
-            cascade: ["persist"]
-            joinColumn:
-                name: fk_created_by_user_id
-                referencedColumnName: id
-                onDelete: SET NULL
-        attachment:
-            targetEntity: CCDNComponent\AttachmentBundle\Entity\Attachment
-            cascade: ["persist"]
-            joinColumn:
-                name: fk_attachment_id
-                referencedColumnName: id
-                onDelete: SET NULL
+#        createdBy:
+#            targetEntity: CCDNUser\UserBundle\Entity\User
+#            cascade: ["persist"]
+#            joinColumn:
+#                name: fk_created_by_user_id
+#                referencedColumnName: id
+#                onDelete: SET NULL
+#        editedBy:
+#            targetEntity: CCDNUser\UserBundle\Entity\User
+#            cascade: ["persist"]
+#            joinColumn:
+#                name: fk_created_by_user_id
+#                referencedColumnName: id
+#                onDelete: SET NULL
+#        deletedBy:
+#            targetEntity: CCDNUser\UserBundle\Entity\User
+#            cascade: ["persist"]
+#            joinColumn:
+#                name: fk_created_by_user_id
+#                referencedColumnName: id
+#                onDelete: SET NULL
+#        lockedBy:
+#            targetEntity: CCDNUser\UserBundle\Entity\User
+#            cascade: ["persist"]
+#            joinColumn:
+#                name: fk_created_by_user_id
+#                referencedColumnName: id
+#                onDelete: SET NULL
+#        attachment:
+#            targetEntity: CCDNComponent\AttachmentBundle\Entity\Attachment
+#            cascade: ["persist"]
+#            joinColumn:
+#                name: fk_attachment_id
+#                referencedColumnName: id
+#                onDelete: SET NULL

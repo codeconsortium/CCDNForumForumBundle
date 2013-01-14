@@ -21,33 +21,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Topic
 {
-	
     /** @var integer $id */
     protected $id;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="topic", cascade={"remove"})
-     */
-    protected $posts;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Board", inversedBy="topics")
-     * @ORM\JoinColumn(name="fk_board_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $board = null;
-
     /** @var string $title */
     protected $title;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Post", cascade={"remove"})
-     */
-    protected $firstPost = null;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Post", cascade={"remove"})
-     */
-    protected $lastPost = null;
 
     /** @var integer $cachedViewCount */
     protected $cachedViewCount = 0;
@@ -61,34 +39,17 @@ class Topic
     /** \DateTime $closedDate */
     protected $closedDate;
 
-    /** @var CCDNUser\UserBundle\Entity\User $closedBy */
-    protected $closedBy = null;
-
-	/** @var Boolean $isDeleted */
+    /** @var Boolean $isDeleted */
     protected $isDeleted = false;
 
-	/** \DateTime $deletedDate */
+    /** \DateTime $deletedDate */
     protected $deletedDate;
 
-	/** @var CCDNUser\UserBundle\Entity\User $deletedBy */
-    protected $deletedBy = null;
-
-	/** \DateTime $stickiedDate */
+    /** \DateTime $stickiedDate */
     protected $stickiedDate;
 
-	/** @var CCDNUser\UserBundle\Entity\User $stickiedBy */
-    protected $stickiedBy = null;
-
-	/** @var Boolean $isSticky */
+    /** @var Boolean $isSticky */
     protected $isSticky = false;
-
-	/** @var CCDNForum\ForumBundle\Entity\Subscription $subscriptions */
-	protected $subscriptions;
-	
-    public function __construct()
-    {
-        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -100,65 +61,6 @@ class Topic
         return $this->id;
     }
 
-    /**
-     * Add posts
-     *
-     * @param CCDNForum\ForumBundle\Entity\Post $posts
-     */
-    public function addPosts(\CCDNForum\ForumBundle\Entity\Post $posts)
-    {
-        $this->posts[] = $posts;
-    }
-
-    /**
-     * Get posts
-     *
-     * @return Doctrine\Common\Collections\Collection
-     */
-    public function getPosts()
-    {
-        return $this->posts;
-    }
-
-    /**
-     * Set board
-     *
-     * @param CCDNForum\ForumBundle\Entity\Board $board
-     */
-    public function setBoard(\CCDNForum\ForumBundle\Entity\Board $board = null)
-    {
-        $this->board = $board;
-    }
-
-    /**
-     * Get board
-     *
-     * @return CCDNForum\ForumBundle\Entity\Board
-     */
-    public function getBoard()
-    {
-        return $this->board;
-    }
-
-    /**
-     * Set last_post
-     *
-     * @param CCDNForum\ForumBundle\Entity\Post $lastPost
-     */
-    public function setLastPost(\CCDNForum\ForumBundle\Entity\Post $lastPost = null)
-    {
-        $this->lastPost = $lastPost;
-    }
-
-    /**
-     * Get last_post
-     *
-     * @return CCDNForum\ForumBundle\Entity\Post
-     */
-    public function getLastPost()
-    {
-        return $this->lastPost;
-    }
 
     /**
      * Set title
@@ -180,35 +82,6 @@ class Topic
         return $this->title;
     }
 
-    /**
-     * Set first_post
-     *
-     * @param CCDNForum\ForumBundle\Entity\Post $firstPost
-     */
-    public function setFirstPost(\CCDNForum\ForumBundle\Entity\Post $firstPost = null)
-    {
-        $this->firstPost = $firstPost;
-    }
-
-    /**
-     * Get first_post
-     *
-     * @return CCDNForum\ForumBundle\Entity\Post
-     */
-    public function getFirstPost()
-    {
-        return $this->firstPost;
-    }
-
-    /**
-     * Add posts
-     *
-     * @param CCDNForum\ForumBundle\Entity\Post $posts
-     */
-    public function addPost(\CCDNForum\ForumBundle\Entity\Post $posts)
-    {
-        $this->posts[] = $posts;
-    }
 
     /**
      * Set closed_date
@@ -230,25 +103,6 @@ class Topic
         return $this->closedDate;
     }
 
-    /**
-     * Set closed_by
-     *
-     * @param CCDNUser\UserBundle\Entity\User $closedBy
-     */
-    public function setClosedBy(\CCDNUser\UserBundle\Entity\User $closedBy = null)
-    {
-        $this->closedBy = $closedBy;
-    }
-
-    /**
-     * Get closed_by
-     *
-     * @return CCDNUser\UserBundle\Entity\User
-     */
-    public function getClosedBy()
-    {
-        return $this->closedBy;
-    }
 
     /**
      * Set deleted_date
@@ -268,26 +122,6 @@ class Topic
     public function getDeletedDate()
     {
         return $this->deletedDate;
-    }
-
-    /**
-     * Set deleted_by
-     *
-     * @param CCDNUser\UserBundle\Entity\User $deletedBy
-     */
-    public function setDeletedBy(\CCDNUser\UserBundle\Entity\User $deletedBy = null)
-    {
-        $this->deletedBy = $deletedBy;
-    }
-
-    /**
-     * Get deleted_by
-     *
-     * @return CCDNUser\UserBundle\Entity\User
-     */
-    public function getDeletedBy()
-    {
-        return $this->deletedBy;
     }
 
     /**
@@ -410,43 +244,4 @@ class Topic
         return $this->stickiedDate;
     }
 
-    /**
-     * Set stickiedBy
-     *
-     * @param CCDNUser\UserBundle\Entity\User $stickiedBy
-     */
-    public function setStickiedBy(\CCDNUser\UserBundle\Entity\User $stickiedBy = null)
-    {
-        $this->stickiedBy = $stickiedBy;
-    }
-
-    /**
-     * Get stickiedBy
-     *
-     * @return CCDNUser\UserBundle\Entity\User
-     */
-    public function getStickiedBy()
-    {
-        return $this->stickiedBy;
-    }
-
-    /**
-     * Add subscriptions
-     *
-     * @param CCDNForum\ForumBundle\Entity\Subscription $subscriptions
-     */
-    public function addSubscription(\CCDNForum\ForumBundle\Entity\Subscription $subscriptions)
-    {
-        $this->subscriptions[] = $subscriptions;
-    }
-
-    /**
-     * Get subscriptions
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getSubscriptions()
-    {
-        return $this->subscriptions;
-    }
 }

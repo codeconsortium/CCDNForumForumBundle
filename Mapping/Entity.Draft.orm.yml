@@ -15,8 +15,6 @@ CCDNForum\ForumBundle\Entity\Draft:
         createdDate:
             type: datetime
             name: "created_date"
-        createdBy:
-        attachment:
     manyToOne:
         board:
             targetEntity: CCDNForum\ForumBundle\Entity\Board
@@ -31,17 +29,17 @@ CCDNForum\ForumBundle\Entity\Draft:
                 name: fk_topic_id
                 referencedColumnName: id
                 onDelete: SET NULL
-        createdBy:
-            targetEntity: CCDNUser\UserBundle\Entity\User
-            cascade: ["persist"]
-            joinColumn:
-                name: fk_created_by_user_id
-                referencedColumnName: id
-                onDelete: SET NULL
-        attachment:
-            targetEntity: CCDNComponent\AttachmentBundle\Entity\Attachment
-            cascade: ["persist"]
-            joinColumn:
-                name: fk_attachment_id
-                referencedColumnName: id
-                onDelete: SET NULL
+#        createdBy:
+#            targetEntity: CCDNUser\UserBundle\Entity\User
+#            cascade: ["persist"]
+#            joinColumn:
+#                name: fk_created_by_user_id
+#                referencedColumnName: id
+#                onDelete: SET NULL
+#        attachment:
+#            targetEntity: CCDNComponent\AttachmentBundle\Entity\Attachment
+#            cascade: ["persist"]
+#            joinColumn:
+#                name: fk_attachment_id
+#                referencedColumnName: id
+#                onDelete: SET NULL

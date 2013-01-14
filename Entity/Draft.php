@@ -16,37 +16,24 @@ namespace CCDNForum\ForumBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use CCDNForum\ForumBundle\Entity\Topic;
-use CCDNUser\UserBundle\Entity\User;
+//use CCDNUser\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\DraftRepository")
  */
 class Draft
 {
-	
     /** @var integer $id */
     protected $id;
 
-    /** @var Board $board */
-    protected $board;
-
     /** @var string $title */
     protected $title;
-
-    /** @var Topic $topic */
-    protected $topic = null;
 
     /** @var string $body */
     protected $body;
 
     /** @var \Datetime $createdDate */
     protected $createdDate;
-
-    /** @var User $createdBy */
-    protected $createdBy = null;
-
-    /** @var Attachment $attachment */
-    protected $attachment = null;
 
     /**
      * Get id
@@ -99,66 +86,6 @@ class Draft
     }
 
     /**
-     * Set topic
-     *
-     * @param CCDNForum\ForumBundle\Entity\Topic $topic
-     */
-    public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic = null)
-    {
-        $this->topic = $topic;
-    }
-
-    /**
-     * Get topic
-     *
-     * @return CCDNForum\ForumBundle\Entity\Topic
-     */
-    public function getTopic()
-    {
-        return $this->topic;
-    }
-
-    /**
-     * Set created_by
-     *
-     * @param CCDNUser\UserBundle\Entity\User $createdBy
-     */
-    public function setCreatedBy(\CCDNUser\UserBundle\Entity\User $createdBy = null)
-    {
-        $this->createdBy = $createdBy;
-    }
-
-    /**
-     * Get created_by
-     *
-     * @return CCDNUser\UserBundle\Entity\User
-     */
-    public function getCreatedBy()
-    {
-        return $this->createdBy;
-    }
-
-    /**
-     * Set attachment
-     *
-     * @param CCDNComponent\AttachmentBundle\Entity\Attachment $attachment
-     */
-    public function setAttachment(\CCDNComponent\AttachmentBundle\Entity\Attachment $attachment = null)
-    {
-        $this->attachment = $attachment;
-    }
-
-    /**
-     * Get attachment
-     *
-     * @return CCDNComponent\AttachmentBundle\Entity\Attachment
-     */
-    public function getAttachment()
-    {
-        return $this->attachment;
-    }
-
-    /**
      * Set title
      *
      * @param string $title
@@ -176,25 +103,5 @@ class Draft
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Set board
-     *
-     * @param CCDNForum\ForumBundle\Entity\Board $board
-     */
-    public function setBoard(\CCDNForum\ForumBundle\Entity\Board $board = null)
-    {
-        $this->board = $board;
-    }
-
-    /**
-     * Get board
-     *
-     * @return CCDNForum\ForumBundle\Entity\Board
-     */
-    public function getBoard()
-    {
-        return $this->board;
     }
 }

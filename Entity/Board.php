@@ -21,15 +21,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Board
 {
-	
     /** @var integer $id */
     protected $id;
-
-    /** @var Category $category */
-    protected $category = null;
-
-    /** @var ArrayCollection $topic */
-    protected $topics;
 
     /** @var string name */
     protected $name;
@@ -43,16 +36,8 @@ class Board
     /** @var integer $cachedPostCount */
     protected $cachedPostCount = 0;
 
-    /** @var Post $lastPost */
-    protected $lastPost = null;
-
     /** @var integer $listOrderPriority */
     protected $listOrderPriority = 0;
-
-    public function __construct()
-    {
-        $this->topics = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -102,76 +87,6 @@ class Board
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set category
-     *
-     * @param CCDNForum\ForumBundle\Entity\Category $category
-     */
-    public function setCategory(\CCDNForum\ForumBundle\Entity\Category $category = null)
-    {
-        $this->category = $category;
-    }
-
-    /**
-     * Get category
-     *
-     * @return CCDNForum\ForumBundle\Entity\Category
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
-     * Add topics
-     *
-     * @param CCDNForum\ForumBundle\Entity\Topic $topics
-     */
-    public function addTopics(\CCDNForum\ForumBundle\Entity\Topic $topics)
-    {
-        $this->topics[] = $topics;
-    }
-
-    /**
-     * Get topics
-     *
-     * @return Doctrine\Common\Collections\Collection
-     */
-    public function getTopics()
-    {
-        return $this->topics;
-    }
-
-    /**
-     * Set last_post
-     *
-     * @param CCDNForum\ForumBundle\Entity\Post $lastPost
-     */
-    public function setLastPost(\CCDNForum\ForumBundle\Entity\Post $lastPost = null)
-    {
-        $this->lastPost = $lastPost;
-    }
-
-    /**
-     * Get last_post
-     *
-     * @return CCDNForum\ForumBundle\Entity\Post
-     */
-    public function getLastPost()
-    {
-        return $this->lastPost;
-    }
-
-    /**
-     * Add topics
-     *
-     * @param CCDNForum\ForumBundle\Entity\Topic $topics
-     */
-    public function addTopic(\CCDNForum\ForumBundle\Entity\Topic $topics)
-    {
-        $this->topics[] = $topics;
     }
 
     /**
@@ -233,5 +148,4 @@ class Board
     {
         return $this->cachedPostCount;
     }
-
 }
