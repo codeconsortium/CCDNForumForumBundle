@@ -46,6 +46,8 @@ abstract class Category
     public function setBoards(ArrayCollection $boards = null)
     {
         $this->boards = $boards;
+
+        return $this;
     }
 
     /**
@@ -58,6 +60,8 @@ abstract class Category
         foreach ($boards as $board) {
             $this->boards->add($board);
         }
+
+        return $this;
     }
 
     /**
@@ -68,5 +72,7 @@ abstract class Category
     public function addBoard(Board $board)
     {
         $this->boards[] = $board;
+
+        return $this;
     }
 }

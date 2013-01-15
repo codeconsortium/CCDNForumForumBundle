@@ -57,6 +57,8 @@ abstract class Board
     public function setCategory(Category $category = null)
     {
         $this->category = $category;
+
+        return $this;
     }
 
     /**
@@ -72,11 +74,13 @@ abstract class Board
     /**
      * Set topics
      *
-     * @param Topic $topics
+     * @param ArrayCollection $topics
      */
     public function setTopics(array $topics = null)
     {
         $this->topics[] = $topics;
+
+        return $this;
     }
 
     /**
@@ -89,6 +93,8 @@ abstract class Board
         foreach ($topics as $topic) {
             $this->topics->add($topic);
         }
+
+        return $this;
     }
 
     /**
@@ -99,6 +105,8 @@ abstract class Board
     public function addTopic(Topic $topic)
     {
         $this->topics[] = $topic;
+
+        return $this;
     }
 
     /**
@@ -119,5 +127,7 @@ abstract class Board
     public function setLastPost(Post $lastPost = null)
     {
         $this->lastPost = $lastPost;
+
+        return $this;
     }
 }

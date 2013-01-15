@@ -63,6 +63,8 @@ abstract class Post
     public function setTopic(Topic $topic = null)
     {
         $this->topic = $topic;
+
+        return $this;
     }
 
     /**
@@ -83,6 +85,8 @@ abstract class Post
     public function setCreatedBy(UserInterface $createdBy = null)
     {
         $this->createdBy = $createdBy;
+
+        return $this;
     }
 
     /**
@@ -103,6 +107,8 @@ abstract class Post
     public function setEditedBy(UserInterface $editedBy = null)
     {
         $this->editedBy = $editedBy;
+
+        return $this;
     }
 
     /**
@@ -123,6 +129,8 @@ abstract class Post
     public function setDeletedBy(UserInterface $deletedBy = null)
     {
         $this->deletedBy = $deletedBy;
+
+        return $this;
     }
 
     /**
@@ -143,6 +151,8 @@ abstract class Post
     public function setLockedBy(UserInterface $lockedBy = null)
     {
         $this->lockedBy = $lockedBy;
+
+        return $this;
     }
 
     /**

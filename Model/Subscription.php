@@ -51,6 +51,8 @@ abstract class Subscription
     public function setTopic(Topic $topic = null)
     {
         $this->topic = $topic;
+
+        return $this;
     }
 
     /**
@@ -71,5 +73,7 @@ abstract class Subscription
     public function setOwnedBy(UserInterface $ownedBy = null)
     {
         $this->ownedBy = $ownedBy;
+
+        return $this;
     }
 }

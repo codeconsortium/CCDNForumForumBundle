@@ -72,6 +72,8 @@ abstract class Topic
     public function setBoard(Board $board = null)
     {
         $this->board = $board;
+
+        return $this;
     }
 
     /**
@@ -92,6 +94,8 @@ abstract class Topic
     public function setClosedBy(UserInterface $closedBy = null)
     {
         $this->closedBy = $closedBy;
+
+        return $this;
     }
 
     /**
@@ -112,6 +116,8 @@ abstract class Topic
     public function setDeletedBy(UserInterface $deletedBy = null)
     {
         $this->deletedBy = $deletedBy;
+
+        return $this;
     }
 
     /**
@@ -132,6 +138,8 @@ abstract class Topic
     public function setStickiedBy(UserInterface $stickiedBy = null)
     {
         $this->stickiedBy = $stickiedBy;
+
+        return $this;
     }
 
     /**
@@ -152,6 +160,8 @@ abstract class Topic
     public function setFirstPost(Post $firstPost = null)
     {
         $this->firstPost = $firstPost;
+
+        return $this;
     }
 
     /**
@@ -172,6 +182,8 @@ abstract class Topic
     public function setLastPost(Post $lastPost = null)
     {
         $this->lastPost = $lastPost;
+
+        return $this;
     }
 
     /**
@@ -192,6 +204,8 @@ abstract class Topic
     public function setPosts(array $posts = null)
     {
         $this->posts[] = $posts;
+
+        return $this;
     }
 
     /**
@@ -204,6 +218,8 @@ abstract class Topic
         foreach($posts as $post) {
             $this->posts->add($post);
         }
+
+        return $this;
     }
 
     /**
@@ -214,6 +230,8 @@ abstract class Topic
     public function addPost(Post $post)
     {
         $this->posts[] = $post;
+
+        return $this;
     }
 
     /**
@@ -232,6 +250,8 @@ abstract class Topic
     public function setSubscriptions(array $subscriptions = null)
     {
         $this->subscriptions = $subscriptions;
+
+        return $this;
     }
 
     /**
@@ -242,6 +262,8 @@ abstract class Topic
         foreach($subscriptions as $subscription) {
             $this->subscriptions->add($subscription);
         }
+
+        return $this;
     }
 
     /**
@@ -252,5 +274,7 @@ abstract class Topic
     public function addSubscription(Subscription $subscription)
     {
         $this->subscriptions->add($subscription);
+
+        return $this;
     }
 }

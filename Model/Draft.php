@@ -58,6 +58,8 @@ abstract class Draft
     public function setTopic(Topic $topic = null)
     {
         $this->topic = $topic;
+
+        return $this;
     }
 
     /**
@@ -78,6 +80,8 @@ abstract class Draft
     public function setCreatedBy(UserInterface $createdBy = null)
     {
         $this->createdBy = $createdBy;
+
+        return $this;
     }
 
     /**
@@ -98,6 +102,8 @@ abstract class Draft
     public function setAttachment(Attachment $attachment = null)
     {
         $this->attachment = $attachment;
+
+        return $this;
     }
 
     /**
@@ -118,5 +124,7 @@ abstract class Draft
     public function setBoard(Board $board = null)
     {
         $this->board = $board;
+
+        return $this;
     }
 }
