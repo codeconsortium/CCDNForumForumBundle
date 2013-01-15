@@ -230,7 +230,7 @@ abstract class Topic
     }
 
     /**
-     * Add posts
+     * Add post
      *
      * @param Post $post
      * @return Topic

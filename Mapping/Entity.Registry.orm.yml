@@ -15,7 +15,7 @@ CCDNForum\ForumBundle\Entity\Registry:
             type: integer
             name: "cached_karma_positive_count"
             nullable: false
-        cached_karma_negative_count:
+        cachedKarmaNegativeCount:
             type: integer
             name: "cached_karma_negative_count"
             nullable: false

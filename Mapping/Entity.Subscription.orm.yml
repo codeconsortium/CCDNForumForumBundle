@@ -16,6 +16,13 @@ CCDNForum\ForumBundle\Entity\Subscription:
             name: 'is_subscribed'
             nullable: false
     manyToOne:
+        topic:
+            targetEntity: "CCDNForum\ForumBundle\Entity\Topic"
+            #cascade: ["persist"]
+            joinColumn:
+                name: fk_topic_id
+                referencedColumnName: id
+                onDelete: SET NULL
 #        ownedBy:
 #            targetEntity: "CCDNUser\UserBundle\Entity\User"
 #            cascade: ["persist"]
@@ -23,10 +30,3 @@ CCDNForum\ForumBundle\Entity\Subscription:
 #                name: fk_owned_by_user_id
 #                referencedColumnName: id
 #                onDelete: SET NULL
-        topic:
-            targetEntity: "CCDNForum\ForumBundle\Entity\Topic"
-            cascade: ["persist"]
-            joinColumn:
-                name: fk_topic_id
-                referencedColumnName: id
-                onDelete: SET NULL

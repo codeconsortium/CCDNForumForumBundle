@@ -125,7 +125,7 @@ abstract class Board
      * @param Post $lastPost
      * @return Board
      */
-    public function setLastPost(ConcretePost $lastPost = null)
+    public function setLastPost($lastPost = null)
     {
         $this->lastPost = $lastPost;
 
