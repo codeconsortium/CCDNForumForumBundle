@@ -15,8 +15,8 @@ namespace CCDNForum\ForumBundle\Model;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use CCDNForum\ForumBundle\Entity\Board;
-use CCDNForum\ForumBundle\Entity\Topic;
+use CCDNForum\ForumBundle\Entity\Board as ConcreteBoard;
+use CCDNForum\ForumBundle\Entity\Topic as ConcreteTopic;
 
 abstract class Draft
 {
@@ -53,7 +53,7 @@ abstract class Draft
      * @param Topic $topic
      * @return Draft
      */
-    public function setTopic(Topic $topic = null)
+    public function setTopic(ConcreteTopic $topic = null)
     {
         $this->topic = $topic;
 
@@ -84,29 +84,6 @@ abstract class Draft
     }
 
     /**
-     * Get attachment
-     *
-     * @return Attachment
-     */
-    public function getAttachment()
-    {
-        return $this->attachment;
-    }
-
-    /**
-     * Set attachment
-     *
-     * @param Attachment $attachment
-     * @return Draft
-     */
-    public function setAttachment(Attachment $attachment = null)
-    {
-        $this->attachment = $attachment;
-
-        return $this;
-    }
-
-    /**
      * Get board
      *
      * @return Board
@@ -122,10 +99,33 @@ abstract class Draft
      * @param Board $board
      * @return Draft
      */
-    public function setBoard(Board $board = null)
+    public function setBoard(ConcreteBoard $board = null)
     {
         $this->board = $board;
 
         return $this;
     }
+
+//    /**
+//     * Get attachment
+//     *
+//     * @return Attachment
+//     */
+//    public function getAttachment()
+//    {
+//        return $this->attachment;
+//    }
+//
+//    /**
+//     * Set attachment
+//     *
+//     * @param Attachment $attachment
+//     * @return Draft
+//     */
+//    public function setAttachment(Attachment $attachment = null)
+//    {
+//        $this->attachment = $attachment;
+//
+//        return $this;
+//    }
 }

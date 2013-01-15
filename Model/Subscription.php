@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Model;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use CCDNForum\ForumBundle\Entity\Topic;
+use CCDNForum\ForumBundle\Entity\Topic as ConcreteTopic;
 
 abstract class Subscription
 {
@@ -46,7 +46,7 @@ abstract class Subscription
      * @param Topic $topic
      * @return Subscription
      */
-    public function setTopic(Topic $topic = null)
+    public function setTopic(ConcreteTopic $topic = null)
     {
         $this->topic = $topic;
 

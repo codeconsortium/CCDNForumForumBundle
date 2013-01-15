@@ -35,6 +35,7 @@ CCDNForum\ForumBundle\Entity\Post:
         topic:
             targetEntity: CCDNForum\ForumBundle\Entity\Topic
             cascade: ["persist"]
+            nullable: true
             joinColumn:
                 name: fk_topic_id
                 referencedColumnName: id

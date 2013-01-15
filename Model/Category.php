@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-use CCDNForum\ForumBundle\Entity\Board;
+use CCDNForum\ForumBundle\Entity\Board as ConcreteBoard;
 
 abstract class Category
 {
@@ -71,7 +71,7 @@ abstract class Category
      * @param Board $board
      * @return Category
      */
-    public function addBoard(Board $board)
+    public function addBoard(ConcreteBoard $board)
     {
         $this->boards[] = $board;
 

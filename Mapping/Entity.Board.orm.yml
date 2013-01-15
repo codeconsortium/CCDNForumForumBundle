@@ -25,13 +25,15 @@ CCDNForum\ForumBundle\Entity\Board:
         category:
             targetEntity: "CCDNForum\ForumBundle\Entity\Category"
             inversedBy: "boards"
+            nullable: true
             joinColumn:
                 name: fk_category_id
                 referencedColumnName: id
                 onDelete: SET NULL
-    oneToOne:
         lastPost:
             targetEntity: "CCDNForum\ForumBundle\Entity\Post"
+            cascade: ["persist"]
+            nullable: true
             joinColumn:
                 name: fk_last_post_id
                 referencedColumnName: id

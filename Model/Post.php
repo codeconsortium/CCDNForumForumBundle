@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Model;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use CCDNForum\ForumBundle\Entity\Topic;
+use CCDNForum\ForumBundle\Entity\Topic as ConcreteTopic;
 
 abstract class Post
 {
@@ -58,7 +58,7 @@ abstract class Post
      * @param Topic $topic
      * @return Post
      */
-    public function setTopic(Topic $topic = null)
+    public function setTopic(ConcreteTopic $topic = null)
     {
         $this->topic = $topic;
 
@@ -157,26 +157,26 @@ abstract class Post
         return $this;
     }
 
-    /**
-     * Get attachment
-     *
-     * @return Attachment
-     */
-    public function getAttachment()
-    {
-        return $this->attachment;
-    }
-
-    /**
-     * Set attachment
-     *
-     * @param  Attachment $attachment
-     * @return Post
-     */
-    public function setAttachment(Attachment $attachment = null)
-    {
-        $this->attachment = $attachment;
-
-        return $this;
-    }
+//    /**
+//     * Get attachment
+//     *
+//     * @return Attachment
+//     */
+//    public function getAttachment()
+//    {
+//        return $this->attachment;
+//    }
+//
+//    /**
+//     * Set attachment
+//     *
+//     * @param  Attachment $attachment
+//     * @return Post
+//     */
+//    public function setAttachment(Attachment $attachment = null)
+//    {
+//        $this->attachment = $attachment;
+//
+//        return $this;
+//    }
 }

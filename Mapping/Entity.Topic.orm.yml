@@ -62,14 +62,15 @@ CCDNForum\ForumBundle\Entity\Topic:
                 onDelete: SET NULL
         firstPost:
             targetEntity: "CCDNForum\ForumBundle\Entity\Post"
-            cascade: ["remove"]
+            cascade: ["persist", "remove"]
             joinColumn:
                 name: fk_first_post_id
                 referencedColumnName: id
                 onDelete: SET NULL
         lastPost:
             targetEntity: "CCDNForum\ForumBundle\Entity\Post"
-            cascade: ["remove"]
+            cascade: ["persist", "remove"]
+            nullable: true
             joinColumn:
                 name: fk_last_post_id
                 referencedColumnName: id

@@ -15,9 +15,9 @@ namespace CCDNForum\ForumBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-use CCDNForum\ForumBundle\Entity\Category;
-use CCDNForum\ForumBundle\Entity\Topic;
-use CCDNForum\ForumBundle\Entity\Post;
+use CCDNForum\ForumBundle\Entity\Category as ConcreteCategory;
+use CCDNForum\ForumBundle\Entity\Topic as ConcreteTopic;
+use CCDNForum\ForumBundle\Entity\Post as ConcretePost;
 
 abstract class Board
 {
@@ -28,7 +28,7 @@ abstract class Board
     protected $topics;
 
     /** @var Post $lastPost */
-    protected $lastPost = null;
+    protected $lastPost;
 
     public function __construct()
     {
@@ -51,7 +51,7 @@ abstract class Board
      * @param Category $category
      * @return Board
      */
-    public function setCategory(Category $category = null)
+    public function setCategory(ConcreteCategory $category = null)
     {
         $this->category = $category;
 
@@ -102,7 +102,7 @@ abstract class Board
      * @param Topic $topic
      * @return Board
      */
-    public function addTopic(Topic $topic)
+    public function addTopic(ConcreteTopic $topic)
     {
         $this->topics[] = $topic;
 
@@ -125,7 +125,7 @@ abstract class Board
      * @param Post $lastPost
      * @return Board
      */
-    public function setLastPost(Post $lastPost = null)
+    public function setLastPost(ConcretePost $lastPost = null)
     {
         $this->lastPost = $lastPost;
 

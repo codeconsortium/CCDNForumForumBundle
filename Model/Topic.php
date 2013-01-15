@@ -17,9 +17,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-use CCDNForum\ForumBundle\Entity\Board as Board;
-use CCDNForum\ForumBundle\Entity\Post;
-use CCDNForum\ForumBundle\Entity\Subscription;
+use CCDNForum\ForumBundle\Entity\Board as ConcreteBoard;
+use CCDNForum\ForumBundle\Entity\Post as ConcretePost;
+use CCDNForum\ForumBundle\Entity\Subscription as ConcreteSubscription;
 
 abstract class Topic
 {
@@ -69,7 +69,7 @@ abstract class Topic
      * @param Board $board
      * @return Topic
      */
-    public function setBoard(Board $board = null)
+    public function setBoard(ConcreteBoard $board = null)
     {
         $this->board = $board;
 
@@ -161,7 +161,7 @@ abstract class Topic
      * @param Post $firstPost
      * @return Topic
      */
-    public function setFirstPost(Post $firstPost = null)
+    public function setFirstPost(ConcretePost $firstPost = null)
     {
         $this->firstPost = $firstPost;
 
@@ -184,7 +184,7 @@ abstract class Topic
      * @param Post $lastPost
      * @return Topic
      */
-    public function setLastPost(Post $lastPost = null)
+    public function setLastPost(ConcretePost $lastPost = null)
     {
         $this->lastPost = $lastPost;
 
@@ -235,7 +235,7 @@ abstract class Topic
      * @param Post $post
      * @return Topic
      */
-    public function addPost(Post $post)
+    public function addPost(ConcretePost $post)
     {
         $this->posts[] = $post;
 
@@ -282,7 +282,7 @@ abstract class Topic
      * @param Subscription $subscription
      * @return Topic
      */
-    public function addSubscription(Subscription $subscription)
+    public function addSubscription(ConcreteSubscription $subscription)
     {
         $this->subscriptions->add($subscription);
 
