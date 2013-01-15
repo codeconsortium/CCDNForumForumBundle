@@ -199,7 +199,9 @@ abstract class Topic
      */
     public function addPosts(array $posts)
     {
-        $this->posts[] = $posts;
+        foreach($posts as $post) {
+            $this->posts->add($post);
+        }
     }
 
     /**
@@ -231,12 +233,22 @@ abstract class Topic
     }
 
     /**
+     * @param ArrayCollection $subscriptions
+     */
+    public function addSubscriptions(array $subscriptions)
+    {
+        foreach($subscriptions as $subscription) {
+            $this->subscriptions->add($subscription);
+        }
+    }
+
+    /**
      * Add subscriptions
      *
      * @param Subscription $subscription
      */
     public function addSubscription(Subscription $subscription)
     {
-        $this->subscriptions[] = $subscription;
+        $this->subscriptions->add($subscription);
     }
 }
