@@ -68,6 +68,7 @@ abstract class Topic
      * Set board
      *
      * @param Board $board
+     * @return Topic
      */
     public function setBoard(Board $board = null)
     {
@@ -90,6 +91,7 @@ abstract class Topic
      * Set closed_by
      *
      * @param UserInterface $closedBy
+     * @return Topic
      */
     public function setClosedBy(UserInterface $closedBy = null)
     {
@@ -112,6 +114,7 @@ abstract class Topic
      * Set deleted_by
      *
      * @param UserInterface $deletedBy
+     * @return Topic
      */
     public function setDeletedBy(UserInterface $deletedBy = null)
     {
@@ -134,6 +137,7 @@ abstract class Topic
      * Set stickiedBy
      *
      * @param UserInterface $stickiedBy
+     * @return Topic
      */
     public function setStickiedBy(UserInterface $stickiedBy = null)
     {
@@ -156,6 +160,7 @@ abstract class Topic
      * Set first_post
      *
      * @param Post $firstPost
+     * @return Topic
      */
     public function setFirstPost(Post $firstPost = null)
     {
@@ -178,6 +183,7 @@ abstract class Topic
      * Set last_post
      *
      * @param Post $lastPost
+     * @return Topic
      */
     public function setLastPost(Post $lastPost = null)
     {
@@ -200,6 +206,7 @@ abstract class Topic
      * Set posts
      *
      * @param ArrayCollection $posts
+     * @return Topic
      */
     public function setPosts(array $posts = null)
     {
@@ -212,6 +219,7 @@ abstract class Topic
      * Add posts
      *
      * @param ArrayCollection $posts
+     * @return Topic
      */
     public function addPosts(array $posts)
     {
@@ -226,6 +234,7 @@ abstract class Topic
      * Add posts
      *
      * @param Post $post
+     * @return Topic
      */
     public function addPost(Post $post)
     {
@@ -246,6 +255,7 @@ abstract class Topic
 
     /**
      * @param ArrayCollection $subscriptions
+     * @return Topic
      */
     public function setSubscriptions(array $subscriptions = null)
     {
@@ -256,6 +266,7 @@ abstract class Topic
 
     /**
      * @param ArrayCollection $subscriptions
+     * @return Topic
      */
     public function addSubscriptions(array $subscriptions)
     {
@@ -270,6 +281,7 @@ abstract class Topic
      * Add subscription
      *
      * @param Subscription $subscription
+     * @return Topic
      */
     public function addSubscription(Subscription $subscription)
     {

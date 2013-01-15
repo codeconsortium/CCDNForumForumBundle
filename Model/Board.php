@@ -33,7 +33,6 @@ abstract class Board
     /** @var Post $lastPost */
     protected $lastPost = null;
 
-
     public function __construct()
     {
         $this->topics = new ArrayCollection();
@@ -53,6 +52,7 @@ abstract class Board
      * Set category
      *
      * @param Category $category
+     * @return Board
      */
     public function setCategory(Category $category = null)
     {
@@ -75,6 +75,7 @@ abstract class Board
      * Set topics
      *
      * @param ArrayCollection $topics
+     * @return Board
      */
     public function setTopics(array $topics = null)
     {
@@ -87,6 +88,7 @@ abstract class Board
      * Add topics
      *
      * @param ArrayCollection $topics
+     * @return Board
      */
     public function addTopics(array $topics)
     {
@@ -101,6 +103,7 @@ abstract class Board
      * Add topic
      *
      * @param Topic $topic
+     * @return Board
      */
     public function addTopic(Topic $topic)
     {
@@ -123,6 +126,7 @@ abstract class Board
      * Set last_post
      *
      * @param Post $lastPost
+     * @return Board
      */
     public function setLastPost(Post $lastPost = null)
     {

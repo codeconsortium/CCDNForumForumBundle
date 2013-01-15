@@ -42,6 +42,7 @@ abstract class Category
      * Set boards
      *
      * @param ArrayCollection $boards
+     * @return Category
      */
     public function setBoards(ArrayCollection $boards = null)
     {
@@ -54,6 +55,7 @@ abstract class Category
      * Add boards
      *
      * @param ArrayCollection $boards
+     * @return Category
      */
     public function addBoards(ArrayCollection $boards)
     {
@@ -68,6 +70,7 @@ abstract class Category
      * Add board
      *
      * @param Board $board
+     * @return Category
      */
     public function addBoard(Board $board)
     {

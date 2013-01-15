@@ -54,6 +54,7 @@ abstract class Draft
      * Set topic
      *
      * @param Topic $topic
+     * @return Draft
      */
     public function setTopic(Topic $topic = null)
     {
@@ -76,6 +77,7 @@ abstract class Draft
      * Set created_by
      *
      * @param UserInterface $createdBy
+     * @return Draft
      */
     public function setCreatedBy(UserInterface $createdBy = null)
     {
@@ -98,6 +100,7 @@ abstract class Draft
      * Set attachment
      *
      * @param Attachment $attachment
+     * @return Draft
      */
     public function setAttachment(Attachment $attachment = null)
     {
@@ -120,6 +123,7 @@ abstract class Draft
      * Set board
      *
      * @param Board $board
+     * @return Draft
      */
     public function setBoard(Board $board = null)
     {

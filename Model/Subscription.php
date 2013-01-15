@@ -47,6 +47,7 @@ abstract class Subscription
      * Set topic
      *
      * @param Topic $topic
+     * @return Subscription
      */
     public function setTopic(Topic $topic = null)
     {
@@ -69,6 +70,7 @@ abstract class Subscription
      * Set owned_by
      *
      * @param UserInterface $ownedBy
+     * @return Subscription
      */
     public function setOwnedBy(UserInterface $ownedBy = null)
     {
