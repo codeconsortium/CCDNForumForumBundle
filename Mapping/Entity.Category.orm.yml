@@ -1,6 +1,7 @@
 CCDNForum\ForumBundle\Entity\Category:
     type: entity
     table: CC_Forum_Category
+    repositoryClass: "CCDNForum\ForumBundle\Repository\CategoryRepository"
     id:
         id:
             type: integer

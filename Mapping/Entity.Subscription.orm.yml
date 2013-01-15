@@ -1,6 +1,7 @@
 CCDNForum\ForumBundle\Entity\Subscription:
     type: entity
     table: CC_Forum_Subscription
+    repositoryClass: "CCDNForum\ForumBundle\Repository\SubscriptionRepository"
     id:
         id:
             type: integer

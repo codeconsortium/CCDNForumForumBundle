@@ -17,9 +17,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 use CCDNForum\ForumBundle\Model\Subscription as AbstractSubscription;
 
-/**
- * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\SubscriptionRepository")
- */
 class Subscription extends AbstractSubscription
 {
     /** @var integer $id */

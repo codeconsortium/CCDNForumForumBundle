@@ -18,9 +18,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNForum\ForumBundle\Model\Board as AbstractBoard;
 
-/**
- * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\BoardRepository")
- */
 class Board extends AbstractBoard
 {
     /** @var integer $id */

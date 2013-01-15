@@ -18,9 +18,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNForum\ForumBundle\Model\Topic as AbstractTopic;
 
-/**
- * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\TopicRepository")
- */
 class Topic extends AbstractTopic
 {
     /** @var integer $id */

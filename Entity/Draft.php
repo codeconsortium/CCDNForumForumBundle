@@ -18,9 +18,6 @@ use Doctrine\ORM\Mapping as ORM;
 use CCDNForum\ForumBundle\Model\Draft as AbstractDraft;
 use CCDNForum\ForumBundle\Entity\Topic;
 
-/**
- * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\DraftRepository")
- */
 class Draft extends AbstractDraft
 {
     /** @var integer $id */

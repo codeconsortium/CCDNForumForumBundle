@@ -18,9 +18,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 use CCDNForum\ForumBundle\Model\Registry as AbstractRegistry;
 
-/**
- * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\RegistryRepository")
- */
 class Registry extends AbstractRegistry
 {
     /** @var integer $id */

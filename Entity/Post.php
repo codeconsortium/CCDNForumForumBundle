@@ -19,9 +19,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use CCDNForum\ForumBundle\Model\Post as AbstractPost;
 use CCDNForum\ForumBundle\Entity\Topic;
 
-/**
- * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\PostRepository")
- */
 class Post extends AbstractPost
 {
     /** @var integer $id */
