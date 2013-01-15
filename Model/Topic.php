@@ -22,17 +22,8 @@ use CCDNForum\ForumBundle\Entity\Subscription;
 
 abstract class Topic
 {
-    /** @var ArrayCollection $posts */
-    protected $posts;
-
     /** @var Board $board */
     protected $board = null;
-
-    /** @var Post $firstPost */
-    protected $firstPost = null;
-
-    /** @var Post $lastPost */
-    protected $lastPost = null;
 
     /** @var User $closedBy */
     protected $closedBy = null;
@@ -43,12 +34,22 @@ abstract class Topic
     /** @var User $stickiedBy */
     protected $stickiedBy = null;
 
+    /** @var Post $firstPost */
+    protected $firstPost = null;
+
+    /** @var Post $lastPost */
+    protected $lastPost = null;
+
+    /** @var ArrayCollection $posts */
+    protected $posts;
+
     /** @var ArrayCollection $subscriptions */
     protected $subscriptions;
 
     public function __construct()
     {
-        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->posts = new ArrayCollection();
+        $this->subscriptions = new ArrayCollection();
     }
 
     /**
@@ -66,89 +67,9 @@ abstract class Topic
      *
      * @param Board $board
      */
-    public function setBoard(\CCDNForum\ForumBundle\Entity\Board $board = null)
+    public function setBoard(Board $board = null)
     {
         $this->board = $board;
-    }
-
-    /**
-     * Get first_post
-     *
-     * @return Post
-     */
-    public function getFirstPost()
-    {
-        return $this->firstPost;
-    }
-
-    /**
-     * Set first_post
-     *
-     * @param Post $firstPost
-     */
-    public function setFirstPost(\CCDNForum\ForumBundle\Entity\Post $firstPost = null)
-    {
-        $this->firstPost = $firstPost;
-    }
-
-    /**
-     * Get last_post
-     *
-     * @return Post
-     */
-    public function getLastPost()
-    {
-        return $this->lastPost;
-    }
-
-    /**
-     * Set last_post
-     *
-     * @param Post $lastPost
-     */
-    public function setLastPost(\CCDNForum\ForumBundle\Entity\Post $lastPost = null)
-    {
-        $this->lastPost = $lastPost;
-    }
-
-    /**
-     * Get posts
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPosts()
-    {
-        return $this->posts;
-    }
-
-    /**
-     * Set posts
-     *
-     * @param ArrayCollection $posts
-     */
-    public function setPosts(array $posts)
-    {
-        $this->posts[] = $posts;
-    }
-
-    /**
-     * Add posts
-     *
-     * @param Post $posts
-     */
-    public function addPosts(array $posts)
-    {
-        $this->posts[] = $posts;
-    }
-
-    /**
-     * Add posts
-     *
-     * @param Post $posts
-     */
-    public function addPost(\CCDNForum\ForumBundle\Entity\Post $posts)
-    {
-        $this->posts[] = $posts;
     }
 
     /**
@@ -166,7 +87,7 @@ abstract class Topic
      *
      * @param User $closedBy
      */
-    public function setClosedBy(\CCDNUser\UserBundle\Entity\User $closedBy = null)
+    public function setClosedBy(User $closedBy = null)
     {
         $this->closedBy = $closedBy;
     }
@@ -186,7 +107,7 @@ abstract class Topic
      *
      * @param User $deletedBy
      */
-    public function setDeletedBy(\CCDNUser\UserBundle\Entity\User $deletedBy = null)
+    public function setDeletedBy(User $deletedBy = null)
     {
         $this->deletedBy = $deletedBy;
     }
@@ -206,15 +127,95 @@ abstract class Topic
      *
      * @param User $stickiedBy
      */
-    public function setStickiedBy(\CCDNUser\UserBundle\Entity\User $stickiedBy = null)
+    public function setStickiedBy(User $stickiedBy = null)
     {
         $this->stickiedBy = $stickiedBy;
     }
 
     /**
+     * Get first_post
+     *
+     * @return Post
+     */
+    public function getFirstPost()
+    {
+        return $this->firstPost;
+    }
+
+    /**
+     * Set first_post
+     *
+     * @param Post $firstPost
+     */
+    public function setFirstPost(Post $firstPost = null)
+    {
+        $this->firstPost = $firstPost;
+    }
+
+    /**
+     * Get last_post
+     *
+     * @return Post
+     */
+    public function getLastPost()
+    {
+        return $this->lastPost;
+    }
+
+    /**
+     * Set last_post
+     *
+     * @param Post $lastPost
+     */
+    public function setLastPost(Post $lastPost = null)
+    {
+        $this->lastPost = $lastPost;
+    }
+
+    /**
+     * Get posts
+     *
+     * @return ArrayCollection
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+
+    /**
+     * Set posts
+     *
+     * @param ArrayCollection $posts
+     */
+    public function setPosts(array $posts)
+    {
+        $this->posts[] = $posts;
+    }
+
+    /**
+     * Add posts
+     *
+     * @param ArrayCollection $posts
+     */
+    public function addPosts(array $posts)
+    {
+        $this->posts[] = $posts;
+    }
+
+    /**
+     * Add posts
+     *
+     * @param Post $post
+     */
+    public function addPost(Post $post)
+    {
+        $this->posts[] = $post;
+    }
+
+    /**
      * Get subscriptions
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
     public function getSubscriptions()
     {
@@ -222,12 +223,20 @@ abstract class Topic
     }
 
     /**
+     * @param ArrayCollection $subscriptions
+     */
+    public function setSubscriptions(array $subscriptions = null)
+    {
+        $this->subscriptions = $subscriptions;
+    }
+
+    /**
      * Add subscriptions
      *
-     * @param Subscription $subscriptions
+     * @param Subscription $subscription
      */
-    public function addSubscription(\CCDNForum\ForumBundle\Entity\Subscription $subscriptions)
+    public function addSubscription(Subscription $subscription)
     {
-        $this->subscriptions[] = $subscriptions;
+        $this->subscriptions[] = $subscription;
     }
 }
