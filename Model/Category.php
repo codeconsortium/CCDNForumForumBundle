@@ -31,7 +31,7 @@ abstract class Category
     /**
      * Get boards
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
     public function getBoards()
     {
@@ -39,22 +39,34 @@ abstract class Category
     }
 
     /**
-     * Add boards
+     * Set boards
      *
-     * @param Board $boards
+     * @param ArrayCollection $boards
      */
-    public function addBoards(Board $boards)
+    public function setBoards(ArrayCollection $boards)
     {
-        $this->boards[] = $boards;
+        $this->boards = $boards;
     }
 
     /**
      * Add boards
      *
-     * @param Board $boards
+     * @param ArrayCollection $boards
      */
-    public function addBoard(Board $boards)
+    public function addBoards(ArrayCollection $boards)
     {
-        $this->boards[] = $boards;
+        foreach ($boards as $board) {
+            $this->boards->add($board);
+        }
+    }
+
+    /**
+     * Add board
+     *
+     * @param Board $board
+     */
+    public function addBoard(Board $board)
+    {
+        $this->boards[] = $board;
     }
 }

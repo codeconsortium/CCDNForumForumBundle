@@ -34,7 +34,7 @@ abstract class Board
 
     public function __construct()
     {
-        $this->topics = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->topics = new ArrayCollection();
     }
 
     /**
@@ -52,7 +52,7 @@ abstract class Board
      *
      * @param Category $category
      */
-    public function setCategory(\CCDNForum\ForumBundle\Entity\Category $category = null)
+    public function setCategory(Category $category = null)
     {
         $this->category = $category;
     }
@@ -60,7 +60,7 @@ abstract class Board
     /**
      * Get topics
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
     public function getTopics()
     {
@@ -68,7 +68,7 @@ abstract class Board
     }
 
     /**
-     * Add topics
+     * Set topics
      *
      * @param Topic $topics
      */
@@ -80,22 +80,23 @@ abstract class Board
     /**
      * Add topics
      *
-     * @param Topic $topics
+     * @param ArrayCollection $topics
      */
     public function addTopics(array $topics)
     {
-        /** @todo merge topics with new ones */
-        $this->topics[] = $topics;
+        foreach ($topics as $topic) {
+            $this->topics->add($topic);
+        }
     }
 
     /**
      * Add topics
      *
-     * @param Topic $topics
+     * @param Topic $topic
      */
-    public function addTopic(\CCDNForum\ForumBundle\Entity\Topic $topics)
+    public function addTopic(Topic $topic)
     {
-        $this->topics[] = $topics;
+        $this->topics[] = $topic;
     }
 
     /**
@@ -113,7 +114,7 @@ abstract class Board
      *
      * @param Post $lastPost
      */
-    public function setLastPost(\CCDNForum\ForumBundle\Entity\Post $lastPost = null)
+    public function setLastPost(Post $lastPost = null)
     {
         $this->lastPost = $lastPost;
     }
