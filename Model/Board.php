@@ -13,6 +13,9 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+
 abstract class Board
 {
     /** @var Category $category */
@@ -33,7 +36,7 @@ abstract class Board
     /**
      * Get category
      *
-     * @return \CCDNForum\ForumBundle\Entity\Category
+     * @return Category
      */
     public function getCategory()
     {
@@ -43,7 +46,7 @@ abstract class Board
     /**
      * Set category
      *
-     * @param \CCDNForum\ForumBundle\Entity\Category $category
+     * @param Category $category
      */
     public function setCategory(\CCDNForum\ForumBundle\Entity\Category $category = null)
     {
@@ -63,7 +66,7 @@ abstract class Board
     /**
      * Add topics
      *
-     * @param \CCDNForum\ForumBundle\Entity\Topic $topics
+     * @param Topic $topics
      */
     public function setTopics(array $topics)
     {
@@ -73,7 +76,7 @@ abstract class Board
     /**
      * Add topics
      *
-     * @param \CCDNForum\ForumBundle\Entity\Topic $topics
+     * @param Topic $topics
      */
     public function addTopics(array $topics)
     {
@@ -84,7 +87,7 @@ abstract class Board
     /**
      * Add topics
      *
-     * @param \CCDNForum\ForumBundle\Entity\Topic $topics
+     * @param Topic $topics
      */
     public function addTopic(\CCDNForum\ForumBundle\Entity\Topic $topics)
     {
@@ -94,7 +97,7 @@ abstract class Board
     /**
      * Get last_post
      *
-     * @return \CCDNForum\ForumBundle\Entity\Post
+     * @return Post
      */
     public function getLastPost()
     {
@@ -104,7 +107,7 @@ abstract class Board
     /**
      * Set last_post
      *
-     * @param \CCDNForum\ForumBundle\Entity\Post $lastPost
+     * @param Post $lastPost
      */
     public function setLastPost(\CCDNForum\ForumBundle\Entity\Post $lastPost = null)
     {

@@ -13,6 +13,9 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+
 abstract class Registry
 {
     /** @var User $ownedBy */
@@ -26,7 +29,7 @@ abstract class Registry
     /**
      * Get owned_by
      *
-     * @return \CCDNUser\UserBundle\Entity\User
+     * @return User
      */
     public function getOwnedBy()
     {
@@ -36,7 +39,7 @@ abstract class Registry
     /**
      * Set owned_by
      *
-     * @param  \CCDNUser\UserBundle\Entity\User $ownedBy
+     * @param  User $ownedBy
      * @return Registry
      */
     public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)

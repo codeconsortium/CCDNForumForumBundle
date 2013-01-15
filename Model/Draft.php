@@ -13,6 +13,9 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+
 abstract class Draft
 {
     /** @var Board $board */
@@ -35,7 +38,7 @@ abstract class Draft
     /**
      * Get topic
      *
-     * @return \CCDNForum\ForumBundle\Entity\Topic
+     * @return Topic
      */
     public function getTopic()
     {
@@ -45,7 +48,7 @@ abstract class Draft
     /**
      * Set topic
      *
-     * @param \CCDNForum\ForumBundle\Entity\Topic $topic
+     * @param Topic $topic
      */
     public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic = null)
     {
@@ -55,7 +58,7 @@ abstract class Draft
     /**
      * Get created_by
      *
-     * @return \CCDNUser\UserBundle\Entity\User
+     * @return User
      */
     public function getCreatedBy()
     {
@@ -65,7 +68,7 @@ abstract class Draft
     /**
      * Set created_by
      *
-     * @param \CCDNUser\UserBundle\Entity\User $createdBy
+     * @param User $createdBy
      */
     public function setCreatedBy(\CCDNUser\UserBundle\Entity\User $createdBy = null)
     {
@@ -75,7 +78,7 @@ abstract class Draft
     /**
      * Get attachment
      *
-     * @return \CCDNComponent\AttachmentBundle\Entity\Attachment
+     * @return Attachment
      */
     public function getAttachment()
     {
@@ -85,7 +88,7 @@ abstract class Draft
     /**
      * Set attachment
      *
-     * @param \CCDNComponent\AttachmentBundle\Entity\Attachment $attachment
+     * @param Attachment $attachment
      */
     public function setAttachment(\CCDNComponent\AttachmentBundle\Entity\Attachment $attachment = null)
     {
@@ -95,7 +98,7 @@ abstract class Draft
     /**
      * Get board
      *
-     * @return \CCDNForum\ForumBundle\Entity\Board
+     * @return Board
      */
     public function getBoard()
     {
@@ -105,7 +108,7 @@ abstract class Draft
     /**
      * Set board
      *
-     * @param \CCDNForum\ForumBundle\Entity\Board $board
+     * @param Board $board
      */
     public function setBoard(\CCDNForum\ForumBundle\Entity\Board $board = null)
     {

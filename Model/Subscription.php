@@ -13,12 +13,15 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+
 abstract class Subscription
 {
-    /** @var \CCDNForum\ForumBundle\Entity\Topic $topic */
+    /** @var Topic $topic */
     protected $topic = null;
 
-    /** @var \CCDNUser\UserBundle\Entity\User $ownedBy */
+    /** @var User $ownedBy */
     protected $ownedBy = null;
 
     public function __construct()
@@ -29,7 +32,7 @@ abstract class Subscription
     /**
      * Get topic
      *
-     * @return \CCDNForum\ForumBundle\Entity\Topic
+     * @return Topic
      */
     public function getTopic()
     {
@@ -39,7 +42,7 @@ abstract class Subscription
     /**
      * Set topic
      *
-     * @param \CCDNForum\ForumBundle\Entity\Topic $topic
+     * @param Topic $topic
      */
     public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic = null)
     {
@@ -49,7 +52,7 @@ abstract class Subscription
     /**
      * Get owned_by
      *
-     * @return \CCDNUser\UserBundle\Entity\User
+     * @return User
      */
     public function getOwnedBy()
     {
@@ -59,7 +62,7 @@ abstract class Subscription
     /**
      * Set owned_by
      *
-     * @param \CCDNUser\UserBundle\Entity\User $ownedBy
+     * @param User $ownedBy
      */
     public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)
     {

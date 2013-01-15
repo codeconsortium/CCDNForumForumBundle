@@ -13,6 +13,9 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+
 abstract class Topic
 {
     /**
@@ -35,16 +38,16 @@ abstract class Topic
      */
     protected $lastPost = null;
 
-    /** @var \CCDNUser\UserBundle\Entity\User $closedBy */
+    /** @var User $closedBy */
     protected $closedBy = null;
 
-    /** @var \CCDNUser\UserBundle\Entity\User $deletedBy */
+    /** @var User $deletedBy */
     protected $deletedBy = null;
 
-    /** @var \CCDNUser\UserBundle\Entity\User $stickiedBy */
+    /** @var User $stickiedBy */
     protected $stickiedBy = null;
 
-    /** @var \CCDNForum\ForumBundle\Entity\Subscription $subscriptions */
+    /** @var Subscription $subscriptions */
     protected $subscriptions;
 
     public function __construct()
@@ -55,7 +58,7 @@ abstract class Topic
     /**
      * Get board
      *
-     * @return \CCDNForum\ForumBundle\Entity\Board
+     * @return Board
      */
     public function getBoard()
     {
@@ -65,7 +68,7 @@ abstract class Topic
     /**
      * Set board
      *
-     * @param \CCDNForum\ForumBundle\Entity\Board $board
+     * @param Board $board
      */
     public function setBoard(\CCDNForum\ForumBundle\Entity\Board $board = null)
     {
@@ -75,7 +78,7 @@ abstract class Topic
     /**
      * Get first_post
      *
-     * @return \CCDNForum\ForumBundle\Entity\Post
+     * @return Post
      */
     public function getFirstPost()
     {
@@ -85,7 +88,7 @@ abstract class Topic
     /**
      * Set first_post
      *
-     * @param \CCDNForum\ForumBundle\Entity\Post $firstPost
+     * @param Post $firstPost
      */
     public function setFirstPost(\CCDNForum\ForumBundle\Entity\Post $firstPost = null)
     {
@@ -95,7 +98,7 @@ abstract class Topic
     /**
      * Get last_post
      *
-     * @return \CCDNForum\ForumBundle\Entity\Post
+     * @return Post
      */
     public function getLastPost()
     {
@@ -105,7 +108,7 @@ abstract class Topic
     /**
      * Set last_post
      *
-     * @param \CCDNForum\ForumBundle\Entity\Post $lastPost
+     * @param Post $lastPost
      */
     public function setLastPost(\CCDNForum\ForumBundle\Entity\Post $lastPost = null)
     {
@@ -135,9 +138,9 @@ abstract class Topic
     /**
      * Add posts
      *
-     * @param \CCDNForum\ForumBundle\Entity\Post $posts
+     * @param Post $posts
      */
-    public function addPosts(\CCDNForum\ForumBundle\Entity\Post $posts)
+    public function addPosts(array $posts)
     {
         $this->posts[] = $posts;
     }
@@ -145,7 +148,7 @@ abstract class Topic
     /**
      * Add posts
      *
-     * @param \CCDNForum\ForumBundle\Entity\Post $posts
+     * @param Post $posts
      */
     public function addPost(\CCDNForum\ForumBundle\Entity\Post $posts)
     {
@@ -155,7 +158,7 @@ abstract class Topic
     /**
      * Get closed_by
      *
-     * @return \CCDNUser\UserBundle\Entity\User
+     * @return User
      */
     public function getClosedBy()
     {
@@ -165,18 +168,17 @@ abstract class Topic
     /**
      * Set closed_by
      *
-     * @param \CCDNUser\UserBundle\Entity\User $closedBy
+     * @param User $closedBy
      */
     public function setClosedBy(\CCDNUser\UserBundle\Entity\User $closedBy = null)
     {
         $this->closedBy = $closedBy;
     }
 
-
     /**
      * Get deleted_by
      *
-     * @return \CCDNUser\UserBundle\Entity\User
+     * @return User
      */
     public function getDeletedBy()
     {
@@ -186,7 +188,7 @@ abstract class Topic
     /**
      * Set deleted_by
      *
-     * @param \CCDNUser\UserBundle\Entity\User $deletedBy
+     * @param User $deletedBy
      */
     public function setDeletedBy(\CCDNUser\UserBundle\Entity\User $deletedBy = null)
     {
@@ -196,17 +198,17 @@ abstract class Topic
     /**
      * Get stickiedBy
      *
-     * @return \CCDNUser\UserBundle\Entity\User
+     * @return User
      */
     public function getStickiedBy()
     {
         return $this->stickiedBy;
     }
-    
+
     /**
      * Set stickiedBy
      *
-     * @param \CCDNUser\UserBundle\Entity\User $stickiedBy
+     * @param User $stickiedBy
      */
     public function setStickiedBy(\CCDNUser\UserBundle\Entity\User $stickiedBy = null)
     {
@@ -226,7 +228,7 @@ abstract class Topic
     /**
      * Add subscriptions
      *
-     * @param \CCDNForum\ForumBundle\Entity\Subscription $subscriptions
+     * @param Subscription $subscriptions
      */
     public function addSubscription(\CCDNForum\ForumBundle\Entity\Subscription $subscriptions)
     {
