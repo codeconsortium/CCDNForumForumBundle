@@ -15,10 +15,12 @@ namespace CCDNForum\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use CCDNForum\ForumBundle\Model\Subscription as AbstractSubscription;
+
 /**
  * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\SubscriptionRepository")
  */
-class Subscription
+class Subscription extends AbstractSubscription
 {
     /** @var integer $id */
     protected $id;

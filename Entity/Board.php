@@ -16,10 +16,12 @@ namespace CCDNForum\ForumBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use CCDNForum\ForumBundle\Model\Board as AbstractBoard;
+
 /**
  * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\BoardRepository")
  */
-class Board
+class Board extends AbstractBoard
 {
     /** @var integer $id */
     protected $id;

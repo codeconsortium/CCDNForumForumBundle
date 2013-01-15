@@ -16,13 +16,13 @@ namespace CCDNForum\ForumBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use CCDNForum\ForumBundle\Model\Post as AbstractPost;
 use CCDNForum\ForumBundle\Entity\Topic;
-//use CCDNUser\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\PostRepository")
  */
-class Post
+class Post extends AbstractPost
 {
     /** @var integer $id */
     protected $id;

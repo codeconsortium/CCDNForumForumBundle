@@ -15,7 +15,6 @@ namespace CCDNForum\ForumBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNForum\ForumBundle\Entity\Board;

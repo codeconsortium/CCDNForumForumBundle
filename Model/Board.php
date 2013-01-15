@@ -13,10 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-
-
 
 use CCDNForum\ForumBundle\Entity\Category;
 use CCDNForum\ForumBundle\Entity\Topic;

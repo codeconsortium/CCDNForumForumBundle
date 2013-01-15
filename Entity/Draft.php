@@ -15,13 +15,13 @@ namespace CCDNForum\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use CCDNForum\ForumBundle\Model\Draft as AbstractDraft;
 use CCDNForum\ForumBundle\Entity\Topic;
-//use CCDNUser\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity(repositoryClass="CCDNForum\ForumBundle\Repository\DraftRepository")
  */
-class Draft
+class Draft extends AbstractDraft
 {
     /** @var integer $id */
     protected $id;
