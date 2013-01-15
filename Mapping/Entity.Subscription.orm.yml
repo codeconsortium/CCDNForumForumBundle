@@ -1,7 +1,7 @@
 CCDNForum\ForumBundle\Entity\Subscription:
     type: entity
     table: CC_Forum_Subscription
-    repositoryClass: "CCDNForum\ForumBundle\Repository\SubscriptionRepository"
+    repositoryClass: CCDNForum\ForumBundle\Repository\SubscriptionRepository
     id:
         id:
             type: integer
@@ -9,22 +9,22 @@ CCDNForum\ForumBundle\Entity\Subscription:
     fields:
         isRead:
             type: boolean
-            name: 'is_read'
+            name: is_read
             nullable: false
         isSubscribed:
             type: boolean
-            name: 'is_subscribed'
+            name: is_subscribed
             nullable: false
     manyToOne:
         topic:
-            targetEntity: "CCDNForum\ForumBundle\Entity\Topic"
+            targetEntity: CCDNForum\ForumBundle\Entity\Topic
             #cascade: ["persist"]
             joinColumn:
                 name: fk_topic_id
                 referencedColumnName: id
                 onDelete: SET NULL
 #        ownedBy:
-#            targetEntity: "CCDNUser\UserBundle\Entity\User"
+#            targetEntity: CCDNUser\UserBundle\Entity\User
 #            cascade: ["persist"]
 #            joinColumn:
 #                name: fk_owned_by_user_id

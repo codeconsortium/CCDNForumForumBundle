@@ -1,7 +1,7 @@
 CCDNForum\ForumBundle\Entity\Registry:
     type: entity
     table: CC_Forum_Registry
-    repositoryClass: "CCDNForum\ForumBundle\Repository\RegistryRepository"
+    repositoryClass: CCDNForum\ForumBundle\Repository\RegistryRepository
     id:
         id:
             type: integer
@@ -9,15 +9,15 @@ CCDNForum\ForumBundle\Entity\Registry:
     fields:
         cachedPostCount:
             type: integer
-            name: "cached_post_count"
+            name: cached_post_count
             nullable: false
         cachedKarmaPositiveCount:
             type: integer
-            name: "cached_karma_positive_count"
+            name: cached_karma_positive_count
             nullable: false
         cachedKarmaNegativeCount:
             type: integer
-            name: "cached_karma_negative_count"
+            name: cached_karma_negative_count
             nullable: false
 #    manyToOne:
 #        ownedBy:

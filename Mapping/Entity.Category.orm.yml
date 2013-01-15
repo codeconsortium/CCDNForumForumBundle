@@ -1,7 +1,7 @@
 CCDNForum\ForumBundle\Entity\Category:
     type: entity
     table: CC_Forum_Category
-    repositoryClass: "CCDNForum\ForumBundle\Repository\CategoryRepository"
+    repositoryClass: CCDNForum\ForumBundle\Repository\CategoryRepository
     id:
         id:
             type: integer
@@ -11,9 +11,9 @@ CCDNForum\ForumBundle\Entity\Category:
             type: string
         listOrderPriority:
             type: integer
-            name: "list_order_priority"
+            name: list_order_priority
     oneToMany:
         boards:
-            targetEntity: "CCDNForum\ForumBundle\Entity\Board"
+            targetEntity: CCDNForum\ForumBundle\Entity\Board
             mappedBy: category
             #cascade: ["persist", "remove"]

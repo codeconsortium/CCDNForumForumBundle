@@ -1,7 +1,7 @@
 CCDNForum\ForumBundle\Entity\Post:
     type: entity
     table: CC_Forum_Post
-    repositoryClass: "CCDNForum\ForumBundle\Repository\PostRepository"
+    repositoryClass: CCDNForum\ForumBundle\Repository\PostRepository
     id:
         id:
             type: integer
@@ -11,14 +11,14 @@ CCDNForum\ForumBundle\Entity\Post:
             type: text
         createdDate:
             type: datetime
-            name: "created_date"
+            name: created_date
         editedDate:
             type: datetime
             name: edited_date
             nullable: true
         isDeleted:
             type: boolean
-            name: "is_deleted"
+            name: is_deleted
             nullable: false
         deletedDate:
             type: datetime
@@ -26,21 +26,21 @@ CCDNForum\ForumBundle\Entity\Post:
             nullable: true
         isLocked:
             type: boolean
-            name: "is_locked"
+            name: is_locked
             nullable: false
         lockedDate:
             type: datetime
-            name: "locked_date"
+            name: locked_date
             nullable: true
     manyToOne:
-#        topic:
-#            targetEntity: "CCDNForum\ForumBundle\Entity\Topic"
-#            #cascade: ["persist"]
-#            nullable: true
-#            joinColumn:
-#                name: fk_topic_id
-#                referencedColumnName: id
-#                onDelete: SET NULL
+        topic:
+            targetEntity: CCDNForum\ForumBundle\Entity\Topic
+            #cascade: ["persist"]
+            #nullable: true
+            joinColumn:
+                name: fk_topic_id
+                referencedColumnName: id
+                onDelete: SET NULL
 #        inversedBy: posts
 
 #        createdBy:

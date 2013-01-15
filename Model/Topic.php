@@ -207,27 +207,27 @@ abstract class Topic
      * @param ArrayCollection $posts
      * @return Topic
      */
-    public function setPosts(array $posts = null)
+    public function setPosts(ArrayCollection $posts = null)
     {
         $this->posts[] = $posts;
 
         return $this;
     }
 
-    /**
-     * Add posts
-     *
-     * @param ArrayCollection $posts
-     * @return Topic
-     */
-    public function addPosts(array $posts)
-    {
-        foreach($posts as $post) {
-            $this->posts->add($post);
-        }
-
-        return $this;
-    }
+//    /**
+//     * Add posts
+//     *
+//     * @param ArrayCollection $posts
+//     * @return Topic
+//     */
+//    public function addPosts(ArrayCollection $posts)
+//    {
+//        foreach($posts as $post) {
+//            $this->posts->add($post);
+//        }
+//
+//        return $this;
+//    }
 
     /**
      * Add post
@@ -256,25 +256,25 @@ abstract class Topic
      * @param ArrayCollection $subscriptions
      * @return Topic
      */
-    public function setSubscriptions(array $subscriptions = null)
+    public function setSubscriptions(ArrayCollection $subscriptions = null)
     {
         $this->subscriptions = $subscriptions;
 
         return $this;
     }
 
-    /**
-     * @param ArrayCollection $subscriptions
-     * @return Topic
-     */
-    public function addSubscriptions(array $subscriptions)
-    {
-        foreach($subscriptions as $subscription) {
-            $this->subscriptions->add($subscription);
-        }
-
-        return $this;
-    }
+//    /**
+//     * @param ArrayCollection $subscriptions
+//     * @return Topic
+//     */
+//    public function addSubscriptions(array $subscriptions)
+//    {
+//        foreach($subscriptions as $subscription) {
+//            $this->subscriptions->add($subscription);
+//        }
+//
+//        return $this;
+//    }
 
     /**
      * Add subscription

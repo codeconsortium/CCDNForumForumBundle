@@ -1,7 +1,7 @@
 CCDNForum\ForumBundle\Entity\Topic:
     type: entity
     table: CC_Forum_Topic
-    repositoryClass: "CCDNForum\ForumBundle\Repository\TopicRepository"
+    repositoryClass: CCDNForum\ForumBundle\Repository\TopicRepository
     id:
         id:
             type: integer
@@ -12,50 +12,50 @@ CCDNForum\ForumBundle\Entity\Topic:
             length: 100
         cachedViewCount:
             type: integer
-            name: "cached_view_count"
+            name: cached_view_count
             nullable: false
         cachedReplyCount:
             type: integer
-            name: "cached_reply_count"
+            name: cached_reply_count
             nullable: false
         isClosed:
             type: boolean
-            name: "is_closed"
+            name: is_closed
             nullable: false
         closedDate:
             type: datetime
-            name: "closed_date"
+            name: closed_date
             nullable: true
         isDeleted:
             type: boolean
-            name: "is_deleted"
+            name: is_deleted
             nullable: false
         deletedDate:
             type: datetime
-            name: "deleted_date"
+            name: deleted_date
             nullable: true
         isSticky:
             type: boolean
-            name: "is_sticky"
+            name: is_sticky
             nullable: false
         stickiedDate:
             type: datetime
-            name: "stickied_date"
+            name: stickied_date
             nullable: true
     oneToMany:
         posts:
-            targetEntity: "CCDNForum\ForumBundle\Entity\Post"
+            targetEntity: CCDNForum\ForumBundle\Entity\Post
             mappedBy: topic
             #cascade: ["remove"]
             #onDelete: SET NULL
         subscriptions:
-            targetEntity: "CCDNForum\ForumBundle\Entity\Subscription"
+            targetEntity: CCDNForum\ForumBundle\Entity\Subscription
             mappedBy: topic
             #cascade: ["remove"]
             #onDelete: SET NULL
     manyToOne:
         board:
-            targetEntity: "CCDNForum\ForumBundle\Entity\Board"
+            targetEntity: CCDNForum\ForumBundle\Entity\Board
             #cascade: ["remove"]
             joinColumn:
                 name: fk_board_id

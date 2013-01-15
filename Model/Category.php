@@ -50,20 +50,20 @@ abstract class Category
         return $this;
     }
 
-    /**
-     * Add boards
-     *
-     * @param ArrayCollection $boards
-     * @return Category
-     */
-    public function addBoards(ArrayCollection $boards)
-    {
-        foreach ($boards as $board) {
-            $this->boards->add($board);
-        }
-
-        return $this;
-    }
+//    /**
+//     * Add boards
+//     *
+//     * @param ArrayCollection $boards
+//     * @return Category
+//     */
+//    public function addBoards(ArrayCollection $boards)
+//    {
+//        foreach ($boards as $board) {
+//            $this->boards->add($board);
+//        }
+//
+//        return $this;
+//    }
 
     /**
      * Add board

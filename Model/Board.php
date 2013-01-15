@@ -74,27 +74,27 @@ abstract class Board
      * @param ArrayCollection $topics
      * @return Board
      */
-    public function setTopics(array $topics = null)
+    public function setTopics(ArrayCollection $topics = null)
     {
         $this->topics[] = $topics;
 
         return $this;
     }
 
-    /**
-     * Add topics
-     *
-     * @param ArrayCollection $topics
-     * @return Board
-     */
-    public function addTopics(array $topics)
-    {
-        foreach ($topics as $topic) {
-            $this->topics->add($topic);
-        }
-
-        return $this;
-    }
+//    /**
+//     * Add topics
+//     *
+//     * @param ArrayCollection $topics
+//     * @return Board
+//     */
+//    public function addTopics(array $topics)
+//    {
+//        foreach ($topics as $topic) {
+//            $this->topics->add($topic);
+//        }
+//
+//        return $this;
+//    }
 
     /**
      * Add topic
