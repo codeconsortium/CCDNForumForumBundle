@@ -88,7 +88,7 @@ class Topic extends AbstractTopic
     /**
      * Set closed_date
      *
-     * @param datetime $closedDate
+     * @param \datetime $closedDate
      */
     public function setClosedDate($closedDate)
     {
@@ -98,7 +98,7 @@ class Topic extends AbstractTopic
     /**
      * Get closed_date
      *
-     * @return datetime
+     * @return \datetime
      */
     public function getClosedDate()
     {
@@ -109,7 +109,7 @@ class Topic extends AbstractTopic
     /**
      * Set deleted_date
      *
-     * @param datetime $deletedDate
+     * @param \datetime $deletedDate
      */
     public function setDeletedDate($deletedDate)
     {
@@ -119,7 +119,7 @@ class Topic extends AbstractTopic
     /**
      * Get deleted_date
      *
-     * @return datetime
+     * @return \datetime
      */
     public function getDeletedDate()
     {
@@ -229,7 +229,7 @@ class Topic extends AbstractTopic
     /**
      * Set stickiedDate
      *
-     * @param datetime $stickiedDate
+     * @param \datetime $stickiedDate
      */
     public function setStickiedDate($stickiedDate)
     {
@@ -239,7 +239,7 @@ class Topic extends AbstractTopic
     /**
      * Get stickiedDate
      *
-     * @return datetime
+     * @return \datetime
      */
     public function getStickiedDate()
     {

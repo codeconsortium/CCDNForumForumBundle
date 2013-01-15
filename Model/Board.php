@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Entity;
+namespace CCDNForum\ForumBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 

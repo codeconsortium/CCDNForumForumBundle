@@ -74,7 +74,7 @@ class Board extends AbstractBoard
     /**
      * Set description
      *
-     * @param text $description
+     * @param string $description
      */
     public function setDescription($description)
     {
@@ -84,7 +84,7 @@ class Board extends AbstractBoard
     /**
      * Get description
      *
-     * @return text
+     * @return string
      */
     public function getDescription()
     {

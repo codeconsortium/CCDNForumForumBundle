@@ -59,29 +59,9 @@ class Post extends AbstractPost
     }
 
     /**
-     * Set title
-     *
-     * @param string $title
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
      * Set body
      *
-     * @param text $body
+     * @param string $body
      */
     public function setBody($body)
     {
@@ -91,7 +71,7 @@ class Post extends AbstractPost
     /**
      * Get body
      *
-     * @return text
+     * @return string
      */
     public function getBody()
     {
@@ -101,7 +81,7 @@ class Post extends AbstractPost
     /**
      * Set created_date
      *
-     * @param datetime $createdDate
+     * @param \datetime $createdDate
      */
     public function setCreatedDate($createdDate)
     {
@@ -111,7 +91,7 @@ class Post extends AbstractPost
     /**
      * Get created_date
      *
-     * @return datetime
+     * @return \datetime
      */
     public function getCreatedDate()
     {
@@ -121,7 +101,7 @@ class Post extends AbstractPost
     /**
      * Set edited_date
      *
-     * @param datetime $editedDate
+     * @param \datetime $editedDate
      */
     public function setEditedDate($editedDate)
     {
@@ -131,7 +111,7 @@ class Post extends AbstractPost
     /**
      * Get edited_date
      *
-     * @return datetime
+     * @return \datetime
      */
     public function getEditedDate()
     {
@@ -141,7 +121,7 @@ class Post extends AbstractPost
     /**
      * Set deleted_date
      *
-     * @param datetime $deletedDate
+     * @param \datetime $deletedDate
      */
     public function setDeletedDate($deletedDate)
     {
@@ -151,7 +131,7 @@ class Post extends AbstractPost
     /**
      * Get deleted_date
      *
-     * @return datetime
+     * @return \datetime
      */
     public function getDeletedDate()
     {
@@ -161,7 +141,7 @@ class Post extends AbstractPost
     /**
      * Set locked_date
      *
-     * @param datetime $lockedDate
+     * @param \datetime $lockedDate
      */
     public function setLockedDate($lockedDate)
     {
@@ -171,7 +151,7 @@ class Post extends AbstractPost
     /**
      * Get locked_date
      *
-     * @return datetime
+     * @return \datetime
      */
     public function getLockedDate()
     {

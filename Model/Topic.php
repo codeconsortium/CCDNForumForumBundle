@@ -11,13 +11,13 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Entity;
+namespace CCDNForum\ForumBundle\Model;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-use CCDNForum\ForumBundle\Entity\Board;
+use CCDNForum\ForumBundle\Entity\Board as Board;
 use CCDNForum\ForumBundle\Entity\Post;
 use CCDNForum\ForumBundle\Entity\Subscription;
 
@@ -35,10 +35,10 @@ abstract class Topic
     /** @var UserInterface $stickiedBy */
     protected $stickiedBy = null;
 
-    /** @var PostInterface $firstPost */
+    /** @var Post $firstPost */
     protected $firstPost = null;
 
-    /** @var PostInterface $lastPost */
+    /** @var Post $lastPost */
     protected $lastPost = null;
 
     /** @var ArrayCollection $posts */

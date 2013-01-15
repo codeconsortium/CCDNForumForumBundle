@@ -48,7 +48,7 @@ class Draft extends AbstractDraft
     /**
      * Set body
      *
-     * @param text $body
+     * @param string $body
      */
     public function setBody($body)
     {
@@ -58,7 +58,7 @@ class Draft extends AbstractDraft
     /**
      * Get body
      *
-     * @return text
+     * @return string
      */
     public function getBody()
     {
@@ -68,7 +68,7 @@ class Draft extends AbstractDraft
     /**
      * Set created_date
      *
-     * @param datetime $createdDate
+     * @param \datetime $createdDate
      */
     public function setCreatedDate($createdDate)
     {
@@ -78,7 +78,7 @@ class Draft extends AbstractDraft
     /**
      * Get created_date
      *
-     * @return datetime
+     * @return \datetime
      */
     public function getCreatedDate()
     {
