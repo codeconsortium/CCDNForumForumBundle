@@ -13,6 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -22,12 +24,12 @@ use CCDNForum\ForumBundle\Entity\Topic;
 abstract class Draft
 {
     /** @var Board $board */
-    protected $board;
+    protected $board = null;
 
     /** @var Topic $topic */
     protected $topic = null;
 
-    /** @var User $createdBy */
+    /** @var UserInterface $createdBy */
     protected $createdBy = null;
 
     /** @var Attachment $attachment */
@@ -61,7 +63,7 @@ abstract class Draft
     /**
      * Get created_by
      *
-     * @return User
+     * @return UserInterface
      */
     public function getCreatedBy()
     {
@@ -71,9 +73,9 @@ abstract class Draft
     /**
      * Set created_by
      *
-     * @param User $createdBy
+     * @param UserInterface $createdBy
      */
-    public function setCreatedBy(User $createdBy = null)
+    public function setCreatedBy(UserInterface $createdBy = null)
     {
         $this->createdBy = $createdBy;
     }

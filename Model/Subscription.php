@@ -13,6 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -23,7 +25,7 @@ abstract class Subscription
     /** @var Topic $topic */
     protected $topic = null;
 
-    /** @var User $ownedBy */
+    /** @var UserInterface $ownedBy */
     protected $ownedBy = null;
 
     public function __construct()
@@ -54,7 +56,7 @@ abstract class Subscription
     /**
      * Get owned_by
      *
-     * @return User
+     * @return UserInterface
      */
     public function getOwnedBy()
     {
@@ -64,9 +66,9 @@ abstract class Subscription
     /**
      * Set owned_by
      *
-     * @param User $ownedBy
+     * @param UserInterface $ownedBy
      */
-    public function setOwnedBy(User $ownedBy = null)
+    public function setOwnedBy(UserInterface $ownedBy = null)
     {
         $this->ownedBy = $ownedBy;
     }

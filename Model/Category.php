@@ -43,7 +43,7 @@ abstract class Category
      *
      * @param ArrayCollection $boards
      */
-    public function setBoards(ArrayCollection $boards)
+    public function setBoards(ArrayCollection $boards = null)
     {
         $this->boards = $boards;
     }

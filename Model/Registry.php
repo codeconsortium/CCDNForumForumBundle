@@ -13,12 +13,14 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 abstract class Registry
 {
-    /** @var User $ownedBy */
+    /** @var UserInterface $ownedBy */
     protected $ownedBy = null;
 
     public function __construct()
@@ -29,7 +31,7 @@ abstract class Registry
     /**
      * Get owned_by
      *
-     * @return User
+     * @return UserInterface
      */
     public function getOwnedBy()
     {
@@ -39,10 +41,10 @@ abstract class Registry
     /**
      * Set owned_by
      *
-     * @param  User $ownedBy
+     * @param  UserInterface $ownedBy
      * @return Registry
      */
-    public function setOwnedBy(User $ownedBy = null)
+    public function setOwnedBy(UserInterface $ownedBy = null)
     {
         $this->ownedBy = $ownedBy;
 

@@ -13,6 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -25,19 +27,19 @@ abstract class Topic
     /** @var Board $board */
     protected $board = null;
 
-    /** @var User $closedBy */
+    /** @var UserInterface $closedBy */
     protected $closedBy = null;
 
-    /** @var User $deletedBy */
+    /** @var UserInterface $deletedBy */
     protected $deletedBy = null;
 
-    /** @var User $stickiedBy */
+    /** @var UserInterface $stickiedBy */
     protected $stickiedBy = null;
 
-    /** @var Post $firstPost */
+    /** @var PostInterface $firstPost */
     protected $firstPost = null;
 
-    /** @var Post $lastPost */
+    /** @var PostInterface $lastPost */
     protected $lastPost = null;
 
     /** @var ArrayCollection $posts */
@@ -75,7 +77,7 @@ abstract class Topic
     /**
      * Get closed_by
      *
-     * @return User
+     * @return UserInterface
      */
     public function getClosedBy()
     {
@@ -85,9 +87,9 @@ abstract class Topic
     /**
      * Set closed_by
      *
-     * @param User $closedBy
+     * @param UserInterface $closedBy
      */
-    public function setClosedBy(User $closedBy = null)
+    public function setClosedBy(UserInterface $closedBy = null)
     {
         $this->closedBy = $closedBy;
     }
@@ -95,7 +97,7 @@ abstract class Topic
     /**
      * Get deleted_by
      *
-     * @return User
+     * @return UserInterface
      */
     public function getDeletedBy()
     {
@@ -105,9 +107,9 @@ abstract class Topic
     /**
      * Set deleted_by
      *
-     * @param User $deletedBy
+     * @param UserInterface $deletedBy
      */
-    public function setDeletedBy(User $deletedBy = null)
+    public function setDeletedBy(UserInterface $deletedBy = null)
     {
         $this->deletedBy = $deletedBy;
     }
@@ -115,7 +117,7 @@ abstract class Topic
     /**
      * Get stickiedBy
      *
-     * @return User
+     * @return UserInterface
      */
     public function getStickiedBy()
     {
@@ -125,9 +127,9 @@ abstract class Topic
     /**
      * Set stickiedBy
      *
-     * @param User $stickiedBy
+     * @param UserInterface $stickiedBy
      */
-    public function setStickiedBy(User $stickiedBy = null)
+    public function setStickiedBy(UserInterface $stickiedBy = null)
     {
         $this->stickiedBy = $stickiedBy;
     }
@@ -187,7 +189,7 @@ abstract class Topic
      *
      * @param ArrayCollection $posts
      */
-    public function setPosts(array $posts)
+    public function setPosts(array $posts = null)
     {
         $this->posts[] = $posts;
     }
@@ -243,7 +245,7 @@ abstract class Topic
     }
 
     /**
-     * Add subscriptions
+     * Add subscription
      *
      * @param Subscription $subscription
      */

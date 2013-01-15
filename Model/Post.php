@@ -13,6 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -23,16 +25,16 @@ abstract class Post
     /** @var Topic $topic */
     protected $topic = null;
 
-    /** @var User $createdBy */
+    /** @var UserInterface $createdBy */
     protected $createdBy = null;
 
-    /** @var User $editedBy */
+    /** @var UserInterface $editedBy */
     protected $editedBy = null;
 
-    /** @var User $deletedBy */
+    /** @var UserInterface $deletedBy */
     protected $deletedBy = null;
 
-    /** @var User $lockedBy */
+    /** @var UserInterface $lockedBy */
     protected $lockedBy = null;
 
     /** @var Attachment $attachment */
@@ -66,7 +68,7 @@ abstract class Post
     /**
      * Get created_by
      *
-     * @return User
+     * @return UserInterface
      */
     public function getCreatedBy()
     {
@@ -76,9 +78,9 @@ abstract class Post
     /**
      * Set created_by
      *
-     * @param User $createdBy
+     * @param UserInterface $createdBy
      */
-    public function setCreatedBy(User $createdBy = null)
+    public function setCreatedBy(UserInterface $createdBy = null)
     {
         $this->createdBy = $createdBy;
     }
@@ -86,7 +88,7 @@ abstract class Post
     /**
      * Get edited_by
      *
-     * @return User
+     * @return UserInterface
      */
     public function getEditedBy()
     {
@@ -96,9 +98,9 @@ abstract class Post
     /**
      * Set edited_by
      *
-     * @param User $editedBy
+     * @param UserInterface $editedBy
      */
-    public function setEditedBy(User $editedBy = null)
+    public function setEditedBy(UserInterface $editedBy = null)
     {
         $this->editedBy = $editedBy;
     }
@@ -106,7 +108,7 @@ abstract class Post
     /**
      * Get deleted_by
      *
-     * @return User
+     * @return UserInterface
      */
     public function getDeletedBy()
     {
@@ -116,9 +118,9 @@ abstract class Post
     /**
      * Set deleted_by
      *
-     * @param User $deletedBy
+     * @param UserInterface $deletedBy
      */
-    public function setDeletedBy(User $deletedBy = null)
+    public function setDeletedBy(UserInterface $deletedBy = null)
     {
         $this->deletedBy = $deletedBy;
     }
@@ -126,7 +128,7 @@ abstract class Post
     /**
      * Get locked_by
      *
-     * @return User
+     * @return UserInterface
      */
     public function getLockedBy()
     {
@@ -136,9 +138,9 @@ abstract class Post
     /**
      * Set locked_by
      *
-     * @param User $lockedBy
+     * @param UserInterface $lockedBy
      */
-    public function setLockedBy(User $lockedBy = null)
+    public function setLockedBy(UserInterface $lockedBy = null)
     {
         $this->lockedBy = $lockedBy;
     }
