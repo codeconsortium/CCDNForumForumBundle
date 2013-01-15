@@ -13,7 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
-use Doctrine\Common\Persistence\AbstractManagerRegistry;
 use Doctrine\ORM\Mapping as ORM;
 
 use CCDNForum\ForumBundle\Model\Registry as AbstractRegistry;

@@ -14,6 +14,6 @@ CCDNForum\ForumBundle\Entity\Category:
             name: "list_order_priority"
     oneToMany:
         boards:
-            targetEntity: CCDNForum\ForumBundle\Entity\Board
+            targetEntity: "CCDNForum\ForumBundle\Entity\Board"
             mappedBy: category
             #cascade: ["persist", "remove"]

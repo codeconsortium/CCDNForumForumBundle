@@ -16,7 +16,6 @@ namespace CCDNForum\ForumBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use CCDNForum\ForumBundle\Model\Draft as AbstractDraft;
-use CCDNForum\ForumBundle\Entity\Topic;
 
 class Draft extends AbstractDraft
 {

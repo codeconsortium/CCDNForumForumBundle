@@ -14,10 +14,8 @@
 namespace CCDNForum\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNForum\ForumBundle\Model\Post as AbstractPost;
-use CCDNForum\ForumBundle\Entity\Topic;
 
 class Post extends AbstractPost
 {

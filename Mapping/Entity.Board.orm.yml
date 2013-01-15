@@ -19,12 +19,12 @@ CCDNForum\ForumBundle\Entity\Board:
             type: integer
     oneToMany:
         topics:
-            targetEntity: CCDNForum\ForumBundle\Entity\Topic
+            targetEntity: "CCDNForum\ForumBundle\Entity\Topic"
             mappedBy: board
             #cascade: ["remove"]
     manyToOne:
         category:
-            targetEntity: CCDNForum\ForumBundle\Entity\Category
+            targetEntity: "CCDNForum\ForumBundle\Entity\Category"
             inversedBy: "boards"
             nullable: true
             joinColumn:

@@ -18,13 +18,13 @@ CCDNForum\ForumBundle\Entity\Draft:
             name: "created_date"
     manyToOne:
         board:
-            targetEntity: CCDNForum\ForumBundle\Entity\Board
+            targetEntity: "CCDNForum\ForumBundle\Entity\Board"
             joinColumn:
                 name: fk_board_id
                 referencedColumnName: id
                 onDelete: SET NULL
         topic:
-            targetEntity: CCDNForum\ForumBundle\Entity\Topic
+            targetEntity: "CCDNForum\ForumBundle\Entity\Topic"
             #cascade: ["persist"]
             joinColumn:
                 name: fk_topic_id

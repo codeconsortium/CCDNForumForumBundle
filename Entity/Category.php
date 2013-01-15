@@ -14,10 +14,8 @@
 namespace CCDNForum\ForumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNForum\ForumBundle\Model\Category as AbstractCategory;
-use CCDNForum\ForumBundle\Entity\Board;
 
 class Category extends AbstractCategory
 {

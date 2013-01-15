@@ -33,15 +33,16 @@ CCDNForum\ForumBundle\Entity\Post:
             name: "locked_date"
             nullable: true
     manyToOne:
-        topic:
-            targetEntity: CCDNForum\ForumBundle\Entity\Topic
-            #cascade: ["persist"]
-            nullable: true
-            joinColumn:
-                name: fk_topic_id
-                referencedColumnName: id
-                onDelete: SET NULL
-        inversedBy: posts
+#        topic:
+#            targetEntity: "CCDNForum\ForumBundle\Entity\Topic"
+#            #cascade: ["persist"]
+#            nullable: true
+#            joinColumn:
+#                name: fk_topic_id
+#                referencedColumnName: id
+#                onDelete: SET NULL
+#        inversedBy: posts
+
 #        createdBy:
 #            targetEntity: CCDNUser\UserBundle\Entity\User
 #            cascade: ["persist"]
