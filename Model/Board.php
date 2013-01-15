@@ -16,6 +16,10 @@ namespace CCDNForum\ForumBundle\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use CCDNForum\ForumBundle\Entity\Category;
+use CCDNForum\ForumBundle\Entity\Topic;
+use CCDNForum\ForumBundle\Entity\Post;
+
 abstract class Board
 {
     /** @var Category $category */

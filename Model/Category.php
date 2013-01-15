@@ -16,6 +16,8 @@ namespace CCDNForum\ForumBundle\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use CCDNForum\ForumBundle\Entity\Board;
+
 abstract class Category
 {
     /** @var ArrayCollection $boards */
@@ -23,7 +25,7 @@ abstract class Category
 
     public function __construct()
     {
-        $this->boards = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->boards = new ArrayCollection();
     }
 
     /**
@@ -41,7 +43,7 @@ abstract class Category
      *
      * @param Board $boards
      */
-    public function addBoards(\CCDNForum\ForumBundle\Entity\Board $boards)
+    public function addBoards(Board $boards)
     {
         $this->boards[] = $boards;
     }
@@ -51,7 +53,7 @@ abstract class Category
      *
      * @param Board $boards
      */
-    public function addBoard(\CCDNForum\ForumBundle\Entity\Board $boards)
+    public function addBoard(Board $boards)
     {
         $this->boards[] = $boards;
     }

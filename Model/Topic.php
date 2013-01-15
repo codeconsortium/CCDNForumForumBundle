@@ -16,26 +16,22 @@ namespace CCDNForum\ForumBundle\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use CCDNForum\ForumBundle\Entity\Board;
+use CCDNForum\ForumBundle\Entity\Post;
+use CCDNForum\ForumBundle\Entity\Subscription;
+
 abstract class Topic
 {
-    /**
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="topic", cascade={"remove"})
-     */
+    /** @var ArrayCollection $posts */
     protected $posts;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Board", inversedBy="topics")
-     * @ORM\JoinColumn(name="fk_board_id", referencedColumnName="id", onDelete="SET NULL")
-     */
+    /** @var Board $board */
     protected $board = null;
-    /**
-     * @ORM\OneToOne(targetEntity="Post", cascade={"remove"})
-     */
+
+    /** @var Post $firstPost */
     protected $firstPost = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Post", cascade={"remove"})
-     */
+    /** @var Post $lastPost */
     protected $lastPost = null;
 
     /** @var User $closedBy */
@@ -47,7 +43,7 @@ abstract class Topic
     /** @var User $stickiedBy */
     protected $stickiedBy = null;
 
-    /** @var Subscription $subscriptions */
+    /** @var ArrayCollection $subscriptions */
     protected $subscriptions;
 
     public function __construct()

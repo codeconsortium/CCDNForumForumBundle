@@ -16,6 +16,9 @@ namespace CCDNForum\ForumBundle\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use CCDNForum\ForumBundle\Entity\Board;
+use CCDNForum\ForumBundle\Entity\Topic;
+
 abstract class Draft
 {
     /** @var Board $board */
