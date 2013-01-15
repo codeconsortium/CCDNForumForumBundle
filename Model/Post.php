@@ -58,7 +58,7 @@ abstract class Post
      *
      * @param Topic $topic
      */
-    public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic = null)
+    public function setTopic(Topic $topic = null)
     {
         $this->topic = $topic;
     }
@@ -78,7 +78,7 @@ abstract class Post
      *
      * @param User $createdBy
      */
-    public function setCreatedBy(\CCDNUser\UserBundle\Entity\User $createdBy = null)
+    public function setCreatedBy(User $createdBy = null)
     {
         $this->createdBy = $createdBy;
     }
@@ -98,7 +98,7 @@ abstract class Post
      *
      * @param User $editedBy
      */
-    public function setEditedBy(\CCDNUser\UserBundle\Entity\User $editedBy = null)
+    public function setEditedBy(User $editedBy = null)
     {
         $this->editedBy = $editedBy;
     }
@@ -118,7 +118,7 @@ abstract class Post
      *
      * @param User $deletedBy
      */
-    public function setDeletedBy(\CCDNUser\UserBundle\Entity\User $deletedBy = null)
+    public function setDeletedBy(User $deletedBy = null)
     {
         $this->deletedBy = $deletedBy;
     }
@@ -138,7 +138,7 @@ abstract class Post
      *
      * @param User $lockedBy
      */
-    public function setLockedBy(\CCDNUser\UserBundle\Entity\User $lockedBy = null)
+    public function setLockedBy(User $lockedBy = null)
     {
         $this->lockedBy = $lockedBy;
     }
@@ -159,7 +159,7 @@ abstract class Post
      * @param  Attachment $attachment
      * @return Post
      */
-    public function setAttachment(\CCDNComponent\AttachmentBundle\Entity\Attachment $attachment = null)
+    public function setAttachment(Attachment $attachment = null)
     {
         $this->attachment = $attachment;
 

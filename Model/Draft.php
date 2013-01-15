@@ -53,7 +53,7 @@ abstract class Draft
      *
      * @param Topic $topic
      */
-    public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic = null)
+    public function setTopic(Topic $topic = null)
     {
         $this->topic = $topic;
     }
@@ -73,7 +73,7 @@ abstract class Draft
      *
      * @param User $createdBy
      */
-    public function setCreatedBy(\CCDNUser\UserBundle\Entity\User $createdBy = null)
+    public function setCreatedBy(User $createdBy = null)
     {
         $this->createdBy = $createdBy;
     }
@@ -93,7 +93,7 @@ abstract class Draft
      *
      * @param Attachment $attachment
      */
-    public function setAttachment(\CCDNComponent\AttachmentBundle\Entity\Attachment $attachment = null)
+    public function setAttachment(Attachment $attachment = null)
     {
         $this->attachment = $attachment;
     }
@@ -113,7 +113,7 @@ abstract class Draft
      *
      * @param Board $board
      */
-    public function setBoard(\CCDNForum\ForumBundle\Entity\Board $board = null)
+    public function setBoard(Board $board = null)
     {
         $this->board = $board;
     }

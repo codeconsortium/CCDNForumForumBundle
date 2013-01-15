@@ -46,7 +46,7 @@ abstract class Subscription
      *
      * @param Topic $topic
      */
-    public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic = null)
+    public function setTopic(Topic $topic = null)
     {
         $this->topic = $topic;
     }
@@ -66,7 +66,7 @@ abstract class Subscription
      *
      * @param User $ownedBy
      */
-    public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)
+    public function setOwnedBy(User $ownedBy = null)
     {
         $this->ownedBy = $ownedBy;
     }

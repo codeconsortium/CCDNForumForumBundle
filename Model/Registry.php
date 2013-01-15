@@ -42,7 +42,7 @@ abstract class Registry
      * @param  User $ownedBy
      * @return Registry
      */
-    public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)
+    public function setOwnedBy(User $ownedBy = null)
     {
         $this->ownedBy = $ownedBy;
 
