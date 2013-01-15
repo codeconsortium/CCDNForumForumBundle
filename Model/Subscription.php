@@ -15,10 +15,10 @@ namespace CCDNForum\ForumBundle\Entity;
 
 abstract class Subscription
 {
-    /** @var CCDNForum\ForumBundle\Entity\Topic $topic */
+    /** @var \CCDNForum\ForumBundle\Entity\Topic $topic */
     protected $topic = null;
 
-    /** @var CCDNUser\UserBundle\Entity\User $ownedBy */
+    /** @var \CCDNUser\UserBundle\Entity\User $ownedBy */
     protected $ownedBy = null;
 
     public function __construct()
@@ -27,19 +27,9 @@ abstract class Subscription
     }
 
     /**
-     * Set topic
-     *
-     * @param CCDNForum\ForumBundle\Entity\Topic $topic
-     */
-    public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic = null)
-    {
-        $this->topic = $topic;
-    }
-
-    /**
      * Get topic
      *
-     * @return CCDNForum\ForumBundle\Entity\Topic
+     * @return \CCDNForum\ForumBundle\Entity\Topic
      */
     public function getTopic()
     {
@@ -47,22 +37,32 @@ abstract class Subscription
     }
 
     /**
-     * Set owned_by
+     * Set topic
      *
-     * @param CCDNUser\UserBundle\Entity\User $ownedBy
+     * @param \CCDNForum\ForumBundle\Entity\Topic $topic
      */
-    public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)
+    public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic = null)
     {
-        $this->ownedBy = $ownedBy;
+        $this->topic = $topic;
     }
 
     /**
      * Get owned_by
      *
-     * @return CCDNUser\UserBundle\Entity\User
+     * @return \CCDNUser\UserBundle\Entity\User
      */
     public function getOwnedBy()
     {
         return $this->ownedBy;
+    }
+
+    /**
+     * Set owned_by
+     *
+     * @param \CCDNUser\UserBundle\Entity\User $ownedBy
+     */
+    public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)
+    {
+        $this->ownedBy = $ownedBy;
     }
 }

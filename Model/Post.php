@@ -15,21 +15,22 @@ namespace CCDNForum\ForumBundle\Entity;
 
 abstract class Post
 {
-    /** @var CCDNForum\ForumBundle\Entity\Topic $topic */
+    /** @var \CCDNForum\ForumBundle\Entity\Topic $topic */
     protected $topic = null;
 
-    /** @var CCDNUser\UserBundle\Entity\User $createdBy */
+    /** @var \CCDNUser\UserBundle\Entity\User $createdBy */
     protected $createdBy = null;
 
-    /** @var CCDNUser\UserBundle\Entity\User $editedBy */
+    /** @var \CCDNUser\UserBundle\Entity\User $editedBy */
     protected $editedBy = null;
 
-    /** @var CCDNUser\UserBundle\Entity\User $deletedBy */
+    /** @var \CCDNUser\UserBundle\Entity\User $deletedBy */
     protected $deletedBy = null;
-    /** @var CCDNUser\UserBundle\Entity\User $lockedBy */
+
+    /** @var \CCDNUser\UserBundle\Entity\User $lockedBy */
     protected $lockedBy = null;
 
-    /** @var CCDNComponent\AttachmentBundle\Entity\Attachment $attachment */
+    /** @var \CCDNComponent\AttachmentBundle\Entity\Attachment $attachment */
     protected $attachment = null;
 
     public function __construct()
@@ -38,19 +39,9 @@ abstract class Post
     }
 
     /**
-     * Set topic
-     *
-     * @param CCDNForum\ForumBundle\Entity\Topic $topic
-     */
-    public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic = null)
-    {
-        $this->topic = $topic;
-    }
-
-    /**
      * Get topic
      *
-     * @return CCDNForum\ForumBundle\Entity\Topic
+     * @return \CCDNForum\ForumBundle\Entity\Topic
      */
     public function getTopic()
     {
@@ -58,19 +49,19 @@ abstract class Post
     }
 
     /**
-     * Set created_by
+     * Set topic
      *
-     * @param CCDNUser\UserBundle\Entity\User $createdBy
+     * @param \CCDNForum\ForumBundle\Entity\Topic $topic
      */
-    public function setCreatedBy(\CCDNUser\UserBundle\Entity\User $createdBy = null)
+    public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic = null)
     {
-        $this->createdBy = $createdBy;
+        $this->topic = $topic;
     }
 
     /**
      * Get created_by
      *
-     * @return CCDNUser\UserBundle\Entity\User
+     * @return \CCDNUser\UserBundle\Entity\User
      */
     public function getCreatedBy()
     {
@@ -78,19 +69,19 @@ abstract class Post
     }
 
     /**
-     * Set edited_by
+     * Set created_by
      *
-     * @param CCDNUser\UserBundle\Entity\User $editedBy
+     * @param \CCDNUser\UserBundle\Entity\User $createdBy
      */
-    public function setEditedBy(\CCDNUser\UserBundle\Entity\User $editedBy = null)
+    public function setCreatedBy(\CCDNUser\UserBundle\Entity\User $createdBy = null)
     {
-        $this->editedBy = $editedBy;
+        $this->createdBy = $createdBy;
     }
 
     /**
      * Get edited_by
      *
-     * @return CCDNUser\UserBundle\Entity\User
+     * @return \CCDNUser\UserBundle\Entity\User
      */
     public function getEditedBy()
     {
@@ -98,19 +89,19 @@ abstract class Post
     }
 
     /**
-     * Set deleted_by
+     * Set edited_by
      *
-     * @param CCDNUser\UserBundle\Entity\User $deletedBy
+     * @param \CCDNUser\UserBundle\Entity\User $editedBy
      */
-    public function setDeletedBy(\CCDNUser\UserBundle\Entity\User $deletedBy = null)
+    public function setEditedBy(\CCDNUser\UserBundle\Entity\User $editedBy = null)
     {
-        $this->deletedBy = $deletedBy;
+        $this->editedBy = $editedBy;
     }
 
     /**
      * Get deleted_by
      *
-     * @return CCDNUser\UserBundle\Entity\User
+     * @return \CCDNUser\UserBundle\Entity\User
      */
     public function getDeletedBy()
     {
@@ -118,19 +109,19 @@ abstract class Post
     }
 
     /**
-     * Set locked_by
+     * Set deleted_by
      *
-     * @param CCDNUser\UserBundle\Entity\User $lockedBy
+     * @param \CCDNUser\UserBundle\Entity\User $deletedBy
      */
-    public function setLockedBy(\CCDNUser\UserBundle\Entity\User $lockedBy = null)
+    public function setDeletedBy(\CCDNUser\UserBundle\Entity\User $deletedBy = null)
     {
-        $this->lockedBy = $lockedBy;
+        $this->deletedBy = $deletedBy;
     }
 
     /**
      * Get locked_by
      *
-     * @return CCDNUser\UserBundle\Entity\User
+     * @return \CCDNUser\UserBundle\Entity\User
      */
     public function getLockedBy()
     {
@@ -138,9 +129,29 @@ abstract class Post
     }
 
     /**
+     * Set locked_by
+     *
+     * @param \CCDNUser\UserBundle\Entity\User $lockedBy
+     */
+    public function setLockedBy(\CCDNUser\UserBundle\Entity\User $lockedBy = null)
+    {
+        $this->lockedBy = $lockedBy;
+    }
+
+    /**
+     * Get attachment
+     *
+     * @return \CCDNComponent\AttachmentBundle\Entity\Attachment
+     */
+    public function getAttachment()
+    {
+        return $this->attachment;
+    }
+
+    /**
      * Set attachment
      *
-     * @param  CCDNComponent\AttachmentBundle\Entity\Attachment $attachment
+     * @param  \CCDNComponent\AttachmentBundle\Entity\Attachment $attachment
      * @return Post
      */
     public function setAttachment(\CCDNComponent\AttachmentBundle\Entity\Attachment $attachment = null)
@@ -148,15 +159,5 @@ abstract class Post
         $this->attachment = $attachment;
 
         return $this;
-    }
-
-    /**
-     * Get attachment
-     *
-     * @return CCDNComponent\AttachmentBundle\Entity\Attachment
-     */
-    public function getAttachment()
-    {
-        return $this->attachment;
     }
 }

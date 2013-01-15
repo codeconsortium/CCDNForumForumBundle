@@ -24,9 +24,19 @@ abstract class Registry
     }
 
     /**
+     * Get owned_by
+     *
+     * @return \CCDNUser\UserBundle\Entity\User
+     */
+    public function getOwnedBy()
+    {
+        return $this->ownedBy;
+    }
+
+    /**
      * Set owned_by
      *
-     * @param  CCDNUser\UserBundle\Entity\User $ownedBy
+     * @param  \CCDNUser\UserBundle\Entity\User $ownedBy
      * @return Registry
      */
     public function setOwnedBy(\CCDNUser\UserBundle\Entity\User $ownedBy = null)
@@ -34,15 +44,5 @@ abstract class Registry
         $this->ownedBy = $ownedBy;
 
         return $this;
-    }
-
-    /**
-     * Get owned_by
-     *
-     * @return CCDNUser\UserBundle\Entity\User
-     */
-    public function getOwnedBy()
-    {
-        return $this->ownedBy;
     }
 }

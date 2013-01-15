@@ -33,19 +33,9 @@ abstract class Draft
     }
 
     /**
-     * Set topic
-     *
-     * @param CCDNForum\ForumBundle\Entity\Topic $topic
-     */
-    public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic = null)
-    {
-        $this->topic = $topic;
-    }
-
-    /**
      * Get topic
      *
-     * @return CCDNForum\ForumBundle\Entity\Topic
+     * @return \CCDNForum\ForumBundle\Entity\Topic
      */
     public function getTopic()
     {
@@ -53,19 +43,19 @@ abstract class Draft
     }
 
     /**
-     * Set created_by
+     * Set topic
      *
-     * @param CCDNUser\UserBundle\Entity\User $createdBy
+     * @param \CCDNForum\ForumBundle\Entity\Topic $topic
      */
-    public function setCreatedBy(\CCDNUser\UserBundle\Entity\User $createdBy = null)
+    public function setTopic(\CCDNForum\ForumBundle\Entity\Topic $topic = null)
     {
-        $this->createdBy = $createdBy;
+        $this->topic = $topic;
     }
 
     /**
      * Get created_by
      *
-     * @return CCDNUser\UserBundle\Entity\User
+     * @return \CCDNUser\UserBundle\Entity\User
      */
     public function getCreatedBy()
     {
@@ -73,19 +63,19 @@ abstract class Draft
     }
 
     /**
-     * Set attachment
+     * Set created_by
      *
-     * @param CCDNComponent\AttachmentBundle\Entity\Attachment $attachment
+     * @param \CCDNUser\UserBundle\Entity\User $createdBy
      */
-    public function setAttachment(\CCDNComponent\AttachmentBundle\Entity\Attachment $attachment = null)
+    public function setCreatedBy(\CCDNUser\UserBundle\Entity\User $createdBy = null)
     {
-        $this->attachment = $attachment;
+        $this->createdBy = $createdBy;
     }
 
     /**
      * Get attachment
      *
-     * @return CCDNComponent\AttachmentBundle\Entity\Attachment
+     * @return \CCDNComponent\AttachmentBundle\Entity\Attachment
      */
     public function getAttachment()
     {
@@ -93,22 +83,32 @@ abstract class Draft
     }
 
     /**
-     * Set board
+     * Set attachment
      *
-     * @param CCDNForum\ForumBundle\Entity\Board $board
+     * @param \CCDNComponent\AttachmentBundle\Entity\Attachment $attachment
      */
-    public function setBoard(\CCDNForum\ForumBundle\Entity\Board $board = null)
+    public function setAttachment(\CCDNComponent\AttachmentBundle\Entity\Attachment $attachment = null)
     {
-        $this->board = $board;
+        $this->attachment = $attachment;
     }
 
     /**
      * Get board
      *
-     * @return CCDNForum\ForumBundle\Entity\Board
+     * @return \CCDNForum\ForumBundle\Entity\Board
      */
     public function getBoard()
     {
         return $this->board;
+    }
+
+    /**
+     * Set board
+     *
+     * @param \CCDNForum\ForumBundle\Entity\Board $board
+     */
+    public function setBoard(\CCDNForum\ForumBundle\Entity\Board $board = null)
+    {
+        $this->board = $board;
     }
 }
