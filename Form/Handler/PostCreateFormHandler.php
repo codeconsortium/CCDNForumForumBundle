@@ -20,6 +20,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use CCDNForum\ForumBundle\Manager\ManagerInterface;
 
+use CCDNForum\ForumBundle\Entity\Topic;
+use CCDNForum\ForumBundle\Entity\Post;
+
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>

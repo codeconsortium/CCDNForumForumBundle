@@ -145,8 +145,7 @@ class TopicController extends ContainerAware
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_create')->setDefaultValues($options);
 
 		// Flood Control.
-		if ( ! $this->container->get('ccdn_forum_forum.component.flood_control')->isFlooded())
-		{
+		if ( ! $this->container->get('ccdn_forum_forum.component.flood_control')->isFlooded()) {
 	        if (isset($_POST['submit_post'])) {
 	            if ($formHandler->process()) {
 	                $this->container->get('ccdn_forum_forum.component.flood_control')->incrementCounter();
@@ -215,43 +214,11 @@ class TopicController extends ContainerAware
 
         $options = array('topic' => $topic,	'user' => $user, 'quote' => (empty($quote) ? null : $quote));
 
-        //
-        // Publishing drafts
-        //
-        if ($draftId != 0) {
-            $draft = $this->container->get('ccdn_forum_forum.manager.draft')->getDraft($draftId);
-
-            if (is_object($draft) && $draft instanceof Post) {
-                $options['post'] = $draft;
-            } else {
-                if (is_object($draft) && $draft instanceof Topic) {
-                    return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_create_from_draft', array('boardId' => $draft->getBoard()->getId(), 'draftId' => $draft->getId()) ));
-                }
-            }
-        }
-
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_create')->setDefaultValues($options);
 
-		if (isset($_POST['submit_draft'])) {
-	        $formHandler->setMode($formHandler::DRAFT);
-
-	        if ($formHandler->process()) {
-	            $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.draft.save.success', array(), 'CCDNForumForumBundle'));
-
-	            return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_draft_list'));
-	        }
-	    }
-		
-        if (isset($_POST['submit_preview'])) {
-            $formHandler->setMode($formHandler::PREVIEW);
-        }
-	
 		// Flood Control.
-		if ( ! $this->container->get('ccdn_forum_forum.component.flood_control')->isFlooded())
-		{
+		if ( ! $this->container->get('ccdn_forum_forum.component.flood_control')->isFlooded()) {
 	        if (isset($_POST['submit_post'])) {
-	            $formHandler->setMode($formHandler::NORMAL);
-
 	            if ($formHandler->process()) {
 					$this->container->get('ccdn_forum_forum.component.flood_control')->incrementCounter();
 					
@@ -302,5 +269,4 @@ class TopicController extends ContainerAware
     {
         return $this->container->getParameter('ccdn_forum_forum.template.engine');
     }
-
 }
