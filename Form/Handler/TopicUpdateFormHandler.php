@@ -28,7 +28,7 @@ use CCDNForum\ForumBundle\Entity\Post;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class TopicEditFormHandler
+class TopicUpdateFormHandler
 {
     /** @access protected */
     protected $factory;
@@ -118,15 +118,16 @@ class TopicEditFormHandler
     public function getForm()
     {
         if (! $this->form) {
-            if (! array_key_exists('board', $this->defaults)) {
-                throw new \Exception('Board must be specified');
-            }
-
             $postType = $this->container->get('ccdn_forum_forum.form.type.post');
             $topicType = $this->container->get('ccdn_forum_forum.form.type.topic');
 
-            $this->form = $this->factory->create($postType, $this->defaults['post']);
-            $this->form->add($this->factory->create($topicType, $this->defaults['post']->getTopic()));
+            $post = $this->defaults['post'];
+            $topic = $post->getTopic();
+
+            //ladybug_dump_die($post);
+
+            $this->form = $this->factory->create($postType, $post);
+            $this->form->add($this->factory->create($topicType, $topic));
 
             if ($this->request->getMethod() == 'POST') {
                 $this->form->bind($this->request);

@@ -25,61 +25,26 @@ use CCDNForum\ForumBundle\Manager\ManagerInterface;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class PostFormHandler
+class PostCreateFormHandler
 {
 
-    /**
-     *
-     * @access protected
-     */
+    /** @access protected */
     protected $factory;
 
-    /**
-     *
-     * @access protected
-     */
+    /** @access protected */
     protected $container;
 
-    /**
-     *
-     * @access protected
-     */
+    /** @access protected */
     protected $request;
 
-    /**
-     *
-     * @access protected
-     */
+    /** @access protected */
     protected $manager;
 
-    /**
-     *
-     * @access protected
-     */
+    /** @access protected */
     protected $defaults = array();
 
-    /**
-     *
-     * @access protected
-     */
+    /** @access protected */
     protected $form;
-
-    /**
-     *
-     * @access protected
-     */
-    protected $strategy;
-    const INSERT = 0;
-    const UPDATE = 1;
-
-    /**
-     *
-     * @access protected
-     */
-    protected $mode;
-    const NORMAL = 0;
-    const PREVIEW = 1;
-    const DRAFT = 2;
 
     /**
      *
@@ -92,52 +57,9 @@ class PostFormHandler
         $this->factory = $factory;
         $this->container = $container;
 
-        // topic manager is the default unless the mode is changed.
-        $this->mode = self::NORMAL;
         $this->manager = $this->container->get('ccdn_forum_forum.manager.post');
 
         $this->request = $container->get('request');
-    }
-
-    /**
-     *
-     * @access public
-     */
-    public function useInsertStrategy()
-    {
-        $this->strategy = self::INSERT;
-    }
-
-    /**
-     *
-     * @access public
-     */
-    public function useUpdateStrategy()
-    {
-        $this->strategy = self::UPDATE;
-    }
-
-    /**
-     *
-     *
-     * @access public
-     */
-    public function setMode($mode)
-    {
-        switch ($mode) {
-            case self::NORMAL:
-                $this->mode = self::NORMAL;
-                $this->manager = $this->container->get('ccdn_forum_forum.manager.post');
-            break;
-            case self::PREVIEW:
-                $this->mode = self::PREVIEW;
-                $this->manager = $this->container->get('ccdn_forum_forum.manager.post');
-            break;
-            case self::DRAFT:
-                $this->mode = self::DRAFT;
-                $this->manager = $this->container->get('ccdn_forum_forum.manager.draft');
-            break;
-        }
     }
 
     /**
@@ -165,9 +87,6 @@ class PostFormHandler
         if ($this->request->getMethod() == 'POST') {
             $formData = $this->form->getData();
 
-            //
-            // INSERT topic
-            //
             if ($this->strategy == self::INSERT) {
                 $formData->setCreatedDate(new \DateTime());
                 $formData->setCreatedBy($this->defaults['user']);
@@ -176,9 +95,6 @@ class PostFormHandler
                 $formData->setIsDeleted(false);
             }
 
-            //
-            // UPDATE topic
-            //
             if ($this->strategy == self::UPDATE) {
                 $formData = $this->form->getData();
 
@@ -258,19 +174,7 @@ class PostFormHandler
      */
     protected function onSuccess($entity)
     {
-        //
-        // INSERT post
-        //
-        if ($this->strategy == self::INSERT) {
-            return $this->manager->create($entity)->flush();
-        }
-
-        //
-        // UPDATE post
-        //
-        if ($this->strategy == self::UPDATE) {
-            return $this->manager->update($entity)->flush();
-        }
+        return $this->manager->update($entity)->flush();
     }
 
 }
