@@ -101,7 +101,7 @@ class TopicUpdateFormHandler
 
             // Validate
             if ($this->form->isValid()) {
-                $this->onSuccess($this->form->getData());
+                $this->onSuccess($formData);
 
                 return true;
             }

@@ -102,7 +102,7 @@ class TopicCreateFormHandler
 
             // Validate
             if ($this->form->isValid()) {
-                $this->onSuccess($this->form->getData());
+                $this->onSuccess($formData);
 
                 return true;
             }

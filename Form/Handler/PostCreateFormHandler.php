@@ -95,21 +95,9 @@ class PostCreateFormHandler
             $formData->setIsLocked(false);
             $formData->setIsDeleted(false);
 
-            $formData = $this->form->getData();
-
-            // get the current time, and compare to when the post was made.
-            $now = new \DateTime();
-            $interval = $now->diff($formData->getCreatedDate());
-
-            // if post is less than 15 minutes old, don't add that it was edited.
-            if ($interval->format('%i') > 15) {
-                $formData->setEditedDate(new \DateTime());
-                $formData->setEditedBy($this->defaults['user']);
-            }
-
             // Validate
             if ($this->form->isValid()) {
-                $this->onSuccess($this->form->getData());
+                $this->onSuccess($formData);
 
                 return true;
             }

@@ -157,10 +157,6 @@ class PostController extends ContainerAware
             $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_update')->setDefaultValues(array('post' => $post, 'user' => $user));
         }
 
-        if (isset($_POST['submit_preview'])) {
-            $formHandler->setMode($formHandler::PREVIEW);
-        }
-
         if (isset($_POST['submit_post'])) {
             if ($formHandler->process()) {	// get posts for determining the page of the edited post
                 $topic = $post->getTopic();

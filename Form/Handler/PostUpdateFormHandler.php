@@ -86,14 +86,6 @@ class PostUpdateFormHandler
         if ($this->request->getMethod() == 'POST') {
             $formData = $this->form->getData();
 
-            $formData->setCreatedDate(new \DateTime());
-            $formData->setCreatedBy($this->defaults['user']);
-            $formData->setTopic($this->defaults['topic']);
-            $formData->setIsLocked(false);
-            $formData->setIsDeleted(false);
-
-            $formData = $this->form->getData();
-
             // get the current time, and compare to when the post was made.
             $now = new \DateTime();
             $interval = $now->diff($formData->getCreatedDate());
@@ -106,7 +98,7 @@ class PostUpdateFormHandler
 
             // Validate
             if ($this->form->isValid()) {
-                $this->onSuccess($this->form->getData());
+                $this->onSuccess($formData);
 
                 return true;
             }
@@ -130,7 +122,6 @@ class PostUpdateFormHandler
             }
 
             $postType = $this->container->get('ccdn_forum_forum.form.type.post');
-            $postType->setDefaultValues($this->defaults);
 
             $this->form = $this->factory->create($postType, $this->defaults['post']);
 

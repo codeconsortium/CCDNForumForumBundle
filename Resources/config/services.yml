@@ -18,7 +18,7 @@ parameters:
 
     ccdn_forum_forum.form.type.post.class:                      CCDNForum\ForumBundle\Form\Type\PostType
     ccdn_forum_forum.form.handler.post_create.class:            CCDNForum\ForumBundle\Form\Handler\PostCreateFormHandler
-    ccdn_forum_forum.form.handler.post_update.class:            CCDNForum\ForumBundle\Form\Handler\PostUpdareFormHandler
+    ccdn_forum_forum.form.handler.post_update.class:            CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
 
     ccdn_forum_forum.form.type.topic.class:                     CCDNForum\ForumBundle\Form\Type\TopicType
     ccdn_forum_forum.form.handler.topic_create.class:           CCDNForum\ForumBundle\Form\Handler\TopicCreateFormHandler
