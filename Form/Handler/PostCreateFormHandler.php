@@ -27,7 +27,6 @@ use CCDNForum\ForumBundle\Manager\ManagerInterface;
  */
 class PostCreateFormHandler
 {
-
     /** @access protected */
     protected $factory;
 
@@ -117,8 +116,6 @@ class PostCreateFormHandler
         return false;
     }
 
-
-
     /**
      *
      * @access public
@@ -132,9 +129,11 @@ class PostCreateFormHandler
             }
 
             $postType = $this->container->get('ccdn_forum_forum.form.type.post');
-            $postType->setDefaultValues($this->defaults);
 
-            $this->form = $this->factory->create($postType, $this->defaults['post']);
+            $post = new Post();
+            $post->setTopic($this->defaults['topic']);
+
+            $this->form = $this->factory->create($postType, $post);
 
             if ($this->request->getMethod() == 'POST') {
                 $this->form->bind($this->request);

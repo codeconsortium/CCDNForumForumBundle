@@ -30,7 +30,6 @@ use CCDNForum\ForumBundle\Entity\Post;
  */
 class TopicCreateFormHandler
 {
-
     /** @access protected */
     protected $factory;
 

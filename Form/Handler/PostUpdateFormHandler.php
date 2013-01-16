@@ -27,7 +27,6 @@ use CCDNForum\ForumBundle\Manager\ManagerInterface;
  */
 class PostUpdateFormHandler
 {
-
     /** @access protected */
     protected $factory;
 
@@ -116,8 +115,6 @@ class PostUpdateFormHandler
 
         return false;
     }
-
-
 
     /**
      *
