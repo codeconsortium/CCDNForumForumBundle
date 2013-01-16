@@ -121,7 +121,7 @@ class TopicCreateFormHandler
     {
         if (! $this->form) {
             if (! array_key_exists('board', $this->defaults)) {
-                throw new \Exception('Board must be specified');
+                throw new \Exception('Board must be specified to be create a Topic in TopicCreateFormHandler');
             }
 
             $postType = $this->container->get('ccdn_forum_forum.form.type.post');

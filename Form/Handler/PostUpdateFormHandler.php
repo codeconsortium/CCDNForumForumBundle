@@ -25,7 +25,7 @@ use CCDNForum\ForumBundle\Manager\ManagerInterface;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class PostCreateFormHandler
+class PostUpdateFormHandler
 {
 
     /** @access protected */
@@ -87,31 +87,25 @@ class PostCreateFormHandler
         if ($this->request->getMethod() == 'POST') {
             $formData = $this->form->getData();
 
-            if ($this->strategy == self::INSERT) {
-                $formData->setCreatedDate(new \DateTime());
-                $formData->setCreatedBy($this->defaults['user']);
-                $formData->setTopic($this->defaults['topic']);
-                $formData->setIsLocked(false);
-                $formData->setIsDeleted(false);
+            $formData->setCreatedDate(new \DateTime());
+            $formData->setCreatedBy($this->defaults['user']);
+            $formData->setTopic($this->defaults['topic']);
+            $formData->setIsLocked(false);
+            $formData->setIsDeleted(false);
+
+            $formData = $this->form->getData();
+
+            // get the current time, and compare to when the post was made.
+            $now = new \DateTime();
+            $interval = $now->diff($formData->getCreatedDate());
+
+            // if post is less than 15 minutes old, don't add that it was edited.
+            if ($interval->format('%i') > 15) {
+                $formData->setEditedDate(new \DateTime());
+                $formData->setEditedBy($this->defaults['user']);
             }
 
-            if ($this->strategy == self::UPDATE) {
-                $formData = $this->form->getData();
-
-                // get the current time, and compare to when the post was made.
-                $now = new \DateTime();
-                $interval = $now->diff($formData->getCreatedDate());
-
-                // if post is less than 15 minutes old, don't add that it was edited.
-                if ($interval->format('%i') > 15) {
-                    $formData->setEditedDate(new \DateTime());
-                    $formData->setEditedBy($this->defaults['user']);
-                }
-            }
-
-            //
             // Validate
-            //
             if ($this->form->isValid()) {
                 $this->onSuccess($this->form->getData());
 
@@ -134,29 +128,14 @@ class PostCreateFormHandler
     {
 
         if (! $this->form) {
+            if (! array_key_exists('post', $this->defaults)) {
+                throw new \Exception('Post must be specified to be update a Reply in PostUpdateFormHandler');
+            }
+
             $postType = $this->container->get('ccdn_forum_forum.form.type.post');
             $postType->setDefaultValues($this->defaults);
 
-            //
-            // INSERT topic
-            //
-            if ($this->strategy == self::INSERT) {
-                // post for draft
-                if (array_key_exists('post', $this->defaults)) {
-                    $this->form = $this->factory->create($postType, $this->defaults['post']);
-                } else {
-                    $this->form = $this->factory->create($postType);
-                }
-
-                //$this->form = $this->factory->create($postType);
-            }
-
-            //
-            // UPDATE topic
-            //
-            if ($this->strategy == self::UPDATE) {
-                $this->form = $this->factory->create($postType, $this->defaults['post']);
-            }
+            $this->form = $this->factory->create($postType, $this->defaults['post']);
 
             if ($this->request->getMethod() == 'POST') {
                 $this->form->bind($this->request);

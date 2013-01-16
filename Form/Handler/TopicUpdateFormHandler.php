@@ -118,6 +118,10 @@ class TopicUpdateFormHandler
     public function getForm()
     {
         if (! $this->form) {
+            if (! array_key_exists('post', $this->defaults)) {
+                throw new \Exception('Post must be specified to be update a Topic in TopicUpdateFormHandler');
+            }
+
             $postType = $this->container->get('ccdn_forum_forum.form.type.post');
             $topicType = $this->container->get('ccdn_forum_forum.form.type.topic');
 
