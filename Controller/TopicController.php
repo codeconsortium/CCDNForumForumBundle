@@ -73,21 +73,21 @@ class TopicController extends ContainerAware
         //
         // Get post counts for users
         //
-        if (count($postsPager->getCurrentPageResults()) > 0) {
-            $registryUserIds = array();
-
-            foreach ($postsPager->getCurrentPageResults() as $key => $post) {
-                if ($post->getCreatedBy()) {
-                    $id = $post->getCreatedBy()->getId();
-
-                    if (! array_key_exists($id, $registryUserIds)) {
-                        $registryUserIds[] = $id;
-                    }
-                }
-            }
-        }
-
-        $registries = $this->container->get('ccdn_forum_forum.manager.registry')->getRegistriesForUsersAsArray($registryUserIds);
+//        if (count($postsPager->getCurrentPageResults()) > 0) {
+//            $registryUserIds = array();
+//
+//            foreach ($postsPager->getCurrentPageResults() as $key => $post) {
+//                if ($post->getCreatedBy()) {
+//                    $id = $post->getCreatedBy()->getId();
+//
+//                    if (! array_key_exists($id, $registryUserIds)) {
+//                        $registryUserIds[] = $id;
+//                    }
+//                }
+//            }
+//        }
+//
+//        $registries = $this->container->get('ccdn_forum_forum.manager.registry')->getRegistriesForUsersAsArray($registryUserIds);
 
         $subscriberCount = $this->container->get('ccdn_forum_forum.repository.subscription')->getSubscriberCountForTopicById($topicId);
 
@@ -108,7 +108,7 @@ class TopicController extends ContainerAware
             'pager' => $postsPager,
             'board' => $board,
             'topic' => $topic,
-            'registries' => $registries,
+            //'registries' => $registries,
             'subscription' => $subscription,
             'subscription_count' => $subscriberCount,
         ));

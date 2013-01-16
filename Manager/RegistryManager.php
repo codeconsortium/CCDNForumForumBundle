@@ -74,25 +74,25 @@ class RegistryManager extends BaseManager implements ManagerInterface
      * @param $user
      * @return self
      */
-    public function updateCacheKarmaCountForUser($user)
-    {
-
-        $record = $this->container->get('ccdn_forum_forum.repository.registry')->findRegistryRecordForUser($user->getId());
-
-        if (! $record) {
-            $record = new Registry();
-            $record->setOwnedBy($user);
-        }
-
-        $karmaCount = $this->container->get('ccdn_forum_karma.repository.karma')->getKarmaCountForUserById($user->getId());
-
-        $record->setCachedKarmaPositiveCount($karmaCount['karmaPositiveCount']);
-        $record->setCachedKarmaNegativeCount($karmaCount['karmaNegativeCount']);
-
-        $this->persist($record)->flush();
-
-        return $this;
-    }
+//    public function updateCacheKarmaCountForUser($user)
+//    {
+//
+//        $record = $this->container->get('ccdn_forum_forum.repository.registry')->findRegistryRecordForUser($user->getId());
+//
+//        if (! $record) {
+//            $record = new Registry();
+//            $record->setOwnedBy($user);
+//        }
+//
+//        $karmaCount = $this->container->get('ccdn_forum_karma.repository.karma')->getKarmaCountForUserById($user->getId());
+//
+//        $record->setCachedKarmaPositiveCount($karmaCount['karmaPositiveCount']);
+//        $record->setCachedKarmaNegativeCount($karmaCount['karmaNegativeCount']);
+//
+//        $this->persist($record)->flush();
+//
+//        return $this;
+//    }
 
     /**
      *

@@ -93,16 +93,17 @@
 						</div>
 					</div>
 				</div>
-						
+
+{#
 				<div style="display:block;float:none;clear:right;padding-top:20px;text-align:left;">
 					<div class="pull-left">
-						{%- if registries[post.getCreatedBy().getId()] is defined -%}												
+						{%- if registries[post.getCreatedBy().getId()] is defined -%}
 							{#<div style="clear:both;text-align:left;vertical-align:middle;">
 								<img class="icon16" width="16" height="16" src="{{- asset('bundles/ccdncomponentcommon/images/icons/Black/16x16/16x16_karma.png') -}}" alt="icon">&nbsp;
 								<span class="badge badge-important">{{- registries[post.getCreatedBy().getId()].getCachedKarmaNegativeCount -}}</span>&nbsp;
 								<span class="badge badge-success">{{- registries[post.getCreatedBy().getId()].getCachedKarmaPositiveCount -}}</span>
 							</div>#}
-
+{#
 							<span class="label">{{- 'ccdn_forum_forum.post.user.post_count' |transchoice(registries[post.getCreatedBy().getId()].getCachedPostCount(), {'%post_count%': registries[post.getCreatedBy().getId()].getCachedPostCount()}, 'CCDNForumForumBundle') -}}</span>
 						{%- endif -%}
 
@@ -112,7 +113,7 @@
 						{%- endif -%}
 					</div>
 				</div>
-				
+#}
 			</div>
 		</div>
 	
