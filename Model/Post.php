@@ -23,7 +23,7 @@ abstract class Post
     protected $topic = null;
 
     /** @var UserInterface $createdBy */
-    protected $createdBy = null;
+    protected $createdBy;
 
     /** @var UserInterface $editedBy */
     protected $editedBy = null;

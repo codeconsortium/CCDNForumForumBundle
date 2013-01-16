@@ -133,7 +133,7 @@ class TopicCreateFormHandler
             $post = new Post();
             $post->setTopic($topic);
             $post->setCreatedBy($this->defaults['user']);
-ladybug_dump_die($this->defaults['user']);
+
             $this->form = $this->factory->create($postType, $post);
             $this->form->add($this->factory->create($topicType, $topic));
 

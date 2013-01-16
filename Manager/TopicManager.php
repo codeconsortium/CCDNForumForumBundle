@@ -32,11 +32,13 @@ class TopicManager extends BaseManager implements ManagerInterface
      */
     public function create($post)
     {
+//ladybug_dump($post);
         // insert a new row.
+
+//ladybug_dump($post->getCreatedBy());
         $this->persist($post)->flush();
 
-        // refresh the user so that we have an PostId to work with.
-        $this->refresh($post);
+//ladybug_dump_die($post->getCreatedBy());
 
         // get the topic.
         $topic = $post->getTopic();
@@ -44,11 +46,11 @@ class TopicManager extends BaseManager implements ManagerInterface
         // set topic last_post and first_post, board's last_post.
         $topic->setFirstPost($post);
         $topic->setLastPost($post);
-
+//ladybug_dump_die($post);
         // persist and refresh after a flush to get topic id.
         $this->persist($topic)->flush();
-
-        $this->refresh($topic);
+//ladybug_dump_die($post);
+//        $this->refresh($topic);
 
         if ($topic->getBoard()) {
             // Update affected Board stats.

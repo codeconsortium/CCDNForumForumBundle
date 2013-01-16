@@ -18,7 +18,7 @@
 				<div style="display:block;float:none;clear:right;">
 					<div class="pull-left" style="padding:5px;vertical-align:bottom;">
 						{%- if post.getCreatedBy -%}
-							{{- 'ccdn_forum_forum.post.posted_by' |trans({}, 'CCDNForumForumBundle') -}}<a href="{{- path(user_profile_route, {'userId': post.getCreatedBy.getId } ) -}}">{{- post.getCreatedBy |title -}}</a>
+							{{- 'ccdn_forum_forum.post.posted_by' |trans({}, 'CCDNForumForumBundle') -}}{{- post.getCreatedBy |title -}}
 						{%- else -%}
 							Guest
 						{%- endif -%}
@@ -29,7 +29,7 @@
 							&nbsp;&nbsp;
 							<span class="label" style="display:inline-block;">
 								{{- 'ccdn_forum_forum.post.edited_by' |trans({}, 'CCDNForumForumBundle') -}}
-								{%- if post.getEditedBy -%}<a href="{{- path(user_profile_route, {'userId': post.getEditedBy.getId}) -}}">{{- post.getEditedBy.getUsername |title -}}</a>{%- else -%}Guest{%- endif -%}
+								{%- if post.getEditedBy -%}{{- post.getEditedBy.getUsername |title -}}{%- else -%}Guest{%- endif -%}
 								{{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}
 								<abbr class="timestamper" title="{{- post.getEditedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- post.getEditedDate |date(ccdn_forum_forum.item_post.post_edited_datetime_format) -}}</abbr>
 							</span>

@@ -47,12 +47,12 @@ CCDNForum\ForumBundle\Entity\Topic:
             targetEntity: CCDNForum\ForumBundle\Entity\Post
             mappedBy: topic
             cascade: ["persist", "remove"]
-            onDelete: SET NULL
+            #onDelete: SET NULL
         subscriptions:
             targetEntity: CCDNForum\ForumBundle\Entity\Subscription
             mappedBy: topic
             cascade: ["persist", "remove"]
-            onDelete: SET NULL
+            #onDelete: SET NULL
     manyToOne:
         board:
             targetEntity: CCDNForum\ForumBundle\Entity\Board

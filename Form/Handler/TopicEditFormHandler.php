@@ -125,8 +125,8 @@ class TopicEditFormHandler
             $postType = $this->container->get('ccdn_forum_forum.form.type.post');
             $topicType = $this->container->get('ccdn_forum_forum.form.type.topic');
 
-            $this->form = $this->factory->create($topicType, $this->defaults['post']->getTopic());
-            $this->form->add($this->factory->create($postType, $this->defaults['post']));
+            $this->form = $this->factory->create($postType, $this->defaults['post']);
+            $this->form->add($this->factory->create($topicType, $this->defaults['post']->getTopic()));
 
             if ($this->request->getMethod() == 'POST') {
                 $this->form->bind($this->request);

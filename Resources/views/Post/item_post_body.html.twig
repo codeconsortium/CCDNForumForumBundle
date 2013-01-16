@@ -5,7 +5,7 @@
 		<i class="icon-trash"></i>&nbsp;
 		{{- 'ccdn_forum_forum.post.is_deleted' | trans({}, 'CCDNForumForumBundle') -}}&nbsp; 
 		{{- 'ccdn_forum_forum.post.deleted_by' |trans({}, 'CCDNForumForumBundle') -}}
-		{%- if post.getDeletedBy -%}<a href="{{- path(user_profile_route, {'userId': post.getDeletedBy.getId }) -}}">{{- post.getDeletedBy.getUsername |title -}}</a>{%- else -%}Guest{%- endif -%}
+		{%- if post.getDeletedBy -%}{{- post.getDeletedBy.getUsername |title -}}{%- else -%}Guest{%- endif -%}
 		{{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}{{- relevantDateFormat(post.getDeletedDate) -}}{#|date(ccdn_forum_forum.item_post.post_deleted_datetime_format) #}
 		</span>
 	{%- endif -%}
