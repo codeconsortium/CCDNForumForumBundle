@@ -94,6 +94,6 @@ CCDNForum\ForumBundle\Entity\Topic:
             targetEntity: Symfony\Component\Security\Core\User\UserInterface
             cascade: ["remove"]
             joinColumn:
-                name: fk_sticked_by_user_id
+                name: fk_stickied_by_user_id
                 referencedColumnName: id
                 onDelete: SET NULL
