@@ -3,28 +3,32 @@ namespace CCDNForum\ForumBundle\Component\Provider;
 
 class Profile
 {
-    protected $plainName;
+    protected $username;
     protected $avatar;
     protected $signature;
-
-    public function setSignature($signature)
-    {
-        $this->signature = $signature;
-    }
 
     public function getSignature()
     {
         return $this->signature;
     }
 
-    public function getPlainName()
+    public function setSignature($signature)
     {
-        return $this->plainName;
+        $this->signature = $signature;
+
+        return $this;
     }
 
-    public function setPlainName($plainName)
+    public function getUsername()
     {
-        $this->plainName = $plainName;
+        return $this->username;
+    }
+
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
     }
 
     public function getAvatar()
@@ -35,5 +39,7 @@ class Profile
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+
+        return $this;
     }
 }

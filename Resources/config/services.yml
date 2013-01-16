@@ -27,17 +27,13 @@ parameters:
     ccdn_forum_forum.component.dashboard.integrator.class:      CCDNForum\ForumBundle\Component\Dashboard\DashboardIntegrator
 
     ccdn_forum_forum.component.twig_extension.board_list.class: CCDNForum\ForumBundle\Component\TwigExtension\BoardListExtension
+    ccdn_forum_forum.component.twig_extension.create_profile.class: CCDNForum\ForumBundle\Component\TwigExtension\CreateProfile
+
     ccdn_forum_forum.component.flood_control.class:             CCDNForum\ForumBundle\Component\FloodControl
     
     ccdn_forum_forum.component.menu_builder.menu.class:         CCDNForum\ForumBundle\Component\MenuBuilder\Menu
 
-    #ccdn_forum_forum.component.provider.profile.class:          CCDNForum\ForumBundle\Component\Provider\ProfileProvider
-
 services:
-
-    ccdn_forum_forum.component.provider.profile:
-        class: %ccdn_forum_forum.component.provider.profile.class%
-
 
     #
     # Repositories.
@@ -137,13 +133,10 @@ services:
         arguments:  [@form.factory, @service_container]
 
     #
-    # Dashboard Integrator.
+    # Providers.
     #
-    ccdn_forum_forum.component.dashboard.integrator:
-        class: %ccdn_forum_forum.component.dashboard.integrator.class%
-        arguments: [@service_container]
-        tags:
-            - { name: ccdn_component_dashboard.integrator }
+    ccdn_forum_forum.component.provider.profile:
+        class: %ccdn_forum_forum.component.provider.profile.class%
 
     #
     # Twig Extensions.
@@ -153,11 +146,28 @@ services:
         arguments: [@service_container]
         tags:
             - { name: twig.extension }
+    ccdn_forum_forum.component.twig_extension.create_profile:
+        class: %ccdn_forum_forum.component.twig_extension.create_profile.class%
+        arguments: [@ccdn_forum_forum.component.provider.profile]
+        tags:
+            - { name: twig.extension }
 
+    #
+    # Other.
+    #
     ccdn_forum_forum.component.flood_control:
-        class: %ccdn_forum_forum.component.flood_control.class%
-        arguments: [@session, @service_container]
-        
+       class: %ccdn_forum_forum.component.flood_control.class%
+       arguments: [@session, @service_container]
+
+    #
+    # Dashboard Integrator.
+    #
+    ccdn_forum_forum.component.dashboard.integrator:
+        class: %ccdn_forum_forum.component.dashboard.integrator.class%
+        arguments: [@service_container]
+        tags:
+            - { name: ccdn_component_dashboard.integrator }
+
     #
     # Menu Builder.
     #
