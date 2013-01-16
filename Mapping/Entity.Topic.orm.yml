@@ -46,31 +46,31 @@ CCDNForum\ForumBundle\Entity\Topic:
         posts:
             targetEntity: CCDNForum\ForumBundle\Entity\Post
             mappedBy: topic
-            #cascade: ["remove"]
-            #onDelete: SET NULL
+            cascade: ["persist", "remove"]
+            onDelete: SET NULL
         subscriptions:
             targetEntity: CCDNForum\ForumBundle\Entity\Subscription
             mappedBy: topic
-            #cascade: ["remove"]
-            #onDelete: SET NULL
+            cascade: ["persist", "remove"]
+            onDelete: SET NULL
     manyToOne:
         board:
             targetEntity: CCDNForum\ForumBundle\Entity\Board
-            #cascade: ["remove"]
+            cascade: ["persist"]
             joinColumn:
                 name: fk_board_id
                 referencedColumnName: id
                 onDelete: SET NULL
         firstPost:
             targetEntity: CCDNForum\ForumBundle\Entity\Post
-            #cascade: ["persist", "remove"]
+            cascade: ["persist", "remove"]
             joinColumn:
                 name: fk_first_post_id
                 referencedColumnName: id
                 onDelete: SET NULL
         lastPost:
             targetEntity: CCDNForum\ForumBundle\Entity\Post
-            #cascade: ["persist", "remove"]
+            cascade: ["persist", "remove"]
             nullable: true
             joinColumn:
                 name: fk_last_post_id

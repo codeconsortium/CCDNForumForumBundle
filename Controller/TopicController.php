@@ -140,49 +140,14 @@ class TopicController extends ContainerAware
         //
         // Set the form handler options
         //
-        $options = array('board' => $board,	'user' => $user);
-
-        //
-        // Publishing drafts
-        //
-        if ($draftId != 0) {
-            $draft = $this->container->get('ccdn_forum_forum.manager.draft')->getDraft($draftId);
-
-            if (array_key_exists('post', $draft) && array_key_exists('topic', $draft)) {
-                if (is_object($draft['topic']) && $draft['topic'] instanceof Topic && is_object($draft['post']) && $draft['post'] instanceof Post) {
-                    $options['topic'] = $draft['topic'];
-                    $options['post'] = $draft['post'];
-                } else {
-                    if (is_object($draft) && $draft instanceof Post) {
-                        return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_reply_from_draft', array('topicId' => $draft->getTopic()->getId(), 'draftId' => $draft->getId()) ));
-                    }
-                }
-            }
-
-        }
+        $options = array('board' => $board, 'user' => $user);
 
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_create')->setDefaultValues($options);
-
-	    if (isset($_POST['submit_draft'])) {
-	        $formHandler->setMode($formHandler::DRAFT);
-
-	        if ($formHandler->process()) {
-	            $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.draft.save.success', array(), 'CCDNForumForumBundle'));
-
-	            return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_draft_list'));
-	        }
-	    }
-	
-	    if (isset($_POST['submit_preview'])) {
-            $formHandler->setMode($formHandler::PREVIEW);
-        }
 
 		// Flood Control.
 		if ( ! $this->container->get('ccdn_forum_forum.component.flood_control')->isFlooded())
 		{
 	        if (isset($_POST['submit_post'])) {
-	            $formHandler->setMode($formHandler::NORMAL);
-
 	            if ($formHandler->process()) {
 	                $this->container->get('ccdn_forum_forum.component.flood_control')->incrementCounter();
 

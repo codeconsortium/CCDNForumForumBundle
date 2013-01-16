@@ -33,7 +33,7 @@ CCDNForum\ForumBundle\Entity\Board:
                 onDelete: SET NULL
         lastPost:
             targetEntity: CCDNForum\ForumBundle\Entity\Post
-            #cascade: ["persist"]
+            cascade: ["persist"]
             nullable: true
             joinColumn:
                 name: fk_last_post_id

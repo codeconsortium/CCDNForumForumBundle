@@ -43,10 +43,10 @@ class PostManager extends BaseManager implements ManagerInterface
         $this->container->get('ccdn_forum_forum.manager.topic')->updateStats($post->getTopic());
 
         // Update the cached post count of the post author.
-        $this->container->get('ccdn_forum_forum.manager.registry')->updateCachePostCountForUser($post->getCreatedBy());
+//        $this->container->get('ccdn_forum_forum.manager.registry')->updateCachePostCountForUser($post->getCreatedBy());
 
 		// Subscribe the user to the topic.
-		$this->container->get('ccdn_forum_forum.manager.subscription')->subscribe($post->getTopic()->getId(), $post->getCreatedBy());
+//		$this->container->get('ccdn_forum_forum.manager.subscription')->subscribe($post->getTopic()->getId(), $post->getCreatedBy());
 		
         return $this;
     }

@@ -35,7 +35,7 @@ CCDNForum\ForumBundle\Entity\Post:
     manyToOne:
         topic:
             targetEntity: CCDNForum\ForumBundle\Entity\Topic
-            #cascade: ["persist"]
+            cascade: ["persist"]
             #nullable: true
             joinColumn:
                 name: fk_topic_id

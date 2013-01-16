@@ -93,7 +93,7 @@ class TopicFormHandler
         $this->container = $container;
 
         // topic manager is the default unless the mode is changed.
-        $this->mode = self::NORMAL;
+//        $this->mode = self::NORMAL;
         $this->manager = $this->container->get('ccdn_forum_forum.manager.topic');
 
         // set insert as default strategy
@@ -229,39 +229,50 @@ class TopicFormHandler
 
             // set for insert method
             if ($this->strategy == self::INSERT) {
-                if (array_key_exists('board', $this->defaults)) {
-                    $topicType->setDefaultValues(array('choose_board' => true, 'board' => $this->defaults['board']));
-                }
+//                if (array_key_exists('board', $this->defaults)) {
+//                    $topicType->setDefaultValues(array('choose_board' => true, 'board' => $this->defaults['board']));
+//                }
 
-                // post for draft
-                if (array_key_exists('post', $this->defaults)) {
-                    $this->form = $this->factory->create($postType, $this->defaults['post']);
-                } else {
-                    $this->form = $this->factory->create($postType);
-                }
+                $post = new Post();
 
-                // topic for draft
-                if (array_key_exists('topic', $this->defaults)) {
-                    $this->form->add($this->factory->create($topicType, $this->defaults['topic']));
-                } else {
-                    $this->form->add($this->factory->create($topicType));
-                }
+                $topic = new Topic();
+
+                $topic->setPost($post);
+                $topic->setBoard($this->defaults['board']);
+
+                $this->form = $this->factory->create($topicType);
+
+//                // post for draft
+//                if (array_key_exists('post', $this->defaults)) {
+//                    $this->form = $this->factory->create($postType, $this->defaults['post']);
+//                } else {
+//                    $this->form = $this->factory->create($postType);
+//                }
+//
+//                // topic for draft
+//                if (array_key_exists('topic', $this->defaults)) {
+//                    $this->form->add($this->factory->create($topicType, $this->defaults['topic']));
+//                } else {
+//                    $this->form->add($this->factory->create($topicType));
+//                }
             }
 
             // set if in update method
             if ($this->strategy == self::UPDATE) {
-                if (array_key_exists('board', $this->defaults)) {
-                    $topicType->setDefaultValues(array('choose_board' => true, 'board' => $this->defaults['board']));
-                }
+//                if (array_key_exists('board', $this->defaults)) {
+//                    $topicType->setDefaultValues(array('choose_board' => true, 'board' => $this->defaults['board']));
+//                }
+
+                $topic = $this->defaults['post']->getTopic();
+                $topic->setBoard($this->defaults['board']);
 
                 $this->form = $this->factory->create($postType, $this->defaults['post']);
-                $this->form->add($this->factory->create($topicType, $this->defaults['post']->getTopic()));
+                $this->form->add($this->factory->create($topicType, $topic));
             }
 
             if ($this->request->getMethod() == 'POST') {
-                $this->form->bindRequest($this->request);
+                $this->form->bind($this->request);
             }
-
         }
 
         return $this->form;

@@ -79,17 +79,6 @@ class PostType extends AbstractType
         $builder->add('body', 'textarea', array(
             'data' => $this->getQuote(),
         ));
-
-        $userId = $this->defaults['user']->getId();
-        $attachments = $this->container->get('ccdn_component_attachment.repository.attachment')->findForUserByIdAsQB($userId);
-
-        $builder->add('attachment', 'entity', array(
-            'class' => 'CCDNComponentAttachmentBundle:Attachment',
-            'choices' => $attachments,
-            'property' => 'filename_original',
-            'required' => false,
-            )
-        );
     }
 
     /**
@@ -99,18 +88,18 @@ class PostType extends AbstractType
      */
     public function getQuote()
     {
-        if (array_key_exists('quote', $this->defaults)) {
-            if (is_object($this->defaults['quote']) && $this->defaults['quote'] instanceof Post) {
-                $quote = $this->defaults['quote'];
-
-                $author = $quote->getCreatedBy();
-                $body = $quote->getBody();
-
-                $quote = '[QUOTE=' . $author . ']' . $body . '[/QUOTE]';
-
-                return $quote;
-            }
-        }
+//        if (array_key_exists('quote', $this->defaults)) {
+//            if (is_object($this->defaults['quote']) && $this->defaults['quote'] instanceof Post) {
+//                $quote = $this->defaults['quote'];
+//
+//                $author = $quote->getCreatedBy();
+//                $body = $quote->getBody();
+//
+//                $quote = '[QUOTE=' . $author . ']' . $body . '[/QUOTE]';
+//
+//                return $quote;
+//            }
+//        }
 
         return "";
     }

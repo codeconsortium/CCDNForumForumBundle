@@ -25,7 +25,7 @@ CCDNForum\ForumBundle\Entity\Draft:
                 onDelete: SET NULL
         topic:
             targetEntity: CCDNForum\ForumBundle\Entity\Topic
-            #cascade: ["persist"]
+            cascade: ["persist"]
             joinColumn:
                 name: fk_topic_id
                 referencedColumnName: id

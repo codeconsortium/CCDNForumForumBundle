@@ -6,7 +6,7 @@
 		<div class="btn-toolbar" style="clear:both;">
 			<div class="pull-left">
 				{%- if post.getCreatedBy -%}
-				<a href="{{- path(user_profile_route, {'userId': post.getCreatedBy.getId } ) -}}">{{- post.getCreatedBy -}}</a>
+				    {{- post.getCreatedBy -}}
 				{%- else -%}Guest{%- endif -%}
 			</div>
 			<div class="pull-right">

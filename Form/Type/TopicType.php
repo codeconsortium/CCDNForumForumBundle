@@ -50,25 +50,6 @@ class TopicType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-        if (array_key_exists('choose_board', $this->defaults)) {
-            if ($this->defaults['choose_board']) {
-                if (array_key_exists('board', $this->defaults)) {
-                    $preferredChoices = array($this->defaults['board']->getName() => $this->defaults['board']->getId());
-                } else {
-                    $preferredChoices = array();
-                }
-
-                $builder
-                    ->add('board', 'entity', array(
-                        'class' => 'CCDNForumForumBundle:Board',
-                        'query_builder' => function($repository)  { return $repository->createQueryBuilder('b')->orderBy('b.id', 'ASC'); },
-                        'property' => 'name',
-                        'preferred_choices' => $preferredChoices,
-                    ));
-            }
-        }
-
         $builder->add('title');
     }
 

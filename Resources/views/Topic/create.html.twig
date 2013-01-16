@@ -38,7 +38,7 @@
 			{{- form_errors(form) -}}
 
 			<div class="control-group"><div class="controls row-fluid">{{- form_row(form._token) -}}</div></div>
-
+{#
 			<div class="control-group{{- (form.Topic.board.vars.errors|length > 0) ? ' error': '' -}}">
 				{{- form_label(form.Topic.board, null, { 'label': 'ccdn_forum_forum.form.label.topic.board'| trans({}, 'CCDNForumForumBundle')}) -}}
 				<div class="controls row-fluid">
@@ -46,7 +46,7 @@
 					{{- form_widget(form.Topic.board) -}}
 				</div>
 			</div>
-
+#}
 			<div class="control-group{{- (form.Topic.title.vars.errors|length > 0) ? ' error': '' -}}">
 				{{- form_label(form.Topic.title, null, { 'label': 'ccdn_forum_forum.form.label.topic.title'| trans({}, 'CCDNForumForumBundle')}) -}}
 				<div class="controls row-fluid">
@@ -67,7 +67,7 @@
 			</div>
 
 			{%- form_theme form ccdn_forum_forum.topic.create.form_theme -%}
-			<div class="control-group{{- (form.attachment.vars.errors|length > 0) ? ' error': '' -}}">
+{#			<div class="control-group{{- (form.attachment.vars.errors|length > 0) ? ' error': '' -}}">
 				{{- form_label(form.attachment, null, { 'label': 'ccdn_forum_forum.form.label.post.attachment'| trans({}, 'CCDNForumForumBundle')}) -}}
 				<div class="controls row-fluid">
 					{{- form_errors(form.attachment) -}}
@@ -76,11 +76,11 @@
 					&nbsp;<a target="_blank" class="btn" href="{{- path('ccdn_component_attachment_upload') -}}">{{- 'ccdn_component_attachment.link.upload' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
 				</div>
 			</div>
-
+#}
 			<div class="form-actions">
 				<input type="submit" class="btn btn-primary" value="{{- 'ccdn_forum_forum.form.button.topic.create' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_post">&nbsp;
-				<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">&nbsp;
-				<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.save_draft' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_draft">&nbsp;
+{#				<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">&nbsp;
+				<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.save_draft' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_draft">&nbsp;#}
 				<a class="btn" href="{{- path('ccdn_forum_forum_board_show', {'boardId': board.id}) -}}">{{- 'ccdn_forum_forum.form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}</a>
 			</div>
 		</fieldset>

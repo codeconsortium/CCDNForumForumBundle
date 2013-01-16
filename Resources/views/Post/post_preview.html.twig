@@ -20,7 +20,7 @@
 							<div class="pull-left">
 								<span class="">
 									{%- if post.getCreatedBy -%}
-									<a href="{{- path(user_profile_route, {'userId': post.getCreatedBy.getId }) -}}">{{- post.getCreatedBy |title -}}</a>
+									    {{- post.getCreatedBy |title -}}
 									{%- else -%}
 									Guest
 									{%- endif -%}
@@ -37,7 +37,7 @@
 								{{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}
 								<br>
 							</span>
-							<span class="common_body">
+{#							<span class="common_body">
 								{%- if post.getAttachment -%}
 									<br><a href="{{- path('ccdn_component_attachment_download', {'attachmentId': post.getAttachment.getId }) -}}"><img width="60" height="60" src="{{- path('ccdn_component_attachment_thumbnail', {'attachmentId': post.getAttachment.getId }) -}}" alt="{{- post.getAttachment.getFilenameOriginal -}}"></a><br>
 								{%- endif -%}
@@ -52,7 +52,7 @@
 									{%- endif -%}
 								{%- endif -%}
 							</span>
-						</div>
+#}						</div>
 					</div>
 
 				</div>

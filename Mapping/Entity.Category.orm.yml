@@ -16,4 +16,4 @@ CCDNForum\ForumBundle\Entity\Category:
         boards:
             targetEntity: CCDNForum\ForumBundle\Entity\Board
             mappedBy: category
-            #cascade: ["persist", "remove"]
+            cascade: ["persist"]

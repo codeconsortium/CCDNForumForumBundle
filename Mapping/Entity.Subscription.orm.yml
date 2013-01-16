@@ -18,7 +18,7 @@ CCDNForum\ForumBundle\Entity\Subscription:
     manyToOne:
         topic:
             targetEntity: CCDNForum\ForumBundle\Entity\Topic
-            #cascade: ["persist"]
+            cascade: ["persist"]
             joinColumn:
                 name: fk_topic_id
                 referencedColumnName: id

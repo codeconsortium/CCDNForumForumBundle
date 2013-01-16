@@ -59,10 +59,6 @@
 										<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply_with_quote', {'topicId': post.getTopic.getId, 'quoteId': post.getId }) -}}"><i class="icon-pencil"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.quote' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
 
 										{%- if post.getCreatedBy -%}
-											{%- if post.getCreatedBy.getId != user.getId -%}
-												<li><a rel="nofollow" href="{{- path('ccdn_forum_karma_rate', {'postId': post.getId }) -}}"><i class="icon-thumbs-up"></i>&nbsp;{{- 'ccdn_forum_karma.link.post.rate' | trans({}, 'CCDNForumKarmaBundle') -}}</a></li>
-											{%- endif -%}
-
 											{%- if post.getCreatedBy.getId == user.getId and not is_granted('ROLE_MODERATOR') -%}
 												<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_post_edit', {'postId': post.getId }) -}}"><i class="icon-pencil"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.edit' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
 												{%- if not post.getDeletedBy -%}

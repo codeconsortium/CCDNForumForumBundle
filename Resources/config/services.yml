@@ -21,8 +21,8 @@ parameters:
     ccdn_forum_forum.form.handler.post_update.class:            CCDNForum\ForumBundle\Form\Handler\PostFormHandler
 
     ccdn_forum_forum.form.type.topic.class:                     CCDNForum\ForumBundle\Form\Type\TopicType
-    ccdn_forum_forum.form.handler.topic_create.class:           CCDNForum\ForumBundle\Form\Handler\TopicFormHandler
-    ccdn_forum_forum.form.handler.topic_update.class:           CCDNForum\ForumBundle\Form\Handler\TopicFormHandler
+    ccdn_forum_forum.form.handler.topic_create.class:           CCDNForum\ForumBundle\Form\Handler\TopicCreateFormHandler
+    ccdn_forum_forum.form.handler.topic_update.class:           CCDNForum\ForumBundle\Form\Handler\TopicUpdateFormHandler
 
     ccdn_forum_forum.component.dashboard.integrator.class:      CCDNForum\ForumBundle\Component\Dashboard\DashboardIntegrator
 
@@ -113,13 +113,9 @@ services:
     ccdn_forum_forum.form.handler.post_create:
         class:  %ccdn_forum_forum.form.handler.post_create.class%
         arguments:  [@form.factory, @service_container]
-        calls:
-            - [ useInsertStrategy, []]
     ccdn_forum_forum.form.handler.post_update:
         class:  %ccdn_forum_forum.form.handler.post_update.class%
         arguments:  [@form.factory, @service_container]
-        calls:
-            - [ useUpdateStrategy, []]
 
     #
     # Topic Forms.
@@ -130,13 +126,9 @@ services:
     ccdn_forum_forum.form.handler.topic_create:
         class:  %ccdn_forum_forum.form.handler.topic_create.class%
         arguments:  [@form.factory, @service_container]
-        calls:
-            - [ useInsertStrategy, []]
     ccdn_forum_forum.form.handler.topic_update:
         class:  %ccdn_forum_forum.form.handler.topic_update.class%
         arguments:  [@form.factory, @service_container]
-        calls:
-            - [ useUpdateStrategy, []]
 
     #
     # Dashboard Integrator.
@@ -167,4 +159,3 @@ services:
         class: %ccdn_forum_forum.component.menu_builder.menu.class%
         tags:
             - { name: ccdn_component_menu.menu_builder }
-    
