@@ -155,5 +155,4 @@ class TopicCreateFormHandler
     {
         return $this->manager->create($entity)->flush();
     }
-
 }

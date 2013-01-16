@@ -124,8 +124,6 @@ class TopicUpdateFormHandler
             $post = $this->defaults['post'];
             $topic = $post->getTopic();
 
-            //ladybug_dump_die($post);
-
             $this->form = $this->factory->create($postType, $post);
             $this->form->add($this->factory->create($topicType, $topic));
 

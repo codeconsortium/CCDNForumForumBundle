@@ -176,5 +176,4 @@ class PostCreateFormHandler
     {
         return $this->manager->create($entity)->flush();
     }
-
 }
