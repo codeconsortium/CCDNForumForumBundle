@@ -49,6 +49,8 @@ class CCDNForumForumExtension extends Extension
 
         $config = $processor->processConfiguration($configuration, $configs);
 
+        $this->getServicesSection($container, $config);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 		
@@ -73,10 +75,10 @@ class CCDNForumForumExtension extends Extension
         $this->getTranscriptSection($container, $config);
     }
 
-	protected function getServices()
+	protected function getServicesSection($container, $config)
 	{
-		
-	}
+        $container->setParameter('ccdn_forum_forum.component.provider.profile.class', $config['service']['provider']['profile_provider']);
+    }
 
     /**
      *

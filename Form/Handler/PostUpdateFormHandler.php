@@ -115,7 +115,6 @@ class PostUpdateFormHandler
      */
     public function getForm()
     {
-
         if (! $this->form) {
             if (! array_key_exists('post', $this->defaults)) {
                 throw new \Exception('Post must be specified to be update a Reply in PostUpdateFormHandler');

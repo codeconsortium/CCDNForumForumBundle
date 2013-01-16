@@ -30,8 +30,14 @@ parameters:
     ccdn_forum_forum.component.flood_control.class:             CCDNForum\ForumBundle\Component\FloodControl
     
     ccdn_forum_forum.component.menu_builder.menu.class:         CCDNForum\ForumBundle\Component\MenuBuilder\Menu
-    
+
+    #ccdn_forum_forum.component.provider.profile.class:          CCDNForum\ForumBundle\Component\Provider\ProfileProvider
+
 services:
+
+    ccdn_forum_forum.component.provider.profile:
+        class: %ccdn_forum_forum.component.provider.profile.class%
+
 
     #
     # Repositories.
