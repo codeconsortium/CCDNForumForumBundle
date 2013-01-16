@@ -51,8 +51,8 @@
 							</div>
 
 							{%- if is_granted('ROLE_USER') -%}
-								<div class="btn-group">
-									<a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i>&nbsp;<span class="caret"></span></a>
+								<div class="dropdown btn-group">
+									<a class="dropdown-toggle btn" data-toggle="dropdown" href="#"><i class="icon-cog"></i>&nbsp;<span class="caret"></span></a>
 									<ul class="dropdown-menu pull-right" style="z-index:15;">
 
 										<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply', {'topicId': post.getTopic.getId }) -}}"><i class="icon-pencil"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}</a></li>

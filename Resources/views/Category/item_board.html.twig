@@ -21,7 +21,7 @@
 				{%- set page = divCeil(( board.getLastPost.getTopic.getCachedReplyCount + 1), topics_per_page) -%}
 				{{- 'ccdn_forum_forum.post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
 				{%- if board.getLastPost.getCreatedBy -%}
-					<a href="{{- path(user_profile_route, {'userId': board.getLastPost.getCreatedBy.getId }) -}}">{{- board.getLastPost.getCreatedBy.getUsername |title -}}</a>
+					{{- board.getLastPost.getCreatedBy.getUsername |title -}}
 				{%- else -%}
 					Guest
 				{%- endif -%}

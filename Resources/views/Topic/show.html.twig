@@ -25,7 +25,7 @@
 	{%- if topic.closedDate -%}
 	<div class="alert alert-error">
 		{{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
-		{%- if topic.getClosedBy -%}<a href="{{- path(user_profile_route, {'userId': topic.getClosedBy.getId } ) -}}">{{- topic.getClosedBy.getUsername -}}</a>{%- else -%}Unknown{%- endif -%}&nbsp;
+		{%- if topic.getClosedBy -%}{{- topic.getClosedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
 		{{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.topic_closed_datetime_format) -}}
 	</div>
 	{%- endif -%}
@@ -33,7 +33,7 @@
 	{%- if topic.deletedDate -%}
 	<div class="alert alert-error">
 		{{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
-		{%- if topic.getDeletedBy -%}<a href="{{- path(user_profile_route, {'userId': topic.getDeletedBy.getId } ) -}}">{{- topic.getDeletedBy.getUsername -}}</a>{%- else -%}Unknown{%- endif -%}&nbsp;
+		{%- if topic.getDeletedBy -%}{{- topic.getDeletedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
 		{{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
 	</div>
 	{%- endif -%}
