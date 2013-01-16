@@ -88,7 +88,6 @@ class PostRepository extends EntityRepository
                 LEFT JOIN p.editedBy eu
                 LEFT JOIN p.deletedBy du
                 LEFT JOIN p.lockedBy lu
-                LEFT JOIN p.attachment pa
                 WHERE p.topic = :id
                 GROUP BY p.id
                 ORDER BY p.createdDate ASC
