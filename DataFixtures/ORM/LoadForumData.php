@@ -13,6 +13,9 @@
 
 namespace CCDNForum\ForumBundle\DataFixtures\ORM;
 
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -27,8 +30,14 @@ use CCDNForum\ForumBundle\Entity\Post;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
+class LoadForumData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
+    private $container;
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
 
 	/**
 	 *
@@ -37,6 +46,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 	 */
     public function load(ObjectManager $manager)
     {
+        $referencedUserAdmin = $this->getReference($this->container->getParameter('ccdn_forum_forum.fixtures.user_admin'));
+
 		//
 		// Category.
 		//
@@ -88,7 +99,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 		$post = new Post();
 		
 		$post->setTopic($topic);
-		$post->setCreatedBy($manager->merge($this->getReference('user-admin')));
+		$post->setCreatedBy($manager->merge($referencedUserAdmin));
 		$post->setCreatedDate(new \DateTime());
 		$post->setIsDeleted(false);
 		$post->setIsLocked(false);

@@ -56,6 +56,8 @@ class CCDNForumForumExtension extends Extension
 
         $container->setParameter('ccdn_forum_forum.user.profile_route', $config['user']['profile_route']);
 
+        $this->getFixtureReferenceSection($container, $config);
+
         $this->getSEOSection($container, $config);
         $this->getCategorySection($container, $config);
         $this->getBoardSection($container, $config);
@@ -75,7 +77,16 @@ class CCDNForumForumExtension extends Extension
 	{
 		
 	}
-	
+
+    /**
+     *
+     * @access protected
+     * @param $container, $config
+     */
+    protected function getFixtureReferenceSection($container, $config)
+    {
+        $container->setParameter('ccdn_forum_forum.fixtures.user_admin', $config['fixtures']['user_admin']);
+    }
 	
     /**
      *

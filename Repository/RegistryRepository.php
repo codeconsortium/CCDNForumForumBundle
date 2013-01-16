@@ -35,25 +35,25 @@ class RegistryRepository extends EntityRepository
         $queryOrphanedRegistryCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT r.id) AS orphanedRegistryCount
-                FROM CCDNForumForumBundle:Registry r
+                FROM CCDNForum\ForumBundle\Entity\Registry r
                 WHERE r.ownedBy IS NULL
             ');
         $queryUnsetCachedPostCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT r.id) AS unsetCachedPostCount
-                FROM CCDNForumForumBundle:Registry r
+                FROM CCDNForum\ForumBundle\Entity\Registry r
                 WHERE r.cachedPostCount IS NULL
             ');
         $queryUnsetCachedKarmaPositiveCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT r.id) AS unsetCachedKarmaPositiveCount
-                FROM CCDNForumForumBundle:Registry r
+                FROM CCDNForum\ForumBundle\Entity\Registry r
                 WHERE r.cachedKarmaPositiveCount IS NULL
             ');
         $queryUnsetCachedKarmaNegativeCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT r.id) AS unsetCachedKarmaNegativeCount
-                FROM CCDNForumForumBundle:Registry r
+                FROM CCDNForum\ForumBundle\Entity\Registry r
                 WHERE r.cachedKarmaNegativeCount IS NULL
             ');
 
@@ -94,7 +94,7 @@ class RegistryRepository extends EntityRepository
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT r
-                FROM CCDNForumForumBundle:Registry r
+                FROM CCDNForum\ForumBundle\Entity\Registry r
                 WHERE r.ownedBy = :id
                 ')
             ->setParameter('id', $userId);
@@ -116,7 +116,7 @@ class RegistryRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
         $query = $qb
             ->add('select', 'r')
-            ->from('CCDNForumForumBundle:Registry', 'r')
+            ->from('CCDNForum\ForumBundle\Entity\Registry', 'r')
             ->where($qb->expr()->in('r.ownedBy', '?1'))
             ->setParameters(array('1' => array_values($registryUserIds)))
             ->getQuery();

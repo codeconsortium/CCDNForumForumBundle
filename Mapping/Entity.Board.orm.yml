@@ -31,11 +31,11 @@ CCDNForum\ForumBundle\Entity\Board:
                 name: fk_category_id
                 referencedColumnName: id
                 onDelete: SET NULL
-#        lastPost:
-#            targetEntity: CCDNForum\ForumBundle\Entity\Post
-#            #cascade: ["persist"]
-#            nullable: true
-#            joinColumn:
-#                name: fk_last_post_id
-#                referencedColumnName: id
-#                onDelete: SET NULL
+        lastPost:
+            targetEntity: CCDNForum\ForumBundle\Entity\Post
+            #cascade: ["persist"]
+            nullable: true
+            joinColumn:
+                name: fk_last_post_id
+                referencedColumnName: id
+                onDelete: SET NULL

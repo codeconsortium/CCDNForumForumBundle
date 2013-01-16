@@ -35,19 +35,19 @@ class PostRepository extends EntityRepository
         $queryOrphanedPostCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT p.id) AS orphanedPostCount
-                FROM CCDNForumForumBundle:Post p
+                FROM CCDNForum\ForumBundle\Entity\Post p
                 WHERE p.topic IS NULL
             ');
         $queryPartialLockCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT p.id) AS partialLockCount
-                FROM CCDNForumForumBundle:Post p
+                FROM CCDNForum\ForumBundle\Entity\Post p
                 WHERE p.isLocked IS NULL OR (p.isLocked = FALSE AND p.lockedBy IS NOT NULL)
             ');
         $queryPartialDeletionCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT p.id) AS partialDeletionCount
-                FROM CCDNForumForumBundle:Post p
+                FROM CCDNForum\ForumBundle\Entity\Post p
                 WHERE p.isDeleted IS NULL OR (p.isDeleted = FALSE AND p.deletedBy IS NOT NULL)
             ');
 
@@ -82,7 +82,7 @@ class PostRepository extends EntityRepository
 
         $query = $this->getEntityManager()
             ->createQuery('
-                SELECT p, t FROM CCDNForumForumBundle:Post p
+                SELECT p, t FROM CCDNForum\ForumBundle\Entity\Post p
                 LEFT JOIN p.topic t
                 LEFT JOIN p.createdBy u
                 LEFT JOIN p.editedBy eu
@@ -124,7 +124,7 @@ class PostRepository extends EntityRepository
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT p, t, fp
-                FROM CCDNForumForumBundle:Post p
+                FROM CCDNForum\ForumBundle\Entity\Post p
                 LEFT JOIN p.topic t
                 LEFT JOIN t.firstPost fp
                 WHERE p.id = :id')
@@ -149,7 +149,7 @@ class PostRepository extends EntityRepository
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT p, t
-                FROM CCDNForumForumBundle:Post p
+                FROM CCDNForum\ForumBundle\Entity\Post p
                 LEFT JOIN p.topic t
                 WHERE p.isDeleted = TRUE');
 
@@ -172,7 +172,7 @@ class PostRepository extends EntityRepository
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT p, t
-                FROM CCDNForumForumBundle:Post p
+                FROM CCDNForum\ForumBundle\Entity\Post p
                 LEFT JOIN p.topic t
                 WHERE p.isLocked = TRUE or t.isDeleted = TRUE
                 ORDER BY p.createdDate DESC');
@@ -195,7 +195,7 @@ class PostRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $query = $qb->add('select', 'p')
-            ->from('CCDNForumForumBundle:Post', 'p')
+            ->from('CCDNForum\ForumBundle\Entity\Post', 'p')
             ->where($qb->expr()->in('p.id', '?1'))
             ->setParameters(array('1' => array_values($postIds)))
             ->getQuery();
@@ -218,7 +218,7 @@ class PostRepository extends EntityRepository
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(p.id) AS postCount
-                FROM CCDNForumForumBundle:Post p
+                FROM CCDNForum\ForumBundle\Entity\Post p
                 LEFT JOIN p.topic t
                 WHERE p.createdBy = :id AND p.isDeleted = FALSE')
             ->setParameter('id', $userId);
@@ -243,7 +243,7 @@ class PostRepository extends EntityRepository
 
         $query = $qb
             ->add('select', 'count(p.id)')
-            ->add('from', 'CCDNForumForumBundle:Post p')
+            ->add('from', 'CCDNForum\ForumBundle\Entity\Post p')
             ->add('where', 'p.topic = ?1')
             ->setParameter(1, $topicId)
             ->getQuery();

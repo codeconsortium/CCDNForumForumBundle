@@ -55,6 +55,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end();
 
+        $this->addFixtureReferenceSection($rootNode);
         $this->addSEOSection($rootNode);
         $this->addCategorySection($rootNode);
         $this->addBoardSection($rootNode);
@@ -75,9 +76,28 @@ class Configuration implements ConfigurationInterface
      * @access protected
      * @param ArrayNodeDefinition $node
      */
+    protected function addFixtureReferenceSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('fixtures')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                    ->scalarNode('user_admin')->defaultValue('user-admin')->end()
+                ->end()
+            ->end();
+    }
+
+    /**
+     *
+     * @access protected
+     * @param ArrayNodeDefinition $node
+     */
     protected function addSEOSection(ArrayNodeDefinition $node)
     {
         $node
+            ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('seo')
                     ->addDefaultsIfNotSet()
@@ -129,6 +149,7 @@ class Configuration implements ConfigurationInterface
     private function addBoardSection(ArrayNodeDefinition $node)
     {
         $node
+            ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('board')
                     ->addDefaultsIfNotSet()
@@ -157,6 +178,7 @@ class Configuration implements ConfigurationInterface
     private function addTopicSection(ArrayNodeDefinition $node)
     {
         $node
+            ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('topic')
                     ->addDefaultsIfNotSet()
@@ -207,6 +229,7 @@ class Configuration implements ConfigurationInterface
     private function addPostSection(ArrayNodeDefinition $node)
     {
         $node
+            ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('post')
                     ->addDefaultsIfNotSet()
@@ -255,6 +278,7 @@ class Configuration implements ConfigurationInterface
     private function addItemBoardSection(ArrayNodeDefinition $node)
     {
         $node
+            ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('item_board')
                     ->addDefaultsIfNotSet()
@@ -274,6 +298,7 @@ class Configuration implements ConfigurationInterface
     private function addItemPostSection(ArrayNodeDefinition $node)
     {
         $node
+            ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('item_post')
                     ->addDefaultsIfNotSet()
@@ -297,6 +322,7 @@ class Configuration implements ConfigurationInterface
     private function addItemSignatureSection(ArrayNodeDefinition $node)
     {
         $node
+            ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('item_signature')
                     ->addDefaultsIfNotSet()
@@ -316,6 +342,7 @@ class Configuration implements ConfigurationInterface
     private function addDraftSection(ArrayNodeDefinition $node)
     {
         $node
+            ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('draft')
                     ->addDefaultsIfNotSet()
@@ -343,6 +370,7 @@ class Configuration implements ConfigurationInterface
     private function addSubscriptionSection(ArrayNodeDefinition $node)
     {
         $node
+            ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('subscription')
                     ->addDefaultsIfNotSet()
@@ -371,6 +399,7 @@ class Configuration implements ConfigurationInterface
     private function addTranscriptSection(ArrayNodeDefinition $node)
     {
         $node
+            ->addDefaultsIfNotSet()
             ->children()
                 ->arrayNode('transcript')
                     ->addDefaultsIfNotSet()

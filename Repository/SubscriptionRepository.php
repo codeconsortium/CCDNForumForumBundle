@@ -24,19 +24,19 @@ class SubscriptionRepository extends EntityRepository
         $queryOrphanedSubscriptionCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT s.id) AS orphanedSubscriptionCount
-                FROM CCDNForumForumBundle:Subscription s
+                FROM CCDNForum\ForumBundle\Entity\Subscription s
                 WHERE s.topic IS NULL
             ');
         $queryNullSubscribedCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT s.id) AS nullSubscribedCount
-                FROM CCDNForumForumBundle:Subscription s
+                FROM CCDNForum\ForumBundle\Entity\Subscription s
                 WHERE s.isSubscribed IS NULL
             ');
         $queryNullReadCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT s.id) AS nullReadCount
-                FROM CCDNForumForumBundle:Subscription s
+                FROM CCDNForum\ForumBundle\Entity\Subscription s
                 WHERE s.isRead IS NULL
             ');
 
@@ -71,7 +71,7 @@ class SubscriptionRepository extends EntityRepository
 
         $query = $this->getEntityManager()
             ->createQuery('
-                SELECT s, t, fp, lp, b, c FROM CCDNForumForumBundle:Subscription s
+                SELECT s, t, fp, lp, b, c FROM CCDNForum\ForumBundle\Entity\Subscription s
                 LEFT JOIN s.topic t
                 LEFT JOIN t.lastPost lp
                 LEFT JOIN lp.createdBy lpu
@@ -100,7 +100,7 @@ class SubscriptionRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
             ->createQuery('
-                SELECT s, t FROM CCDNForumForumBundle:Subscription s
+                SELECT s, t FROM CCDNForum\ForumBundle\Entity\Subscription s
                 LEFT JOIN s.topic t
                 WHERE s.topic = :topicId AND s.ownedBy = :userId')
             ->setParameters(array('topicId' => $topicId, 'userId' => $userId));
@@ -121,7 +121,7 @@ class SubscriptionRepository extends EntityRepository
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(s.id)
-                FROM CCDNForumForumBundle:Subscription s
+                FROM CCDNForum\ForumBundle\Entity\Subscription s
                 WHERE s.topic = :id AND s.isSubscribed = TRUE')
             ->setParameter('id', $topicId);
 

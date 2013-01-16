@@ -33,7 +33,7 @@ class CategoryRepository extends EntityRepository
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT c, b
-                FROM CCDNForumForumBundle:Category c
+                FROM CCDNForum\ForumBundle\Entity\Category c
                 LEFT JOIN c.boards b
                 ORDER BY c.listOrderPriority, b.listOrderPriority
             ');
@@ -54,7 +54,7 @@ class CategoryRepository extends EntityRepository
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT c
-                FROM CCDNForumForumBundle:Category c
+                FROM CCDNForum\ForumBundle\Entity\Category c
                 WHERE c.name = :name
             ')
 			->setParameter('name', $name);
@@ -77,7 +77,7 @@ class CategoryRepository extends EntityRepository
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT c, b
-                FROM CCDNForumForumBundle:Category c
+                FROM CCDNForum\ForumBundle\Entity\Category c
                 LEFT JOIN c.boards b
                 WHERE c.id = :id
                 ORDER BY c.listOrderPriority, b.listOrderPriority
@@ -102,7 +102,7 @@ class CategoryRepository extends EntityRepository
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT c
-                FROM CCDNForumForumBundle:Category c
+                FROM CCDNForum\ForumBundle\Entity\Category c
                 ORDER BY c.listOrderPriority ASC');
 
         try {
@@ -124,7 +124,7 @@ class CategoryRepository extends EntityRepository
 		$categoryCountQuery = $this->getEntityManager()
 			->createQuery('
 	            SELECT COUNT(c.id)
-	            FROM CCDNForumForumBundle:Category c
+	            FROM CCDNForum\ForumBundle\Entity\Category c
 			');
 
         try {

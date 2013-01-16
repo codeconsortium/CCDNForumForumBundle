@@ -35,31 +35,31 @@ class TopicRepository extends EntityRepository
         $queryOrphanedTopicCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT t.id) AS orphanedTopicCount
-                FROM CCDNForumForumBundle:Topic t
+                FROM CCDNForum\ForumBundle\Entity\Topic t
                 WHERE t.board IS NULL
             ');
         $queryUnlinkedFirstPostCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT t.id) AS unlinkedFirstPostCount
-                FROM CCDNForumForumBundle:Topic t
+                FROM CCDNForum\ForumBundle\Entity\Topic t
                 WHERE t.firstPost IS NULL AND t.cachedReplyCount > 0
             ');
         $queryUnlinkedLastPostCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT t.id) AS unlinkedLastPostCount
-                FROM CCDNForumForumBundle:Topic t
+                FROM CCDNForum\ForumBundle\Entity\Topic t
                 WHERE t.lastPost IS NULL AND t.cachedReplyCount > 0
             ');
         $queryPartialClosureCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT t.id) AS partialClosureCount
-                FROM CCDNForumForumBundle:Topic t
+                FROM CCDNForum\ForumBundle\Entity\Topic t
                 WHERE t.isClosed IS NULL OR (t.isClosed = FALSE AND t.closedBy IS NOT NULL)
             ');
         $queryPartialDeletionCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT t.id) AS partialDeletionCount
-                FROM CCDNForumForumBundle:Topic t
+                FROM CCDNForum\ForumBundle\Entity\Topic t
                 WHERE t.isDeleted IS NULL OR (t.isDeleted = FALSE AND t.deletedBy IS NOT NULL)
             ');
 //		$queryPartialStickyCount = $this->getEntityManager()
@@ -71,13 +71,13 @@ class TopicRepository extends EntityRepository
         $queryUnsetReplyCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT t.id) AS unsetReplyCount
-                FROM CCDNForumForumBundle:Topic t
+                FROM CCDNForum\ForumBundle\Entity\Topic t
                 WHERE t.cachedReplyCount IS NULL
             ');
         $queryUnsetViewCount = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(DISTINCT t.id) AS unsetViewCount
-                FROM CCDNForumForumBundle:Topic t
+                FROM CCDNForum\ForumBundle\Entity\Topic t
                 WHERE t.cachedViewCount IS NULL
             ');
 
@@ -135,7 +135,7 @@ class TopicRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
             ->createQuery('
-                SELECT t, fp, lp FROM CCDNForumForumBundle:Topic t
+                SELECT t, fp, lp FROM CCDNForum\ForumBundle\Entity\Topic t
                 LEFT JOIN t.lastPost lp
                 LEFT JOIN lp.createdBy lpu
                 LEFT JOIN t.firstPost fp
@@ -163,7 +163,7 @@ class TopicRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
             ->createQuery('
-                SELECT t, fp, lp FROM CCDNForumForumBundle:Topic t
+                SELECT t, fp, lp FROM CCDNForum\ForumBundle\Entity\Topic t
                 LEFT JOIN t.lastPost lp
                 LEFT JOIN lp.createdBy lpu
                 LEFT JOIN t.firstPost fp
@@ -191,7 +191,7 @@ class TopicRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
             ->createQuery('
-                SELECT t, b, c FROM CCDNForumForumBundle:Topic t
+                SELECT t, b, c FROM CCDNForum\ForumBundle\Entity\Topic t
                 LEFT JOIN t.board b
                 LEFT JOIN b.category c
                 WHERE t.id = :id')
@@ -213,7 +213,7 @@ class TopicRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
             ->createQuery('
-                SELECT t, p	FROM CCDNForumForumBundle:Topic t
+                SELECT t, p	FROM CCDNForum\ForumBundle\Entity\Topic t
                 INNER JOIN t.posts p
                 LEFT JOIN p.createdBy u
                 WHERE t.id = :id
@@ -240,7 +240,7 @@ class TopicRepository extends EntityRepository
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT t, fp, lp, b
-                FROM CCDNForumForumBundle:Topic t
+                FROM CCDNForum\ForumBundle\Entity\Topic t
                 LEFT JOIN t.lastPost lp
                 LEFT JOIN t.firstPost fp
                 LEFT JOIN t.board b
@@ -266,7 +266,7 @@ class TopicRepository extends EntityRepository
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $query = $qb->add('select', 't')
-            ->from('CCDNForumForumBundle:Topic', 't')
+            ->from('CCDNForum\ForumBundle\Entity\Topic', 't')
             ->where($qb->expr()->in('t.id', '?1'))
             ->setParameters(array('1' => array_values($topicIds)))
             ->getQuery();
@@ -289,7 +289,7 @@ class TopicRepository extends EntityRepository
 
         $query = $qb
             ->add('select', 'p')
-            ->add('from', 'CCDNForumForumBundle:Post p')
+            ->add('from', 'CCDNForum\ForumBundle\Entity\Post p')
             ->add('where', 'p.topic = ?1')
             ->add('orderBy', 'p.createdDate ASC')
             ->setMaxResults(1)
@@ -316,7 +316,7 @@ class TopicRepository extends EntityRepository
 
         $query = $qb
             ->add('select', 'p')
-            ->add('from', 'CCDNForumForumBundle:Post p')
+            ->add('from', 'CCDNForum\ForumBundle\Entity\Post p')
             ->add('where', 'p.topic = ?1')
             ->add('orderBy', 'p.createdDate DESC')
             ->setMaxResults(1)
