@@ -1,112 +1,111 @@
 {% extends ccdn_forum_forum.topic.show.layout_template %}
 
 {% block stylesheets %}
-	{{ parent() }}
-	<link href="{{- asset('bundles/ccdncomponentcommon/css/speech_bubble.css') -}}" rel="stylesheet" type="text/css">
-	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
+    {{ parent() }}
+    <link href="{{- asset('bundles/ccdncomponentcommon/css/speech_bubble.css') -}}" rel="stylesheet" type="text/css">
+    <link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block title %}{{- truncDot('ccdn_forum_forum.title.topic.show' | trans({'%topic_title%': topic.getTitle |capitalize}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
 
 {% block sidebar %}
-	{{ parent() }}
+    {{ parent() }}
 
-	{%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
+    {%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
 
 {% endblock %}
 
 
 {% block body_content %}
 
-	{%- spaceless -%}
+    {%- spaceless -%}
 
-	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
+    {%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
 
-	{%- if topic.closedDate -%}
-	<div class="alert alert-error">
-		{{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
-		{%- if topic.getClosedBy -%}{{- topic.getClosedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
-		{{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.topic_closed_datetime_format) -}}
-	</div>
-	{%- endif -%}
+    {% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
 
-	{%- if topic.deletedDate -%}
-	<div class="alert alert-error">
-		{{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
-		{%- if topic.getDeletedBy -%}{{- topic.getDeletedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
-		{{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
-	</div>
-	{%- endif -%}
+    <h2 title="{{- topic.getTitle -}}">{{- truncDot(topic.getTitle |capitalize, 70) -}}</h2>
 
-	{% include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } %}
+    <br>
 
-	<h2 title="{{- topic.getTitle -}}">{{- truncDot(topic.getTitle |capitalize, 70) -}}</h2>
+    {%- if topic.isDeleted -%}
+        <div class="alert alert-error">
+            <i class="icon-white icon-trash"></i>&nbsp;
+            {% set topic_deleter = create_profile(topic.getDeletedBy) %}
 
-	<br>
+            {{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
+            {{ topic_deleter.getProfilePath|raw }}
 
-	<span class="badge badge-info">{{- 'ccdn_forum_forum.topic.reply_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- topic.cachedReplyCount -}}</span>&nbsp;
-	<span class="badge badge-info">{{- 'ccdn_forum_forum.topic.view_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- topic.cachedViewCount -}}</span>&nbsp;
+            &nbsp;
 
-	{%- if subscription_count is defined -%}
-		<span class="badge badge-info">{{- 'ccdn_forum_forum.topic.subscription_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- subscription_count -}}</span>&nbsp;
-	{%- endif -%}
+            {{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
+        </div><br>
+    {%- endif -%}
 
-	{%- if topic.isSticky -%}
-	<span class="label label-important">
-		<i class="icon-white icon-bullhorn"></i>&nbsp;
-		{{- 'ccdn_forum_forum.topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
-		{%- if topic.getStickiedBy -%}{{- topic.getStickiedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
-		{{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
-	</span>&nbsp;
-	{%- endif -%}
+    {%- if topic.isClosed -%}
+        <div class="alert alert-error">
+            <i class="icon-white icon-lock"></i>&nbsp;
+            {% set topic_closer = create_profile(topic.getClosedBy) %}
 
-	{%- if topic.isClosed -%}
-	<span class="label label-important">
-		<i class="icon-white icon-lock"></i>&nbsp;
-		{{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
-		{%- if topic.getClosedBy -%}{{- topic.getClosedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
-		{{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.topic_closed_datetime_format) -}}
-	</span>&nbsp;
-	{%- endif -%}
+            {{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
+            {{ topic_closer.getProfilePath|raw }}
 
-	{%- if topic.isDeleted -%}
-	<span class="label label-important">
-		<i class="icon-white icon-trash"></i>&nbsp;
-		{{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
-		{%- if topic.getDeletedBy -%}{{- topic.getDeletedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
-		{{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
-	</span>&nbsp;
-	{%- endif -%}
-	
-	<div class="btn-toolbar" style="display:block !important;clear:both !important;">
-		<div class="pull-left">
-			<a class="btn btn-danger" rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply', {'topicId': topic.getId }) -}}"><i class="icon-white icon-comment"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
-			{%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
-		</div>
-		{%- if pager.haveToPaginate -%}
-			<div class="pull-right">
-	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_topic_show_paginated', 'routeParams':{'topicId':topic.getId}} ) -}}
-			</div>
-		{%- endif -%}
-		<br><br>
-	</div>
-	
-	{%- for key, post in pager.getCurrentPageResults -%}
-		{%- include "CCDNForumForumBundle:Post:item_post.html.twig" with {'key': key} -%}
-	{%- endfor -%}
+            &nbsp;
 
-	
-	<div class="btn-toolbar" style="display:block !important;clear:both !important;">
-		{%- if pager.haveToPaginate -%}
-			<div class="pull-right">
-	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_topic_show_paginated', 'routeParams':{'topicId':topic.getId}} ) -}}
-			</div>
-		{%- endif -%}
-		<br><br>
-	</div>
+            {{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.topic_closed_datetime_format) -}}
+        </div><br>
+    {%- endif -%}
 
-	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
+    {%- if topic.isSticky -%}
+        <span class="label label-inverse">
+        <i class="icon-white icon-bullhorn"></i>&nbsp;
+            {% set topic_stickier = create_profile(topic.stickiedBy) %}
 
-	{%- endspaceless -%}
+            {{- 'ccdn_forum_forum.topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
+            {{ topic_stickier.getProfilePath|raw }}
+
+            &nbsp;
+
+            {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
+        </span><br>
+    {%- endif -%}
+
+    <span class="badge badge-info">{{- 'ccdn_forum_forum.topic.reply_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- topic.cachedReplyCount -}}</span>&nbsp;
+    <span class="badge badge-info">{{- 'ccdn_forum_forum.topic.view_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- topic.cachedViewCount -}}</span>&nbsp;
+
+    {%- if subscription_count is defined -%}
+        <span class="badge badge-info">{{- 'ccdn_forum_forum.topic.subscription_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- subscription_count -}}</span>&nbsp;
+    {%- endif -%}
+
+    <div class="btn-toolbar" style="display:block !important;clear:both !important;">
+        <div class="pull-left">
+            <a class="btn btn-danger" rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply', {'topicId': topic.getId }) -}}"><i class="icon-white icon-comment"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+            {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
+        </div>
+        {%- if pager.haveToPaginate -%}
+            <div class="pull-right">
+            {{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_topic_show_paginated', 'routeParams':{'topicId':topic.getId}} ) -}}
+            </div>
+        {%- endif -%}
+        <br><br>
+    </div>
+
+    {%- for key, post in pager.getCurrentPageResults -%}
+        {%- include "CCDNForumForumBundle:Post:item_post.html.twig" with {'key': key} -%}
+    {%- endfor -%}
+
+
+    <div class="btn-toolbar" style="display:block !important;clear:both !important;">
+        {%- if pager.haveToPaginate -%}
+            <div class="pull-right">
+            {{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_topic_show_paginated', 'routeParams':{'topicId':topic.getId}} ) -}}
+            </div>
+        {%- endif -%}
+        <br><br>
+    </div>
+
+    {%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
+
+    {%- endspaceless -%}
 
 {% endblock body_content %}
