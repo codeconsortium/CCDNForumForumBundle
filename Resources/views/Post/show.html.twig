@@ -22,60 +22,59 @@
 
 	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
 
-	{%- if topic.closedDate -%}
-	<div class="alert alert-error">&nbsp;
-		{{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
-		{%- if topic.getClosedBy -%}{{- topic.getClosedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
-		{{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.topic_closed_datetime_format) -}}
-	</div>
-	{%- endif -%}
-
-	{%- if topic.deletedDate -%}
-	<div class="alert alert-error">&nbsp;
-		{{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
-		{%- if topic.getDeletedBy -%}{{- topic.getDeletedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
-		{{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
-	</div>
-	{%- endif -%}
-
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
 	<h2 title="{{- topic.getTitle -}}">{{- truncDot(topic.getTitle |capitalize, 70) -}}</h2>
 
 	<br>
 
+    {%- if topic.isDeleted -%}
+        <div class="alert alert-error">
+            <i class="icon-white icon-trash"></i>&nbsp;
+            {% set topic_deleter = create_profile(topic.getDeletedBy) %}
+
+            {{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
+            {{ topic_deleter.getProfilePath|raw }}
+
+            &nbsp;
+
+            {{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
+        </div><br>
+    {%- endif -%}
+
+    {%- if topic.isClosed -%}
+        <div class="alert alert-error">
+            <i class="icon-white icon-lock"></i>&nbsp;
+            {% set topic_closer = create_profile(topic.getClosedBy) %}
+
+            {{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
+            {{ topic_closer.getProfilePath|raw }}
+
+            &nbsp;
+
+            {{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.topic_closed_datetime_format) -}}
+        </div><br>
+    {%- endif -%}
+
+    {%- if topic.isSticky -%}
+        <span class="label label-inverse">
+    <i class="icon-white icon-bullhorn"></i>&nbsp;
+            {% set topic_stickier = create_profile(topic.stickiedBy) %}
+
+            {{- 'ccdn_forum_forum.topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
+            {{ topic_stickier.getProfilePath|raw }}
+
+            &nbsp;
+
+            {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
+    </span><br>
+    {%- endif -%}
+
 	<span class="badge badge-info">{{- 'ccdn_forum_forum.topic.reply_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- topic.cachedReplyCount -}}</span>&nbsp;
 	<span class="badge badge-info">{{- 'ccdn_forum_forum.topic.view_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- topic.cachedViewCount -}}</span>&nbsp;
 
 	{%- if subscription_count is defined -%}
 		<span class="badge badge-info">{{- 'ccdn_forum_forum.topic.subscription_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- subscription_count -}}</span>&nbsp;
-	{%- endif -%}
-
-	{%- if topic.isSticky -%}
-	<span class="label label-important">
-		<i class="icon-white icon-bullhorn"></i>&nbsp;
-		{{- 'ccdn_forum_forum.topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
-		{%- if topic.getStickiedBy -%}{{- topic.getStickiedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
-		{{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
-	</span>&nbsp;
-	{%- endif -%}
-
-	{%- if topic.isClosed -%}
-	<span class="label label-important">
-		<i class="icon-white icon-lock"></i>&nbsp;
-		{{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
-		{%- if topic.getClosedBy -%}{{- topic.getClosedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
-		{{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.topic_closed_datetime_format) -}}
-	</span>&nbsp;
-	{%- endif -%}
-
-	{%- if topic.isDeleted -%}
-	<span class="label label-important">
-		<i class="icon-white icon-trash"></i>&nbsp;
-		{{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
-		{%- if topic.getDeletedBy -%}{{- topic.getDeletedBy.getUsername -}}{%- else -%}Unknown{%- endif -%}&nbsp;
-		{{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
-	</span>&nbsp;
 	{%- endif -%}
 
 	<div class="btn-toolbar">
