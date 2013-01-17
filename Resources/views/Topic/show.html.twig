@@ -57,8 +57,8 @@
     {%- endif -%}
 
     {%- if topic.isSticky -%}
-        <span class="label label-inverse">
-        <i class="icon-white icon-bullhorn"></i>&nbsp;
+        <div class="alert alert-inverse">
+        <i class="icon-bullhorn"></i>&nbsp;
             {% set topic_stickier = create_profile(topic.stickiedBy) %}
 
             {{- 'ccdn_forum_forum.topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
@@ -67,7 +67,7 @@
             &nbsp;
 
             {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
-        </span><br>
+        </div><br>
     {%- endif -%}
 
     <span class="badge badge-info">{{- 'ccdn_forum_forum.topic.reply_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- topic.cachedReplyCount -}}</span>&nbsp;
