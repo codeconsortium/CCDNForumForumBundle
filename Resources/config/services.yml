@@ -137,6 +137,7 @@ services:
     #
     ccdn_forum_forum.component.provider.profile:
         class: %ccdn_forum_forum.component.provider.profile.class%
+        arguments: [@service_container]
 
     #
     # Twig Extensions.

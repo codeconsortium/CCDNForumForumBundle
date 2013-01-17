@@ -1,6 +1,8 @@
 {%- spaceless -%}
 <hr>
 
+{% set author = create_profile(post.getCreatedBy) %}
+
 <div style="border-left:5px solid #99caff;padding-top:1px;padding-bottom:5px;vertical-align:top;">
     <div style="display:block;min-height:120px;vertical-align:top;" id="post_{{- post.getId -}}">
 
@@ -8,6 +10,7 @@
             <div style="margin:0px;padding:5px 0;overflow:hidden;vertical-align:top;text-align:center;z-index:3;">
 
             {#  {%- include 'CCDNUserProfileBundle:Avatar:item_avatar.html.twig' with {'user': post.getCreatedBy, 'scale_x':80, 'scale_y':80, 'border': 1, 'padding': 4, } -%} #}
+                {{ author.renderAvatar|raw }}
 
             </div>
         </div>
@@ -17,7 +20,7 @@
 
                 <div style="display:block;float:none;clear:right;">
                     <div class="pull-left" style="padding:5px;vertical-align:bottom;">
-                        {% set author = create_profile(post.getCreatedBy) %}
+
 
                         {{- 'ccdn_forum_forum.post.posted_by' |trans({}, 'CCDNForumForumBundle') -}}
                         {{- author.getProfilePath|raw -}}
