@@ -20,7 +20,7 @@
                         {% set author = create_profile(post.getCreatedBy) %}
 
                         {{- 'ccdn_forum_forum.post.posted_by' |trans({}, 'CCDNForumForumBundle') -}}
-                        {{- author.getProfilePath |title -}}
+                        {{- author.getProfilePath|raw -}}
 
                         &nbsp;&nbsp;
                         <abbr class="timestamper label" style="display:inline-block;" title="{{- post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
@@ -33,7 +33,7 @@
                                 {% set editor = create_profile(post.getEditedBy) %}
 
                                 {{- 'ccdn_forum_forum.post.edited_by' |trans({}, 'CCDNForumForumBundle') -}}
-                                {{- editor.getProfilePath |title -}}
+                                {{- editor.getProfilePath|raw -}}
 
                                 {{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}
 

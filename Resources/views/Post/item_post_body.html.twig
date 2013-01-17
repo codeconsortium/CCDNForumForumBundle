@@ -2,11 +2,15 @@
 
 	{%- if post.getIsDeleted -%}
 		<span class="alert alert-warning" style="display:block;">
-		<i class="icon-trash"></i>&nbsp;
-		{{- 'ccdn_forum_forum.post.is_deleted' | trans({}, 'CCDNForumForumBundle') -}}&nbsp; 
-		{{- 'ccdn_forum_forum.post.deleted_by' |trans({}, 'CCDNForumForumBundle') -}}
-		{%- if post.getDeletedBy -%}{{- post.getDeletedBy.getUsername |title -}}{%- else -%}Guest{%- endif -%}
-		{{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}{{- relevantDateFormat(post.getDeletedDate) -}}{#|date(ccdn_forum_forum.item_post.post_deleted_datetime_format) #}
+            <i class="icon-trash"></i>&nbsp;
+            {% set deleter = create_profile(post.getDeletedBy) %}
+
+            {{- 'ccdn_forum_forum.post.is_deleted' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
+            {{- 'ccdn_forum_forum.post.deleted_by' |trans({}, 'CCDNForumForumBundle') -}}
+            {{ deleter.getProfilePath|raw }}
+
+            {{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}
+            {{- relevantDateFormat(post.getDeletedDate) -}}{#|date(ccdn_forum_forum.item_post.post_deleted_datetime_format) #}
 		</span>
 	{%- endif -%}
 

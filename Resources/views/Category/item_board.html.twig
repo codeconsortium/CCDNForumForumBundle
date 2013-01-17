@@ -34,7 +34,7 @@
                 {% set profile = create_profile(board.getLastPost.getCreatedBy) %}
 
                 {{- 'ccdn_forum_forum.post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
-                {{- profile.getProfilePath |title -}}
+                {{- profile.getProfilePath|raw -}}
 
                 <br>
                 {%- if page < 2 -%}
