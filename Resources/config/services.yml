@@ -27,7 +27,7 @@ parameters:
     ccdn_forum_forum.component.dashboard.integrator.class:      CCDNForum\ForumBundle\Component\Dashboard\DashboardIntegrator
 
     ccdn_forum_forum.component.twig_extension.board_list.class: CCDNForum\ForumBundle\Component\TwigExtension\BoardListExtension
-    ccdn_forum_forum.component.twig_extension.create_profile.class: CCDNForum\ForumBundle\Component\TwigExtension\CreateProfile
+    ccdn_forum_forum.component.twig_extension.create_profile.class: CCDNForum\ForumBundle\Component\TwigExtension\CreateProfileExtension
 
     ccdn_forum_forum.component.flood_control.class:             CCDNForum\ForumBundle\Component\FloodControl
     

@@ -31,13 +31,18 @@
 			<br>
 			
 			{%- if topic.getFirstPost -%}
+
+                {% set topic_author = create_profile(topic.getFirstPost.getCreatedBy) %}
+
 				{{- 'ccdn_forum_forum.post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
-				{%- if topic.getFirstPost.getCreatedBy -%}
-					{{- topic.getFirstPost.getCreatedBy |title -}}
-				{%- else -%}
-					Guest
-				{%- endif -%}
-				&nbsp;<a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.getId }) -}}"><abbr class="timestamper" title="{{- topic.getFirstPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- topic.getFirstPost.getCreatedDate |date(ccdn_forum_forum.board.show.first_post_datetime_format) -}}</abbr></a>
+                {{ topic_author.getProfilePath|title }}
+
+				&nbsp;
+                <a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.getId }) -}}">
+                    <abbr class="timestamper" title="{{- topic.getFirstPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+                        {{- topic.getFirstPost.getCreatedDate |date(ccdn_forum_forum.board.show.first_post_datetime_format) -}}
+                    </abbr>
+                </a>
 			{%- endif -%}
 		</td>
 		<td class="center">
@@ -48,14 +53,12 @@
 		</td>
 		<td class="center">
 			{%- if topic.getLastPost -%}
-				{{- 'ccdn_forum_forum.post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
-				{%- if topic.getLastPost.getCreatedBy -%}
-					{{- topic.getLastPost.getCreatedBy |title -}}
-				{%- else -%}
-					Guest
-				{%- endif -%}
+                {% set last_author = create_profile(topic.getLastPost.getCreatedBy) %}
 
-				{%- set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) -%}
+                {{- 'ccdn_forum_forum.post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
+                {{ last_author.getProfilePath|title }}
+
+                {%- set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) -%}
 				<br>
 				{%- if page < 2 -%}
 					<a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.getId } ) -}}#{{- topic.getLastPost.getId -}}"><abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">{{- topic.getLastPost.getCreatedDate |date(ccdn_forum_forum.board.show.last_post_datetime_format) -}}</abbr></a>

@@ -3,9 +3,21 @@ namespace CCDNForum\ForumBundle\Component\Provider;
 
 class Profile
 {
+    protected $profilePath;
     protected $username;
     protected $avatar;
     protected $signature;
+
+
+    public function getProfilePath()
+    {
+        return $this->username;
+    }
+
+    public function setProfilePath($profilePath)
+    {
+        $this->profilePath = $profilePath;
+    }
 
     public function getSignature()
     {

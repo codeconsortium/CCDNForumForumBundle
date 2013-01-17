@@ -86,13 +86,13 @@
 			</div>
 		</fieldset>
 	</form>
-
+{#
 	{%- if preview is not empty -%}
 		{%- include "CCDNForumForumBundle:Post:post_preview.html.twig" -%}
 	{%- endif -%}
 
 	{%- include 'CCDNForumForumBundle:Topic:transcript.html.twig' with {'topic': topic } -%}
-
+#}
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
 	{%- endspaceless -%}
