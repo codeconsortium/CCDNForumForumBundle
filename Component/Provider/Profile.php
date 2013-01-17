@@ -43,6 +43,22 @@ class Profile
         return $this;
     }
 
+    public function renderAvatar($scaleX = 100, $scaleY = 100, $roundedPX = 0, $borderPX = 0, $paddingPX = 0)
+    {
+        $scaleX     = ($scaleX) ? $scaleX : 100;
+        $scaleY     = ($scaleY) ? $scaleY : 100;
+        $roundedPX  = ($roundedPX) ? 'border-radius:' . $roundedPX . 'px;' : '';
+        $borderPX   = ($borderPX) ? 'border:' . $borderPX . 'px solid #ddd;': '';
+        $paddingPX  = ($paddingPX) ? 'padding:' . $paddingPX . 'px;': '';
+
+        return '<img style="' . $borderPX . $roundedPX . $paddingPX . '" class="avatar" width="' . $scaleX . '" height="' . $scaleY . '" src="' . $this->getAvatarUrl() . '" alt="avatar" />';
+    }
+
+    public function getAvatarUrl()
+    {
+        return $this->avatar;
+    }
+
     public function getAvatar()
     {
         return $this->avatar;

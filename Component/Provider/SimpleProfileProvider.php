@@ -10,13 +10,9 @@ class SimpleProfileProvider implements ProfileProviderInterface
         $profile = new Profile();
 
         if (null !== $user) {
-            $profile->setAvatar('');
             $profile->setUsername($user->getUsername());
-            $profile->setSignature('');
         } else {
-            $profile->setAvatar('');
             $profile->setUsername('Guest');
-            $profile->setSignature('');
         }
 
         return $profile;
