@@ -28,15 +28,14 @@ class SimpleProfileProvider implements ProfileProviderInterface
     {
         $profile = new Profile();
 
-        $asset = $this->container->get('templating.helper.assets');
-
-        $profile->setAvatar($asset->getUrl('bundles/ccdnforumforum/images/default_avatar/anonymous_avatar.gif'));
-
         if (null !== $user) {
             $profile->setUsername($user->getUsername());
         } else {
             $profile->setUsername('Guest');
         }
+
+        $asset = $this->container->get('templating.helper.assets');
+        $profile->setAvatarFallback($asset->getUrl('bundles/ccdnforumforum/images/default_avatar/anonymous_avatar.gif'));
 
         return $profile;
     }

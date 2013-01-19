@@ -13,26 +13,88 @@
 
 namespace CCDNForum\ForumBundle\Component\Provider;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 interface ProfileInterface
 {
+    /**
+     * @return \Symfony\Component\Security\Core\User\UserInterface $user
+     */
+    public function getUser();
+
+    /**
+     * @param \Symfony\Component\Security\Core\User\UserInterface $user
+     * @return Profile $this
+     */
+    public function setUser(UserInterface $user = null);
+
+    /**
+     * @return string
+     */
     public function getProfilePath();
 
+    /**
+     * @param $profilePath
+     * @return Profile $this
+     */
     public function setProfilePath($profilePath);
 
-    public function getSignature();
-
-    public function setSignature($signature);
-
+    /**
+     * @return string
+     */
     public function getUsername();
 
+    /**
+     * @param string $username
+     * @return Profile $this
+     */
     public function setUsername($username);
 
+    /**
+     * @param int $scaleX
+     * @param int $scaleY
+     * @param int $roundedPX
+     * @param int $borderPX
+     * @param int $paddingPX
+     * @return string
+     */
     public function renderAvatar($scaleX = 100, $scaleY = 100, $roundedPX = 0, $borderPX = 0, $paddingPX = 0);
 
+    /**
+     * @return string
+     */
     public function getAvatarUrl();
 
+    /**
+     * @return string
+     */
     public function getAvatar();
 
+    /**
+     * @param string $avatar
+     * @return Profile $this
+     */
     public function setAvatar($avatar);
 
+    /**
+     * @return string
+     */
+    public function getAvatarFallback();
+
+    /**
+     * @param string $avatar
+     * @return Profile $this
+     */
+    public function setAvatarFallback($avatar);
+
+    /**
+     * @return string
+     */
+    public function getSignature();
+
+    /**
+     * @param string $signature
+     * @return Profile $this
+     */
+    public function setSignature($signature);
 }
