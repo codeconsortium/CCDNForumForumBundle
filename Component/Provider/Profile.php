@@ -35,6 +35,24 @@ class Profile implements ProfileInterface
     /** @var string $signature */
     protected $signature;
 
+    /** @var array $roleBadges */
+    protected $roleBadges;
+
+    static $badgeColours = array(
+        'grey' => 'label',
+        'green' => 'label-success',
+        'orange' => 'label-warning',
+        'red' => 'label-important',
+        'blue' => 'label-info',
+        'black' => 'label-inverse',
+    );
+
+
+    public function __construct()
+    {
+        $this->roleBadges = array();
+    }
+
     /**
      * @return \Symfony\Component\Security\Core\User\UserInterface $user
      */
@@ -174,5 +192,62 @@ class Profile implements ProfileInterface
         $this->signature = $signature;
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoleBadges()
+    {
+        return $this->roleBadges;
+    }
+
+    /**
+     * @param array $badges
+     * @return Profile $this
+     */
+    public function setRoleBadges(array $badges = null)
+    {
+        $this->roleBadges = $badges;
+
+        return $this;
+    }
+
+    /**
+     * @param array $badges
+     * @return Profile $this
+     */
+    public function addRoleBadges(array $badges)
+    {
+        foreach ($badges as $badge) {
+            $this->roleBadges[] = $badge;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function renderRoleBadges()
+    {
+        $html = '';
+
+        if ( ! is_array($this->roleBadges) && count($this->roleBadges) < 1) {
+            return '';
+        }
+
+        foreach ($this->roleBadges as $badge) {
+            if (! is_array($badge)) {
+                continue;
+            }
+
+            $colour = (array_key_exists($badge[0], self::$badgeColours) ? self::$badgeColours[$badge[0]] : 'label');
+            $message = $badge[1];
+
+            $html .= '<span class="label ' . $colour . '">' . $message . '</span>';
+        }
+
+        return $html;
     }
 }

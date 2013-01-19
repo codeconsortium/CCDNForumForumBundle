@@ -97,4 +97,27 @@ interface ProfileInterface
      * @return Profile $this
      */
     public function setSignature($signature);
+
+    /**
+     * @return array
+     */
+    public function getRoleBadges();
+
+    /**
+     * @param array $badges
+     * @return Profile $this
+     */
+    public function setRoleBadges(array $badges = null);
+
+    /**
+     * @param array $badges
+     * @return Profile $this
+     */
+    public function addRoleBadges(array $badges);
+
+    /**
+     * @return string
+     */
+    public function renderRoleBadges();
+
 }

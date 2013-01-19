@@ -37,6 +37,28 @@ class SimpleProfileProvider implements ProfileProviderInterface
         $asset = $this->container->get('templating.helper.assets');
         $profile->setAvatarFallback($asset->getUrl('bundles/ccdnforumforum/images/default_avatar/anonymous_avatar.gif'));
 
+        if (null !== $user) {
+            $roles = $user->getRoles();
+
+            foreach ($roles as $role) {
+                switch ($role) {
+                    case 'ROLE_SUPER_ADMIN':
+                    case 'ROLE_ADMIN':
+                    case 'ROLE_MODERATOR':
+                        $badges = array('red', 'Staff');
+                        break;
+                    case 'ROLE_USER':
+                        $badges = array('blue', 'Member');
+                        break;
+                    default:
+                        $badges = array('grey', 'Anonymous');
+                        break;
+                }
+            }
+
+            $profile->setRoleBadges(array($badges));
+        }
+
         return $profile;
     }
 }
