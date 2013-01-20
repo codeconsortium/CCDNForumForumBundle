@@ -84,20 +84,22 @@ class PostUpdateFormHandler
         $this->getForm();
 
         if ($this->request->getMethod() == 'POST') {
-            $formData = $this->form->getData();
-
-            // get the current time, and compare to when the post was made.
-            $now = new \DateTime();
-            $interval = $now->diff($formData->getCreatedDate());
-
-            // if post is less than 15 minutes old, don't add that it was edited.
-            if ($interval->format('%i') > 15) {
-                $formData->setEditedDate(new \DateTime());
-                $formData->setEditedBy($this->defaults['user']);
-            }
+            $this->form->bind($this->request);
 
             // Validate
             if ($this->form->isValid()) {
+                $formData = $this->form->getData();
+
+                // get the current time, and compare to when the post was made.
+                $now = new \DateTime();
+                $interval = $now->diff($formData->getCreatedDate());
+
+                // if post is less than 15 minutes old, don't add that it was edited.
+                if ($interval->format('%i') > 15) {
+                    $formData->setEditedDate(new \DateTime());
+                    $formData->setEditedBy($this->defaults['user']);
+                }
+
                 $this->onSuccess($formData);
 
                 return true;
@@ -121,12 +123,7 @@ class PostUpdateFormHandler
             }
 
             $postType = $this->container->get('ccdn_forum_forum.form.type.post');
-
             $this->form = $this->factory->create($postType, $this->defaults['post']);
-
-            if ($this->request->getMethod() == 'POST') {
-                $this->form->bind($this->request);
-            }
         }
 
         return $this->form;

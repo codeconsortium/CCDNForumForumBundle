@@ -87,21 +87,23 @@ class TopicCreateFormHandler
         $this->getForm();
 
         if ($this->request->getMethod() == 'POST') {
-            $formData = $this->form->getData();
-
-            $formData->setCreatedDate(new \DateTime());
-            $formData->setCreatedBy($this->defaults['user']);
-            $formData->setIsLocked(false);
-            $formData->setIsDeleted(false);
-
-            $formData->getTopic()->setCachedViewCount(0);
-            $formData->getTopic()->setCachedReplyCount(0);
-            $formData->getTopic()->setIsClosed(false);
-            $formData->getTopic()->setIsDeleted(false);
-            $formData->getTopic()->setIsSticky(false);
+            $this->form->bind($this->request);
 
             // Validate
             if ($this->form->isValid()) {
+                $formData = $this->form->getData();
+
+                $formData->setCreatedDate(new \DateTime());
+                $formData->setCreatedBy($this->defaults['user']);
+                $formData->setIsLocked(false);
+                $formData->setIsDeleted(false);
+
+                $formData->getTopic()->setCachedViewCount(0);
+                $formData->getTopic()->setCachedReplyCount(0);
+                $formData->getTopic()->setIsClosed(false);
+                $formData->getTopic()->setIsDeleted(false);
+                $formData->getTopic()->setIsSticky(false);
+
                 $this->onSuccess($formData);
 
                 return true;
@@ -123,9 +125,6 @@ class TopicCreateFormHandler
                 throw new \Exception('Board must be specified to be create a Topic in TopicCreateFormHandler');
             }
 
-            $postType = $this->container->get('ccdn_forum_forum.form.type.post');
-            $topicType = $this->container->get('ccdn_forum_forum.form.type.topic');
-
             $topic = new Topic();
             $topic->setBoard($this->defaults['board']);
 
@@ -133,12 +132,11 @@ class TopicCreateFormHandler
             $post->setTopic($topic);
             $post->setCreatedBy($this->defaults['user']);
 
+            $postType = $this->container->get('ccdn_forum_forum.form.type.post');
+            $topicType = $this->container->get('ccdn_forum_forum.form.type.topic');
+
             $this->form = $this->factory->create($postType, $post);
             $this->form->add($this->factory->create($topicType, $topic));
-
-            if ($this->request->getMethod() == 'POST') {
-                $this->form->bind($this->request);
-            }
         }
 
         return $this->form;

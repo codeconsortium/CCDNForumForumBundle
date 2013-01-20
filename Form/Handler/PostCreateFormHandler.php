@@ -87,16 +87,18 @@ class PostCreateFormHandler
         $this->getForm();
 
         if ($this->request->getMethod() == 'POST') {
-            $formData = $this->form->getData();
-
-            $formData->setCreatedDate(new \DateTime());
-            $formData->setCreatedBy($this->defaults['user']);
-            $formData->setTopic($this->defaults['topic']);
-            $formData->setIsLocked(false);
-            $formData->setIsDeleted(false);
+            $this->form->bind($this->request);
 
             // Validate
             if ($this->form->isValid()) {
+                $formData = $this->form->getData();
+
+                $formData->setCreatedDate(new \DateTime());
+                $formData->setCreatedBy($this->defaults['user']);
+                $formData->setTopic($this->defaults['topic']);
+                $formData->setIsLocked(false);
+                $formData->setIsDeleted(false);
+
                 $this->onSuccess($formData);
 
                 return true;
@@ -119,16 +121,11 @@ class PostCreateFormHandler
                 throw new \Exception('Topic must be specified to create a Reply in PostCreateFormHandler');
             }
 
-            $postType = $this->container->get('ccdn_forum_forum.form.type.post');
-
             $post = new Post();
             $post->setTopic($this->defaults['topic']);
 
+            $postType = $this->container->get('ccdn_forum_forum.form.type.post');
             $this->form = $this->factory->create($postType, $post);
-
-            if ($this->request->getMethod() == 'POST') {
-                $this->form->bind($this->request);
-            }
         }
 
         return $this->form;
