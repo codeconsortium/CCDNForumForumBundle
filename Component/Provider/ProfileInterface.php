@@ -116,6 +116,11 @@ interface ProfileInterface
     public function addRoleBadges(array $badges);
 
     /**
+     * @return Profile $this
+     */
+    public function autoSetRoleBadge();
+
+    /**
      * @return string
      */
     public function renderRoleBadges();
