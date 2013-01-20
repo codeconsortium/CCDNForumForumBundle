@@ -2,6 +2,7 @@
 
 {% block stylesheets %}
 	{{ parent() }}
+    <link href="{{- asset('bundles/ccdnforumforum/css/generic.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block title %}{{- truncDot('ccdn_forum_forum.title.category.show' | trans({'%category_name%': category.name}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}

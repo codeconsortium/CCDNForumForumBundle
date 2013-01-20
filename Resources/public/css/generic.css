@@ -1,0 +1,19 @@
+div.form-actions .btn {
+    margin-right:10px;
+}
+
+div.btn-toolbar .btn {
+    margin-right:10px;
+}
+
+.form-answer .btn {
+    margin-right: 10px;
+}
+
+.btn i[class^="icon-"] {
+    margin-right: 5px;
+}
+
+ul.nav i[class^="icon-"] {
+    margin-right: 5px;
+}

@@ -2,6 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    <link href="{{- asset('bundles/ccdnforumforum/css/generic.css') -}}" rel="stylesheet" type="text/css">
     <link href="{{- asset('bundles/ccdnforumforum/css/post.css') -}}" rel="stylesheet" type="text/css">
     <link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
@@ -79,7 +80,7 @@
 
     <div class="btn-toolbar" style="display:block !important;clear:both !important;">
         <div class="pull-left">
-            <a class="btn btn-danger" rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply', {'topicId': topic.getId }) -}}"><i class="icon-white icon-comment"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+            <a class="btn btn-danger" rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply', {'topicId': topic.getId }) -}}"><i class="icon-white icon-comment"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}</a>
             {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
         </div>
         {%- if pager.haveToPaginate -%}

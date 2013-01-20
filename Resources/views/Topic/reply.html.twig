@@ -2,6 +2,7 @@
 
 {% block stylesheets %}
 	{{ parent() }}
+    <link href="{{- asset('bundles/ccdnforumforum/css/generic.css') -}}" rel="stylesheet" type="text/css">
     <link href="{{- asset('bundles/ccdnforumforum/css/post.css') -}}" rel="stylesheet" type="text/css">
 	<link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
 {% endblock %}
@@ -70,7 +71,7 @@
 			</div>
 #}
 			<div class="form-actions">
-				<input type="submit" class="btn btn-primary" value="{{- 'ccdn_forum_forum.form.button.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_post">&nbsp;
+				<input type="submit" class="btn btn-primary" value="{{- 'ccdn_forum_forum.form.button.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_post">
 {#				<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">&nbsp;
 				<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.save_draft' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_draft">&nbsp;#}
 				<a class="btn" href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.id}) -}}">{{- 'ccdn_forum_forum.form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}</a>
