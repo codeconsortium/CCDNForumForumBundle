@@ -58,6 +58,8 @@ class CCDNForumForumExtension extends Extension
 
         $container->setParameter('ccdn_forum_forum.user.profile_route', $config['user']['profile_route']);
 
+        $container->setParameter('ccdn_forum_forum.profile_provider.avatar_fallback', 'bundles/ccdnforumforum/images/default_avatar/anonymous_avatar.gif');
+
         $this->getFixtureReferenceSection($container, $config);
 
         $this->getSEOSection($container, $config);

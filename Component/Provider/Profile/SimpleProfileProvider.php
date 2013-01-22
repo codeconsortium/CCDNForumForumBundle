@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Component\Provider;
+namespace CCDNForum\ForumBundle\Component\Provider\Profile;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -35,7 +35,9 @@ class SimpleProfileProvider implements ProfileProviderInterface
         }
 
         $asset = $this->container->get('templating.helper.assets');
-        $profile->setAvatarFallback($asset->getUrl('bundles/ccdnforumforum/images/default_avatar/anonymous_avatar.gif'));
+
+        $fallbackAvatar = $asset->getUrl($this->container->getParameter('ccdn_forum_forum.profile_provider.avatar_fallback'));
+        $profile->setAvatarFallback($fallbackAvatar);
 
         $profile->autoSetRoleBadge();
 

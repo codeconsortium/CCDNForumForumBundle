@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Component\Provider;
+namespace CCDNForum\ForumBundle\Component\Provider\Profile;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
