@@ -34,7 +34,7 @@
 	<h2>{{- 'ccdn_forum_forum.title.topic.reply' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}</h2>
 
 	{%- form_theme form ccdn_forum_forum.topic.reply.form_theme -%}
-	<form action="{{- path('ccdn_forum_forum_topic_reply', { 'topicId': topic.id } ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+	<form action="{{- path('ccdn_forum_forum_topic_reply', { 'topicId': topic.id } ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
 		<fieldset>
 
 			{{- form_errors(form) -}}

@@ -3,6 +3,7 @@ CCDNForum\ForumBundle\Entity\Topic:
         board:
             - NotNull: { groups: [topic] }
         title:
+            - Type: { type: string, groups: [topic] }
             - NotBlank: { groups: [topic] }
             - MinLength: { limit: 10, groups: [topic] }
             - MaxLength: { limit: 255, groups: [topic] }
@@ -10,6 +11,7 @@ CCDNForum\ForumBundle\Entity\Topic:
 CCDNForum\ForumBundle\Entity\Post:
     properties:
         body:
+            - Type: { type: string, groups: [topic, post] }
             - NotBlank: {  groups: [topic, post] }
             - MinLength: { limit: 15, groups: [topic, post] }
             - MaxLength: { limit: 30000, groups: [topic, post] }
