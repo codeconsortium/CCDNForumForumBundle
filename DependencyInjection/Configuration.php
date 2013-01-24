@@ -88,7 +88,7 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('provider')
                             ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('profile_provider')->defaultValue('CCDNForum\ForumBundle\Component\Provider\SimpleProfileProvider')->end()
+                                ->scalarNode('profile_provider')->defaultValue('CCDNForum\ForumBundle\Component\Provider\Profile\SimpleProfileProvider')->end()
                             ->end()
                         ->end()
                     ->end()
