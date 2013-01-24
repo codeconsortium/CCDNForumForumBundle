@@ -80,7 +80,9 @@
 
     <div class="btn-toolbar" style="display:block !important;clear:both !important;">
         <div class="pull-left">
-            <a class="btn btn-danger" rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply', {'topicId': topic.getId }) -}}"><i class="icon-white icon-comment"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}</a>
+            {% set is_topic_reply_disabled = board.isAuthorisedToTopicReply(app.security) ? '': ' disabled' %}
+
+            <a class="btn btn-danger{{ is_topic_reply_disabled }}" rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply', {'topicId': topic.getId }) -}}"><i class="icon-white icon-comment"></i>&nbsp;{{- 'ccdn_forum_forum.link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}</a>
             {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
         </div>
         {%- if pager.haveToPaginate -%}

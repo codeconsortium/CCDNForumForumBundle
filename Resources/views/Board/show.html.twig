@@ -66,7 +66,9 @@
 
     <div class="btn-toolbar" style="display:block !important;clear:both !important;">
         <div class="pull-left">
-            <a class="btn btn-danger" rel="nofollow" href="{{- path('ccdn_forum_forum_topic_create', {'boardId': board.getId }) -}}"><i class="icon-white icon-asterisk"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}</a>
+            {% set is_topic_create_disabled = board.isAuthorisedToCreateTopic(app.security) ? '': ' disabled' %}
+
+            <a class="btn btn-danger{{ is_topic_create_disabled }}" rel="nofollow" href="{{- path('ccdn_forum_forum_topic_create', {'boardId': board.getId }) -}}"><i class="icon-white icon-asterisk"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}</a>
         </div>
         {%- if pager.haveToPaginate -%}
             <div class="pull-right">

@@ -59,7 +59,7 @@ class LoadForumData extends AbstractFixture implements OrderedFixtureInterface, 
         return $category;
     }
 
-    protected function createBoard($category, $order, $name, $description)
+    protected function createBoard($category, $order, $name, $description, array $boardReadRoles = array(), array $topicCreateRoles = array(), array $topicReplyRoles = array())
     {
         $board = new Board();
 
@@ -69,6 +69,9 @@ class LoadForumData extends AbstractFixture implements OrderedFixtureInterface, 
         $board->setCachedTopicCount(0);
         $board->setCachedPostCount(0);
         $board->setListOrderPriority($order);
+        $board->setReadAuthorisedRoles($boardReadRoles);
+        $board->setTopicCreateAuthorisedRoles($topicCreateRoles);
+        $board->setTopicReplyAuthorisedRoles($topicReplyRoles);
 
         return $board;
     }
