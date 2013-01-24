@@ -16,6 +16,7 @@ namespace CCDNForum\ForumBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use CCDNForum\ForumBundle\Model\Board as AbstractBoard;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class Board extends AbstractBoard
 {
@@ -36,6 +37,24 @@ class Board extends AbstractBoard
 
     /** @var integer $listOrderPriority */
     protected $listOrderPriority = 0;
+
+    /** @var array $readAuthorisedRoles */
+    protected $readAuthorisedRoles;
+
+    /** @var array $topicCreateAuthorisedRoles */
+    protected $topicCreateAuthorisedRoles;
+
+    /** @var array $topicReplyAuthorisedRoles */
+    protected $topicReplyAuthorisedRoles;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->readAuthorisedRoles = array();
+        $this->topicCreateAuthorisedRoles = array();
+        $this->topicReplyAuthorisedRoles = array();
+    }
 
     /**
      * Get id
@@ -145,5 +164,155 @@ class Board extends AbstractBoard
     public function getCachedPostCount()
     {
         return $this->cachedPostCount;
+    }
+
+    /**
+     * @return array
+     */
+    public function getReadAuthorisedRoles()
+    {
+        return $this->readAuthorisedRoles;
+    }
+
+    /**
+     * @param array $roles
+
+     * @return Board
+     */
+    public function setReadAuthorisedRoles(array $roles = null)
+    {
+        $this->readAuthorisedRoles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @param $role
+     *
+     * @return bool
+     */
+    public function hasReadAuthorisedRole($role)
+    {
+        return in_array($role, $this->readAuthorisedRoles);
+    }
+
+    /**
+     * @param SecurityContextInterface $securityContext
+     *
+     * @return bool
+     */
+    public function isAuthorisedToRead(SecurityContextInterface $securityContext)
+    {
+        if (0 == count($this->readAuthorisedRoles)) {
+            return true;
+        }
+
+        foreach ($this->readAuthorisedRoles as $role) {
+            if ($securityContext->isGranted($role)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTopicCreateAuthorisedRoles()
+    {
+        return $this->topicCreateAuthorisedRoles;
+    }
+
+    /**
+     * @param array $roles
+     *
+     * @return Board
+     */
+    public function setTopicCreateAuthorisedRoles(array $roles = null)
+    {
+        $this->topicCreateAuthorisedRoles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @param $role
+     *
+     * @return bool
+     */
+    public function hasTopicCreateAuthorisedRole($role)
+    {
+        return in_array($role, $this->topicCreateAuthorisedRoles);
+    }
+
+    /**
+     * @param SecurityContextInterface $securityContext
+     *
+     * @return bool
+     */
+    public function isAuthorisedToCreateTopic(SecurityContextInterface $securityContext)
+    {
+        if (0 == count($this->topicCreateAuthorisedRoles)) {
+            return true;
+        }
+
+        foreach ($this->topicCreateAuthorisedRoles as $role) {
+            if ($securityContext->isGranted($role)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTopicReplyAuthorisedRoles()
+    {
+        return $this->topicReplyAuthorisedRoles;
+    }
+
+    /**
+     * @param array $roles
+     *
+     * @return Board
+     */
+    public function setTopicReplyAuthorisedRoles(array $roles = null)
+    {
+        $this->topicReplyAuthorisedRoles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @param $role
+     *
+     * @return bool
+     */
+    public function hasTopicReplyAuthorisedRole($role)
+    {
+        return in_array($role, $this->topicReplyAuthorisedRoles);
+    }
+
+    /**
+     * @param SecurityContextInterface $securityContext
+     *
+     * @return bool
+     */
+    public function isAuthorisedToTopicReply(SecurityContextInterface $securityContext)
+    {
+        if (0 == count($this->topicReplyAuthorisedRoles)) {
+            return true;
+        }
+
+        foreach ($this->topicReplyAuthorisedRoles as $role) {
+            if ($securityContext->isGranted($role)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

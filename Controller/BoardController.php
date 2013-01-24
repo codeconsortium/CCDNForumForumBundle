@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class BoardController extends ContainerAware
+class BoardController extends BaseController
 {
 
     /**

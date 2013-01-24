@@ -17,6 +17,15 @@ CCDNForum\ForumBundle\Entity\Board:
             type: integer
         listOrderPriority:
             type: integer
+        readAuthorisedRoles:
+            type: array
+            nullable: true
+        topicCreateAuthorisedRoles:
+            type: array
+            nullable: true
+        topicReplyAuthorisedRoles:
+            type: array
+            nullable: true
     oneToMany:
         topics:
             targetEntity: CCDNForum\ForumBundle\Entity\Topic

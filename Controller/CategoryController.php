@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class CategoryController extends ContainerAware
+class CategoryController extends BaseController
 {
 
     /**
@@ -31,7 +31,7 @@ class CategoryController extends ContainerAware
      */
     public function indexAction()
     {
-        $categories = $this->container->get('ccdn_forum_forum.repository.category')->findAllJoinedToBoard();
+        $categories = $this->filterViewableCategories($this->container->get('ccdn_forum_forum.repository.category')->findAllJoinedToBoard());
 
         $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
@@ -54,8 +54,7 @@ class CategoryController extends ContainerAware
      */
     public function showAction($categoryId)
     {
-
-        $category = $this->container->get('ccdn_forum_forum.repository.category')->findOneByIdJoinedToBoard($categoryId);
+        $category = $this->filterViewableCategories(array($this->container->get('ccdn_forum_forum.repository.category')->findOneByIdJoinedToBoard($categoryId)));
 
         if (! $category) {
             throw NotFoundhttpException('No such category exists!');
@@ -74,15 +73,4 @@ class CategoryController extends ContainerAware
             'topics_per_page' => $topicsPerPage,
         ));
     }
-
-    /**
-     *
-     * @access protected
-     * @return string
-     */
-    protected function getEngine()
-    {
-        return $this->container->getParameter('ccdn_forum_forum.template.engine');
-    }
-
 }

@@ -26,7 +26,7 @@ use CCDNForum\ForumBundle\Entity\Draft;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class DraftController extends ContainerAware
+class DraftController extends BaseController
 {
 
     /**

@@ -3,7 +3,7 @@ div.form-actions .btn {
 }
 
 div.btn-toolbar .btn {
-    margin-right:10px;
+    margin-right:5px;
 }
 
 .form-answer .btn {
@@ -16,4 +16,21 @@ div.btn-toolbar .btn {
 
 ul.nav i[class^="icon-"] {
     margin-right: 5px;
+}
+
+div.control-group div.controls div {
+/*    display: inline-block;
+    width: 100%;*/
+}
+
+div.control-group div.controls div table.table {
+    width: 100%;
+}
+
+div.control-group div.controls div table.table tbody tr td:nth-child(2) {
+    text-align: left;
+}
+
+div.control-group div.controls div table.table tbody tr td:nth-child(2) label.control-label {
+    text-align: left;
 }

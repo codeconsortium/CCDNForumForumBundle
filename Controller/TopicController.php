@@ -15,6 +15,7 @@ namespace CCDNForum\ForumBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -27,7 +28,7 @@ use CCDNForum\ForumBundle\Entity\Draft;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class TopicController extends ContainerAware
+class TopicController extends BaseController
 {
 
     /**
@@ -137,6 +138,10 @@ class TopicController extends ContainerAware
             throw new NotFoundHttpException('No such board exists!');
         }
 
+        if (! $board->isAuthorisedToCreateTopic($this->container->get('security.context'))) {
+            throw new AccessDeniedException('You do not have permission to use this resource.');
+        }
+
         //
         // Set the form handler options
         //
@@ -199,6 +204,10 @@ class TopicController extends ContainerAware
 
         if (! $topic) {
             throw new NotFoundHttpException('No such topic exists!');
+        }
+
+        if (! $topic->getBoard()->isAuthorisedToTopicReply($this->container->get('security.context'))) {
+            throw new AccessDeniedException('You do not have permission to use this resource.');
         }
 
         if ($topic->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {

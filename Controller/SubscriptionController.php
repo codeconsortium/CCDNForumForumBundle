@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class SubscriptionController extends ContainerAware
+class SubscriptionController extends BaseController
 {
 
     /**

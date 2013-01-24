@@ -77,4 +77,16 @@ abstract class Category
 
         return $this;
     }
+
+    /**
+     * @param Board $board
+     *
+     * @return $this
+     */
+    public function removeBoard(ConcreteBoard $board)
+    {
+        $this->boards->removeElement($board);
+
+        return $this;
+    }
 }

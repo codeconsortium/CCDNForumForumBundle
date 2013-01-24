@@ -2,7 +2,19 @@
 <tr class="{{- cycler(['row_odd', 'row_even'], 'board') }} marked_read">
 
     <td class="center">
-        <i class="icon-folder-close" style="margin-top:10px;"></i>
+        {% if board.isAuthorisedToCreateTopic(app.security) %}
+            {% if board.isAuthorisedToTopicReply(app.security) %}
+                <i class="icon-folder-close" style="margin-top:10px;"></i>
+            {% else %}
+                <i class="icon-lock" style="margin-top:10px;"></i>
+            {% endif %}
+        {% else %}
+            {% if board.isAuthorisedToTopicReply(app.security) %}
+                <i class="icon-eye-open" style="margin-top:10px;"></i>
+            {% else %}
+                <i class="icon-lock" style="margin-top:10px;"></i>
+            {% endif %}
+        {% endif %}
     </td>
 
     <td class="left">
