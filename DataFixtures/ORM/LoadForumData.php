@@ -32,11 +32,74 @@ use CCDNForum\ForumBundle\Entity\Post;
  */
 class LoadForumData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
-    private $container;
+    protected $container;
 
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
+    }
+
+    protected function checkCategory($categoryName)
+    {
+        return $this->container->get('ccdn_forum_forum.repository.category')->findOneByName($categoryName);
+    }
+
+    protected function checkBoard($boardName)
+    {
+        return $this->container->get('ccdn_forum_forum.repository.board')->findOneByName($boardName);
+    }
+
+    protected function createCategory($name, $order)
+    {
+        $category = new Category();
+
+        $category->setName($name);
+        $category->setListOrderPriority($order);
+
+        return $category;
+    }
+
+    protected function createBoard($category, $order, $name, $description)
+    {
+        $board = new Board();
+
+        $board->setCategory($category);
+        $board->setName($name);
+        $board->setDescription($description);
+        $board->setCachedTopicCount(0);
+        $board->setCachedPostCount(0);
+        $board->setListOrderPriority($order);
+
+        return $board;
+    }
+
+    protected function createTopic($board, $title)
+    {
+        $topic = new Topic();
+
+        $topic->setBoard($board);
+        $topic->setTitle($title);
+        $topic->setCachedViewCount(0);
+        $topic->setCachedReplyCount(0);
+        $topic->setIsSticky(false);
+        $topic->setIsClosed(false);
+        $topic->setIsDeleted(false);
+
+        return $topic;
+    }
+
+    protected function createPost($topic, $body, $author)
+    {
+        $post = new Post();
+
+        $post->setTopic($topic);
+        $post->setCreatedBy($author);
+        $post->setCreatedDate(new \DateTime());
+        $post->setIsDeleted(false);
+        $post->setIsLocked(false);
+        $post->setBody($body);
+
+        return $post;
     }
 
 	/**
@@ -48,78 +111,33 @@ class LoadForumData extends AbstractFixture implements OrderedFixtureInterface, 
     {
         $referencedUserAdmin = $this->getReference($this->container->getParameter('ccdn_forum_forum.fixtures.user_admin'));
 
-		//
-		// Category.
-		//
-		$category = new Category();
-		
-		$category->setName('General');
-		$category->setListOrderPriority(1);
-		
-		$manager->persist($category);
-		$manager->flush();
-		$manager->refresh($category);
+        if (null == $this->checkCategory('General')) {
+            $categoryGeneral = $this->createCategory('General', 0);
 
-		//
-		// Board.
-		//
-		$board = new Board();		
-		
-		$board->setCategory($category);
-		$board->setName('Introductions');
-		$board->setDescription('Say hello and introduce yoursel!\nTell us a little about yourself.');
-		$board->setCachedTopicCount(1);
-		$board->setCachedPostCount(1);
-		$board->setListOrderPriority(1);
-		
-		$manager->persist($board);
-		$manager->flush();
-		$manager->refresh($board);
-		
-		//
-		// Topic.
-		//
-		$topic = new Topic();
-		
-		$topic->setBoard($board);
-		$topic->setTitle('Welcome Topic.');
-		$topic->setCachedViewCount(0);
-		$topic->setCachedReplyCount(0);
-		$topic->setIsSticky(false);
-		$topic->setIsClosed(false);
-		$topic->setIsDeleted(false);
-				
-		$manager->persist($topic);
-		$manager->flush();
-		$manager->refresh($topic);
-		
-		//
-		// Post.
-		//
-		$post = new Post();
-		
-		$post->setTopic($topic);
-		$post->setCreatedBy($manager->merge($referencedUserAdmin));
-		$post->setCreatedDate(new \DateTime());
-		$post->setIsDeleted(false);
-		$post->setIsLocked(false);
-		$post->setBody('Welcome to the CodeConsortium Forum. Please introduce yourself and make yourself at home. :)');
+            $manager->persist($categoryGeneral);
+            $manager->flush();
 
-		$manager->persist($post);
-		$manager->flush();
-		$manager->refresh($post);
-		
-		//
-		// Set last post references.
-		//
-		$topic->setFirstPost($post);
-		$topic->setLastPost($post);
-		$board->setLastPost($post);
+            if (null == $this->checkBoard('Introductions')) {
+                $boardIntroductions = $this->createBoard($categoryGeneral, 0, 'Introductions', 'Say hello and introduce yoursel!' . "\n" . 'Tell us a little about yourself.');
+                $topic = $this->createTopic($boardIntroductions, 'Welcome to CCDNForum.');
+                $post = $this->createPost($topic, 'Welcome to the CodeConsortium Forum.' . "\n" . 'Please introduce yourself and make yourself at home. :)', $manager->merge($referencedUserAdmin));
 
-		$manager->persist($topic, $board);
-		$manager->flush();
-		
-		$this->addReference('forum-post', $post);
+                $manager->persist($boardIntroductions);
+                $manager->persist($topic);
+                $manager->persist($post);
+                $manager->flush();
+
+                // Set last post references.
+                $boardIntroductions->setLastPost($post);
+                $topic->setFirstPost($post);
+                $topic->setLastPost($post);
+
+                $manager->persist($topic, $boardIntroductions);
+                $manager->flush();
+
+                $this->addReference('forum-post', $post);
+            }
+        }
     }
 
 	/**
