@@ -45,7 +45,7 @@ class PostCreateFormHandler
     /** @access protected */
     protected $defaults = array();
 
-    /** @access protected */
+    /** @var \CCDNForum\ForumBundle\Form\Type\PostType $form */
     protected $form;
 
     /**
@@ -103,7 +103,6 @@ class PostCreateFormHandler
 
                 return true;
             }
-
         }
 
         return false;

@@ -264,7 +264,7 @@ class TopicController extends BaseController
             'user' => $user,
             'crumbs' => $crumbs,
             'topic' => $topic,
-            'preview' => $formHandler->getForm()->getData(),
+            //'preview' => $formHandler->getForm()->getData(),
             'form' => $formHandler->getForm()->createView(),
         ));
     }

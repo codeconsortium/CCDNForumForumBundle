@@ -87,9 +87,11 @@
 		</fieldset>
 	</form>
 
-	{%- if preview is not empty -%}
-		{%- include "CCDNForumForumBundle:Post:post_preview.html.twig" with {'post': preview} -%}
-	{%- endif -%}
+    {%- if preview is defined -%}
+        {%- if preview is not empty -%}
+            {%- include "CCDNForumForumBundle:Post:post_preview.html.twig" with {'post': preview} -%}
+        {%- endif -%}
+    {%- endif -%}
 
 	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 

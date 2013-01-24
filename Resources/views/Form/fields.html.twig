@@ -36,7 +36,13 @@
 		<div class="alert alert-error span8">
 		    <ul>
 		        {%- for error in errors -%}
-		            <li>{{- error.messageTemplate|trans(error.messageParameters, 'validators') -}}</li>
+		            <li>
+                        {{
+                        error.messagePluralization is null
+                        ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                        : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+                        }}
+                    </li>
 		        {%- endfor -%}
 		    </ul>
 		</div>
@@ -52,7 +58,12 @@
 		<div class="alert alert-error span8">
 		    <ul>
 		        {%- for error in errors -%}
-		            <li>{{- error.messageTemplate|trans(error.messageParameters, 'validators') -}}</li>
+		            <li>{{
+                        error.messagePluralization is null
+                        ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                        : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+                        }}<hr>
+                    </li>
 		        {%- endfor -%}
 		    </ul>
 		</div>

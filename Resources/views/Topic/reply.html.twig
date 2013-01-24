@@ -79,9 +79,11 @@
 		</fieldset>
 	</form>
 
-	{%- if preview is not empty -%}
-		{%- include "CCDNForumForumBundle:Post:post_preview.html.twig" with {'post': preview} -%}
-	{%- endif -%}
+    {%- if preview is defined -%}
+        {%- if preview is not empty -%}
+            {%- include "CCDNForumForumBundle:Post:post_preview.html.twig" with {'post': preview} -%}
+        {%- endif -%}
+    {%- endif -%}
 
 	{%- include 'CCDNForumForumBundle:Topic:transcript.html.twig' with {'topic': topic } -%}
 

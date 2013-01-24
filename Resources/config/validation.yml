@@ -11,7 +11,7 @@ CCDNForum\ForumBundle\Entity\Topic:
 CCDNForum\ForumBundle\Entity\Post:
     properties:
         body:
-            - Type: { type: string, groups: [topic, post] }
-            - NotBlank: {  groups: [topic, post] }
-            - MinLength: { limit: 15, groups: [topic, post] }
-            - MaxLength: { limit: 30000, groups: [topic, post] }
+            - Type: { type: string, groups: [post] }
+            - NotBlank: { groups: [post] }
+            - MinLength: { limit: 15, groups: [post] }
+            - MaxLength: { limit: 30000, groups: [post] }
