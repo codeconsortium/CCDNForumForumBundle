@@ -1,5 +1,5 @@
 {
-    "name": "ccdn-forum/forum-bundle",
+    "name": "codeconsortium/ccdn-forum-bundle",
     "type": "symfony-bundle",
     "description": "CCDN Forum main bundle",
     "keywords": ["forum", "board"],
