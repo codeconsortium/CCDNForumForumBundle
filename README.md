@@ -4,9 +4,9 @@ CCDNForum ForumBundle README.
 
 ## Notes: 
 
-This bundle is for the symfony framework and requires Symfony 2.1.x and PHP 5.3.6
+This bundle is for the symfony framework and requires Symfony 2.1.x and PHP 5.4
   
-This project uses Doctrine 2.0.x and so does not require any specific database.
+This project uses Doctrine 2.1.x and so does not require any specific database.
   
 
 This file is part of the CCDNForum Bundle(s)
@@ -24,7 +24,7 @@ file that was distributed with this source code.
 
 ## Description:
 
-This is a ForumBundle for Symfony (2.0.11) for building a bulletin board forum community where users can create and reply to discussions.
+This is a ForumBundle for Symfony (2.1.x) for building a bulletin board forum community where users can create and reply to discussions.
 
 ## Features.
 
