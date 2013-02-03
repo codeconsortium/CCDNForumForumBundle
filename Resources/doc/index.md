@@ -3,7 +3,7 @@ CCDNForum ForumBundle Documentation.
 
 ## Prerequisites
 
-This version of the bundle requires Symfony 2.0.11. 
+This version of the bundle requires Symfony 2.1
 
 ### Translations
 

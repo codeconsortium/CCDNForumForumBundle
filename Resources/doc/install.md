@@ -1,4 +1,4 @@
-Installing CCDNForum ForumBundle 1.2
+Installing CCDNForum ForumBundle 1.x
 ====================================
 
 

@@ -4,7 +4,7 @@ CCDNForum ForumBundle README.
 
 ## Notes: 
 
-This bundle is for the symfony framework and requires Symfony 2.0.x and PHP 5.3.6
+This bundle is for the symfony framework and requires Symfony 2.1.x and PHP 5.3.6
   
 This project uses Doctrine 2.0.x and so does not require any specific database.
   
