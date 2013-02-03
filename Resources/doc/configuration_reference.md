@@ -89,7 +89,7 @@ forum:
             last_post_datetime_format:  d-m-Y - H:i
     transcript:
         post_creation_datetime_format:  d-m-Y - H:i
-        post_deleted_datetime_format:  d-m-Y - H:i 
+        post_deleted_datetime_format:  d-m-Y - H:i
 ```
 
 - [Return back to the docs index](index.md).

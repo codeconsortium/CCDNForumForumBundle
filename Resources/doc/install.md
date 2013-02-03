@@ -5,11 +5,11 @@ Installing CCDNForum ForumBundle 1.x
 ## Dependencies:
 
 1. [PagerFantaBundle](http://github.com/whiteoctober/WhiteOctoberPagerfantaBundle).
-2. [CCDNComponent CommonBundle](http://github.com/codeconsortium/CommonBundle/tree/v1.2).
-3. [CCDNComponent BBCodeBundle](http://github.com/codeconsortium/BBCodeBundle/tree/v1.2).
-4. [CCDNComponent CrumbTrailBundle](http://github.com/codeconsortium/CrumbTrailBundle/tree/v1.2).
-5. [CCDNComponent DashboardBundle](http://github.com/codeconsortium/DashboardBundle/tree/v1.2).
-6. [CCDNForum AdminBundle](http://github.com/codeconsortium/CCDNForumForumBundle/tree/v1.2).
+2. [CCDNComponent CommonBundle](http://github.com/codeconsortium/CommonBundle).
+3. [CCDNComponent BBCodeBundle](http://github.com/codeconsortium/BBCodeBundle).
+4. [CCDNComponent CrumbTrailBundle](http://github.com/codeconsortium/CrumbTrailBundle).
+5. [CCDNComponent DashboardBundle](http://github.com/codeconsortium/DashboardBundle).
+6. [CCDNForum AdminBundle](http://github.com/codeconsortium/CCDNForumAdminBundle).
 
 ## Installation:
 
