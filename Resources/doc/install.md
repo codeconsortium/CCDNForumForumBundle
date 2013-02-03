@@ -22,7 +22,7 @@ Installation takes only 4 steps:
 
 ### Step 1: Download and install dependencies via Composer.
 
-Append the following to end of your deps file (found in the root of your Symfony2 installation):
+Append the following to end of your applications composer.json file (found in the root of your Symfony2 installation):
 
 ``` js
 // composer.json
