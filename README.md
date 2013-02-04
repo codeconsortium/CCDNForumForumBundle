@@ -34,18 +34,18 @@ ForumBundle Provides the following features:
 1. Create/Reply to Topics.
 2. Edit Topics/Posts.
 3. Make Topics sticky.
-4. Smileys and BBCode support through [CommonBundle](http://github.com/codeconsortium/CommonBundle) and [BBCodeBundle](http://github.com/codeconsortium/BBCodeBundle).
+4. Smileys and BBCode support through [CommonBundle](http://github.com/codeconsortium/CCDNComponentCommonBundle) and [BBCodeBundle](http://github.com/codeconsortium/CCDNComponentBBCodeBundle).
 5. Board and Topics are paginated.
 6. Topics and Posts can be soft-deleted for recovery by Admin or hard-delete.
 7. Topics can be closed and Posts locked from editing.
 8. Topics and Posts can be Previewed before posting.
 9. Topics and Posts can be saved as a Draft which can be later published.
 10. Topics can be subscribed to and followed in the Topic subscription page.
-11. Optional integration with [DashboardBundle](http://github.com/codeconsortium/DashboardBundle) for easy site navigation.
+11. Optional integration with [DashboardBundle](http://github.com/codeconsortium/CCDNComponentDashboardBundle) for easy site navigation.
 12. [AdminBundle](http://github.com/codeconsortium/CCDNForumAdminBundle) to allow full forum moderation and administration.
 13. Complimentary [KarmaBundle](http://github.com/codeconsortium/CCDNForumKarmaBundle) provides Post ratings giving a user an overall Karma rating.
-14. Complimentary [AttachmentBundle](http://github.com/codeconsortium/AttachmentBundle) allows file attachments to Posts.
-15. Complimentary [CrumbTrailBundle](http://github.com/codeconsortium/CrumbTrailBundle) allows easy backtracking and logical hierarchical navigation.
+14. Complimentary [AttachmentBundle](http://github.com/codeconsortium/CCDNComponentAttachmentBundle) allows file attachments to Posts.
+15. Complimentary [CrumbTrailBundle](http://github.com/codeconsortium/CCDNComponentCrumbTrailBundle) allows easy backtracking and logical hierarchical navigation.
 16. Utilises Twitter-Bootstrap interface by default.
 
 You will need the complimentary bundles for this bundle to work, which are listed in the dependencies of the installation documentation.

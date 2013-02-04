@@ -3,7 +3,7 @@ CCDNForum ForumBundle Documentation.
 
 ## Prerequisites
 
-This version of the bundle requires Symfony 2.1
+This version of the bundle requires Symfony 2.1.x
 
 ### Translations
 
@@ -20,6 +20,6 @@ For more information about translations, check [Symfony documentation](http://sy
 
 ## Installation Documentation:
 
-- [Installing CCDNForum ForumBundle for Symfony 2.0.11](install.md).
+- [Installing CCDNForum ForumBundle for Symfony 2.1.x](install.md).
 - [Configuration Reference](configuration_reference.md).
 - [Upgrading to version 1.1.2](upgrading_to_1_1_2.md).
