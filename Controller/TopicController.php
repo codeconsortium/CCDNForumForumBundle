@@ -96,6 +96,8 @@ class TopicController extends BaseController
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
+        $isAllowCreateTopic = $board->isAuthorisedToCreateTopic($this->container->get('security.context'));
+
         $crumbs = $this->container->get('ccdn_component_crumb.trail')
             ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
             ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
@@ -112,6 +114,7 @@ class TopicController extends BaseController
             //'registries' => $registries,
             'subscription' => $subscription,
             'subscription_count' => $subscriberCount,
+            'is_allow_create_topic' => $isAllowCreateTopic
         ));
     }
 
