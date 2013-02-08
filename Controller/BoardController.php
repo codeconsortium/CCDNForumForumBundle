@@ -64,6 +64,8 @@ class BoardController extends BaseController
             ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
             ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $boardId)), "board");
 
+        $isAllowCreateTopic = $board->isAuthorisedToCreateTopic($this->container->get('security.context'));
+
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Board:show.html.' . $this->getEngine(), array(
             'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
             'crumbs' => $crumbs,
@@ -71,6 +73,7 @@ class BoardController extends BaseController
             'pager' => $topicsPager,
             'posts_per_page' => $postsPerPage,
             'sticky_topics' => $stickyTopics,
+            'is_allow_create_topic' => $isAllowCreateTopic
         ));
     }
 
