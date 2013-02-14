@@ -14,6 +14,7 @@
 namespace CCDNForum\ForumBundle\Component\Provider\Profile;
 
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Profile implements ProfileInterface
 {
@@ -31,6 +32,9 @@ class Profile implements ProfileInterface
 
     /** @var string $avatarUploaded */
     protected $avatarUploaded;
+
+    /** @var file $avatarFile */
+    protected $avatarFile;
 
     /** @var string $avatarFallback */
     protected $avatarFallback;
@@ -176,6 +180,23 @@ class Profile implements ProfileInterface
         $this->avatarUploaded = $avatar;
 
         return $this;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    public function getAvatarFile()
+    {
+        return $this->avatarFile;
+    }
+
+    /**
+     * @param UploadedFile
+     * @return Profile $this
+     */
+    public function setAvatarFile(UploadedFile $avatarFile)
+    {
+        $this->avatarFile = $avatarFile;
     }
 
     /**
