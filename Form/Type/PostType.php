@@ -77,32 +77,32 @@ class PostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('body', 'textarea', array(
-        //    'data' => $this->getQuote(),
+            'data' => $this->getQuote(),
         ));
     }
 
-//    /**
-//     *
-//     * @access public
-//     * @return string
-//     */
-//    public function getQuote()
-//    {
-//        if (array_key_exists('quote', $this->defaults)) {
-//            if (is_object($this->defaults['quote']) && $this->defaults['quote'] instanceof Post) {
-//                $quote = $this->defaults['quote'];
-//
-//                $author = $quote->getCreatedBy();
-//                $body = $quote->getBody();
-//
-//                $quote = '[QUOTE=' . $author . ']' . $body . '[/QUOTE]';
-//
-//                return $quote;
-//            }
-//        }
-//
-//        return "";
-//    }
+    /**
+     *
+     * @access public
+     * @return string
+     */
+    public function getQuote()
+    {
+        if (array_key_exists('quote', $this->defaults)) {
+            if (is_object($this->defaults['quote']) && $this->defaults['quote'] instanceof Post) {
+                $quote = $this->defaults['quote'];
+
+                $author = $quote->getCreatedBy();
+                $body = $quote->getBody();
+
+                $quote = '[QUOTE="' . $author . '"]' . $body . '[/QUOTE]';
+
+                return $quote;
+            }
+        }
+
+        return "";
+    }
 
     /**
      *

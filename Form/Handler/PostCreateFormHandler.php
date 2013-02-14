@@ -124,6 +124,11 @@ class PostCreateFormHandler
             $post->setTopic($this->defaults['topic']);
 
             $postType = $this->container->get('ccdn_forum_forum.form.type.post');
+
+            if (isset($this->defaults['quote'])) {
+                $postType->setDefaultValues(array('quote' => $this->defaults['quote']));
+            }
+
             $this->form = $this->factory->create($postType, $post);
         }
 
