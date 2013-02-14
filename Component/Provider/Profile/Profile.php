@@ -29,6 +29,9 @@ class Profile implements ProfileInterface
     /** @var string $avatar */
     protected $avatar;
 
+    /** @var string $avatarUploaded */
+    protected $avatarUploaded;
+
     /** @var string $avatarFallback */
     protected $avatarFallback;
 
@@ -134,7 +137,7 @@ class Profile implements ProfileInterface
      */
     public function getAvatarUrl()
     {
-        return $this->avatar ?: $this->avatarFallback;
+        return $this->avatarUploaded ?:$this->avatar ?: $this->avatarFallback;
     }
 
     /**
@@ -152,6 +155,25 @@ class Profile implements ProfileInterface
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAvatarUploaded()
+    {
+        return $this->avatarUploaded;
+    }
+
+    /**
+     * @param string $avatar
+     * @return Profile $this
+     */
+    public function setAvatarUploaded($avatar)
+    {
+        $this->avatarUploaded = $avatar;
 
         return $this;
     }
