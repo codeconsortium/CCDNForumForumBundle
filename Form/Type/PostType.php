@@ -95,7 +95,7 @@ class PostType extends AbstractType
                 $author = $quote->getCreatedBy();
                 $body = $quote->getBody();
 
-                $quote = '[QUOTE=' . $author . ']' . $body . '[/QUOTE]';
+                $quote = '[QUOTE="' . $author . '"]' . $body . '[/QUOTE]';
 
                 return $quote;
             }
