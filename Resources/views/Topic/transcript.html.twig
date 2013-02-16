@@ -5,7 +5,7 @@
 	{% for post in topic.getPosts %}
         {% set cycle_shade = cycle(['odd', 'even'], loop.index) %}
         <div class="{{ cycle_shade }}-post-transcript">
-            <div class="btn-toolbar" style="clear:both;">
+            {#<div class="btn-toolbar" style="clear:both;">
                 <div class="pull-left">
                     {%- if post.getCreatedBy -%}
                         {{- post.getCreatedBy -}}
@@ -14,7 +14,7 @@
                 <div class="pull-right">
                     <span class="span3">{{- 'ccdn_forum_forum.generic.posted_at' |trans({}, 'CCDNForumForumBundle') -}}{{- post.getCreatedDate |date(ccdn_forum_forum.transcript.post_creation_datetime_format) -}}</span>
                 </div>
-            </div>
+            </div>#}
             <div style="clear:both;">
                 {%- if post.getDeletedBy -%}
                     <span class="common_body">
