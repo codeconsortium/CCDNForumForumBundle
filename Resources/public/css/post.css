@@ -38,3 +38,13 @@ div.forum_post div.forum_post_body {
     clear:both;
     float:none;
 }
+
+div.even-post-transcript {
+    background-color: #E5E5E5;
+    padding: 10px;
+}
+
+div.odd-post-transcript {
+    background-color: #FFFFF0;
+    padding: 10px;
+}
