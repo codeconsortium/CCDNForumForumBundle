@@ -21,6 +21,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use CCDNForum\ForumBundle\Manager\ManagerInterface;
 
 use CCDNForum\ForumBundle\Entity\Topic;
+use CCDNForum\ForumBundle\Form\Type\PostType;
 use CCDNForum\ForumBundle\Entity\Post;
 
 /**
@@ -123,10 +124,12 @@ class PostCreateFormHandler
             $post = new Post();
             $post->setTopic($this->defaults['topic']);
 
+            /** @var PostType $postType  */
             $postType = $this->container->get('ccdn_forum_forum.form.type.post');
 
             if (isset($this->defaults['quote'])) {
-                $postType->setDefaultValues(array('quote' => $this->defaults['quote']));
+                $post->setBody($postType->getQuote($this->defaults['quote']));
+
             }
 
             $this->form = $this->factory->create($postType, $post);
