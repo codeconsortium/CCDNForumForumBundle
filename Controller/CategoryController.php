@@ -60,6 +60,8 @@ class CategoryController extends BaseController
             throw NotFoundhttpException('No such category exists!');
         }
 
+        $category = $category[0];
+
         $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
         $crumbs = $this->container->get('ccdn_component_crumb.trail')
