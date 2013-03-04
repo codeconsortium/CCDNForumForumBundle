@@ -76,8 +76,10 @@ class PostType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('body', 'textarea', array(
+        $builder->add('body', 'bb_editor', array(
         //    'data' => $this->getQuote(),
+			'label' => 'ccdn_forum_forum.form.label.post.body',
+			'translation_domain' => 'CCDNForumForumBundle'
         ));
     }
 

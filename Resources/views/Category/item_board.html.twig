@@ -1,70 +1,71 @@
 {%- spaceless -%}
-<tr class="{{- cycler(['row_odd', 'row_even'], 'board') }} marked_read">
+	<tr>
+	    <td class="center">
+	        {% if board.isAuthorisedToCreateTopic(app.security) %}
+	            {% if board.isAuthorisedToTopicReply(app.security) %}
+	                <i class="icon-folder-close" style="margin-top:10px;"></i>
+	            {% else %}
+	                <i class="icon-lock" style="margin-top:10px;"></i>
+	            {% endif %}
+	        {% else %}
+	            {% if board.isAuthorisedToTopicReply(app.security) %}
+	                <i class="icon-eye-open" style="margin-top:10px;"></i>
+	            {% else %}
+	                <i class="icon-lock" style="margin-top:10px;"></i>
+	            {% endif %}
+	        {% endif %}
+	    </td>
 
-    <td class="center">
-        {% if board.isAuthorisedToCreateTopic(app.security) %}
-            {% if board.isAuthorisedToTopicReply(app.security) %}
-                <i class="icon-folder-close" style="margin-top:10px;"></i>
-            {% else %}
-                <i class="icon-lock" style="margin-top:10px;"></i>
-            {% endif %}
-        {% else %}
-            {% if board.isAuthorisedToTopicReply(app.security) %}
-                <i class="icon-eye-open" style="margin-top:10px;"></i>
-            {% else %}
-                <i class="icon-lock" style="margin-top:10px;"></i>
-            {% endif %}
-        {% endif %}
-    </td>
+	    <td class="left">
+	        <h4>
+	            <a href="{{- path('ccdn_forum_forum_board_show', {'boardId': board.getId }) -}}" title="{{- board.getName -}}">
+	                {{- truncDot(board.getName, ccdn_forum_forum.seo.title_length) -}}
+	            </a>
+	        </h4>
 
-    <td class="left">
-        <h4>
-            <a href="{{- path('ccdn_forum_forum_board_show', {'boardId': board.getId }) -}}" title="{{- board.getName -}}">
-                {{- truncDot(board.getName, ccdn_forum_forum.seo.title_length) -}}
-            </a>
-        </h4>
-
-        <span class="common_body">
             {{- BBCode(board.getDescription | raw, ccdn_forum_forum.item_board.enable_bb_parser) | raw -}}
-        </span>
-    </td>
+	    </td>
 
-    <td class="center" style="width: 100px;">
-        {{- board.getCachedTopicCount -}}
-    </td>
+	    <td class="center prominent-figure-large" style="width: 100px;">
+			<span class="label label-info lead" title="{{- board.getCachedTopicCount -}}">
+				{{- abbr_number(board.getCachedTopicCount) -}}
+			</span>
+	    </td>
 
-    <td class="center" style="width: 100px;">
-        {{- board.getCachedPostCount -}}
-    </td>
+	    <td class="center prominent-figure-large" style="width: 100px;">
+			<span class="label label-info lead" title="{{- board.getCachedPostCount -}}">
+		        {{- abbr_number(board.getCachedPostCount) -}}
+			</span>
+	    </td>
 
-    <td class="center" style="width:170px;">
-        {%- if board.getLastPost -%}
-            {%- if board.getLastPost.getTopic -%}
+	    <td class="center" style="width:170px;">
+	        {%- if board.getLastPost -%}
+	            {%- if board.getLastPost.getTopic -%}
 
-                {%- set page = divCeil(( board.getLastPost.getTopic.getCachedReplyCount + 1), topics_per_page) -%}
+	                {%- set page = divCeil(( board.getLastPost.getTopic.getCachedReplyCount + 1), topics_per_page) -%}
 
-                {% set profile = create_profile(board.getLastPost.getCreatedBy) %}
+	                {% set profile = create_profile(board.getLastPost.getCreatedBy) %}
 
-                {{- 'ccdn_forum_forum.post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
-                {{- profile.getProfilePath|raw -}}
+	                {{- 'ccdn_forum_forum.post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
+	                {{- profile.getProfilePath|raw -}}
 
-                <br>
-                {%- if page < 2 -%}
-                    <a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': board.getLastPost.getTopic.getId } ) -}}#{{- board.getLastPost.getId -}}">
-                        <abbr class="timestamper" title="{{- board.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-                            {{- board.getLastPost.getCreatedDate |date(ccdn_forum_forum.category.last_post_datetime_format) -}}
-                        </abbr>
-                    </a>
-                {%- else -%}
-                    <a href="{{- path('ccdn_forum_forum_topic_show_paginated', {'topicId': board.getLastPost.getTopic.getId, 'page':page }) -}}#{{- board.getLastPost.getId -}}">
-                        <abbr class="timestamper" title="{{- board.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-                            {{- board.getLastPost.getCreatedDate |date(ccdn_forum_forum.category.last_post_datetime_format) -}}
-                        </abbr>
-                    </a>
-                {%- endif -%}
-            {%- endif -%}
-        {%- endif -%}
-    </td>
+	                <br>
+	                {%- if page < 2 -%}
+	                    <a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': board.getLastPost.getTopic.getId } ) -}}#{{- board.getLastPost.getId -}}">
+	                        <abbr class="timestamper" title="{{- board.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+	                            {{- board.getLastPost.getCreatedDate |date(ccdn_forum_forum.category.last_post_datetime_format) -}}
+	                        </abbr>
+	                    </a>
+	                {%- else -%}
+	                    <a href="{{- path('ccdn_forum_forum_topic_show_paginated', {'topicId': board.getLastPost.getTopic.getId, 'page':page }) -}}#{{- board.getLastPost.getId -}}">
+	                        <abbr class="timestamper" title="{{- board.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+	                            {{- board.getLastPost.getCreatedDate |date(ccdn_forum_forum.category.last_post_datetime_format) -}}
+	                        </abbr>
+	                    </a>
+	                {%- endif -%}
+	            {%- endif -%}
+	        {%- endif -%}
+	    </td>
 
-</tr>
+	</tr>
 {%- endspaceless -%}

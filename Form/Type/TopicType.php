@@ -50,7 +50,10 @@ class TopicType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title');
+        $builder->add('title', null, array(
+        	'label' => 'ccdn_forum_forum.form.label.topic.title',
+			'translation_domain' => 'CCDNForumForumBundle'
+        ));
     }
 
     /**

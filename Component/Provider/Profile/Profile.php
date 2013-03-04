@@ -234,21 +234,25 @@ class Profile implements ProfileInterface
         $badges = array('grey', 'Anonymous');
 
         if (null !== $this->user) {
-            if ($this->user->hasRole('ROLE_USER')) {
-                $badges = array('blue', 'Member');
-            }
+			if ($this->user->isLocked()) {
+				$badges = array('black', 'Banned');
+			} else {
+	            if ($this->user->hasRole('ROLE_USER')) {
+	                $badges = array('blue', 'Member');
+	            }
 
-            if ($this->user->hasRole('ROLE_MODERATOR')) {
-                $badges = array('red', 'Staff');
-            }
+	            if ($this->user->hasRole('ROLE_MODERATOR')) {
+	                $badges = array('red', 'Staff');
+	            }
 
-            if ($this->user->hasRole('ROLE_ADMIN')) {
-                $badges = array('red', 'Staff');
-            }
+	            if ($this->user->hasRole('ROLE_ADMIN')) {
+	                $badges = array('red', 'Staff');
+	            }
 
-            if ($this->user->hasRole('ROLE_SUPER_ADMIN')) {
-                $badges = array('red', 'Staff');
-            }
+	            if ($this->user->hasRole('ROLE_SUPER_ADMIN')) {
+	                $badges = array('red', 'Staff');
+	            }
+			}
         }
 
         $this->roleBadges = array($badges);

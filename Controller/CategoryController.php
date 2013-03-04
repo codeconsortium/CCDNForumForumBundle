@@ -55,7 +55,8 @@ class CategoryController extends BaseController
     public function showAction($categoryId)
     {
         $category = $this->filterViewableCategories(array($this->container->get('ccdn_forum_forum.repository.category')->findOneByIdJoinedToBoard($categoryId)));
-
+		$category = $category[0];
+		
         if (! $category) {
             throw NotFoundhttpException('No such category exists!');
         }

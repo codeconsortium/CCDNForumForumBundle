@@ -2,41 +2,13 @@
 
 {% set author = create_profile(post.getCreatedBy) %}
 
-<div class="forum_post">
-    <div class="forum_post_head" id="post_{{- post.getId -}}">
-
+<article class="row-fluid forum-post-item">
+    <header{% if post.id %} id="post_{{- post.getId -}}"{% endif %}>
         {%- include 'CCDNForumForumBundle:Post:item_post_head.html.twig' with {'post': post, 'author': author} -%}
+	</header>
 
-    </div>
+	{%- include 'CCDNForumForumBundle:Post:item_post_body.html.twig' with {'post': post} -%}
 
-    <div class="forum_post_body">
-
-        {%- include 'CCDNForumForumBundle:Post:item_post_body.html.twig' with {'post': post} -%}
-
-        {%- if post.getEditedDate -%}
-            <span class="label">
-                {% set editor = create_profile(post.getEditedBy) %}
-
-                {{- 'ccdn_forum_forum.post.edited_by' |trans({}, 'CCDNForumForumBundle') -}}
-                {{- editor.getProfilePath|raw -}}
-
-                {{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}
-
-                <abbr class="timestamper" title="{{- post.getEditedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-                    {{- post.getEditedDate |date(ccdn_forum_forum.item_post.post_edited_datetime_format) -}}
-                </abbr>
-            </span>
-        {%- endif -%}
-    </div>
-
-    <div class="forum_post_body">
-
-        {% if author.getSignature %}
-            <hr>
-            {{- BBCode(author.getSignature|raw, ccdn_forum_forum.item_signature.enable_bb_parser) | raw -}}
-        {% endif %}
-
-    </div>
-</div>
+</article>
 
 {%- endspaceless -%}

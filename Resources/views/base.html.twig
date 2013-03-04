@@ -1,0 +1,77 @@
+{% extends LayoutTemplate %}
+
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{- asset('bundles/ccdnforumforum/css/theme.css') -}}" rel="stylesheet" type="text/css">
+    <link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
+	{% block stylesheets_extra %}
+	{% endblock stylesheets_extra %}
+{% endblock stylesheets %}
+
+
+
+{% block javascripts %}
+	{{ parent() }}
+	{% block javascripts_extra %}
+	{% endblock javascripts_extra %}
+{% endblock javascripts %}
+
+
+
+{% block tool_bar %}
+	{%- spaceless -%}
+	
+	<div id="sub-nav" class="row-fluid">
+	    <div class="span2">
+			<h3>{% block sub_title %}<a href="{{ path('ccdn_forum_forum_index') }}">Forum</a>{% endblock sub_title %}</h3>
+		</div>
+				
+		<nav class="span10">
+			{%- block crumb_trail -%}
+				{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
+			{%- endblock crumb_trail -%}
+		</nav>
+	</div>	
+	
+	{%- endspaceless -%}
+{% endblock tool_bar %}
+
+
+
+{% block sidebar %}
+	{%- spaceless -%}
+
+    {{ parent() }}
+
+	{%- block sidebar_extra_top -%}{%- endblock sidebar_extra_top -%}
+    {%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
+	{%- block sidebar_extra_bottom -%}{%- endblock sidebar_extra_bottom -%}
+
+	{%- endspaceless -%}
+{% endblock %}
+
+
+{% block body %}
+	{%- spaceless -%}
+
+	{% block body_content %}
+	{% endblock body_content %}
+
+	<footer class="row-fluid center page-footer">
+		<nav>
+			<p>
+				Powered by <a rel="friend" target="_blank" href="http://www.github.com/codeconsortium/CCDNForumForumBundle">CCDNForum Forum Bundle</a>. 
+				Copyright <a target="_blank" href="http://www.codeconsortium.com/">CodeConsortium</a> 2011 - {{ 'now'|date("Y") }}.		
+			</p>
+			<p>
+				Graphics courtesy of <a rel="friend" target="_blank" href="http://pc.de">pc.de</a> and 
+				<a rel="friend" target="_blank" href="http://glyphicons.com/glyphicons-licenses/">Glyphicons</a>. 
+				Smileys courtesy of <a rel="friend" target="_blank" href="http://www.freesmileys.org/copyright.php">freesmileys.org</a>
+			</p>
+		</nav>
+	</footer>
+
+	{%- endspaceless -%}
+{% endblock body %}

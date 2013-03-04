@@ -1,51 +1,19 @@
-{% block field_label %}
-	{%- spaceless -%}
-		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' control-label'}) -%}
-	    <label for="{{- id -}}" {{ block('widget_attributes') -}}>{{- label -}}
-		{%- if required -%}
-			<span style="color:#f00;" title="{{- 'ccdn_forum_forum.form.field.is_required' |trans({}, 'CCDNForumForumBundle') -}}">*</span>
-		{%- endif -%}
-		</label>
-	{%- endspaceless -%}
-{% endblock field_label %}
-
-
-
-{% block field_widget %}
-	{%- spaceless -%}
-	    {%- set type = type|default('text') -%}
-		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' input-xlarge span8'}) -%}
-	    <input type="{{- type -}}" value="{{- value -}}" {{ block('widget_attributes') -}}>
-	{%- endspaceless -%}
-{% endblock field_widget %}
-
-
-
-{% block textarea_widget %}
-	{%- spaceless -%}
-		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' text-xlarge span8', 'style': attr.style|default('') ~ 'height:250px;'}) -%}
-	    <textarea {{ block('widget_attributes') -}}>{{- value -}}</textarea>
-	{%- endspaceless -%}
-{% endblock textarea_widget %}
-
-
-
 {% block field_errors %}{# errors for next to each field #}
 	{%- spaceless -%}
 	    {%- if errors|length > 0 -%}
-		<div class="alert alert-error span8">
-		    <ul>
-		        {%- for error in errors -%}
-		            <li>
-                        {{
-                        error.messagePluralization is null
-                        ? error.messageTemplate|trans(error.messageParameters, 'validators')
-                        : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
-                        }}
-                    </li>
-		        {%- endfor -%}
-		    </ul>
-		</div>
+			<div class="alert alert-error alert-block span10">
+			    <ul>
+			        {%- for error in errors -%}
+			            <li>
+	                        {{
+	                        error.messagePluralization is null
+	                        ? error.messageTemplate|trans(error.messageParameters, 'validators')
+	                        : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+	                        }}
+	                    </li>
+			        {%- endfor -%}
+			    </ul>
+			</div>
 	    {%- endif -%}
 	{%- endspaceless -%}
 {% endblock field_errors %}
@@ -55,36 +23,180 @@
 {% block form_errors %}{# for the overall form #}
 	{%- spaceless -%}
 	    {%- if errors|length > 0 -%}
-		<div class="alert alert-error span8">
-		    <ul>
-		        {%- for error in errors -%}
-		            <li>{{
-                        error.messagePluralization is null
-                        ? error.messageTemplate|trans(error.messageParameters, 'validators')
-                        : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
-                        }}<hr>
-                    </li>
-		        {%- endfor -%}
-		    </ul>
-		</div>
+			<div class="alert alert-error alert-block span10">
+			    <ul>
+			        {%- for error in errors -%}
+			            <li>
+							{{
+	                        error.messagePluralization is null
+	                        ? error.messageTemplate|trans(error.messageParameters, 'validators')
+	                        : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+	                        }}
+	                    </li>
+			        {%- endfor -%}
+			    </ul>
+			</div>
 	    {%- endif -%}
 	{%- endspaceless -%}
 {% endblock form_errors %}
 
 
+
+{#
+{% block form_widget %}
+	{% spaceless %}
+	    {% if compound %}
+	        {{ block('form_widget_compound') }}
+	    {% else %}
+	        {{ block('form_widget_simple') }}
+	    {% endif %}
+	{% endspaceless %}
+{% endblock form_widget %}
+
+	{% block form_widget_simple %}
+		{% spaceless %}
+		    {% set type = type|default('text') %}
+		    <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+		{% endspaceless %}
+	{% endblock form_widget_simple %}
+
+	{% block form_widget_compound %}
+		{% spaceless %}
+		
+		{{ block('form_rows') }}
+		    <div {{ block('widget_container_attributes') }} class="FUCK">		
+		        {% if form.parent is empty %}
+		            {{ form_errors(form) }}
+		        {% endif %}
+		        {{ block('form_rows') }}
+		        {{ form_rest(form) }}
+		    </div>	
+		{% endspaceless %}
+	{% endblock form_widget_compound %}
+#}	
+
+{% block form_row %}
+	{%- spaceless -%}
+		{%- if compound and not form.vars.block_prefixes[1] == 'field' -%}
+
+			{{- form_widget(form) -}}
+				
+		{%- else -%}
+			<div class="control-group{{- (form.vars.errors|length > 0) ? ' error': '' -}}">
+				{% if 'repeated' in form.vars.block_prefixes %} 		 
+					{% if form.vars.block_prefixes[1] == 'checkbox' %}
+						<div class="controls">
+							{{- form_errors(form) -}}
+							{{- form_widget(form) -}}
+							{{- form_label(form) -}}
+						</div>
+					{% else %}
+						{{- form_label(form) -}}
+						<div class="controls">
+							{{- form_errors(form) -}}
+							{{- form_widget(form) -}}
+						</div>			
+					{% endif %}	
+				{% else %}
+					{% if form.vars.block_prefixes[2] == 'checkbox' %}
+						<div class="controls">
+							{{- form_errors(form) -}}
+							{{- form_widget(form) -}}
+							{{- form_label(form) -}}
+						</div>
+					{% else %}
+						{{- form_label(form) -}}
+						<div class="controls">
+							{{- form_errors(form) -}}
+							{{- form_widget(form) -}}
+						</div>			
+					{% endif %}	
+				{% endif %}
+			</div>
+		{%- endif -%}
+	{%- endspaceless -%}
+{% endblock form_row %}
+
+
+
+{% block field_label %}
+	{%- spaceless -%}
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' control-label' ~ (required ? ' control-label-required':'')}) -%}
+	    <label for="{{- id -}}" {{ block('widget_attributes') -}}>
+			{%- if required -%}
+				<span style="color:#f00;" title="{{- 'ccdn_forum_forum.form.field.required' |trans({}, 'CCDNForumForumBundle') -}}">*</span>
+			{%- endif -%}
+			{{- label |trans({}, translation_domain) | raw -}}
+		</label>
+	{%- endspaceless -%}
+{% endblock field_label %}
+
+
+
+{% block field_widget %}
+	{%- spaceless -%}
+	    {%- set type = type|default('text') -%}
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' input-xxlarge span10'}) -%}
+	    <input type="{{- type -}}" value="{{- value -}}" {{ block('widget_attributes') -}} />
+	{%- endspaceless -%}
+{% endblock field_widget %}
+
+
+
+{% block email_widget %}
+	{%- spaceless -%}
+	    {%- set type = type|default('text') -%}
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' input-xxlarge span12'}) -%}
+		<div class="input-prepend span10">
+			<span class="add-on"><i class="icon-envelope"></i></span>
+		    <input type="{{- type -}}" value="{{- value -}}" {{ block('widget_attributes') -}} />
+		</div>
+	{%- endspaceless -%}
+{% endblock email_widget %}
+
+
+
+{% block password_widget %}
+	{%- spaceless -%}
+	    {%- set type = type|default('text') -%}
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' input-xxlarge span10'}) -%}
+		<div class="input-prepend row-fluid">
+			<span class="add-on"><i class="icon-lock"></i></span>
+		    <input type="{{- type -}}" value="{{- value -}}" {{ block('widget_attributes') -}} />
+		</div>
+	{%- endspaceless -%}
+{% endblock password_widget %}
+
+
+
+{% block textarea_widget %}
+	{%- spaceless -%}
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' text-xxlarge span10', 'style': attr.style|default('') ~ 'height:250px;'}) -%}
+	    <textarea {{ block('widget_attributes') -}}>{{- value -}}</textarea>
+	{%- endspaceless -%}
+{% endblock textarea_widget %}
+
+
+{% block checkbox_widget %}
+	{%- spaceless -%}
+	    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+	{%- endspaceless -%}
+{% endblock checkbox_widget %}
+
+
 {% block choice_widget %}
     {% spaceless %}
         {% if expanded %}
-            {%- set attr = attr|merge({'class': attr.class|default('') ~ ' span8'}) -%}
+            {%- set attr = attr|merge({'class': attr.class|default('') ~ ' span10'}) -%}
             <div {{ block('widget_container_attributes') }}>
                 <table class="table table-condensed">
                     <tbody>
-                    {% for child in form %}
-                        <tr>
-                            <td>{{ form_widget(child) }}</td>
-                            <td>{{ form_label(child) }}</td>
-                        </tr>
-                    {% endfor %}
+	                    {% for child in form %}
+	                        <tr>
+	                            <td>{{ form_widget(child) }}</td>
+	                            <td>{{ form_label(child) }}</td>
+	                        </tr>
+	                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -106,3 +218,34 @@
         {% endif %}
     {% endspaceless %}
 {% endblock choice_widget %}
+
+
+
+{% block ewz_recaptcha_widget %}
+	{% spaceless %}
+	    {% if form.vars.ewz_recaptcha_enabled %}
+	        {% if attr.options is defined %}
+	            <script type="text/javascript">
+	                var RecaptchaOptions = {{ attr.options|json_encode|raw }}
+	            </script>
+	        {% endif %}
+	        <script src="{{ form.vars.url_challenge }}" type="text/javascript"></script>
+	        <noscript>
+	            <iframe src="{{ form.vars.url_noscript }}" height="300" width="500"></iframe><br/>
+	            <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+	            <input type="hidden" name="recaptcha_response_field" value="manual_challenge"/>
+	        </noscript>
+	    {% endif %}
+	{% endspaceless %}
+{% endblock ewz_recaptcha_widget %}
+
+
+
+{% block widget_upload %}
+	{%- spaceless -%}
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' input-file'}) -%}
+		<input type="{{- type -}}" {{ block('widget_attributes') -}} style="display:block;clear:both;height:100%;width:100%;visibility:visible;">
+	{%- endspaceless -%}
+{% endblock widget_upload %}
+
+

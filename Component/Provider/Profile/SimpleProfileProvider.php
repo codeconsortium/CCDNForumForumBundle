@@ -28,17 +28,23 @@ class SimpleProfileProvider implements ProfileProviderInterface
     {
         $profile = new Profile();
 
+		// Set user object.
+		$profile->setUser($user);
+		
+		// Choose username, wether canonical or email or some other field.
         if (null !== $user) {
             $profile->setUsername($user->getUsername());
         } else {
             $profile->setUsername('Guest');
         }
 
+		// Set avatar.
         $asset = $this->container->get('templating.helper.assets');
 
         $fallbackAvatar = $asset->getUrl($this->container->getParameter('ccdn_forum_forum.profile_provider.avatar_fallback'));
         $profile->setAvatarFallback($fallbackAvatar);
 
+		// Set role badges.
         $profile->autoSetRoleBadge();
 
         return $profile;

@@ -1,18 +1,8 @@
-{% extends ccdn_forum_forum.board.show.layout_template %}
+{% extends 'CCDNForumForumBundle::base.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{- asset('bundles/ccdnforumforum/css/generic.css') -}}" rel="stylesheet" type="text/css">
-{% endblock %}
+{% set LayoutTemplate = ccdn_forum_forum.board.show.layout_template %}
 
 {% block title %}{{- truncDot('ccdn_forum_forum.title.board.show' | trans({'%board_name%': board.name}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
-
-{% block sidebar %}
-    {{ parent() }}
-
-    {%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
-
-{% endblock %}
 
 
 {% block body_content %}
@@ -21,23 +11,29 @@
 
     {%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
 
-    {%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
-
-    <h2 title="{{- board.name -}}">{{- truncDot(board.name, ccdn_forum_forum.seo.title_length) -}}.</h2>
-
-    <br>
-
-    {{- BBCode(board.getDescription | raw, ccdn_forum_forum.item_board.enable_bb_parser) | raw -}}
-
-    <br><br>
-
-    <span class="badge badge-info">{{- 'ccdn_forum_forum.board.topic_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- board.cachedTopicCount -}}</span>&nbsp;
-    <span class="badge badge-info">{{- 'ccdn_forum_forum.board.post_count' |trans({}, 'CCDNForumForumBundle') -}}&nbsp;{{- board.cachedPostCount -}}</span>
-
-    <hr>
+	<section>
+		<header class="row-fluid">
+			<div class="span6">
+			    <h3 title="{{- board.name -}}">{{- truncDot(board.name, ccdn_forum_forum.seo.title_length) -}}</h3>
+			</div>
+			<div class="span6 content-right">
+			    <span class="label label-inverse prominent-figure" title="{{- board.cachedTopicCount -}}">
+					{{- 'ccdn_forum_forum.board.topic_count' |trans({}, 'CCDNForumForumBundle') -}}
+					{{- abbr_number(board.cachedTopicCount) -}}
+				</span>
+			    <span class="label label-inverse prominent-figure" title="{{- board.cachedPostCount -}}">
+					{{- 'ccdn_forum_forum.board.post_count' |trans({}, 'CCDNForumForumBundle') -}}
+					{{- abbr_number(board.cachedPostCount) -}}
+				</span>			
+			</div>
+		</header>
+		<div class="row-fluid">
+		    {{- BBCode(board.getDescription | raw, ccdn_forum_forum.item_board.enable_bb_parser) | raw -}}			
+		</div>
+	</section>
 
     {%- if sticky_topics is not empty -%}
-        <table class="table">
+        <table class="table table-striped table-bordered table-hover table-no-vertical-borders">
             <thead>
                 <tr>
                     <th class="center" style="width: 18px;"></th>
@@ -49,36 +45,38 @@
                 </tr>
             </thead>
             <tbody>
-            {%- for row, topic in sticky_topics -%}
-                {%- if not topic.getDeletedBy or is_granted('ROLE_MODERATOR') -%}
-                    {%- include 'CCDNForumForumBundle:Board:item_topic_list.html.twig' -%}
-                {%- endif -%}
-            {%- else -%}
-                <tr>
-                    <td class="center" colspan="6">
-                        {{- 'ccdn_forum_forum.board.table.empty' | trans({}, 'CCDNForumForumBundle') -}}
-                    </td>
-                </tr>
-            {%- endfor -%}
+	            {%- for row, topic in sticky_topics -%}
+	                {%- if not topic.isDeleted or is_granted('ROLE_MODERATOR') -%}
+	                    {%- include 'CCDNForumForumBundle:Board:item_topic_list.html.twig' -%}
+	                {%- endif -%}
+	            {%- else -%}
+	                <tr>
+	                    <td class="center" colspan="6">
+	                        {{- 'ccdn_forum_forum.board.table.empty' | trans({}, 'CCDNForumForumBundle') -}}
+	                    </td>
+	                </tr>
+	            {%- endfor -%}
             </tbody>
         </table>
     {%- endif -%}
 
-    <div class="btn-toolbar" style="display:block !important;clear:both !important;">
-        <div class="pull-left">
+    <div class="btn-toolbar">
+        <div class="span6">
             {% set is_topic_create_disabled = board.isAuthorisedToCreateTopic(app.security) ? '': ' disabled' %}
 
-            <a class="btn btn-danger{{ is_topic_create_disabled }}" rel="nofollow" href="{{- path('ccdn_forum_forum_topic_create', {'boardId': board.getId }) -}}"><i class="icon-white icon-asterisk"></i>&nbsp;{{- 'ccdn_forum_forum.link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}</a>
+            <a class="btn btn-danger{{ is_topic_create_disabled }}" rel="nofollow" href="{{- path('ccdn_forum_forum_topic_create', {'boardId': board.getId }) -}}">
+				<i class="icon-white icon-asterisk"></i>
+				{{- 'ccdn_forum_forum.link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}
+			</a>
         </div>
         {%- if pager.haveToPaginate -%}
-            <div class="pull-right">
-            {{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_board_show_paginated', 'routeParams':{'boardId':board.getId}} ) -}}
-            </div>
+            <nav class="span6 btn-right paginate">
+	            {{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_board_show_paginated', 'routeParams':{'boardId':board.getId}} ) -}}
+            </nav>
         {%- endif -%}
-        <br><br>
     </div>
 
-    <table class="table">
+    <table class="table table-striped table-bordered table-hover table-no-vertical-borders">
         <thead>
             <tr>
                 <th class="center" style="width: 18px;"></th>
@@ -90,30 +88,27 @@
             </tr>
         </thead>
         <tbody>
-        {%- for row, topic in pager.getCurrentPageResults -%}
-            {%- if not topic.getDeletedBy or is_granted('ROLE_MODERATOR') -%}
-                {%- include 'CCDNForumForumBundle:Board:item_topic_list.html.twig' -%}
-            {%- endif -%}
-        {%- else -%}
-            <tr>
-                <td class="center" colspan="6">
-                    {{- 'ccdn_forum_forum.board.table.empty' | trans({}, 'CCDNForumForumBundle') -}}
-                </td>
-            </tr>
-        {%- endfor -%}
+	        {%- for row, topic in pager.getCurrentPageResults -%}
+	            {%- if not topic.isDeleted or is_granted('ROLE_MODERATOR') -%}
+	                {%- include 'CCDNForumForumBundle:Board:item_topic_list.html.twig' -%}
+	            {%- endif -%}
+	        {%- else -%}
+	            <tr>
+	                <td class="center" colspan="6">
+	                    {{- 'ccdn_forum_forum.board.table.empty' | trans({}, 'CCDNForumForumBundle') -}}
+	                </td>
+	            </tr>
+	        {%- endfor -%}
         </tbody>
     </table>
 
     {%- if pager.haveToPaginate -%}
-        <div class="btn-toolbar" style="display:block !important;clear:both !important;">
-            <div class="pull-right" style="clear:both;display:block;">
+        <div class="btn-toolbar">
+            <nav class="span12 btn-right paginate">
                 {{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_board_show_paginated', 'routeParams':{'boardId':board.getId}} ) -}}
-            </div>
-            <br><br>
+            </nav>
         </div>
     {%- endif -%}
-
-    {%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
     {%- endspaceless -%}
 

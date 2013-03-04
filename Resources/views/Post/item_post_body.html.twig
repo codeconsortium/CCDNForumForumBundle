@@ -1,40 +1,124 @@
 {%- spaceless -%}
 
+	{%- if post.getIsDeleted == false or is_granted('ROLE_MODERATOR') -%}
+		{%- if post.getEditedDate -%}
+		    <div class="label forum-post-notice">
+				<i class="icon-white icon-pencil"></i>
+		        {% set editor = create_profile(post.getEditedBy) %}
+
+		        {{- 'ccdn_forum_forum.post.edited_by' |trans({}, 'CCDNForumForumBundle') -}}
+		        {{- editor.getProfilePath|raw -}}
+
+		        {{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}
+
+		        <abbr class="timestamper" title="{{- post.getEditedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+		            {{- post.getEditedDate |date(ccdn_forum_forum.item_post.post_edited_datetime_format) -}}
+		        </abbr>
+		    </div>
+		{%- endif -%}
+	{%- endif -%}
+	
+	{%- if post.getIsDeleted == true -%}
+		<div class="label label-important forum-post-notice">
+			<div class="span8">
+		        <i class="icon-white icon-trash"></i>
+		        {% set deleter = create_profile(post.getDeletedBy) %}
+
+		        {{- 'ccdn_forum_forum.post.is_deleted' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
+		        {{- 'ccdn_forum_forum.post.deleted_by' |trans({}, 'CCDNForumForumBundle') -}}
+		        {{ deleter.getProfilePath|raw }}
+
+		        {{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}
+								
+		        <abbr class="timestamper" title="{{- post.getDeletedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+		            {{- post.getDeletedDate |date(ccdn_forum_forum.item_post.post_deleted_datetime_format) -}}
+		        </abbr>								
+			</div>
+			
+	        {%- if is_granted('ROLE_MODERATOR') -%}
+				<div class="span4 content-right">
+	                <a class="accordion-toggle" data-toggle="collapse" data-parent="#post_{{- post.getId() -}}" href="#post_{{- post.getId() -}}_body">
+	                    {{- 'ccdn_forum_forum.post.show_hide' |trans({}, 'CCDNForumForumBundle') -}}
+	                </a>
+				</div>
+			{%- endif -%}
+		</div>
+		{%- if is_granted('ROLE_MODERATOR') -%}
+			<section class="accordion-body collapse" id="post_{{- post.getId() -}}_body">
+			    {{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}
+			</section>
+		{%- endif -%}
+	{%- else -%}
+		<section id="post_{{- post.getId() -}}_body">
+		    {{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}
+		</section>	
+	{%- endif -%}
+	
+	{%- if post.getIsDeleted == false or is_granted('ROLE_MODERATOR') -%}
+		{%- if author.getSignature -%}
+		    <footer>
+		        {{- BBCode(author.getSignature|raw, ccdn_forum_forum.item_signature.enable_bb_parser) | raw -}}
+			</footer>
+		{%- endif -%}
+	{%- endif -%}
+	
+	{#
+	{%- if post.getIsDeleted == false or is_granted('ROLE_MODERATOR') -%}
+		{%- if post.getEditedDate -%}
+		    <span class="label">
+				<i class="icon-white icon-pencil"></i>
+		        {% set editor = create_profile(post.getEditedBy) %}
+
+		        {{- 'ccdn_forum_forum.post.edited_by' |trans({}, 'CCDNForumForumBundle') -}}
+		        {{- editor.getProfilePath|raw -}}
+
+		        {{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}
+
+		        <abbr class="timestamper" title="{{- post.getEditedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+		            {{- post.getEditedDate |date(ccdn_forum_forum.item_post.post_edited_datetime_format) -}}
+		        </abbr>
+		    </span>
+		{%- endif -%}
+	{%- endif -%}
+		
     {%- if post.getIsDeleted -%}
-        <span class="alert alert-warning" style="display:block;">
-            <i class="icon-trash"></i>&nbsp;
-            {% set deleter = create_profile(post.getDeletedBy) %}
-
-            {{- 'ccdn_forum_forum.post.is_deleted' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
-            {{- 'ccdn_forum_forum.post.deleted_by' |trans({}, 'CCDNForumForumBundle') -}}
-            {{ deleter.getProfilePath|raw }}
-
-            {{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}
-            {{- relevantDateFormat(post.getDeletedDate) -}}{#|date(ccdn_forum_forum.item_post.post_deleted_datetime_format) #}
-        </span>
-    {%- endif -%}
-
-    {%- if post.getIsDeleted == false or is_granted('ROLE_MODERATOR') -%}
-        {%- if post.getIsDeleted == true -%}
             <div class="accordion" id="post_{{- post.getId() -}}">
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#post_{{- post.getId() -}}" href="#post_{{- post.getId() -}}_body">
-                            {{- 'ccdn_forum_forum.post.show_hide' |trans({}, 'CCDNForumForumBundle') -}}
-                        </a>
+						<span class="label label-important">
+							<div class="span6">
+						        <i class="icon-white icon-trash"></i>
+						        {% set deleter = create_profile(post.getDeletedBy) %}
+
+						        {{- 'ccdn_forum_forum.post.is_deleted' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
+						        {{- 'ccdn_forum_forum.post.deleted_by' |trans({}, 'CCDNForumForumBundle') -}}
+						        {{ deleter.getProfilePath|raw }}
+
+						        {{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}
+								
+						        <abbr class="timestamper" title="{{- post.getDeletedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+						            {{- post.getDeletedDate |date(ccdn_forum_forum.item_post.post_deleted_datetime_format) -}}
+						        </abbr>								
+							</div>
+					        {%- if is_granted('ROLE_MODERATOR') -%}
+								<div class="span6 content-right">
+			                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#post_{{- post.getId() -}}" href="#post_{{- post.getId() -}}_body">
+			                            {{- 'ccdn_forum_forum.post.show_hide' |trans({}, 'CCDNForumForumBundle') -}}
+			                        </a>
+								</div>
+							{%- endif -%}
+						</span>
                     </div>
                     <div id="post_{{- post.getId() -}}_body" class="accordion-body collapse">
                         <div class="accordion-inner">
-        {%- endif -%}
-
-        {{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}<br>
-
-        {%- if post.getIsDeleted == true -%}
+					        {{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}<br>
                         </div>
                     </div>
                 </div>
             </div>
-        {%- endif -%}
+	{%- else -%}
+	    {{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}<br>
     {%- endif -%}
-
+	#}
+	
 {%- endspaceless -%}

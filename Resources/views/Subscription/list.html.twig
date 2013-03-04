@@ -1,18 +1,8 @@
-{% extends ccdn_forum_forum.subscription.list.layout_template %}
+{% extends 'CCDNForumForumBundle::base.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{- asset('bundles/ccdnforumforum/css/generic.css') -}}" rel="stylesheet" type="text/css">
-{% endblock %}
+{% set LayoutTemplate = ccdn_forum_forum.subscription.list.layout_template %}
 
 {% block title %}{{- truncDot('ccdn_forum_forum.title.subscriptions.show' | trans({}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
-
-{% block sidebar %}
-	{{ parent() }}
-
-	{%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
-
-{% endblock %}
 
 
 {% block body_content %}
@@ -21,20 +11,17 @@
 
 	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
 
-	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
+	<h3>{{- 'ccdn_forum_forum.title.subscriptions.show' | trans({}, 'CCDNForumForumBundle' ) -}}</h3>
 
-	<h2>{{- 'ccdn_forum_forum.title.subscriptions.show' | trans({}, 'CCDNForumForumBundle' ) -}}</h2>
-
-	<div class="btn-toolbar" style="display:block !important;clear:both !important;">
-		{%- if pager.haveToPaginate -%}
-			<div class="pull-right">
-	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_subscription_list_paginated', 'routeParams':{}} ) -}}
-			</div>
-		{%- endif -%}
-		<br><br>
-	</div>
+	{%- if pager.haveToPaginate -%}
+		<div class="btn-toolbar">
+			<nav class="span12 btn-right paginate">
+		    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_subscription_list_paginated', 'routeParams':{}} ) -}}
+			</nav>
+		</div>
+	{%- endif -%}
 	
-	<table class="table">
+	<table class="table table-bordered table-hover">
 		<thead>
 			<tr>
 				<th class="center" style="width:18px;"></th>
@@ -46,31 +33,28 @@
 			</tr>
 		</thead>
 		<tbody>
-		{%- for row, subscription in pager.getCurrentPageResults -%}
-			{%- set topic = subscription.getTopic -%}
-			{%- if not topic.getDeletedBy or is_granted('ROLE_MODERATOR') -%}
-				{%- include 'CCDNForumForumBundle:Board:item_topic_list.html.twig' -%}
-			{%- endif -%}
-		{%- else -%}
-			<tr>
-				<td class="center" colspan="6">
-					{{- 'ccdn_forum_forum.subscriptions.table.empty' | trans({}, 'CCDNForumForumBundle') -}}
-				</td>
-			</tr>
-		{%- endfor -%}
+			{%- for row, subscription in pager.getCurrentPageResults -%}
+				{%- set topic = subscription.getTopic -%}
+				{%- if not topic.isDeleted or is_granted('ROLE_MODERATOR') -%}
+					{%- include 'CCDNForumForumBundle:Board:item_topic_list.html.twig' -%}
+				{%- endif -%}
+			{%- else -%}
+				<tr>
+					<td class="center" colspan="6">
+						{{- 'ccdn_forum_forum.subscriptions.table.empty' | trans({}, 'CCDNForumForumBundle') -}}
+					</td>
+				</tr>
+			{%- endfor -%}
 		</tbody>
 	</table>
 	
-	<div class="btn-toolbar" style="display:block !important;clear:both !important;">
-		{%- if pager.haveToPaginate -%}
-			<div class="pull-right">
-	    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_subscription_list_paginated', 'routeParams':{}} ) -}}
-			</div>
-		{%- endif -%}
-		<br><br>
-	</div>
-
-	{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
+	{%- if pager.haveToPaginate -%}
+		<div class="btn-toolbar">
+			<nav class="span12 btn-right paginate">
+		    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_subscription_list_paginated', 'routeParams':{}} ) -}}
+			</nav>
+		</div>
+	{%- endif -%}
 
 	{%- endspaceless -%}
 

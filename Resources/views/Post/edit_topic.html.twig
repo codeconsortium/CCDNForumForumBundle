@@ -1,24 +1,11 @@
-{% extends ccdn_forum_forum.post.edit_topic.layout_template %}
+{% extends 'CCDNForumForumBundle::base.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{- asset('bundles/ccdnforumforum/css/generic.css') -}}" rel="stylesheet" type="text/css">
-    <link href="{{- asset('bundles/ccdnforumforum/css/post.css') -}}" rel="stylesheet" type="text/css">
-    <link href="{{- asset('bundles/ccdncomponentbbcode/css/bbcode.css') -}}" rel="stylesheet" type="text/css">
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{- asset('bundles/ccdncomponentbbcode/js/jquery.bbeditor.js') -}}" type="text/javascript"></script>
-{% endblock %}
+{% set LayoutTemplate = ccdn_forum_forum.post.edit_topic.layout_template %}
 
 {% block title %}{{- truncDot('ccdn_forum_forum.title.topic.edit' | trans({'%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
 
-{% block sidebar %}
-    {{ parent() }}
-
-    {%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
-
+{% block javascripts_extra %}
+	<script src="{{- asset('bundles/ccdncomponentbbcode/js/jquery.bbeditor.js') -}}" type="text/javascript"></script>
 {% endblock %}
 
 
@@ -28,73 +15,39 @@
 
     {%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
 
-    {%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
-
-    <h2>{{- 'ccdn_forum_forum.title.topic.edit' | trans({'%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}</h2>
-
     {%- form_theme form ccdn_forum_forum.post.edit_topic.form_theme -%}
     <form action="{{- path('ccdn_forum_forum_post_edit', { 'postId': post.id } ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
         <fieldset>
 
-            {{- form_errors(form) -}}
+			<div class="control-group form-title">
+				<div class="controls">
+					<h3>{{- 'ccdn_forum_forum.title.topic.edit' | trans({'%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}</h3>
+				</div>
+			</div>
 
-            <div class="control-group"><div class="controls row-fluid">{{- form_row(form._token) -}}</div></div>
+			{{- form_errors(form) -}}
 
-{#			{%- if is_granted('ROLE_MODERATOR') -%}
-                <div class="control-group{{- (form.Topic.board.vars.errors|length > 0) ? ' error': '' -}}">
-                    {{- form_label(form.Topic.board, null, { 'label': 'ccdn_forum_forum.form.label.topic.board'| trans({}, 'CCDNForumForumBundle')}) -}}
-                    <div class="controls row-fluid">
-                        {{- form_errors(form.Topic.board) -}}
-                        {{- form_widget(form.Topic.board) -}}
-                    </div>
-                </div>
-            {%- endif -%}
-#}
-            <div class="control-group{{- (form.Topic.title.vars.errors|length > 0) ? ' error': '' -}}">
-                {{- form_label(form.Topic.title, null, { 'label': 'ccdn_forum_forum.form.label.topic.title'| trans({}, 'CCDNForumForumBundle')}) -}}
-                <div class="controls row-fluid">
-                    {{- form_errors(form.Topic.title) -}}
-                    {{- form_widget(form.Topic.title) -}}
-                </div>
-            </div>
+			{{- form_row(form.Topic.title) -}}
 
-            <div class="control-group{{- (form.body.vars.errors|length > 0) ? ' error': '' -}}">
-                {{- form_label(form.body, null, { 'label': 'ccdn_forum_forum.form.label.post.body'| trans({}, 'CCDNForumForumBundle')}) -}}
-                <div class="controls row-fluid">
-                    {{- form_errors(form.body) -}}
-                    {%- if ccdn_forum_forum.post.edit_topic.enable_bb_editor -%}
-                        {%- form_theme form 'CCDNComponentBBCodeBundle:Form:fields.html.twig' -%}
-                    {%- endif -%}
-                    {{- form_widget(form.body) -}}
-                </div>
-            </div>
+			{{- form_rest(form) -}}
 
-            {%- form_theme form ccdn_forum_forum.post.edit_topic.form_theme -%}
-{#			<div class="control-group{{- (form.attachment.vars.errors|length > 0) ? ' error': '' -}}">
-                {{- form_label(form.attachment, null, { 'label': 'ccdn_forum_forum.form.label.post.attachment'| trans({}, 'CCDNForumForumBundle')}) -}}
-                <div class="controls row-fluid">
-                    {{- form_errors(form.attachment) -}}
-                    {{- form_widget(form.attachment) -}}
-                    &nbsp;<a target="_blank" class="btn" href="{{- path('ccdn_component_attachment_index') -}}">{{- 'ccdn_component_attachment.link.manage' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
-                    &nbsp;<a target="_blank" class="btn" href="{{- path('ccdn_component_attachment_upload') -}}">{{- 'ccdn_component_attachment.link.upload' | trans({}, 'CCDNComponentAttachmentBundle') -}}</a>
-                </div>
-            </div>
-#}
             <div class="form-actions">
                 <input type="submit" class="btn btn-primary" value="{{- 'ccdn_forum_forum.form.button.post.edit' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_post">
-{#				<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">&nbsp;#}
-                <a class="btn" href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.id}) -}}">{{- 'ccdn_forum_forum.form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}</a>
+{#				<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">#}
+
+                <a class="btn" href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.id}) -}}">
+					{{- 'ccdn_forum_forum.form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
+				</a>
             </div>
         </fieldset>
     </form>
-{#
-    {%- if preview is not empty -%}
-        {%- include "CCDNForumForumBundle:Post:post_preview.html.twig" -%}
+
+    {%- if preview is defined -%}
+        {%- if preview is not empty -%}
+            {%- include "CCDNForumForumBundle:Post:post_preview.html.twig" with {'post': preview} -%}
+        {%- endif -%}
     {%- endif -%}
 
-    {%- include 'CCDNForumForumBundle:Topic:transcript.html.twig' with {'topic': topic } -%}
-#}
-    {%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 
     {%- endspaceless -%}
 

@@ -1,34 +1,36 @@
 {%- spaceless -%}
-<h3>{{- 'ccdn_forum_forum.topic.transcript' |trans({'%topic_title%': topic.getTitle}, 'CCDNForumForumBundle') -}}</h3>
 
-<div class="well" style="height:300px; clear:both; display:block; overflow:scroll;">
-	{% for post in topic.getPosts %}
-		<div class="btn-toolbar" style="clear:both;">
-			<div class="pull-left">
-				{%- if post.getCreatedBy -%}
-				    {{- post.getCreatedBy -}}
-				{%- else -%}Guest{%- endif -%}
-			</div>
-			<div class="pull-right">
-				<span class="span3">{{- 'ccdn_forum_forum.generic.posted_at' |trans({}, 'CCDNForumForumBundle') -}}{{- post.getCreatedDate |date(ccdn_forum_forum.transcript.post_creation_datetime_format) -}}</span>
-			</div>
+	<div class="forum-topic-transcript">
+		<h3>{{- 'ccdn_forum_forum.topic.transcript' |trans({'%topic_title%': topic.getTitle}, 'CCDNForumForumBundle') -}}</h3>
+
+		<div class="well">
+			{%- for key, post in topic.getPosts -%}
+		
+				{%- if post.isDeleted == false or is_granted('ROLE_MODERATOR') -%}
+					{%- set author = create_profile(post.getCreatedBy) -%}
+		
+					<article class="row-fluid forum-post-item">
+					    <header{% if post.id %} id="post_{{- post.getId -}}"{% endif %} style="height:27px;">
+							<div class="span12">
+						        {{- 'ccdn_forum_forum.post.posted_by' |trans({}, 'CCDNForumForumBundle') -}}
+						        {{- author.getProfilePath|raw -}}
+
+						        &nbsp;&#183;
+
+						        <span class="timestamper"  title="{{- post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+						            {{- post.getCreatedDate |date(ccdn_forum_forum.item_post.post_created_datetime_format) -}}
+						        </span>
+							</div>
+						</header>
+
+					    <section>
+							<pre style="border:none;padding:none;white-space:pre;word-wrap:break-word;">
+								{{- post.getBody |trim -}}
+							</pre>
+						</section>
+					</article>
+				{%- endif -%}
+			{%- endfor -%}
 		</div>
-		<div style="clear:both;">
-			<br>
-			{%- if post.getDeletedBy -%}
-				<span class="common_body">
-				{{- 'ccdn_forum_forum.post.is_deleted' | trans({}, 'CCDNForumForumBundle') -}} -
-				{{- 'ccdn_forum_forum.post.deleted_by' |trans({}, 'CCDNForumForumBundle') -}}
-				{%- if post.getDeletedBy -%}{{- post.getDeletedBy.getUsername -}}{%- else -%}Guest{%- endif -%}
-				{{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}{{- post.getDeletedDate |date(ccdn_forum_forum.transcript.post_deleted_datetime_format) -}}
-				</span>
-			{%- else -%}
-				<span class="common_body">
-					{{- BBCode(post.getBody |raw, false) |raw -}}
-				</span>
-			{%- endif -%}
-		</div>
-		<hr>
-	{% endfor %}
-</div>
+	</div>
 {%- endspaceless -%}
