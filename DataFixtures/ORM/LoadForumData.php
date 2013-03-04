@@ -59,15 +59,15 @@ class LoadForumData extends AbstractFixture implements OrderedFixtureInterface, 
         return $category;
     }
 
-    protected function createBoard($category, $order, $name, $description, array $boardReadRoles = array(), array $topicCreateRoles = array(), array $topicReplyRoles = array())
+    protected function createBoard($category, $order, $name, $description, $cachedTopicCount, $cachedPostCount, array $boardReadRoles = array(), array $topicCreateRoles = array(), array $topicReplyRoles = array())
     {
         $board = new Board();
 
         $board->setCategory($category);
         $board->setName($name);
         $board->setDescription($description);
-        $board->setCachedTopicCount(0);
-        $board->setCachedPostCount(0);
+        $board->setCachedTopicCount($cachedTopicCount);
+        $board->setCachedPostCount($cachedPostCount);
         $board->setListOrderPriority($order);
         $board->setReadAuthorisedRoles($boardReadRoles);
         $board->setTopicCreateAuthorisedRoles($topicCreateRoles);
@@ -121,7 +121,7 @@ class LoadForumData extends AbstractFixture implements OrderedFixtureInterface, 
             $manager->flush();
 
             if (null == $this->checkBoard('Introductions')) {
-                $boardIntroductions = $this->createBoard($categoryGeneral, 0, 'Introductions', 'Say hello and introduce yoursel!' . "\n" . 'Tell us a little about yourself.');
+                $boardIntroductions = $this->createBoard($categoryGeneral, 0, 'Introductions', 'Say hello and introduce yoursel!' . "\n" . 'Tell us a little about yourself.', 1, 1);
                 $topic = $this->createTopic($boardIntroductions, 'Welcome to CCDNForum.');
                 $post = $this->createPost($topic, 'Welcome to the CodeConsortium Forum.' . "\n" . 'Please introduce yourself and make yourself at home. :)', $manager->merge($referencedUserAdmin));
 
