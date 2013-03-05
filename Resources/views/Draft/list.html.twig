@@ -9,93 +9,95 @@
 
 	{%- spaceless -%}
 
-	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
+	<header>
+		<h3>{{- 'ccdn_forum_forum.title.drafts.show' | trans({}, 'CCDNForumForumBundle' ) -}}</h3>
+	</header>
 
-	<h3>{{- 'ccdn_forum_forum.title.drafts.show' | trans({}, 'CCDNForumForumBundle' ) -}}</h3>
+	<section>	
+		{%- if pager.haveToPaginate -%}
+			<div class="btn-toolbar">
+				<nav class="span12 btn-right paginate">
+			    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_draft_list_paginated', 'routeParams':{}} ) -}}
+				</nav>
+			</div>
+		{%- endif -%}
 	
-	{%- if pager.haveToPaginate -%}
-		<div class="btn-toolbar">
-			<nav class="span12 btn-right paginate">
-		    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_draft_list_paginated', 'routeParams':{}} ) -}}
-			</nav>
-		</div>
-	{%- endif -%}
-	
-	<table class="table table-striped table-bordered table-hover">
-		<thead>
-			<tr>
-				<th class="center" style="width:18px;"></th>
-				<th class="left" colspan="2">{{- 'ccdn_forum_forum.drafts.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') -}}</th>
-				<th class="center" style="width:200px;"></th>
-				<th class="center" style="width:200px;"></th>
-			</tr>
-		</thead>
-		<tbody>
-		{%- for row, draft in pager.getCurrentPageResults -%}
-			<tr>
-				<td class="center">
-					{%- if draft.getTopic -%}
-						<i class="icon-asterisk"></i>
-					{%- else -%}
-						<i class="icon-comment"></i>
-					{%- endif -%}
-				</td>
-				{%- if draft.getTopic -%}
-					<td class="left" colspan="2">
-						<b>Reply: </b>
-						<a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': draft.getTopic.getId }) -}}">
-							{{- draft.getTopic.getTitle -}}
-						</a>
-					</td>
-				{%- else -%}
-				<td class="left">
-					<b>Topic: </b>
-					{{- truncDot(draft.getTitle, ccdn_forum_forum.draft.list.topic_title_truncate) -}}
-				</td>
-				<td class="left">
-					{%- if draft.getBoard -%}
-						<a href="{{- path('ccdn_forum_forum_board_show', {'boardId': draft.getBoard.getId}) -}}">
-							{{- draft.getBoard.getName -}}
-						</a>
-					{%- endif -%}
-				</td>
-				{%- endif -%}
-				<td class="center">
-					{{- draft.getCreatedDate |date(ccdn_forum_forum.draft.list.creation_datetime_format) -}}
-				</td>
-				<td class="center">
-					<a class="btn btn-danger" href="{{- path('ccdn_forum_forum_draft_delete', {'draftId': draft.getId }) -}}">
-						{{- 'ccdn_forum_forum.link.draft.delete' | trans({}, 'CCDNForumForumBundle') -}}
-					</a>
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<tr>
+					<th class="center" style="width:18px;"></th>
+					<th class="left" colspan="2">{{- 'ccdn_forum_forum.drafts.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') -}}</th>
+					<th class="center" style="width:200px;"></th>
+					<th class="center" style="width:200px;"></th>
+				</tr>
+			</thead>
+			<tbody>
+				{%- for row, draft in pager.getCurrentPageResults -%}
+					<tr>
+						<td class="center">
+							{%- if draft.getTopic -%}
+								<i class="icon-asterisk"></i>
+							{%- else -%}
+								<i class="icon-comment"></i>
+							{%- endif -%}
+						</td>
+						{%- if draft.getTopic -%}
+							<td class="left" colspan="2">
+								<b>Reply: </b>
+								<a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': draft.getTopic.getId }) -}}">
+									{{- draft.getTopic.getTitle -}}
+								</a>
+							</td>
+						{%- else -%}
+							<td class="left">
+								<b>Topic: </b>
+								{{- truncDot(draft.getTitle, ccdn_forum_forum.draft.list.topic_title_truncate) -}}
+							</td>
+							<td class="left">
+								{%- if draft.getBoard -%}
+									<a href="{{- path('ccdn_forum_forum_board_show', {'boardId': draft.getBoard.getId}) -}}">
+										{{- draft.getBoard.getName -}}
+									</a>
+								{%- endif -%}
+							</td>
+						{%- endif -%}
+						<td class="center">
+							{{- draft.getCreatedDate |date(ccdn_forum_forum.draft.list.creation_datetime_format) -}}
+						</td>
+						<td class="center">
+							<a class="btn btn-danger" href="{{- path('ccdn_forum_forum_draft_delete', {'draftId': draft.getId }) -}}">
+								{{- 'ccdn_forum_forum.link.draft.delete' | trans({}, 'CCDNForumForumBundle') -}}
+							</a>
 					
-					<a class="btn btn-primary" href="{{- path('ccdn_forum_forum_draft_publish', {'draftId': draft.getId }) -}}">
-						{{- 'ccdn_forum_forum.link.draft.publish' | trans({}, 'CCDNForumForumBundle') -}}
-					</a>
-				</td>
-			</tr>
-			<tr>
-				<td class="left" colspan="5">
-					{{- draft.body | slice(0, 200) -}}&nbsp;...
-				</td>
-			</tr>
-		{%- else -%}
-			<tr>
-				<td class="center" colspan="5">
-					{{- 'ccdn_forum_forum.drafts.table.empty' | trans({}, 'CCDNForumForumBundle') -}}
-				</td>
-			</tr>
-		{%- endfor -%}
-		</tbody>
-	</table>
+							<a class="btn btn-primary" href="{{- path('ccdn_forum_forum_draft_publish', {'draftId': draft.getId }) -}}">
+								{{- 'ccdn_forum_forum.link.draft.publish' | trans({}, 'CCDNForumForumBundle') -}}
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<td class="left" colspan="5">
+							{{- draft.body | slice(0, 200) -}}&nbsp;...
+						</td>
+					</tr>
+				{%- else -%}
+					<tr>
+						<td class="center" colspan="5">
+							{{- 'ccdn_forum_forum.drafts.table.empty' | trans({}, 'CCDNForumForumBundle') -}}
+						</td>
+					</tr>
+				{%- endfor -%}
+			</tbody>
+		</table>
 
-	{%- if pager.haveToPaginate -%}
-		<div class="btn-toolbar">
-			<nav class="span12 btn-right paginate">
-		    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_draft_list_paginated', 'routeParams':{}} ) -}}
-			</nav>
-		</div>
-	{%- endif -%}
-
+		{%- if pager.haveToPaginate -%}
+			<div class="btn-toolbar">
+				<nav class="span12 btn-right paginate">
+			    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_draft_list_paginated', 'routeParams':{}} ) -}}
+				</nav>
+			</div>
+		{%- endif -%}
+	</section>
+	
 	{%- endspaceless -%}
 
 {% endblock body_content %}

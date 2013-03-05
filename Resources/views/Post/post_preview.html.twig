@@ -1,7 +1,9 @@
 {%- spaceless -%}
 
     {% if preview.getBody %}
-        {%- include 'CCDNForumForumBundle:Post:item_post.html.twig' with {'post': preview} -%}
+		<section>
+	        {%- include 'CCDNForumForumBundle:Post:item_post.html.twig' with {'post': preview} -%}
+		</section>
     {% endif %}
-
+	
 {%- endspaceless -%}

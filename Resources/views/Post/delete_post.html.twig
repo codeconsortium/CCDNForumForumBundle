@@ -9,9 +9,7 @@
 
 	{%- spaceless -%}
 
-	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
-
-	<div class="form-confirmation">
+	<section class="form-confirmation">
 
 		<h3>{{- page_title -}}</h3>
 
@@ -25,7 +23,7 @@
 			<a class="btn" href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.id }) -}}">{{- 'ccdn_forum_forum.post.delete.confirm_no' | trans({}, 'CCDNForumForumBundle') -}}</a>
 		</div>
 
-	</div>
+	</section>
 
 	{%- endspaceless -%}
 

@@ -1,14 +1,14 @@
 {%- spaceless -%}
 
-{% set author = create_profile(post.getCreatedBy) %}
+	{% set author = create_profile(post.getCreatedBy) %}
 
-<article class="row-fluid forum-post-item">
-    <header{% if post.id %} id="post_{{- post.getId -}}"{% endif %}>
-        {%- include 'CCDNForumForumBundle:Post:item_post_head.html.twig' with {'post': post, 'author': author} -%}
-	</header>
+	<article class="row-fluid forum-post-item">
+	    <header{% if post.id %} id="post_{{- post.getId -}}"{% endif %}>
+	        {%- include 'CCDNForumForumBundle:Post:item_post_head.html.twig' with {'post': post, 'author': author} -%}
+		</header>
 
-	{%- include 'CCDNForumForumBundle:Post:item_post_body.html.twig' with {'post': post} -%}
+		{%- include 'CCDNForumForumBundle:Post:item_post_body.html.twig' with {'post': post} -%}
 
-</article>
+	</article>
 
 {%- endspaceless -%}

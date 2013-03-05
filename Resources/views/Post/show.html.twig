@@ -9,83 +9,81 @@
 
 	{%- spaceless -%}
 
-	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
+	<header class="row-fluid">
+		<div class="span6">
+		    <h3 title="{{- topic.getTitle -}}">{{- truncDot(topic.getTitle |capitalize, 70) -}}</h3>
+		</div>
+		<div class="span6 content-right">
+		    <span class="label label-inverse prominent-figure" title="{{- topic.cachedReplyCount -}}">
+				{{- 'ccdn_forum_forum.topic.reply_count' |trans({}, 'CCDNForumForumBundle') -}}
+				{{- abbr_number(topic.cachedReplyCount) -}}
+			</span>
+				
+		    <span class="label label-inverse prominent-figure" title="{{- topic.cachedViewCount -}}">
+				{{- 'ccdn_forum_forum.topic.view_count' |trans({}, 'CCDNForumForumBundle') -}}
+				{{- abbr_number(topic.cachedViewCount) -}}
+			</span>
+
+		    {%- if subscription_count is defined -%}
+		        <span class="label label-inverse prominent-figure" title="{{- subscription_count -}}">
+					{{- 'ccdn_forum_forum.topic.subscription_count' |trans({}, 'CCDNForumForumBundle') -}}
+					{{- abbr_number(subscription_count) -}}
+				</span>
+		    {%- endif -%}				
+		</div>
+	</header>
 
 	<section>
-		<header class="row-fluid">
-			<div class="span6">
-			    <h3 title="{{- topic.getTitle -}}">{{- truncDot(topic.getTitle |capitalize, 70) -}}</h3>
-			</div>
-			<div class="span6 content-right">
-			    <span class="badge badge-info prominent-figure" title="{{- topic.cachedReplyCount -}}">
-					{{- 'ccdn_forum_forum.topic.reply_count' |trans({}, 'CCDNForumForumBundle') -}}
-					{{- abbr_number(topic.cachedReplyCount) -}}
-				</span>
-				
-			    <span class="badge badge-info prominent-figure" title="{{- topic.cachedViewCount -}}">
-					{{- 'ccdn_forum_forum.topic.view_count' |trans({}, 'CCDNForumForumBundle') -}}
-					{{- abbr_number(topic.cachedViewCount) -}}
-				</span>
+	    {%- if topic.isDeleted -%}
+	        <div class="alert alert-error block-alert">
+	            <i class="icon-trash"></i>
+	            {% set topic_deleter = create_profile(topic.getDeletedBy) %}
 
-			    {%- if subscription_count is defined -%}
-			        <span class="badge badge-info prominent-figure" title="{{- subscription_count -}}">
-						{{- 'ccdn_forum_forum.topic.subscription_count' |trans({}, 'CCDNForumForumBundle') -}}
-						{{- abbr_number(subscription_count) -}}
-					</span>
-			    {%- endif -%}				
-			</div>
-		</header>
-	</section>
+	            {{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}
+	            {{ topic_deleter.getProfilePath|raw }}
+	            &nbsp;
+	            {{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
+	        </div>
+	    {%- endif -%}
 
-    {%- if topic.isDeleted -%}
-        <div class="alert alert-error block-alert">
-            <i class="icon-trash"></i>
-            {% set topic_deleter = create_profile(topic.getDeletedBy) %}
+	    {%- if topic.isClosed -%}
+	        <div class="alert alert-error block-alert">
+	            <i class="icon-lock"></i>
+	            {% set topic_closer = create_profile(topic.getClosedBy) %}
 
-            {{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}
-            {{ topic_deleter.getProfilePath|raw }}
-            &nbsp;
-            {{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
-        </div>
-    {%- endif -%}
+	            {{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}
+	            {{ topic_closer.getProfilePath|raw }}
+	            &nbsp;
+	            {{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.topic_closed_datetime_format) -}}
+	        </div>
+	    {%- endif -%}
 
-    {%- if topic.isClosed -%}
-        <div class="alert alert-error block-alert">
-            <i class="icon-lock"></i>
-            {% set topic_closer = create_profile(topic.getClosedBy) %}
+	    {%- if topic.isSticky -%}
+	        <div class="alert alert-inverse block-alert">
+		        <i class="icon-bullhorn"></i>
+	            {% set topic_stickier = create_profile(topic.stickiedBy) %}
 
-            {{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}
-            {{ topic_closer.getProfilePath|raw }}
-            &nbsp;
-            {{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.topic_closed_datetime_format) -}}
-        </div>
-    {%- endif -%}
+	            {{- 'ccdn_forum_forum.topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}
+	            {{ topic_stickier.getProfilePath|raw }}
+	            &nbsp;
+	            {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
+	        </div>
+	    {%- endif -%}
 
-    {%- if topic.isSticky -%}
-        <div class="alert alert-inverse block-alert">
-	        <i class="icon-bullhorn"></i>
-            {% set topic_stickier = create_profile(topic.stickiedBy) %}
-
-            {{- 'ccdn_forum_forum.topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}
-            {{ topic_stickier.getProfilePath|raw }}
-            &nbsp;
-            {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
-        </div>
-    {%- endif -%}
-
-    <div class="btn-toolbar">
-        <div class="span12">		
-            {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
-        </div>
-    </div>
+	    <div class="btn-toolbar">
+	        <div class="span12">		
+	            {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
+	        </div>
+	    </div>
 	
-	{%- include "CCDNForumForumBundle:Post:item_post.html.twig" -%}
+		{%- include "CCDNForumForumBundle:Post:item_post.html.twig" -%}
 
-    <div class="btn-toolbar">
-        <div class="span12">		
-            {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
-        </div>
-    </div>
+	    <div class="btn-toolbar">
+	        <div class="span12">		
+	            {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
+	        </div>
+	    </div>
+	</section>
 
 	{%- endspaceless -%}
 

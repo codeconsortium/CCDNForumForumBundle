@@ -9,52 +9,54 @@
 
 	{%- spaceless -%}
 
-	{%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
+	<header class="row-fluid">
+		<h3>{{- 'ccdn_forum_forum.title.subscriptions.show' | trans({}, 'CCDNForumForumBundle' ) -}}</h3>
+	</header>
 
-	<h3>{{- 'ccdn_forum_forum.title.subscriptions.show' | trans({}, 'CCDNForumForumBundle' ) -}}</h3>
-
-	{%- if pager.haveToPaginate -%}
-		<div class="btn-toolbar">
-			<nav class="span12 btn-right paginate">
-		    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_subscription_list_paginated', 'routeParams':{}} ) -}}
-			</nav>
-		</div>
-	{%- endif -%}
+	<section>
+		{%- if pager.haveToPaginate -%}
+			<div class="btn-toolbar">
+				<nav class="span12 btn-right paginate">
+			    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_subscription_list_paginated', 'routeParams':{}} ) -}}
+				</nav>
+			</div>
+		{%- endif -%}
 	
-	<table class="table table-bordered table-hover">
-		<thead>
-			<tr>
-				<th class="center" style="width:18px;"></th>
-				<th class="center" style="width:18px;"></th>
-				<th class="left">{{- 'ccdn_forum_forum.board.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') -}}</th>
-				<th class="center" style="width: 100px;">{{- 'ccdn_forum_forum.board.table.head.reply_count' | trans({}, 'CCDNForumForumBundle') -}}</th>
-				<th class="center" style="width: 100px;">{{- 'ccdn_forum_forum.board.table.head.view_count' | trans({}, 'CCDNForumForumBundle') -}}</th>
-				<th class="center" style="width: 170px;">{{- 'ccdn_forum_forum.board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') -}}</th>
-			</tr>
-		</thead>
-		<tbody>
-			{%- for row, subscription in pager.getCurrentPageResults -%}
-				{%- set topic = subscription.getTopic -%}
-				{%- if not topic.isDeleted or is_granted('ROLE_MODERATOR') -%}
-					{%- include 'CCDNForumForumBundle:Board:item_topic_list.html.twig' -%}
-				{%- endif -%}
-			{%- else -%}
+		<table class="table table-bordered table-hover table-no-vertical-borders">
+			<thead>
 				<tr>
-					<td class="center" colspan="6">
-						{{- 'ccdn_forum_forum.subscriptions.table.empty' | trans({}, 'CCDNForumForumBundle') -}}
-					</td>
+					<th class="center" style="width:18px;"></th>
+					<th class="center" style="width:18px;"></th>
+					<th class="left">{{- 'ccdn_forum_forum.board.table.head.topic_title' | trans({}, 'CCDNForumForumBundle') -}}</th>
+					<th class="center" style="width: 100px;">{{- 'ccdn_forum_forum.board.table.head.reply_count' | trans({}, 'CCDNForumForumBundle') -}}</th>
+					<th class="center" style="width: 100px;">{{- 'ccdn_forum_forum.board.table.head.view_count' | trans({}, 'CCDNForumForumBundle') -}}</th>
+					<th class="center" style="width: 170px;">{{- 'ccdn_forum_forum.board.table.head.last_post' | trans({}, 'CCDNForumForumBundle') -}}</th>
 				</tr>
-			{%- endfor -%}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				{%- for row, subscription in pager.getCurrentPageResults -%}
+					{%- set topic = subscription.getTopic -%}
+					{%- if not topic.isDeleted or is_granted('ROLE_MODERATOR') -%}
+						{%- include 'CCDNForumForumBundle:Board:item_topic_list.html.twig' -%}
+					{%- endif -%}
+				{%- else -%}
+					<tr>
+						<td class="center" colspan="6">
+							{{- 'ccdn_forum_forum.subscriptions.table.empty' | trans({}, 'CCDNForumForumBundle') -}}
+						</td>
+					</tr>
+				{%- endfor -%}
+			</tbody>
+		</table>
 	
-	{%- if pager.haveToPaginate -%}
-		<div class="btn-toolbar">
-			<nav class="span12 btn-right paginate">
-		    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_subscription_list_paginated', 'routeParams':{}} ) -}}
-			</nav>
-		</div>
-	{%- endif -%}
+		{%- if pager.haveToPaginate -%}
+			<div class="btn-toolbar">
+				<nav class="span12 btn-right paginate">
+			    	{{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_subscription_list_paginated', 'routeParams':{}} ) -}}
+				</nav>
+			</div>
+		{%- endif -%}
+	</section>
 
 	{%- endspaceless -%}
 

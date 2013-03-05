@@ -13,35 +13,35 @@
 
     {%- spaceless -%}
 
-    {%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
+	<section>
+	    {%- form_theme form ccdn_forum_forum.post.edit_topic.form_theme -%}
+	    <form action="{{- path('ccdn_forum_forum_post_edit', { 'postId': post.id } ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
+	        <fieldset>
 
-    {%- form_theme form ccdn_forum_forum.post.edit_topic.form_theme -%}
-    <form action="{{- path('ccdn_forum_forum_post_edit', { 'postId': post.id } ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
-        <fieldset>
-
-			<div class="control-group form-title">
-				<div class="controls">
-					<h3>{{- 'ccdn_forum_forum.title.topic.edit' | trans({'%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}</h3>
+				<div class="control-group form-title">
+					<div class="controls">
+						<h3>{{- 'ccdn_forum_forum.title.topic.edit' | trans({'%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}</h3>
+					</div>
 				</div>
-			</div>
 
-			{{- form_errors(form) -}}
+				{{- form_errors(form) -}}
 
-			{{- form_row(form.Topic.title) -}}
+				{{- form_row(form.Topic.title) -}}
 
-			{{- form_rest(form) -}}
+				{{- form_rest(form) -}}
 
-            <div class="form-actions">
-                <input type="submit" class="btn btn-primary" value="{{- 'ccdn_forum_forum.form.button.post.edit' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_post">
-{#				<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">#}
+	            <div class="form-actions">
+	                <input type="submit" class="btn btn-primary" value="{{- 'ccdn_forum_forum.form.button.post.edit' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_post">
+					{#<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">#}
 
-                <a class="btn" href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.id}) -}}">
-					{{- 'ccdn_forum_forum.form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
-				</a>
-            </div>
-        </fieldset>
-    </form>
-
+	                <a class="btn" href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.id}) -}}">
+						{{- 'ccdn_forum_forum.form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
+					</a>
+	            </div>
+	        </fieldset>
+	    </form>
+	</section>
+	
     {%- if preview is defined -%}
         {%- if preview is not empty -%}
             {%- include "CCDNForumForumBundle:Post:post_preview.html.twig" with {'post': preview} -%}
