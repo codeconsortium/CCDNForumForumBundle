@@ -2,14 +2,18 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.category.show.layout_template %}
 
-{% block title %}{{- truncDot('ccdn_forum_forum.title.category.show' | trans({'%category_name%': category.name}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
+{% block title %}{{- truncDot('ccdn_forum_forum.title.category.show' | trans({'%category_name%': categories[0].name}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
 
 
 {% block body_content %}
 
 	{%- spaceless -%}
 
-	{%- include "CCDNForumForumBundle:Category:item_category.html.twig" -%}
+	{%- for category in categories -%}
+		{%- include "CCDNForumForumBundle:Category:item_category.html.twig" -%}
+	{%- else -%}
+		<div class="well">{{- 'ccdn_forum_forum.categories.empty' | trans({}, 'CCDNForumForumBundle') -}}</div>
+	{%- endfor -%}
 	
 	{%- endspaceless -%}
 
