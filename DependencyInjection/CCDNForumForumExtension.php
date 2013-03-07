@@ -49,16 +49,12 @@ class CCDNForumForumExtension extends Extension
 
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $this->getServicesSection($container, $config);
-
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 		
-        $container->setParameter('ccdn_forum_forum.template.engine', $config['template']['engine']);
-
         $container->setParameter('ccdn_forum_forum.user.profile_route', $config['user']['profile_route']);
-
-        $container->setParameter('ccdn_forum_forum.profile_provider.avatar_fallback', 'bundles/ccdnforumforum/images/default_avatar/anonymous_avatar.gif');
+		
+        $container->setParameter('ccdn_forum_forum.template.engine', $config['template']['engine']);
 
         $this->getFixtureReferenceSection($container, $config);
 
@@ -75,11 +71,6 @@ class CCDNForumForumExtension extends Extension
         $this->getDraftSection($container, $config);
         $this->getSubscriptionSection($container, $config);
         $this->getTranscriptSection($container, $config);
-    }
-
-	protected function getServicesSection($container, $config)
-	{
-        $container->setParameter('ccdn_forum_forum.component.provider.profile.class', $config['service']['provider']['profile_provider']);
     }
 
     /**

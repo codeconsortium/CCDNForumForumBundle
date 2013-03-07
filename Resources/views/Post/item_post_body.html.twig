@@ -9,9 +9,9 @@
 		        {{- 'ccdn_forum_forum.post.edited_by' |trans({}, 'CCDNForumForumBundle') -}}
 		        {{- editor.getProfilePath|raw -}}
 
-		        {{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}
-
-		        <abbr class="timestamper" title="{{- post.getEditedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+				&nbsp;&#183;
+				
+				<abbr class="timestamper" title="{{- post.getEditedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 		            {{- post.getEditedDate |date(ccdn_forum_forum.item_post.post_edited_datetime_format) -}}
 		        </abbr>
 		    </div>
@@ -28,8 +28,8 @@
 		        {{- 'ccdn_forum_forum.post.deleted_by' |trans({}, 'CCDNForumForumBundle') -}}
 		        {{ deleter.getProfilePath|raw }}
 
-		        {{- 'ccdn_forum_forum.generic.actioned_at' |trans({}, 'CCDNForumForumBundle') -}}
-								
+				&nbsp;&#183;
+							
 		        <abbr class="timestamper" title="{{- post.getDeletedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 		            {{- post.getDeletedDate |date(ccdn_forum_forum.item_post.post_deleted_datetime_format) -}}
 		        </abbr>								

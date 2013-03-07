@@ -55,7 +55,6 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end();
 
-        $this->addServices($rootNode);
         $this->addFixtureReferenceSection($rootNode);
         $this->addSEOSection($rootNode);
         $this->addCategorySection($rootNode);
@@ -70,31 +69,6 @@ class Configuration implements ConfigurationInterface
         $this->addTranscriptSection($rootNode);
 
         return $treeBuilder;
-    }
-
-    /**
-     *
-     * @access protected
-     * @param ArrayNodeDefinition $node
-     */
-    protected function addServices(ArrayNodeDefinition $node)
-    {
-        $node
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->arrayNode('service')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->arrayNode('provider')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('profile_provider')->defaultValue('CCDNForum\ForumBundle\Component\Provider\Profile\SimpleProfileProvider')->end()
-                            ->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
     }
 
     /**

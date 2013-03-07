@@ -42,7 +42,9 @@
 
 	            {{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}
 	            {{ topic_deleter.getProfilePath|raw }}
-	            &nbsp;
+	            
+				&nbsp;&#183;
+				
 	            {{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
 	        </div>
 	    {%- endif -%}
@@ -54,7 +56,9 @@
 
 	            {{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}
 	            {{ topic_closer.getProfilePath|raw }}
-	            &nbsp;
+	            
+				&nbsp;&#183;
+				
 	            {{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.topic_closed_datetime_format) -}}
 	        </div>
 	    {%- endif -%}
@@ -66,7 +70,9 @@
 
 	            {{- 'ccdn_forum_forum.topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}
 	            {{ topic_stickier.getProfilePath|raw }}
-	            &nbsp;
+	            
+				&nbsp;&#183;
+				
 	            {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
 	        </div>
 	    {%- endif -%}
