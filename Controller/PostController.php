@@ -85,7 +85,6 @@ class PostController extends BaseController
             ->add('#' . $post->getId(), $this->container->get('router')->generate('ccdn_forum_forum_post_show', array('postId' => $post->getId())), "comment");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:show.html.' . $this->getEngine(), array(
-            'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
             'user'	=> $user,
             'crumbs' => $crumbs,
             'topic' => $topic,
@@ -197,7 +196,6 @@ class PostController extends BaseController
         }
 
         return $this->container->get('templating')->renderResponse($template, array(
-            'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
             'user' => $user,
             'board' => $board,
             'topic' => $topic,
@@ -279,7 +277,6 @@ class PostController extends BaseController
             ->add($crumbDelete, $this->container->get('router')->generate('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())), "trash");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:delete_post.html.' . $this->getEngine(), array(
-            'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
             'page_title' => $pageTitle,
             'confirmation_message' => $confirmationMessage,
             'topic' => $topic,

@@ -41,12 +41,6 @@ class Configuration implements ConfigurationInterface
         // more information on that topic.
         $rootNode
             ->children()
-                ->arrayNode('user')
-			        ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('profile_route')->defaultValue('ccdn_user_profile_show_by_id')->end()
-                    ->end()
-                ->end()
                 ->arrayNode('template')
 			        ->addDefaultsIfNotSet()
                     ->children()

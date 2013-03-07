@@ -54,7 +54,6 @@ class SubscriptionController extends BaseController
             ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.topic.subscriptions', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_subscription_list'), "bookmark");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Subscription:list.html.' . $this->getEngine(), array(
-            'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
             'crumbs' => $crumbs,
             'pager' => $subscriptions,
             'posts_per_page' => $postsPerPage,

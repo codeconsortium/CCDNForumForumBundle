@@ -8,8 +8,6 @@ All available configuration options are listed below with their default values.
 # for CCDNForum ForumBundle    
 #
 forum:
-    user:
-        profile_route:        ccdn_user_profile_show_by_id
     template:
         engine:               twig
     service:

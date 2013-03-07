@@ -39,7 +39,6 @@ class CategoryController extends BaseController
             ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Category:index.html.' . $this->getEngine(), array(
-            'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
             'crumbs' => $crumbs,
             'categories' => $categories,
             'topics_per_page' => $topicsPerPage,
@@ -67,7 +66,6 @@ class CategoryController extends BaseController
             ->add($categories[0]->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $categoryId)), "category");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Category:show.html.' . $this->getEngine(), array(
-            'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
             'crumbs' => $crumbs,
             'categories' => $categories,
             'topics_per_page' => $topicsPerPage,

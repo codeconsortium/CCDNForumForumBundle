@@ -51,9 +51,7 @@ class CCDNForumForumExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-		
-        $container->setParameter('ccdn_forum_forum.user.profile_route', $config['user']['profile_route']);
-		
+			
         $container->setParameter('ccdn_forum_forum.template.engine', $config['template']['engine']);
 
         $this->getFixtureReferenceSection($container, $config);

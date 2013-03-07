@@ -65,7 +65,6 @@ class BoardController extends BaseController
             ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $boardId)), "board");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Board:show.html.' . $this->getEngine(), array(
-            'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
             'crumbs' => $crumbs,
             'board' => $board,
             'pager' => $topicsPager,

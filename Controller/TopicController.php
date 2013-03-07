@@ -103,7 +103,6 @@ class TopicController extends BaseController
             ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Topic:show.html.' . $this->getEngine(), array(
-            'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
             'user'	=> $user,
             'crumbs' => $crumbs,
             'pager' => $postsPager,
@@ -174,7 +173,6 @@ class TopicController extends BaseController
             ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.topic.create', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_topic_create', array('boardId' => $board->getId())), "edit");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Topic:create.html.' . $this->getEngine(), array(
-            'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
             'user' => $user,
             'crumbs' => $crumbs,
             'board' => $board,
@@ -260,7 +258,6 @@ class TopicController extends BaseController
             ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.topic.reply', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())), "edit");
 
         return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Topic:reply.html.' . $this->getEngine(), array(
-            'user_profile_route' => $this->container->getParameter('ccdn_forum_forum.user.profile_route'),
             'user' => $user,
             'crumbs' => $crumbs,
             'topic' => $topic,
