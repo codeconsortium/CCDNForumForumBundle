@@ -4,6 +4,13 @@
 
 {% block title %}{{- truncDot('ccdn_forum_forum.title.category.show' | trans({'%category_name%': categories[0].name}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
 
+{% block stylesheets_extra %}
+	<style type="text/css">
+		section {border-bottom:none;}
+		footer.page-footer {border-top:1px solid #eee;}
+	</style>
+{% endblock stylesheets_extra %}
+
 
 {% block body_content %}
 
