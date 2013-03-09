@@ -268,19 +268,6 @@ abstract class Topic
         return $this;
     }
 
-//    /**
-//     * @param ArrayCollection $subscriptions
-//     * @return Topic
-//     */
-//    public function addSubscriptions(array $subscriptions)
-//    {
-//        foreach($subscriptions as $subscription) {
-//            $this->subscriptions->add($subscription);
-//        }
-//
-//        return $this;
-//    }
-
     /**
      * Add subscription
      *

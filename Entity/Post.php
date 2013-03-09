@@ -62,17 +62,7 @@ class Post extends AbstractPost
     {
         return $this->id;
     }
-
-    /**
-     * Set body
-     *
-     * @param string $body
-     */
-    public function setBody($body)
-    {
-        $this->body = $body;
-    }
-
+	
     /**
      * Get body
      *
@@ -82,19 +72,22 @@ class Post extends AbstractPost
     {
         return $this->body;
     }
-
+	
     /**
-     * Set created_date
+     * Set body
      *
-     * @param \datetime $createdDate
+     * @param string $body
+	 * @return Post
      */
-    public function setCreatedDate($createdDate)
+    public function setBody($body)
     {
-        $this->createdDate = $createdDate;
+        $this->body = $body;
+		
+		return $this;
     }
 
     /**
-     * Get created_date
+     * Get createdDate
      *
      * @return \datetime
      */
@@ -104,13 +97,16 @@ class Post extends AbstractPost
     }
 
     /**
-     * Set edited_date
+     * Set createdDate
      *
-     * @param \datetime $editedDate
+     * @param \datetime $createdDate
+	 * @return Post
      */
-    public function setEditedDate($editedDate)
+    public function setCreatedDate($createdDate)
     {
-        $this->editedDate = $editedDate;
+        $this->createdDate = $createdDate;
+		
+		return $this;
     }
 
     /**
@@ -124,17 +120,20 @@ class Post extends AbstractPost
     }
 
     /**
-     * Set deleted_date
+     * Set editedDate
      *
-     * @param \datetime $deletedDate
+     * @param \datetime $editedDate
+	 * @return Post
      */
-    public function setDeletedDate($deletedDate)
+    public function setEditedDate($editedDate)
     {
-        $this->deletedDate = $deletedDate;
+        $this->editedDate = $editedDate;
+		
+		return $this;
     }
 
     /**
-     * Get deleted_date
+     * Get deletedDate
      *
      * @return \datetime
      */
@@ -144,17 +143,20 @@ class Post extends AbstractPost
     }
 
     /**
-     * Set locked_date
+     * Set deletedDate
      *
-     * @param \datetime $lockedDate
+     * @param \datetime $deletedDate
+	 * @return Post
      */
-    public function setLockedDate($lockedDate)
+    public function setDeletedDate($deletedDate)
     {
-        $this->lockedDate = $lockedDate;
+        $this->deletedDate = $deletedDate;
+		
+		return $this;
     }
 
     /**
-     * Get locked_date
+     * Get lockedDate
      *
      * @return \datetime
      */
@@ -164,17 +166,20 @@ class Post extends AbstractPost
     }
 
     /**
-     * Set is_deleted
+     * Set lockedDate
      *
-     * @param boolean $isDeleted
+     * @param \datetime $lockedDate
+	 * @return Post
      */
-    public function setIsDeleted($isDeleted)
+    public function setLockedDate($lockedDate)
     {
-        $this->isDeleted = $isDeleted;
+        $this->lockedDate = $lockedDate;
+		
+		return $this;
     }
 
     /**
-     * Get is_deleted
+     * Get isDeleted
      *
      * @return boolean
      */
@@ -184,22 +189,38 @@ class Post extends AbstractPost
     }
 
     /**
-     * Set is_locked
+     * Set is_deleted
      *
-     * @param boolean $isLocked
+     * @param boolean $isDeleted
+	 * @return Post
      */
-    public function setIsLocked($isLocked)
+    public function setIsDeleted($isDeleted)
     {
-        $this->isLocked = $isLocked;
+        $this->isDeleted = $isDeleted;
+		
+		return $this;
     }
 
     /**
-     * Get is_locked
+     * Get isLocked
      *
      * @return boolean
      */
     public function getIsLocked()
     {
         return $this->isLocked;
+    }
+	
+    /**
+     * Set isLocked
+     *
+     * @param boolean $isLocked
+	 * @return Post
+     */
+    public function setIsLocked($isLocked)
+    {
+        $this->isLocked = $isLocked;
+		
+		return $this;
     }
 }

@@ -49,16 +49,6 @@ class Category extends AbstractCategory
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
      * Get name
      *
      * @return string
@@ -67,15 +57,18 @@ class Category extends AbstractCategory
     {
         return $this->name;
     }
-
+	
     /**
-     * Set list_order_priority
+     * Set name
      *
-     * @param integer $listOrderPriority
+     * @param string $name
+	 * @return Category
      */
-    public function setListOrderPriority($listOrderPriority)
+    public function setName($name)
     {
-        $this->listOrderPriority = $listOrderPriority;
+        $this->name = $name;
+		
+		return $this;
     }
 
     /**
@@ -86,5 +79,18 @@ class Category extends AbstractCategory
     public function getListOrderPriority()
     {
         return $this->listOrderPriority;
+    }
+	
+    /**
+     * Set list_order_priority
+     *
+     * @param integer $listOrderPriority
+	 * @return Category
+     */
+    public function setListOrderPriority($listOrderPriority)
+    {
+        $this->listOrderPriority = $listOrderPriority;
+		
+		return $this;
     }
 }

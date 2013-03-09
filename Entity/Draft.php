@@ -52,16 +52,6 @@ class Draft extends AbstractDraft
     }
 
     /**
-     * Set body
-     *
-     * @param string $body
-     */
-    public function setBody($body)
-    {
-        $this->body = $body;
-    }
-
-    /**
      * Get body
      *
      * @return string
@@ -70,19 +60,22 @@ class Draft extends AbstractDraft
     {
         return $this->body;
     }
-
+	
     /**
-     * Set created_date
+     * Set body
      *
-     * @param \datetime $createdDate
+     * @param string $body
+	 * @return Draft
      */
-    public function setCreatedDate($createdDate)
+    public function setBody($body)
     {
-        $this->createdDate = $createdDate;
+        $this->body = $body;
+		
+		return $this;
     }
-
+	
     /**
-     * Get created_date
+     * Get createdDate
      *
      * @return \datetime
      */
@@ -92,13 +85,16 @@ class Draft extends AbstractDraft
     }
 
     /**
-     * Set title
+     * Set createdDate
      *
-     * @param string $title
+     * @param \datetime $createdDate
+	 * @return Draft
      */
-    public function setTitle($title)
+    public function setCreatedDate($createdDate)
     {
-        $this->title = $title;
+        $this->createdDate = $createdDate;
+		
+		return $this;
     }
 
     /**
@@ -109,5 +105,18 @@ class Draft extends AbstractDraft
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+	 * @return Draft
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+		
+		return $this;
     }
 }

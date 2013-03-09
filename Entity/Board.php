@@ -72,16 +72,6 @@ class Board extends AbstractBoard
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
      * Get name
      *
      * @return string
@@ -90,15 +80,18 @@ class Board extends AbstractBoard
     {
         return $this->name;
     }
-
+	
     /**
-     * Set description
+     * Set name
      *
-     * @param string $description
+     * @param string $name
+	 * @return Board
      */
-    public function setDescription($description)
+    public function setName($name)
     {
-        $this->description = $description;
+        $this->name = $name;
+		
+		return $this;
     }
 
     /**
@@ -110,15 +103,18 @@ class Board extends AbstractBoard
     {
         return $this->description;
     }
-
+	
     /**
-     * Set list_order_priority
+     * Set description
      *
-     * @param integer $listOrderPriority
+     * @param string $description
+	 * @return Board
      */
-    public function setListOrderPriority($listOrderPriority)
+    public function setDescription($description)
     {
-        $this->listOrderPriority = $listOrderPriority;
+        $this->description = $description;
+		
+		return $this;
     }
 
     /**
@@ -130,15 +126,18 @@ class Board extends AbstractBoard
     {
         return $this->listOrderPriority;
     }
-
+	
     /**
-     * Set cachedTopicCount
+     * Set list_order_priority
      *
-     * @param integer $cachedTopicCount
+     * @param integer $listOrderPriority
+	 * @return Board
      */
-    public function setCachedTopicCount($cachedTopicCount)
+    public function setListOrderPriority($listOrderPriority)
     {
-        $this->cachedTopicCount = $cachedTopicCount;
+        $this->listOrderPriority = $listOrderPriority;
+		
+		return $this;
     }
 
     /**
@@ -150,15 +149,18 @@ class Board extends AbstractBoard
     {
         return $this->cachedTopicCount;
     }
-
+	
     /**
-     * Set cachedPostCount
+     * Set cachedTopicCount
      *
-     * @param integer $cachedPostCount
+     * @param integer $cachedTopicCount
+	 * @return Board
      */
-    public function setCachedPostCount($cachedPostCount)
+    public function setCachedTopicCount($cachedTopicCount)
     {
-        $this->cachedPostCount = $cachedPostCount;
+        $this->cachedTopicCount = $cachedTopicCount;
+		
+		return $this;
     }
 
     /**
@@ -169,6 +171,19 @@ class Board extends AbstractBoard
     public function getCachedPostCount()
     {
         return $this->cachedPostCount;
+    }
+	
+    /**
+     * Set cachedPostCount
+     *
+     * @param integer $cachedPostCount
+	 * @return Board
+     */
+    public function setCachedPostCount($cachedPostCount)
+    {
+        $this->cachedPostCount = $cachedPostCount;
+		
+		return $this;
     }
 
     /**
@@ -181,7 +196,6 @@ class Board extends AbstractBoard
 
     /**
      * @param array $roles
-
      * @return Board
      */
     public function setReadAuthorisedRoles(array $roles = null)

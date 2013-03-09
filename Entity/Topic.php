@@ -69,17 +69,6 @@ class Topic extends AbstractTopic
         return $this->id;
     }
 
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
     /**
      * Get title
      *
@@ -90,19 +79,21 @@ class Topic extends AbstractTopic
         return $this->title;
     }
 
-
     /**
-     * Set closed_date
+     * Set title
      *
-     * @param \datetime $closedDate
+     * @param string $title
+	 * @return Topic
      */
-    public function setClosedDate($closedDate)
+    public function setTitle($title)
     {
-        $this->closedDate = $closedDate;
+        $this->title = $title;
+		
+		return $this;
     }
 
     /**
-     * Get closed_date
+     * Get closedDate
      *
      * @return \datetime
      */
@@ -111,19 +102,21 @@ class Topic extends AbstractTopic
         return $this->closedDate;
     }
 
-
     /**
-     * Set deleted_date
+     * Set closedDate
      *
-     * @param \datetime $deletedDate
+     * @param \datetime $closedDate
+	 * @return Topic
      */
-    public function setDeletedDate($deletedDate)
+    public function setClosedDate($closedDate)
     {
-        $this->deletedDate = $deletedDate;
+        $this->closedDate = $closedDate;
+		
+		return $this;
     }
 
     /**
-     * Get deleted_date
+     * Get deletedDate
      *
      * @return \datetime
      */
@@ -133,17 +126,20 @@ class Topic extends AbstractTopic
     }
 
     /**
-     * Set is_sticky
+     * Set deletedDate
      *
-     * @param boolean $isSticky
+     * @param \datetime $deletedDate
+	 * @return Topic
      */
-    public function setIsSticky($isSticky)
+    public function setDeletedDate($deletedDate)
     {
-        $this->isSticky = $isSticky;
+        $this->deletedDate = $deletedDate;
+		
+		return $this;
     }
 
     /**
-     * Get is_sticky
+     * Get isSticky
      *
      * @return boolean
      */
@@ -151,19 +147,22 @@ class Topic extends AbstractTopic
     {
         return $this->isSticky;
     }
-
+	
     /**
-     * Set is_closed
+     * Set isSticky
      *
-     * @param boolean $isClosed
+     * @param boolean $isSticky
+	 * @return Topic
      */
-    public function setIsClosed($isClosed)
+    public function setIsSticky($isSticky)
     {
-        $this->isClosed = $isClosed;
+        $this->isSticky = $isSticky;
+		
+		return $this;
     }
 
     /**
-     * Get is_closed
+     * Get isClosed
      *
      * @return boolean
      */
@@ -173,17 +172,20 @@ class Topic extends AbstractTopic
     }
 
     /**
-     * Set is_deleted
+     * Set isClosed
      *
-     * @param boolean $isDeleted
+     * @param boolean $isClosed
+	 * @return Topic
      */
-    public function setIsDeleted($isDeleted)
+    public function setIsClosed($isClosed)
     {
-        $this->isDeleted = $isDeleted;
+        $this->isClosed = $isClosed;
+		
+		return $this;
     }
 
     /**
-     * Get is_deleted
+     * Get isDeleted
      *
      * @return boolean
      */
@@ -193,13 +195,16 @@ class Topic extends AbstractTopic
     }
 
     /**
-     * Set cachedViewCount
+     * Set isDeleted
      *
-     * @param integer $cachedViewCount
+     * @param boolean $isDeleted
+	 * @return Topic
      */
-    public function setCachedViewCount($cachedViewCount)
+    public function setIsDeleted($isDeleted)
     {
-        $this->cachedViewCount = $cachedViewCount;
+        $this->isDeleted = $isDeleted;
+		
+		return $this;
     }
 
     /**
@@ -213,13 +218,16 @@ class Topic extends AbstractTopic
     }
 
     /**
-     * Set cachedReplyCount
+     * Set cachedViewCount
      *
-     * @param integer $cachedReplyCount
+     * @param integer $cachedViewCount
+	 * @return Topic
      */
-    public function setCachedReplyCount($cachedReplyCount)
+    public function setCachedViewCount($cachedViewCount)
     {
-        $this->cachedReplyCount = $cachedReplyCount;
+        $this->cachedViewCount = $cachedViewCount;
+		
+		return $this;
     }
 
     /**
@@ -233,13 +241,16 @@ class Topic extends AbstractTopic
     }
 
     /**
-     * Set stickiedDate
+     * Set cachedReplyCount
      *
-     * @param \datetime $stickiedDate
+     * @param integer $cachedReplyCount
+	 * @return Topic
      */
-    public function setStickiedDate($stickiedDate)
+    public function setCachedReplyCount($cachedReplyCount)
     {
-        $this->stickiedDate = $stickiedDate;
+        $this->cachedReplyCount = $cachedReplyCount;
+		
+		return $this;
     }
 
     /**
@@ -251,5 +262,17 @@ class Topic extends AbstractTopic
     {
         return $this->stickiedDate;
     }
-
+	
+    /**
+     * Set stickiedDate
+     *
+     * @param \datetime $stickiedDate
+	 * @return Topic
+     */
+    public function setStickiedDate($stickiedDate)
+    {
+        $this->stickiedDate = $stickiedDate;
+		
+		return $this;
+    }
 }
