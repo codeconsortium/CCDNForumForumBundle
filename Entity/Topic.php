@@ -49,6 +49,16 @@ class Topic extends AbstractTopic
     /** @var Boolean $isSticky */
     protected $isSticky = false;
 
+	/**
+	 *
+	 * @access public
+	 */
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+    }
+	
     /**
      * Get id
      *

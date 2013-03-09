@@ -27,7 +27,17 @@ class Subscription extends AbstractSubscription
 
     /** @var Boolean $isSubscribed */
     protected $isSubscribed = false;
-
+	
+	/**
+	 *
+	 * @access public
+	 */
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+    }
+	
     /**
      * Get id
      *

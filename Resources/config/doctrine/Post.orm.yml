@@ -11,26 +11,26 @@ CCDNForum\ForumBundle\Entity\Post:
             type: text
         createdDate:
             type: datetime
-            name: created_date
+            column: created_date
         editedDate:
             type: datetime
-            name: edited_date
+            column: edited_date
             nullable: true
         isDeleted:
             type: boolean
-            name: is_deleted
+            column: is_deleted
             nullable: false
         deletedDate:
             type: datetime
-            name: deleted_date
+            column: deleted_date
             nullable: true
         isLocked:
             type: boolean
-            name: is_locked
+            column: is_locked
             nullable: false
         lockedDate:
             type: datetime
-            name: locked_date
+            column: locked_date
             nullable: true
     manyToOne:
         topic:

@@ -9,11 +9,11 @@ CCDNForum\ForumBundle\Entity\Subscription:
     fields:
         isRead:
             type: boolean
-            name: is_read
+            column: is_read
             nullable: false
         isSubscribed:
             type: boolean
-            name: is_subscribed
+            column: is_subscribed
             nullable: false
     manyToOne:
         topic:

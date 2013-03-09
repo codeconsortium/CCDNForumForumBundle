@@ -9,15 +9,15 @@ CCDNForum\ForumBundle\Entity\Registry:
     fields:
         cachedPostCount:
             type: integer
-            name: cached_post_count
+            column: cached_post_count
             nullable: false
         cachedKarmaPositiveCount:
             type: integer
-            name: cached_karma_positive_count
+            column: cached_karma_positive_count
             nullable: false
         cachedKarmaNegativeCount:
             type: integer
-            name: cached_karma_negative_count
+            column: cached_karma_negative_count
             nullable: false
     manyToOne:
         ownedBy:

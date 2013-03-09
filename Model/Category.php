@@ -22,8 +22,13 @@ abstract class Category
     /** @var ArrayCollection $boards */
     protected $boards;
 
+	/**
+	 *
+	 * @access public
+	 */
     public function __construct()
     {
+        // your own logic
         $this->boards = new ArrayCollection();
     }
 

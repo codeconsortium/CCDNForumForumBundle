@@ -24,10 +24,14 @@ abstract class Subscription
 
     /** @var UserInterface $ownedBy */
     protected $ownedBy = null;
-
+	
+	/**
+	 *
+	 * @access public
+	 */
     public function __construct()
     {
-
+        // your own logic
     }
 
     /**

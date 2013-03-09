@@ -29,9 +29,14 @@ abstract class Board
 
     /** @var Post $lastPost */
     protected $lastPost;
-
+	
+	/**
+	 *
+	 * @access public
+	 */
     public function __construct()
     {
+        // your own logic
         $this->topics = new ArrayCollection();
     }
 

@@ -31,6 +31,16 @@ class Registry extends AbstractRegistry
     /** @var integer $cachedKarmaNegativeCount */
     protected $cachedKarmaNegativeCount = 0;
 
+	/**
+	 *
+	 * @access public
+	 */
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+    }
+	
     /**
      * Get id
      *

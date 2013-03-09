@@ -46,9 +46,14 @@ abstract class Topic
 
     /** @var ArrayCollection $subscriptions */
     protected $subscriptions;
-
+	
+	/**
+	 *
+	 * @access public
+	 */
     public function __construct()
     {
+        // your own logic
         $this->posts = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
     }

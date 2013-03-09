@@ -36,10 +36,14 @@ abstract class Post
 
     /** @var Attachment $attachment */
     protected $attachment = null;
-
+	
+	/**
+	 *
+	 * @access public
+	 */
     public function __construct()
     {
-
+        // your own logic
     }
 
     /**

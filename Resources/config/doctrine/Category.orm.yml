@@ -11,7 +11,7 @@ CCDNForum\ForumBundle\Entity\Category:
             type: string
         listOrderPriority:
             type: integer
-            name: list_order_priority
+            column: list_order_priority
     oneToMany:
         boards:
             targetEntity: CCDNForum\ForumBundle\Entity\Board

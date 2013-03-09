@@ -13,18 +13,24 @@ CCDNForum\ForumBundle\Entity\Board:
             type: text
         cachedTopicCount:
             type: integer
+            column: cached_topic_count
         cachedPostCount:
             type: integer
+            column: cached_post_count
         listOrderPriority:
             type: integer
+            column: list_order_priority
         readAuthorisedRoles:
             type: array
+            column: read_authorised_roles
             nullable: true
         topicCreateAuthorisedRoles:
             type: array
+            column: topic_create_authorised_roles
             nullable: true
         topicReplyAuthorisedRoles:
             type: array
+            column: topic_reply_authorised_roles
             nullable: true
     oneToMany:
         topics:

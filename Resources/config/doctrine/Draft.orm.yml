@@ -15,7 +15,7 @@ CCDNForum\ForumBundle\Entity\Draft:
             nullable: true
         createdDate:
             type: datetime
-            name: created_date
+            column: created_date
     manyToOne:
         board:
             targetEntity: CCDNForum\ForumBundle\Entity\Board

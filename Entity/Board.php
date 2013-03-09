@@ -47,10 +47,15 @@ class Board extends AbstractBoard
     /** @var array $topicReplyAuthorisedRoles */
     protected $topicReplyAuthorisedRoles;
 
+	/**
+	 *
+	 * @access public
+	 */
     public function __construct()
     {
         parent::__construct();
-
+		
+        // your own logic
         $this->readAuthorisedRoles = array();
         $this->topicCreateAuthorisedRoles = array();
         $this->topicReplyAuthorisedRoles = array();

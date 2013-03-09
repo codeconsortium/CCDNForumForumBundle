@@ -27,7 +27,17 @@ class Category extends AbstractCategory
 
     /** @var integer $listOrderPriority */
     protected $listOrderPriority;
-
+	
+	/**
+	 *
+	 * @access public
+	 */
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+    }
+	
     /**
      * Get id
      *
