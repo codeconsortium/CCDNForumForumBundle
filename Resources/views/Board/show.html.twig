@@ -8,7 +8,11 @@
 {% block body_content %}
 
     {%- spaceless -%}
-
+	
+	<style type="text/css">
+		header {border:none;}
+	</style>
+	
 	<header class="row-fluid">
 		<div class="span6">
 		    <h3 title="{{- board.name -}}">{{- truncDot(board.name, ccdn_forum_forum.seo.title_length) -}}</h3>
@@ -25,7 +29,7 @@
 		</div>
 	</header>
 	
-	<section class="row-fluid">
+	<section class="row-fluid light-box">
 		<blockquote>
 		    {{- BBCode(board.getDescription | raw, ccdn_forum_forum.item_board.enable_bb_parser) | raw -}}			
 		</blockquote>
