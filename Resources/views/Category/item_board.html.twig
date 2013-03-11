@@ -22,8 +22,10 @@
 	                {{- truncDot(board.getName, ccdn_forum_forum.seo.title_length) -}}
 	            </a>
 	        </h4>
-
-            {{- BBCode(board.getDescription | raw, ccdn_forum_forum.item_board.enable_bb_parser) | raw -}}
+			
+			<blockquote>
+	            {{- BBCode(board.getDescription | raw, ccdn_forum_forum.item_board.enable_bb_parser) | raw -}}
+			</blockquote>
 	    </td>
 
 	    <td class="center prominent-figure-large" style="width: 100px;">
