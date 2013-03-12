@@ -47,7 +47,7 @@ class TopicManager extends BaseManager implements ManagerInterface
 
         if ($topic->getBoard()) {
             // Update affected Board stats.
-            $this->container->get('ccdn_forum_forum.manager.board')->updateStats($topic->getBoard())->flush();
+            $this->managerBag->getBoardManager()->updateStats($topic->getBoard())->flush();
         }
 
 		// Subscribe the user to the topic.
@@ -204,8 +204,8 @@ class TopicManager extends BaseManager implements ManagerInterface
      */
     public function updateStats($topic)
     {
-        $topicRepository = $this->container->get('ccdn_forum_forum.repository.topic');
-        $postRepository = $this->container->get('ccdn_forum_forum.repository.post');
+        $topicRepository = $this->repository;
+        $postRepository = $this->managerBag->getPostManager()->getRepository();
 
         // Gets stats.
         $topicReplyCount = $postRepository->getPostCountForTopicById($topic->getId());
@@ -221,7 +221,7 @@ class TopicManager extends BaseManager implements ManagerInterface
 
         if ($topic->getBoard()) {
             // Update affected Board stats.
-            $this->container->get('ccdn_forum_forum.manager.board')->updateStats($topic->getBoard())->flush();
+            $this->managerBag->getBoardManager()->updateStats($topic->getBoard())->flush();
         }
 
         return $this;

@@ -13,6 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Manager;
 
+use CCDNForum\ForumBundle\Manager\Bag\ManagerBag;
+
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
@@ -20,13 +22,12 @@ namespace CCDNForum\ForumBundle\Manager;
  */
 interface ManagerInterface
 {
-
 	/**
 	 *
 	 * @access public
 	 * @param $doctrine
 	 */
-    public function __construct($doctrine, $container, $repository);
+    public function __construct($doctrine, $securityContext, $repository, ManagerBag $managerBag);
 
 	/**
 	 *
@@ -58,5 +59,4 @@ interface ManagerInterface
 	 * @return self
 	 */
     public function refresh($entity);
-
 }

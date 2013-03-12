@@ -27,7 +27,6 @@ use CCDNForum\ForumBundle\Entity\Draft;
  */
 class DraftManager extends BaseManager implements ManagerInterface
 {
-
     const TOPIC = 0;
     const REPLY = 1;
 
@@ -39,9 +38,9 @@ class DraftManager extends BaseManager implements ManagerInterface
      */
     public function getDraft($draftId)
     {
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->securityContext->getToken()->getUser();
 
-        $draft = $this->container->get('ccdn_forum_forum.repository.draft')->findOneByIdForUserById($draftId, $user->getId());
+        $draft = $this->repository->findOneByIdForUserById($draftId, $user->getId());
 
         if (! $draft) {
             return null;
@@ -100,7 +99,7 @@ class DraftManager extends BaseManager implements ManagerInterface
      */
     public function create($post)
     {
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->securityContext->getToken()->getUser();
 
         $draft = new Draft();
 
@@ -148,5 +147,4 @@ class DraftManager extends BaseManager implements ManagerInterface
 
         return $this;
     }
-
 }

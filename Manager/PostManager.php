@@ -23,7 +23,6 @@ use CCDNForum\ForumBundle\Manager\BaseManager;
  */
 class PostManager extends BaseManager implements ManagerInterface
 {
-
     /**
      *
      * @access public
@@ -32,7 +31,6 @@ class PostManager extends BaseManager implements ManagerInterface
      */
     public function create($post)
     {
-
         // insert a new row
         $this->persist($post)->flush();
 
@@ -40,7 +38,7 @@ class PostManager extends BaseManager implements ManagerInterface
         $this->refresh($post);
 
         // Update affected Topic stats.
-        $this->container->get('ccdn_forum_forum.manager.topic')->updateStats($post->getTopic());
+        $this->managerBag->getTopicManager()->updateStats($post->getTopic());
 
 		// Subscribe the user to the topic.
 		//$this->container->get('ccdn_forum_forum.manager.subscription')->subscribe($post->getTopic()->getId(), $post->getCreatedBy());
@@ -103,7 +101,7 @@ class PostManager extends BaseManager implements ManagerInterface
                         $this->persist($topic)->flush();
 
                         // Update affected Topic stats.
-                        $this->container->get('ccdn_forum_forum.manager.topic')->updateStats($post->getTopic())->flush();
+                        $this->managerBag->getTopicManager()->updateStats($post->getTopic())->flush();
                     }
                 }
             }
@@ -140,7 +138,7 @@ class PostManager extends BaseManager implements ManagerInterface
                 $this->persist($topic)->flush();
 
                 // Update affected Topic stats.
-                $this->container->get('ccdn_forum_forum.manager.topic')->updateStats($post->getTopic())->flush();
+                $this->managerBag->getTopicManager()->updateStats($post->getTopic())->flush();
             }
         }
 

@@ -13,6 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Manager;
 
+use CCDNForum\ForumBundle\Manager\Bag\ManagerBag;
+
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
@@ -20,7 +22,6 @@ namespace CCDNForum\ForumBundle\Manager;
  */
 class BaseManager
 {
-	
 	/**
 	 *
 	 * @access protected
@@ -37,24 +38,43 @@ class BaseManager
 	 *
 	 * @access protected
 	 */
-    protected $container;
+    protected $securityContext;
+
+	/**
+	 *
+	 * @access protected
+	 */
+    protected $repository;
+
+	/**
+	 *
+	 * @access protected
+	 */
+    protected $managerBag;
 
 	/**
 	 *
 	 * @access public
 	 * @param $doctrine
 	 */
-    public function __construct($doctrine, $container, $repository)
+    public function __construct($doctrine, $securityContext, $repository, ManagerBag $managerBag)
     {
         $this->doctrine = $doctrine;
 
         $this->em = $doctrine->getEntityManager();
-
-		$this->container = $container;
+		
+		$this->securityContext = $securityContext;
 		
 		$this->repository = $repository;
+		
+		$this->managerBag = $managerBag;
     }
 
+	public function getRepository()
+	{
+		return $this->repository;
+	}
+	
 	/**
 	 *
 	 * @access public

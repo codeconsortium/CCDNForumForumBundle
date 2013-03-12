@@ -92,17 +92,7 @@ class BaseController extends ContainerAware
 		
 		return $this->draftManager;		
 	}
-	
-	private $subscriptionManager;
-	protected function getSubscriptionManager()
-	{
-		if (null == $this->subscriptionManager) {
-			$this->draftManager = $this->container->get('ccdn_forum_forum.manager.draft');
-		}
-		
-		return $this->subscriptionManager;
-	}
-		
+			
 	private $registryManager;
 	protected function getRegistryManager()		
 	{
@@ -113,7 +103,15 @@ class BaseController extends ContainerAware
 		return $this->registryManager;
 	}
 	
-	
+	private $subscriptionManager;
+	protected function getSubscriptionManager()
+	{
+		if (null == $this->subscriptionManager) {
+			$this->subscriptionManager = $this->container->get('ccdn_forum_forum.manager.subscription');
+		}
+		
+		return $this->subscriptionManager;
+	}
 	
     protected function filterViewableBoards($boards)
     {

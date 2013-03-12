@@ -25,7 +25,6 @@ use CCDNForum\ForumBundle\Entity\Subscription;
  */
 class SubscriptionManager extends BaseManager implements ManagerInterface
 {
-
     /**
      *
      * @access public
@@ -34,13 +33,13 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
      */
     public function subscribe($topicId, $user)
     {
-        $subscription = $this->container->get('ccdn_forum_forum.repository.subscription')->findTopicSubscriptionByTopicAndUserId($topicId, $user->getId());
+        $subscription = $this->repository->findTopicSubscriptionByTopicAndUserId($topicId, $user->getId());
 
         if (! $subscription) {
-            $topic = $this->container->get('ccdn_forum_forum.repository.topic')->findOneById($topicId);
+            $topic = $this->managerBag->getTopicManager()->getRepository()->findOneById($topicId);
 
             if (! $topic) {
-                $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.subscription.topic.not.found', array(), 'CCDNForumForumBundle'));
+//                $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.subscription.topic.not.found', array(), 'CCDNForumForumBundle'));
 
                 return $this;
             }
@@ -58,7 +57,7 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
 
 	        $this->persist($subscription)->flush();
 
-        	$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.subscription.topic.subscribed', array('%topic_title%' => $subscription->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+//     	$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.subscription.topic.subscribed', array('%topic_title%' => $subscription->getTopic()->getTitle()), 'CCDNForumForumBundle'));
 		}
 		
         return $this;
@@ -72,7 +71,7 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
      */
     public function unsubscribe($topicId, $user)
     {
-        $subscription = $this->container->get('ccdn_forum_forum.repository.subscription')->findTopicSubscriptionByTopicAndUserId($topicId, $user->getId());
+        $subscription = $this->repository->findTopicSubscriptionByTopicAndUserId($topicId, $user->getId());
 
         if (! $subscription) {
             return $this;
@@ -83,9 +82,8 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
 
         $this->persist($subscription);
 
-        $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.subscription.topic.unsubscribed', array('%topic_title%' => $subscription->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+//        $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.subscription.topic.unsubscribed', array('%topic_title%' => $subscription->getTopic()->getTitle()), 'CCDNForumForumBundle'));
 
         return $this;
     }
-
 }

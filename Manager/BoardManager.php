@@ -23,7 +23,6 @@ use CCDNForum\ForumBundle\Manager\BaseManager;
  */
 class BoardManager extends BaseManager implements ManagerInterface
 {
-
     /**
      *
      * @access public
@@ -32,13 +31,13 @@ class BoardManager extends BaseManager implements ManagerInterface
      */
     public function updateStats($board)
     {
-        $counters = $this->container->get('ccdn_forum_forum.repository.board')->getTopicAndPostCountsForBoard($board->getId());
+        $counters = $this->repository->getTopicAndPostCountsForBoard($board->getId());
 
         // set the board topic / post count
         $board->setCachedTopicCount($counters['topicCount']);
         $board->setCachedPostCount($counters['postCount']);
 
-        $last_topic = $this->container->get('ccdn_forum_forum.repository.board')->findLastTopicForBoard($board->getId());
+        $last_topic = $this->repository->findLastTopicForBoard($board->getId());
 
         // set last_post for board
         if ($last_topic) {
@@ -68,5 +67,4 @@ class BoardManager extends BaseManager implements ManagerInterface
 
         return $this;
     }
-
 }
