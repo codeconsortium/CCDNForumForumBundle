@@ -23,7 +23,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class BoardController extends BaseController
 {
-
     /**
      *
      * @access public
@@ -72,15 +71,4 @@ class BoardController extends BaseController
             'sticky_topics' => $stickyTopics,
         ));
     }
-
-    /**
-     *
-     * @access protected
-     * @return string
-     */
-    protected function getEngine()
-    {
-        return $this->container->getParameter('ccdn_forum_forum.template.engine');
-    }
-
 }

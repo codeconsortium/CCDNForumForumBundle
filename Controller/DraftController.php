@@ -142,15 +142,4 @@ class DraftController extends BaseController
 
         return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_draft_list'));
     }
-
-    /**
-     *
-     * @access protected
-     * @return string
-     */
-    protected function getEngine()
-    {
-        return $this->container->getParameter('ccdn_forum_forum.template.engine');
-    }
-
 }

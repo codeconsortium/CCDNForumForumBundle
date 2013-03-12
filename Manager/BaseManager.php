@@ -44,13 +44,15 @@ class BaseManager
 	 * @access public
 	 * @param $doctrine
 	 */
-    public function __construct($doctrine, $container)
+    public function __construct($doctrine, $container, $repository)
     {
         $this->doctrine = $doctrine;
 
         $this->em = $doctrine->getEntityManager();
 
 		$this->container = $container;
+		
+		$this->repository = $repository;
     }
 
 	/**

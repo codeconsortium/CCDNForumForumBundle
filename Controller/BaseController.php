@@ -22,7 +22,6 @@ use Symfony\Component\DependencyInjection\ContainerAware;
  */
 class BaseController extends ContainerAware
 {
-
     /**
      *
      * @access protected
@@ -33,6 +32,89 @@ class BaseController extends ContainerAware
         return $this->container->getParameter('ccdn_forum_forum.template.engine');
     }
 
+    /**
+     *
+     * @access protected
+	 * @param string $action, string $value
+     * @return string
+     */
+    protected function setFlash($action, $value)
+    {
+        $this->container->get('session')->setFlash($action, $value);
+    }
+	
+	private $categoryManager;
+	protected function getCategoryManager()
+	{
+		if (null == $this->categoryManager) {
+			$this->categoryManager = $this->container->get('ccdn_forum_forum.manager.category');
+		}
+		
+		return $this->categoryManager;
+	}
+	
+	private $boardManager;
+	protected function getBoardManager()
+	{
+		if (null == $this->boardManager) {
+			$this->boardManager = $this->container->get('ccdn_forum_forum.manager.board');
+		}
+		
+		return $this->boardManager;
+	}
+	
+	private $topicManager;
+	protected function getTopicManager()
+	{
+		if (null == $this->topicManager) {
+			$this->topicManager = $this->container->get('ccdn_forum_forum.manager.topic');
+		}
+		
+		return $this->topicManager;		
+	}
+	
+	private $postManager;
+	protected function getPostManager()
+	{
+		if (null == $this->postManager) {
+			$this->postManager = $this->container->get('ccdn_forum_forum.manager.post');
+		}
+		
+		return $this->postManager;
+	}
+	
+	private $draftManager;
+	protected function getDraftManager()
+	{
+		if (null == $this->draftManager) {
+			$this->draftManager = $this->container->get('ccdn_forum_forum.manager.draft');
+		}
+		
+		return $this->draftManager;		
+	}
+	
+	private $subscriptionManager;
+	protected function getSubscriptionManager()
+	{
+		if (null == $this->subscriptionManager) {
+			$this->draftManager = $this->container->get('ccdn_forum_forum.manager.draft');
+		}
+		
+		return $this->subscriptionManager;
+	}
+		
+	private $registryManager;
+	protected function getRegistryManager()		
+	{
+		if (null == $this->registryManager) {
+			$this->registryManager = $this->container->get('ccdn_forum_forum.manager.registry');
+		}
+		
+		return $this->registryManager;
+	}
+	
+	
+	
     protected function filterViewableBoards($boards)
     {
         foreach ($boards as $boardKey => $board) {

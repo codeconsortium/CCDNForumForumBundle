@@ -265,14 +265,4 @@ class TopicController extends BaseController
             'form' => $formHandler->getForm()->createView(),
         ));
     }
-
-    /**
-     *
-     * @access protected
-     * @return string
-     */
-    protected function getEngine()
-    {
-        return $this->container->getParameter('ccdn_forum_forum.template.engine');
-    }
 }
