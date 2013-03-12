@@ -1,0 +1,34 @@
+{% extends 'CCDNForumAdminBundle::base.html.twig' %}
+
+{% set LayoutTemplate = ccdn_forum_admin.topic.delete_topic.layout_template %}
+
+{% block title %}{{- truncDot('ccdn_forum_forum.title.topic.delete' |trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle'), ccdn_forum_admin.seo.title_length) -}}{% endblock %}
+
+
+{% block body_content %}
+
+	{%- spaceless -%}
+
+	<section class="form-confirmation">
+
+		<h3>{{- 'ccdn_forum_forum.title.topic.delete' |trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}</h3>
+
+		<div class="form-question">
+			<span class="lead">{{- 'ccdn_forum_forum.topic.delete_topic_question' | trans({}, 'CCDNForumForumBundle') -}}</span>
+		</div>
+
+		<div class="form-answer">
+			<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_topic_delete_confirmed', {'topicId': topic.id }) -}}">
+				{{- 'ccdn_forum_forum.post.delete.confirm_yes' | trans({}, 'CCDNForumForumBundle') -}}
+			</a>
+			
+			<a class="btn" href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.id }) -}}">
+				{{- 'ccdn_forum_forum.post.delete.confirm_no' | trans({}, 'CCDNForumForumBundle') -}}
+			</a>
+		</div>
+
+	</section>
+
+	{%- endspaceless -%}
+
+{% endblock body_content %}

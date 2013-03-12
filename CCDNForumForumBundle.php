@@ -67,6 +67,10 @@ class CCDNForumForumBundle extends Bundle
 					'form_theme' => $this->container->getParameter('ccdn_forum_forum.topic.reply.form_theme'),
 					'enable_bb_editor' => $this->container->getParameter('ccdn_forum_forum.topic.reply.enable_bb_editor'),
 				),
+				'change_board' => array(
+					'layout_template' => $this->container->getParameter('ccdn_forum_forum.topic.change_board.layout_template'),
+					'form_theme' => $this->container->getParameter('ccdn_forum_forum.topic.change_board.form_theme'),
+				),
 			),
 			'post' => array(
 				'show' => array(

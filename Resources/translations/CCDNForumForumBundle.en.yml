@@ -19,6 +19,7 @@ ccdn_forum_forum.title.post.edit: 'Forum - Edit post #%post_id% on topic: %topic
 ccdn_forum_forum.title.post.delete: 'Forum - Delete post #%post_id% on topic: %topic_title%.'
 ccdn_forum_forum.title.drafts.show: 'Drafts.'
 ccdn_forum_forum.title.subscriptions.show: 'Subscriptions.'
+ccdn_forum_forum.title.topic.change_board: 'Change board for topic: %topic_title%.'
 
 #
 # Crumbs.
@@ -98,6 +99,8 @@ ccdn_forum_forum.form.button.post.edit: 'Update'
 ccdn_forum_forum.form.button.post.preview: 'Preview'
 ccdn_forum_forum.form.button.post.save_draft: 'Save Draft'
 ccdn_forum_forum.form.button.cancel: 'Cancel'
+ccdn_forum_forum.form.button.topic.move_to_board: 'Update Topic'
+ccdn_forum_forum.form.label.board: 'Board: '
 
 #
 # Table Labels.

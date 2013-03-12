@@ -42,11 +42,8 @@ class PostManager extends BaseManager implements ManagerInterface
         // Update affected Topic stats.
         $this->container->get('ccdn_forum_forum.manager.topic')->updateStats($post->getTopic());
 
-        // Update the cached post count of the post author.
-//        $this->container->get('ccdn_forum_forum.manager.registry')->updateCachePostCountForUser($post->getCreatedBy());
-
 		// Subscribe the user to the topic.
-//		$this->container->get('ccdn_forum_forum.manager.subscription')->subscribe($post->getTopic()->getId(), $post->getCreatedBy());
+		//$this->container->get('ccdn_forum_forum.manager.subscription')->subscribe($post->getTopic()->getId(), $post->getCreatedBy());
 		
         return $this;
     }
@@ -150,4 +147,40 @@ class PostManager extends BaseManager implements ManagerInterface
         return $this;
     }
 
+    /**
+     *
+     * @access public
+     * @param Post $post, $user
+     * @return self
+     */
+    public function lock($post, $user)
+    {
+        // Don't overwite previous users accountability.
+        if ( ! $post->getLockedBy() && ! $post->getLockedDate()) {
+            $post->setIsLocked(true);
+            $post->setLockedBy($user);
+            $post->setLockedDate(new \DateTime());
+
+            $this->persist($post);
+        }
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param Post $post
+     * @return self
+     */
+    public function unlock($post)
+    {
+        $post->setIsLocked(false);
+        $post->setLockedBy(null);
+        $post->setLockedDate(null);
+
+        $this->persist($post);
+
+        return $this;
+    }
 }

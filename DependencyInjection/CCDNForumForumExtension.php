@@ -140,7 +140,9 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.topic.reply.layout_template', $config['topic']['reply']['layout_template']);
         $container->setParameter('ccdn_forum_forum.topic.reply.form_theme', $config['topic']['reply']['form_theme']);
         $container->setParameter('ccdn_forum_forum.topic.reply.enable_bb_editor', $config['topic']['reply']['enable_bb_editor']);
-
+		
+        $container->setParameter('ccdn_forum_forum.topic.change_board.layout_template', $config['topic']['change_board']['layout_template']);
+        $container->setParameter('ccdn_forum_forum.topic.change_board.form_theme', $config['topic']['change_board']['form_theme']);
     }
 
     /**

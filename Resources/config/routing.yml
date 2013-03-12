@@ -119,3 +119,63 @@ ccdn_forum_forum_subscription_subscribe:
 ccdn_forum_forum_subscription_unsubscribe:
     pattern: /{_locale}/forum/subscriptions/topic/{topicId}/unsubscribe
     defaults: { _controller: CCDNForumForumBundle:Subscription:unsubscribe, _locale: en }
+
+
+
+
+
+
+
+
+
+
+
+
+ccdn_forum_admin_topic_close:
+    pattern: /{_locale}/forum/topic/{topicId}/close
+    defaults: { _controller: CCDNForumForumBundle:TopicModerator:close, _locale: en }
+
+ccdn_forum_admin_topic_reopen:
+    pattern: /{_locale}/forum/topic/{topicId}/reopen
+    defaults: { _controller: CCDNForumForumBundle:TopicModerator:reopen, _locale: en }
+
+ccdn_forum_admin_topic_sticky:
+    pattern: /{_locale}/forum/topic/{topicId}/sticky
+    defaults: { _controller: CCDNForumForumBundle:TopicModerator:sticky, _locale: en }
+
+ccdn_forum_admin_topic_unsticky:
+    pattern: /{_locale}/forum/topic/{topicId}/unsticky
+    defaults: { _controller: CCDNForumForumBundle:TopicModerator:unsticky, _locale: en }
+
+ccdn_forum_admin_topic_delete:
+    pattern: /{_locale}/forum/topic/{topicId}/delete
+    defaults: { _controller: CCDNForumForumBundle:TopicModerator:delete, _locale: en }
+
+ccdn_forum_admin_topic_delete_confirmed:
+    pattern: /{_locale}/forum/topic/{topicId}/delete/confirm
+    defaults: { _controller: CCDNForumForumBundle:TopicModerator:deleteConfirmed, _locale: en }
+
+ccdn_forum_admin_topic_restore:
+    pattern: /{_locale}/forum/topic/{topicId}/restore
+    defaults: { _controller: CCDNForumForumBundle:TopicModerator:restore, _locale: en }
+
+ccdn_forum_forum_topic_change_board:
+    pattern: /{_locale}/forum/topic/{topicId}/change/board
+    defaults: { _controller: CCDNForumForumBundle:TopicModerator:move, _locale: en }
+
+
+
+
+
+
+ccdn_forum_admin_post_lock:
+    pattern: /{_locale}/forum/post/{postId}/lock
+    defaults: { _controller: CCDNForumForumBundle:PostModerator:lock, _locale: en }
+
+ccdn_forum_admin_post_unlock:
+    pattern: /{_locale}/forum/post/{postId}/unlock
+    defaults: { _controller: CCDNForumForumBundle:PostModerator:unlock, _locale: en }
+
+ccdn_forum_admin_post_restore:
+    pattern: /{_locale}/forum/post/{postId}/restore
+    defaults: { _controller: CCDNForumForumBundle:PostModerator:restore, _locale: en }

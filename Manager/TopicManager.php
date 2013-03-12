@@ -23,7 +23,6 @@ use CCDNForum\ForumBundle\Manager\BaseManager;
  */
 class TopicManager extends BaseManager implements ManagerInterface
 {
-
     /**
      *
      * @access public
@@ -32,13 +31,8 @@ class TopicManager extends BaseManager implements ManagerInterface
      */
     public function create($post)
     {
-//ladybug_dump($post);
         // insert a new row.
-
-//ladybug_dump($post->getCreatedBy());
         $this->persist($post)->flush();
-
-//ladybug_dump_die($post->getCreatedBy());
 
         // get the topic.
         $topic = $post->getTopic();
@@ -46,27 +40,21 @@ class TopicManager extends BaseManager implements ManagerInterface
         // set topic last_post and first_post, board's last_post.
         $topic->setFirstPost($post);
         $topic->setLastPost($post);
-//ladybug_dump_die($post);
+
         // persist and refresh after a flush to get topic id.
         $this->persist($topic)->flush();
-//ladybug_dump_die($post);
-//        $this->refresh($topic);
+        $this->refresh($topic);
 
         if ($topic->getBoard()) {
             // Update affected Board stats.
             $this->container->get('ccdn_forum_forum.manager.board')->updateStats($topic->getBoard())->flush();
         }
 
-        // Update the cached post count of the post author.
-        //$this->container->get('ccdn_forum_forum.manager.registry')->updateCachePostCountForUser($post->getCreatedBy());
-
 		// Subscribe the user to the topic.
 		//$this->container->get('ccdn_forum_forum.manager.subscription')->subscribe($topic->getId(), $post->getCreatedBy());
 		
         return $this;
     }
-
-
 
     /**
      *
@@ -82,8 +70,26 @@ class TopicManager extends BaseManager implements ManagerInterface
         return $this;
     }
 
+    /**
+     *
+     * @access public
+     * @param Topic $topic
+     * @return self
+     */
+    public function restore($topic)
+    {
+        $topic->setIsDeleted(false);
+        $topic->setDeletedBy(null);
+        $topic->setDeletedDate(null);
 
+        $this->persist($topic)->flush();
 
+        // Update affected Topic stats.
+        $this->updateStats($topic);
+
+        return $this;
+    }
+	
     /**
      *
      * @access public
@@ -112,6 +118,26 @@ class TopicManager extends BaseManager implements ManagerInterface
 
         return $this;
     }
+	
+    /**
+     *
+     * @access public
+     * @param Topic $topic, $user
+     * @return self
+     */
+    public function close($topic, $user)
+    {
+        // Don't overwite previous users accountability.
+        if ( ! $topic->getClosedBy() && ! $topic->getClosedDate()) {
+            $topic->setIsClosed(true);
+            $topic->setClosedBy($user);
+            $topic->setClosedDate(new \DateTime());
+
+            $this->persist($topic);
+        }
+
+        return $this;
+    }
 
     /**
      *
@@ -119,20 +145,57 @@ class TopicManager extends BaseManager implements ManagerInterface
      * @param Topic $topic
      * @return self
      */
-    public function restore($topic)
+    public function reopen($topic)
     {
-        $topic->setIsDeleted(false);
-        $topic->setDeletedBy(null);
-        $topic->setDeletedDate(null);
+        $topic->setIsClosed(false);
+        $topic->setClosedBy(null);
+        $topic->setClosedDate(null);
 
-        $this->persist($topic)->flush();
-
-        // Update affected Topic stats.
-        $this->updateStats($topic);
+		if ($topic->getIsDeleted()) {	
+	        $topic->setIsDeleted(false);
+	        $topic->setDeletedBy(null);
+	        $topic->setDeletedDate(null);			
+		}
+		
+        $this->persist($topic);
 
         return $this;
     }
 
+    /**
+     *
+     * @access public
+     * @param Topic $topic
+     * @return self
+     */
+    public function sticky($topic, $user)
+    {
+        $topic->setIsSticky(true);
+        $topic->setStickiedBy($user);
+        $topic->setStickiedDate(new \DateTime());
+
+        $this->persist($topic);
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param Topic $topic
+     * @return self
+     */
+    public function unsticky($topic)
+    {
+        $topic->setIsSticky(false);
+        $topic->setStickiedBy(null);
+        $topic->setStickiedDate(null);
+
+        $this->persist($topic);
+
+        return $this;
+    }
+	
     /**
      *
      * @access public
@@ -189,5 +252,4 @@ class TopicManager extends BaseManager implements ManagerInterface
 
         $this->persist($topic)->flush();
     }
-
 }

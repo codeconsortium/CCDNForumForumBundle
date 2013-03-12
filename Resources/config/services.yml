@@ -32,6 +32,9 @@ parameters:
     
     ccdn_forum_forum.component.menu_builder.menu.class:         CCDNForum\ForumBundle\Component\MenuBuilder\Menu
 
+    ccdn_forum_forum.form.type.change_topics_board.class:       CCDNForum\ForumBundle\Form\Type\TopicChangeBoardType
+    ccdn_forum_forum.form.handler.change_topics_board.class:    CCDNForum\ForumBundle\Form\Handler\TopicChangeBoardFormHandler
+
 services:
 
     #
@@ -163,3 +166,15 @@ services:
         class: %ccdn_forum_forum.component.menu_builder.menu.class%
         tags:
             - { name: ccdn_component_menu.menu_builder }
+
+
+
+    #
+    # Topic Forms.
+    #
+    ccdn_forum_forum.form.type.change_topics_board:
+        class:  %ccdn_forum_forum.form.type.change_topics_board.class%
+        arguments:  [@doctrine]
+    ccdn_forum_forum.form.handler.change_topics_board:
+        class:  %ccdn_forum_forum.form.handler.change_topics_board.class%
+        arguments:  [@form.factory, @service_container, @ccdn_forum_forum.manager.topic]

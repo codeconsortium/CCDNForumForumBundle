@@ -210,6 +210,13 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('enable_bb_editor')->defaultValue(true)->end()
                             ->end()
                         ->end()
+                        ->arrayNode('change_board')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
+                                ->scalarNode('form_theme')->defaultValue('CCDNForumForumBundle:Form:fields.html.twig')->end()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end();
