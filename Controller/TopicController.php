@@ -52,19 +52,16 @@ class TopicController extends BaseController
             throw new NotFoundHttpException('No such topic exists!');
         }
 
-        // if this topics first post is deleted, and no
-        // other posts exist then throw an NotFoundHttpException!
-        if ($topic->getIsDeleted()
-        && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
-        {
+        // if this topics first post is deleted, and no other posts exist then throw an NotFoundHttpException!
+        if ($topic->getIsDeleted() && ! $this->isGranted('ROLE_MODERATOR')) {
             throw new NotFoundHttpException('No such topic exists!');
         }
 
         // update the view counter because you viewed the topic
-        $this->container->get('ccdn_forum_forum.manager.topic')->incrementViewCounter($topic);
+        $this->getTopicManager()->incrementViewCounter($topic);
 
         // get the topic subscriptions
-        if ($this->container->get('security.context')->isGranted('ROLE_USER')) {
+        if ($this->isGranted('ROLE_USER')) {
             $subscription = $this->container->get('ccdn_forum_forum.repository.subscription')->findTopicSubscriptionByTopicAndUserId($topicId, $user->getId());
         } else {
             $subscription = null;
@@ -76,13 +73,13 @@ class TopicController extends BaseController
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
-        $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
-            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
-            ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication");
+        $crumbs = $this->getCrumbs()
+            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'), "home")
+            ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
+            ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
+            ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication");
 
-        return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Topic:show.html.' . $this->getEngine(), array(
+        return $this->renderResponse('CCDNForumForumBundle:Topic:show.html.', array(
             'user'	=> $user,
             'crumbs' => $crumbs,
             'pager' => $postsPager,
@@ -108,17 +105,13 @@ class TopicController extends BaseController
 
         $board = $this->container->get('ccdn_forum_forum.repository.board')->find($boardId);
 
-        if (! $board) {
-            throw new NotFoundHttpException('No such board exists!');
-        }
+        $this->isFound($board);
 
-        if (! $board->isAuthorisedToCreateTopic($this->container->get('security.context'))) {
+        if (! $board->isAuthorisedToCreateTopic($this->getSecurityContext())) {
             throw new AccessDeniedException('You do not have permission to use this resource.');
         }
 
-        //
         // Set the form handler options
-        //
         $options = array('board' => $board, 'user' => $user);
 
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_create')->setDefaultValues($options);
@@ -129,25 +122,25 @@ class TopicController extends BaseController
 	            if ($formHandler->process()) {
 	                $this->container->get('ccdn_forum_forum.component.flood_control')->incrementCounter();
 
-					$this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+					$this->setFlash('success', $this->trans('ccdn_forum_forum.flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle())));
 
-	                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $formHandler->getForm()->getData()->getTopic()->getId() )));
+	                return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $formHandler->getForm()->getData()->getTopic()->getId() )));
 	            }
 	        }
 		} else {
-			$this->container->get('session')->setFlash('warning', $this->container->get('translator')->trans('ccdn_forum_forum.flash.topic.flood_control', array(), 'CCDNForumForumBundle'));
+			$this->setFlash('warning', $this->trans('ccdn_forum_forum.flash.topic.flood_control'));
 		}
 
         // setup crumb trail.
         $category = $board->getCategory();
 
-        $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
-            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
-            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.topic.create', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_topic_create', array('boardId' => $board->getId())), "edit");
+        $crumbs = $this->getCrumbs()
+            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'), "home")
+            ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
+            ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
+            ->add($this->trans('ccdn_forum_forum.crumbs.topic.create'), $this->path('ccdn_forum_forum_topic_create', array('boardId' => $board->getId())), "edit");
 
-        return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Topic:create.html.' . $this->getEngine(), array(
+        return $this->renderResponse('CCDNForumForumBundle:Topic:create.html.', array(
             'user' => $user,
             'crumbs' => $crumbs,
             'board' => $board,
@@ -170,21 +163,17 @@ class TopicController extends BaseController
 
         $topic = $this->container->get('ccdn_forum_forum.repository.topic')->findOneByIdJoinedToPosts($topicId);
 
-        if (! $topic) {
-            throw new NotFoundHttpException('No such topic exists!');
-        }
+        $this->isFound($topic);
 
-        if (! $topic->getBoard()->isAuthorisedToTopicReply($this->container->get('security.context'))) {
+        if (! $topic->getBoard()->isAuthorisedToTopicReply($this->getSecurityContext())) {
             throw new AccessDeniedException('You do not have permission to use this resource.');
         }
 
-        if ($topic->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
+        if ($topic->getIsClosed() && ! $this->isGranted('ROLE_MODERATOR')) {
             throw new AccessDeniedException('This topic has been closed!');
         }
 
-        //
         // Set the form handler options
-        //
         if ( ! empty($quoteId)) {
             $quote = $this->container->get('ccdn_forum_forum.repository.post')->find($quoteId);
         }
@@ -206,28 +195,27 @@ class TopicController extends BaseController
 
 	                $page =  $pageCounter ? ceil($pageCounter / $postsPerTopicPage) : 1;
 
-	                $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.topic.reply.success', array('%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle'));
+	                $this->setFlash('success', $this->trans('ccdn_forum_forum.flash.topic.reply.success', array('%topic_title%' => $topic->getTitle())));
 
-	                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show_paginated_anchored',
-	                    array('topicId' => $topicId, 'page' => $page, 'postId' => $topic->getLastPost()->getId()) ));
+	                return new RedirectResponse($this->path('ccdn_forum_forum_topic_show_paginated_anchored', array('topicId' => $topicId, 'page' => $page, 'postId' => $topic->getLastPost()->getId()) ));
 	            }
 	        }
 		} else {
-			$this->container->get('session')->setFlash('warning', $this->container->get('translator')->trans('ccdn_forum_forum.flash.topic.flood_control', array(), 'CCDNForumForumBundle'));
+			$this->setFlash('warning', $this->trans('ccdn_forum_forum.flash.topic.flood_control'));
 		}
 		
         // setup crumb trail.
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
-        $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
-            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
-            ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
-            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.topic.reply', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())), "edit");
+        $crumbs = $this->getCrumbs()
+            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'), "home")
+            ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
+            ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
+            ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
+            ->add($this->trans('ccdn_forum_forum.crumbs.topic.reply'), $this->path('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())), "edit");
 
-        return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Topic:reply.html.' . $this->getEngine(), array(
+        return $this->renderResponse('CCDNForumForumBundle:Topic:reply.html.', array(
             'user' => $user,
             'crumbs' => $crumbs,
             'topic' => $topic,

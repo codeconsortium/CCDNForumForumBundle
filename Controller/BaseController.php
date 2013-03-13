@@ -14,6 +14,8 @@
 namespace CCDNForum\ForumBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  *
@@ -24,14 +26,175 @@ class BaseController extends ContainerAware
 {
 	/**
 	 *
-	 * @var $securityContext
+	 * @var \Symfony\Bundle\FrameworkBundle\Translation\Translator $translator
+	 */
+	private $translator;
+
+	/**
+	 *
+	 * @var \Symfony\Bundle\FrameworkBundle\Routing\Router $router
+	 */
+	private $router;
+
+	/**
+	 *
+	 * @var \Symfony\Bundle\TwigBundle\Debug\TimedTwigEngine $templating
+	 */	
+	private $templating;
+	
+	/**
+	 *
+	 * @var \Symfony\Component\Security\Core\SecurityContext $securityContext
 	 */
 	private $securityContext;
+	
+	/**
+	 *
+	 * @var $categoryManager
+	 */
+	private $categoryManager;
+	
+	/**
+	 *
+	 * @var $boardManager
+	 */
+	private $boardManager;
+	
+	/**
+	 *
+	 * @var $topicManager
+	 */
+	private $topicManager;
+	
+	/**
+	 *
+	 * @var $postManager
+	 */
+	private $postManager;
+	
+	/**
+	 *
+	 * @var $draftManager
+	 */
+	private $draftManager;
+	
+	/**
+	 *
+	 * @var $registryManager
+	 */
+	private $registryManager;
+	
+	/**
+	 *
+	 * @var $subscriptionManager
+	 */
+	private $subscriptionManager;
+	
+	/**
+	 *
+	 * @access protected
+	 * @return \Symfony\Bundle\FrameworkBundle\Translation\Translator
+	 */
+	protected function getTranslator()
+	{
+		if (null == $this->translator) {
+			$this->translator = $this->container->get('translator');
+		}
+		
+		return $this->translator;
+	}
+	
+	/**
+	 *
+	 * @access protected
+	 * @param string $message
+	 * @param Array $params
+	 * @param string $bundle
+	 * @return string
+	 */
+	protected function trans($message, $params = array(), $bundle = 'CCDNForumForumBundle')
+	{
+		return $this->getTranslator()->trans($message, $params, $bundle);
+	}
+	
+    /**
+     *
+     * @access protected
+	 * @param string $action, string $value
+     * @return string
+     */
+    protected function setFlash($action, $value)
+    {
+        $this->container->get('session')->setFlash($action, $value);
+    }
+	
+	/**
+	 *
+	 * @access protected
+	 * @return \Symfony\Bundle\FrameworkBundle\Routing\Router
+	 */
+	protected function getRouter()
+	{
+		if (null == $this->router) {
+			$this->router = $this->container->get('router');
+		}
+		
+		return $this->router;
+	}
+	
+	/**
+	 *
+	 * @access protected
+	 * @param string $route
+	 * @param Array $params
+	 * @return string
+	 */
+	protected function path($route, $params = array())
+	{
+		return $this->getRouter()->generate($route, $params);
+	}
+	
+	/**
+	 *
+	 * @access protected
+	 * @return \Symfony\Bundle\TwigBundle\Debug\TimedTwigEngine
+	 */
+	protected function getTemplating()
+	{
+		if (null == $this->templating) {
+			$this->templating = $this->container->get('templating');
+		}
+		
+		return $this->templating;
+	}
+	
+	/**
+	 *
+	 * @access protected
+	 * @param string $template
+	 * @param Array $params
+	 * @param string $engine
+	 * @return string
+	 */
+	protected function renderResponse($template, $params = array(), $engine = null)
+	{
+		return $this->getTemplating()->renderResponse($template . ($engine ?: $this->getEngine()), $params);
+	}
+	
+    /**
+     *
+     * @access protected
+     * @return string
+     */
+    protected function getEngine()
+    {
+        return $this->container->getParameter('ccdn_forum_forum.template.engine');
+    }
 	
 	/** 
 	 * 
 	 * @access protected
-	 * @return SecurityContext
+	 * @return \Symfony\Component\Security\Core\SecurityContext
 	 */
 	protected function getSecurityContext()
 	{
@@ -49,49 +212,59 @@ class BaseController extends ContainerAware
 	 */	
 	protected function getUser()
 	{
-		if (null == $this->securityContext) {
-			$this->securityContext = $this->container->get('security.context');
-		}
-
-		return $this->securityContext->getToken()->getUser();		
+		return $this->getSecurityContext()->getToken()->getUser();		
 	}
 	
 	/** 
 	 * 
 	 * @access protected
-	 * @throws AccessDeniedException
+	 * @param string $role
+	 * @return bool
+	 */
+	protected function isGranted($role)
+	{
+		if (! $this->getSecurityContext()->isGranted($role)) {
+			return false;
+		}
+		
+		return true;
+	}
+		
+	/** 
+	 * 
+	 * @access protected
+	 * @throws Symfony\Component\Security\Core\Exception\AccessDeniedException
 	 */
 	protected function isAuthorised($role)
 	{
-		if (! $this->getSecurityContext()->isGranted($role)) {
+		if (! $this->isGranted($role)) {
 			throw new AccessDeniedException('You do not have permission to use this resource.');
 		}
 		
 		return true;
 	}
 	
-    /**
-     *
-     * @access protected
-     * @return string
-     */
-    protected function getEngine()
-    {
-        return $this->container->getParameter('ccdn_forum_forum.template.engine');
-    }
+	/**
+	 *
+	 * @access protected
+	 * @param \Object $item
+	 * @param string $message
+	 * @return bool
+	 * @throws Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+	 */
+	protected function isFound($item, $message = null)
+	{
+		if (null == $item) {
+			throw new NotFoundHttpException($message ?: 'Page you are looking for could not be found!');
+		}
+		
+		return true;
+	}
 
-    /**
-     *
-     * @access protected
-	 * @param string $action, string $value
-     * @return string
-     */
-    protected function setFlash($action, $value)
-    {
-        $this->container->get('session')->setFlash($action, $value);
-    }
-	
-	private $categoryManager;
+	/**
+	 *
+	 * @access protected
+	 */
 	protected function getCategoryManager()
 	{
 		if (null == $this->categoryManager) {
@@ -101,7 +274,10 @@ class BaseController extends ContainerAware
 		return $this->categoryManager;
 	}
 	
-	private $boardManager;
+	/**
+	 *
+	 * @access protected
+	 */
 	protected function getBoardManager()
 	{
 		if (null == $this->boardManager) {
@@ -111,7 +287,10 @@ class BaseController extends ContainerAware
 		return $this->boardManager;
 	}
 	
-	private $topicManager;
+	/**
+	 *
+	 * @access protected
+	 */
 	protected function getTopicManager()
 	{
 		if (null == $this->topicManager) {
@@ -121,7 +300,10 @@ class BaseController extends ContainerAware
 		return $this->topicManager;		
 	}
 	
-	private $postManager;
+	/**
+	 *
+	 * @access protected
+	 */
 	protected function getPostManager()
 	{
 		if (null == $this->postManager) {
@@ -131,7 +313,10 @@ class BaseController extends ContainerAware
 		return $this->postManager;
 	}
 	
-	private $draftManager;
+	/**
+	 *
+	 * @access protected
+	 */
 	protected function getDraftManager()
 	{
 		if (null == $this->draftManager) {
@@ -140,8 +325,11 @@ class BaseController extends ContainerAware
 		
 		return $this->draftManager;		
 	}
-			
-	private $registryManager;
+	
+	/**
+	 *
+	 * @access protected
+	 */	
 	protected function getRegistryManager()		
 	{
 		if (null == $this->registryManager) {
@@ -151,7 +339,10 @@ class BaseController extends ContainerAware
 		return $this->registryManager;
 	}
 	
-	private $subscriptionManager;
+	/**
+	 *
+	 * @access protected
+	 */
 	protected function getSubscriptionManager()
 	{
 		if (null == $this->subscriptionManager) {
@@ -161,10 +352,25 @@ class BaseController extends ContainerAware
 		return $this->subscriptionManager;
 	}
 	
+	/**
+	 *
+	 * @access protected
+	 */
+	protected function getCrumbs()
+	{
+		return $this->container->get('ccdn_component_crumb.trail');
+	}
+	
+	/**
+	 *
+	 * @access protected
+	 * @param Array $boards
+	 * @return Array
+	 */
     protected function filterViewableBoards($boards)
     {
         foreach ($boards as $boardKey => $board) {
-            if (! $board->isAuthorisedToRead($this->container->get('security.context'))) {
+            if (! $board->isAuthorisedToRead($this->getSecurityContext())) {
                 unset($boards[$boardKey]);
             }
         }
@@ -172,13 +378,19 @@ class BaseController extends ContainerAware
         return $boards;
     }
 
+	/**
+	 *
+	 * @access protected
+	 * @param Array $categories
+	 * @return Array
+	 */
     protected function filterViewableCategories($categories)
     {
         foreach ($categories as $categoryKey => $category) {
             $boards = $category->getBoards();
 
             foreach($boards as $board) {
-                if (! $board->isAuthorisedToRead($this->container->get('security.context'))) {
+                if (! $board->isAuthorisedToRead($this->getSecurityContext())) {
                     $categories[$categoryKey]->removeBoard($board);
                 }
             }

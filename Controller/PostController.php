@@ -37,12 +37,10 @@ class PostController extends BaseController
 
         $post = $this->container->get('ccdn_forum_forum.repository.post')->find($postId);
 
-        if (! $post) {
-            throw new NotFoundHttpException('No such post exists!');
-        }
+		$this->isFound($post);
 
         // If this topics first post is deleted, and no other posts exist then throw an NotFoundHttpException!
-        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted()) && ! $this->isAuthorised('ROLE_MODERATOR')) {
+        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted()) && ! $this->isGranted('ROLE_MODERATOR')) {
             throw new NotFoundHttpException('No such post exists!');
         }
 
@@ -53,10 +51,10 @@ class PostController extends BaseController
             $registryUserIds = array();
         }
 
-        $registries = $this->container->get('ccdn_forum_forum.manager.registry')->getRegistriesForUsersAsArray($registryUserIds);
+        $registries = $this->getRegistryManager()->getRegistriesForUsersAsArray($registryUserIds);
 
         // Get the topic subscriptions.
-        if ($this->isAuthorised('ROLE_USER') && $post->getTopic()) {
+        if ($this->isGranted('ROLE_USER') && $post->getTopic()) {
             $subscription = $this->container->get('ccdn_forum_forum.repository.subscription')->findTopicSubscriptionByTopicAndUserId($post->getTopic()->getId(), $user->getId());
         } else {
             $subscription = null;
@@ -69,14 +67,14 @@ class PostController extends BaseController
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
-        $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
-            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
-            ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
-            ->add('#' . $post->getId(), $this->container->get('router')->generate('ccdn_forum_forum_post_show', array('postId' => $post->getId())), "comment");
+        $crumbs = $this->getCrumbs()
+            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'), "home")
+            ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
+            ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
+            ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
+            ->add('#' . $post->getId(), $this->path('ccdn_forum_forum_post_show', array('postId' => $post->getId())), "comment");
 
-        return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:show.html.' . $this->getEngine(), array(
+        return $this->renderResponse('CCDNForumForumBundle:Post:show.html.', array(
             'user'	=> $user,
             'crumbs' => $crumbs,
             'topic' => $topic,
@@ -101,27 +99,25 @@ class PostController extends BaseController
 
         $post = $this->container->get('ccdn_forum_forum.repository.post')->findPostForEditing($postId);
 
-        if (! $post) {
-            throw new NotFoundHttpException('No such post exists!');
-        }
+        $this->isFound($post);
 
         // if this topics first post is deleted, and no other posts exist then throw an NotFoundHttpException!
-        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted()) && ! $this->isAuthorised('ROLE_MODERATOR')) {
+        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted()) && ! $this->isGranted('ROLE_MODERATOR')) {
             throw new NotFoundHttpException('No such post exists!');
         }
 
         // you cannot reply/edit/delete a post if it is locked
-        if ($post->getIsLocked() && ! $this->isAuthorised('ROLE_MODERATOR')) {
+        if ($post->getIsLocked() && ! $this->isGranted('ROLE_MODERATOR')) {
             throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
         }
 		
         // you cannot reply/edit/delete a post if the topic is closed
-        if ($post->getTopic()->getIsClosed() && ! $this->isAuthorised('ROLE_MODERATOR')) {
+        if ($post->getTopic()->getIsClosed() && ! $this->isGranted('ROLE_MODERATOR')) {
             throw new AccessDeniedException('This topic has been closed!');
         }
 
         // Invalidate this action / redirect if user should not have access to it
-        if ( ! $this->isAuthorised('ROLE_MODERATOR')) {
+        if ( ! $this->isGranted('ROLE_MODERATOR')) {
             if ($post->getCreatedBy()) {
                 // if user does not own post, or is not a mod
                 if ($post->getCreatedBy()->getId() != $user->getId()) {
@@ -136,7 +132,7 @@ class PostController extends BaseController
 			// if post is the very first post of the topic then use a topic handler so user can change topic title
             $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_update')->setDefaultValues(array('post' => $post, 'user' => $user));
 
-            if ($this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
+            if ($this->isGranted('ROLE_MODERATOR')) {
                 $formHandler->setDefaultValues(array('board' => $post->getTopic()->getBoard()));
             }
         } else {
@@ -155,11 +151,10 @@ class PostController extends BaseController
                     }
                 }
 
-                $this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.post.edit.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+                $this->setFlash('success', $this->trans('ccdn_forum_forum.flash.post.edit.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle())));
 
                 // redirect user on successful edit.
-                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show_paginated_anchored',
-                    array('topicId' => $topic->getId(), 'page' => $page, 'postId' => $post->getId() ) ));
+                return new RedirectResponse($this->path('ccdn_forum_forum_topic_show_paginated_anchored', array('topicId' => $topic->getId(), 'page' => $page, 'postId' => $post->getId() ) ));
             }
         }
 
@@ -168,21 +163,22 @@ class PostController extends BaseController
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
-        $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(),	$this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
-            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
-            ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
-            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.post.edit', array(), 'CCDNForumForumBundle') . $post->getId(), $this->container->get('router')->generate('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())), "edit");
+        $crumbs = $this->getCrumbs()
+            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'), "home")
+            ->add($category->getName(),	$this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
+            ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
+            ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
+            ->add($this->trans('ccdn_forum_forum.crumbs.post.edit') . $post->getId(), $this->path('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())), "edit");
 
-        if ($post->getTopic()->getFirstPost()->getId() == $post->getId()) {	// render edit_topic if first post
-            $template = 'CCDNForumForumBundle:Post:edit_topic.html.' . $this->getEngine();
+        if ($post->getTopic()->getFirstPost()->getId() == $post->getId()) {
+			// render edit_topic if first post
+            $template = 'CCDNForumForumBundle:Post:edit_topic.html.';
         } else {
             // render edit_post if not first post
-            $template = 'CCDNForumForumBundle:Post:edit_post.html.' . $this->getEngine();
+            $template = 'CCDNForumForumBundle:Post:edit_post.html.';
         }
 
-        return $this->container->get('templating')->renderResponse($template, array(
+        return $this->renderResponse($template, array(
             'user' => $user,
             'board' => $board,
             'topic' => $topic,
@@ -207,27 +203,25 @@ class PostController extends BaseController
 
         $post = $this->container->get('ccdn_forum_forum.repository.post')->findPostForEditing($postId);
 
-        if (! $post) {
-            throw new NotFoundHttpException('No such post exists!');
-        }
+        $this->isFound($post);
 
         // if this topics first post is deleted, and no other posts exist then throw an NotFoundHttpException!
-        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted()) && ! $this->isAuthorised('ROLE_MODERATOR')) {
+        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted()) && ! $this->isGranted('ROLE_MODERATOR')) {
             throw new NotFoundHttpException('No such post exists!');
         }
 
 		// you cannot reply/edit/delete a post if it is locked		
-        if ($post->getIsLocked() && ! $this->isAuthorised('ROLE_MODERATOR')) {
+        if ($post->getIsLocked() && ! $this->isGranted('ROLE_MODERATOR')) {
             throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
         }
 		
 		// you cannot reply/edit/delete a post if the topic is closed
-        if ($post->getTopic()->getIsClosed() && ! $this->isAuthorised('ROLE_MODERATOR')) {	
+        if ($post->getTopic()->getIsClosed() && ! $this->isGranted('ROLE_MODERATOR')) {	
             throw new AccessDeniedException('This topic has been closed!');
         }
 
         // Invalidate this action / redirect if user should not have access to it
-        if ( ! $this->isAuthorised('ROLE_MODERATOR')) {
+        if ( ! $this->isGranted('ROLE_MODERATOR')) {
             // if user does not own post, or is not a mod
             if ($post->getCreatedBy()) {
                 if ($post->getCreatedBy()->getId() != $user->getId()) {
@@ -245,23 +239,23 @@ class PostController extends BaseController
         if ($post->getTopic()->getFirstPost()->getId() == $post->getId() && $post->getTopic()->getCachedReplyCount() == 0) {
 			// if post is the very first post of the topic then use a topic handler so user can change topic title
             $confirmationMessage = 'ccdn_forum_forum.topic.delete_topic_question';
-            $crumbDelete = $this->container->get('translator')->trans('ccdn_forum_forum.crumbs.topic.delete', array(), 'CCDNForumForumBundle');
-            $pageTitle = $this->container->get('translator')->trans('ccdn_forum_forum.title.topic.delete', array('%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle');
+            $crumbDelete = $this->trans('ccdn_forum_forum.crumbs.topic.delete');
+            $pageTitle = $this->trans('ccdn_forum_forum.title.topic.delete', array('%topic_title%' => $topic->getTitle()));
         } else {
             $confirmationMessage = 'ccdn_forum_forum.post.delete_post_question';
-            $crumbDelete = $this->container->get('translator')->trans('ccdn_forum_forum.crumbs.post.delete', array(), 'CCDNForumForumBundle') . $post->getId();
-            $pageTitle = $this->container->get('translator')->trans('ccdn_forum_forum.title.post.delete', array('%post_id%' => $post->getId(), '%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle');
+            $crumbDelete = $this->trans('ccdn_forum_forum.crumbs.post.delete') . $post->getId();
+            $pageTitle = $this->trans('ccdn_forum_forum.title.post.delete', array('%post_id%' => $post->getId(), '%topic_title%' => $topic->getTitle()));
         }
 
         // setup crumb trail.
-        $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(),	$this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
-            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
-            ->add($topic->getTitle(), $this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
-            ->add($crumbDelete, $this->container->get('router')->generate('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())), "trash");
+        $crumbs = $this->getCrumbs()
+            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'), "home")
+            ->add($category->getName(),	$this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
+            ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
+            ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
+            ->add($crumbDelete, $this->path('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())), "trash");
 
-        return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Post:delete_post.html.' . $this->getEngine(), array(
+        return $this->renderResponse('CCDNForumForumBundle:Post:delete_post.html.', array(
             'page_title' => $pageTitle,
             'confirmation_message' => $confirmationMessage,
             'topic' => $topic,
@@ -284,27 +278,25 @@ class PostController extends BaseController
 
         $post = $this->container->get('ccdn_forum_forum.repository.post')->findPostForEditing($postId);
 
-        if (! $post) {
-            throw new NotFoundHttpException('No such post exists!');
-        }
+        $this->isFound($post);
 
         // if this topics first post is deleted, and no other posts exist then throw an NotFoundHttpException!
-        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted()) && ! $this->isAuthorised('ROLE_MODERATOR')) {
+        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted()) && ! $this->isGranted('ROLE_MODERATOR')) {
             throw new NotFoundHttpException('No such post exists!');
         }
 
         // you cannot reply/edit/delete a post if the topic is closed
-        if ($post->getTopic()->getIsClosed() && ! $this->isAuthorised('ROLE_MODERATOR')) {
+        if ($post->getTopic()->getIsClosed() && ! $this->isGranted('ROLE_MODERATOR')) {
             throw new AccessDeniedException('This topic has been closed!');
         }
 
         // you cannot reply/edit/delete a post if it is locked
-        if ($post->getIsLocked() && ! $this->isAuthorised('ROLE_MODERATOR')) {
+        if ($post->getIsLocked() && ! $this->isGranted('ROLE_MODERATOR')) {
             throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
         }
 
         // Invalidate this action / redirect if user should not have access to it
-        if ( ! $this->isAuthorised('ROLE_MODERATOR')) {
+        if ( ! $this->isGranted('ROLE_MODERATOR')) {
             // if user does not own post, or is not a mod
             if ($post->getCreatedBy()) {
                 if ($post->getCreatedBy()->getId() != $user->getId()) {
@@ -315,12 +307,12 @@ class PostController extends BaseController
             }
         }
 
-        $this->container->get('ccdn_forum_forum.manager.post')->softDelete($post, $user)->flush();
+        $this->getPostManager()->softDelete($post, $user)->flush();
 
         // set flash message
-        $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.post.delete.success', array('%post_id%' => $postId), 'CCDNForumForumBundle'));
+        $this->setFlash('notice', $this->trans('ccdn_forum_forum.flash.post.delete.success', array('%post_id%' => $postId)));
 
         // forward user
-        return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
+        return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
     }
 }

@@ -45,15 +45,13 @@ class PostModeratorController extends BaseController
 
 	    $post = $this->container->get('ccdn_forum_forum.repository.post')->find($postId);
 
-	    if (! $post) {
-	        throw new NotFoundHttpException('No such post exists!');
-	    }
+	    $this->isFound($post);
 
-	    $this->container->get('ccdn_forum_forum.manager.post')->lock($post, $user)->flush();
+	    $this->getPostManager()->lock($post, $user)->flush();
 
-	    $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_admin.flash.post.lock.success', array('%post_id%' => $postId), 'CCDNForumAdminBundle'));
+	    $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.lock.success', array('%post_id%' => $postId)));
 
-	    return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
+	    return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
 	}
 
 	/**
@@ -68,15 +66,13 @@ class PostModeratorController extends BaseController
 
 	    $post = $this->find($postId);
 
-	    if (! $post) {
-	        throw new NotFoundHttpException('No such post exists!');
-	    }
+	    $this->isFound($post);
 
-	    $this->container->get('ccdn_forum_forum.manager.post')->unlock($post)->flush();
+	    $this->getPostManager()->unlock($post)->flush();
 
-	    $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_admin.flash.post.unlock.success', array('%post_id%' => $postId), 'CCDNForumAdminBundle'));
+	    $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.unlock.success', array('%post_id%' => $postId)));
 
-	    return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
+	    return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
 	}
 
 	/**
@@ -91,16 +87,14 @@ class PostModeratorController extends BaseController
 
 	    $post = $this->container->get('ccdn_forum_forum.repository.post')->findPostForEditing($postId);
 
-	    if (! $post) {
-	        throw new NotFoundHttpException('No such post exists!');
-	    }
-
-	    $this->container->get('ccdn_forum_forum.manager.post')->restore($post)->flush();
+		$this->isFound($post);
+		
+	    $this->getPostManager()->restore($post)->flush();
 
 	    // set flash message
-	    $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_admin.flash.post.restore.success', array('%post_id%' => $postId), 'CCDNForumAdminBundle'));
+	    $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.restore.success', array('%post_id%' => $postId)));
 
 	    // forward user
-	    return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
+	    return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
 	}
 }

@@ -35,10 +35,10 @@ class CategoryController extends BaseController
 
         $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
-        $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home");
+        $crumbs = $this->getCrumbs()
+            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'), "home");
 
-        return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Category:index.html.' . $this->getEngine(), array(
+        return $this->renderResponse('CCDNForumForumBundle:Category:index.html.', array(
             'crumbs' => $crumbs,
             'categories' => $categories,
             'topics_per_page' => $topicsPerPage,
@@ -55,17 +55,15 @@ class CategoryController extends BaseController
     {
         $categories = $this->filterViewableCategories(array($this->container->get('ccdn_forum_forum.repository.category')->findOneByIdJoinedToBoard($categoryId)));
 		
-        if (! $categories[0]) {
-            throw new NotFoundHttpException('No such category exists!');
-        }
+		$this->isFound($categories[0]);
 
         $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
-        $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($categories[0]->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $categoryId)), "category");
+        $crumbs = $this->getCrumbs()
+            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'), "home")
+            ->add($categories[0]->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $categoryId)), "category");
 
-        return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Category:show.html.' . $this->getEngine(), array(
+        return $this->renderResponse('CCDNForumForumBundle:Category:show.html.', array(
             'crumbs' => $crumbs,
             'categories' => $categories,
             'topics_per_page' => $topicsPerPage,

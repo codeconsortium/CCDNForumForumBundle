@@ -33,7 +33,10 @@ class BoardController extends BaseController
     {
         $board = $this->container->get('ccdn_forum_forum.repository.board')->findOneByIdWithCategory($boardId);
 
-        if ($this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
+        // check board exists.
+		$this->isFound($board);
+
+        if ($this->isGranted('ROLE_MODERATOR')) {
             $topicsPager = $this->container->get('ccdn_forum_forum.repository.topic')->findTopicsForBoardById($boardId, true);
             $stickyTopics = $this->container->get('ccdn_forum_forum.repository.topic')->findStickyTopicsForBoardById($boardId, true);
         } else {
@@ -46,23 +49,18 @@ class BoardController extends BaseController
         $topicsPager->setMaxPerPage($topicsPerPage);
         $topicsPager->setCurrentPage($page, false, true);
 
-        // check board exists.
-        if (! $board) {
-            throw new NotFoundHttpException('No such board exists!');
-        }
-
         // this is necessary for working out the last page for each topic.
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 
         // setup bread crumbs.
         $category = $board->getCategory();
 
-        $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(), $this->container->get('router')->generate('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
-            ->add($board->getName(), $this->container->get('router')->generate('ccdn_forum_forum_board_show', array('boardId' => $boardId)), "board");
+        $crumbs = $this->getCrumbs()
+            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'), "home")
+            ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
+            ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $boardId)), "board");
 
-        return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Board:show.html.' . $this->getEngine(), array(
+        return $this->renderResponse('CCDNForumForumBundle:Board:show.html.', array(
             'crumbs' => $crumbs,
             'board' => $board,
             'pager' => $topicsPager,

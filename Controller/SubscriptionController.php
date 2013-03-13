@@ -46,16 +46,15 @@ class SubscriptionController extends BaseController
         // this is necessary for working out the last page for each topic.
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 
-        $crumbs = $this->container->get('ccdn_component_crumb.trail')
-            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.forum_index', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_category_index'), "home")
-            ->add($this->container->get('translator')->trans('ccdn_forum_forum.crumbs.topic.subscriptions', array(), 'CCDNForumForumBundle'), $this->container->get('router')->generate('ccdn_forum_forum_subscription_list'), "bookmark");
+        $crumbs = $this->getCrumbs()
+            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'), "home")
+            ->add($this->trans('ccdn_forum_forum.crumbs.topic.subscriptions'), $this->path('ccdn_forum_forum_subscription_list'), "bookmark");
 
-        return $this->container->get('templating')->renderResponse('CCDNForumForumBundle:Subscription:list.html.' . $this->getEngine(), array(
+        return $this->renderResponse('CCDNForumForumBundle:Subscription:list.html.', array(
             'crumbs' => $crumbs,
             'pager' => $subscriptions,
             'posts_per_page' => $postsPerPage,
         ));
-
     }
 
     /**
@@ -70,9 +69,9 @@ class SubscriptionController extends BaseController
 
         $user = $this->getUser();
 
-        $this->container->get('ccdn_forum_forum.manager.subscription')->subscribe($topicId, $user)->flush();
+        $this->getSubscriptionManager()->subscribe($topicId, $user)->flush();
 
-        return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topicId)) );
+        return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topicId)) );
     }
 
     /**
@@ -87,8 +86,8 @@ class SubscriptionController extends BaseController
 
         $user = $this->getUser();
 
-        $this->container->get('ccdn_forum_forum.manager.subscription')->unsubscribe($topicId, $user)->flush();
+        $this->getSubscriptionManager()->unsubscribe($topicId, $user)->flush();
 
-        return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $topicId)) );
+        return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topicId)) );
     }
 }
