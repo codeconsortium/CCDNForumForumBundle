@@ -39,11 +39,9 @@ class PostModeratorController extends BaseController
 	 */
 	public function lockAction($postId)
 	{
-	    if ( ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
-	        throw new AccessDeniedException('You do not have access to this section.');
-	    }
+	    $this->isAuthorised('ROLE_MODERATOR');
 
-	    $user = $this->container->get('security.context')->getToken()->getUser();
+	    $user = $this->getUser();
 
 	    $post = $this->container->get('ccdn_forum_forum.repository.post')->find($postId);
 
@@ -66,11 +64,9 @@ class PostModeratorController extends BaseController
 	 */
 	public function unlockAction($postId)
 	{
-	    if ( ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
-	        throw new AccessDeniedException('You do not have access to this section.');
-	    }
+	    $this->isAuthorised('ROLE_MODERATOR');
 
-	    $post = $this->container->get('ccdn_forum_forum.repository.post')->find($postId);
+	    $post = $this->find($postId);
 
 	    if (! $post) {
 	        throw new NotFoundHttpException('No such post exists!');
@@ -91,9 +87,7 @@ class PostModeratorController extends BaseController
 	 */
 	public function restoreAction($postId)
 	{
-	    if ( ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
-	        throw new AccessDeniedException('You do not have permission to use this resource!');
-	    }
+	    $this->isAuthorised('ROLE_MODERATOR');
 
 	    $post = $this->container->get('ccdn_forum_forum.repository.post')->findPostForEditing($postId);
 

@@ -24,7 +24,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 class SubscriptionController extends BaseController
 {
-
     /**
      *
      * @access public
@@ -33,11 +32,9 @@ class SubscriptionController extends BaseController
      */
     public function showAction($page)
     {
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException('You do not have permission to use this resource!');
-        }
+        $this->isAuthorised('ROLE_USER');
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $subscriptions = $this->container->get('ccdn_forum_forum.repository.subscription')->findForUserById($user->getId());
 
@@ -69,11 +66,9 @@ class SubscriptionController extends BaseController
      */
     public function subscribeAction($topicId)
     {
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException('You do not have permission to use this resource!');
-        }
+		$this->isAuthorised('ROLE_USER');
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $this->container->get('ccdn_forum_forum.manager.subscription')->subscribe($topicId, $user)->flush();
 
@@ -88,11 +83,9 @@ class SubscriptionController extends BaseController
      */
     public function unsubscribeAction($topicId)
     {
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException('You do not have permission to use this resource!');
-        }
+        $this->isAuthorised('ROLE_USER');
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $this->container->get('ccdn_forum_forum.manager.subscription')->unsubscribe($topicId, $user)->flush();
 

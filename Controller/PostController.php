@@ -25,7 +25,6 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 class PostController extends BaseController
 {
-
     /**
      *
      * @access public
@@ -34,7 +33,7 @@ class PostController extends BaseController
      */
     public function showAction($postId)
     {
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $post = $this->container->get('ccdn_forum_forum.repository.post')->find($postId);
 
@@ -42,17 +41,12 @@ class PostController extends BaseController
             throw new NotFoundHttpException('No such post exists!');
         }
 
-        // If this topics first post is deleted, and no other
-        // posts exist then throw an NotFoundHttpException!
-        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted())
-        && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
-        {
+        // If this topics first post is deleted, and no other posts exist then throw an NotFoundHttpException!
+        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted()) && ! $this->isAuthorised('ROLE_MODERATOR')) {
             throw new NotFoundHttpException('No such post exists!');
         }
 
-        //
         // Get post counts for users.
-        //
         if ($post->getCreatedBy()) {
             $registryUserIds = array($post->getCreatedBy()->getId());
         } else {
@@ -61,10 +55,8 @@ class PostController extends BaseController
 
         $registries = $this->container->get('ccdn_forum_forum.manager.registry')->getRegistriesForUsersAsArray($registryUserIds);
 
-        //
         // Get the topic subscriptions.
-        //
-        if ($this->container->get('security.context')->isGranted('ROLE_USER') && $post->getTopic()) {
+        if ($this->isAuthorised('ROLE_USER') && $post->getTopic()) {
             $subscription = $this->container->get('ccdn_forum_forum.repository.subscription')->findTopicSubscriptionByTopicAndUserId($post->getTopic()->getId(), $user->getId());
         } else {
             $subscription = null;
@@ -103,11 +95,9 @@ class PostController extends BaseController
      */
     public function editAction($postId)
     {
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException('You do not have permission to use this resource!');
-        }
+		$this->isAuthorised('ROLE_USER');
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $post = $this->container->get('ccdn_forum_forum.repository.post')->findPostForEditing($postId);
 
@@ -115,38 +105,35 @@ class PostController extends BaseController
             throw new NotFoundHttpException('No such post exists!');
         }
 
-        // if this topics first post is deleted, and no
-        // other posts exist then throw an NotFoundHttpException!
-        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted())
-        && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
-        {
+        // if this topics first post is deleted, and no other posts exist then throw an NotFoundHttpException!
+        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted()) && ! $this->isAuthorised('ROLE_MODERATOR')) {
             throw new NotFoundHttpException('No such post exists!');
         }
 
+        // you cannot reply/edit/delete a post if it is locked
+        if ($post->getIsLocked() && ! $this->isAuthorised('ROLE_MODERATOR')) {
+            throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
+        }
+		
         // you cannot reply/edit/delete a post if the topic is closed
-        if ($post->getTopic()->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
+        if ($post->getTopic()->getIsClosed() && ! $this->isAuthorised('ROLE_MODERATOR')) {
             throw new AccessDeniedException('This topic has been closed!');
         }
 
-        // you cannot reply/edit/delete a post if it is locked
-        if ($post->getIsLocked() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
-            throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
-        }
-
-        //
-        //	Invalidate this action / redirect if user should not have access to it
-        //
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
+        // Invalidate this action / redirect if user should not have access to it
+        if ( ! $this->isAuthorised('ROLE_MODERATOR')) {
             if ($post->getCreatedBy()) {
                 // if user does not own post, or is not a mod
-                if ($post->getCreatedBy()->getId() != $user->getId())
-                    throw new AccessDeniedException('You do not have permission to edit this post!');
+                if ($post->getCreatedBy()->getId() != $user->getId()) {
+                    throw new AccessDeniedException('You do not have permission to edit this post!');                	
+                }
             } else {
                 throw new AccessDeniedException('You do not have permission to edit this post!');
             }
         }
 
-        if ($post->getTopic()->getFirstPost()->getId() == $post->getId()) {	// if post is the very first post of the topic then use a topic handler so user can change topic title
+        if ($post->getTopic()->getFirstPost()->getId() == $post->getId()) {
+			// if post is the very first post of the topic then use a topic handler so user can change topic title
             $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_update')->setDefaultValues(array('post' => $post, 'user' => $user));
 
             if ($this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
@@ -214,11 +201,9 @@ class PostController extends BaseController
      */
     public function deleteAction($postId)
     {
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException('You do not have permission to use this resource!');
-        }
+		$this->isAuthorised('ROLE_USER');
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $post = $this->container->get('ccdn_forum_forum.repository.post')->findPostForEditing($postId);
 
@@ -226,24 +211,23 @@ class PostController extends BaseController
             throw new NotFoundHttpException('No such post exists!');
         }
 
-        // if this topics first post is deleted, and no
-        // other posts exist then throw an NotFoundHttpException!
-        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted())
-        && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
-        {
+        // if this topics first post is deleted, and no other posts exist then throw an NotFoundHttpException!
+        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted()) && ! $this->isAuthorised('ROLE_MODERATOR')) {
             throw new NotFoundHttpException('No such post exists!');
         }
 
-        if ($post->getTopic()->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {	// you cannot reply/edit/delete a post if the topic is closed
+		// you cannot reply/edit/delete a post if it is locked		
+        if ($post->getIsLocked() && ! $this->isAuthorised('ROLE_MODERATOR')) {
+            throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
+        }
+		
+		// you cannot reply/edit/delete a post if the topic is closed
+        if ($post->getTopic()->getIsClosed() && ! $this->isAuthorised('ROLE_MODERATOR')) {	
             throw new AccessDeniedException('This topic has been closed!');
         }
 
-        if ($post->getIsLocked() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {	// you cannot reply/edit/delete a post if it is locked
-            throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
-        }
-
         // Invalidate this action / redirect if user should not have access to it
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
+        if ( ! $this->isAuthorised('ROLE_MODERATOR')) {
             // if user does not own post, or is not a mod
             if ($post->getCreatedBy()) {
                 if ($post->getCreatedBy()->getId() != $user->getId()) {
@@ -258,7 +242,8 @@ class PostController extends BaseController
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
-        if ($post->getTopic()->getFirstPost()->getId() == $post->getId() && $post->getTopic()->getCachedReplyCount() == 0) {	// if post is the very first post of the topic then use a topic handler so user can change topic title
+        if ($post->getTopic()->getFirstPost()->getId() == $post->getId() && $post->getTopic()->getCachedReplyCount() == 0) {
+			// if post is the very first post of the topic then use a topic handler so user can change topic title
             $confirmationMessage = 'ccdn_forum_forum.topic.delete_topic_question';
             $crumbDelete = $this->container->get('translator')->trans('ccdn_forum_forum.crumbs.topic.delete', array(), 'CCDNForumForumBundle');
             $pageTitle = $this->container->get('translator')->trans('ccdn_forum_forum.title.topic.delete', array('%topic_title%' => $topic->getTitle()), 'CCDNForumForumBundle');
@@ -293,11 +278,9 @@ class PostController extends BaseController
      */
     public function deleteConfirmedAction($postId)
     {
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException('You do not have permission to use this resource!');
-        }
+		$this->isAuthorised('ROLE_USER');
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $post = $this->container->get('ccdn_forum_forum.repository.post')->findPostForEditing($postId);
 
@@ -305,26 +288,23 @@ class PostController extends BaseController
             throw new NotFoundHttpException('No such post exists!');
         }
 
-        // if this topics first post is deleted, and no
-        // other posts exist then throw an NotFoundHttpException!
-        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted())
-        && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR'))
-        {
+        // if this topics first post is deleted, and no other posts exist then throw an NotFoundHttpException!
+        if (($post->getIsDeleted() || $post->getTopic()->getIsDeleted()) && ! $this->isAuthorised('ROLE_MODERATOR')) {
             throw new NotFoundHttpException('No such post exists!');
         }
 
         // you cannot reply/edit/delete a post if the topic is closed
-        if ($post->getTopic()->getIsClosed() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
+        if ($post->getTopic()->getIsClosed() && ! $this->isAuthorised('ROLE_MODERATOR')) {
             throw new AccessDeniedException('This topic has been closed!');
         }
 
         // you cannot reply/edit/delete a post if it is locked
-        if ($post->getIsLocked() && ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
+        if ($post->getIsLocked() && ! $this->isAuthorised('ROLE_MODERATOR')) {
             throw new AccessDeniedException('This post has been locked and cannot be edited or deleted!');
         }
 
         // Invalidate this action / redirect if user should not have access to it
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
+        if ( ! $this->isAuthorised('ROLE_MODERATOR')) {
             // if user does not own post, or is not a mod
             if ($post->getCreatedBy()) {
                 if ($post->getCreatedBy()->getId() != $user->getId()) {

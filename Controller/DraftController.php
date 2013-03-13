@@ -37,14 +37,9 @@ class DraftController extends BaseController
      */
     public function listAction($page)
     {
-        //
-        //	Invalidate this action / redirect if user should not have access to it
-        //
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException('You do not have permission to use this resource!');
-        }
+		$this->isAuthorised('ROLE_USER');
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $draftsPaginated = $this->container->get('ccdn_forum_forum.repository.draft')->findDraftsPaginated($user->getId());
 
@@ -70,14 +65,9 @@ class DraftController extends BaseController
      */
     public function deleteAction($draftId)
     {
-        //
-        //	Invalidate this action / redirect if user should not have access to it
-        //
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException('You do not have permission to use this resource!');
-        }
+		$this->isAuthorised('ROLE_USER');
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $draft = $this->container->get('ccdn_forum_forum.repository.draft')->findOneByIdForUserById($draftId, $user->getId());
 
@@ -100,14 +90,9 @@ class DraftController extends BaseController
      */
     public function publishAction($draftId)
     {
-        //
-        //	Invalidate this action / redirect if user should not have access to it
-        //
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException('You do not have permission to use this resource!');
-        }
+		$this->isAuthorised('ROLE_USER');
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $draft = $this->container->get('ccdn_forum_forum.repository.draft')->findOneByIdForUserById($draftId, $user->getId());
 

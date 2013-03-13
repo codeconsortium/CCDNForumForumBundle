@@ -31,7 +31,6 @@ class BoardController extends BaseController
      */
     public function showAction($boardId, $page)
     {
-
         $board = $this->container->get('ccdn_forum_forum.repository.board')->findOneByIdWithCategory($boardId);
 
         if ($this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {

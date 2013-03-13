@@ -22,6 +22,54 @@ use Symfony\Component\DependencyInjection\ContainerAware;
  */
 class BaseController extends ContainerAware
 {
+	/**
+	 *
+	 * @var $securityContext
+	 */
+	private $securityContext;
+	
+	/** 
+	 * 
+	 * @access protected
+	 * @return SecurityContext
+	 */
+	protected function getSecurityContext()
+	{
+		if (null == $this->securityContext) {
+			$this->securityContext = $this->container->get('security.context');
+		}
+		
+		return $this->securityContext;
+	}
+
+	/** 
+	 * 
+	 * @access protected
+	 * @return UserInterface
+	 */	
+	protected function getUser()
+	{
+		if (null == $this->securityContext) {
+			$this->securityContext = $this->container->get('security.context');
+		}
+
+		return $this->securityContext->getToken()->getUser();		
+	}
+	
+	/** 
+	 * 
+	 * @access protected
+	 * @throws AccessDeniedException
+	 */
+	protected function isAuthorised($role)
+	{
+		if (! $this->getSecurityContext()->isGranted($role)) {
+			throw new AccessDeniedException('You do not have permission to use this resource.');
+		}
+		
+		return true;
+	}
+	
     /**
      *
      * @access protected

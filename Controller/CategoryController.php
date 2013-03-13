@@ -56,7 +56,7 @@ class CategoryController extends BaseController
         $categories = $this->filterViewableCategories(array($this->container->get('ccdn_forum_forum.repository.category')->findOneByIdJoinedToBoard($categoryId)));
 		
         if (! $categories[0]) {
-            throw NotFoundhttpException('No such category exists!');
+            throw new NotFoundHttpException('No such category exists!');
         }
 
         $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');

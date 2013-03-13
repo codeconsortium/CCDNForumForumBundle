@@ -30,7 +30,6 @@ use CCDNForum\ForumBundle\Entity\Draft;
  */
 class TopicController extends BaseController
 {
-
     /**
      *
      * @access public
@@ -39,7 +38,7 @@ class TopicController extends BaseController
      */
     public function showAction($topicId, $page)
     {
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $topic = $this->container->get('ccdn_forum_forum.repository.topic')->findByIdWithBoardAndCategory($topicId);
 
@@ -70,25 +69,6 @@ class TopicController extends BaseController
         } else {
             $subscription = null;
         }
-
-        //
-        // Get post counts for users
-        //
-//        if (count($postsPager->getCurrentPageResults()) > 0) {
-//            $registryUserIds = array();
-//
-//            foreach ($postsPager->getCurrentPageResults() as $key => $post) {
-//                if ($post->getCreatedBy()) {
-//                    $id = $post->getCreatedBy()->getId();
-//
-//                    if (! array_key_exists($id, $registryUserIds)) {
-//                        $registryUserIds[] = $id;
-//                    }
-//                }
-//            }
-//        }
-//
-//        $registries = $this->container->get('ccdn_forum_forum.manager.registry')->getRegistriesForUsersAsArray($registryUserIds);
 
         $subscriberCount = $this->container->get('ccdn_forum_forum.repository.subscription')->getSubscriberCountForTopicById($topicId);
 
@@ -122,14 +102,9 @@ class TopicController extends BaseController
      */
     public function createAction($boardId, $draftId)
     {
-        //
-        //	Invalidate this action / redirect if user should not have access to it
-        //
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException('You do not have permission to use this resource!');
-        }
+        $this->isAuthorised('ROLE_USER');
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $board = $this->container->get('ccdn_forum_forum.repository.board')->find($boardId);
 
@@ -189,14 +164,9 @@ class TopicController extends BaseController
      */
     public function replyAction($topicId, $quoteId, $draftId)
     {
-        //
-        // 	Invalidate this action / redirect if user should not have access to it
-        //
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException('You do not have permission to use this resource!');
-        }
+        $this->isAuthorised('ROLE_USER');
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $topic = $this->container->get('ccdn_forum_forum.repository.topic')->findOneByIdJoinedToPosts($topicId);
 

@@ -38,11 +38,9 @@ class TopicModeratorController extends BaseController
      */
     public function stickyAction($topicId)
     {
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
-            throw new AccessDeniedException('You do not have access to this section.');
-        }
+        $this->isAuthorised('ROLE_MODERATOR');
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
 
@@ -65,9 +63,7 @@ class TopicModeratorController extends BaseController
      */
     public function unstickyAction($topicId)
     {
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
-            throw new AccessDeniedException('You do not have access to this section.');
-        }
+        $this->isAuthorised('ROLE_MODERATOR');
 
         $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
 
@@ -92,11 +88,9 @@ class TopicModeratorController extends BaseController
      */
     public function closeAction($topicId)
     {
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
-            throw new AccessDeniedException('You do not have access to this section.');
-        }
+        $this->isAuthorised('ROLE_MODERATOR');
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
 
@@ -119,11 +113,9 @@ class TopicModeratorController extends BaseController
      */
     public function reopenAction($topicId)
     {
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
-            throw new AccessDeniedException('You do not have access to this section.');
-        }
+        $this->isAuthorised('ROLE_MODERATOR');
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
 
@@ -146,11 +138,9 @@ class TopicModeratorController extends BaseController
      */
     public function deleteAction($topicId)
     {
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
-            throw new AccessDeniedException('You do not have permission to use this resource!');
-        }
+        $this->isAuthorised('ROLE_MODERATOR');
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
 
@@ -185,11 +175,9 @@ class TopicModeratorController extends BaseController
      */
     public function deleteConfirmedAction($topicId)
     {
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
-            throw new AccessDeniedException('You do not have permission to use this resource!');
-        }
+        $this->isAuthorised('ROLE_MODERATOR');
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->getUser();
 
         $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
 
@@ -214,9 +202,7 @@ class TopicModeratorController extends BaseController
      */
     public function restoreAction($topicId)
     {
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
-            throw new AccessDeniedException('You do not have permission to use this resource!');
-        }
+        $this->isAuthorised('ROLE_MODERATOR');
 
         $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
 
@@ -241,9 +227,7 @@ class TopicModeratorController extends BaseController
      */
     public function moveAction($topicId)
     {
-        if ( ! $this->container->get('security.context')->isGranted('ROLE_MODERATOR')) {
-            throw new AccessDeniedException('You do not have access to this section.');
-        }
+		$this->isAuthorised('ROLE_MODERATOR');
 
         $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
 
