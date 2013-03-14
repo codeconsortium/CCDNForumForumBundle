@@ -13,6 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
+use ImmersiveLabs\DefaultBundle\Event\NotifyEvent;
+use ImmersiveLabs\DefaultBundle\Event\NotifyEvents;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -159,6 +161,11 @@ class TopicController extends BaseController
 	                $this->container->get('ccdn_forum_forum.component.flood_control')->incrementCounter();
 
 					$this->container->get('session')->setFlash('success', $this->container->get('translator')->trans('ccdn_forum_forum.flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle()), 'CCDNForumForumBundle'));
+
+                    $event = new NotifyEvent(null, array(
+                        'topic_title' => $_POST['Post_Topic_title']
+                    ));
+                    $this->container->get('event_dispatcher')->dispatch(NotifyEvents::TOPIC_CREATED, $event);
 
 	                return new RedirectResponse($this->container->get('router')->generate('ccdn_forum_forum_topic_show', array('topicId' => $formHandler->getForm()->getData()->getTopic()->getId() )));
 	            }
