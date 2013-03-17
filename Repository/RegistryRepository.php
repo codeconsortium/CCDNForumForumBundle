@@ -25,65 +25,6 @@ use Doctrine\ORM\EntityRepository;
  */
 class RegistryRepository extends EntityRepository
 {
-
-    /**
-     *
-     * @access public
-     */
-    public function getTableIntegrityStatus()
-    {
-        $queryOrphanedRegistryCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT r.id) AS orphanedRegistryCount
-                FROM CCDNForum\ForumBundle\Entity\Registry r
-                WHERE r.ownedBy IS NULL
-            ');
-        $queryUnsetCachedPostCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT r.id) AS unsetCachedPostCount
-                FROM CCDNForum\ForumBundle\Entity\Registry r
-                WHERE r.cachedPostCount IS NULL
-            ');
-//        $queryUnsetCachedKarmaPositiveCount = $this->getEntityManager()
-//            ->createQuery('
-//                SELECT COUNT(DISTINCT r.id) AS unsetCachedKarmaPositiveCount
-//                FROM CCDNForum\ForumBundle\Entity\Registry r
-//                WHERE r.cachedKarmaPositiveCount IS NULL
-//            ');
-//        $queryUnsetCachedKarmaNegativeCount = $this->getEntityManager()
-//            ->createQuery('
-//                SELECT COUNT(DISTINCT r.id) AS unsetCachedKarmaNegativeCount
-//                FROM CCDNForum\ForumBundle\Entity\Registry r
-//                WHERE r.cachedKarmaNegativeCount IS NULL
-//            ');
-
-        try {
-            $result['orphanedRegistryCount'] = $queryOrphanedRegistryCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['orphanedRegistryCount'] = '?';
-        }
-
-        try {
-            $result['unsetCachedPostCount'] = $queryUnsetCachedPostCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['unsetCachedPostCount'] = '?';
-        }
-
-//        try {
-//            $result['unsetCachedKarmaPositiveCount'] = $queryUnsetCachedKarmaPositiveCount->getSingleScalarResult();
-//        } catch (\Doctrine\ORM\NoResultException $e) {
-//            $result['unsetCachedKarmaPositiveCount'] = '?';
-//        }
-//
-//        try {
-//            $result['unsetCachedKarmaNegativeCount'] = $queryUnsetCachedKarmaNegativeCount->getSingleScalarResult();
-//        } catch (\Doctrine\ORM\NoResultException $e) {
-//            $result['unsetCachedKarmaNegativeCount'] = '?';
-//        }
-
-        return $result;
-    }
-
     /**
      *
      * @access public
@@ -127,5 +68,4 @@ class RegistryRepository extends EntityRepository
             return null;
         }
     }
-
 }

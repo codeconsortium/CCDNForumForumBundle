@@ -13,51 +13,67 @@
 
 namespace CCDNForum\ForumBundle\Manager;
 
-use CCDNForum\ForumBundle\Manager\Bag\ManagerBag;
+use Symfony\Component\Security\Core\SecurityContext;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\ORM\QueryBuilder;
+
+use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
+use CCDNForum\ForumBundle\Manager\Bag\ManagerBagInterface;
+
+use CCDNForum\ForumBundle\Gateway\BaseGatewayInterface;
 
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
+ * @abstract
  */
-class BaseManager
+abstract class BaseManager implements BaseManagerInterface
 {
 	/**
 	 *
 	 * @access protected
+	 * @var \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
 	 */
     protected $doctrine;
 
 	/**
 	 *
 	 * @access protected
+	 * @var \Doctrine\ORM\EntityManager $em
 	 */
     protected $em;
 
 	/**
 	 *
 	 * @access protected
+	 * @var \Symfony\Component\Security\Core\SecurityContext $securityContext
 	 */
     protected $securityContext;
 
 	/**
 	 *
 	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $gateway
 	 */
-    protected $repository;
+    protected $gateway;
 
 	/**
 	 *
 	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Manager\Bag\ManagerBagInterface $managerBag
 	 */
     protected $managerBag;
 
 	/**
 	 *
 	 * @access public
-	 * @param $doctrine
+	 * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
+	 * @param \Symfony\Component\Security\Core\SecurityContext $securityContext
+	 * @param \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface $gateway
+	 * @param \CCDNForum\ForumBundle\Manager\Bag\ManagerBagInterface $managerBag
 	 */
-    public function __construct($doctrine, $securityContext, $repository, ManagerBag $managerBag)
+    public function __construct(Registry $doctrine, SecurityContext $securityContext, BaseGatewayInterface $gateway, ManagerBagInterface $managerBag)
     {
         $this->doctrine = $doctrine;
 
@@ -65,21 +81,59 @@ class BaseManager
 		
 		$this->securityContext = $securityContext;
 		
-		$this->repository = $repository;
+		$this->gateway = $gateway;
 		
 		$this->managerBag = $managerBag;
     }
 
-	public function getRepository()
+	/**
+	 *
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
+	 */
+	public function getGateway()
 	{
-		return $this->repository;
+		return $this->gateway;
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param Array $aliases = null
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */	
+	public function createSelectQuery(Array $aliases = null)
+	{
+		return $this->gateway->createSelectQuery($aliases);
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \Doctrine\ORM\QueryBuilder $qb
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */	
+	public function one(QueryBuilder $qb)
+	{
+		return $this->gateway->one($qb);
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \Doctrine\ORM\QueryBuilder $qb
+	 * @return \Doctrine\ORM\QueryBuilder
+	 */	
+	public function all(QueryBuilder $qb)
+	{
+		return $this->gateway->all($qb);
 	}
 	
 	/**
 	 *
 	 * @access public
 	 * @param $entity
-	 * @return self
+	 * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
 	 */
     public function persist($entity)
     {
@@ -92,7 +146,7 @@ class BaseManager
 	 *
 	 * @access public
 	 * @param $entity
-	 * @return self
+	 * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
 	 */
     public function remove($entity)
     {
@@ -104,7 +158,7 @@ class BaseManager
 	/**
 	 *
 	 * @access public
-	 * @return self
+	 * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
 	 */
     public function flush()
     {
@@ -117,7 +171,7 @@ class BaseManager
 	 *
 	 * @access public
 	 * @param $entity
-	 * @return self
+	 * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
 	 */
     public function refresh($entity)
     {
@@ -125,5 +179,44 @@ class BaseManager
 
         return $this;
     }
-
+	
+	/**
+	 *
+	 * @access public
+	 * @return int
+	 */
+	public function getTopicsPerPageOnSubscriptions()
+	{
+		return $this->managerBag->getTopicsPerPageOnSubscriptions();
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @return int
+	 */
+	public function getTopicsPerPageOnBoards()
+	{
+		return $this->managerBag->getTopicsPerPageOnBoards();
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @return int
+	 */
+	public function getPostsPerPageOnTopics()
+	{
+		return $this->managerBag->getPostsPerPageOnTopics();
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @return int
+	 */
+	public function getDraftsPerPageOnDrafts()
+	{
+		return $this->managerBag->getDraftsPerPageOnDrafts();
+	}
 }

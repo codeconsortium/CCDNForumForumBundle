@@ -14,53 +14,6 @@ use Pagerfanta\Pagerfanta;
  */
 class SubscriptionRepository extends EntityRepository
 {
-
-    /**
-     *
-     * @access public
-     */
-    public function getTableIntegrityStatus()
-    {
-        $queryOrphanedSubscriptionCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT s.id) AS orphanedSubscriptionCount
-                FROM CCDNForum\ForumBundle\Entity\Subscription s
-                WHERE s.topic IS NULL
-            ');
-        $queryNullSubscribedCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT s.id) AS nullSubscribedCount
-                FROM CCDNForum\ForumBundle\Entity\Subscription s
-                WHERE s.isSubscribed IS NULL
-            ');
-        $queryNullReadCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT s.id) AS nullReadCount
-                FROM CCDNForum\ForumBundle\Entity\Subscription s
-                WHERE s.isRead IS NULL
-            ');
-
-        try {
-            $result['orphanedSubscriptionCount'] = $queryOrphanedSubscriptionCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['orphanedSubscriptionCount'] = '?';
-        }
-
-        try {
-            $result['nullSubscribedCount'] = $queryNullSubscribedCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['nullSubscribedCount'] = '?';
-        }
-
-        try {
-            $result['nullReadCount'] = $queryNullReadCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['nullReadCount'] = '?';
-        }
-
-        return $result;
-    }
-
     /**
      *
      * @access public
@@ -68,7 +21,6 @@ class SubscriptionRepository extends EntityRepository
      */
     public function findForUserById($userId)
     {
-
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT s, t, fp, lp, b, c FROM CCDNForum\ForumBundle\Entity\Subscription s
@@ -130,7 +82,5 @@ class SubscriptionRepository extends EntityRepository
         } catch (\Doctrine\ORM\NoResultException $e) {
             return null;
         }
-
     }
-
 }

@@ -13,7 +13,10 @@
 
 namespace CCDNForum\ForumBundle\Manager;
 
-use CCDNForum\ForumBundle\Manager\ManagerInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\QueryBuilder;
+
+use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Manager\BaseManager;
 
 /**
@@ -21,7 +24,7 @@ use CCDNForum\ForumBundle\Manager\BaseManager;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class PostManager extends BaseManager implements ManagerInterface
+class PostManager extends BaseManager implements BaseManagerInterface
 {
     /**
      *

@@ -23,7 +23,6 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoryRepository extends EntityRepository
 {
-
     /**
      *
      * @access public
@@ -73,7 +72,6 @@ class CategoryRepository extends EntityRepository
      */
     public function findOneByIdJoinedToBoard($categoryId)
     {
-
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT c, b
@@ -120,7 +118,6 @@ class CategoryRepository extends EntityRepository
      */
     public function countCategories()
     {
-	
 		$categoryCountQuery = $this->getEntityManager()
 			->createQuery('
 	            SELECT COUNT(c.id)
@@ -133,5 +130,4 @@ class CategoryRepository extends EntityRepository
 			return 0;
         }
     }
-
 }

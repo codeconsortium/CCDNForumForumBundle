@@ -30,24 +30,14 @@ class BoardController extends BaseController
      * @return RedirectResponse|RenderResponse
      */
     public function showAction($boardId, $page)
-    {
-        $board = $this->container->get('ccdn_forum_forum.repository.board')->findOneByIdWithCategory($boardId);
+    {	
+		$board = $this->getBoardManager()->findOneByIdWithCategory($boardId);
+
+		$stickyTopics = $this->getTopicManager()->findAllStickiedByBoardId($boardId);
+		$topicsPager = $this->getTopicManager()->findAllPaginatedByBoardId($boardId, $page);
 
         // check board exists.
 		$this->isFound($board);
-
-        if ($this->isGranted('ROLE_MODERATOR')) {
-            $topicsPager = $this->container->get('ccdn_forum_forum.repository.topic')->findTopicsForBoardById($boardId, true);
-            $stickyTopics = $this->container->get('ccdn_forum_forum.repository.topic')->findStickyTopicsForBoardById($boardId, true);
-        } else {
-            $topicsPager = $this->container->get('ccdn_forum_forum.repository.topic')->findTopicsForBoardById($boardId, false);
-            $stickyTopics = $this->container->get('ccdn_forum_forum.repository.topic')->findStickyTopicsForBoardById($boardId, false);
-        }
-
-        // deal with pagination.
-        $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
-        $topicsPager->setMaxPerPage($topicsPerPage);
-        $topicsPager->setCurrentPage($page, false, true);
 
         // this is necessary for working out the last page for each topic.
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');

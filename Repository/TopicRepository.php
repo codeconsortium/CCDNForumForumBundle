@@ -25,107 +25,6 @@ use Pagerfanta\Pagerfanta;
  */
 class TopicRepository extends EntityRepository
 {
-
-    /**
-     *
-     * @access public
-     */
-    public function getTableIntegrityStatus()
-    {
-        $queryOrphanedTopicCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT t.id) AS orphanedTopicCount
-                FROM CCDNForum\ForumBundle\Entity\Topic t
-                WHERE t.board IS NULL
-            ');
-        $queryUnlinkedFirstPostCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT t.id) AS unlinkedFirstPostCount
-                FROM CCDNForum\ForumBundle\Entity\Topic t
-                WHERE t.firstPost IS NULL AND t.cachedReplyCount > 0
-            ');
-        $queryUnlinkedLastPostCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT t.id) AS unlinkedLastPostCount
-                FROM CCDNForum\ForumBundle\Entity\Topic t
-                WHERE t.lastPost IS NULL AND t.cachedReplyCount > 0
-            ');
-        $queryPartialClosureCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT t.id) AS partialClosureCount
-                FROM CCDNForum\ForumBundle\Entity\Topic t
-                WHERE t.isClosed IS NULL OR (t.isClosed = FALSE AND t.closedBy IS NOT NULL)
-            ');
-        $queryPartialDeletionCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT t.id) AS partialDeletionCount
-                FROM CCDNForum\ForumBundle\Entity\Topic t
-                WHERE t.isDeleted IS NULL OR (t.isDeleted = FALSE AND t.deletedBy IS NOT NULL)
-            ');
-//		$queryPartialStickyCount = $this->getEntityManager()
-//			->createQuery('
-//				SELECT COUNT(DISTINCT t.id) AS partialStickyCount
-//				FROM CCDNForumForumBundle:Topic t
-//				WHERE b.is_sticky IS NULL OR (t.is_sticky = FALSE AND t.stickied_by IS NOT NULL)
-//			');
-        $queryUnsetReplyCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT t.id) AS unsetReplyCount
-                FROM CCDNForum\ForumBundle\Entity\Topic t
-                WHERE t.cachedReplyCount IS NULL
-            ');
-        $queryUnsetViewCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT t.id) AS unsetViewCount
-                FROM CCDNForum\ForumBundle\Entity\Topic t
-                WHERE t.cachedViewCount IS NULL
-            ');
-
-        try {
-            $result['orphanedTopicCount'] = $queryOrphanedTopicCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['orphanedTopicCount'] = '?';
-        }
-
-        try {
-            $result['unlinkedFirstPostCount'] = $queryUnlinkedFirstPostCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['unlinkedFirstPostCount'] = '?';
-        }
-
-        try {
-            $result['unlinkedLastPostCount'] = $queryUnlinkedLastPostCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['unlinkedLastPostCount'] = '?';
-        }
-
-        try {
-            $result['partialClosureCount'] = $queryPartialClosureCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['partialClosureCount'] = '?';
-        }
-
-        try {
-            $result['partialDeletionCount'] = $queryPartialDeletionCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['partialDeletionCount'] = '?';
-        }
-
-        try {
-            $result['unsetReplyCount'] = $queryUnsetReplyCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['unsetReplyCount'] = '?';
-        }
-
-        try {
-            $result['unsetViewCount'] = $queryUnsetViewCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['unsetViewCount'] = '?';
-        }
-
-        return $result;
-    }
-
     /**
      *
      * @access public
@@ -331,5 +230,4 @@ class TopicRepository extends EntityRepository
             return null;
         }
     }
-
 }

@@ -13,7 +13,10 @@
 
 namespace CCDNForum\ForumBundle\Manager;
 
-use CCDNForum\ForumBundle\Manager\ManagerInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\QueryBuilder;
+
+use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Manager\BaseManager;
 
 use CCDNForum\ForumBundle\Entity\Subscription;
@@ -23,7 +26,7 @@ use CCDNForum\ForumBundle\Entity\Subscription;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class SubscriptionManager extends BaseManager implements ManagerInterface
+class SubscriptionManager extends BaseManager implements BaseManagerInterface
 {
     /**
      *
@@ -39,8 +42,6 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
             $topic = $this->managerBag->getTopicManager()->getRepository()->findOneById($topicId);
 
             if (! $topic) {
-//                $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.subscription.topic.not.found', array(), 'CCDNForumForumBundle'));
-
                 return $this;
             }
 
@@ -56,8 +57,6 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
             $subscription->setIsRead(true);
 
 	        $this->persist($subscription)->flush();
-
-//     	$this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.subscription.topic.subscribed', array('%topic_title%' => $subscription->getTopic()->getTitle()), 'CCDNForumForumBundle'));
 		}
 		
         return $this;
@@ -81,8 +80,6 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
         $subscription->setIsRead(true);
 
         $this->persist($subscription);
-
-//        $this->container->get('session')->setFlash('notice', $this->container->get('translator')->trans('ccdn_forum_forum.flash.subscription.topic.unsubscribed', array('%topic_title%' => $subscription->getTopic()->getTitle()), 'CCDNForumForumBundle'));
 
         return $this;
     }

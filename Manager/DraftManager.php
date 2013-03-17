@@ -13,7 +13,10 @@
 
 namespace CCDNForum\ForumBundle\Manager;
 
-use CCDNForum\ForumBundle\Manager\ManagerInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\QueryBuilder;
+
+use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Manager\BaseManager;
 
 use CCDNForum\ForumBundle\Entity\Topic;
@@ -25,7 +28,7 @@ use CCDNForum\ForumBundle\Entity\Draft;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class DraftManager extends BaseManager implements ManagerInterface
+class DraftManager extends BaseManager implements BaseManagerInterface
 {
     const TOPIC = 0;
     const REPLY = 1;

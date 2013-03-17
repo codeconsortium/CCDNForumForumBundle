@@ -50,43 +50,43 @@ class BaseController extends ContainerAware
 	
 	/**
 	 *
-	 * @var $categoryManager
+	 * @var \CCDNForum\ForumBundle\Manager\CategoryManager $categoryManager
 	 */
 	private $categoryManager;
 	
 	/**
 	 *
-	 * @var $boardManager
+	 * @var \CCDNForum\ForumBundle\Manager\BoardManager $boardManager
 	 */
 	private $boardManager;
 	
 	/**
 	 *
-	 * @var $topicManager
+	 * @var \CCDNForum\ForumBundle\Manager\TopicManager $topicManager
 	 */
 	private $topicManager;
 	
 	/**
 	 *
-	 * @var $postManager
+	 * @var \CCDNForum\ForumBundle\Manager\PostManager $postManager
 	 */
 	private $postManager;
 	
 	/**
 	 *
-	 * @var $draftManager
+	 * @var \CCDNForum\ForumBundle\Manager\DraftManager $draftManager
 	 */
 	private $draftManager;
 	
 	/**
 	 *
-	 * @var $registryManager
+	 * @var \CCDNForum\ForumBundle\Manager\RegistryManager $registryManager
 	 */
 	private $registryManager;
 	
 	/**
 	 *
-	 * @var $subscriptionManager
+	 * @var \CCDNForum\ForumBundle\Manager\SubscriptionManager $subscriptionManager
 	 */
 	private $subscriptionManager;
 	
@@ -264,6 +264,7 @@ class BaseController extends ContainerAware
 	/**
 	 *
 	 * @access protected
+	 * @return \CCDNForum\ForumBundle\Manager\CategoryManager
 	 */
 	protected function getCategoryManager()
 	{
@@ -277,6 +278,7 @@ class BaseController extends ContainerAware
 	/**
 	 *
 	 * @access protected
+	 * @return \CCDNForum\ForumBundle\Manager\BoardManager
 	 */
 	protected function getBoardManager()
 	{
@@ -290,6 +292,7 @@ class BaseController extends ContainerAware
 	/**
 	 *
 	 * @access protected
+	 * @return \CCDNForum\ForumBundle\Manager\TopicManager
 	 */
 	protected function getTopicManager()
 	{
@@ -303,6 +306,7 @@ class BaseController extends ContainerAware
 	/**
 	 *
 	 * @access protected
+	 * @return \CCDNForum\ForumBundle\Manager\PostManager
 	 */
 	protected function getPostManager()
 	{
@@ -316,6 +320,7 @@ class BaseController extends ContainerAware
 	/**
 	 *
 	 * @access protected
+	 * @return \CCDNForum\ForumBundle\Manager\DraftManager
 	 */
 	protected function getDraftManager()
 	{
@@ -329,6 +334,7 @@ class BaseController extends ContainerAware
 	/**
 	 *
 	 * @access protected
+	 * @return \CCDNForum\ForumBundle\Manager\RegistryManager
 	 */	
 	protected function getRegistryManager()		
 	{
@@ -342,6 +348,7 @@ class BaseController extends ContainerAware
 	/**
 	 *
 	 * @access protected
+	 * @return \CCDNForum\ForumBundle\Manager\SubscriptionManager
 	 */
 	protected function getSubscriptionManager()
 	{
@@ -360,42 +367,4 @@ class BaseController extends ContainerAware
 	{
 		return $this->container->get('ccdn_component_crumb.trail');
 	}
-	
-	/**
-	 *
-	 * @access protected
-	 * @param Array $boards
-	 * @return Array
-	 */
-    protected function filterViewableBoards($boards)
-    {
-        foreach ($boards as $boardKey => $board) {
-            if (! $board->isAuthorisedToRead($this->getSecurityContext())) {
-                unset($boards[$boardKey]);
-            }
-        }
-
-        return $boards;
-    }
-
-	/**
-	 *
-	 * @access protected
-	 * @param Array $categories
-	 * @return Array
-	 */
-    protected function filterViewableCategories($categories)
-    {
-        foreach ($categories as $categoryKey => $category) {
-            $boards = $category->getBoards();
-
-            foreach($boards as $board) {
-                if (! $board->isAuthorisedToRead($this->getSecurityContext())) {
-                    $categories[$categoryKey]->removeBoard($board);
-                }
-            }
-        }
-
-        return $categories;
-    }
 }

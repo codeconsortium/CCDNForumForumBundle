@@ -23,65 +23,6 @@ use Doctrine\ORM\EntityRepository;
  */
 class BoardRepository extends EntityRepository
 {
-
-    /**
-     *
-     * @access public
-     */
-    public function getTableIntegrityStatus()
-    {
-        $queryOrphanedBoardCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT b.id) AS orphanedBoardCount
-                FROM CCDNForum\ForumBundle\Entity\Board b
-                WHERE b.category IS NULL
-            ');
-        $queryUnlinkedLastPostCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT b.id) AS unlinkedLastPostCount
-                FROM CCDNForum\ForumBundle\Entity\Board b
-                WHERE b.lastPost IS NULL AND b.cachedTopicCount > 0
-            ');
-        $queryUnsetTopicCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT b.id) AS unsetTopicCount
-                FROM CCDNForum\ForumBundle\Entity\Board b
-                WHERE b.cachedTopicCount IS NULL
-            ');
-        $queryUnsetPostCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT b.id) AS unsetPostCount
-                FROM CCDNForum\ForumBundle\Entity\Board b
-                WHERE b.cachedPostCount IS NULL
-            ');
-
-        try {
-            $result['orphanedBoardCount'] = $queryOrphanedBoardCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['orphanedBoardCount'] = '?';
-        }
-
-        try {
-            $result['unlinkedLastPostCount'] = $queryUnlinkedLastPostCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['unlinkedLastPostCount'] = '?';
-        }
-
-        try {
-            $result['unsetTopicCount'] = $queryUnsetTopicCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['unsetTopicCount'] = '?';
-        }
-
-        try {
-            $result['unsetPostCount'] = $queryUnsetPostCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['unsetPostCount'] = '?';
-        }
-
-        return $result;
-    }
-
     /**
      *
      * @access public
@@ -161,7 +102,6 @@ class BoardRepository extends EntityRepository
      */
     public function findBoardsOrderedByPriorityInCategory($categoryId)
     {
-
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT b
@@ -225,5 +165,4 @@ class BoardRepository extends EntityRepository
 			return 0;
         }
     }
-
 }

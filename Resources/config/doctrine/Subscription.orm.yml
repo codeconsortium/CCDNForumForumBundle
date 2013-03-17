@@ -19,6 +19,7 @@ CCDNForum\ForumBundle\Entity\Subscription:
         topic:
             targetEntity: CCDNForum\ForumBundle\Entity\Topic
             cascade: ["persist"]
+            inversedBy: subscriptions
             joinColumn:
                 name: fk_topic_id
                 referencedColumnName: id

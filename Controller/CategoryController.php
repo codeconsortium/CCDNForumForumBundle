@@ -23,7 +23,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CategoryController extends BaseController
 {
-
     /**
      *
      * @access public
@@ -31,8 +30,8 @@ class CategoryController extends BaseController
      */
     public function indexAction()
     {
-        $categories = $this->filterViewableCategories($this->container->get('ccdn_forum_forum.repository.category')->findAllJoinedToBoard());
-
+		$categories = $this->getCategoryManager()->findAllWithBoards();
+			
         $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
         $crumbs = $this->getCrumbs()
@@ -53,19 +52,19 @@ class CategoryController extends BaseController
      */
     public function showAction($categoryId)
     {
-        $categories = $this->filterViewableCategories(array($this->container->get('ccdn_forum_forum.repository.category')->findOneByIdJoinedToBoard($categoryId)));
+		$category = $this->getCategoryManager()->findOneByIdWithBoards($categoryId);
 		
-		$this->isFound($categories[0]);
+		$this->isFound($category);
 
         $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
         $crumbs = $this->getCrumbs()
             ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'), "home")
-            ->add($categories[0]->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $categoryId)), "category");
+            ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $categoryId)), "category");
 
         return $this->renderResponse('CCDNForumForumBundle:Category:show.html.', array(
             'crumbs' => $crumbs,
-            'categories' => $categories,
+            'categories' => array($category),
             'topics_per_page' => $topicsPerPage,
         ));
     }

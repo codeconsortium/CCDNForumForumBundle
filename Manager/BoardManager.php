@@ -13,7 +13,10 @@
 
 namespace CCDNForum\ForumBundle\Manager;
 
-use CCDNForum\ForumBundle\Manager\ManagerInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\QueryBuilder;
+
+use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Manager\BaseManager;
 
 /**
@@ -21,8 +24,29 @@ use CCDNForum\ForumBundle\Manager\BaseManager;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class BoardManager extends BaseManager implements ManagerInterface
+class BoardManager extends BaseManager implements BaseManagerInterface
 {
+	/**
+	 *
+	 * @access public
+	 * @param int $boardId
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */	
+	public function findOneByIdWithCategory($boardId)
+	{
+		if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
+			throw new \Exception('Board id "' . $boardId . '" is invalid!');
+		}
+		
+		$qb = $this->createSelectQuery(array('b', 'c'));
+		
+		$qb
+			->innerJoin('b.category', 'c')
+			->where('b.id = :boardId');
+		
+		return $this->gateway->findBoard($qb, array(':boardId' => $boardId));
+	}
+	
     /**
      *
      * @access public
@@ -66,5 +90,22 @@ class BoardManager extends BaseManager implements ManagerInterface
         $this->flush();
 
         return $this;
+    }
+	
+	/**
+	 *
+	 * @access public
+	 * @param $boards
+	 * @return Array
+	 */
+    public function filterViewableBoards($boards)
+    {
+        foreach ($boards as $boardKey => $board) {
+            if (! $board->isAuthorisedToRead($this->securityContext)) {
+                unset($boards[$boardKey]);
+            }
+        }
+
+        return $boards;
     }
 }

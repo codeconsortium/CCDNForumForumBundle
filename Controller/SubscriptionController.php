@@ -71,6 +71,9 @@ class SubscriptionController extends BaseController
 
         $this->getSubscriptionManager()->subscribe($topicId, $user)->flush();
 
+		//$this->setFlash('notice', $this->trans('ccdn_forum_forum.flash.subscription.topic.not.found'));
+		//$this->setFlash('notice', $this->trans('ccdn_forum_forum.flash.subscription.topic.subscribed', array('%topic_title%' => $subscription->getTopic()->getTitle())));
+		
         return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topicId)) );
     }
 
@@ -88,6 +91,9 @@ class SubscriptionController extends BaseController
 
         $this->getSubscriptionManager()->unsubscribe($topicId, $user)->flush();
 
+		//$this->setFlash('notice', $this->trans('ccdn_forum_forum.flash.subscription.topic.not.found'));
+		//$this->setFlash('notice', $this->trans('ccdn_forum_forum.flash.subscription.topic.unsubscribed', array('%topic_title%' => $subscription->getTopic()->getTitle())));
+		
         return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topicId)) );
     }
 }

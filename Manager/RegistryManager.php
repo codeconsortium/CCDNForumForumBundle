@@ -13,7 +13,10 @@
 
 namespace CCDNForum\ForumBundle\Manager;
 
-use CCDNForum\ForumBundle\Manager\ManagerInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\QueryBuilder;
+
+use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Manager\BaseManager;
 
 use CCDNForum\ForumBundle\Entity\Registry;
@@ -23,7 +26,7 @@ use CCDNForum\ForumBundle\Entity\Registry;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class RegistryManager extends BaseManager implements ManagerInterface
+class RegistryManager extends BaseManager implements BaseManagerInterface
 {
     /**
      *
@@ -34,7 +37,7 @@ class RegistryManager extends BaseManager implements ManagerInterface
     public function updateCachePostCountForUser($user)
     {
 
-        $record = $this->repository->findRegistryRecordForUser($user->getId());
+        $record = $this->gateway->getRepository()->findRegistryRecordForUser($user->getId());
 
         if (! $record) {
             $record = new Registry();
@@ -76,7 +79,7 @@ class RegistryManager extends BaseManager implements ManagerInterface
     public function getRegistriesForUsersAsArray($registryUserIds = array())
     {
 
-        $registriesTemp = $this->repository->getPostCountsForUsers($registryUserIds);
+        $registriesTemp = $this->gateway->getRepository()->getPostCountsForUsers($registryUserIds);
 
         //
         // Sort the registries so that the [id] is the key of the parent key.

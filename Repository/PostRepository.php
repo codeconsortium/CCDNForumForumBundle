@@ -25,53 +25,6 @@ use Pagerfanta\Pagerfanta;
  */
 class PostRepository extends EntityRepository
 {
-
-    /**
-     *
-     * @access public
-     */
-    public function getTableIntegrityStatus()
-    {
-        $queryOrphanedPostCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT p.id) AS orphanedPostCount
-                FROM CCDNForum\ForumBundle\Entity\Post p
-                WHERE p.topic IS NULL
-            ');
-        $queryPartialLockCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT p.id) AS partialLockCount
-                FROM CCDNForum\ForumBundle\Entity\Post p
-                WHERE p.isLocked IS NULL OR (p.isLocked = FALSE AND p.lockedBy IS NOT NULL)
-            ');
-        $queryPartialDeletionCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT p.id) AS partialDeletionCount
-                FROM CCDNForum\ForumBundle\Entity\Post p
-                WHERE p.isDeleted IS NULL OR (p.isDeleted = FALSE AND p.deletedBy IS NOT NULL)
-            ');
-
-        try {
-            $result['orphanedPostCount'] = $queryOrphanedPostCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['orphanedPostCount'] = '?';
-        }
-
-        try {
-            $result['partialLockCount'] = $queryPartialLockCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['partialLockCount'] = '?';
-        }
-
-        try {
-            $result['partialDeletionCount'] = $queryPartialDeletionCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['partialDeletionCount'] = '?';
-        }
-
-        return $result;
-    }
-
     /**
      *
      * @access public
@@ -79,7 +32,6 @@ class PostRepository extends EntityRepository
      */
     public function findPostsForTopicByIdPaginated($topicId)
     {
-
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT p, t FROM CCDNForum\ForumBundle\Entity\Post p
@@ -113,13 +65,11 @@ class PostRepository extends EntityRepository
      * just the one, as one would be needed to check if it was
      * the first post after retrieval, which is a waste.
      *
-     *
      * @access public
      * @param int $postId
      */
     public function findPostForEditing($postId)
     {
-
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT p, t, fp
@@ -144,7 +94,6 @@ class PostRepository extends EntityRepository
      */
     public function findDeletedPostsForAdminsPaginated()
     {
-
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT p, t
@@ -167,7 +116,6 @@ class PostRepository extends EntityRepository
      */
     public function findLockedPostsForModeratorsPaginated()
     {
-
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT p, t
@@ -186,7 +134,6 @@ class PostRepository extends EntityRepository
     /**
      *
      * for moderator
-     *
      *
      * @access public
      */
@@ -213,7 +160,6 @@ class PostRepository extends EntityRepository
      */
     public function getPostCountForUserById($userId)
     {
-
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(p.id) AS postCount
@@ -237,7 +183,6 @@ class PostRepository extends EntityRepository
      */
     public function getPostCountForTopicById($topicId)
     {
-
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $query = $qb
@@ -253,5 +198,4 @@ class PostRepository extends EntityRepository
             return null;
         }
     }
-
 }

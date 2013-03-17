@@ -14,29 +14,6 @@ use Pagerfanta\Pagerfanta;
  */
 class DraftRepository extends EntityRepository
 {
-
-    /**
-     *
-     * @access public
-     */
-    public function getTableIntegrityStatus()
-    {
-        $queryOrphanedDraftCount = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(DISTINCT d.id) AS orphanedDraftCount
-                FROM CCDNForum\ForumBundle\Entity\Draft d
-                WHERE d.createdBy IS NULL
-            ');
-
-        try {
-            $result['orphanedDraftCount'] = $queryOrphanedDraftCount->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            $result['orphanedDraftCount'] = '?';
-        }
-
-        return $result;
-    }
-
     /**
      *
      * @access public
@@ -45,7 +22,6 @@ class DraftRepository extends EntityRepository
      */
     public function findDraftsPaginated($userId)
     {
-
         $draftsQuery = $this->getEntityManager()
             ->createQuery('
                 SELECT d
@@ -70,7 +46,6 @@ class DraftRepository extends EntityRepository
      */
     public function findOneByIdForUserById($draftId, $userId)
     {
-
         $query = $this->getEntityManager()
             ->createQuery('
                 SELECT d
@@ -84,5 +59,4 @@ class DraftRepository extends EntityRepository
             return null;
         }
     }
-
 }

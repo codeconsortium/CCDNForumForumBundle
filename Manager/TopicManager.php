@@ -13,7 +13,10 @@
 
 namespace CCDNForum\ForumBundle\Manager;
 
-use CCDNForum\ForumBundle\Manager\ManagerInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\QueryBuilder;
+
+use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Manager\BaseManager;
 
 /**
@@ -21,8 +24,111 @@ use CCDNForum\ForumBundle\Manager\BaseManager;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class TopicManager extends BaseManager implements ManagerInterface
+class TopicManager extends BaseManager implements BaseManagerInterface
 {
+	/**
+	 *
+	 * @access protected
+	 * @var string $roleToViewDeletedTopics
+	 */	
+	protected $roleToViewDeletedTopics = 'ROLE_MODERATOR';
+	
+	/**
+	 *
+	 * @access public
+	 * @return bool
+	 */	
+	public function allowedToViewDeletedTopics()
+	{
+		return $this->securityContext->isGranted($this->roleToViewDeletedTopics);
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param int $boardId
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */	
+	public function findAllStickiedByBoardId($boardId)
+	{
+		if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
+			throw new \Exception('Board id "' . $boardId . '" is invalid!');
+		}
+		
+		$params = array(':boardId' => $boardId, ':isSticky' => true);
+		
+		$qb = $this->createSelectQuery(array('t', 'lp', 'lp_author'));
+		
+		$qb
+			->innerJoin('t.firstPost', 'fp')
+			->innerJoin('t.lastPost', 'lp')
+			->innerJoin('fp.createdBy', 'fp_author')
+			->innerJoin('lp.createdBy', 'lp_author')
+			->where(
+				$this->limitQueryByStickiedAndDeletedState($qb)
+			)
+			->orderBy('lp.createdDate', 'DESC');
+		
+		return $this->gateway->findTopics($qb, $params);
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param int $boardId
+	 * @param int $page
+	 * @return \Pagerfanta\Pagerfanta
+	 */	
+	public function findAllPaginatedByBoardId($boardId, $page)
+	{
+		if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
+			throw new \Exception('Board id "' . $boardId . '" is invalid!');
+		}
+		
+		$params = array(':boardId' => $boardId, ':isSticky' => false);
+		
+		$qb = $this->createSelectQuery(array('t', 'lp', 'lp_author'));
+		
+		$qb
+			->innerJoin('t.firstPost', 'fp')
+			->innerJoin('t.lastPost', 'lp')
+			->innerJoin('fp.createdBy', 'fp_author')
+			->innerJoin('lp.createdBy', 'lp_author')
+			->where(
+				$this->limitQueryByStickiedAndDeletedState($qb)
+			)
+			->setParameters($params)
+			->orderBy('lp.createdDate', 'DESC');
+
+		return $this->gateway->paginateQuery($qb, $this->getTopicsPerPageOnBoards(), $page);
+	}
+	
+	/**
+	 *
+	 * @access protected
+	 * @param \Doctrine\ORM\QueryBuilder $qb
+	 * @return \Doctrine\ORM\QueryBuilder
+	 */
+	protected function limitQueryByStickiedAndDeletedState(QueryBuilder $qb)
+	{
+		if ($this->allowedToViewDeletedTopics()) {
+			$expr = $qb->expr()->andX(
+				$qb->expr()->eq('t.board', ':boardId'),
+				$qb->expr()->eq('t.isSticky', ':isSticky')
+			);
+		} else {
+			$expr = $qb->expr()->andX(
+				$qb->expr()->eq('t.board', ':boardId'),
+				$qb->expr()->andX(
+					$qb->expr()->eq('t.isSticky', ':isSticky'),
+					$qb->expr()->eq('t.isDeleted', false)
+				)
+			);
+		}
+		
+		return $expr;
+	}
+	
     /**
      *
      * @access public
