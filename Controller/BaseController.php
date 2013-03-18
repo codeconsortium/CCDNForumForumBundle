@@ -233,10 +233,19 @@ class BaseController extends ContainerAware
 	/** 
 	 * 
 	 * @access protected
-	 * @throws Symfony\Component\Security\Core\Exception\AccessDeniedException
+	 * @param string $role|boolean $role
+	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
 	 */
 	protected function isAuthorised($role)
 	{
+		if (is_bool($role)) {
+			if ($role == false) {
+				throw new AccessDeniedException('You do not have permission to use this resource.');
+			}
+			
+			return true;
+		}
+		
 		if (! $this->isGranted($role)) {
 			throw new AccessDeniedException('You do not have permission to use this resource.');
 		}

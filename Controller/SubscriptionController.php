@@ -34,14 +34,8 @@ class SubscriptionController extends BaseController
     {
         $this->isAuthorised('ROLE_USER');
 
-        $user = $this->getUser();
-
-        $subscriptions = $this->container->get('ccdn_forum_forum.repository.subscription')->findForUserById($user->getId());
-
-        // deal with pagination.
-        $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.subscription.list.topics_per_page');
-        $subscriptions->setMaxPerPage($topicsPerPage);
-        $subscriptions->setCurrentPage($page, false, true);
+		$subscriptionPager = $this->getSubscriptionManager()->findAllPaginated($page);
+		$this->isFound($subscriptionPager->getCurrentPageResults());
 
         // this is necessary for working out the last page for each topic.
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
@@ -52,7 +46,7 @@ class SubscriptionController extends BaseController
 
         return $this->renderResponse('CCDNForumForumBundle:Subscription:list.html.', array(
             'crumbs' => $crumbs,
-            'pager' => $subscriptions,
+            'pager' => $subscriptionPager,
             'posts_per_page' => $postsPerPage,
         ));
     }
@@ -67,12 +61,12 @@ class SubscriptionController extends BaseController
     {
 		$this->isAuthorised('ROLE_USER');
 
-        $user = $this->getUser();
+		$topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
+		$this->isFound($topic);
+		
+        $this->getSubscriptionManager()->subscribe($topic)->flush();
 
-        $this->getSubscriptionManager()->subscribe($topicId, $user)->flush();
-
-		//$this->setFlash('notice', $this->trans('ccdn_forum_forum.flash.subscription.topic.not.found'));
-		//$this->setFlash('notice', $this->trans('ccdn_forum_forum.flash.subscription.topic.subscribed', array('%topic_title%' => $subscription->getTopic()->getTitle())));
+		$this->setFlash('notice', $this->trans('ccdn_forum_forum.flash.subscription.topic.subscribed', array('%topic_title%' => $topic->getTitle() )));
 		
         return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topicId)) );
     }
@@ -87,12 +81,12 @@ class SubscriptionController extends BaseController
     {
         $this->isAuthorised('ROLE_USER');
 
-        $user = $this->getUser();
+		$topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
+		$this->isFound($topic);
+		
+        $this->getSubscriptionManager()->unsubscribe($topic)->flush();
 
-        $this->getSubscriptionManager()->unsubscribe($topicId, $user)->flush();
-
-		//$this->setFlash('notice', $this->trans('ccdn_forum_forum.flash.subscription.topic.not.found'));
-		//$this->setFlash('notice', $this->trans('ccdn_forum_forum.flash.subscription.topic.unsubscribed', array('%topic_title%' => $subscription->getTopic()->getTitle())));
+		$this->setFlash('notice', $this->trans('ccdn_forum_forum.flash.subscription.topic.unsubscribed', array('%topic_title%' => $topic->getTitle() )));
 		
         return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topicId)) );
     }

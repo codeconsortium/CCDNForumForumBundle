@@ -37,7 +37,7 @@ class DraftManager extends BaseManager implements BaseManagerInterface
      *
      * @access public
      * @param int $draftId
-     * @return null|Post|array
+     * @return \CCDNForum\ForumBundle\Entity\Post|null|array
      */
     public function getDraft($draftId)
     {
@@ -97,8 +97,8 @@ class DraftManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param $post
-     * @return self
+     * @param \CCDNForum\ForumBundle\Entity\Post $post
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function create($post)
     {
@@ -140,8 +140,8 @@ class DraftManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param Draft $draft
-     * @return self
+     * @param \CCDNForum\ForumBundle\Entity\Draft $draft
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function update($draft)
     {

@@ -28,7 +28,7 @@ use CCDNForum\ForumBundle\Entity\Draft;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class TopicController extends BaseController
+class TopicController extends TopicBaseController
 {
     /**
      *
@@ -38,36 +38,20 @@ class TopicController extends BaseController
      */
     public function showAction($topicId, $page)
     {
-        $user = $this->getUser();
+		// Get topic.
+		$topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
+		$this->isFound($topic);
 
-        $topic = $this->container->get('ccdn_forum_forum.repository.topic')->findByIdWithBoardAndCategory($topicId);
+		// Get posts for topic paginated.
+		$postsPager = $this->getPostManager()->findAllPaginatedByTopicId($topicId, $page);
+		$this->isFound($postsPager->getCurrentPageResults());
 
-        $postsPager = $this->container->get('ccdn_forum_forum.repository.post')->findPostsForTopicByIdPaginated($topicId);
+        // get the topic subscriptions.
+		$subscription = $this->getSubscriptionManager()->findSubscriptionForTopicById($topicId);		
+        $subscriberCount = $this->getSubscriptionManager()->countSubscriptionsForTopicById($topicId);
 
-        $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
-        $postsPager->setMaxPerPage($postsPerPage);
-        $postsPager->setCurrentPage($page, false, true);
-
-        if ( ! $topic || ! $postsPager->getCurrentPageResults()) {
-            throw new NotFoundHttpException('No such topic exists!');
-        }
-
-        // if this topics first post is deleted, and no other posts exist then throw an NotFoundHttpException!
-        if ($topic->getIsDeleted() && ! $this->isGranted('ROLE_MODERATOR')) {
-            throw new NotFoundHttpException('No such topic exists!');
-        }
-
-        // update the view counter because you viewed the topic
+		// Incremenet view counter.
         $this->getTopicManager()->incrementViewCounter($topic);
-
-        // get the topic subscriptions
-        if ($this->isGranted('ROLE_USER')) {
-            $subscription = $this->container->get('ccdn_forum_forum.repository.subscription')->findTopicSubscriptionByTopicAndUserId($topicId, $user->getId());
-        } else {
-            $subscription = null;
-        }
-
-        $subscriberCount = $this->container->get('ccdn_forum_forum.repository.subscription')->getSubscriberCountForTopicById($topicId);
 
         // setup crumb trail.
         $board = $topic->getBoard();
@@ -80,7 +64,6 @@ class TopicController extends BaseController
             ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication");
 
         return $this->renderResponse('CCDNForumForumBundle:Topic:show.html.', array(
-            'user'	=> $user,
             'crumbs' => $crumbs,
             'pager' => $postsPager,
             'board' => $board,
@@ -103,13 +86,10 @@ class TopicController extends BaseController
 
         $user = $this->getUser();
 
-        $board = $this->container->get('ccdn_forum_forum.repository.board')->find($boardId);
-
+        //$board = $this->container->get('ccdn_forum_forum.repository.board')->find($boardId);
+		$board = $this->getBoardManager()->findOneByIdWithCategory($boardId);
         $this->isFound($board);
-
-        if (! $board->isAuthorisedToCreateTopic($this->getSecurityContext())) {
-            throw new AccessDeniedException('You do not have permission to use this resource.');
-        }
+		$this->isAuthorisedToCreateTopic($board);
 
         // Set the form handler options
         $options = array('board' => $board, 'user' => $user);
@@ -141,7 +121,6 @@ class TopicController extends BaseController
             ->add($this->trans('ccdn_forum_forum.crumbs.topic.create'), $this->path('ccdn_forum_forum_topic_create', array('boardId' => $board->getId())), "edit");
 
         return $this->renderResponse('CCDNForumForumBundle:Topic:create.html.', array(
-            'user' => $user,
             'crumbs' => $crumbs,
             'board' => $board,
             'preview' => $formHandler->getForm()->getData(),
@@ -161,17 +140,9 @@ class TopicController extends BaseController
 
         $user = $this->getUser();
 
-        $topic = $this->container->get('ccdn_forum_forum.repository.topic')->findOneByIdJoinedToPosts($topicId);
-
+		$topic = $this->getTopicManager()->findOneByIdWithPostsByTopicId($topicId);
         $this->isFound($topic);
-
-        if (! $topic->getBoard()->isAuthorisedToTopicReply($this->getSecurityContext())) {
-            throw new AccessDeniedException('You do not have permission to use this resource.');
-        }
-
-        if ($topic->getIsClosed() && ! $this->isGranted('ROLE_MODERATOR')) {
-            throw new AccessDeniedException('This topic has been closed!');
-        }
+		$this->isAuthorisedToReplyToTopic($topic);
 
         // Set the form handler options
         if ( ! empty($quoteId)) {
@@ -216,7 +187,6 @@ class TopicController extends BaseController
             ->add($this->trans('ccdn_forum_forum.crumbs.topic.reply'), $this->path('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())), "edit");
 
         return $this->renderResponse('CCDNForumForumBundle:Topic:reply.html.', array(
-            'user' => $user,
             'crumbs' => $crumbs,
             'topic' => $topic,
             //'preview' => $formHandler->getForm()->getData(),

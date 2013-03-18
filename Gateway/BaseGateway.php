@@ -109,7 +109,11 @@ abstract class BaseGateway implements BaseGatewayInterface
 			$qb->setParameters($parameters);
 		}
 		
-		return $qb->getQuery()->getSingleResult();
+		try {
+			return $qb->getQuery()->getSingleResult();
+		} catch (\Doctrine\ORM\NoResultException $e) {
+			return null;
+		}
 	}
 	
 	/**
@@ -125,7 +129,11 @@ abstract class BaseGateway implements BaseGatewayInterface
 			$qb->setParameters($parameters);
 		}
 		
-		return $qb->getQuery()->getResult();
+		try {
+			return $qb->getQuery()->getResult();
+		} catch (\Doctrine\ORM\NoResultException $e) {
+			return null;
+		}
 	}
 	
 	/**

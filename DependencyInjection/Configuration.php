@@ -27,7 +27,6 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
  */
 class Configuration implements ConfigurationInterface
 {
-
     /**
      * {@inheritDoc}
      */
@@ -117,6 +116,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->canBeUnset()
                     ->children()
+						->scalarNode('enable_bb_parser')->defaultValue(true)->end()
                         ->scalarNode('last_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
                         ->arrayNode('index')
                             ->addDefaultsIfNotSet()
@@ -412,5 +412,4 @@ class Configuration implements ConfigurationInterface
                 ->end()
             ->end();
     }
-
 }

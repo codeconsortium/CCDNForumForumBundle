@@ -86,6 +86,16 @@ abstract class BaseManager implements BaseManagerInterface
 		$this->managerBag = $managerBag;
     }
 
+	protected function isGranted($role)
+	{
+		return $this->securityContext->isGranted($role);
+	}
+	
+	protected function getUser()
+	{
+		return $this->securityContext->getToken()->getUser();
+	}
+
 	/**
 	 *
 	 * @access public
@@ -95,7 +105,29 @@ abstract class BaseManager implements BaseManagerInterface
 	{
 		return $this->gateway;
 	}
+
+	/**
+	 *
+	 * @access public
+	 * @return \Doctrine\ORM\QueryBuilder
+	 */	
+	public function getQueryBuilder()
+	{
+		return $this->gateway->getQueryBuilder();
+	}
 	
+	/**
+	 *
+	 * @access public
+	 * @param string $column = null
+	 * @param Array $aliases = null
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */	
+	public function createCountQuery($column = null, Array $aliases = null)
+	{
+		return $this->gateway->createCountQuery($column, $aliases);
+	}
+		
 	/**
 	 *
 	 * @access public

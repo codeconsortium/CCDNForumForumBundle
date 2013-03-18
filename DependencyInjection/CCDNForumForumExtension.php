@@ -29,7 +29,6 @@ use Symfony\Component\Config\FileLocator;
  */
 class CCDNForumForumExtension extends Extension
 {
-
     /**
      * {@inheritDoc}
      */
@@ -99,7 +98,7 @@ class CCDNForumForumExtension extends Extension
     private function getCategorySection($container, $config)
     {
         $container->setParameter('ccdn_forum_forum.category.last_post_datetime_format', $config['category']['last_post_datetime_format']);
-//		$container->setParameter('ccdn_forum_forum.category.enable_bb_parser', $config['category']['enable_bb_parser']);
+		$container->setParameter('ccdn_forum_forum.category.enable_bb_parser', $config['category']['enable_bb_parser']);
         $container->setParameter('ccdn_forum_forum.category.index.layout_template', $config['category']['index']['layout_template']);
         $container->setParameter('ccdn_forum_forum.category.show.layout_template', $config['category']['show']['layout_template']);
     }
@@ -241,5 +240,4 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.transcript.post_creation_datetime_format', $config['transcript']['post_creation_datetime_format']);
         $container->setParameter('ccdn_forum_forum.transcript.post_deleted_datetime_format', $config['transcript']['post_deleted_datetime_format']);
     }
-
 }

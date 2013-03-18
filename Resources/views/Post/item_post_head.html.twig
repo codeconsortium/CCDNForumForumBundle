@@ -77,7 +77,7 @@
 								</li>
 
 		                        {%- if post.getCreatedBy -%}
-		                            {%- if post.getCreatedBy.getId == user.getId and not is_granted('ROLE_MODERATOR') -%}
+		                            {%- if post.getCreatedBy.getId == app.user.getId and not is_granted('ROLE_MODERATOR') -%}
 		                                <li>
 											<a rel="nofollow" href="{{- path('ccdn_forum_forum_post_edit', {'postId': post.getId }) -}}">
 												<i class="icon-pencil"></i>

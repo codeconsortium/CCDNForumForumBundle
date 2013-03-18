@@ -32,11 +32,10 @@ class RegistryManager extends BaseManager implements BaseManagerInterface
      *
      * @access public
      * @param $user
-     * @return self
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function updateCachePostCountForUser($user)
     {
-
         $record = $this->gateway->getRepository()->findRegistryRecordForUser($user->getId());
 
         if (! $record) {
@@ -60,8 +59,8 @@ class RegistryManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param array $users
-     * @return self
+     * @param Array $users
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function bulkUpdateCachePostCountForUser($users)
     {
@@ -73,8 +72,8 @@ class RegistryManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param array $registryUserIds
-     * @return self
+     * @param Array $registryUserIds
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function getRegistriesForUsersAsArray($registryUserIds = array())
     {

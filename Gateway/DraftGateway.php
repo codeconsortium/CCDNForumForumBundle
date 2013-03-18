@@ -41,6 +41,16 @@ class DraftGateway extends BaseGateway implements BaseGatewayInterface
 	 * @var string $queryAlias
 	 */
 	private $queryAlias = 'd';
+
+	/**
+	 *
+	 * @access public
+	 * @return string
+	 */
+	public function getEntityClass()
+	{
+		return $this->entityClass;
+	}
 	
 	/**
 	 *
@@ -72,6 +82,56 @@ class DraftGateway extends BaseGateway implements BaseGatewayInterface
 		}
 		
 		return $this->all($qb, $parameters);
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \Doctrine\ORM\QueryBuilder $qb
+	 * @param Array $parameters
+	 * @return int
+	 */
+	public function countDrafts(QueryBuilder $qb = null, $parameters = null)
+	{
+		if (null == $qb) {
+			$qb = $this->createCountQuery();
+		}
+		
+		if (null == $parameters) {
+			$parameters = array();
+		}
+		
+		$qb->setParameters($parameters);
+
+		try {
+			return $qb->getQuery()->getSingleScalarResult();
+		} catch (\Doctrine\ORM\NoResultException $e) {
+			return 0;
+		}
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param string $column = null
+	 * @param Array $aliases = null
+	 * @return \Doctrine\ORM\QueryBuilder
+	 */	
+	public function createCountQuery($column = null, Array $aliases = null)
+	{
+		if (null == $column) {
+			$column = 'count(' . $this->queryAlias . '.id)';
+		}
+		
+		if (null == $aliases || ! is_array($aliases)) {
+			$aliases = array($column);
+		}
+		
+		if (! in_array($column, $aliases)) {
+			$aliases = array($column) + $aliases;
+		}
+
+		return $this->getQueryBuilder()->select($aliases)->from($this->entityClass, $this->queryAlias);
 	}
 	
 	/**

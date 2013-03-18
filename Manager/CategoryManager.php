@@ -46,7 +46,7 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
 	 *
 	 * @access public
 	 * @param int $categoryId
-	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 * @return \CCDNForum\ForumBundle\Entity\Category
 	 */	
 	public function findOneByIdWithBoards($categoryId)
 	{
@@ -74,10 +74,10 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
 	protected function joinToQueryBoardsAndLastPost(QueryBuilder $qb)
 	{
 		$qb
-			->join('c.boards', 'b')
-			->innerJoin('b.lastPost', 'lp')
-			->innerJoin('lp.topic', 't')
-			->innerJoin('lp.createdBy', 'lp_author');
+			->leftjoin('c.boards', 'b')
+			->leftJoin('b.lastPost', 'lp')
+			->leftJoin('lp.topic', 't')
+			->leftJoin('lp.createdBy', 'lp_author');
 			
 		return $qb;
 	}
@@ -85,7 +85,7 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
 	/**
 	 *
 	 * @access public
-	 * @param $categories
+	 * @param Array $categories
 	 * @return Array
 	 */
     public function filterViewableCategoriesAndBoards($categories)

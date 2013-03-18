@@ -22,7 +22,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class CCDNForumForumBundle extends Bundle
 {
-
 	public function boot()
 	{
 		$twig = $this->container->get('twig');	
@@ -31,6 +30,7 @@ class CCDNForumForumBundle extends Bundle
 				'title_length' => $this->container->getParameter('ccdn_forum_forum.seo.title_length'),
 			),
 			'category' => array(
+				'enable_bb_parser' => $this->container->getParameter('ccdn_forum_forum.category.enable_bb_parser'),
 				'last_post_datetime_format' => $this->container->getParameter('ccdn_forum_forum.category.last_post_datetime_format'),
 				'index' => array(
 					'layout_template' => $this->container->getParameter('ccdn_forum_forum.category.index.layout_template'),
@@ -45,6 +45,7 @@ class CCDNForumForumBundle extends Bundle
 					'topic_title_truncate' => $this->container->getParameter('ccdn_forum_forum.board.show.topic_title_truncate'),
 					'first_post_datetime_format' => $this->container->getParameter('ccdn_forum_forum.board.show.first_post_datetime_format'),
 					'last_post_datetime_format' => $this->container->getParameter('ccdn_forum_forum.board.show.last_post_datetime_format'),
+					'topics_per_page' => $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page'),
 				),
 			),
 			'item_board' => array(
@@ -56,6 +57,7 @@ class CCDNForumForumBundle extends Bundle
 					'layout_template' => $this->container->getParameter('ccdn_forum_forum.topic.show.layout_template'),
 					'topic_closed_datetime_format' => $this->container->getParameter('ccdn_forum_forum.topic.show.topic_closed_datetime_format'),
 					'topic_deleted_datetime_format' => $this->container->getParameter('ccdn_forum_forum.topic.show.topic_deleted_datetime_format'),
+					'posts_per_page' => $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page'),
 				),
 				'create' => array(
 					'layout_template' => $this->container->getParameter('ccdn_forum_forum.topic.create.layout_template'),
@@ -108,15 +110,15 @@ class CCDNForumForumBundle extends Bundle
 					'layout_template' => $this->container->getParameter('ccdn_forum_forum.draft.list.layout_template'),
 					'topic_title_truncate' => $this->container->getParameter('ccdn_forum_forum.draft.list.topic_title_truncate'),
 					'creation_datetime_format' => $this->container->getParameter('ccdn_forum_forum.draft.list.creation_datetime_format'),
+					'drafts_per_page' => $this->container->getParameter('ccdn_forum_forum.draft.list.drafts_per_page'),
 				),
 			),
 			'subscription' => array(
 				'list' => array(
 					'layout_template' => $this->container->getParameter('ccdn_forum_forum.subscription.list.layout_template'),
+					'topics_per_page' => $this->container->getParameter('ccdn_forum_forum.subscription.list.topics_per_page'),
 				),
 			),
 		));
-
 	}
-
 }

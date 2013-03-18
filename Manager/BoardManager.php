@@ -29,8 +29,23 @@ class BoardManager extends BaseManager implements BaseManagerInterface
 	/**
 	 *
 	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Board $board
+	 * @return bool
+	 */
+	public function isAuthorisedToCreateTopic($board)
+	{
+        if (! $board->isAuthorisedToCreateTopic($this->securityContext)) {
+        	return false;
+		}
+        
+		return true;
+	}
+	
+	/**
+	 *
+	 * @access public
 	 * @param int $boardId
-	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 * @return \CCDNForum\ForumBundle\Entity\Board
 	 */	
 	public function findOneByIdWithCategory($boardId)
 	{
@@ -41,36 +56,71 @@ class BoardManager extends BaseManager implements BaseManagerInterface
 		$qb = $this->createSelectQuery(array('b', 'c'));
 		
 		$qb
-			->innerJoin('b.category', 'c')
+			->leftJoin('b.category', 'c')
 			->where('b.id = :boardId');
 		
 		return $this->gateway->findBoard($qb, array(':boardId' => $boardId));
 	}
 	
+	/**
+	 *
+	 * @access public
+	 * @param int $boardId
+	 * @return Array
+	 */	
+	public function getTopicAndPostCountForBoardById($boardId)
+	{
+		if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
+			throw new \Exception('Board id "' . $boardId . '" is invalid!');
+		}
+		
+		$qb = $this->getQueryBuilder();
+
+		$topicEntityClass = $this->managerBag->getTopicManager()->getGateway()->getEntityClass();
+			
+		$qb
+			->select('COUNT(DISTINCT t.id) AS topicCount, COUNT(DISTINCT p.id) AS postCount')
+			->from($topicEntityClass, 't')
+			->leftJoin('t.posts', 'p')
+			->where('t.board = :boardId')
+			->andWhere('t.isDeleted = FALSE')
+			->andWhere('p.isDeleted = FALSE')
+			->setParameter(':boardId', $boardId)
+			->groupBy('t.board');
+		
+		try {
+			return $qb->getQuery()->getSingleResult();			
+		} catch (\Doctrine\ORM\NoResultException $e) {
+			return array('topicCount' => null, 'postCount' => null);
+		} catch (\Exception $e) {
+			return array('topicCount' => null, 'postCount' => null);			
+		}
+	}
+	
     /**
      *
      * @access public
-     * @param Board $board
-     * @return self
+     * @param \CCDNForum\ForumBundle\Entity\Board $board
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function updateStats($board)
     {
-        $counters = $this->repository->getTopicAndPostCountsForBoard($board->getId());
-
+		$stats = $this->getTopicAndPostCountForBoardById($board->getId());
+		
         // set the board topic / post count
-        $board->setCachedTopicCount($counters['topicCount']);
-        $board->setCachedPostCount($counters['postCount']);
-
-        $last_topic = $this->repository->findLastTopicForBoard($board->getId());
-
+        $board->setCachedTopicCount($stats['topicCount']);
+        $board->setCachedPostCount($stats['postCount']);
+        
+        $lastTopic = $this->managerBag->getTopicManager()->findLastTopicForBoardByIdWithLastPost($board->getId());
+        
         // set last_post for board
-        if ($last_topic) {
-            $board->setLastPost( (($last_topic->getLastPost()) ? $last_topic->getLastPost() : null) );
+        if ($lastTopic) {
+            $board->setLastPost($lastTopic->getLastPost() ?: null);
         } else {
             $board->setLastPost(null);
         }
-
-        $this->persist($board);
+        
+        $this->persist($board)->flush();
 
         return $this;
     }
@@ -78,8 +128,8 @@ class BoardManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param $boards
-     * @return self
+     * @param Array $boards
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function bulkUpdateStats($boards)
     {
