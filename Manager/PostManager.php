@@ -288,7 +288,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Post $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function create($post)
+    public function postTopicReply($post)
     {
         // insert a new row
         $this->persist($post)->flush();

@@ -78,37 +78,30 @@ class PostController extends PostBaseController
         $this->isFound($post);
 		$this->isAuthorisedToEditPost($post);
 
+		// If post is the very first post of the topic then use a topic handler so user can change topic title.
         if ($post->getTopic()->getFirstPost()->getId() == $post->getId()) {
-			// if post is the very first post of the topic then use a topic handler so user can change topic title
-            $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_update')->setDefaultValues(array('post' => $post, 'user' => $user));
-
-            if ($this->isGranted('ROLE_MODERATOR')) {
-                $formHandler->setDefaultValues(array('board' => $post->getTopic()->getBoard()));
-            }
+			$formHandler = $this->getFormHandlerToEditTopic($post);
         } else {
-            $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_update')->setDefaultValues(array('post' => $post, 'user' => $user));
+			$formHandler = $this->getFormHandlerToEditPost($post);
         }
 
-        if (isset($_POST['submit_post'])) {
-            if ($formHandler->process()) {	// get posts for determining the page of the edited post
-                $topic = $post->getTopic();
+        if ($formHandler->process($this->getRequest())) {	// get posts for determining the page of the edited post
+            $topic = $post->getTopic();
 
-                foreach ($topic->getPosts() as $index => $postTest) {
-                    if ($post->getId() == $postTest->getId()) {
-                        $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
-                        $page = ceil($index / $postsPerPage);
-                        break;
-                    }
+            foreach ($topic->getPosts() as $index => $postTest) {
+                if ($post->getId() == $postTest->getId()) {
+                    $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
+                    $page = ceil($index / $postsPerPage);
+                    break;
                 }
-
-                $this->setFlash('success', $this->trans('ccdn_forum_forum.flash.post.edit.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle())));
-
-                // redirect user on successful edit.
-                return new RedirectResponse($this->path('ccdn_forum_forum_topic_show_paginated_anchored', array('topicId' => $topic->getId(), 'page' => $page, 'postId' => $post->getId() ) ));
             }
+
+            $this->setFlash('success', $this->trans('ccdn_forum_forum.flash.post.edit.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle())));
+
+            return new RedirectResponse($this->path('ccdn_forum_forum_topic_show_paginated_anchored', array('topicId' => $topic->getId(), 'page' => $page, 'postId' => $post->getId() ) ));
         }
 
-        // setup crumb trail.
+        // Setup crumb trail.
         $topic = $post->getTopic();
         $board = $topic->getBoard();
         $category = $board->getCategory();

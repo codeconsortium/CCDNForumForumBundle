@@ -25,37 +25,6 @@ use CCDNForum\ForumBundle\Entity\Post;
  */
 class PostType extends AbstractType
 {
-
-    /**
-     *
-     * @access private
-     */
-    private $defaults = array();
-
-    /**
-     *
-     * @access private
-     */
-    protected $container;
-
-    /**
-     *
-     * @access private
-     */
-    protected $doctrine;
-
-    /**
-     *
-     * @access public
-	 * @param $container
-     */
-    public function __construct($container)
-    {
-        $this->defaults = array();
-
-        $this->container = $container;
-    }
-
     /**
      *
      * @access public
@@ -135,5 +104,4 @@ class PostType extends AbstractType
     {
         return 'Post';
     }
-
 }

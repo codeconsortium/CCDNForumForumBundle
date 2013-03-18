@@ -16,9 +16,9 @@ namespace CCDNForum\ForumBundle\Form\Handler;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use CCDNForum\ForumBundle\Manager\ManagerInterface;
+use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
+use CCDNForum\ForumBundle\Entity\Post;
 
 /**
  *
@@ -27,84 +27,96 @@ use CCDNForum\ForumBundle\Manager\ManagerInterface;
  */
 class PostUpdateFormHandler
 {
-    /** @access protected */
+    /**
+	 *
+	 * @access protected
+	 * @var \Symfony\Component\Form\FormFactory $factory
+	 */
     protected $factory;
-
-    /** @access protected */
-    protected $container;
-
-    /** @access protected */
-    protected $request;
-
-    /** @access protected */
+	
+	/**
+	 *
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Form\Type\PostType $formPostType
+	 */
+	protected $formPostType;
+	
+    /**
+	 *
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $manager
+	 */
     protected $manager;
 
-    /** @access protected */
-    protected $defaults = array();
-
-    /** @access protected */
+    /**
+	 * 
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Form\Type\PostType $form 
+	 */
     protected $form;
 
     /**
+	 * 
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Entity\Post $post 
+	 */
+    protected $post;
+	
+    /**
      *
      * @access public
-     * @param FormFactory $factory, ContainerInterface $container, ManagerInterface $manager
+     * @param \Symfony\Component\Form\FormFactory $factory
+	 * @param \CCDNForum\ForumBundle\Form\Type\PostType $formPostType
+	 * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $manager
      */
-    public function __construct(FormFactory $factory, ContainerInterface $container)
+    public function __construct(FormFactory $factory, $formPostType, BaseManagerInterface $manager)
     {
-        $this->defaults = array();
         $this->factory = $factory;
-        $this->container = $container;
-
-        $this->manager = $this->container->get('ccdn_forum_forum.manager.post');
-
-        $this->request = $container->get('request');
+		$this->formPostType = $formPostType;
+        $this->manager = $manager;
     }
 
     /**
      *
      * @access public
-     * @param array $defaults
-     * @return self
+	 * @param \CCDNForum\ForumBundle\Entity\Post $post
+	 * @return \CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
      */
-    public function setDefaultValues(array $defaults = null)
-    {
-        $this->defaults = array_merge($this->defaults, $defaults);
-
-        return $this;
-    }
-
+	public function setPost(Post $post)
+	{
+		$this->post = $post;
+		
+		return $this;
+	}
+	
     /**
      *
      * @access public
      * @return bool
      */
-    public function process()
+    public function process($request)
     {
         $this->getForm();
 
-        if ($this->request->getMethod() == 'POST') {
-            $this->form->bind($this->request);
+        if ($request->getMethod() == 'POST') {
+            $this->form->bind($request);
 
             // Validate
             if ($this->form->isValid()) {
                 $formData = $this->form->getData();
+				
+				if ($request->request->has('submit')) {
+					$action = key($request->request->get('submit'));
+				} else {
+					$action = 'post';
+				}
 
-                // get the current time, and compare to when the post was made.
-                $now = new \DateTime();
-                $interval = $now->diff($formData->getCreatedDate());
+				if ($action == 'post') {
+	                $this->onSuccess($formData);
 
-                // if post is less than 15 minutes old, don't add that it was edited.
-                if ($interval->format('%i') > 15) {
-                    $formData->setEditedDate(new \DateTime());
-                    $formData->setEditedBy($this->defaults['user']);
-                }
-
-                $this->onSuccess($formData);
-
-                return true;
+	                return true;					
+				}
             }
-
         }
 
         return false;
@@ -118,12 +130,11 @@ class PostUpdateFormHandler
     public function getForm()
     {
         if (! $this->form) {
-            if (! array_key_exists('post', $this->defaults)) {
+            if (! is_object($this->post) || ! ($this->post instanceof Post)) {
                 throw new \Exception('Post must be specified to be update a Reply in PostUpdateFormHandler');
             }
 
-            $postType = $this->container->get('ccdn_forum_forum.form.type.post');
-            $this->form = $this->factory->create($postType, $this->defaults['post']);
+            $this->form = $this->factory->create($this->formPostType, $this->post);
         }
 
         return $this->form;
@@ -132,11 +143,21 @@ class PostUpdateFormHandler
     /**
      *
      * @access protected
-     * @param $entity
-     * @return PostManager
+     * @param \CCDNForum\ForumBundle\Entity\Post $post
+     * @return \CCDNForum\ForumBundle\Manager\PostManager
      */
-    protected function onSuccess($entity)
+    protected function onSuccess(Post $post)
     {
-        return $this->manager->update($entity)->flush();
+        // get the current time, and compare to when the post was made.
+        $now = new \DateTime();
+        $interval = $now->diff($post->getCreatedDate());
+
+        // if post is less than 15 minutes old, don't add that it was edited.
+        if ($interval->format('%i') > 15) {
+            $post->setEditedDate(new \DateTime());
+            $post->setEditedBy($this->manager->getUser());
+        }
+		
+        return $this->manager->update($post)->flush();
     }
 }

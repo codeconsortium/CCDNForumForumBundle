@@ -11,14 +11,14 @@ article.forum-post-item {
 }
 
 article.forum-post-item > header {
+	clear:both;
 	height:72px;
+	max-height:72px;
 	margin:0px !important;
 	padding:5px;
 	border-bottom:1px solid #ddd;
-	
 	background-color:#eee;
 	
-
 	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
 	   -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
 	        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
@@ -36,12 +36,22 @@ article.forum-post-item > header {
 
 article.forum-post-item > header > div:nth-child(1) { /* avatar */
 	float:left;
+	height:60px;
+	max-height:60px;
+	margin:0px;
 	margin-right:-100px;
 	padding:5px;
+	overflow:hidden;
+}
+
+article.forum-post-item > header > div:nth-child(1) > img {
+	margin:0px;
+	padding:0px;
 }
 
 article.forum-post-item > header > div:nth-child(2) { /* remainder of header container */
-	line-height:100%;
+	/*line-height:100%;*/
+	line-height:inherit;
 	vertical-align:middle;
 	display:inline-block;
 }
@@ -51,9 +61,9 @@ article.forum-post-item > header > div:nth-child(2) > div:nth-child(2) { /* row 
 	width:auto;
 	clear:both;
 
-	max-height:32px;
-	height: 32px;
-	line-height:32px;
+	max-height:30px;
+	height: 30px;
+	line-height:30px;
 
 	margin-top:2px;
 	margin-bottom:0px;
@@ -66,16 +76,16 @@ article.forum-post-item > header > div:nth-child(2) > div:nth-child(1) > div,
 article.forum-post-item > header > div:nth-child(2) > div:nth-child(2) > div { /* row 1,2 > columns 1,2 */
 	padding:0px;
 	
-	max-height:32px;
-	height: 32px;
-	line-height:32px;
+	max-height:30px;
+	height: 30px;
+	line-height:30px;
 	vertical-align: middle;
 }
 
 article.forum-post-item > header > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) .btn-group,
 article.forum-post-item > header > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) .icon-container {
-	height:32px;
-	line-height:32px;
+	height:30px;
+	line-height:30px;
 
 	margin:0px;
 	padding:0px;
@@ -116,7 +126,10 @@ article.forum-post-item > .forum-post-notice {
 	word-wrap:break-word;
 	overflow:hidden;
 
-
+	        border-radius:0px;
+	   -moz-border-radius:0px;
+	-webkit-border-radius:0px;
+	/*
 	        border-top-left-radius:0px;
 	   -moz-border-radius-topleft: 0px;
 	-webkit-border-top-left-radius:0px;
@@ -131,7 +144,8 @@ article.forum-post-item > .forum-post-notice {
 
 		 	border-bottom-right-radius:4px;
 	   -moz-border-radius-bottomright: 4px;
-	-webkit-border-bottom-right-radius:4px;	
+	-webkit-border-bottom-right-radius:4px;
+	*/
 }
 
 article.forum-post-item > .forum-post-notice > div {
@@ -157,6 +171,7 @@ article.forum-post-item > .forum-post-notice a:active {
 /* Post-Item Body
 ------------------------------------------------------- */
 article.forum-post-item > section {
+	clear:both;
     display:block;
 	padding:0px;
 	margin:0px !important;
@@ -186,6 +201,7 @@ article.forum-post-item > section > div {
 /* Post-Item Footer
 ------------------------------------------------------- */
 article.forum-post-item > footer {
+	clear:both;
     display:block;
 	border-top:1px solid #eee;
 }

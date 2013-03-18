@@ -44,6 +44,12 @@ class BaseController extends ContainerAware
 	
 	/**
 	 *
+	 * @var \Symfony\Component\HttpFoundation\Request $request
+	 */
+	protected $request;
+	
+	/**
+	 *
 	 * @var \Symfony\Component\Security\Core\SecurityContext $securityContext
 	 */
 	private $securityContext;
@@ -166,6 +172,20 @@ class BaseController extends ContainerAware
 		}
 		
 		return $this->templating;
+	}
+
+	/**
+	 *
+	 * @access protected
+	 * @return \Symfony\Component\HttpFoundation\Request
+	 */	
+	protected function getRequest()
+	{
+		if (null == $this->request) {
+			$this->request = $this->container->get('request');
+		}
+
+		return $this->request;
 	}
 	
 	/**

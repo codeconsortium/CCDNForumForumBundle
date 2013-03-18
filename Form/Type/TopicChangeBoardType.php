@@ -23,25 +23,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class TopicChangeBoardType extends AbstractType
 {
-
-    /**
-     *
-     * @access protected
-     */
-    protected $defaults = array();
-
-    /**
-     *
-     * @access public
-     * @param array $options
-     */
-    public function setDefaultValues(array $defaults = null)
-    {
-        $this->defaults = array_merge($this->defaults, $defaults);
-
-        return $this;
-    }
-
     /**
      *
      * @access public
@@ -84,5 +65,4 @@ class TopicChangeBoardType extends AbstractType
     {
         return 'TopicChangeBoard';
     }
-
 }

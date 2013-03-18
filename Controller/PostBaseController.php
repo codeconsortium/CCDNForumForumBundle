@@ -58,4 +58,34 @@ class PostBaseController extends BaseController
 	{
 		return $this->isAuthorised($this->getPostManager()->isAuthorisedToRestorePost($post));
 	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Post $post
+	 * @return \CCDNForum\ForumBundle\Form\Handler\TopicUpdateFormHandler
+	 */
+	public function getFormHandlerToEditTopic($post)
+	{
+		$formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_update');
+		
+		$formHandler->setPost($post);
+
+		return $formHandler;
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Post $post
+	 * @return \CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
+	 */
+	public function getFormHandlerToEditPost($post)
+	{		
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_update');
+
+		$formHandler->setPost($post);
+		
+		return $formHandler;
+	}
 }

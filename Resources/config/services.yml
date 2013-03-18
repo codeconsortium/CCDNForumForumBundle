@@ -204,26 +204,42 @@ services:
     #
     ccdn_forum_forum.form.type.post:
         class:  %ccdn_forum_forum.form.type.post.class%
-        arguments:  [@service_container, @doctrine]
+        arguments:
+            - @doctrine
     ccdn_forum_forum.form.handler.post_create:
         class:  %ccdn_forum_forum.form.handler.post_create.class%
-        arguments:  [@form.factory, @service_container]
+        arguments: 
+            - @form.factory
+            - @ccdn_forum_forum.form.type.post
+            - @ccdn_forum_forum.manager.post
     ccdn_forum_forum.form.handler.post_update:
         class:  %ccdn_forum_forum.form.handler.post_update.class%
-        arguments:  [@form.factory, @service_container]
+        arguments:
+            - @form.factory
+            - @ccdn_forum_forum.form.type.post
+            - @ccdn_forum_forum.manager.post
 
     #
     # Topic Forms.
     #
     ccdn_forum_forum.form.type.topic:
         class:  %ccdn_forum_forum.form.type.topic.class%
-        arguments:  [@doctrine]
+        arguments:
+            - @doctrine
     ccdn_forum_forum.form.handler.topic_create:
         class:  %ccdn_forum_forum.form.handler.topic_create.class%
-        arguments:  [@form.factory, @service_container]
+        arguments:
+            - @form.factory
+            - @ccdn_forum_forum.form.type.topic
+            - @ccdn_forum_forum.form.type.post
+            - @ccdn_forum_forum.manager.topic
     ccdn_forum_forum.form.handler.topic_update:
         class:  %ccdn_forum_forum.form.handler.topic_update.class%
-        arguments:  [@form.factory, @service_container]
+        arguments:
+            - @form.factory
+            - @ccdn_forum_forum.form.type.topic
+            - @ccdn_forum_forum.form.type.post
+            - @ccdn_forum_forum.manager.topic
 
     #
     # Twig Extensions.

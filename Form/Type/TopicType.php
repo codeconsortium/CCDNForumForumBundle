@@ -23,26 +23,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class TopicType extends AbstractType
 {
-
-    /**
-     *
-     * @access protected
-     */
-    protected $defaults = array();
-
-    /**
-     *
-     * @access public
-     * @param array $defaults
-	 * @return self
-     */
-    public function setDefaultValues(array $defaults = null)
-    {
-        $this->defaults = array_merge($this->defaults, $defaults);
-
-        return $this;
-    }
-
     /**
      *
      * @access public
@@ -84,5 +64,4 @@ class TopicType extends AbstractType
     {
         return 'Topic';
     }
-
 }

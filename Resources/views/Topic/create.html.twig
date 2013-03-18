@@ -31,12 +31,14 @@
 				{{- form_rest(form) -}}
 			
 				<div class="form-actions">
-					<input type="submit" class="btn btn-primary" value="{{- 'ccdn_forum_forum.form.button.topic.create' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_post">
+					<input type="submit" class="btn btn-primary" value="{{- 'ccdn_forum_forum.form.button.topic.create' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]">
 					{#
 					<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">
 					<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.save_draft' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_draft">
 					#}
-					<a class="btn" href="{{- path('ccdn_forum_forum_board_show', {'boardId': board.id}) -}}">{{- 'ccdn_forum_forum.form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}</a>
+					<a class="btn" href="{{- path('ccdn_forum_forum_board_show', {'boardId': board.id}) -}}">
+						{{- 'ccdn_forum_forum.form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
+					</a>
 				</div>
 			</fieldset>
 		</form>

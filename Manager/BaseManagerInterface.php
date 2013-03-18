@@ -36,7 +36,22 @@ interface BaseManagerInterface
 	 * @param \CCDNForum\ForumBundle\Manager\Bag\ManagerBagInterface $managerBag
 	 */
     public function __construct(Registry $doctrine, SecurityContext $securityContext, BaseGatewayInterface $gateway, ManagerBagInterface $managerBag);
+	
+	/**
+	 *
+	 * @access public
+	 * @param string $role
+	 * @return bool
+	 */
+	public function isGranted($role);
 
+	/**
+	 *
+	 * @access public
+	 * @return \Symfony\Component\Security\Core\User\UserInterface
+	 */	
+	public function getUser();
+	
 	/**
 	 *
 	 * @access public

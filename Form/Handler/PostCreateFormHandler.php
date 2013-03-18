@@ -16,9 +16,8 @@ namespace CCDNForum\ForumBundle\Form\Handler;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use CCDNForum\ForumBundle\Manager\ManagerInterface;
+use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
@@ -30,78 +29,95 @@ use CCDNForum\ForumBundle\Entity\Post;
  */
 class PostCreateFormHandler
 {
-    /** @access protected */
+    /**
+	 *
+	 * @access protected
+	 * @var \Symfony\Component\Form\FormFactory $factory
+	 */
     protected $factory;
-
-    /** @access protected */
-    protected $container;
-
-    /** @access protected */
-    protected $request;
-
-    /** @access protected */
+	
+	/**
+	 *
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Form\Type\PostType $formPostType
+	 */
+	protected $formPostType;
+	
+    /**
+	 *
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $manager
+	 */
     protected $manager;
 
-    /** @access protected */
-    protected $defaults = array();
-
-    /** @var \CCDNForum\ForumBundle\Form\Type\PostType $form */
+    /**
+	 * 
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Form\Type\PostType $form 
+	 */
     protected $form;
 
     /**
+	 * 
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Entity\Topic $topic 
+	 */
+	protected $topic;
+	
+    /**
      *
      * @access public
-     * @param FormFactory $factory, ContainerInterface $container, ManagerInterface $manager
+     * @param \Symfony\Component\Form\FormFactory $factory
+	 * @param \CCDNForum\ForumBundle\Form\Type\PostType $formPostType
+	 * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $manager
      */
-    public function __construct(FormFactory $factory, ContainerInterface $container)
+    public function __construct(FormFactory $factory, $formPostType, BaseManagerInterface $manager)
     {
-        $this->defaults = array();
         $this->factory = $factory;
-        $this->container = $container;
-
-        $this->manager = $this->container->get('ccdn_forum_forum.manager.post');
-
-        $this->request = $container->get('request');
+		$this->formPostType = $formPostType;
+        $this->manager = $manager;
     }
 
     /**
      *
      * @access public
-     * @param array $defaults
-     * @return self
+	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
+	 * @return \CCDNForum\ForumBundle\Form\Handler\PostCreateFormHandler
      */
-    public function setDefaultValues(array $defaults = null)
-    {
-        $this->defaults = array_merge($this->defaults, $defaults);
-
-        return $this;
-    }
-
+	public function setTopic(Topic $topic)
+	{
+		$this->topic = $topic;
+		
+		return $this;
+	}
+	
     /**
      *
      * @access public
      * @return bool
      */
-    public function process()
+    public function process($request)
     {
         $this->getForm();
 
-        if ($this->request->getMethod() == 'POST') {
-            $this->form->bind($this->request);
+        if ($request->getMethod() == 'POST') {
+            $this->form->bind($request);
 
             // Validate
             if ($this->form->isValid()) {
                 $formData = $this->form->getData();
 
-                $formData->setCreatedDate(new \DateTime());
-                $formData->setCreatedBy($this->defaults['user']);
-                $formData->setTopic($this->defaults['topic']);
-                $formData->setIsLocked(false);
-                $formData->setIsDeleted(false);
+				if ($request->request->has('submit')) {
+					$action = key($request->request->get('submit'));
+				} else {
+					$action = 'post';
+				}
 
-                $this->onSuccess($formData);
+				if ($action == 'post') {
+	                $this->onSuccess($formData);
 
-                return true;
+	                return true;					
+				}
             }
         }
 
@@ -116,15 +132,14 @@ class PostCreateFormHandler
     public function getForm()
     {
         if (! $this->form) {
-            if (! array_key_exists('topic', $this->defaults)) {
+            if (! is_object($this->topic) || ! ($this->topic instanceof Topic)) {
                 throw new \Exception('Topic must be specified to create a Reply in PostCreateFormHandler');
             }
 
             $post = new Post();
-            $post->setTopic($this->defaults['topic']);
+            $post->setTopic($this->topic);
 
-            $postType = $this->container->get('ccdn_forum_forum.form.type.post');
-            $this->form = $this->factory->create($postType, $post);
+            $this->form = $this->factory->create($this->formPostType, $post);
         }
 
         return $this->form;
@@ -133,11 +148,17 @@ class PostCreateFormHandler
     /**
      *
      * @access protected
-     * @param $entity
-     * @return PostManager
+     * @param \CCDNForum\ForumBundle\Entity\Post $post
+     * @return \CCDNForum\ForumBundle\Manager\PostManager
      */
-    protected function onSuccess($entity)
+    protected function onSuccess(Post $post)
     {
-        return $this->manager->create($entity)->flush();
+        $post->setCreatedDate(new \DateTime());
+        $post->setCreatedBy($this->manager->getUser());
+        $post->setTopic($this->topic);
+        $post->setIsLocked(false);
+        $post->setIsDeleted(false);
+		
+        return $this->manager->postTopicReply($post)->flush();
     }
 }

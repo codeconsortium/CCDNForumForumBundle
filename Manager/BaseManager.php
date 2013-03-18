@@ -86,12 +86,23 @@ abstract class BaseManager implements BaseManagerInterface
 		$this->managerBag = $managerBag;
     }
 
-	protected function isGranted($role)
+	/**
+	 *
+	 * @access public
+	 * @param string $role
+	 * @return bool
+	 */
+	public function isGranted($role)
 	{
 		return $this->securityContext->isGranted($role);
 	}
-	
-	protected function getUser()
+
+	/**
+	 *
+	 * @access public
+	 * @return \Symfony\Component\Security\Core\User\UserInterface
+	 */	
+	public function getUser()
 	{
 		return $this->securityContext->getToken()->getUser();
 	}

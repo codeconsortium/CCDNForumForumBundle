@@ -18,8 +18,9 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use CCDNForum\ForumBundle\Manager\ManagerInterface;
+use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 
+use CCDNForum\ForumBundle\Entity\Board;
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
 
@@ -30,83 +31,104 @@ use CCDNForum\ForumBundle\Entity\Post;
  */
 class TopicCreateFormHandler
 {
-    /** @access protected */
+    /**
+	 *
+	 * @access protected
+	 * @var \Symfony\Component\Form\FormFactory $factory
+	 */
     protected $factory;
-
-    /** @access protected */
-    protected $container;
-
-    /** @access protected */
-    protected $request;
-
-    /** @access protected */
+	
+	/**
+	 *
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Form\Type\TopicType $formType
+	 */
+	protected $formTopicType;
+	
+	/**
+	 *
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Form\Type\PostType $formType
+	 */
+	protected $formPostType;
+	
+    /**
+	 *
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $manager
+	 */
     protected $manager;
 
-    /** @access protected */
-    protected $defaults = array();
-
-    /** @access protected */
+    /**
+	 * 
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Form\Type\TopicType $form 
+	 */
     protected $form;
-
+	
+    /**
+	 * 
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Entity\Board $board 
+	 */
+    protected $board;
+	
     /**
      *
      * @access public
-     * @param FormFactory $factory, ContainerInterface $container, ManagerInterface $manager
+     * @param \Symfony\Component\Form\FormFactory $factory
+	 * @param \CCDNForum\ForumBundle\Form\Type\TopicType $formTopicType
+	 * @param \CCDNForum\ForumBundle\Form\Type\PostType $formPostType
+	 * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $manager
      */
-    public function __construct(FormFactory $factory, ContainerInterface $container)
+    public function __construct(FormFactory $factory, $formTopicType, $formPostType, BaseManagerInterface $manager)
     {
-        $this->defaults = array();
         $this->factory = $factory;
-        $this->container = $container;
-
-        $this->manager = $this->container->get('ccdn_forum_forum.manager.topic');
-
-        $this->request = $container->get('request');
+		$this->formTopicType = $formTopicType;
+		$this->formPostType = $formPostType;
+        $this->manager = $manager;
     }
 
     /**
      *
      * @access public
-     * @param array $defaults
-     * @return self
+	 * @param \CCDNForum\ForumBundle\Entity\Board $board
+	 * @return \CCDNForum\ForumBundle\Form\Handler\TopicCreateFormHandler
      */
-    public function setDefaultValues(array $defaults = null)
-    {
-        $this->defaults = array_merge($this->defaults, $defaults);
-
-        return $this;
-    }
-
+	public function setBoard(Board $board)
+	{
+		$this->board = $board;
+		
+		return $this;
+	}
+	
     /**
      *
      * @access public
      * @return bool
      */
-    public function process()
+    public function process($request)
     {
         $this->getForm();
 
-        if ($this->request->getMethod() == 'POST') {
-            $this->form->bind($this->request);
+        if ($request->getMethod() == 'POST') {
+            $this->form->bind($request);
 
             // Validate
             if ($this->form->isValid()) {
                 $formData = $this->form->getData();
 
-                $formData->setCreatedDate(new \DateTime());
-                $formData->setCreatedBy($this->defaults['user']);
-                $formData->setIsLocked(false);
-                $formData->setIsDeleted(false);
+				if ($request->request->has('submit')) {
+					$action = key($request->request->get('submit'));
+				} else {
+					$action = 'post';
+				}
 
-                $formData->getTopic()->setCachedViewCount(0);
-                $formData->getTopic()->setCachedReplyCount(0);
-                $formData->getTopic()->setIsClosed(false);
-                $formData->getTopic()->setIsDeleted(false);
-                $formData->getTopic()->setIsSticky(false);
+				if ($action == 'post') {
+	                $this->onSuccess($formData);
 
-                $this->onSuccess($formData);
-
-                return true;
+	                return true;					
+				}
             }
         }
 
@@ -121,22 +143,19 @@ class TopicCreateFormHandler
     public function getForm()
     {
         if (! $this->form) {
-            if (! array_key_exists('board', $this->defaults)) {
+            if (! is_object($this->board) || ! ($this->board instanceof Board)) {
                 throw new \Exception('Board must be specified to be create a Topic in TopicCreateFormHandler');
             }
 
             $topic = new Topic();
-            $topic->setBoard($this->defaults['board']);
+            $topic->setBoard($this->board);
 
             $post = new Post();
             $post->setTopic($topic);
-            $post->setCreatedBy($this->defaults['user']);
+            $post->setCreatedBy($this->manager->getUser());
 
-            $postType = $this->container->get('ccdn_forum_forum.form.type.post');
-            $topicType = $this->container->get('ccdn_forum_forum.form.type.topic');
-
-            $this->form = $this->factory->create($postType, $post);
-            $this->form->add($this->factory->create($topicType, $topic));
+            $this->form = $this->factory->create($this->formPostType, $post);
+            $this->form->add($this->factory->create($this->formTopicType, $topic));
         }
 
         return $this->form;
@@ -145,11 +164,22 @@ class TopicCreateFormHandler
     /**
      *
      * @access protected
-     * @param $entity
-     * @return TopicManager
+     * @param \CCDNForum\ForumBundle\Entity\Post $post
+     * @return \CCDNForum\ForumBundle\Manager\TopicManager
      */
-    protected function onSuccess($entity)
+    protected function onSuccess(Post $post)
     {
-        return $this->manager->create($entity)->flush();
+        $post->setCreatedDate(new \DateTime());
+        $post->setCreatedBy($this->manager->getUser());
+        $post->setIsLocked(false);
+        $post->setIsDeleted(false);
+
+        $post->getTopic()->setCachedViewCount(0);
+        $post->getTopic()->setCachedReplyCount(0);
+        $post->getTopic()->setIsClosed(false);
+        $post->getTopic()->setIsDeleted(false);
+        $post->getTopic()->setIsSticky(false);
+		
+        return $this->manager->postNewTopic($post)->flush();
     }
 }

@@ -84,29 +84,21 @@ class TopicController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_USER');
 
-        $user = $this->getUser();
-
-        //$board = $this->container->get('ccdn_forum_forum.repository.board')->find($boardId);
 		$board = $this->getBoardManager()->findOneByIdWithCategory($boardId);
         $this->isFound($board);
 		$this->isAuthorisedToCreateTopic($board);
 
-        // Set the form handler options
-        $options = array('board' => $board, 'user' => $user);
-
-        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_create')->setDefaultValues($options);
+		$formHandler = $this->getFormHandlerToCreateTopic($board, $draftId);
 
 		// Flood Control.
-		if ( ! $this->container->get('ccdn_forum_forum.component.flood_control')->isFlooded()) {
-	        if (isset($_POST['submit_post'])) {
-	            if ($formHandler->process()) {
-	                $this->container->get('ccdn_forum_forum.component.flood_control')->incrementCounter();
+		if (! $this->container->get('ccdn_forum_forum.component.flood_control')->isFlooded()) {
+            if ($formHandler->process($this->getRequest())) {
+                $this->container->get('ccdn_forum_forum.component.flood_control')->incrementCounter();
 
-					$this->setFlash('success', $this->trans('ccdn_forum_forum.flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle())));
+				$this->setFlash('success', $this->trans('ccdn_forum_forum.flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle())));
 
-	                return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $formHandler->getForm()->getData()->getTopic()->getId() )));
-	            }
-	        }
+                return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $formHandler->getForm()->getData()->getTopic()->getId() )));
+            }
 		} else {
 			$this->setFlash('warning', $this->trans('ccdn_forum_forum.flash.topic.flood_control'));
 		}
@@ -138,39 +130,28 @@ class TopicController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_USER');
 
-        $user = $this->getUser();
-
 		$topic = $this->getTopicManager()->findOneByIdWithPostsByTopicId($topicId);
         $this->isFound($topic);
 		$this->isAuthorisedToReplyToTopic($topic);
 
-        // Set the form handler options
-        if ( ! empty($quoteId)) {
-            $quote = $this->container->get('ccdn_forum_forum.repository.post')->find($quoteId);
-        }
-
-        $options = array('topic' => $topic,	'user' => $user, 'quote' => (empty($quote) ? null : $quote));
-
-        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_create')->setDefaultValues($options);
+		$formHandler = $this->getFormHandlerToReplyToTopic($topic, $draftId, $quoteId);
 
 		// Flood Control.
 		if ( ! $this->container->get('ccdn_forum_forum.component.flood_control')->isFlooded()) {
-	        if (isset($_POST['submit_post'])) {
-	            if ($formHandler->process()) {
-					$this->container->get('ccdn_forum_forum.component.flood_control')->incrementCounter();
+            if ($formHandler->process($this->getRequest())) {
+				$this->container->get('ccdn_forum_forum.component.flood_control')->incrementCounter();
 					
-	                // page of the last post
-	                $postsPerTopicPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
+                // page of the last post
+                $postsPerTopicPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 
-	                $pageCounter = $this->container->get('ccdn_forum_forum.repository.post')->getPostCountForTopicById($topicId);
+                $pageCounter = $this->container->get('ccdn_forum_forum.repository.post')->getPostCountForTopicById($topicId);
 
-	                $page =  $pageCounter ? ceil($pageCounter / $postsPerTopicPage) : 1;
+                $page =  $pageCounter ? ceil($pageCounter / $postsPerTopicPage) : 1;
 
-	                $this->setFlash('success', $this->trans('ccdn_forum_forum.flash.topic.reply.success', array('%topic_title%' => $topic->getTitle())));
+                $this->setFlash('success', $this->trans('ccdn_forum_forum.flash.topic.reply.success', array('%topic_title%' => $topic->getTitle())));
 
-	                return new RedirectResponse($this->path('ccdn_forum_forum_topic_show_paginated_anchored', array('topicId' => $topicId, 'page' => $page, 'postId' => $topic->getLastPost()->getId()) ));
-	            }
-	        }
+                return new RedirectResponse($this->path('ccdn_forum_forum_topic_show_paginated_anchored', array('topicId' => $topicId, 'page' => $page, 'postId' => $topic->getLastPost()->getId()) ));
+            }
 		} else {
 			$this->setFlash('warning', $this->trans('ccdn_forum_forum.flash.topic.flood_control'));
 		}

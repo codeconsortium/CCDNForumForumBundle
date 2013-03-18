@@ -377,7 +377,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Post $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function create($post)
+    public function postNewTopic($post)
     {
         // insert a new row.
         $this->persist($post)->flush();

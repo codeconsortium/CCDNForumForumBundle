@@ -82,4 +82,49 @@ class TopicBaseController extends BaseController
 	{
 		return $this->isAuthorised($this->getTopicManager()->isAuthorisedToRestoreTopic($topic));
 	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Board $board
+	 * @param int $draftId
+	 * @return \CCDNForum\ForumBundle\Form\Handler\TopicCreateFormHandler
+	 */
+	public function getFormHandlerToCreateTopic($board, $draftId)
+	{
+        //if ( ! empty($draftId)) {
+        //    $draft = $this->getDraftManager()->findOneById($draftId);
+        //}
+		
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_create');
+		
+		$formHandler->setBoard($board);
+
+		return $formHandler;
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
+	 * @param int $draftId
+	 * @param int $quoteId
+	 * @return \CCDNForum\ForumBundle\Form\Handler\TopicCreateFormHandler
+	 */
+	public function getFormHandlerToReplyToTopic($topic, $draftId, $quoteId)
+	{		
+        //if ( ! empty($draftId)) {
+        //    $draft = $this->getDraftManager()->findOneById($draftId);
+        //}
+	
+        //if ( ! empty($quoteId)) {
+        //    $quote = $this->container->get('ccdn_forum_forum.repository.post')->find($quoteId);
+        //}
+		
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_create');
+
+		$formHandler->setTopic($topic);
+		
+		return $formHandler;
+	}
 }
