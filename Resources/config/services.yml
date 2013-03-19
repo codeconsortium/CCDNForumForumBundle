@@ -240,6 +240,17 @@ services:
             - @ccdn_forum_forum.form.type.topic
             - @ccdn_forum_forum.form.type.post
             - @ccdn_forum_forum.manager.topic
+    ccdn_forum_forum.form.type.change_topics_board:
+        class:  %ccdn_forum_forum.form.type.change_topics_board.class%
+        arguments: 
+            - @doctrine
+    ccdn_forum_forum.form.handler.change_topics_board:
+        class:  %ccdn_forum_forum.form.handler.change_topics_board.class%
+        arguments:
+            - @form.factory
+            - @ccdn_forum_forum.form.type.change_topics_board
+            - @ccdn_forum_forum.manager.topic
+            - @ccdn_forum_forum.manager.board
 
     #
     # Twig Extensions.
@@ -273,15 +284,3 @@ services:
         class: %ccdn_forum_forum.component.menu_builder.menu.class%
         tags:
             - { name: ccdn_component_menu.menu_builder }
-
-
-
-    #
-    # Topic Forms.
-    #
-    ccdn_forum_forum.form.type.change_topics_board:
-        class:  %ccdn_forum_forum.form.type.change_topics_board.class%
-        arguments:  [@doctrine]
-    ccdn_forum_forum.form.handler.change_topics_board:
-        class:  %ccdn_forum_forum.form.handler.change_topics_board.class%
-        arguments:  [@form.factory, @service_container, @ccdn_forum_forum.manager.topic]

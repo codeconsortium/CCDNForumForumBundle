@@ -215,13 +215,13 @@ class TopicModeratorController extends TopicBaseController
     {
 		$this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
+		$topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
 
         $this->isFound($topic);
 
-        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.change_topics_board')->setDefaultValues(array('topic' => $topic));
+        $formHandler = $this->getFormHandlerToChangeBoardOnTopic($topic);
 
-        if ($formHandler->process()) {
+        if ($formHandler->process($this->getRequest())) {
             $this->setFlash('warning', $this->trans('ccdn_forum_admin.flash.topic.move.success', array('%topic_title%' => $topic->getTitle())));
 
             return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId()) ));

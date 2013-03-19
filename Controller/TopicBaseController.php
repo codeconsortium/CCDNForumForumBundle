@@ -16,6 +16,9 @@ namespace CCDNForum\ForumBundle\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+use CCDNForum\ForumBundle\Entity\Board;
+use CCDNForum\ForumBundle\Entity\Topic;
+
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
@@ -30,7 +33,7 @@ class TopicBaseController extends BaseController
 	 * @return bool
 	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
 	 */
-	public function isAuthorisedToCreateTopic($board)
+	public function isAuthorisedToCreateTopic(Board $board)
 	{
 		return $this->isAuthorised($this->getBoardManager()->isAuthorisedToCreateTopic($board));
 	}
@@ -42,7 +45,7 @@ class TopicBaseController extends BaseController
 	 * @return bool
 	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
 	 */
-	public function isAuthorisedToReplyToTopic($topic)
+	public function isAuthorisedToReplyToTopic(Topic $topic)
 	{
 		return $this->isAuthorised($this->getTopicManager()->isAuthorisedToReplyToTopic($topic));
 	}
@@ -54,7 +57,7 @@ class TopicBaseController extends BaseController
 	 * @return bool
 	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
 	 */
-	public function isAuthorisedToEditTopic($topic)
+	public function isAuthorisedToEditTopic(Topic $topic)
 	{
 		return $this->isAuthorised($this->getTopicManager()->isAuthorisedToEditTopic($topic));
 	}
@@ -66,7 +69,7 @@ class TopicBaseController extends BaseController
 	 * @return bool
 	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
 	 */
-	public function isAuthorisedToDeleteTopic($topic)
+	public function isAuthorisedToDeleteTopic(Topic $topic)
 	{
 		return $this->isAuthorised($this->getTopicManager()->isAuthorisedToDeleteTopic($topic));
 	}
@@ -78,7 +81,7 @@ class TopicBaseController extends BaseController
 	 * @return bool
 	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
 	 */
-	public function isAuthorisedToRestoreTopic($topic)
+	public function isAuthorisedToRestoreTopic(Topic $topic)
 	{
 		return $this->isAuthorised($this->getTopicManager()->isAuthorisedToRestoreTopic($topic));
 	}
@@ -90,7 +93,7 @@ class TopicBaseController extends BaseController
 	 * @param int $draftId
 	 * @return \CCDNForum\ForumBundle\Form\Handler\TopicCreateFormHandler
 	 */
-	public function getFormHandlerToCreateTopic($board, $draftId)
+	public function getFormHandlerToCreateTopic(Board $board, $draftId)
 	{
         //if ( ! empty($draftId)) {
         //    $draft = $this->getDraftManager()->findOneById($draftId);
@@ -111,7 +114,7 @@ class TopicBaseController extends BaseController
 	 * @param int $quoteId
 	 * @return \CCDNForum\ForumBundle\Form\Handler\TopicCreateFormHandler
 	 */
-	public function getFormHandlerToReplyToTopic($topic, $draftId, $quoteId)
+	public function getFormHandlerToReplyToTopic(Topic $topic, $draftId, $quoteId)
 	{		
         //if ( ! empty($draftId)) {
         //    $draft = $this->getDraftManager()->findOneById($draftId);
@@ -123,6 +126,21 @@ class TopicBaseController extends BaseController
 		
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_create');
 
+		$formHandler->setTopic($topic);
+		
+		return $formHandler;
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
+	 * @return \CCDNForum\ForumBundle\Form\Handler\TopicChangeBoardFormHandler
+	 */
+	public function getFormHandlerToChangeBoardOnTopic(Topic $topic)
+	{
+		$formHandler = $this->container->get('ccdn_forum_forum.form.handler.change_topics_board');
+		
 		$formHandler->setTopic($topic);
 		
 		return $formHandler;

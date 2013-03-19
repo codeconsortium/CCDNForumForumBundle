@@ -16,9 +16,10 @@ namespace CCDNForum\ForumBundle\Form\Handler;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use CCDNForum\ForumBundle\Manager\ManagerInterface;
+use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
+use CCDNForum\ForumBundle\Entity\Board;
+use CCDNForum\ForumBundle\Entity\Topic;
 
 /**
  *
@@ -27,80 +28,122 @@ use CCDNForum\ForumBundle\Manager\ManagerInterface;
  */
 class TopicChangeBoardFormHandler
 {
-
-    /** @access protected */
+    /**
+	 *
+	 * @access protected
+	 * @var \Symfony\Component\Form\FormFactory $factory
+	 */
     protected $factory;
-
-    /** @access protected */
-    protected $container;
-
-    /** @access protected */
-    protected $request;
-
-    /** @access protected */
-    protected $manager;
-
-    /** @access protected */
-    protected $defaults = array();
-
-    /** @access protected */
+	
+	/**
+	 *
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Form\Type\TopicChangeBoardType $formTopicChangeBoardType
+	 */
+	protected $formTopicChangeBoardType;
+	
+    /**
+	 *
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $topicManager
+	 */
+    protected $topicManager;
+	
+    /**
+	 *
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $boardManager
+	 */
+	protected $boardManager;
+	
+    /**
+	 * 
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Form\Type\TopicChangeBoardType $form 
+	 */
     protected $form;
-
-    /** @access protected */
-    protected $oldBoard;
-
+	
+    /**
+	 * 
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Entity\Board $oldBoard 
+	 */
+	protected $oldBoard;
+	
     /**
      *
      * @access public
-     * @param FormFactory $factory, ContainerInterface $container, ManagerInterface $manager
+     * @param \Symfony\Component\Form\FormFactory $factory
+	 * @param \CCDNForum\ForumBundle\Form\Type\TopicChangeBoardType $formTopicChangeBoardType
+	 * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $topicManager
+	 * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $boardManager
      */
-    public function __construct(FormFactory $factory, ContainerInterface $container, ManagerInterface $manager)
+    public function __construct(FormFactory $factory, $formTopicChangeBoardType, BaseManagerInterface $topicManager, BaseManagerInterface $boardManager)
     {
-        $this->defaults = array();
         $this->factory = $factory;
-        $this->container = $container;
-        $this->manager = $manager;
-
-        $this->request = $container->get('request');
+		$this->formTopicChangeBoardType = $formTopicChangeBoardType;
+        $this->topicManager = $topicManager;
+        $this->boardManager = $boardManager;
     }
 
     /**
      *
      * @access public
-     * @param array $options
-     * @return self
+	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
+	 * @return \CCDNForum\ForumBundle\Form\Handler\TopicChangeBoardFormHandler
      */
-    public function setDefaultValues(array $defaults = null)
-    {
-        $this->defaults = array_merge($this->defaults, $defaults);
-
-        return $this;
-    }
-
+	public function setTopic(Topic $topic)
+	{
+		$this->topic = $topic;
+		
+		return $this;
+	}
+	
     /**
      *
      * @access public
+	 * @param \Symfony\Component\HttpFoundation\Request $request
      * @return bool
      */
-    public function process()
+    public function process(Request $request)
     {
         $this->getForm();
 
-        if ($this->request->getMethod() == 'POST') {
-            $this->form->bind($this->request);
+        if ($request->getMethod() == 'POST') {
+            $this->form->bind($request);
 
-            $formData = $this->form->getData();
-
+            // Validate
             if ($this->form->isValid()) {
-                $this->onSuccess($this->form->getData());
+                $formData = $this->form->getData();
 
-                return true;
+				if ($this->getAction($request) == 'post') {
+	                $this->onSuccess($formData);
+
+	                return true;					
+				}
             }
         }
 
         return false;
     }
-
+	
+	/**
+	 *
+	 * @access public
+	 * @param \Symfony\Component\HttpFoundation\Request $request
+	 * @return string
+	 */
+	public function getAction(Request $request)
+	{
+		if ($request->request->has('submit')) {
+			$action = key($request->request->get('submit'));
+		} else {
+			$action = 'post';
+		}
+		
+		return $action;
+	}
+	
     /**
      *
      * @access public
@@ -109,15 +152,9 @@ class TopicChangeBoardFormHandler
     public function getForm()
     {
         if (!$this->form) {
-            $this->oldBoard = $this->defaults['topic']->getBoard();
-
-            $topicChangeBoardType = $this->container->get('ccdn_forum_forum.form.type.change_topics_board');
-			
-            $topicChangeBoardType->setDefaultValues(array(
-				'board' => $this->defaults['topic']->getBoard()
-			));
+            $this->oldBoard = $this->topic->getBoard();
             
-			$this->form = $this->factory->create($topicChangeBoardType, $this->defaults['topic']);
+			$this->form = $this->factory->create($this->formTopicChangeBoardType, $this->topic);
         }
 
         return $this->form;
@@ -131,22 +168,18 @@ class TopicChangeBoardFormHandler
      */
     protected function onSuccess($topic)
     {
-        $this->manager->update($topic)->flush();
+        $this->topicManager->update($topic)->flush();
 
-        $boardManager = $this->container->get('ccdn_forum_forum.manager.board');
-
-        //
         // Update stats of the topics old board.
-        //
         if ($this->oldBoard) {
-            $boardManager->updateStats($this->oldBoard)->flush();
+            $this->boardManager->updateStats($this->oldBoard)->flush();
         }
 
-        //
         // Setup stats on the topics new board.
-        //
         if ($topic->getBoard()) {
-            $boardManager->updateStats($topic->getBoard())->flush();
+            $this->boardManager->updateStats($topic->getBoard())->flush();
         }
+		
+		return $this->topicManager;
     }
 }

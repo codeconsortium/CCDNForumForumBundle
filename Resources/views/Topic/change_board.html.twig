@@ -20,12 +20,23 @@
 					</div>
 				</div>
 
+				<div class="control-group">
+					<label class="control-label">
+						Topic:
+					</label>
+					<div class="controls">
+						<label class="label">
+							{{- topic.getTitle -}}
+						</label>
+					</div>
+				</div>
+				
 				{{- form_errors(form) -}}
 
 				{{- form_widget(form) -}}
 			
 				<div class="form-actions">
-					<input type="submit" class="btn btn-danger" value="{{- 'ccdn_forum_forum.form.button.topic.move_to_board' | trans({}, 'CCDNForumForumBundle') -}}">
+					<input type="submit" class="btn btn-danger" value="{{- 'ccdn_forum_forum.form.button.topic.move_to_board' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]">
 				
 					<a class="btn" href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.id}) -}}">
 						{{- 'ccdn_forum_forum.form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}

@@ -33,8 +33,7 @@ class TopicChangeBoardType extends AbstractType
         $builder->add('board', 'entity', array(
             'property' => 'name',
             'class' => 'CCDNForumForumBundle:Board',
-            'query_builder' => function($repository) { return $repository->createQueryBuilder('b')->orderBy('b.id', 'ASC'); },
-            'preferred_choices' => array($this->defaults['board']),
+            'query_builder' => function($qb) { return $qb->createQueryBuilder('b')->orderBy('b.id', 'ASC'); },
             'label' => 'ccdn_forum_forum.form.label.board',
 			'translation_domain' =>  'CCDNForumForumBundle',
         ));
