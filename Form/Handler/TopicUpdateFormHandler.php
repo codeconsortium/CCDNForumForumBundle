@@ -104,9 +104,10 @@ class TopicUpdateFormHandler
     /**
      *
      * @access public
+	 * @param \Symfony\Component\HttpFoundation\Request $request
      * @return bool
      */
-    public function process($request)
+    public function process(Request $request)
     {
         $this->getForm();
 
@@ -117,13 +118,7 @@ class TopicUpdateFormHandler
             if ($this->form->isValid()) {
                 $formData = $this->form->getData();
 				
-				if ($request->request->has('submit')) {
-					$action = key($request->request->get('submit'));
-				} else {
-					$action = 'post';
-				}
-
-				if ($action == 'post') {
+				if ($this->getAction($request) == 'post') {
 	                $this->onSuccess($formData);
 
 	                return true;					
@@ -133,7 +128,24 @@ class TopicUpdateFormHandler
 
         return false;
     }
-
+	
+	/**
+	 *
+	 * @access public
+	 * @param \Symfony\Component\HttpFoundation\Request $request
+	 * @return string
+	 */
+	public function getAction(Request $request)
+	{
+		if ($request->request->has('submit')) {
+			$action = key($request->request->get('submit'));
+		} else {
+			$action = 'post';
+		}
+		
+		return $action;
+	}
+	
     /**
      *
      * @access public
