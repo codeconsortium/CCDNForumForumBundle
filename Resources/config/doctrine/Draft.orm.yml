@@ -1,6 +1,6 @@
 CCDNForum\ForumBundle\Entity\Draft:
     type: entity
-    table: CC_Forum_Draft
+    table: cc_forum_draft
     repositoryClass: CCDNForum\ForumBundle\Repository\DraftRepository
     id:
         id:

@@ -1,6 +1,6 @@
 CCDNForum\ForumBundle\Entity\Registry:
     type: entity
-    table: CC_Forum_Registry
+    table: cc_forum_registry
     repositoryClass: CCDNForum\ForumBundle\Repository\RegistryRepository
     id:
         id:

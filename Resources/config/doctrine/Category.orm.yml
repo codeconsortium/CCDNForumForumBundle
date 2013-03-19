@@ -1,6 +1,6 @@
 CCDNForum\ForumBundle\Entity\Category:
     type: entity
-    table: CC_Forum_Category
+    table: cc_forum_category
     repositoryClass: CCDNForum\ForumBundle\Repository\CategoryRepository
     id:
         id:
