@@ -145,7 +145,7 @@ class BoardManager extends BaseManager implements BaseManagerInterface
 	/**
 	 *
 	 * @access public
-	 * @param $boards
+	 * @param Array $boards
 	 * @return Array
 	 */
     public function filterViewableBoards($boards)

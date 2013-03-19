@@ -64,6 +64,7 @@ class CategoryController extends BaseController
 
         return $this->renderResponse('CCDNForumForumBundle:Category:show.html.', array(
             'crumbs' => $crumbs,
+			'category' => $category,
             'categories' => array($category),
             'topics_per_page' => $topicsPerPage,
         ));

@@ -13,6 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Component\TwigExtension;
 
+use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
+
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
@@ -20,20 +22,21 @@ namespace CCDNForum\ForumBundle\Component\TwigExtension;
  */
 class BoardListExtension extends \Twig_Extension
 {
-
     /**
      *
      * @access protected
+	 * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $categoryManager
      */
-    protected $container;
+    protected $categoryManager;
 
     /**
      * 
 	 * @access public
+	 * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $categoryManager
      */
-    public function __construct($container)
+    public function __construct(BaseManagerInterface $categoryManager)
     {
-        $this->container = $container;
+        $this->categoryManager = $categoryManager;
     }
 
     /**
@@ -56,9 +59,7 @@ class BoardListExtension extends \Twig_Extension
      */
     public function boardList()
     {
-        $boards = $this->container->get('ccdn_forum_forum.repository.board')->findAllBoardsGroupedByCategoryHydratedAsArray();
-
-        return $boards;
+        return $this->categoryManager->findAllBoardsGroupedByCategory();
     }
 
     /**
@@ -70,5 +71,4 @@ class BoardListExtension extends \Twig_Extension
     {
         return 'boardList';
     }
-
 }

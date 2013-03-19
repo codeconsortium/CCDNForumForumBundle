@@ -42,6 +42,23 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
 		return $this->filterViewableCategoriesAndBoards($categories);
 	}
 	
+    /**
+     *
+     * @access public
+	 * @return Array
+     */
+    public function findAllBoardsGroupedByCategory()
+    {
+		$qb = $this->createSelectQuery(array('c', 'b'));
+
+		$qb
+			->leftJoin('c.boards', 'b');
+			
+		$categories = $this->gateway->findCategories($qb);
+
+		return $this->filterViewableCategoriesAndBoards($categories);			
+    }
+	
 	/**
 	 *
 	 * @access public

@@ -81,7 +81,7 @@ class PostGateway extends BaseGateway implements BaseGatewayInterface
 			$qb = $this->createSelectQuery();
 		}
 
-		$qb->orderBy('p.createdDate', 'ASC');
+		$qb->addOrderBy('p.createdDate', 'ASC');
 		
 		return $this->all($qb, $parameters);
 	}

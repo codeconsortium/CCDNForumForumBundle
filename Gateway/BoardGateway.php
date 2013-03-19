@@ -65,7 +65,7 @@ class BoardGateway extends BaseGateway implements BaseGatewayInterface
 			$qb = $this->createSelectQuery();
 		}
 		
-		$qb->orderBy('b.listOrderPriority');
+		$qb->addOrderBy('b.listOrderPriority', 'ASC');
 				
 		return $this->one($qb, $parameters);
 	}
@@ -83,7 +83,7 @@ class BoardGateway extends BaseGateway implements BaseGatewayInterface
 			$qb = $this->createSelectQuery();
 		}
 		
-		$qb->orderBy('b.listOrderPriority');
+		$qb->addOrderBy('b.listOrderPriority', 'ASC');
 		
 		return $this->all($qb, $parameters);
 	}

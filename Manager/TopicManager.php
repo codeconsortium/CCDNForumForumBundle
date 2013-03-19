@@ -198,6 +198,8 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 			throw new \Exception('Board id "' . $boardId . '" is invalid!');
 		}
 		
+		$params = array(':boardId' => $boardId);
+		
 		$qb = $this->createSelectQuery(array('t', 'lp'));
 		
 		$qb
@@ -207,7 +209,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 			->orderBy('lp.createdDate', 'DESC')
 			->setMaxResults(1);
 		
-		return $this->gateway->findTopic($qb, array(':boardId' => $boardId));
+		return $this->gateway->findTopic($qb, $params);
 	}
 	
 	/**
@@ -222,6 +224,10 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 			throw new \Exception('Topic id "' . $topicId . '" is invalid!');
 		}
 		
+		$canViewDeleted = $this->allowedToViewDeletedTopics();
+		
+		$params = array(':topicId' => $topicId, ':isDeleted' => false);
+		
 		$qb = $this->createSelectQuery(array('t', 'p', 'fp', 'lp', 'b', 'c'));
 		
 		$qb
@@ -231,10 +237,10 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 			->leftJoin('t.board', 'b')
 			->leftJoin('b.category', 'c')
 			->where(
-				$this->limitQueryByDeletedStateAndByTopicId($qb)
+				$this->limitQueryByDeletedStateAndByTopicId($qb, $canViewDeleted)
 			);
 		
-		return $this->gateway->findTopic($qb, array(':topicId' => $topicId));
+		return $this->gateway->findTopic($qb, $params);
 	}
 		
 	/**
@@ -249,16 +255,20 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 			throw new \Exception('Topic id "' . $topicId . '" is invalid!');
 		}
 		
+		$canViewDeleted = $this->allowedToViewDeletedTopics();
+		
+		$params = array(':topicId' => $topicId, ':isDeleted' => false);
+		
 		$qb = $this->createSelectQuery(array('t', 'b', 'c'));
 		
 		$qb
 			->leftJoin('t.board', 'b')
 			->leftJoin('b.category', 'c')
 			->where(
-				$this->limitQueryByDeletedStateAndByTopicId($qb)
+				$this->limitQueryByDeletedStateAndByTopicId($qb, $canViewDeleted)
 			);
 		
-		return $this->gateway->findTopic($qb, array(':topicId' => $topicId));
+		return $this->gateway->findTopic($qb, $params);
 	}
 	
 	/**
@@ -273,7 +283,9 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 			throw new \Exception('Board id "' . $boardId . '" is invalid!');
 		}
 		
-		$params = array(':boardId' => $boardId, ':isSticky' => true);
+		$canViewDeleted = $this->allowedToViewDeletedTopics();
+		
+		$params = array(':boardId' => $boardId, ':isSticky' => true, ':isDeleted' => false);
 		
 		$qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author'));
 		
@@ -285,7 +297,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 			->leftJoin('t.board', 'b')
 			->leftJoin('b.category', 'c')
 			->where(
-				$this->limitQueryByStickiedAndDeletedStateByBoardId($qb)
+				$this->limitQueryByStickiedAndDeletedStateByBoardId($qb, $canViewDeleted)
 			)
 			->orderBy('lp.createdDate', 'DESC');
 		
@@ -304,11 +316,13 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 		if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
 			throw new \Exception('Board id "' . $boardId . '" is invalid!');
 		}
+
+		$canViewDeleted = $this->allowedToViewDeletedTopics();
 		
-		$params = array(':boardId' => $boardId, ':isSticky' => false);
+		$params = array(':boardId' => $boardId, ':isSticky' => false, ':isDeleted' => false);
 		
 		$qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author'));
-		
+			
 		$qb
 			->innerJoin('t.firstPost', 'fp')
 			->leftJoin('t.lastPost', 'lp')
@@ -317,7 +331,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 			->leftJoin('t.board', 'b')
 			->leftJoin('b.category', 'c')
 			->where(
-				$this->limitQueryByStickiedAndDeletedStateByBoardId($qb)
+				$this->limitQueryByStickiedAndDeletedStateByBoardId($qb, $canViewDeleted)
 			)
 			->setParameters($params)
 			->orderBy('lp.createdDate', 'DESC');
@@ -331,14 +345,14 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 	 * @param \Doctrine\ORM\QueryBuilder $qb
 	 * @return \Doctrine\ORM\QueryBuilder
 	 */
-	protected function limitQueryByDeletedStateAndByTopicId(QueryBuilder $qb)
+	protected function limitQueryByDeletedStateAndByTopicId(QueryBuilder $qb, $canViewDeletedTopics)
 	{
-		if ($this->allowedToViewDeletedTopics()) {
+		if ($canViewDeletedTopics) {
 			$expr = $qb->expr()->eq('t.id', ':topicId');
 		} else {
 			$expr = $qb->expr()->andX(
 				$qb->expr()->eq('t.id', ':topicId'),
-				$qb->expr()->eq('t.isDeleted', false)
+				$qb->expr()->eq('t.isDeleted', ':isDeleted')
 			);
 		}
 		
@@ -351,9 +365,9 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 	 * @param \Doctrine\ORM\QueryBuilder $qb
 	 * @return \Doctrine\ORM\QueryBuilder
 	 */
-	protected function limitQueryByStickiedAndDeletedStateByBoardId(QueryBuilder $qb)
+	protected function limitQueryByStickiedAndDeletedStateByBoardId(QueryBuilder $qb, $canViewDeletedTopics)
 	{
-		if ($this->allowedToViewDeletedTopics()) {
+		if ($canViewDeletedTopics) {
 			$expr = $qb->expr()->andX(
 				$qb->expr()->eq('t.board', ':boardId'),
 				$qb->expr()->eq('t.isSticky', ':isSticky')
@@ -363,7 +377,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 				$qb->expr()->eq('t.board', ':boardId'),
 				$qb->expr()->andX(
 					$qb->expr()->eq('t.isSticky', ':isSticky'),
-					$qb->expr()->eq('t.isDeleted', false)
+					$qb->expr()->eq('t.isDeleted', ':isDeleted')
 				)
 			);
 		}

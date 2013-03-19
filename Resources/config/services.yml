@@ -257,7 +257,8 @@ services:
     #
     ccdn_forum_forum.component.twig_extension.board_list:
         class: %ccdn_forum_forum.component.twig_extension.board_list.class%
-        arguments: [@service_container]
+        arguments:
+            - @ccdn_forum_forum.manager.category
         tags:
             - { name: twig.extension }
 
@@ -276,11 +277,3 @@ services:
         arguments: [@service_container]
         tags:
             - { name: ccdn_component_dashboard.integrator }
-
-    #
-    # Menu Builder.
-    #
-    ccdn_forum_forum.component.menu_builder.menu:
-        class: %ccdn_forum_forum.component.menu_builder.menu.class%
-        tags:
-            - { name: ccdn_component_menu.menu_builder }
