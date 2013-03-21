@@ -91,9 +91,9 @@ class TopicController extends TopicBaseController
 		$formHandler = $this->getFormHandlerToCreateTopic($board, $draftId);
 
 		// Flood Control.
-		if (! $this->container->get('ccdn_forum_forum.component.flood_control')->isFlooded()) {
+		if (! $this->getFloodControl()->isFlooded()) {
             if ($formHandler->process($this->getRequest())) {
-                $this->container->get('ccdn_forum_forum.component.flood_control')->incrementCounter();
+                $this->getFloodControl()->incrementCounter();
 
 				$this->setFlash('success', $this->trans('ccdn_forum_forum.flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle())));
 
@@ -137,9 +137,9 @@ class TopicController extends TopicBaseController
 		$formHandler = $this->getFormHandlerToReplyToTopic($topic, $draftId, $quoteId);
 
 		// Flood Control.
-		if ( ! $this->container->get('ccdn_forum_forum.component.flood_control')->isFlooded()) {
+		if ( ! $this->getFloodControl()->isFlooded()) {
             if ($formHandler->process($this->getRequest())) {
-				$this->container->get('ccdn_forum_forum.component.flood_control')->incrementCounter();
+				$this->getFloodControl()->incrementCounter();
 				
                 // Page of the last post.
 				$page = $this->getTopicManager()->getPageForPostOnTopic($topic, $topic->getLastPost());

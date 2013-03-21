@@ -28,6 +28,13 @@ class TopicBaseController extends BaseController
 {
 	/**
 	 *
+	 * @access private
+	 * @var \CCDNForum\ForumBundle\Component\FloodControl $floodControl
+	 */
+	private $floodControl;
+	
+	/**
+	 *
 	 * @access public
 	 * @param \CCDNForum\ForumBundle\Entity\Board $board
 	 * @return bool
@@ -84,6 +91,20 @@ class TopicBaseController extends BaseController
 	public function isAuthorisedToRestoreTopic(Topic $topic)
 	{
 		return $this->isAuthorised($this->getTopicManager()->isAuthorisedToRestoreTopic($topic));
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Component\FloodControl
+	 */
+	public function getFloodControl()
+	{
+		if (null == $this->floodControl) {
+			$this->floodControl = $this->container->get('ccdn_forum_forum.component.flood_control');			
+		}
+		
+		return $this->floodControl;
 	}
 	
 	/**
