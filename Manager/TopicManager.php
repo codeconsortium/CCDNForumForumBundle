@@ -424,6 +424,28 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 		}
 	}
 	
+	/**
+	 *
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
+	 * @param \CCDNForum\ForumBundle\Entity\Post $post
+	 * @return int
+	 */
+	public function getPageForPostOnTopic(Topic $topic, Post $post)
+	{
+		$postsPerPage = $this->getPostsPerPageOnTopics();
+		$page = 1;
+		
+        foreach ($topic->getPosts() as $index => $postTest) {
+            if ($post->getId() == $postTest->getId()) {
+                $page = ceil($index / $postsPerPage);
+                break;
+            }
+        }
+		
+		return $page;
+	}
+	
     /**
      *
      * @access public
@@ -458,15 +480,17 @@ class TopicManager extends BaseManager implements BaseManagerInterface
     }
 
     /**
-     *
+     * Post will be the first post of the topic, the topic entity should be 
+	 * included inside the topic for title changes etc to persisted correctly.
+	 *
      * @access public
      * @param \CCDNForum\ForumBundle\Entity\Topic $topic
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function update(Topic $topic)
+    public function updateTopic(Post $post)
     {
         // update the record
-        $this->persist($topic);
+        $this->persist($post);
 
         return $this;
     }

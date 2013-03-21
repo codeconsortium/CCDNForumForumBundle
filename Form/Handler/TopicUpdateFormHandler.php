@@ -189,6 +189,6 @@ class TopicUpdateFormHandler
             $post->setEditedBy($this->manager->getUser());
         }
 		
-        return $this->manager->update($post)->flush();
+        return $this->manager->updateTopic($post)->flush();
     }
 }

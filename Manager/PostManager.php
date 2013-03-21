@@ -292,7 +292,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Post $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function update(Post $post)
+    public function updatePost(Post $post)
     {
         // update a record
         $this->persist($post);

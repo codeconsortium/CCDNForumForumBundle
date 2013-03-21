@@ -140,14 +140,10 @@ class TopicController extends TopicBaseController
 		if ( ! $this->container->get('ccdn_forum_forum.component.flood_control')->isFlooded()) {
             if ($formHandler->process($this->getRequest())) {
 				$this->container->get('ccdn_forum_forum.component.flood_control')->incrementCounter();
-					
-                // page of the last post
-                $postsPerTopicPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
-
-                $pageCounter = $this->getTopicManager()->getPostCountForTopicById($topicId);
 				
-                $page = $pageCounter ? ceil($pageCounter['postCount'] / $postsPerTopicPage) : 1;
-
+                // Page of the last post.
+				$page = $this->getTopicManager()->getPageForPostOnTopic($topic, $topic->getLastPost());
+				
                 $this->setFlash('success', $this->trans('ccdn_forum_forum.flash.topic.reply.success', array('%topic_title%' => $topic->getTitle())));
 
                 return new RedirectResponse($this->path('ccdn_forum_forum_topic_show_paginated_anchored', array('topicId' => $topicId, 'page' => $page, 'postId' => $topic->getLastPost()->getId()) ));

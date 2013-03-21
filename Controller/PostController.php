@@ -85,16 +85,11 @@ class PostController extends PostBaseController
 			$formHandler = $this->getFormHandlerToEditPost($post);
         }
 
-        if ($formHandler->process($this->getRequest())) {	// get posts for determining the page of the edited post
+        if ($formHandler->process($this->getRequest())) {
+			// get posts for determining the page of the edited post
             $topic = $post->getTopic();
 
-            foreach ($topic->getPosts() as $index => $postTest) {
-                if ($post->getId() == $postTest->getId()) {
-                    $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
-                    $page = ceil($index / $postsPerPage);
-                    break;
-                }
-            }
+			$page = $this->getTopicManager()->getPageForPostOnTopic($topic, $post);
 
             $this->setFlash('success', $this->trans('ccdn_forum_forum.flash.post.edit.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle())));
 
