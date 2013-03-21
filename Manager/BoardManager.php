@@ -127,22 +127,22 @@ class BoardManager extends BaseManager implements BaseManagerInterface
         return $this;
     }
 
-//    /**
-//     *
-//     * @access public
-//     * @param Array $boards
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function bulkUpdateStats($boards)
-//    {
-//        foreach ($boards as $board) {
-//            $this->updateStats($board);
-//        }
-//
-//        $this->flush();
-//
-//        return $this;
-//    }
+    /**
+     *
+     * @access public
+     * @param Array $boards
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function bulkUpdateStats($boards)
+    {
+        foreach ($boards as $board) {
+            $this->updateStats($board);
+        }
+
+        $this->flush();
+
+        return $this;
+    }
 	
 	/**
 	 *
@@ -159,5 +159,90 @@ class BoardManager extends BaseManager implements BaseManagerInterface
         }
 
         return $boards;
+    }
+	
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Entity\Board $board
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function postNewBoard(Board $board)
+    {
+		$boardCount = $this->gateway->getRepository()->countBoardsForCategory($board->getCategory()->getId());
+
+        $board->setListOrderPriority(++$boardCount[1]);
+
+        // insert a new row
+        $this->persist($board);
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Entity\Board $board
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function updateBoard(Board $board)
+    {
+        // update a record
+        $this->persist($board);
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param array $boards
+	 * @param int $boardId
+	 * @param string $direction
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function reorder($boards, $boardId, $direction)
+    {
+        $boardCount = count($boards);
+        for ($index = 0, $priority = 1, $align = false; $index < $boardCount; $index++, $priority++) {
+            if ($boards[$index]->getId() == $boardId) {
+                if ($align == false) { // if aligning then other indices priorities are being corrected
+                    // **************
+                    // **** DOWN ****
+                    // **************
+                    if ($direction == 'down') {
+                        if ($index < ($boardCount - 1)) { // <-- must be lower because we need to alter an offset of the next index.
+                            $boards[$index]->setListOrderPriority($priority+1); // move this down the page
+                            $boards[$index+1]->setListOrderPriority($priority); // move this up the page
+                            $index+=1; $priority++; // the next index has already been changed
+                        } else {
+                            $boards[$index]->setListOrderPriority(1); // move to the top of the page
+                            $index = -1; $priority = 1; // alter offsets for alignment of all other priorities
+                        }
+                    // **************
+                    // ***** UP *****
+                    // **************
+                    } else {
+                        if ($index > 0) {
+                            $boards[$index]->setListOrderPriority($priority-1); // move this up the page
+                            $boards[$index-1]->setListOrderPriority($priority); // move this down the page
+                            $index+=1; $priority++;
+                        } else {
+                            $boards[$index]->setListOrderPriority($boardCount); // move to the bottom of the page
+                            $index = -1; $priority = -1; // alter offsets for alignment of all other priorities
+                        }
+                    } // end down / up direction
+                    $align = true; continue;
+                }// end align
+            } else {
+                $boards[$index]->setListOrderPriority($priority);
+            } // end board id match
+        } // end loop
+
+        foreach ($boards as $board) { $this->persist($board); }
+
+		$this->flush();
+		
+        return $this;
     }
 }

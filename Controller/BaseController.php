@@ -191,6 +191,35 @@ class BaseController extends ContainerAware
 	/**
 	 *
 	 * @access protected
+	 * @param string $prefix
+	 * @return Array
+	 */
+	protected function getCheckedItemIds($prefix = 'check_', $enforceNumericType = true)
+	{
+		$request = $this->getRequest();
+		
+		$sanitarisedIds = array();
+		
+		if ($request->request->has($prefix)) {
+			$itemIds = $request->request->get($prefix);
+			
+			foreach($itemIds as $id => $val) {
+				if ($enforceNumericType == true) {
+					if (! is_numeric($id)) {
+						continue;
+					}
+				}
+				
+				$sanitarisedIds[] = $id;
+			}
+		}
+		
+		return $sanitarisedIds;
+	}
+	
+	/**
+	 *
+	 * @access protected
 	 * @param string $template
 	 * @param Array $params
 	 * @param string $engine

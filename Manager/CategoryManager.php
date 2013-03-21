@@ -19,6 +19,8 @@ use Doctrine\ORM\QueryBuilder;
 use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Manager\BaseManager;
 
+use CCDNForum\ForumBundle\Entity\Category;
+
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
@@ -118,5 +120,90 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
         }
 
         return $categories;
+    }
+	
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Entity\Category $category
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function postNewCategory(Category $category)
+    {
+		$categoryCount = $this->gateway->getRepository()->countCategories();
+
+        $category->setListOrderPriority(++$categoryCount[1]);
+
+        // insert a new row
+        $this->persist($category);
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Entity\Category $category
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function updateCategory(Category $category)
+    {
+        // update a record
+        $this->persist($category);
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param Array $categories
+	 * @param int $categoryId
+	 * @param string $direction
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function reorder($categories, $categoryId, $direction)
+    {
+        $categoryCount = count($categories);
+        for ($index = 0, $priority = 1, $align = false; $index < $categoryCount; $index++, $priority++) {
+            if ($categories[$index]->getId() == $categoryId) {
+                if ($align == false) { // if aligning then other indices priorities are being corrected
+                    // **************
+                    // **** DOWN ****
+                    // **************
+                    if ($direction == 'down') {
+                        if ($index < ($categoryCount - 1)) { // <-- must be lower because we need to alter an offset of the next index.
+                            $categories[$index]->setListOrderPriority($priority+1); // move this down the page
+                            $categories[$index+1]->setListOrderPriority($priority); // move this up the page
+                            $index+=1; $priority++; // the next index has already been changed
+                        } else {
+                            $categories[$index]->setListOrderPriority(1); // move to the top of the page
+                            $index = -1; $priority = 1; // alter offsets for alignment of all other priorities
+                        }
+                    // **************
+                    // ***** UP *****
+                    // **************
+                    } else {
+                        if ($index > 0) {
+                            $categories[$index]->setListOrderPriority($priority-1); // move this up the page
+                            $categories[$index-1]->setListOrderPriority($priority); // move this down the page
+                            $index+=1; $priority++;
+                        } else {
+                            $categories[$index]->setListOrderPriority($categoryCount); // move to the bottom of the page
+                            $index = -1; $priority = -1; // alter offsets for alignment of all other priorities
+                        }
+                    } // end down / up direction
+                    $align = true; continue;
+                }// end align
+            } else {
+                $categories[$index]->setListOrderPriority($priority);
+            } // end category id match
+        } // end loop
+
+        foreach ($categories as $category) { $this->persist($category); }
+
+		$this->flush();
+		
+        return $this;
     }
 }
