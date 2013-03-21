@@ -193,7 +193,6 @@ class TopicModeratorController extends TopicBaseController
         $this->isAuthorised('ROLE_MODERATOR');
 
         $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
-
         $this->isFound($topic);
 
         $this->getTopicManager()->restore($topic)->flush();
@@ -216,7 +215,6 @@ class TopicModeratorController extends TopicBaseController
 		$this->isAuthorised('ROLE_MODERATOR');
 
 		$topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
-
         $this->isFound($topic);
 
         $formHandler = $this->getFormHandlerToChangeBoardOnTopic($topic);

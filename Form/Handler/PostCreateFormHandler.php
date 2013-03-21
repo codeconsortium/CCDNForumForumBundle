@@ -63,6 +63,13 @@ class PostCreateFormHandler
 	 * @var \CCDNForum\ForumBundle\Entity\Topic $topic 
 	 */
 	protected $topic;
+
+    /**
+	 * 
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Entity\Post $postToQuote 
+	 */	
+	protected $postToQuote;
 	
     /**
      *
@@ -87,6 +94,19 @@ class PostCreateFormHandler
 	public function setTopic(Topic $topic)
 	{
 		$this->topic = $topic;
+		
+		return $this;
+	}
+
+    /**
+     *
+     * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Post $post
+	 * @return \CCDNForum\ForumBundle\Form\Handler\PostCreateFormHandler
+     */
+	public function setPostToQuote(Post $post)
+	{
+		$this->postToQuote = $post;
 		
 		return $this;
 	}
@@ -136,6 +156,25 @@ class PostCreateFormHandler
 		return $action;
 	}
 	
+	/**
+	 *
+	 * @access public
+	 * @return string
+	 */
+	protected function getQuote()
+	{
+		$quote = "";
+		
+        if (is_object($this->postToQuote) && $this->postToQuote instanceof Post) {
+            $author = $this->postToQuote->getCreatedBy();
+            $body = $this->postToQuote->getBody();
+
+            $quote = '[QUOTE="' . $author . '"]' . $body . '[/QUOTE]';
+        }
+	
+	    return $quote;
+	}
+	
     /**
      *
      * @access public
@@ -150,6 +189,7 @@ class PostCreateFormHandler
 
             $post = new Post();
             $post->setTopic($this->topic);
+			$post->setBody($this->getQuote());
 
             $this->form = $this->factory->create($this->formPostType, $post);
         }

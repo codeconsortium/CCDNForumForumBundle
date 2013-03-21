@@ -116,14 +116,14 @@ class TopicBaseController extends BaseController
 	 */
 	public function getFormHandlerToCreateTopic(Board $board, $draftId)
 	{
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_create');
+
+		$formHandler->setBoard($board);
+
         //if ( ! empty($draftId)) {
         //    $draft = $this->getDraftManager()->findOneById($draftId);
         //}
 		
-        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_create');
-		
-		$formHandler->setBoard($board);
-
 		return $formHandler;
 	}
 	
@@ -137,18 +137,20 @@ class TopicBaseController extends BaseController
 	 */
 	public function getFormHandlerToReplyToTopic(Topic $topic, $draftId, $quoteId)
 	{		
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_create');
+
+		$formHandler->setTopic($topic);
+
         //if ( ! empty($draftId)) {
         //    $draft = $this->getDraftManager()->findOneById($draftId);
         //}
 	
-        //if ( ! empty($quoteId)) {
-        //    $quote = $this->container->get('ccdn_forum_forum.repository.post')->find($quoteId);
-        //}
-		
-        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_create');
-
-		$formHandler->setTopic($topic);
-		
+        if ( ! empty($quoteId)) {
+            $quote = $this->getPostManager()->findOneByIdWithTopicAndBoard($quoteId);
+			
+			$formHandler->setPostToQuote($quote);
+        }
+				
 		return $formHandler;
 	}
 	

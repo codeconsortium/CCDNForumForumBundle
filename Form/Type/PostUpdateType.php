@@ -16,12 +16,14 @@ namespace CCDNForum\ForumBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+use CCDNForum\ForumBundle\Entity\Post;
+
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class TopicType extends AbstractType
+class PostUpdateType extends AbstractType
 {
     /**
      *
@@ -30,10 +32,12 @@ class TopicType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', null, array(
-        	'label' => 'ccdn_forum_forum.form.label.topic.title',
-			'translation_domain' => 'CCDNForumForumBundle'
-        ));
+        $builder
+			->add('body', 'bb_editor', array(
+				'label' => 'ccdn_forum_forum.form.label.post.body',
+				'translation_domain' => 'CCDNForumForumBundle'
+	        ))
+		;
     }
 
     /**
@@ -45,13 +49,14 @@ class TopicType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class' => 'CCDNForum\ForumBundle\Entity\Topic',
-            'empty_data' => new \CCDNForum\ForumBundle\Entity\Topic(),
+            'data_class' => 'CCDNForum\ForumBundle\Entity\Post',
+            'empty_data' => new \CCDNForum\ForumBundle\Entity\Post(),
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             // a unique key to help generate the secret token
-            'intention'       => 'topic_item',
-            'validation_groups' => array('topic'),
+            'intention'       => 'post_item',
+            'validation_groups' => array('post'),
+            'cascade_validation' => true,
         );
     }
 
@@ -62,6 +67,6 @@ class TopicType extends AbstractType
      */
     public function getName()
     {
-        return 'Topic';
+        return 'Post';
     }
 }

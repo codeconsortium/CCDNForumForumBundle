@@ -23,21 +23,8 @@ use CCDNForum\ForumBundle\Entity\Post;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class PostType extends AbstractType
+class PostCreateType extends AbstractType
 {
-    /**
-     *
-     * @access public
-     * @param array $defaults
-	 * @return self
-     */
-    public function setDefaultValues(array $defaults = null)
-    {
-        $this->defaults = array_merge($this->defaults, $defaults);
-
-        return $this;
-    }
-
     /**
      *
      * @access public
@@ -45,35 +32,13 @@ class PostType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('body', 'bb_editor', array(
-        //    'data' => $this->getQuote(),
-			'label' => 'ccdn_forum_forum.form.label.post.body',
-			'translation_domain' => 'CCDNForumForumBundle'
-        ));
+        $builder
+			->add('body', 'bb_editor', array(
+				'label' => 'ccdn_forum_forum.form.label.post.body',
+				'translation_domain' => 'CCDNForumForumBundle'
+	        ))
+		;
     }
-
-//    /**
-//     *
-//     * @access public
-//     * @return string
-//     */
-//    public function getQuote()
-//    {
-//        if (array_key_exists('quote', $this->defaults)) {
-//            if (is_object($this->defaults['quote']) && $this->defaults['quote'] instanceof Post) {
-//                $quote = $this->defaults['quote'];
-//
-//                $author = $quote->getCreatedBy();
-//                $body = $quote->getBody();
-//
-//                $quote = '[QUOTE=' . $author . ']' . $body . '[/QUOTE]';
-//
-//                return $quote;
-//            }
-//        }
-//
-//        return "";
-//    }
 
     /**
      *
