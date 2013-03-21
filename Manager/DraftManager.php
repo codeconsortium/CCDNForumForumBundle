@@ -49,9 +49,7 @@ class DraftManager extends BaseManager implements BaseManagerInterface
             return null;
         }
 
-        //
         // is this a topic?
-        //
         if (is_object($draft->getTopic()) && $draft->getTopic() instanceof Topic) {
             if ($draft->getTopic()->getId()) {
                 // we have a reply
@@ -65,9 +63,7 @@ class DraftManager extends BaseManager implements BaseManagerInterface
             $type = self::TOPIC;
         }
 
-        //
         // format the entity to be returned.
-        //
         if ($type == self::REPLY) {
             $post = new Post();
 
@@ -106,13 +102,9 @@ class DraftManager extends BaseManager implements BaseManagerInterface
 
         $draft = new Draft();
 
-        //
         // is this a post?
-        //
         if (is_object($post) && $post instanceof Post) {
-            //
             // is this a topic?
-            //
             if (is_object($post->getTopic()) && $post->getTopic() instanceof Topic) {
                 if ($post->getTopic()->getId()) {
                     $draft->setTopic($post->getTopic());

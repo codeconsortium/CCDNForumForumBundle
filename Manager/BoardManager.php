@@ -127,22 +127,22 @@ class BoardManager extends BaseManager implements BaseManagerInterface
         return $this;
     }
 
-    /**
-     *
-     * @access public
-     * @param Array $boards
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function bulkUpdateStats($boards)
-    {
-        foreach ($boards as $board) {
-            $this->updateStats($board);
-        }
-
-        $this->flush();
-
-        return $this;
-    }
+//    /**
+//     *
+//     * @access public
+//     * @param Array $boards
+//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+//     */
+//    public function bulkUpdateStats($boards)
+//    {
+//        foreach ($boards as $board) {
+//            $this->updateStats($board);
+//        }
+//
+//        $this->flush();
+//
+//        return $this;
+//    }
 	
 	/**
 	 *

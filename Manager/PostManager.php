@@ -306,7 +306,6 @@ class PostManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Post $post
 	 * @param \Symfony\Component\Security\Core\User\UserInterface $user
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-	 * @todo get rid of user parameter and use $this->getUser()
      */
     public function softDelete(Post $post, UserInterface $user)
     {

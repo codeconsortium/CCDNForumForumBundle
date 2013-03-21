@@ -82,9 +82,7 @@ class RegistryManager extends BaseManager implements BaseManagerInterface
 
         $registriesTemp = $this->gateway->getRepository()->getPostCountsForUsers($registryUserIds);
 
-        //
         // Sort the registries so that the [id] is the key of the parent key.
-        //
         $registries = array();
 
         foreach ($registriesTemp as $key => $registry) {

@@ -653,20 +653,20 @@ class TopicManager extends BaseManager implements BaseManagerInterface
         return $this;
     }
 
-    /**
-     *
-     * @access public
-     * @param array $topics
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function bulkUpdateStats($topics)
-    {
-        foreach ($topics as $topic) {
-            $this->updateStats($topic);
-        }
-		
-		return $this;
-    }
+//    /**
+//     *
+//     * @access public
+//     * @param array $topics
+//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+//     */
+//    public function bulkUpdateStats($topics)
+//    {
+//        foreach ($topics as $topic) {
+//            $this->updateStats($topic);
+//        }
+//		
+//		return $this;
+//    }
 
     /**
      *
