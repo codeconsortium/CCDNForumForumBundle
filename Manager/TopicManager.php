@@ -13,11 +13,16 @@
 
 namespace CCDNForum\ForumBundle\Manager;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Manager\BaseManager;
+
+use CCDNForum\ForumBundle\Entity\Topic;
+use CCDNForum\ForumBundle\Entity\Post;
 
 /**
  *
@@ -49,7 +54,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
 	 * @return bool
 	 */
-	public function isAuthorisedToReplyToTopic($topic)
+	public function isAuthorisedToReplyToTopic(Topic $topic)
 	{
         if (! $topic->getBoard()->isAuthorisedToTopicReply($this->securityContext)) {
         	return false;
@@ -70,7 +75,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
 	 * @return bool
 	 */
-	public function isAuthorisedToEditTopic($topic)
+	public function isAuthorisedToEditTopic(Topic $topic)
 	{
 		if ($topic->getIsDeleted() || $topic->getIsClosed()) {
 			if (! $this->isGranted('ROLE_MODERATOR')) {
@@ -110,7 +115,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
 	 * @return bool
 	 */
-	public function isAuthorisedToDeleteTopic($topic)
+	public function isAuthorisedToDeleteTopic(Topic $topic)
 	{
 		if ($topic->getIsDeleted() || $topic->getIsClosed()) {
 			if (! $this->isGranted('ROLE_MODERATOR')) {
@@ -156,7 +161,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
 	 * @return bool
 	 */
-	public function isAuthorisedToRestoreTopic($topic)
+	public function isAuthorisedToRestoreTopic(Topic $topic)
 	{
 		if ($topic->getIsDeleted() || $topic->getIsClosed()) {
 			if (! $this->isGranted('ROLE_MODERATOR')) {
@@ -226,7 +231,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 		
 		$canViewDeleted = $this->allowedToViewDeletedTopics();
 		
-		$params = array(':topicId' => $topicId, ':isDeleted' => false);
+		$params = array(':topicId' => $topicId/*, ':isDeleted' => false*/);
 		
 		$qb = $this->createSelectQuery(array('t', 'p', 'fp', 'lp', 'b', 'c'));
 		
@@ -257,7 +262,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 		
 		$canViewDeleted = $this->allowedToViewDeletedTopics();
 		
-		$params = array(':topicId' => $topicId, ':isDeleted' => false);
+		$params = array(':topicId' => $topicId/*, ':isDeleted' => false*/);
 		
 		$qb = $this->createSelectQuery(array('t', 'b', 'c'));
 		
@@ -285,7 +290,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 		
 		$canViewDeleted = $this->allowedToViewDeletedTopics();
 		
-		$params = array(':boardId' => $boardId, ':isSticky' => true, ':isDeleted' => false);
+		$params = array(':boardId' => $boardId, ':isSticky' => true/*, ':isDeleted' => false*/);
 		
 		$qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author'));
 		
@@ -319,7 +324,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 
 		$canViewDeleted = $this->allowedToViewDeletedTopics();
 		
-		$params = array(':boardId' => $boardId, ':isSticky' => false, ':isDeleted' => false);
+		$params = array(':boardId' => $boardId, ':isSticky' => false/*, ':isDeleted' => false*/);
 		
 		$qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author'));
 			
@@ -343,6 +348,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 	 *
 	 * @access protected
 	 * @param \Doctrine\ORM\QueryBuilder $qb
+	 * @param bool $canViewDeletedTopics
 	 * @return \Doctrine\ORM\QueryBuilder
 	 */
 	protected function limitQueryByDeletedStateAndByTopicId(QueryBuilder $qb, $canViewDeletedTopics)
@@ -352,7 +358,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 		} else {
 			$expr = $qb->expr()->andX(
 				$qb->expr()->eq('t.id', ':topicId'),
-				$qb->expr()->eq('t.isDeleted', ':isDeleted')
+				$qb->expr()->eq('t.isDeleted', 'FALSE')
 			);
 		}
 		
@@ -363,6 +369,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 	 *
 	 * @access protected
 	 * @param \Doctrine\ORM\QueryBuilder $qb
+	 * @param bool $canViewDeletedTopics
 	 * @return \Doctrine\ORM\QueryBuilder
 	 */
 	protected function limitQueryByStickiedAndDeletedStateByBoardId(QueryBuilder $qb, $canViewDeletedTopics)
@@ -377,12 +384,44 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 				$qb->expr()->eq('t.board', ':boardId'),
 				$qb->expr()->andX(
 					$qb->expr()->eq('t.isSticky', ':isSticky'),
-					$qb->expr()->eq('t.isDeleted', ':isDeleted')
+					$qb->expr()->eq('t.isDeleted', 'FALSE')
 				)
 			);
 		}
 		
 		return $expr;
+	}
+		
+	/**
+	 *
+	 * @access public
+	 * @param int $boardId
+	 * @return Array
+	 */	
+	public function getPostCountForTopicById($topicId)
+	{
+		if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
+			throw new \Exception('Topic id "' . $topicId . '" is invalid!');
+		}
+		
+		$qb = $this->getQueryBuilder();
+
+		$topicEntityClass = $this->managerBag->getTopicManager()->getGateway()->getEntityClass();
+			
+		$qb
+			->select('COUNT(DISTINCT p.id) AS postCount')
+			->from($topicEntityClass, 't')
+			->leftJoin('t.posts', 'p')
+			->where('t.id = :topicId')
+			->setParameter(':topicId', $topicId);
+		
+		try {
+			return $qb->getQuery()->getSingleResult();			
+		} catch (\Doctrine\ORM\NoResultException $e) {
+			return array('postCount' => null);
+		} catch (\Exception $e) {
+			return array('postCount' => null);			
+		}
 	}
 	
     /**
@@ -391,7 +430,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Post $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function postNewTopic($post)
+    public function postNewTopic(Post $post)
     {
         // insert a new row.
         $this->persist($post)->flush();
@@ -424,7 +463,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Topic $topic
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function update($topic)
+    public function update(Topic $topic)
     {
         // update the record
         $this->persist($topic);
@@ -438,7 +477,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Topic $topic
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function restore($topic)
+    public function restore(Topic $topic)
     {
         $topic->setIsDeleted(false);
         $topic->setDeletedBy(null);
@@ -459,7 +498,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 	 * @param $user
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function softDelete($topic, $user)
+    public function softDelete(Topic $topic, UserInterface $user)
     {
         // Don't overwite previous users accountability.
         if ( ! $topic->getDeletedBy() && ! $topic->getDeletedDate()) {
@@ -489,7 +528,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 	 * @param $user
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function close($topic, $user)
+    public function close(Topic $topic, UserInterface $user)
     {
         // Don't overwite previous users accountability.
         if ( ! $topic->getClosedBy() && ! $topic->getClosedDate()) {
@@ -509,7 +548,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Topic $topic
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function reopen($topic)
+    public function reopen(Topic $topic)
     {
         $topic->setIsClosed(false);
         $topic->setClosedBy(null);
@@ -532,7 +571,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Topic $topic
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function sticky($topic, $user)
+    public function sticky(Topic $topic, UserInterface $user)
     {
         $topic->setIsSticky(true);
         $topic->setStickiedBy($user);
@@ -549,7 +588,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Topic $topic
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function unsticky($topic)
+    public function unsticky(Topic $topic)
     {
         $topic->setIsSticky(false);
         $topic->setStickiedBy(null);
@@ -566,12 +605,12 @@ class TopicManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Topic $topic
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function updateStats($topic)
+    public function updateStats(Topic $topic)
     {
 		$postManager = $this->managerBag->getPostManager();
 
 		// Get stats.
-        $topicPostCount = $postManager->getPostCountForTopicById($topic->getId());
+        $topicPostCount = $this->getPostCountForTopicById($topic->getId());
         $topicFirstPost = $postManager->getFirstPostForTopicById($topic->getId());
         $topicLastPost = $postManager->getLastPostForTopicById($topic->getId());
 
@@ -611,7 +650,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Topic $topic
 	 * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function incrementViewCounter($topic)
+    public function incrementViewCounter(Topic $topic)
     {
         // set the new counters
         $topic->setCachedViewCount($topic->getCachedViewCount() + 1);

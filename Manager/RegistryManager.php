@@ -13,6 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Manager;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
 
@@ -34,7 +36,7 @@ class RegistryManager extends BaseManager implements BaseManagerInterface
      * @param $user
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function updateCachePostCountForUser($user)
+    public function updateCachePostCountForUser(UserInterface $user)
     {
         $record = $this->gateway->getRepository()->findRegistryRecordForUser($user->getId());
 

@@ -144,9 +144,9 @@ class TopicController extends TopicBaseController
                 // page of the last post
                 $postsPerTopicPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 
-                $pageCounter = $this->container->get('ccdn_forum_forum.repository.post')->getPostCountForTopicById($topicId);
-
-                $page =  $pageCounter ? ceil($pageCounter / $postsPerTopicPage) : 1;
+                $pageCounter = $this->getTopicManager()->getPostCountForTopicById($topicId);
+				
+                $page = $pageCounter ? ceil($pageCounter['postCount'] / $postsPerTopicPage) : 1;
 
                 $this->setFlash('success', $this->trans('ccdn_forum_forum.flash.topic.reply.success', array('%topic_title%' => $topic->getTitle())));
 

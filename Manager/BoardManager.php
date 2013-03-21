@@ -19,6 +19,8 @@ use Doctrine\ORM\QueryBuilder;
 use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Manager\BaseManager;
 
+use CCDNForum\ForumBundle\Entity\Board;
+
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
@@ -32,7 +34,7 @@ class BoardManager extends BaseManager implements BaseManagerInterface
 	 * @param \CCDNForum\ForumBundle\Entity\Board $board
 	 * @return bool
 	 */
-	public function isAuthorisedToCreateTopic($board)
+	public function isAuthorisedToCreateTopic(Board $board)
 	{
         if (! $board->isAuthorisedToCreateTopic($this->securityContext)) {
         	return false;
@@ -103,7 +105,7 @@ class BoardManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Board $board
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function updateStats($board)
+    public function updateStats(Board $board)
     {
 		$stats = $this->getTopicAndPostCountForBoardById($board->getId());
 		

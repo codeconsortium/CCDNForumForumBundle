@@ -13,11 +13,15 @@
 
 namespace CCDNForum\ForumBundle\Manager;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Manager\BaseManager;
+
+use CCDNForum\ForumBundle\Entity\Post;
 
 /**
  *
@@ -32,7 +36,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
 	 * @param \CCDNForum\ForumBundle\Entity\Post $post
 	 * @return bool
 	 */
-	public function isAuthorisedToEditPost($post)
+	public function isAuthorisedToEditPost(Post $post)
 	{
 		if ($post->getIsDeleted() || $post->getIsLocked() || $post->getTopic()->getIsDeleted() || $post->getTopic()->getIsClosed()) {
 			if (! $this->isGranted('ROLE_MODERATOR')) {
@@ -66,7 +70,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
 	 * @param \CCDNForum\ForumBundle\Entity\Post $post
 	 * @return bool
 	 */
-	public function isAuthorisedToDeletePost($post)
+	public function isAuthorisedToDeletePost(Post $post)
 	{
 		if ($post->getIsDeleted() || $post->getIsLocked() || $post->getTopic()->getIsDeleted() || $post->getTopic()->getIsClosed()) {
 			if (! $this->isGranted('ROLE_MODERATOR')) {
@@ -100,7 +104,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
 	 * @param \CCDNForum\ForumBundle\Entity\Post $post
 	 * @return bool
 	 */
-	public function isAuthorisedToRestorePost($post)
+	public function isAuthorisedToRestorePost(Post $post)
 	{
 		if ($post->getIsDeleted() || $post->getIsLocked() || $post->getTopic()->getIsDeleted() || $post->getTopic()->getIsClosed()) {
 			if (! $this->isGranted('ROLE_MODERATOR')) {
@@ -131,38 +135,6 @@ class PostManager extends BaseManager implements BaseManagerInterface
 	/**
 	 *
 	 * @access public
-	 * @param int $boardId
-	 * @return Array
-	 */	
-	public function getPostCountForTopicById($topicId)
-	{
-		if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
-			throw new \Exception('Topic id "' . $topicId . '" is invalid!');
-		}
-		
-		$qb = $this->getQueryBuilder();
-
-		$topicEntityClass = $this->managerBag->getTopicManager()->getGateway()->getEntityClass();
-			
-		$qb
-			->select('COUNT(DISTINCT p.id) AS postCount')
-			->from($topicEntityClass, 't')
-			->leftJoin('t.posts', 'p')
-			->where('t.id = :topicId')
-			->setParameter(':topicId', $topicId);
-		
-		try {
-			return $qb->getQuery()->getSingleResult();			
-		} catch (\Doctrine\ORM\NoResultException $e) {
-			return array('postCount' => null);
-		} catch (\Exception $e) {
-			return array('postCount' => null);			
-		}
-	}
-	
-	/**
-	 *
-	 * @access public
 	 * @param int $topicId
 	 * @return \CCDNForum\ForumBundle\Entity\Post
 	 */	
@@ -172,6 +144,8 @@ class PostManager extends BaseManager implements BaseManagerInterface
 			throw new \Exception('Topic id "' . $topicId . '" is invalid!');
 		}
 		
+		$params = array(':topicId' => $topicId);
+		
 		$qb = $this->createSelectQuery(array('p'));
 		
 		$qb
@@ -179,7 +153,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
 			->orderBy('p.createdDate', 'ASC')
 			->setMaxResults(1);
 		
-		return $this->gateway->findPost($qb, array(':topicId' => $topicId));
+		return $this->gateway->findPost($qb, $params);
 	}
 	
 	/**
@@ -194,6 +168,8 @@ class PostManager extends BaseManager implements BaseManagerInterface
 			throw new \Exception('Topic id "' . $topicId . '" is invalid!');
 		}
 
+		$params = array(':topicId' => $topicId);
+		
 		$qb = $this->createSelectQuery(array('p'));
 
 		$qb
@@ -201,7 +177,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
 			->orderBy('p.createdDate', 'DESC')
 			->setMaxResults(1);
 
-		return $this->gateway->findPost($qb, array(':topicId' => $topicId));
+		return $this->gateway->findPost($qb, $params);
 	}
 	
 	/**
@@ -216,7 +192,11 @@ class PostManager extends BaseManager implements BaseManagerInterface
 			throw new \Exception('Post id "' . $postId . '" is invalid!');
 		}
 		
-		$qb = $this->createSelectQuery(array('p', 't', 'b'));
+		$canViewDeleted = $this->managerBag->getTopicManager()->allowedToViewDeletedTopics();
+		
+		$params = array(':postId' => $postId);
+		
+		$qb = $this->createSelectQuery(array('p', 't', 'fp', 'lp', 'b', 'c'));
 		
 		$qb
 			->innerJoin('p.topic', 't')
@@ -225,10 +205,10 @@ class PostManager extends BaseManager implements BaseManagerInterface
 			->leftJoin('t.board', 'b')
 			->leftJoin('b.category', 'c')
 			->where(
-				$this->limitQueryByTopicsDeletedStateAndByPostId($qb)
+				$this->limitQueryByTopicsDeletedStateAndByPostId($qb, $canViewDeleted)
 			);
 		
-		return $this->gateway->findPost($qb, array(':postId' => $postId));
+		return $this->gateway->findPost($qb, $params);
 	}
 	
 	/**
@@ -243,7 +223,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
 		if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
 			throw new \Exception('Topic id "' . $topicId . '" is invalid!');
 		}
-		
+				
 		$params = array(':topicId' => $topicId);
 		
 		$qb = $this->createSelectQuery(array('p', 't', 'b', 'c', 'createdBy', 'editedBy', 'deletedBy'));
@@ -266,16 +246,17 @@ class PostManager extends BaseManager implements BaseManagerInterface
 	 *
 	 * @access protected
 	 * @param \Doctrine\ORM\QueryBuilder $qb
+	 * @param bool $canViewDeletedTopics
 	 * @return \Doctrine\ORM\QueryBuilder
 	 */
-	protected function limitQueryByTopicsDeletedStateAndByPostId(QueryBuilder $qb)
+	protected function limitQueryByTopicsDeletedStateAndByPostId(QueryBuilder $qb, $canViewDeletedTopics)
 	{
-		if ($this->managerBag->getTopicManager()->allowedToViewDeletedTopics()) {
+		if ($canViewDeletedTopics) {
 			$expr = $qb->expr()->eq('p.id', ':postId');
 		} else {
 			$expr = $qb->expr()->andX(
 				$qb->expr()->eq('p.id', ':postId'),
-				$qb->expr()->eq('t.isDeleted', false)
+				$qb->expr()->eq('t.isDeleted', 'FALSE')
 			);
 		}
 		
@@ -288,7 +269,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Post $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function postTopicReply($post)
+    public function postTopicReply(Post $post)
     {
         // insert a new row
         $this->persist($post)->flush();
@@ -311,7 +292,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Post $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function update($post)
+    public function update(Post $post)
     {
         // update a record
         $this->persist($post);
@@ -323,10 +304,11 @@ class PostManager extends BaseManager implements BaseManagerInterface
      *
      * @access public
      * @param \CCDNForum\ForumBundle\Entity\Post $post
+	 * @param \Symfony\Component\Security\Core\User\UserInterface $user
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
 	 * @todo get rid of user parameter and use $this->getUser()
      */
-    public function softDelete($post, $user)
+    public function softDelete(Post $post, UserInterface $user)
     {
         // Don't overwite previous users accountability.
         if ( ! $post->getDeletedBy() && ! $post->getDeletedDate()) {
@@ -376,7 +358,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Post $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function restore($post)
+    public function restore(Post $post)
     {
         $post->setIsDeleted(false);
         $post->setDeletedBy(null);
@@ -408,10 +390,11 @@ class PostManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Entity\Post $post, $user
+     * @param \CCDNForum\ForumBundle\Entity\Post $post
+	 * @param \Symfony\Component\Security\Core\User\UserInterface $user
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function lock($post, $user)
+    public function lock(Post $post, UserInterface $user)
     {
         // Don't overwite previous users accountability.
         if (! $post->getLockedBy() && ! $post->getLockedDate()) {
@@ -431,7 +414,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Post $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function unlock($post)
+    public function unlock(Post $post)
     {
         $post->setIsLocked(false);
         $post->setLockedBy(null);

@@ -20,6 +20,7 @@ use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Manager\BaseManager;
 
 use CCDNForum\ForumBundle\Entity\Subscription;
+use CCDNForum\ForumBundle\Entity\Topic;
 
 /**
  *
@@ -129,7 +130,7 @@ class SubscriptionManager extends BaseManager implements BaseManagerInterface
      * @param int $topicId
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function subscribe($topic)
+    public function subscribe(Topic $topic)
     {
 		$subscription = $this->findSubscriptionForTopicById($topic->getId());
 
@@ -157,7 +158,7 @@ class SubscriptionManager extends BaseManager implements BaseManagerInterface
      * @param int $topicId
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function unsubscribe($topic)
+    public function unsubscribe(Topic $topic)
     {
 		$subscription = $this->findSubscriptionForTopicById($topic->getId());
 

@@ -100,7 +100,7 @@ class DraftManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Post $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function create($post)
+    public function create(Post $post)
     {
         $user = $this->securityContext->getToken()->getUser();
 
@@ -143,7 +143,7 @@ class DraftManager extends BaseManager implements BaseManagerInterface
      * @param \CCDNForum\ForumBundle\Entity\Draft $draft
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function update($draft)
+    public function update(Draft $draft)
     {
         // update a record
         $this->persist($draft);
