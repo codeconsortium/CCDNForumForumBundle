@@ -54,10 +54,17 @@ class TopicUpdateFormHandler
     /**
 	 *
 	 * @access protected
-	 * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $manager
+	 * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $topicManager
 	 */
-    protected $manager;
-
+    protected $topicManager;
+	
+    /**
+	 *
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $postManager
+	 */
+    protected $postManager;
+	
     /**
 	 * 
 	 * @access protected
@@ -78,14 +85,16 @@ class TopicUpdateFormHandler
      * @param \Symfony\Component\Form\FormFactory $factory
 	 * @param \CCDNForum\ForumBundle\Form\Type\TopicType $formTopicType
 	 * @param \CCDNForum\ForumBundle\Form\Type\PostType $formPostType
-	 * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $manager
+	 * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $topicManager
+	 * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $postManager
      */
-    public function __construct(FormFactory $factory, $formTopicType, $formPostType, BaseManagerInterface $manager)
+    public function __construct(FormFactory $factory, $formTopicType, $formPostType, BaseManagerInterface $topicManager, BaseManagerInterface $postManager)
     {
         $this->factory = $factory;
 		$this->formTopicType = $formTopicType;
 		$this->formPostType = $formPostType;
-        $this->manager = $manager;
+        $this->topicManager = $topicManager;
+        $this->postManager = $postManager;
     }
 
     /**
@@ -162,10 +171,6 @@ class TopicUpdateFormHandler
 
             $this->form = $this->factory->create($this->formPostType, $this->post);
             $this->form->add($this->factory->create($this->formTopicType, $topic));
-			
-	        //if ($this->isGranted('ROLE_MODERATOR')) {
-	        //    $formHandler->setDefaultValues(array('board' => $post->getTopic()->getBoard()));
-	        //}
         }
 
         return $this->form;
@@ -189,6 +194,6 @@ class TopicUpdateFormHandler
             $post->setEditedBy($this->manager->getUser());
         }
 		
-        return $this->manager->updateTopic($post)->flush();
+        return $this->postManager->updatePost($post)->flush();
     }
 }

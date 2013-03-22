@@ -26,28 +26,22 @@ parameters:
     ccdn_forum_forum.gateway.draft.class:                       CCDNForum\ForumBundle\Gateway\DraftGateway
     ccdn_forum_forum.gateway.subscription.class:                CCDNForum\ForumBundle\Gateway\SubscriptionGateway
 
-    ccdn_forum_forum.form.type.post_create.class:               CCDNForum\ForumBundle\Form\Type\PostCreateType
-    ccdn_forum_forum.form.type.post_update.class:               CCDNForum\ForumBundle\Form\Type\PostUpdateType
-
-    ccdn_forum_forum.form.handler.post_create.class:            CCDNForum\ForumBundle\Form\Handler\PostCreateFormHandler
-    ccdn_forum_forum.form.handler.post_update.class:            CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
-
-    ccdn_forum_forum.form.type.topic_create.class:              CCDNForum\ForumBundle\Form\Type\TopicCreateType
-    ccdn_forum_forum.form.type.topic_update.class:              CCDNForum\ForumBundle\Form\Type\TopicUpdateType
-
     ccdn_forum_forum.form.handler.topic_create.class:           CCDNForum\ForumBundle\Form\Handler\TopicCreateFormHandler
     ccdn_forum_forum.form.handler.topic_update.class:           CCDNForum\ForumBundle\Form\Handler\TopicUpdateFormHandler
-
-    ccdn_forum_forum.component.dashboard.integrator.class:      CCDNForum\ForumBundle\Component\Dashboard\DashboardIntegrator
+    ccdn_forum_forum.form.handler.post_create.class:            CCDNForum\ForumBundle\Form\Handler\PostCreateFormHandler
+    ccdn_forum_forum.form.handler.post_update.class:            CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
+    ccdn_forum_forum.form.handler.change_topics_board.class:    CCDNForum\ForumBundle\Form\Handler\TopicChangeBoardFormHandler
+    ccdn_forum_forum.form.type.topic_create.class:              CCDNForum\ForumBundle\Form\Type\TopicCreateType
+    ccdn_forum_forum.form.type.topic_update.class:              CCDNForum\ForumBundle\Form\Type\TopicUpdateType
+    ccdn_forum_forum.form.type.post_create.class:               CCDNForum\ForumBundle\Form\Type\PostCreateType
+    ccdn_forum_forum.form.type.post_update.class:               CCDNForum\ForumBundle\Form\Type\PostUpdateType
+    ccdn_forum_forum.form.type.change_topics_board.class:       CCDNForum\ForumBundle\Form\Type\TopicChangeBoardType
 
     ccdn_forum_forum.component.twig_extension.board_list.class: CCDNForum\ForumBundle\Component\TwigExtension\BoardListExtension
 
     ccdn_forum_forum.component.flood_control.class:             CCDNForum\ForumBundle\Component\FloodControl
-    
-    ccdn_forum_forum.component.menu_builder.menu.class:         CCDNForum\ForumBundle\Component\MenuBuilder\Menu
 
-    ccdn_forum_forum.form.type.change_topics_board.class:       CCDNForum\ForumBundle\Form\Type\TopicChangeBoardType
-    ccdn_forum_forum.form.handler.change_topics_board.class:    CCDNForum\ForumBundle\Form\Handler\TopicChangeBoardFormHandler
+    ccdn_forum_forum.component.dashboard.integrator.class:      CCDNForum\ForumBundle\Component\Dashboard\DashboardIntegrator
 
 services:
 
@@ -105,28 +99,28 @@ services:
         arguments:
             - @service_container
     ccdn_forum_forum.manager.category:
-        class:  %ccdn_forum_forum.manager.category.class%
+        class: %ccdn_forum_forum.manager.category.class%
         arguments:
             - @doctrine
             - @security.context
             - @ccdn_forum_forum.gateway.category
             - @ccdn_forum_forum.manager_bag
     ccdn_forum_forum.manager.board:
-        class:  %ccdn_forum_forum.manager.board.class%
+        class: %ccdn_forum_forum.manager.board.class%
         arguments:
             - @doctrine
             - @security.context
             - @ccdn_forum_forum.gateway.board
             - @ccdn_forum_forum.manager_bag
     ccdn_forum_forum.manager.topic:
-        class:  %ccdn_forum_forum.manager.topic.class%
+        class: %ccdn_forum_forum.manager.topic.class%
         arguments:
             - @doctrine
             - @security.context
             - @ccdn_forum_forum.gateway.topic
             - @ccdn_forum_forum.manager_bag
     ccdn_forum_forum.manager.post:
-        class:  %ccdn_forum_forum.manager.post.class%
+        class: %ccdn_forum_forum.manager.post.class%
         arguments:
             - @doctrine
             - @security.context
@@ -161,25 +155,25 @@ services:
         class: %ccdn_forum_forum.gateway_bag.class%
         arguments: [@service_container]
     ccdn_forum_forum.gateway.category:
-        class:  %ccdn_forum_forum.gateway.category.class%
+        class: %ccdn_forum_forum.gateway.category.class%
         arguments:
             - @doctrine
             - @ccdn_forum_forum.repository.category
             - @ccdn_forum_forum.gateway_bag
     ccdn_forum_forum.gateway.board:
-        class:  %ccdn_forum_forum.gateway.board.class%
+        class: %ccdn_forum_forum.gateway.board.class%
         arguments:
             - @doctrine
             - @ccdn_forum_forum.repository.board
             - @ccdn_forum_forum.gateway_bag
     ccdn_forum_forum.gateway.topic:
-        class:  %ccdn_forum_forum.gateway.topic.class%
+        class: %ccdn_forum_forum.gateway.topic.class%
         arguments:
             - @doctrine
             - @ccdn_forum_forum.repository.topic
             - @ccdn_forum_forum.gateway_bag
     ccdn_forum_forum.gateway.post:
-        class:  %ccdn_forum_forum.gateway.post.class%
+        class: %ccdn_forum_forum.gateway.post.class%
         arguments:
             - @doctrine
             - @ccdn_forum_forum.repository.post
@@ -207,21 +201,21 @@ services:
     # Post Forms.
     #
     ccdn_forum_forum.form.type.post_create:
-        class:  %ccdn_forum_forum.form.type.post_create.class%
+        class: %ccdn_forum_forum.form.type.post_create.class%
         arguments:
             - @doctrine
     ccdn_forum_forum.form.handler.post_create:
-        class:  %ccdn_forum_forum.form.handler.post_create.class%
+        class: %ccdn_forum_forum.form.handler.post_create.class%
         arguments: 
             - @form.factory
             - @ccdn_forum_forum.form.type.post_create
             - @ccdn_forum_forum.manager.post
     ccdn_forum_forum.form.type.post_update:
-        class:  %ccdn_forum_forum.form.type.post_update.class%
+        class: %ccdn_forum_forum.form.type.post_update.class%
         arguments:
             - @doctrine
     ccdn_forum_forum.form.handler.post_update:
-        class:  %ccdn_forum_forum.form.handler.post_update.class%
+        class: %ccdn_forum_forum.form.handler.post_update.class%
         arguments:
             - @form.factory
             - @ccdn_forum_forum.form.type.post_update
@@ -231,33 +225,34 @@ services:
     # Topic Forms.
     #
     ccdn_forum_forum.form.type.topic_create:
-        class:  %ccdn_forum_forum.form.type.topic_create.class%
+        class: %ccdn_forum_forum.form.type.topic_create.class%
         arguments:
             - @doctrine
     ccdn_forum_forum.form.handler.topic_create:
-        class:  %ccdn_forum_forum.form.handler.topic_create.class%
+        class: %ccdn_forum_forum.form.handler.topic_create.class%
         arguments:
             - @form.factory
             - @ccdn_forum_forum.form.type.topic_create
             - @ccdn_forum_forum.form.type.post_create
             - @ccdn_forum_forum.manager.topic
     ccdn_forum_forum.form.type.topic_update:
-        class:  %ccdn_forum_forum.form.type.topic_update.class%
+        class: %ccdn_forum_forum.form.type.topic_update.class%
         arguments:
             - @doctrine
     ccdn_forum_forum.form.handler.topic_update:
-        class:  %ccdn_forum_forum.form.handler.topic_update.class%
+        class: %ccdn_forum_forum.form.handler.topic_update.class%
         arguments:
             - @form.factory
             - @ccdn_forum_forum.form.type.topic_update
             - @ccdn_forum_forum.form.type.post_update
             - @ccdn_forum_forum.manager.topic
+            - @ccdn_forum_forum.manager.post
     ccdn_forum_forum.form.type.change_topics_board:
-        class:  %ccdn_forum_forum.form.type.change_topics_board.class%
+        class: %ccdn_forum_forum.form.type.change_topics_board.class%
         arguments: 
             - @doctrine
     ccdn_forum_forum.form.handler.change_topics_board:
-        class:  %ccdn_forum_forum.form.handler.change_topics_board.class%
+        class: %ccdn_forum_forum.form.handler.change_topics_board.class%
         arguments:
             - @form.factory
             - @ccdn_forum_forum.form.type.change_topics_board

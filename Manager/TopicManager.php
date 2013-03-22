@@ -464,6 +464,8 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 	
     /**
      *
+	 * Post must have a set topic for topic to be set  correctly.
+	 *
      * @access public
      * @param \CCDNForum\ForumBundle\Entity\Post $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
@@ -496,17 +498,15 @@ class TopicManager extends BaseManager implements BaseManagerInterface
     }
 
     /**
-     * Post will be the first post of the topic, the topic entity should be 
-	 * included inside the topic for title changes etc to persisted correctly.
 	 *
      * @access public
      * @param \CCDNForum\ForumBundle\Entity\Topic $topic
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function updateTopic(Post $post)
+    public function updateTopic(Topic $topic)
     {
         // update the record
-        $this->persist($post);
+        $this->persist($topic);
 
         return $this;
     }

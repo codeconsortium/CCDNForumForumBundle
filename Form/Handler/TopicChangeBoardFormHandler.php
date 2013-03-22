@@ -166,9 +166,9 @@ class TopicChangeBoardFormHandler
      * @param $entity
      * @return TopicManager
      */
-    protected function onSuccess($topic)
+    protected function onSuccess(Topic $topic)
     {
-        $this->topicManager->update($topic)->flush();
+        $this->topicManager->updateTopic($topic)->flush();
 
         // Update stats of the topics old board.
         if ($this->oldBoard) {
