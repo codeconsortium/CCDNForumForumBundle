@@ -13,34 +13,42 @@
 
 namespace CCDNForum\ForumBundle\Component;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  *
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class FloodControl extends ContainerAware
+class FloodControl
 {
-
 	/**
 	 *
 	 * @access protected
+	 * @var \Symfony\Component\HttpFoundation\Session\Session $session
 	 */
 	protected $session;
 	
 	/**
 	 *
 	 * @access protected
+	 * @var int $postLimit
 	 */
-	protected $container;
+	protected $postLimit;
+
+	/**
+	 *
+	 * @access protected
+	 * @var int $blockTimeInMinutes
+	 */	
+	protected $blockTimeInMinutes;
 	
 	/**
 	 *
 	 * @access public
 	 * @param $session
 	 */
-	public function __construct($session, $container)
+	public function __construct(Session $session, $postLimit, $blockTimeInMinutes)
 	{
 		$this->session = $session;
 		
@@ -49,7 +57,8 @@ class FloodControl extends ContainerAware
 			$this->session->set('flood_control_forum_post_count', array());
 		}
 		
-		$this->container = $container;
+		$this->postLimit = $postLimit;
+		$this->blockTimeInMinutes = $blockTimeInMinutes;
 	}
 	
 	/**
@@ -72,9 +81,7 @@ class FloodControl extends ContainerAware
 	 */
 	public function isFlooded()
 	{	
-        $blockInMinutes = $this->container->getParameter('ccdn_forum_forum.topic.flood_control.block_for_minutes');
-
-        $timeLimit = new \DateTime('-' . $blockInMinutes . ' minutes');
+        $timeLimit = new \DateTime('-' . $this->blockTimeInMinutes . ' minutes');
 
         if ($this->session->has('flood_control_forum_post_count')) {
             $attempts = $this->session->get('flood_control_forum_post_count');
@@ -92,13 +99,11 @@ class FloodControl extends ContainerAware
                 }
             }
 
-            if (count($freshenedAttempts) > $this->container->getParameter('ccdn_forum_forum.topic.flood_control.post_limit'))
-			{
+            if (count($freshenedAttempts) > $this->postLimit) {
 				return true;
 			}
         }		
 
 		return false;
 	}
-	
 }

@@ -96,8 +96,7 @@ services:
     #
     ccdn_forum_forum.manager_bag:
         class: %ccdn_forum_forum.manager_bag.class%
-        arguments:
-            - @service_container
+        arguments: [@service_container]
     ccdn_forum_forum.manager.category:
         class: %ccdn_forum_forum.manager.category.class%
         arguments:
@@ -274,7 +273,10 @@ services:
     #
     ccdn_forum_forum.component.flood_control:
        class: %ccdn_forum_forum.component.flood_control.class%
-       arguments: [@session, @service_container]
+       arguments:
+           - @session
+           - %ccdn_forum_forum.topic.flood_control.post_limit%
+           - %ccdn_forum_forum.topic.flood_control.block_for_minutes%
 
     #
     # Dashboard Integrator.
