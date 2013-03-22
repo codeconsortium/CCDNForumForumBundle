@@ -141,7 +141,7 @@ class PostUpdateFormHandler
      */
     public function getForm()
     {
-        if (! $this->form) {
+        if (null == $this->form) {
             if (! is_object($this->post) || ! ($this->post instanceof Post)) {
                 throw new \Exception('Post must be specified to be update a Reply in PostUpdateFormHandler');
             }

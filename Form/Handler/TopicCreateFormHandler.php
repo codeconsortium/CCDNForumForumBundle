@@ -154,7 +154,7 @@ class TopicCreateFormHandler
      */
     public function getForm()
     {
-        if (! $this->form) {
+        if (null == $this->form) {
             if (! is_object($this->board) || ! ($this->board instanceof Board)) {
                 throw new \Exception('Board must be specified to be create a Topic in TopicCreateFormHandler');
             }

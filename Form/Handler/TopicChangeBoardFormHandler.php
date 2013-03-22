@@ -151,10 +151,17 @@ class TopicChangeBoardFormHandler
      */
     public function getForm()
     {
-        if (!$this->form) {
-            $this->oldBoard = $this->topic->getBoard();
+        if (null == $this->form) {
+            // Store the old board before proceeding, as we will need it to update its stats
+			// as it will be a topic down in its count at least, posts perhaps even more so.
+			$this->oldBoard = $this->topic->getBoard();
             
-			$this->form = $this->factory->create($this->formTopicChangeBoardType, $this->topic);
+			// Boards are pre-filtered for proper rights managements, moderators may move Topics,
+			// but some boards may only be accessible by admins, so moderators should not see them. 
+			$filteredBoards = $this->boardManager->findAllForFormDropDown();
+			$options = array('boards' => $filteredBoards);
+			
+			$this->form = $this->factory->create($this->formTopicChangeBoardType, $this->topic, $options);
         }
 
         return $this->form;

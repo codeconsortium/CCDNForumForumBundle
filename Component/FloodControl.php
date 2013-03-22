@@ -46,7 +46,9 @@ class FloodControl
 	/**
 	 *
 	 * @access public
-	 * @param $session
+	 * @param \Symfony\Component\HttpFoundation\Session\Session $session
+	 * @param int $postLimit
+	 * @param int $blockTimeInMinutes
 	 */
 	public function __construct(Session $session, $postLimit, $blockTimeInMinutes)
 	{

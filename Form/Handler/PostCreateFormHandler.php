@@ -182,7 +182,7 @@ class PostCreateFormHandler
      */
     public function getForm()
     {
-        if (! $this->form) {
+        if (null == $this->form) {
             if (! is_object($this->topic) || ! ($this->topic instanceof Topic)) {
                 throw new \Exception('Topic must be specified to create a Reply in PostCreateFormHandler');
             }

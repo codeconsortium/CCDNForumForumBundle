@@ -33,7 +33,8 @@ class TopicChangeBoardType extends AbstractType
         $builder->add('board', 'entity', array(
             'property' => 'name',
             'class' => 'CCDNForumForumBundle:Board',
-            'query_builder' => function($qb) { return $qb->createQueryBuilder('b')->orderBy('b.id', 'ASC'); },
+			'choices' => $options['boards'],
+            /*'query_builder' => function($qb) { return $qb->createQueryBuilder('b')->orderBy('b.id', 'ASC'); },*/
             'label' => 'ccdn_forum_forum.form.label.board',
 			'translation_domain' =>  'CCDNForumForumBundle',
         ));
@@ -47,11 +48,12 @@ class TopicChangeBoardType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class' => 'CCDNForum\ForumBundle\Entity\Topic',
+            'data_class'      => 'CCDNForum\ForumBundle\Entity\Topic',
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             // a unique key to help generate the secret token
             'intention'       => 'topic_change_board',
+			'boards'          => array(),
         );
     }
 

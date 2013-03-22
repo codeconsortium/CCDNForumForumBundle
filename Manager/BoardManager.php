@@ -98,6 +98,20 @@ class BoardManager extends BaseManager implements BaseManagerInterface
 			return null;
 		}
 	}
+		
+	/**
+	 *
+	 * @access public
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */	
+	public function findAllForFormDropDown()
+	{
+		$qb = $this->createSelectQuery(array('b'));
+				
+		$boards = $this->gateway->findBoards($qb);
+		
+		return $this->filterViewableBoards($boards);
+	}
 	
 	/**
 	 *
