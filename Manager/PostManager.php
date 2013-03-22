@@ -196,12 +196,17 @@ class PostManager extends BaseManager implements BaseManagerInterface
 		
 		$params = array(':postId' => $postId);
 		
-		$qb = $this->createSelectQuery(array('p', 't', 'fp', 'lp', 'b', 'c'));
+		$qb = $this->createSelectQuery(array('p', 't', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 'p_createdBy', 'p_editedBy', 'p_deletedBy'));
 		
 		$qb
-			->innerJoin('p.topic', 't')
-			->leftJoin('t.firstPost', 'fp')
-			->leftJoin('t.lastPost', 'lp')
+			->join('p.topic', 't')
+				->leftJoin('t.firstPost', 'fp')
+					->leftJoin('fp.createdBy', 'fp_author')
+				->leftJoin('t.lastPost', 'lp')
+					->leftJoin('lp.createdBy', 'lp_author')
+			->leftJoin('p.createdBy', 'p_createdBy')
+			->leftJoin('p.editedBy', 'p_editedBy')
+			->leftJoin('p.deletedBy', 'p_deletedBy')
 			->leftJoin('t.board', 'b')
 			->leftJoin('b.category', 'c')
 			->where(
@@ -226,15 +231,18 @@ class PostManager extends BaseManager implements BaseManagerInterface
 				
 		$params = array(':topicId' => $topicId);
 		
-		$qb = $this->createSelectQuery(array('p', 't', 'b', 'c', 'createdBy', 'editedBy', 'deletedBy'));
+		$qb = $this->createSelectQuery(array('p', 't', 'b', 'fp', 'fp_author', 'lp', 'lp_author', 'p_createdBy', 'p_editedBy', 'p_deletedBy'));
 		
 		$qb
 			->join('p.topic', 't')
+				->leftJoin('t.firstPost', 'fp')
+					->leftJoin('fp.createdBy', 'fp_author')
+				->leftJoin('t.lastPost', 'lp')
+					->leftJoin('lp.createdBy', 'lp_author')
+			->leftJoin('p.createdBy', 'p_createdBy')
+			->leftJoin('p.editedBy', 'p_editedBy')
+			->leftJoin('p.deletedBy', 'p_deletedBy')
 			->leftJoin('t.board', 'b')
-			->leftJoin('b.category', 'c')
-			->leftJoin('p.createdBy', 'createdBy')
-			->leftJoin('p.editedBy', 'editedBy')
-			->leftJoin('p.deletedBy', 'deletedBy')
 			->where('p.topic = :topicId')
 			->setParameters($params)
 			->orderBy('p.createdDate', 'ASC');
@@ -263,6 +271,66 @@ class PostManager extends BaseManager implements BaseManagerInterface
 		return $expr;
 	}
 	
+	/**
+	 *
+	 * @access public
+	 * @param int $page
+	 * @return \Pagerfanta\Pagerfanta
+	 */
+	public function findLockedPostsForModeratorsPaginated($page)
+	{
+		$params = array(':isLocked' => true);
+		
+		$qb = $this->createSelectQuery(array('p', 't', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 'p_createdBy', 'p_editedBy', 'p_deletedBy'));
+		
+		$qb
+			->join('p.topic', 't')
+				->leftJoin('t.firstPost', 'fp')
+					->leftJoin('fp.createdBy', 'fp_author')
+				->leftJoin('t.lastPost', 'lp')
+					->leftJoin('lp.createdBy', 'lp_author')
+			->leftJoin('p.createdBy', 'p_createdBy')
+			->leftJoin('p.editedBy', 'p_editedBy')
+			->leftJoin('p.deletedBy', 'p_deletedBy')
+			->leftJoin('t.board', 'b')
+			->leftJoin('b.category', 'c')
+			->where('p.isLocked = :isLocked')
+			->setParameters($params)
+			->orderBy('p.createdDate', 'ASC');
+
+		return $this->gateway->paginateQuery($qb, $this->getPostsPerPageOnTopics(), $page);
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param int $page
+	 * @return \Pagerfanta\Pagerfanta
+	 */
+	public function findDeletedPostsForAdminsPaginated($page)
+	{
+		$params = array(':isDeleted' => true);
+		
+		$qb = $this->createSelectQuery(array('p', 't', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 'p_createdBy', 'p_editedBy', 'p_deletedBy'));
+		
+		$qb
+			->join('p.topic', 't')
+				->leftJoin('t.firstPost', 'fp')
+					->leftJoin('fp.createdBy', 'fp_author')
+				->leftJoin('t.lastPost', 'lp')
+					->leftJoin('lp.createdBy', 'lp_author')
+			->leftJoin('p.createdBy', 'p_createdBy')
+			->leftJoin('p.editedBy', 'p_editedBy')
+			->leftJoin('p.deletedBy', 'p_deletedBy')
+			->leftJoin('t.board', 'b')
+			->leftJoin('b.category', 'c')
+			->where('p.isDeleted = :isDeleted')
+			->setParameters($params)
+			->orderBy('p.createdDate', 'ASC');
+
+		return $this->gateway->paginateQuery($qb, $this->getPostsPerPageOnTopics(), $page);
+	}
+		
     /**
      *
      * @access public

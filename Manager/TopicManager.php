@@ -205,10 +205,16 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 		
 		$params = array(':boardId' => $boardId);
 		
-		$qb = $this->createSelectQuery(array('t', 'lp'));
+		$qb = $this->createSelectQuery(array('t', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
 		
 		$qb
-			->innerJoin('t.lastPost', 'lp')
+			->innerJoin('t.firstPost', 'fp')
+				->leftJoin('fp.createdBy', 'fp_author')
+			->leftJoin('t.lastPost', 'lp')
+				->leftJoin('lp.createdBy', 'lp_author')
+			->leftJoin('t.closedBy', 't_closedBy')
+			->leftJoin('t.deletedBy', 't_deletedBy')
+			->leftJoin('t.stickiedBy', 't_stickiedBy')				
 			->where('t.board = :boardId')
 			->andWhere('t.isDeleted = FALSE')
 			->orderBy('lp.createdDate', 'DESC')
@@ -231,14 +237,19 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 		
 		$canViewDeleted = $this->allowedToViewDeletedTopics();
 		
-		$params = array(':topicId' => $topicId/*, ':isDeleted' => false*/);
+		$params = array(':topicId' => $topicId);
 		
-		$qb = $this->createSelectQuery(array('t', 'p', 'fp', 'lp', 'b', 'c'));
+		$qb = $this->createSelectQuery(array('t', 'p', 'fp', 'lp', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
 		
 		$qb
-			->innerJoin('t.posts', 'p')
-			->leftJoin('t.firstPost', 'fp')
+			->innerJoin('t.firstPost', 'fp')
+				->leftJoin('fp.createdBy', 'fp_author')
 			->leftJoin('t.lastPost', 'lp')
+				->leftJoin('lp.createdBy', 'lp_author')
+			->leftJoin('t.closedBy', 't_closedBy')
+			->leftJoin('t.deletedBy', 't_deletedBy')
+			->leftJoin('t.stickiedBy', 't_stickiedBy')
+			->innerJoin('t.posts', 'p')
 			->leftJoin('t.board', 'b')
 			->leftJoin('b.category', 'c')
 			->where(
@@ -247,7 +258,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 		
 		return $this->gateway->findTopic($qb, $params);
 	}
-		
+	
 	/**
 	 *
 	 * @access public
@@ -262,11 +273,18 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 		
 		$canViewDeleted = $this->allowedToViewDeletedTopics();
 		
-		$params = array(':topicId' => $topicId/*, ':isDeleted' => false*/);
+		$params = array(':topicId' => $topicId);
 		
-		$qb = $this->createSelectQuery(array('t', 'b', 'c'));
+		$qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
 		
 		$qb
+			->innerJoin('t.firstPost', 'fp')
+				->leftJoin('fp.createdBy', 'fp_author')
+			->leftJoin('t.lastPost', 'lp')
+				->leftJoin('lp.createdBy', 'lp_author')
+			->leftJoin('t.closedBy', 't_closedBy')
+			->leftJoin('t.deletedBy', 't_deletedBy')
+			->leftJoin('t.stickiedBy', 't_stickiedBy')
 			->leftJoin('t.board', 'b')
 			->leftJoin('b.category', 'c')
 			->where(
@@ -290,15 +308,18 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 		
 		$canViewDeleted = $this->allowedToViewDeletedTopics();
 		
-		$params = array(':boardId' => $boardId, ':isSticky' => true/*, ':isDeleted' => false*/);
+		$params = array(':boardId' => $boardId, ':isSticky' => true);
 		
-		$qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author'));
+		$qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
 		
 		$qb
 			->innerJoin('t.firstPost', 'fp')
+				->leftJoin('fp.createdBy', 'fp_author')
 			->leftJoin('t.lastPost', 'lp')
-			->leftJoin('fp.createdBy', 'fp_author')
-			->leftJoin('lp.createdBy', 'lp_author')
+				->leftJoin('lp.createdBy', 'lp_author')
+			->leftJoin('t.closedBy', 't_closedBy')
+			->leftJoin('t.deletedBy', 't_deletedBy')
+			->leftJoin('t.stickiedBy', 't_stickiedBy')
 			->leftJoin('t.board', 'b')
 			->leftJoin('b.category', 'c')
 			->where(
@@ -324,15 +345,18 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 
 		$canViewDeleted = $this->allowedToViewDeletedTopics();
 		
-		$params = array(':boardId' => $boardId, ':isSticky' => false/*, ':isDeleted' => false*/);
+		$params = array(':boardId' => $boardId, ':isSticky' => false);
 		
-		$qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author'));
+		$qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
 			
 		$qb
 			->innerJoin('t.firstPost', 'fp')
+				->leftJoin('fp.createdBy', 'fp_author')
 			->leftJoin('t.lastPost', 'lp')
-			->leftJoin('fp.createdBy', 'fp_author')
-			->leftJoin('lp.createdBy', 'lp_author')
+				->leftJoin('lp.createdBy', 'lp_author')
+			->leftJoin('t.closedBy', 't_closedBy')
+			->leftJoin('t.deletedBy', 't_deletedBy')
+			->leftJoin('t.stickiedBy', 't_stickiedBy')
 			->leftJoin('t.board', 'b')
 			->leftJoin('b.category', 'c')
 			->where(
@@ -423,6 +447,64 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 			return array('postCount' => null);			
 		}
 	}
+
+	/**
+	 *
+	 * @access public
+	 * @param int $page
+	 * @return \Pagerfanta\Pagerfanta
+	 */
+	public function findClosedTopicsForModeratorsPaginated($page)
+	{
+		$params = array(':isClosed' => true);
+	
+		$qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
+		
+		$qb
+			->innerJoin('t.firstPost', 'fp')
+				->leftJoin('fp.createdBy', 'fp_author')
+			->leftJoin('t.lastPost', 'lp')
+				->leftJoin('lp.createdBy', 'lp_author')
+			->leftJoin('t.closedBy', 't_closedBy')
+			->leftJoin('t.deletedBy', 't_deletedBy')
+			->leftJoin('t.stickiedBy', 't_stickiedBy')
+			->leftJoin('t.board', 'b')
+			->leftJoin('b.category', 'c')
+			->where('t.isClosed = :isClosed')
+			->setParameters($params)
+			->orderBy('lp.createdDate', 'DESC');
+
+		return $this->gateway->paginateQuery($qb, $this->getTopicsPerPageOnBoards(), $page);
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param int $page
+	 * @return \Pagerfanta\Pagerfanta
+	 */
+	public function findDeletedTopicsForAdminsPaginated($page)
+	{
+		$params = array(':isDeleted' => true);
+	
+		$qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
+		
+		$qb
+			->innerJoin('t.firstPost', 'fp')
+				->leftJoin('fp.createdBy', 'fp_author')
+			->leftJoin('t.lastPost', 'lp')
+				->leftJoin('lp.createdBy', 'lp_author')
+			->leftJoin('t.closedBy', 't_closedBy')
+			->leftJoin('t.deletedBy', 't_deletedBy')
+			->leftJoin('t.stickiedBy', 't_stickiedBy')
+			->leftJoin('t.board', 'b')
+			->leftJoin('b.category', 'c')
+			->where('t.isDeleted = :isDeleted')
+			->setParameters($params)
+			->orderBy('lp.createdDate', 'DESC');
+
+		return $this->gateway->paginateQuery($qb, $this->getTopicsPerPageOnBoards(), $page);
+	}
 	
 	/**
 	 *
@@ -445,7 +527,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 		
 		return $page;
 	}
-
+	
     /**
      *
      * @access public

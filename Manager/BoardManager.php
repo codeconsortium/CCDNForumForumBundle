@@ -49,6 +49,33 @@ class BoardManager extends BaseManager implements BaseManagerInterface
 	 * @param int $boardId
 	 * @return \CCDNForum\ForumBundle\Entity\Board
 	 */	
+	public function findOneById($boardId)
+	{
+		if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
+			throw new \Exception('Board id "' . $boardId . '" is invalid!');
+		}
+		
+		$qb = $this->createSelectQuery(array('b'));
+				
+		$qb->where('b.id = :boardId');
+		
+		$board = $this->gateway->findBoard($qb, array(':boardId' => $boardId));
+		
+		$boards = $this->filterViewableBoards($board);
+		
+		if (count($boards)) {
+			return $boards[0];
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param int $boardId
+	 * @return \CCDNForum\ForumBundle\Entity\Board
+	 */	
 	public function findOneByIdWithCategory($boardId)
 	{
 		if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
@@ -61,7 +88,15 @@ class BoardManager extends BaseManager implements BaseManagerInterface
 			->leftJoin('b.category', 'c')
 			->where('b.id = :boardId');
 		
-		return $this->gateway->findBoard($qb, array(':boardId' => $boardId));
+		$board = $this->gateway->findBoard($qb, array(':boardId' => $boardId));
+		
+		$boards = $this->filterViewableBoards($board);
+		
+		if (count($boards)) {
+			return $boards[0];
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -98,6 +133,63 @@ class BoardManager extends BaseManager implements BaseManagerInterface
 			return array('topicCount' => null, 'postCount' => null);			
 		}
 	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param Array $boards
+	 * @return Array
+	 */
+    public function filterViewableBoards($boards)
+    {
+		if (! is_array($boards)) {
+			if (! is_object($boards) || ! $boards instanceof Board) {
+				throw new \Exception('$boards must be type of Array containing instances of \CCDNForum\ForumBundle\Entity\Board');
+			}
+			
+			$boards = array($boards);
+		}
+		
+        foreach ($boards as $boardKey => $board) {
+            if (! $board->isAuthorisedToRead($this->securityContext)) {
+                unset($boards[$boardKey]);
+            }
+        }
+
+        return $boards;
+    }
+	
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Entity\Board $board
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function postNewBoard(Board $board)
+    {
+		$boardCount = $this->gateway->getRepository()->countBoardsForCategory($board->getCategory()->getId());
+
+        $board->setListOrderPriority(++$boardCount[1]);
+
+        // insert a new row
+        $this->persist($board);
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Entity\Board $board
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function updateBoard(Board $board)
+    {
+        // update a record
+        $this->persist($board);
+
+        return $this;
+    }
 	
     /**
      *
@@ -144,55 +236,6 @@ class BoardManager extends BaseManager implements BaseManagerInterface
         return $this;
     }
 	
-	/**
-	 *
-	 * @access public
-	 * @param Array $boards
-	 * @return Array
-	 */
-    public function filterViewableBoards($boards)
-    {
-        foreach ($boards as $boardKey => $board) {
-            if (! $board->isAuthorisedToRead($this->securityContext)) {
-                unset($boards[$boardKey]);
-            }
-        }
-
-        return $boards;
-    }
-	
-    /**
-     *
-     * @access public
-     * @param \CCDNForum\ForumBundle\Entity\Board $board
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function postNewBoard(Board $board)
-    {
-		$boardCount = $this->gateway->getRepository()->countBoardsForCategory($board->getCategory()->getId());
-
-        $board->setListOrderPriority(++$boardCount[1]);
-
-        // insert a new row
-        $this->persist($board);
-
-        return $this;
-    }
-
-    /**
-     *
-     * @access public
-     * @param \CCDNForum\ForumBundle\Entity\Board $board
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function updateBoard(Board $board)
-    {
-        // update a record
-        $this->persist($board);
-
-        return $this;
-    }
-
     /**
      *
      * @access public

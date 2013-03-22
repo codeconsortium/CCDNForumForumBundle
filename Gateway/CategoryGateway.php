@@ -66,8 +66,7 @@ class CategoryGateway extends BaseGateway implements BaseGatewayInterface
 		}
 		
 		$qb
-			->addOrderBy('c.listOrderPriority', 'ASC')
-			->addOrderBy('b.listOrderPriority', 'ASC');
+			->addOrderBy('c.listOrderPriority', 'ASC');
 		
 		return $this->one($qb, $parameters);
 	}
@@ -86,8 +85,7 @@ class CategoryGateway extends BaseGateway implements BaseGatewayInterface
 		}
 
 		$qb
-			->addOrderBy('c.listOrderPriority', 'ASC')
-			->addOrderBy('b.listOrderPriority', 'ASC');
+			->addOrderBy('c.listOrderPriority', 'ASC');
 		
 		return $this->all($qb, $parameters);
 	}

@@ -27,39 +27,33 @@ use CCDNForum\ForumBundle\Entity\Category;
  * @version 1.0
  */
 class CategoryManager extends BaseManager implements BaseManagerInterface
-{
+{	
 	/**
 	 *
 	 * @access public
-	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 * @param int $categoryId
+	 * @return \CCDNForum\ForumBundle\Entity\Category
 	 */	
-	public function findAllWithBoards()
+	public function findOneById($categoryId)
 	{
-		$qb = $this->createSelectQuery(array('c', 'b', 'lp', 't', 'lp_author'));
-
-		$qb = $this->joinToQueryBoardsAndLastPost($qb);
+		if (null == $categoryId || ! is_numeric($categoryId) || $categoryId == 0) {
+			throw new \Exception('Category id "' . $categoryId . '" is invalid!');
+		}
 		
-		$categories = $this->gateway->findCategories($qb);
+		$qb = $this->createSelectQuery(array('c'));
+				
+		$qb->where('c.id = :categoryId');
 		
-		return $this->filterViewableCategoriesAndBoards($categories);
+		$category = $this->gateway->findCategory($qb, array(':categoryId' => $categoryId));
+		
+		$categories = $this->filterViewableCategoriesAndBoards($category);
+		
+		if (count($categories)) {
+			return $categories[0];
+		} else {
+			return null;
+		}
 	}
-	
-    /**
-     *
-     * @access public
-	 * @return Array
-     */
-    public function findAllBoardsGroupedByCategory()
-    {
-		$qb = $this->createSelectQuery(array('c', 'b'));
-
-		$qb
-			->leftJoin('c.boards', 'b');
-			
-		$categories = $this->gateway->findCategories($qb);
-
-		return $this->filterViewableCategoriesAndBoards($categories);			
-    }
 	
 	/**
 	 *
@@ -77,12 +71,58 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
 		
 		$qb = $this->joinToQueryBoardsAndLastPost($qb);
 		
-		$qb->where('c.id = :categoryId');
+		$qb
+			->where('c.id = :categoryId')
+			->addOrderBy('b.listOrderPriority', 'ASC');
+			;
 		
-		$categories = $this->gateway->findCategory($qb, array(':categoryId' => $categoryId));
+		$category = $this->gateway->findCategory($qb, array(':categoryId' => $categoryId));
+		
+		$categories = $this->filterViewableCategoriesAndBoards($category);
+		
+		if (count($categories)) {
+			return $categories[0];
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */	
+	public function findAllWithBoards()
+	{
+		$qb = $this->createSelectQuery(array('c', 'b', 'lp', 't', 'lp_author'));
+
+		$qb = $this->joinToQueryBoardsAndLastPost($qb);
+		
+		$qb->addOrderBy('b.listOrderPriority', 'ASC');
+		
+		$categories = $this->gateway->findCategories($qb);
 		
 		return $this->filterViewableCategoriesAndBoards($categories);
 	}
+	
+    /**
+     *
+     * @access public
+	 * @return Array
+     */
+    public function findAllBoardsGroupedByCategory()
+    {
+		$qb = $this->createSelectQuery(array('c', 'b'));
+
+		$qb
+			->leftJoin('c.boards', 'b')
+			->addOrderBy('b.listOrderPriority', 'ASC');
+			;
+			
+		$categories = $this->gateway->findCategories($qb);
+
+		return $this->filterViewableCategoriesAndBoards($categories);			
+    }
 	
 	/**
 	 *
@@ -96,7 +136,8 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
 			->leftjoin('c.boards', 'b')
 			->leftJoin('b.lastPost', 'lp')
 			->leftJoin('lp.topic', 't')
-			->leftJoin('lp.createdBy', 'lp_author');
+			->leftJoin('lp.createdBy', 'lp_author')
+			;
 			
 		return $qb;
 	}
@@ -109,6 +150,14 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
 	 */
     public function filterViewableCategoriesAndBoards($categories)
     {
+		if (! is_array($categories)) {
+			if (! is_object($categories) || ! $categories instanceof Category) {
+				throw new \Exception('$categories must be type of Array containing instances of \CCDNForum\ForumBundle\Entity\Category');
+			}
+			
+			$categories = array($categories);
+		}
+		
         foreach ($categories as $categoryKey => $category) {
             $boards = $category->getBoards();
 
