@@ -43,7 +43,7 @@ class PostModeratorController extends PostBaseController
 
 	    $user = $this->getUser();
 
-	    $post = $this->container->get('ccdn_forum_forum.repository.post')->find($postId);
+	    $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
 
 	    $this->isFound($post);
 
@@ -64,7 +64,7 @@ class PostModeratorController extends PostBaseController
 	{
 	    $this->isAuthorised('ROLE_MODERATOR');
 
-	    $post = $this->find($postId);
+	    $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
 
 	    $this->isFound($post);
 
@@ -85,7 +85,7 @@ class PostModeratorController extends PostBaseController
 	{
 	    $this->isAuthorised('ROLE_MODERATOR');
 
-	    $post = $this->container->get('ccdn_forum_forum.repository.post')->findPostForEditing($postId);
+	    $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
 
 		$this->isFound($post);
 		

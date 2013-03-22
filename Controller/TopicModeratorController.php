@@ -40,13 +40,10 @@ class TopicModeratorController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $user = $this->getUser();
-
-        $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
-
+        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
 
-        $this->getTopicManager()->sticky($topic, $user)->flush();
+        $this->getTopicManager()->sticky($topic, $this->getUser())->flush();
 
         $this->setFlash('success', $this->trans('ccdn_forum_admin.flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
 
@@ -63,8 +60,7 @@ class TopicModeratorController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
-
+        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
 
         $this->getTopicManager()->unsticky($topic)->flush();
@@ -86,13 +82,10 @@ class TopicModeratorController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $user = $this->getUser();
-
-        $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
-
+        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
 
-        $this->getTopicManager()->close($topic, $user)->flush();
+        $this->getTopicManager()->close($topic, $this->getUser())->flush();
 
         $this->setFlash('warning', $this->trans('ccdn_forum_admin.flash.topic.close.success', array('%topic_title%' => $topic->getTitle())));
 
@@ -109,10 +102,7 @@ class TopicModeratorController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $user = $this->getUser();
-
-        $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
-
+        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
 
         $this->getTopicManager()->reopen($topic)->flush();
@@ -132,10 +122,7 @@ class TopicModeratorController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $user = $this->getUser();
-
-        $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
-
+        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
 
         $board = $topic->getBoard();
@@ -167,13 +154,10 @@ class TopicModeratorController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $user = $this->getUser();
-
-        $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
-
+        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
 
-        $this->getTopicManager()->softDelete($topic, $user)->flush();
+        $this->getTopicManager()->softDelete($topic, $this->getUser())->flush();
 
         // set flash message
         $this->setFlash('warning', $this->trans('ccdn_forum_admin.flash.topic.delete.success', array('%topic_title%' => $topic->getTitle())));
@@ -192,7 +176,7 @@ class TopicModeratorController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->container->get('ccdn_forum_forum.repository.topic')->find($topicId);
+        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
 
         $this->getTopicManager()->restore($topic)->flush();
