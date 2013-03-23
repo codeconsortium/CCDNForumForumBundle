@@ -218,6 +218,27 @@ class PostManager extends BaseManager implements BaseManagerInterface
 	
 	/**
 	 *
+	 * @access protected
+	 * @param \Doctrine\ORM\QueryBuilder $qb
+	 * @param bool $canViewDeletedTopics
+	 * @return \Doctrine\ORM\QueryBuilder
+	 */
+	protected function limitQueryByTopicsDeletedStateAndByPostId(QueryBuilder $qb, $canViewDeletedTopics)
+	{
+		if ($canViewDeletedTopics) {
+			$expr = $qb->expr()->eq('p.id', ':postId');
+		} else {
+			$expr = $qb->expr()->andX(
+				$qb->expr()->eq('p.id', ':postId'),
+				$qb->expr()->eq('t.isDeleted', 'FALSE')
+			);
+		}
+		
+		return $expr;
+	}
+	
+	/**
+	 *
 	 * @access public
 	 * @param int $topicId
 	 * @param int $page
@@ -252,23 +273,24 @@ class PostManager extends BaseManager implements BaseManagerInterface
 	
 	/**
 	 *
-	 * @access protected
-	 * @param \Doctrine\ORM\QueryBuilder $qb
-	 * @param bool $canViewDeletedTopics
-	 * @return \Doctrine\ORM\QueryBuilder
-	 */
-	protected function limitQueryByTopicsDeletedStateAndByPostId(QueryBuilder $qb, $canViewDeletedTopics)
+	 * @access public
+	 * @param Array $postIds
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */	
+	public function findThesePostsById($postIds = array())
 	{
-		if ($canViewDeletedTopics) {
-			$expr = $qb->expr()->eq('p.id', ':postId');
-		} else {
-			$expr = $qb->expr()->andX(
-				$qb->expr()->eq('p.id', ':postId'),
-				$qb->expr()->eq('t.isDeleted', 'FALSE')
-			);
+		if (! is_array($postIds) || count($postIds) < 1) {
+			throw new \Exception('Parameter 1 must be an array and contain at least 1 post id!');
 		}
 		
-		return $expr;
+		$qb = $this->createSelectQuery(array('p'));
+		
+		$qb
+			->where($qb->expr()->in('p.id', $postIds))
+			->orderBy('p.createdDate', 'ASC')
+		;
+		
+		return $this->gateway->findPosts($qb);
 	}
 	
 	/**
@@ -330,7 +352,38 @@ class PostManager extends BaseManager implements BaseManagerInterface
 
 		return $this->gateway->paginateQuery($qb, $this->getPostsPerPageOnTopics(), $page);
 	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param int $userId
+	 * @return Array
+	 */
+	public function getPostCountForUserById($userId)
+	{
+		if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+			throw new \Exception('User id "' . $userId . '" is invalid!');
+		}
 		
+		$qb = $this->getQueryBuilder();
+
+		$topicEntityClass = $this->gateway->getEntityClass();
+			
+		$qb
+			->select('COUNT(DISTINCT p.id) AS postCount')
+			->from($topicEntityClass, 'p')
+			->where('p.createdBy = :userId')
+			->setParameter(':userId', $userId);
+		
+		try {
+			return $qb->getQuery()->getSingleResult();			
+		} catch (\Doctrine\ORM\NoResultException $e) {
+			return array('postCount' => null);
+		} catch (\Exception $e) {
+			return array('postCount' => null);			
+		}
+	}
+	
     /**
      *
      * @access public
@@ -350,6 +403,8 @@ class PostManager extends BaseManager implements BaseManagerInterface
 
 		// Subscribe the user to the topic.
 		$this->managerBag->getSubscriptionManager()->subscribe($post->getTopic())->flush();
+		
+		$this->managerBag->getRegistryManager()->updateCachedPostCountForUser($post->getCreatedBy())->flush();
 		
         return $this;
     }

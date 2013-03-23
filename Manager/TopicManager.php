@@ -447,7 +447,26 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 			return array('postCount' => null);			
 		}
 	}
-
+	
+	/**
+	 *
+	 * @access public
+	 * @param Array $topicIds
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */	
+	public function findTheseTopicsById($topicIds = array())
+	{
+		if (! is_array($topicIds) || count($topicIds) < 1) {
+			throw new \Exception('Parameter 1 must be an array and contain at least 1 topic id!');
+		}
+		
+		$qb = $this->createSelectQuery(array('t'));
+		
+		$qb->where($qb->expr()->in('t.id', $topicIds));
+		
+		return $this->gateway->findTopics($qb);
+	}
+	
 	/**
 	 *
 	 * @access public
@@ -575,6 +594,8 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 
 		// Subscribe the user to the topic.
 		$this->managerBag->getSubscriptionManager()->subscribe($topic)->flush();
+		
+		$this->managerBag->getRegistryManager()->updateCachedPostCountForUser($post->getCreatedBy())->flush();
 		
         return $this;
     }
@@ -781,6 +802,42 @@ class TopicManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
+     * @param Array $topics
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function bulkRestore($topics)
+    {
+        $boardsToUpdate = array();
+
+        foreach ($topics as $topic) {
+            // Add the board of the topic to be updated.
+            if ($topic->getBoard()) {
+                if ( ! array_key_exists($topic->getBoard()->getId(), $boardsToUpdate)) {
+                    $boardsToUpdate[$topic->getBoard()->getId()] = $topic->getBoard();
+                }
+            }
+	
+			// Remove deletion attributes.
+            $topic->setIsDeleted(false);
+            $topic->setDeletedBy(null);
+            $topic->setDeletedDate(null);
+
+            $this->persist($topic);
+        }
+
+        $this->flush();
+
+        if (count($boardsToUpdate) > 0) {
+            // Update all affected board stats.
+            $this->managerBag->getBoardManager()->bulkUpdateStats($boardsToUpdate)->flush();
+        }
+		
+        return $this;
+    }
+	
+    /**
+     *
+     * @access public
      * @param \CCDNForum\ForumBundle\Entity\Topic $topic
 	 * @param $user
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
@@ -807,7 +864,47 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 
         return $this;
     }
+	
+    /**
+     *
+     * @access public
+     * @param array $topics
+	 * @param \Symfony\Component\Security\Core\User\UserInterface $user
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function bulkSoftDelete($topics, UserInterface $user)
+    {
+        $boardsToUpdate = array();
+		
+        foreach ($topics as $topic) {
+            // Don't overwite previous users accountability.
+            if ( ! $topic->getDeletedBy() && ! $topic->getDeletedDate()) {
+                // Add the board of the topic to be updated.
+                if ($topic->getBoard()) {
+                    if ( ! array_key_exists($topic->getBoard()->getId(), $boardsToUpdate)) {
+                        $boardsToUpdate[$topic->getBoard()->getId()] = $topic->getBoard();
+                    }
+                }
 
+				// Set the deletion attributes.
+                $topic->setIsDeleted(true);
+                $topic->setDeletedBy($user);
+                $topic->setDeletedDate(new \DateTime());
+
+                $this->persist($topic);
+            }
+        }
+
+        $this->flush();
+
+        if (count($boardsToUpdate) > 0) {
+            // Update all affected board stats.
+            $this->managerBag->getBoardManager()->bulkUpdateStats($boardsToUpdate)->flush();
+        }
+		
+        return $this;
+    }
+	
     /**
      *
      * @access public
@@ -841,132 +938,17 @@ class TopicManager extends BaseManager implements BaseManagerInterface
         $this->flush();
 
         // Update all affected Board stats.
-		if (is_object($boardToUpdate) && $boardToUpdate instanceof CCDNForum\ForumBundle\Entity\Board) {
+		if (is_object($boardToUpdate) && $boardToUpdate instanceof Board) {
 	        $this->managerBag->getBoardManager()->bulkUpdateStats(array($boardToUpdate))->flush();
 		}
 		
         // Update all affected Users cached post counts.
         if (count($usersPostCountToUpdate) > 0) {
-			$this->managerBag->getRegistryManager()->bulkUpdateCachePostCountForUser($usersPostCountToUpdate);
+			$this->managerBag->getRegistryManager()->bulkUpdateCachedPostCountForUsers($usersPostCountToUpdate)->flush();
 		}
 
 		return $this;
 	}
-
-    /**
-     *
-     * @access public
-     * @param Array $topics
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function bulkRestore($topics)
-    {
-        $boardsToUpdate = array();
-		$usersPostCountToUpdate = array();
-
-        foreach ($topics as $topic) {
-            // Add the board of the topic to be updated.
-            if ($topic->getBoard()) {
-                if ( ! array_key_exists($topic->getBoard()->getId(), $boardsToUpdate)) {
-                    $boardsToUpdate[$topic->getBoard()->getId()] = $topic->getBoard();
-                }
-            }
-
-
-            // Add author of each post to chain of cached post counts to update.
-            if (count($topic->getPosts()) > 0) {
-				foreach($topic->getPosts() as $postKey => $post) {
-					if ($post->getCreatedBy()) {
-	                    $author = $post->getCreatedBy();
-
-	                    if ( ! array_key_exists($author->getId(), $usersPostCountToUpdate)) {
-	                        $usersPostCountToUpdate[$author->getId()] = $author;
-	                    }
-	                }
-				}
-            }
-	
-			// Remove deletion attributes.
-            $topic->setIsDeleted(false);
-            $topic->setDeletedBy(null);
-            $topic->setDeletedDate(null);
-
-            $this->persist($topic);
-        }
-
-        $this->flush();
-
-        if (count($boardsToUpdate) > 0) {
-            // Update all affected board stats.
-            $this->managerBag->getBoardManager()->bulkUpdateStats($boardsToUpdate)->flush();
-        }
-
-        // Update all affected Users cached post counts.
-        if (count($usersPostCountToUpdate) > 0) {
-			$this->managerBag->getRegistryManager()->bulkUpdateCachePostCountForUser($usersPostCountToUpdate);
-		}
-		
-        return $this;
-    }
-
-    /**
-     *
-     * @access public
-     * @param array $topics
-	 * @param \Symfony\Component\Security\Core\User\UserInterface $user
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function bulkSoftDelete($topics, UserInterface $user)
-    {
-        $boardsToUpdate = array();
-		$usersPostCountToUpdate = array();
-		
-        foreach ($topics as $topic) {
-            // Don't overwite previous users accountability.
-            if ( ! $topic->getDeletedBy() && ! $topic->getDeletedDate()) {
-                // Add the board of the topic to be updated.
-                if ($topic->getBoard()) {
-                    if ( ! array_key_exists($topic->getBoard()->getId(), $boardsToUpdate)) {
-                        $boardsToUpdate[$topic->getBoard()->getId()] = $topic->getBoard();
-                    }
-                }
-
-	            // Add author of each post to chain of cached post counts to update.
-	            if (count($topic->getPosts()) > 0) {
-					foreach($topic->getPosts() as $postKey => $post) {
-						if ($post->getCreatedBy()) {
-		                    $author = $post->getCreatedBy();
-
-		                    if ( ! array_key_exists($author->getId(), $usersPostCountToUpdate)) {
-		                        $usersPostCountToUpdate[$author->getId()] = $author;
-		                    }
-		                }
-					}
-	            }
-
-				// Set the deletion attributes.
-                $topic->setIsDeleted(true);
-                $topic->setDeletedBy($user);
-                $topic->setDeletedDate(new \DateTime());
-
-                $this->persist($topic);
-            }
-        }
-
-        $this->flush();
-
-        if (count($boardsToUpdate) > 0) {
-            // Update all affected board stats.
-            $this->managerBag->getBoardManager()->bulkUpdateStats($boardsToUpdate)->flush();
-        }
-
-        // Update all affected Users cached post counts.
-        if (count($usersPostCountToUpdate) > 0) {
-			$this->managerBag->getRegistryManager()->bulkUpdateCachePostCountForUser($usersPostCountToUpdate);
-		}
-		
-        return $this;
-    }
 
     /**
      *
@@ -1013,7 +995,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 		
         // Update all affected Users cached post counts.
         if (count($usersPostCountToUpdate) > 0) {
-			$this->managerBag->getRegistryManager()->bulkUpdateCachePostCountForUser($usersPostCountToUpdate);
+			$this->managerBag->getRegistryManager()->bulkUpdateCachedPostCountForUsers($usersPostCountToUpdate)->flush();
 		}
 
         return $this;

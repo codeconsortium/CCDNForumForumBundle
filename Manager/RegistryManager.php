@@ -30,22 +30,75 @@ use CCDNForum\ForumBundle\Entity\Registry;
  */
 class RegistryManager extends BaseManager implements BaseManagerInterface
 {
+	/**
+	 *
+	 * @access public
+	 * @param int $userId
+	 * @return \CCDNForum\ForumBundle\Entity\Registry
+	 */	
+	public function findRegistryForUserById($userId)
+	{
+		if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+			throw new \Exception('User id "' . $userId . '" is invalid!');
+		}
+		
+		$params = array(':userId' => $userId);
+		
+		$qb = $this->createSelectQuery(array('r'));
+		
+		$qb->where('r.ownedBy = :userId');
+		
+		return $this->gateway->findRegistry($qb, $params);
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param Array $userIds
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */	
+    public function findRegistriesForTheseUsersById($registryUserIds = array())
+    {
+		if (! is_array($registryUserIds) || count($registryUserIds) < 1) {
+			throw new \Exception('Parameter 1 must be an array and contain at least 1 user id!');
+		}
+		
+		$qb = $this->createSelectQuery(array('r'));
+		
+		$qb->where($qb->expr()->in('r.ownedBy', $registryUserIds));
+		
+		$registriesTemp = $this->gateway->findRegistries($qb, $params);
+
+        // Sort the registries so that the user[id] is the key of the users registry entity.
+        $registries = array();
+
+        foreach ($registriesTemp as $key => $registry) {
+            $registries[$registry->getOwnedBy()->getId()] = $registry;
+        }
+
+        if (count($registries) < 1) {
+            $registries = array();
+        }
+
+        return $registries;
+    }
+	
     /**
      *
      * @access public
      * @param $user
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function updateCachePostCountForUser(UserInterface $user)
+    public function updateCachedPostCountForUser(UserInterface $user)
     {
-        $record = $this->gateway->getRepository()->findRegistryRecordForUser($user->getId());
+        $record = $this->findRegistryForUserById($user->getId());
 
         if (! $record) {
             $record = new Registry();
             $record->setOwnedBy($user);
         }
 
-        $postCount = $this->managerBag->getPostManager()->getRepository()->getPostCountForUserById($user->getId());
+        $postCount = $this->managerBag->getPostManager()->getPostCountForUserById($user->getId());
 
         if (! $postCount) {
             $record->setCachedPostCount(0);
@@ -64,39 +117,10 @@ class RegistryManager extends BaseManager implements BaseManagerInterface
      * @param Array $users
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function bulkUpdateCachePostCountForUser($users)
+    public function bulkUpdateCachedPostCountForUsers($users)
     {
         foreach ($users as $user) {
             $this->updateCachePostCountForUser($user);
         }
-    }
-
-    /**
-     *
-     * @access public
-     * @param Array $registryUserIds
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function getRegistriesForUsersAsArray($registryUserIds = array())
-    {
-
-        $registriesTemp = $this->gateway->getRepository()->getPostCountsForUsers($registryUserIds);
-
-        // Sort the registries so that the [id] is the key of the parent key.
-        $registries = array();
-
-        foreach ($registriesTemp as $key => $registry) {
-            $registries[$registry->getOwnedBy()->getId()] = $registry;
-        }
-
-        if (! @isset($registries)) {
-            $registries = array();
-        } else {
-            if (count($registries) < 1) {
-                $registries = array();
-            }
-        }
-
-        return $registries;
     }
 }
