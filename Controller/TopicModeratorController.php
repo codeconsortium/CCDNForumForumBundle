@@ -42,7 +42,9 @@ class TopicModeratorController extends TopicBaseController
 
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-
+		$this->isAuthorisedToViewTopic($topic);
+		$this->isAuthorisedToEditTopic($topic);
+		
         $this->getTopicManager()->sticky($topic, $this->getUser())->flush();
 
         $this->setFlash('success', $this->trans('ccdn_forum_admin.flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
@@ -62,7 +64,9 @@ class TopicModeratorController extends TopicBaseController
 
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-
+		$this->isAuthorisedToViewTopic($topic);
+		$this->isAuthorisedToEditTopic($topic);
+		
         $this->getTopicManager()->unsticky($topic)->flush();
 
         $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.topic.unsticky.success', array('%topic_title%' => $topic->getTitle())));
@@ -84,7 +88,9 @@ class TopicModeratorController extends TopicBaseController
 
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-
+		$this->isAuthorisedToViewTopic($topic);
+		$this->isAuthorisedToEditTopic($topic);
+		
         $this->getTopicManager()->close($topic, $this->getUser())->flush();
 
         $this->setFlash('warning', $this->trans('ccdn_forum_admin.flash.topic.close.success', array('%topic_title%' => $topic->getTitle())));
@@ -104,7 +110,9 @@ class TopicModeratorController extends TopicBaseController
 
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-
+		$this->isAuthorisedToViewTopic($topic);
+		$this->isAuthorisedToEditTopic($topic);
+		
         $this->getTopicManager()->reopen($topic)->flush();
 
         $this->setFlash('warning', $this->trans('ccdn_forum_admin.flash.topic.reopen.success', array('%topic_title%' => $topic->getTitle())));
@@ -124,7 +132,9 @@ class TopicModeratorController extends TopicBaseController
 
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-
+		$this->isAuthorisedToViewTopic($topic);
+		$this->isAuthorisedToDeleteTopic($topic);
+		
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
@@ -156,7 +166,9 @@ class TopicModeratorController extends TopicBaseController
 
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-
+		$this->isAuthorisedToViewTopic($topic);
+		$this->isAuthorisedToDeleteTopic($topic);
+		
         $this->getTopicManager()->softDelete($topic, $this->getUser())->flush();
 
         // set flash message
@@ -178,7 +190,9 @@ class TopicModeratorController extends TopicBaseController
 
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-
+		$this->isAuthorisedToViewTopic($topic);
+		$this->isAuthorisedToRestoreTopic($topic);
+		
         $this->getTopicManager()->restore($topic)->flush();
 
         // set flash message
@@ -200,7 +214,9 @@ class TopicModeratorController extends TopicBaseController
 
 		$topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-
+		$this->isAuthorisedToViewTopic($topic);
+		$this->isAuthorisedToEditTopic($topic);
+		
         $formHandler = $this->getFormHandlerToChangeBoardOnTopic($topic);
 
         if ($formHandler->process($this->getRequest())) {

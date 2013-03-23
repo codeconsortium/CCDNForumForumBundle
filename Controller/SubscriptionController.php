@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class SubscriptionController extends BaseController
+class SubscriptionController extends TopicBaseController
 {
     /**
      *
@@ -63,6 +63,7 @@ class SubscriptionController extends BaseController
 
 		$topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
 		$this->isFound($topic);
+		$this->isAuthorisedToViewTopic($topic);
 		
         $this->getSubscriptionManager()->subscribe($topic)->flush();
 
@@ -83,6 +84,7 @@ class SubscriptionController extends BaseController
 
 		$topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
 		$this->isFound($topic);
+		$this->isAuthorisedToViewTopic($topic);
 		
         $this->getSubscriptionManager()->unsubscribe($topic)->flush();
 

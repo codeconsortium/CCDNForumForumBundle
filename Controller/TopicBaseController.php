@@ -36,6 +36,18 @@ class TopicBaseController extends BaseController
 	/**
 	 *
 	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
+	 * @return bool
+	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+	 */
+	public function isAuthorisedToViewTopic(Topic $topic)
+	{
+		return $this->isAuthorised($this->getTopicManager()->isAuthorisedToViewTopic($topic));
+	}
+		
+	/**
+	 *
+	 * @access public
 	 * @param \CCDNForum\ForumBundle\Entity\Board $board
 	 * @return bool
 	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException

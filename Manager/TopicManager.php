@@ -54,6 +54,27 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
 	 * @return bool
 	 */
+	public function isAuthorisedToViewTopic(Topic $topic)
+	{
+        if (! $topic->getBoard()->isAuthorisedToRead($this->securityContext)) {
+        	return false;
+		}
+        
+        if ($topic->getIsDeleted()) {
+			if (! $this->isGranted('ROLE_MODERATOR')) {
+				return false;
+			}
+        }
+				
+		return true;
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
+	 * @return bool
+	 */
 	public function isAuthorisedToReplyToTopic(Topic $topic)
 	{
         if (! $topic->getBoard()->isAuthorisedToTopicReply($this->securityContext)) {

@@ -36,7 +36,8 @@ class PostController extends PostBaseController
 		// Get post by id.
 		$post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
 		$this->isFound($post);
-
+		$this->isAuthorisedToViewPost($post);
+		
         // Get the topic subscriptions.
 		$subscription = $this->getSubscriptionManager()->findSubscriptionForTopicById($post->getTopic()->getId());		
         $subscriberCount = $this->getSubscriptionManager()->countSubscriptionsForTopicById($post->getTopic()->getId());
@@ -76,6 +77,7 @@ class PostController extends PostBaseController
 
 		$post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
         $this->isFound($post);
+		$this->isAuthorisedToViewPost($post);
 		$this->isAuthorisedToEditPost($post);
 
 		// If post is the very first post of the topic then use a topic handler so user can change topic title.
@@ -138,6 +140,7 @@ class PostController extends PostBaseController
 
 		$post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
         $this->isFound($post);
+		$this->isAuthorisedToViewPost($post);
 		$this->isAuthorisedToDeletePost($post);
 
         $topic = $post->getTopic();
@@ -184,6 +187,7 @@ class PostController extends PostBaseController
 
 		$post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
         $this->isFound($post);
+		$this->isAuthorisedToViewPost($post);
 		$this->isAuthorisedToDeletePost($post);
 		
         $this->getPostManager()->softDelete($post, $this->getUser())->flush();

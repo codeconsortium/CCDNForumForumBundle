@@ -36,6 +36,27 @@ class PostManager extends BaseManager implements BaseManagerInterface
 	 * @param \CCDNForum\ForumBundle\Entity\Post $post
 	 * @return bool
 	 */
+	public function isAuthorisedToViewPost(Post $post)
+	{
+        if (! $post->getTopic()->getBoard()->isAuthorisedToRead($this->securityContext)) {
+        	return false;
+		}
+        
+        if ($post->getTopic()->getIsDeleted()) {
+			if (! $this->isGranted('ROLE_MODERATOR')) {
+				return false;
+			}
+        }
+				
+		return true;
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Post $post
+	 * @return bool
+	 */
 	public function isAuthorisedToEditPost(Post $post)
 	{
 		if ($post->getIsDeleted() || $post->getIsLocked() || $post->getTopic()->getIsDeleted() || $post->getTopic()->getIsClosed()) {

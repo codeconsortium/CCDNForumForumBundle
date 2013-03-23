@@ -32,6 +32,18 @@ class PostBaseController extends BaseController
 	 * @return bool
 	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
 	 */
+	public function isAuthorisedToViewPost(Post $post)
+	{
+		return $this->isAuthorised($this->getPostManager()->isAuthorisedToViewPost($post));
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Post $post
+	 * @return bool
+	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+	 */
 	public function isAuthorisedToEditPost(Post $post)
 	{
 		return $this->isAuthorised($this->getPostManager()->isAuthorisedToEditPost($post));

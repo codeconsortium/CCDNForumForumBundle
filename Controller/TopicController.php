@@ -41,7 +41,8 @@ class TopicController extends TopicBaseController
 		// Get topic.
 		$topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
 		$this->isFound($topic);
-
+		$this->isAuthorisedToViewTopic($topic);
+		
 		// Get posts for topic paginated.
 		$postsPager = $this->getPostManager()->findAllPaginatedByTopicId($topicId, $page);
 		$this->isFound($postsPager->getCurrentPageResults());
@@ -132,6 +133,7 @@ class TopicController extends TopicBaseController
 
 		$topic = $this->getTopicManager()->findOneByIdWithPostsByTopicId($topicId);
         $this->isFound($topic);
+		$this->isAuthorisedToViewTopic($topic);
 		$this->isAuthorisedToReplyToTopic($topic);
 
 		$formHandler = $this->getFormHandlerToReplyToTopic($topic, $draftId, $quoteId);

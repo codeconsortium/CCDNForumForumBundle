@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
  */
-class BoardController extends BaseController
+class BoardController extends BoardBaseController
 {
     /**
      *
@@ -38,7 +38,8 @@ class BoardController extends BaseController
 
         // check board exists.
 		$this->isFound($board);
-
+		$this->isAuthorisedToViewBoard($board);
+		
         // this is necessary for working out the last page for each topic.
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 

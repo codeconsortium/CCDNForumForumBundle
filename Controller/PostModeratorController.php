@@ -46,7 +46,9 @@ class PostModeratorController extends PostBaseController
 	    $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
 
 	    $this->isFound($post);
-
+		$this->isAuthorisedToViewPost($post);
+		$this->isAuthorisedToEditPost($post);
+		
 	    $this->getPostManager()->lock($post, $user)->flush();
 
 	    $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.lock.success', array('%post_id%' => $postId)));
@@ -67,7 +69,9 @@ class PostModeratorController extends PostBaseController
 	    $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
 
 	    $this->isFound($post);
-
+		$this->isAuthorisedToViewPost($post);
+		$this->isAuthorisedToEditPost($post);
+		
 	    $this->getPostManager()->unlock($post)->flush();
 
 	    $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.unlock.success', array('%post_id%' => $postId)));
@@ -88,6 +92,8 @@ class PostModeratorController extends PostBaseController
 	    $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
 
 		$this->isFound($post);
+		$this->isAuthorisedToViewPost($post);
+		$this->isAuthorisedToRestorePost($post);
 		
 	    $this->getPostManager()->restore($post)->flush();
 
