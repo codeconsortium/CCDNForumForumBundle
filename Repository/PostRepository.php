@@ -22,180 +22,181 @@ use Pagerfanta\Pagerfanta;
  *
  * @author Reece Fowell <reece@codeconsortium.com>
  * @version 1.0
+ * @deprecated (use managers instead)
  */
 class PostRepository extends EntityRepository
 {
-    /**
-     *
-     * @access public
-     * @param int $topicId
-     */
-    public function findPostsForTopicByIdPaginated($topicId)
-    {
-        $query = $this->getEntityManager()
-            ->createQuery('
-                SELECT p, t FROM CCDNForum\ForumBundle\Entity\Post p
-                LEFT JOIN p.topic t
-                LEFT JOIN p.createdBy u
-                LEFT JOIN p.editedBy eu
-                LEFT JOIN p.deletedBy du
-                LEFT JOIN p.lockedBy lu
-                WHERE p.topic = :id
-                GROUP BY p.id
-                ORDER BY p.createdDate ASC
-            ')
-            ->setParameter('id', $topicId);
-
-        try {
-            return new Pagerfanta(new DoctrineORMAdapter($query));
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
-
-    /**
-     *
-     * Finds the post requested for editing joined to its
-     * topic and also the post referenced as first post. This
-     * is so that if first_post matches the request post by ID
-     * then we know the post being edited is the topic/post, if
-     * not then we know we are only editing the post alone.
-     *
-     * By joining in this way we avoid doing 2 queries instead of
-     * just the one, as one would be needed to check if it was
-     * the first post after retrieval, which is a waste.
-     *
-     * @access public
-     * @param int $postId
-     */
-    public function findPostForEditing($postId)
-    {
-        $query = $this->getEntityManager()
-            ->createQuery('
-                SELECT p, t, fp
-                FROM CCDNForum\ForumBundle\Entity\Post p
-                LEFT JOIN p.topic t
-                LEFT JOIN t.firstPost fp
-                WHERE p.id = :id')
-            ->setParameter('id', $postId);
-
-        try {
-            return $query->getsingleResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
-
-    /**
-     *
-     * for moderator
-     *
-     * @access public
-     */
-    public function findDeletedPostsForAdminsPaginated()
-    {
-        $query = $this->getEntityManager()
-            ->createQuery('
-                SELECT p, t
-                FROM CCDNForum\ForumBundle\Entity\Post p
-                LEFT JOIN p.topic t
-                WHERE p.isDeleted = TRUE');
-
-        try {
-            return new Pagerfanta(new DoctrineORMAdapter($query));
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
-
-    /**
-     *
-     * for moderator
-     *
-     * @access public
-     */
-    public function findLockedPostsForModeratorsPaginated()
-    {
-        $query = $this->getEntityManager()
-            ->createQuery('
-                SELECT p, t
-                FROM CCDNForum\ForumBundle\Entity\Post p
-                LEFT JOIN p.topic t
-                WHERE p.isLocked = TRUE or t.isDeleted = TRUE
-                ORDER BY p.createdDate DESC');
-
-        try {
-            return new Pagerfanta(new DoctrineORMAdapter($query));
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
-
-    /**
-     *
-     * for moderator
-     *
-     * @access public
-     */
-    public function findThesePostsByIdForModeration($postIds)
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-        $query = $qb->add('select', 'p')
-            ->from('CCDNForum\ForumBundle\Entity\Post', 'p')
-            ->where($qb->expr()->in('p.id', '?1'))
-            ->setParameters(array('1' => array_values($postIds)))
-            ->getQuery();
-
-        try {
-            return $query->getResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
-
-    /**
-     *
- 	 * @access public
-     * @param int $userId
-     */
-    public function getPostCountForUserById($userId)
-    {
-        $query = $this->getEntityManager()
-            ->createQuery('
-                SELECT COUNT(p.id) AS postCount
-                FROM CCDNForum\ForumBundle\Entity\Post p
-                LEFT JOIN p.topic t
-                WHERE p.createdBy = :id AND p.isDeleted = FALSE')
-            ->setParameter('id', $userId);
-
-        try {
-            return $query->getsingleResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-
-    }
-
-    /**
-     *
-     * @access public
-     * @param int $topicId
-     */
-    public function getPostCountForTopicById($topicId)
-    {
-        $qb = $this->getEntityManager()->createQueryBuilder();
-
-        $query = $qb
-            ->add('select', 'count(p.id)')
-            ->add('from', 'CCDNForum\ForumBundle\Entity\Post p')
-            ->add('where', 'p.topic = ?1')
-            ->setParameter(1, $topicId)
-            ->getQuery();
-
-        try {
-            return $query->getSingleScalarResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
-    }
+//    /**
+//     *
+//     * @access public
+//     * @param int $topicId
+//     */
+//    public function findPostsForTopicByIdPaginated($topicId)
+//    {
+//        $query = $this->getEntityManager()
+//            ->createQuery('
+//                SELECT p, t FROM CCDNForum\ForumBundle\Entity\Post p
+//                LEFT JOIN p.topic t
+//                LEFT JOIN p.createdBy u
+//                LEFT JOIN p.editedBy eu
+//                LEFT JOIN p.deletedBy du
+//                LEFT JOIN p.lockedBy lu
+//                WHERE p.topic = :id
+//                GROUP BY p.id
+//                ORDER BY p.createdDate ASC
+//            ')
+//            ->setParameter('id', $topicId);
+//
+//        try {
+//            return new Pagerfanta(new DoctrineORMAdapter($query));
+//        } catch (\Doctrine\ORM\NoResultException $e) {
+//            return null;
+//        }
+//    }
+//
+//    /**
+//     *
+//     * Finds the post requested for editing joined to its
+//     * topic and also the post referenced as first post. This
+//     * is so that if first_post matches the request post by ID
+//     * then we know the post being edited is the topic/post, if
+//     * not then we know we are only editing the post alone.
+//     *
+//     * By joining in this way we avoid doing 2 queries instead of
+//     * just the one, as one would be needed to check if it was
+//     * the first post after retrieval, which is a waste.
+//     *
+//     * @access public
+//     * @param int $postId
+//     */
+//    public function findPostForEditing($postId)
+//    {
+//        $query = $this->getEntityManager()
+//            ->createQuery('
+//                SELECT p, t, fp
+//                FROM CCDNForum\ForumBundle\Entity\Post p
+//                LEFT JOIN p.topic t
+//                LEFT JOIN t.firstPost fp
+//                WHERE p.id = :id')
+//            ->setParameter('id', $postId);
+//
+//        try {
+//            return $query->getsingleResult();
+//        } catch (\Doctrine\ORM\NoResultException $e) {
+//            return null;
+//        }
+//    }
+//
+//    /**
+//     *
+//     * for moderator
+//     *
+//     * @access public
+//     */
+//    public function findDeletedPostsForAdminsPaginated()
+//    {
+//        $query = $this->getEntityManager()
+//            ->createQuery('
+//                SELECT p, t
+//                FROM CCDNForum\ForumBundle\Entity\Post p
+//                LEFT JOIN p.topic t
+//                WHERE p.isDeleted = TRUE');
+//
+//        try {
+//            return new Pagerfanta(new DoctrineORMAdapter($query));
+//        } catch (\Doctrine\ORM\NoResultException $e) {
+//            return null;
+//        }
+//    }
+//
+//    /**
+//     *
+//     * for moderator
+//     *
+//     * @access public
+//     */
+//    public function findLockedPostsForModeratorsPaginated()
+//    {
+//        $query = $this->getEntityManager()
+//            ->createQuery('
+//                SELECT p, t
+//                FROM CCDNForum\ForumBundle\Entity\Post p
+//                LEFT JOIN p.topic t
+//                WHERE p.isLocked = TRUE or t.isDeleted = TRUE
+//                ORDER BY p.createdDate DESC');
+//
+//        try {
+//            return new Pagerfanta(new DoctrineORMAdapter($query));
+//        } catch (\Doctrine\ORM\NoResultException $e) {
+//            return null;
+//        }
+//    }
+//
+//    /**
+//     *
+//     * for moderator
+//     *
+//     * @access public
+//     */
+//    public function findThesePostsByIdForModeration($postIds)
+//    {
+//        $qb = $this->getEntityManager()->createQueryBuilder();
+//        $query = $qb->add('select', 'p')
+//            ->from('CCDNForum\ForumBundle\Entity\Post', 'p')
+//            ->where($qb->expr()->in('p.id', '?1'))
+//            ->setParameters(array('1' => array_values($postIds)))
+//            ->getQuery();
+//
+//        try {
+//            return $query->getResult();
+//        } catch (\Doctrine\ORM\NoResultException $e) {
+//            return null;
+//        }
+//    }
+//
+//    /**
+//     *
+// 	 * @access public
+//     * @param int $userId
+//     */
+//    public function getPostCountForUserById($userId)
+//    {
+//        $query = $this->getEntityManager()
+//            ->createQuery('
+//                SELECT COUNT(p.id) AS postCount
+//                FROM CCDNForum\ForumBundle\Entity\Post p
+//                LEFT JOIN p.topic t
+//                WHERE p.createdBy = :id AND p.isDeleted = FALSE')
+//            ->setParameter('id', $userId);
+//
+//        try {
+//            return $query->getsingleResult();
+//        } catch (\Doctrine\ORM\NoResultException $e) {
+//            return null;
+//        }
+//
+//    }
+//
+//    /**
+//     *
+//     * @access public
+//     * @param int $topicId
+//     */
+//    public function getPostCountForTopicById($topicId)
+//    {
+//        $qb = $this->getEntityManager()->createQueryBuilder();
+//
+//        $query = $qb
+//            ->add('select', 'count(p.id)')
+//            ->add('from', 'CCDNForum\ForumBundle\Entity\Post p')
+//            ->add('where', 'p.topic = ?1')
+//            ->setParameter(1, $topicId)
+//            ->getQuery();
+//
+//        try {
+//            return $query->getSingleScalarResult();
+//        } catch (\Doctrine\ORM\NoResultException $e) {
+//            return null;
+//        }
+//    }
 }

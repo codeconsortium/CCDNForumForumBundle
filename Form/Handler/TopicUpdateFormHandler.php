@@ -127,7 +127,7 @@ class TopicUpdateFormHandler
             if ($this->form->isValid()) {
                 $formData = $this->form->getData();
 				
-				if ($this->getAction($request) == 'post') {
+				if ($this->getSubmitAction($request) == 'post') {
 	                $this->onSuccess($formData);
 
 	                return true;					
@@ -144,7 +144,7 @@ class TopicUpdateFormHandler
 	 * @param \Symfony\Component\HttpFoundation\Request $request
 	 * @return string
 	 */
-	public function getAction(Request $request)
+	public function getSubmitAction(Request $request)
 	{
 		if ($request->request->has('submit')) {
 			$action = key($request->request->get('submit'));
