@@ -34,6 +34,6 @@ class BoardBaseController extends BaseController
 	 */
 	public function isAuthorisedToViewBoard(Board $board)
 	{
-		return $this->isAuthorised($this->getBoardManager()->isAuthorisedToViewBoard($board));
+		return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToViewBoard($board));
 	}
 }

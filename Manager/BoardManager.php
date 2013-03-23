@@ -31,36 +31,6 @@ class BoardManager extends BaseManager implements BaseManagerInterface
 	/**
 	 *
 	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Board $board
-	 * @return bool
-	 */
-	public function isAuthorisedToViewBoard(Board $board)
-	{
-        if (! $board->isAuthorisedToRead($this->securityContext)) {
-        	return false;
-		}
-        
-		return true;
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Board $board
-	 * @return bool
-	 */
-	public function isAuthorisedToCreateTopic(Board $board)
-	{
-        if (! $board->isAuthorisedToCreateTopic($this->securityContext)) {
-        	return false;
-		}
-        
-		return true;
-	}
-	
-	/**
-	 *
-	 * @access public
 	 * @param int $boardId
 	 * @return \CCDNForum\ForumBundle\Entity\Board
 	 */	

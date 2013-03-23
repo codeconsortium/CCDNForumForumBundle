@@ -34,7 +34,7 @@ class PostBaseController extends BaseController
 	 */
 	public function isAuthorisedToViewPost(Post $post)
 	{
-		return $this->isAuthorised($this->getPostManager()->isAuthorisedToViewPost($post));
+		return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToViewPost($post));
 	}
 	
 	/**
@@ -46,7 +46,7 @@ class PostBaseController extends BaseController
 	 */
 	public function isAuthorisedToEditPost(Post $post)
 	{
-		return $this->isAuthorised($this->getPostManager()->isAuthorisedToEditPost($post));
+		return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToEditPost($post));
 	}
 	
 	/**
@@ -58,7 +58,7 @@ class PostBaseController extends BaseController
 	 */
 	public function isAuthorisedToDeletePost(Post $post)
 	{
-		return $this->isAuthorised($this->getPostManager()->isAuthorisedToDeletePost($post));
+		return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToDeletePost($post));
 	}
 	
 	/**
@@ -70,7 +70,7 @@ class PostBaseController extends BaseController
 	 */
 	public function isAuthorisedToRestorePost(Post $post)
 	{
-		return $this->isAuthorised($this->getPostManager()->isAuthorisedToRestorePost($post));
+		return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToRestorePost($post));
 	}
 	
 	/**

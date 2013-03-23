@@ -42,7 +42,7 @@ class TopicBaseController extends BaseController
 	 */
 	public function isAuthorisedToViewTopic(Topic $topic)
 	{
-		return $this->isAuthorised($this->getTopicManager()->isAuthorisedToViewTopic($topic));
+		return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToViewTopic($topic));
 	}
 		
 	/**
@@ -54,7 +54,7 @@ class TopicBaseController extends BaseController
 	 */
 	public function isAuthorisedToCreateTopic(Board $board)
 	{
-		return $this->isAuthorised($this->getBoardManager()->isAuthorisedToCreateTopic($board));
+		return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToCreateTopic($board));
 	}
 	
 	/**
@@ -66,7 +66,7 @@ class TopicBaseController extends BaseController
 	 */
 	public function isAuthorisedToReplyToTopic(Topic $topic)
 	{
-		return $this->isAuthorised($this->getTopicManager()->isAuthorisedToReplyToTopic($topic));
+		return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToReplyToTopic($topic));
 	}
 	
 	/**
@@ -78,7 +78,7 @@ class TopicBaseController extends BaseController
 	 */
 	public function isAuthorisedToEditTopic(Topic $topic)
 	{
-		return $this->isAuthorised($this->getTopicManager()->isAuthorisedToEditTopic($topic));
+		return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToEditTopic($topic));
 	}
 	
 	/**
@@ -90,7 +90,7 @@ class TopicBaseController extends BaseController
 	 */
 	public function isAuthorisedToDeleteTopic(Topic $topic)
 	{
-		return $this->isAuthorised($this->getTopicManager()->isAuthorisedToDeleteTopic($topic));
+		return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToDeleteTopic($topic));
 	}
 	
 	/**
@@ -102,7 +102,67 @@ class TopicBaseController extends BaseController
 	 */
 	public function isAuthorisedToRestoreTopic(Topic $topic)
 	{
-		return $this->isAuthorised($this->getTopicManager()->isAuthorisedToRestoreTopic($topic));
+		return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToRestoreTopic($topic));
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
+	 * @return bool
+	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+	 */
+	public function isAuthorisedToMoveTopic(Topic $topic)
+	{
+		return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToMoveTopic($topic));
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
+	 * @return bool
+	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+	 */
+	public function isAuthorisedToCloseTopic(Topic $topic)
+	{
+		return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToCloseTopic($topic));
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
+	 * @return bool
+	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+	 */
+	public function isAuthorisedToReOpenTopic(Topic $topic)
+	{
+		return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToReOpenTopic($topic));
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
+	 * @return bool
+	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+	 */
+	public function isAuthorisedToStickyTopic(Topic $topic)
+	{
+		return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToStickyTopic($topic));
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Topic $topic
+	 * @return bool
+	 * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+	 */
+	public function isAuthorisedToUnStickyTopic(Topic $topic)
+	{
+		return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToUnstickyTopic($topic));
 	}
 	
 	/**

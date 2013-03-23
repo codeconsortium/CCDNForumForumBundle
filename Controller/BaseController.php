@@ -96,6 +96,12 @@ class BaseController extends ContainerAware
 	 */
 	private $subscriptionManager;
 	
+	/** 
+	 * 
+	 * @var \CCDNForum\ForumBundle\Manager\PolicyManager $policyManager;
+	 */
+	private $policyManager;
+		
 	/**
 	 *
 	 * @access protected
@@ -433,6 +439,20 @@ class BaseController extends ContainerAware
 		}
 		
 		return $this->subscriptionManager;
+	}
+	
+	/**
+	 *
+	 * @access protected
+	 * @return \CCDNForum\ForumBundle\Manager\PolicyManager
+	 */
+	protected function getPolicyManager()
+	{
+		if (null == $this->policyManager) {
+			$this->policyManager = $this->container->get('ccdn_forum_forum.manager.policy');
+		}
+		
+		return $this->policyManager;
 	}
 	
 	/**

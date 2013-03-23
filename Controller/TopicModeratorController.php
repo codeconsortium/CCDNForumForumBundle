@@ -43,7 +43,7 @@ class TopicModeratorController extends TopicBaseController
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
 		$this->isAuthorisedToViewTopic($topic);
-		$this->isAuthorisedToEditTopic($topic);
+		$this->isAuthorisedToStickyTopic($topic);
 		
         $this->getTopicManager()->sticky($topic, $this->getUser())->flush();
 
@@ -65,7 +65,7 @@ class TopicModeratorController extends TopicBaseController
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
 		$this->isAuthorisedToViewTopic($topic);
-		$this->isAuthorisedToEditTopic($topic);
+		$this->isAuthorisedToUnStickyTopic($topic);
 		
         $this->getTopicManager()->unsticky($topic)->flush();
 
@@ -89,7 +89,7 @@ class TopicModeratorController extends TopicBaseController
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
 		$this->isAuthorisedToViewTopic($topic);
-		$this->isAuthorisedToEditTopic($topic);
+		$this->isAuthorisedToCloseTopic($topic);
 		
         $this->getTopicManager()->close($topic, $this->getUser())->flush();
 
@@ -111,7 +111,7 @@ class TopicModeratorController extends TopicBaseController
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
 		$this->isAuthorisedToViewTopic($topic);
-		$this->isAuthorisedToEditTopic($topic);
+		$this->isAuthorisedToReOpenTopic($topic);
 		
         $this->getTopicManager()->reopen($topic)->flush();
 
@@ -215,7 +215,7 @@ class TopicModeratorController extends TopicBaseController
 		$topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
 		$this->isAuthorisedToViewTopic($topic);
-		$this->isAuthorisedToEditTopic($topic);
+		$this->isAuthorisedToMoveTopic($topic);
 		
         $formHandler = $this->getFormHandlerToChangeBoardOnTopic($topic);
 

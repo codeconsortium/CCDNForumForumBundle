@@ -76,6 +76,13 @@ class ManagerBag implements ManagerBagInterface
 	/**
 	 *
 	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Manager\PolicyManager $policyManager
+	 */
+	protected $policyManager;
+	
+	/**
+	 *
+	 * @access protected
 	 * @var \Symfony\Component\DependencyInjection\Container $container
 	 */
     protected $container;
@@ -224,6 +231,20 @@ class ManagerBag implements ManagerBagInterface
 	/**
 	 *
 	 * @access public
+	 * @return \CCDNForum\ForumBundle\Manager\PolicyManager
+	 */
+	public function getPolicyManager()
+	{
+		if (null == $this->policyManager) {
+			$this->policyManager = $this->container->get('ccdn_forum_forum.manager.policy');
+		}
+		
+		return $this->policyManager;
+	}
+	
+	/**
+	 *
+	 * @access public
 	 * @return int
 	 */
 	public function getTopicsPerPageOnSubscriptions()
@@ -259,5 +280,5 @@ class ManagerBag implements ManagerBagInterface
 	public function getDraftsPerPageOnDrafts()
 	{
 		return $this->draftsPerPageOnDrafts;
-	}	
+	}
 }

@@ -81,6 +81,13 @@ interface ManagerBagInterface
 	/**
 	 *
 	 * @access public
+	 * @return \CCDNForum\ForumBundle\Manager\PolicyManager
+	 */
+	public function getPolicyManager();
+	
+	/**
+	 *
+	 * @access public
 	 * @return int
 	 */
 	public function getTopicsPerPageOnSubscriptions();

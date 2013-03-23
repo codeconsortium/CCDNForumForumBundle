@@ -33,124 +33,11 @@ class PostManager extends BaseManager implements BaseManagerInterface
 	/**
 	 *
 	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Post $post
 	 * @return bool
-	 */
-	public function isAuthorisedToViewPost(Post $post)
+	 */	
+	public function allowedToViewDeletedTopics()
 	{
-        if (! $post->getTopic()->getBoard()->isAuthorisedToRead($this->securityContext)) {
-        	return false;
-		}
-        
-        if ($post->getTopic()->getIsDeleted()) {
-			if (! $this->isGranted('ROLE_MODERATOR')) {
-				return false;
-			}
-        }
-				
-		return true;
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Post $post
-	 * @return bool
-	 */
-	public function isAuthorisedToEditPost(Post $post)
-	{
-		if ($post->getIsDeleted() || $post->getIsLocked() || $post->getTopic()->getIsDeleted() || $post->getTopic()->getIsClosed()) {
-			if (! $this->isGranted('ROLE_MODERATOR')) {
-				return false;
-			}
-		}
-		
-		if ($this->isGranted('ROLE_USER')) {
-	        if ($post->getCreatedBy()) {
-	            // if user does not own post, or is not a mod
-	            if ($post->getCreatedBy()->getId() != $this->getUser()->getId()) {
-					if (! $this->isGranted('ROLE_MODERATOR')) {
-						return false;
-					}
-	            }
-	        } else {
-				if (! $this->isGranted('ROLE_MODERATOR')) {
-					return false;
-				}
-	        }
-		} else {
-			return false;
-		}
-		
-		return true;
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Post $post
-	 * @return bool
-	 */
-	public function isAuthorisedToDeletePost(Post $post)
-	{
-		if ($post->getIsDeleted() || $post->getIsLocked() || $post->getTopic()->getIsDeleted() || $post->getTopic()->getIsClosed()) {
-			if (! $this->isGranted('ROLE_MODERATOR')) {
-				return false;
-			}
-		}
-		
-		if ($this->isGranted('ROLE_USER')) {
-	        if ($post->getCreatedBy()) {
-	            // if user does not own post, or is not a mod
-	            if ($post->getCreatedBy()->getId() != $this->getUser()->getId()) {
-					if (! $this->isGranted('ROLE_MODERATOR')) {
-						return false;
-					}
-	            }
-	        } else {
-				if (! $this->isGranted('ROLE_MODERATOR')) {
-					return false;
-				}
-	        }
-		} else {
-			return false;
-		}
-		
-		return true;
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Post $post
-	 * @return bool
-	 */
-	public function isAuthorisedToRestorePost(Post $post)
-	{
-		if ($post->getIsDeleted() || $post->getIsLocked() || $post->getTopic()->getIsDeleted() || $post->getTopic()->getIsClosed()) {
-			if (! $this->isGranted('ROLE_MODERATOR')) {
-				return false;
-			}
-		}
-		        
-		if ($this->isGranted('ROLE_MODERATOR')) {
-	        if ($post->getCreatedBy()) {
-	            // if user does not own post, or is not a mod
-	            if ($post->getCreatedBy()->getId() != $this->getUser()->getId()) {
-					if (! $this->isGranted('ROLE_MODERATOR')) {
-						return false;
-					}
-	            }
-	        } else {
-				if (! $this->isGranted('ROLE_MODERATOR')) {
-					return false;
-				}
-	        }
-		} else {
-			return false;
-		}
-		
-		return true;
+		return $this->managerBag->getPolicyManager()->allowedToViewDeletedTopics();
 	}
 	
 	/**
@@ -213,7 +100,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
 			throw new \Exception('Post id "' . $postId . '" is invalid!');
 		}
 		
-		$canViewDeleted = $this->managerBag->getTopicManager()->allowedToViewDeletedTopics();
+		$canViewDeleted = $this->allowedToViewDeletedTopics();
 		
 		$params = array(':postId' => $postId);
 		
