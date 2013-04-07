@@ -49,7 +49,7 @@ class DraftController extends BaseController
         $draftsPaginated->setCurrentPage($page, false, true);
 
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('ccdn_forum_forum.crumbs.drafts_index'), $this->path('ccdn_forum_forum_draft_list'), "home");
+            ->add($this->trans('ccdn_forum_forum.crumbs.drafts_index'), $this->path('ccdn_forum_forum_draft_list'));
 
         return $this->renderResponse('CCDNForumForumBundle:Draft:list.html.', array(
             'crumbs' => $crumbs,
@@ -75,7 +75,7 @@ class DraftController extends BaseController
 
         $this->getDraftManager()->remove($draft)->flush();
 
-        return new RedirectResponse($this->path('ccdn_forum_forum_draft_list'));
+        return $this->redirectResponse($this->path('ccdn_forum_forum_draft_list'));
     }
 
     /**
@@ -98,25 +98,25 @@ class DraftController extends BaseController
         if (is_object($draft->getTopic()) && $draft->getTopic() instanceof Topic) {
             if ($draft->getTopic()->getId()) {
                 if ($draft->getBoard()) {
-                    return new RedirectResponse($this->path('ccdn_forum_forum_topic_reply_from_draft', array('topicId' => $draft->getTopic()->getId(), 'draftId' => $draft->getId()) ));
+                    return $this->redirectResponse($this->path('ccdn_forum_forum_topic_reply_from_draft', array('topicId' => $draft->getTopic()->getId(), 'draftId' => $draft->getId()) ));
                 } else {
                     $this->setFlash('error', $this->trans('ccdn_forum_forum.flash.draft.topic_does_not_exist'));
                 }
             } else {
                 if ($draft->getBoard()) {
-                    return new RedirectResponse($this->path('ccdn_forum_forum_topic_create_from_draft', array('boardId' => $draft->getBoard()->getId(), 'draftId' => $draft->getId()) ));
+                    return $this->redirectResponse($this->path('ccdn_forum_forum_topic_create_from_draft', array('boardId' => $draft->getBoard()->getId(), 'draftId' => $draft->getId()) ));
                 } else {
                     $this->setFlash('error', $this->trans('ccdn_forum_forum.flash.draft.board_does_not_exist'));
                 }
             }
         } else {
             if ($draft->getBoard()) {
-                return new RedirectResponse($this->path('ccdn_forum_forum_topic_create_from_draft', array('boardId' => $draft->getBoard()->getId(), 'draftId' => $draft->getId()) ));
+                return $this->redirectResponse($this->path('ccdn_forum_forum_topic_create_from_draft', array('boardId' => $draft->getBoard()->getId(), 'draftId' => $draft->getId()) ));
             } else {
                 $this->setFlash('error', $this->trans('ccdn_forum_forum.flash.draft.board_does_not_exist'));
             }
         }
 
-        return new RedirectResponse($this->path('ccdn_forum_forum_draft_list'));
+        return $this->redirectResponse($this->path('ccdn_forum_forum_draft_list'));
     }
 }

@@ -53,7 +53,7 @@ class PostModeratorController extends PostBaseController
 
 	    $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.lock.success', array('%post_id%' => $postId)));
 
-	    return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
+	    return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
 	}
 
 	/**
@@ -76,7 +76,7 @@ class PostModeratorController extends PostBaseController
 
 	    $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.unlock.success', array('%post_id%' => $postId)));
 
-	    return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
+	    return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
 	}
 
 	/**
@@ -101,6 +101,6 @@ class PostModeratorController extends PostBaseController
 	    $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.restore.success', array('%post_id%' => $postId)));
 
 	    // forward user
-	    return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
+	    return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
 	}
 }

@@ -35,7 +35,7 @@ class CategoryController extends BaseController
         $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'), "home");
+            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'));
 
         return $this->renderResponse('CCDNForumForumBundle:Category:index.html.', array(
             'crumbs' => $crumbs,
@@ -59,8 +59,8 @@ class CategoryController extends BaseController
         $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $categoryId)), "category");
+            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'))
+            ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $categoryId)));
 
         return $this->renderResponse('CCDNForumForumBundle:Category:show.html.', array(
             'crumbs' => $crumbs,

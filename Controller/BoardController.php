@@ -47,9 +47,9 @@ class BoardController extends BoardBaseController
         $category = $board->getCategory();
 
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
-            ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $boardId)), "board");
+            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'))
+            ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())))
+            ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $boardId)));
 
         return $this->renderResponse('CCDNForumForumBundle:Board:show.html.', array(
             'crumbs' => $crumbs,

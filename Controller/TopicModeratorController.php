@@ -49,7 +49,7 @@ class TopicModeratorController extends TopicBaseController
 
         $this->setFlash('success', $this->trans('ccdn_forum_admin.flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
 
-        return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId()) ));
+        return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId()) ));
     }
 
     /**
@@ -71,7 +71,7 @@ class TopicModeratorController extends TopicBaseController
 
         $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.topic.unsticky.success', array('%topic_title%' => $topic->getTitle())));
 
-        return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId()) ));
+        return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId()) ));
     }
 
     /**
@@ -95,7 +95,7 @@ class TopicModeratorController extends TopicBaseController
 
         $this->setFlash('warning', $this->trans('ccdn_forum_admin.flash.topic.close.success', array('%topic_title%' => $topic->getTitle())));
 
-        return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId()) ));
+        return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId()) ));
     }
 
     /**
@@ -117,7 +117,7 @@ class TopicModeratorController extends TopicBaseController
 
         $this->setFlash('warning', $this->trans('ccdn_forum_admin.flash.topic.reopen.success', array('%topic_title%' => $topic->getTitle())));
 
-        return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId()) ));
+        return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId()) ));
     }
 
     /**
@@ -142,11 +142,11 @@ class TopicModeratorController extends TopicBaseController
 
         // setup crumb trail.
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'), "home")
-            ->add($category->getName(),	$this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
-            ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
-            ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
-            ->add($crumbDelete, $this->path('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())), "trash");
+            ->add($this->trans('crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'))
+            ->add($category->getName(),	$this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())))
+            ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())))
+            ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())))
+            ->add($crumbDelete, $this->path('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())));
 
         return $this->renderResponse('CCDNForumForumBundle:Topic:delete_topic.html.', array(
             'topic' => $topic,
@@ -175,7 +175,7 @@ class TopicModeratorController extends TopicBaseController
         $this->setFlash('warning', $this->trans('ccdn_forum_admin.flash.topic.delete.success', array('%topic_title%' => $topic->getTitle())));
 
         // forward user
-        return new RedirectResponse($this->path('ccdn_forum_forum_board_show', array('boardId' => $topic->getBoard()->getId()) ));
+        return $this->redirectResponse($this->path('ccdn_forum_forum_board_show', array('boardId' => $topic->getBoard()->getId()) ));
     }
 
     /**
@@ -199,7 +199,7 @@ class TopicModeratorController extends TopicBaseController
         $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.topic.restore.success', array('%topic_title%' => $topic->getTitle())));
 
         // forward user
-        return new RedirectResponse($this->path('ccdn_forum_forum_board_show', array('boardId' => $topic->getBoard()->getId()) ));
+        return $this->redirectResponse($this->path('ccdn_forum_forum_board_show', array('boardId' => $topic->getBoard()->getId()) ));
     }
 
     /**
@@ -222,18 +222,18 @@ class TopicModeratorController extends TopicBaseController
         if ($formHandler->process($this->getRequest())) {
             $this->setFlash('warning', $this->trans('ccdn_forum_admin.flash.topic.move.success', array('%topic_title%' => $topic->getTitle())));
 
-            return new RedirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId()) ));
+            return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId()) ));
         } else {
             $board = $topic->getBoard();
             $category = $board->getCategory();
 
             // setup crumb trail.
             $crumbs = $this->getCrumbs()
-                ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'), "home")
-                ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())), "category")
-                ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())), "board")
-                ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())), "communication")
-                ->add($this->trans('ccdn_forum_admin.crumbs.topic.change_board'), $this->path('ccdn_forum_forum_topic_change_board', array('topicId' => $topic->getId())), "edit");
+                ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'))
+                ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())))
+                ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())))
+                ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())))
+                ->add($this->trans('ccdn_forum_admin.crumbs.topic.change_board'), $this->path('ccdn_forum_forum_topic_change_board', array('topicId' => $topic->getId())));
 
             return $this->renderResponse('CCDNForumForumBundle:Topic:change_board.html.', array(
                 'crumbs' => $crumbs,
