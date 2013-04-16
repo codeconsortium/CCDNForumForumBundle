@@ -31,26 +31,9 @@ class TopicGateway extends BaseGateway implements BaseGatewayInterface
 	/**
 	 *
 	 * @access private
-	 * @var string $entityClass
-	 */
-	private $entityClass = 'CCDNForum\ForumBundle\Entity\Topic';
-	
-	/**
-	 *
-	 * @access private
 	 * @var string $queryAlias
 	 */
 	private $queryAlias = 't';
-
-	/**
-	 *
-	 * @access public
-	 * @return string
-	 */
-	public function getEntityClass()
-	{
-		return $this->entityClass;
-	}
 	
 	/**
 	 *

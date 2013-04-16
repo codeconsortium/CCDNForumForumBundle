@@ -31,26 +31,9 @@ class PostGateway extends BaseGateway implements BaseGatewayInterface
 	/**
 	 *
 	 * @access private
-	 * @var string $entityClass
-	 */
-	private $entityClass = 'CCDNForum\ForumBundle\Entity\Post';
-	
-	/**
-	 *
-	 * @access private
 	 * @var string $queryAlias
 	 */
 	private $queryAlias = 'p';
-
-	/**
-	 *
-	 * @access public
-	 * @return string
-	 */
-	public function getEntityClass()
-	{
-		return $this->entityClass;
-	}
 	
 	/**
 	 *

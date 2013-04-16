@@ -27,30 +27,13 @@ use CCDNForum\ForumBundle\Entity\Registry;
  * @version 1.0
  */
 class RegistryGateway extends BaseGateway implements BaseGatewayInterface
-{
-	/**
-	 *
-	 * @access private
-	 * @var string $entityClass
-	 */
-	private $entityClass = 'CCDNForum\ForumBundle\Entity\Registry';
-	
+{	
 	/**
 	 *
 	 * @access private
 	 * @var string $queryAlias
 	 */
 	private $queryAlias = 'r';
-
-	/**
-	 *
-	 * @access public
-	 * @return string
-	 */
-	public function getEntityClass()
-	{
-		return $this->entityClass;
-	}
 	
 	/**
 	 *

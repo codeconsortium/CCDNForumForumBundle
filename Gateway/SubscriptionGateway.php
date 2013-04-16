@@ -31,26 +31,9 @@ class SubscriptionGateway extends BaseGateway implements BaseGatewayInterface
 	/**
 	 *
 	 * @access private
-	 * @var string $entityClass
-	 */
-	private $entityClass = 'CCDNForum\ForumBundle\Entity\Subscription';
-	
-	/**
-	 *
-	 * @access private
 	 * @var string $queryAlias
 	 */
 	private $queryAlias = 's';
-
-	/**
-	 *
-	 * @access public
-	 * @return string
-	 */
-	public function getEntityClass()
-	{
-		return $this->entityClass;
-	}
 	
 	/**
 	 *

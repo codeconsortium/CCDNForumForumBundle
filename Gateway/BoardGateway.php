@@ -31,26 +31,9 @@ class BoardGateway extends BaseGateway implements BaseGatewayInterface
 	/**
 	 *
 	 * @access private
-	 * @var string $entityClass
-	 */
-	private $entityClass = 'CCDNForum\ForumBundle\Entity\Board';
-	
-	/**
-	 *
-	 * @access private
 	 * @var string $queryAlias
 	 */
 	private $queryAlias = 'b';
-	
-	/**
-	 *
-	 * @access public
-	 * @return string
-	 */
-	public function getEntityClass()
-	{
-		return $this->entityClass;
-	}
 	
 	/**
 	 *

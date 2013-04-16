@@ -32,6 +32,13 @@ abstract class BaseGateway implements BaseGatewayInterface
 {
 	/**
 	 *
+	 * @access private
+	 * @var string $entityClass
+	 */
+	protected $entityClass;
+	
+	/**
+	 *
 	 * @access protected
 	 * @var \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
 	 */
@@ -64,8 +71,9 @@ abstract class BaseGateway implements BaseGatewayInterface
 	 * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
 	 * @param \Doctrine\ORM\EntityRepository $repository
 	 * @param \CCDNForum\ForumBundle\Gateway\Bag\GatewayBagInterface $gatewayBag
+	 * @param string $entityClass
 	 */
-	public function __construct(Registry $doctrine, $repository, GatewayBagInterface $gatewayBag)
+	public function __construct(Registry $doctrine, $repository, GatewayBagInterface $gatewayBag, $entityClass)
 	{
 		$this->doctrine = $doctrine;
 		
@@ -74,6 +82,18 @@ abstract class BaseGateway implements BaseGatewayInterface
 		$this->repository = $repository;
 		
 		$this->gatewayBag = $gatewayBag;
+		
+		$this->entityClass = $entityClass;
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @return string
+	 */
+	public function getEntityClass()
+	{
+		return $this->entityClass;
 	}
 	
 	/**
