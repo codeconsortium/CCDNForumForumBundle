@@ -158,17 +158,39 @@ class BoardManager extends BaseManager implements BaseManagerInterface
         return $boards;
     }
 	
+	/**
+	 *
+	 * @access public
+	 * @return Array
+	 */
+	public function getBoardCount()
+	{	
+		$qb = $this->createCountQuery();
+			
+		$qb
+			->select('COUNT(DISTINCT b.id) AS boardCount')
+		;
+		
+		try {
+			return $qb->getQuery()->getSingleResult();			
+		} catch (\Doctrine\ORM\NoResultException $e) {
+			return array('boardCount' => null);
+		} catch (\Exception $e) {
+			return array('boardCount' => null);			
+		}
+	}
+	
     /**
      *
      * @access public
      * @param \CCDNForum\ForumBundle\Entity\Board $board
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function postNewBoard(Board $board)
+    public function saveNewBoard(Board $board)
     {
-		$boardCount = $this->gateway->getRepository()->countBoardsForCategory($board->getCategory()->getId());
+		$boardCount = $this->getBoardCount();
 
-        $board->setListOrderPriority(++$boardCount[1]);
+        $board->setListOrderPriority(++$boardCount['boardCount']);
 
         // insert a new row
         $this->persist($board);

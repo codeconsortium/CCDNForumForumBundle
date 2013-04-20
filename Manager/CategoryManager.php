@@ -171,17 +171,39 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
         return $categories;
     }
 	
+	/**
+	 *
+	 * @access public
+	 * @return Array
+	 */
+	public function getCategoryCount()
+	{	
+		$qb = $this->createCountQuery();
+			
+		$qb
+			->select('COUNT(DISTINCT c.id) AS categoryCount')
+		;
+		
+		try {
+			return $qb->getQuery()->getSingleResult();			
+		} catch (\Doctrine\ORM\NoResultException $e) {
+			return array('categoryCount' => null);
+		} catch (\Exception $e) {
+			return array('categoryCount' => null);			
+		}
+	}
+	
     /**
      *
      * @access public
      * @param \CCDNForum\ForumBundle\Entity\Category $category
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function postNewCategory(Category $category)
+    public function saveNewCategory(Category $category)
     {
-		$categoryCount = $this->gateway->getRepository()->countCategories();
+		$categoryCount = $this->getCategoryCount();
 
-        $category->setListOrderPriority(++$categoryCount[1]);
+        $category->setListOrderPriority(++$categoryCount['categoryCount']);
 
         // insert a new row
         $this->persist($category);

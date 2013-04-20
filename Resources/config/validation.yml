@@ -1,17 +1,17 @@
-CCDNForum\ForumBundle\Entity\Topic:
+%ccdn_forum_forum.entity.topic.class%:
     properties:
         board:
-            - NotNull: { groups: [topic] }
+            - NotNull: { groups: [topic_create, topic_update] }
         title:
-            - Type: { type: string, groups: [topic] }
-            - NotBlank: { groups: [topic] }
-            - MinLength: { limit: 10, groups: [topic] }
-            - MaxLength: { limit: 255, groups: [topic] }
+            - Type: { type: string, groups: [topic_create, topic_update] }
+            - NotBlank: { groups: [topic_create, topic_update] }
+            - MinLength: { limit: 10, groups: [topic_create, topic_update] }
+            - MaxLength: { limit: 255, groups: [topic_create, topic_update] }
 
-CCDNForum\ForumBundle\Entity\Post:
+%ccdn_forum_forum.entity.post.class%:
     properties:
         body:
-            - Type: { type: string, groups: [post] }
-            - NotBlank: { groups: [post] }
-            - MinLength: { limit: 15, groups: [post] }
-            - MaxLength: { limit: 30000, groups: [post] }
+            - Type: { type: string, groups: [post_create, post_update] }
+            - NotBlank: { groups: [post_create, post_update] }
+            - MinLength: { limit: 15, groups: [post_create, post_update] }
+            - MaxLength: { limit: 30000, groups: [post_create, post_update] }
