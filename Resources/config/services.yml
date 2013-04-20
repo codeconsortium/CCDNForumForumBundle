@@ -283,6 +283,5 @@ services:
     #
     ccdn_forum_forum.component.dashboard.integrator:
         class: %ccdn_forum_forum.component.dashboard.integrator.class%
-        arguments: [@service_container]
         tags:
             - { name: ccdn_component_dashboard.integrator }

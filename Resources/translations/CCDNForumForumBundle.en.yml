@@ -1,3 +1,10 @@
+ccdn_forum_forum:
+    dashboard:
+        pages:
+            forum: Forum
+        categories:
+            forum: Forum
+
 #
 # Layout Header Link Labeks.
 #
@@ -6,7 +13,7 @@ ccdn_forum_forum.layout.header_links.forum: 'Forum'
 #
 # Page Titles.
 #
-ccdn_forum_forum.title.category.index: 'Forum - Index.'
+ccdn_forum_forum.title.category.index: 'Forum Index.'
 ccdn_forum_forum.title.category.show: 'Forum - %category_name% Category.'
 ccdn_forum_forum.title.board.show: 'Forum - %board_name% Board.'
 ccdn_forum_forum.title.topic.show: 'Forum - %topic_title%.'
