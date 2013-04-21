@@ -52,9 +52,9 @@ class TopicCreateFormType extends AbstractType
 				array(
 		            'property'           => 'name',
 		            'class'              => 'CCDNForumForumBundle:Board',
-		            'query_builder'      => function($qb) { return $qb->createQueryBuilder('b')->orderBy('b.id', 'ASC'); },
+		            'choices'            => $options['boards'],
 		            'label'              => 'ccdn_forum_forum.form.label.board',
-					'translation_domain' =>  'CCDNForumForumBundle',
+					'translation_domain' => 'CCDNForumForumBundle',
 		        )
 			)
 			->add('title', null,
@@ -81,6 +81,7 @@ class TopicCreateFormType extends AbstractType
             // a unique key to help generate the secret token
             'intention'          => 'topic_item',
             'validation_groups'  => array('topic_create'),
+			'boards'             => array(),
         );
     }
 

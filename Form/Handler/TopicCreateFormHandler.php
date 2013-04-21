@@ -55,9 +55,16 @@ class TopicCreateFormHandler
     /**
 	 *
 	 * @access protected
-	 * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $manager
+	 * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $topicManager
 	 */
-    protected $manager;
+    protected $topicManager;
+
+    /**
+	 *
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $boardManager
+	 */
+    protected $boardManager;
 
     /**
 	 * 
@@ -79,14 +86,16 @@ class TopicCreateFormHandler
      * @param \Symfony\Component\Form\FormFactory $factory
 	 * @param \CCDNForum\ForumBundle\Form\Type\TopicType $formTopicType
 	 * @param \CCDNForum\ForumBundle\Form\Type\PostType $formPostType
-	 * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $manager
+	 * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $topicManager
+	 * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $boardManager
      */
-    public function __construct(FormFactory $factory, $formTopicType, $formPostType, BaseManagerInterface $manager)
+    public function __construct(FormFactory $factory, $formTopicType, $formPostType, BaseManagerInterface $topicManager, BaseManagerInterface $boardManager)
     {
         $this->factory = $factory;
 		$this->formTopicType = $formTopicType;
 		$this->formPostType = $formPostType;
-        $this->manager = $manager;
+        $this->topicManager = $topicManager;
+        $this->boardManager = $boardManager;
     }
 
     /**
@@ -159,15 +168,20 @@ class TopicCreateFormHandler
                 throw new \Exception('Board must be specified to be create a Topic in TopicCreateFormHandler');
             }
 
+			$filteredBoards = $this->boardManager->findAllForFormDropDown();
+			$topicOptions = array(
+				'boards' => $filteredBoards,
+			);
+			
             $topic = new Topic();
             $topic->setBoard($this->board);
 
             $post = new Post();
             $post->setTopic($topic);
-            $post->setCreatedBy($this->manager->getUser());
+            $post->setCreatedBy($this->topicManager->getUser());
 
             $this->form = $this->factory->create($this->formPostType, $post);
-            $this->form->add($this->factory->create($this->formTopicType, $topic));
+            $this->form->add($this->factory->create($this->formTopicType, $topic, $topicOptions));
         }
 
         return $this->form;
@@ -182,7 +196,7 @@ class TopicCreateFormHandler
     protected function onSuccess(Post $post)
     {
         $post->setCreatedDate(new \DateTime());
-        $post->setCreatedBy($this->manager->getUser());
+        $post->setCreatedBy($this->topicManager->getUser());
         $post->setIsLocked(false);
         $post->setIsDeleted(false);
 
@@ -192,6 +206,6 @@ class TopicCreateFormHandler
         $post->getTopic()->setIsDeleted(false);
         $post->getTopic()->setIsSticky(false);
 		
-        return $this->manager->postNewTopic($post)->flush();
+        return $this->topicManager->postNewTopic($post)->flush();
     }
 }

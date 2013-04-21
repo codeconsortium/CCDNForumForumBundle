@@ -230,6 +230,7 @@ services:
             - @ccdn_forum_forum.form.type.topic_create
             - @ccdn_forum_forum.form.type.post_create
             - @ccdn_forum_forum.manager.topic
+            - @ccdn_forum_forum.manager.board
 
     ccdn_forum_forum.form.type.topic_update:
         class: %ccdn_forum_forum.form.type.topic_update.class%

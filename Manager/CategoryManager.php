@@ -86,7 +86,23 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
 			return null;
 		}
 	}
+
+	/**
+	 *
+	 * @access public
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */	
+	public function findAllCategories()
+	{
+		$qb = $this->createSelectQuery(array('c'));
 	
+		$qb
+			->addOrderBy('c.listOrderPriority', 'ASC')
+		;
+		
+		return $this->gateway->findCategories($qb);
+	}
+		
 	/**
 	 *
 	 * @access public
