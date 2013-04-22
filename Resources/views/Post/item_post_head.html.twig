@@ -20,11 +20,11 @@
 		        </span>
 		    </div>
 
-		
+
 		    <div class="span5 content-right">
 				<div class="btn-group">
 					{%- if post.getIsLocked or post.getIsDeleted-%}
-						<span class="label label-important">				
+						<span class="label label-important">
 				            {%- if post.getIsLocked -%}
 								<i class="icon-white icon-lock" data-tip="bottom" title="{{- 'ccdn_forum_forum.post.has_been_locked' |trans({}, 'CCDNForumForumBundle') -}}"></i>
 				            {%- endif -%}
@@ -34,7 +34,7 @@
 						</span>
 					{%- endif -%}
 				</div>
-			
+
 		        {% if post.id %}
 		            <div class="btn-group">
 		                <a class="btn btn-mini btn-icon-only" href="{{- path('ccdn_forum_forum_post_show', {'postId': post.getId }) -}}">
@@ -47,12 +47,12 @@
 		        {% endif %}
 		    </div>
 		</div>
-	
+
 		<div class="row-fluid">
 			<div class="span7">
 		        {{- author.renderRoleBadges|raw -}}
 			</div>
-		
+
 			<div class="span5 content-right">
 	            {%- if is_granted('ROLE_USER') -%}
 					{% if post.id %}

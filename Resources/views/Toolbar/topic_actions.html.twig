@@ -4,9 +4,9 @@
 		{%- if board is not defined -%}
 			{%- set board = topic.getBoard -%}
 		{%- endif -%}
-	
+
 	    {% set authorised_to_reply = board.isAuthorisedToTopicReply(app.security) %}
-		
+
 	    <a class="btn btn-danger{{ authorised_to_reply ? '': ' disabled' }}" rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply', {'topicId': topic.getId }) -}}">
 			<i class="icon-white{{ authorised_to_reply ? ' icon-comment': ' icon-lock' }}"></i>
 			{{- 'ccdn_forum_forum.link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}
@@ -61,7 +61,7 @@
 							</a>
 						{%- endif -%}
 					</li>
-					
+
 					<li>
 						<a href="{{- path('ccdn_forum_forum_topic_change_board', {'topicId': topic.getId }) -}}">
 							<i class="icon-move"></i>
@@ -82,7 +82,7 @@
 							</a>
 						{%- endif -%}
 					</li>
-					
+
 					<li>
 						{%- if topic.deletedBy -%}
 							<a href="{{- path('ccdn_forum_admin_topic_restore', {'topicId': topic.getId }) -}}">

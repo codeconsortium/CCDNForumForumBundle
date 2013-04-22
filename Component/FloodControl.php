@@ -17,72 +17,77 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class FloodControl
 {
-	/**
-	 *
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Session\Session $session
-	 */
-	protected $session;
-	
-	/**
-	 *
-	 * @access protected
-	 * @var int $postLimit
-	 */
-	protected $postLimit;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Session\Session $session
+     */
+    protected $session;
 
-	/**
-	 *
-	 * @access protected
-	 * @var int $blockTimeInMinutes
-	 */	
-	protected $blockTimeInMinutes;
-	
-	/**
-	 *
-	 * @access public
-	 * @param \Symfony\Component\HttpFoundation\Session\Session $session
-	 * @param int $postLimit
-	 * @param int $blockTimeInMinutes
-	 */
-	public function __construct(Session $session, $postLimit, $blockTimeInMinutes)
-	{
-		$this->session = $session;
-		
-		if ( ! $this->session->has('flood_control_forum_post_count'))
-		{
-			$this->session->set('flood_control_forum_post_count', array());
-		}
-		
-		$this->postLimit = $postLimit;
-		$this->blockTimeInMinutes = $blockTimeInMinutes;
-	}
-	
-	/**
-	 *
-	 * @access public
-	 */
-	public function incrementCounter()
-	{
-		$postCount = $this->session->get('flood_control_forum_post_count');
-		
-		$postCount[] = new \DateTime('now');
-		
-		$this->session->set('flood_control_forum_post_count', $postCount);		
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @return bool
-	 */
-	public function isFlooded()
-	{	
+    /**
+     *
+     * @access protected
+     * @var int $postLimit
+     */
+    protected $postLimit;
+
+    /**
+     *
+     * @access protected
+     * @var int $blockTimeInMinutes
+     */
+    protected $blockTimeInMinutes;
+
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\HttpFoundation\Session\Session $session
+     * @param int                                               $postLimit
+     * @param int                                               $blockTimeInMinutes
+     */
+    public function __construct(Session $session, $postLimit, $blockTimeInMinutes)
+    {
+        $this->session = $session;
+
+        if (! $this->session->has('flood_control_forum_post_count')) {
+            $this->session->set('flood_control_forum_post_count', array());
+        }
+
+        $this->postLimit = $postLimit;
+        $this->blockTimeInMinutes = $blockTimeInMinutes;
+    }
+
+    /**
+     *
+     * @access public
+     */
+    public function incrementCounter()
+    {
+        $postCount = $this->session->get('flood_control_forum_post_count');
+
+        $postCount[] = new \DateTime('now');
+
+        $this->session->set('flood_control_forum_post_count', $postCount);
+    }
+
+    /**
+     *
+     * @access public
+     * @return bool
+     */
+    public function isFlooded()
+    {
         $timeLimit = new \DateTime('-' . $this->blockTimeInMinutes . ' minutes');
 
         if ($this->session->has('flood_control_forum_post_count')) {
@@ -102,10 +107,10 @@ class FloodControl
             }
 
             if (count($freshenedAttempts) > $this->postLimit) {
-				return true;
-			}
-        }		
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

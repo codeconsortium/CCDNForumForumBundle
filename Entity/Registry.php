@@ -13,34 +13,55 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use CCDNForum\ForumBundle\Model\Registry as AbstractRegistry;
 
+/**
+ *
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
+ */
 class Registry extends AbstractRegistry
 {
-    /** @var integer $id */
+    /**
+     *
+     * @var integer $id
+     */
     protected $id;
 
-    /** @var integer $cachedPostCount */
+    /**
+     *
+     * @var integer $cachedPostCount
+     */
     protected $cachedPostCount = 0;
 
-    /** @var integer $cachedKarmaPositiveCount */
+    /**
+     *
+     * @var integer $cachedKarmaPositiveCount
+     */
     protected $cachedKarmaPositiveCount = 0;
 
-    /** @var integer $cachedKarmaNegativeCount */
+    /**
+     *
+     * @var integer $cachedKarmaNegativeCount
+     */
     protected $cachedKarmaNegativeCount = 0;
 
-	/**
-	 *
-	 * @access public
-	 */
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         parent::__construct();
         // your own logic
     }
-	
+
     /**
      * Get id
      *
@@ -64,14 +85,14 @@ class Registry extends AbstractRegistry
     /**
      * Set cachedPostCount
      *
-     * @param integer $cachedPostCount
-	 * @return Registry
+     * @param  integer  $cachedPostCount
+     * @return Registry
      */
     public function setCachedPostCount($cachedPostCount)
     {
         $this->cachedPostCount = $cachedPostCount;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -87,14 +108,14 @@ class Registry extends AbstractRegistry
     /**
      * Set cachedKarmaPositiveCount
      *
-     * @param integer $cachedKarmaPositiveCount
-	 * @return Registry
+     * @param  integer  $cachedKarmaPositiveCount
+     * @return Registry
      */
     public function setCachedKarmaPositiveCount($cachedKarmaPositiveCount)
     {
         $this->cachedKarmaPositiveCount = $cachedKarmaPositiveCount;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -106,17 +127,17 @@ class Registry extends AbstractRegistry
     {
         return $this->cachedKarmaNegativeCount;
     }
-	
+
     /**
      * Set cachedKarmaNegativeCount
      *
-     * @param integer $cachedKarmaNegativeCount
-	 * @return Registry
+     * @param  integer  $cachedKarmaNegativeCount
+     * @return Registry
      */
     public function setCachedKarmaNegativeCount($cachedKarmaNegativeCount)
     {
         $this->cachedKarmaNegativeCount = $cachedKarmaNegativeCount;
-		
-		return $this;
+
+        return $this;
     }
 }

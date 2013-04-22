@@ -13,33 +13,36 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class BoardController extends BoardBaseController
 {
     /**
      *
      * @access public
-     * @param int $boardId, int $page
+     * @param  int                             $boardId, int $page
      * @return RedirectResponse|RenderResponse
      */
     public function showAction($boardId, $page)
-    {	
-		$board = $this->getBoardManager()->findOneByIdWithCategory($boardId);
+    {
+        $board = $this->getBoardManager()->findOneByIdWithCategory($boardId);
 
-		$stickyTopics = $this->getTopicManager()->findAllStickiedByBoardId($boardId);
-		$topicsPager = $this->getTopicManager()->findAllPaginatedByBoardId($boardId, $page);
+        $stickyTopics = $this->getTopicManager()->findAllStickiedByBoardId($boardId);
+        $topicsPager = $this->getTopicManager()->findAllPaginatedByBoardId($boardId, $page);
 
         // check board exists.
-		$this->isFound($board);
-		$this->isAuthorisedToViewBoard($board);
-		
+        $this->isFound($board);
+        $this->isAuthorisedToViewBoard($board);
+
         // this is necessary for working out the last page for each topic.
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 

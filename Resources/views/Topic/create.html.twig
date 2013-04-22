@@ -17,7 +17,7 @@
 		{%- form_theme form ccdn_forum_forum.topic.create.form_theme -%}
 		<form action="{{- path('ccdn_forum_forum_topic_create', { 'boardId': board.id } ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
 			<fieldset>
-		
+
 				<div class="control-group form-title">
 					<div class="controls">
 						<h3>{{- 'ccdn_forum_forum.title.topic.create' | trans({'%board_name%': board.getName }, 'CCDNForumForumBundle') -}}</h3>
@@ -25,13 +25,13 @@
 				</div>
 
 				{{- form_errors(form) -}}
-			
+
 				{{- form_row(form.Topic.board) -}}
-				
+
 				{{- form_row(form.Topic.title) -}}
 
 				{{- form_rest(form) -}}
-			
+
 				<div class="form-actions">
 					<input type="submit" class="btn btn-primary" value="{{- 'ccdn_forum_forum.form.button.topic.create' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]">
 					{#
@@ -45,7 +45,7 @@
 			</fieldset>
 		</form>
 	</section>
-	
+
     {%- if preview is defined -%}
         {%- if preview is not empty -%}
             {%- include "CCDNForumForumBundle:Post:post_preview.html.twig" with {'post': preview} -%}

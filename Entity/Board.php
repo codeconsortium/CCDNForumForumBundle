@@ -13,48 +13,84 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use CCDNForum\ForumBundle\Model\Board as AbstractBoard;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
+/**
+ *
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
+ */
 class Board extends AbstractBoard
 {
-    /** @var integer $id */
+    /**
+     *
+     * @var integer $id
+     */
     protected $id;
 
-    /** @var string name */
+    /**
+     *
+     * @var string name
+     */
     protected $name;
 
-    /** @var string $description */
+    /**
+     *
+     * @var string $description\
+     */
     protected $description;
 
-    /** @var integer $cachedTopicCount */
+    /**
+     *
+     * @var integer $cachedTopicCount
+     */
     protected $cachedTopicCount = 0;
 
-    /** @var integer $cachedPostCount */
+    /**
+     *
+     * @var integer $cachedPostCount
+     */
     protected $cachedPostCount = 0;
 
-    /** @var integer $listOrderPriority */
+    /**
+     *
+     * @var integer $listOrderPriority
+     */
     protected $listOrderPriority = 0;
 
-    /** @var array $readAuthorisedRoles */
+    /**
+     *
+     * @var array $readAuthorisedRoles
+     */
     protected $readAuthorisedRoles;
 
-    /** @var array $topicCreateAuthorisedRoles */
+    /**
+     *
+     * @var array $topicCreateAuthorisedRoles
+     */
     protected $topicCreateAuthorisedRoles;
 
-    /** @var array $topicReplyAuthorisedRoles */
+    /**
+     *
+     * @var array $topicReplyAuthorisedRoles
+     */
     protected $topicReplyAuthorisedRoles;
 
-	/**
-	 *
-	 * @access public
-	 */
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         parent::__construct();
-		
+
         // your own logic
         $this->readAuthorisedRoles = array();
         $this->topicCreateAuthorisedRoles = array();
@@ -80,18 +116,18 @@ class Board extends AbstractBoard
     {
         return $this->name;
     }
-	
+
     /**
      * Set name
      *
-     * @param string $name
-	 * @return Board
+     * @param  string $name
+     * @return Board
      */
     public function setName($name)
     {
         $this->name = $name;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -103,18 +139,18 @@ class Board extends AbstractBoard
     {
         return $this->description;
     }
-	
+
     /**
      * Set description
      *
-     * @param string $description
-	 * @return Board
+     * @param  string $description
+     * @return Board
      */
     public function setDescription($description)
     {
         $this->description = $description;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -126,18 +162,18 @@ class Board extends AbstractBoard
     {
         return $this->listOrderPriority;
     }
-	
+
     /**
      * Set list_order_priority
      *
-     * @param integer $listOrderPriority
-	 * @return Board
+     * @param  integer $listOrderPriority
+     * @return Board
      */
     public function setListOrderPriority($listOrderPriority)
     {
         $this->listOrderPriority = $listOrderPriority;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -149,18 +185,18 @@ class Board extends AbstractBoard
     {
         return $this->cachedTopicCount;
     }
-	
+
     /**
      * Set cachedTopicCount
      *
-     * @param integer $cachedTopicCount
-	 * @return Board
+     * @param  integer $cachedTopicCount
+     * @return Board
      */
     public function setCachedTopicCount($cachedTopicCount)
     {
         $this->cachedTopicCount = $cachedTopicCount;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -172,18 +208,18 @@ class Board extends AbstractBoard
     {
         return $this->cachedPostCount;
     }
-	
+
     /**
      * Set cachedPostCount
      *
-     * @param integer $cachedPostCount
-	 * @return Board
+     * @param  integer $cachedPostCount
+     * @return Board
      */
     public function setCachedPostCount($cachedPostCount)
     {
         $this->cachedPostCount = $cachedPostCount;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -195,7 +231,7 @@ class Board extends AbstractBoard
     }
 
     /**
-     * @param array $roles
+     * @param  array $roles
      * @return Board
      */
     public function setReadAuthorisedRoles(array $roles = null)

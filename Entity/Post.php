@@ -13,46 +13,79 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use CCDNForum\ForumBundle\Model\Post as AbstractPost;
 
+/**
+ *
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
+ */
 class Post extends AbstractPost
 {
-    /** @var integer $id */
+    /**
+     *
+     * @var integer $id
+     */
     protected $id;
 
-    /** @var string $body */
+    /**
+     *
+     * @var string $body
+     */
     protected $body;
 
-    /** @var \DateTime $createdDate */
+    /**
+     *
+     * @var \DateTime $createdDate
+     */
     protected $createdDate;
 
-    /** @var \DateTime $editedDate */
+    /**
+     *
+     * @var \DateTime $editedDate
+     */
     protected $editedDate;
 
-    /** @var Boolean $isDeleted */
+    /**
+     *
+     * @var Boolean $isDeleted
+     */
     protected $isDeleted = false;
 
-    /** @var \DateTime $deletedDate */
+    /**
+     *
+     * @var \DateTime $deletedDate
+     */
     protected $deletedDate;
 
-    /** @var Boolean $isLocked */
+    /**
+     *
+     * @var Boolean $isLocked
+     */
     protected $isLocked = false;
 
-    /** @var \DateTime $lockedDate */
+    /**
+     *
+     * @var \DateTime $lockedDate
+     */
     protected $lockedDate;
-	
-	/**
-	 *
-	 * @access public
-	 */
+
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         parent::__construct();
         // your own logic
     }
-	
+
     /**
      * Get id
      *
@@ -62,7 +95,7 @@ class Post extends AbstractPost
     {
         return $this->id;
     }
-	
+
     /**
      * Get body
      *
@@ -72,18 +105,18 @@ class Post extends AbstractPost
     {
         return $this->body;
     }
-	
+
     /**
      * Set body
      *
-     * @param string $body
-	 * @return Post
+     * @param  string $body
+     * @return Post
      */
     public function setBody($body)
     {
         $this->body = $body;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -99,14 +132,14 @@ class Post extends AbstractPost
     /**
      * Set createdDate
      *
-     * @param \datetime $createdDate
-	 * @return Post
+     * @param  \datetime $createdDate
+     * @return Post
      */
     public function setCreatedDate($createdDate)
     {
         $this->createdDate = $createdDate;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -122,14 +155,14 @@ class Post extends AbstractPost
     /**
      * Set editedDate
      *
-     * @param \datetime $editedDate
-	 * @return Post
+     * @param  \datetime $editedDate
+     * @return Post
      */
     public function setEditedDate($editedDate)
     {
         $this->editedDate = $editedDate;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -145,14 +178,14 @@ class Post extends AbstractPost
     /**
      * Set deletedDate
      *
-     * @param \datetime $deletedDate
-	 * @return Post
+     * @param  \datetime $deletedDate
+     * @return Post
      */
     public function setDeletedDate($deletedDate)
     {
         $this->deletedDate = $deletedDate;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -168,14 +201,14 @@ class Post extends AbstractPost
     /**
      * Set lockedDate
      *
-     * @param \datetime $lockedDate
-	 * @return Post
+     * @param  \datetime $lockedDate
+     * @return Post
      */
     public function setLockedDate($lockedDate)
     {
         $this->lockedDate = $lockedDate;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -191,14 +224,14 @@ class Post extends AbstractPost
     /**
      * Set is_deleted
      *
-     * @param boolean $isDeleted
-	 * @return Post
+     * @param  boolean $isDeleted
+     * @return Post
      */
     public function setIsDeleted($isDeleted)
     {
         $this->isDeleted = $isDeleted;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -210,17 +243,17 @@ class Post extends AbstractPost
     {
         return $this->isLocked;
     }
-	
+
     /**
      * Set isLocked
      *
-     * @param boolean $isLocked
-	 * @return Post
+     * @param  boolean $isLocked
+     * @return Post
      */
     public function setIsLocked($isLocked)
     {
         $this->isLocked = $isLocked;
-		
-		return $this;
+
+        return $this;
     }
 }

@@ -13,18 +13,21 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Draft;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class DraftController extends BaseController
 {
@@ -32,12 +35,12 @@ class DraftController extends BaseController
     /**
      *
      * @access public
-     * @param int $page
+     * @param  int            $page
      * @return RenderResponse
      */
     public function listAction($page)
     {
-		$this->isAuthorised('ROLE_USER');
+        $this->isAuthorised('ROLE_USER');
 
         $user = $this->getUser();
 
@@ -60,18 +63,18 @@ class DraftController extends BaseController
     /**
      *
      * @access public
-     * @param int $draftId
+     * @param  int              $draftId
      * @return RedirectResponse
      */
     public function deleteAction($draftId)
     {
-		$this->isAuthorised('ROLE_USER');
+        $this->isAuthorised('ROLE_USER');
 
         $user = $this->getUser();
 
         $draft = $this->container->get('ccdn_forum_forum.repository.draft')->findOneByIdForUserById($draftId, $user->getId());
 
-		$this->isFound($draft);
+        $this->isFound($draft);
 
         $this->getDraftManager()->remove($draft)->flush();
 
@@ -81,19 +84,19 @@ class DraftController extends BaseController
     /**
      *
      * @access public
-     * @param int $draftId
+     * @param  int              $draftId
      * @return RedirectResponse
      */
     public function publishAction($draftId)
     {
-		$this->isAuthorised('ROLE_USER');
+        $this->isAuthorised('ROLE_USER');
 
         $user = $this->getUser();
 
         $draft = $this->container->get('ccdn_forum_forum.repository.draft')->findOneByIdForUserById($draftId, $user->getId());
 
-		$this->isFound($draft);
-		
+        $this->isFound($draft);
+
         // is this a topic?
         if (is_object($draft->getTopic()) && $draft->getTopic() instanceof Topic) {
             if ($draft->getTopic()->getId()) {

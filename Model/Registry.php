@@ -19,11 +19,11 @@ abstract class Registry
 {
     /** @var UserInterface $ownedBy */
     protected $ownedBy = null;
-	
-	/**
-	 *
-	 * @access public
-	 */
+
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         // your own logic

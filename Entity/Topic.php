@@ -13,52 +13,91 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use CCDNForum\ForumBundle\Model\Topic as AbstractTopic;
 
+/**
+ *
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
+ */
 class Topic extends AbstractTopic
 {
-    /** @var integer $id */
+    /**
+     *
+     * @var integer $id
+     */
     protected $id;
 
-    /** @var string $title */
+    /**
+     *
+     * @var string $title
+     */
     protected $title;
 
-    /** @var integer $cachedViewCount */
+    /**
+     *
+     * @var integer $cachedViewCount
+     */
     protected $cachedViewCount = 0;
 
-    /** @var integer $cachedReplyCount */
+    /**
+     *
+     * @var integer $cachedReplyCount
+     */
     protected $cachedReplyCount = 0;
 
-    /** @var Boolean $isClosed */
+    /**
+     *
+     * @var Boolean $isClosed
+     */
     protected $isClosed = false;
 
-    /** \DateTime $closedDate */
+    /**
+     *
+     * @var \DateTime $closedDate
+     */
     protected $closedDate;
 
-    /** @var Boolean $isDeleted */
+    /**
+     *
+     * @var Boolean $isDeleted
+     */
     protected $isDeleted = false;
 
-    /** \DateTime $deletedDate */
+    /**
+     *
+     * @var \DateTime $deletedDate
+     */
     protected $deletedDate;
 
-    /** \DateTime $stickiedDate */
+    /**
+     *
+     * @var \DateTime $stickiedDate
+     */
     protected $stickiedDate;
 
-    /** @var Boolean $isSticky */
+    /**
+     *
+     *  @var Boolean $isSticky
+     */
     protected $isSticky = false;
 
-	/**
-	 *
-	 * @access public
-	 */
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         parent::__construct();
         // your own logic
     }
-	
+
     /**
      * Get id
      *
@@ -82,14 +121,14 @@ class Topic extends AbstractTopic
     /**
      * Set title
      *
-     * @param string $title
-	 * @return Topic
+     * @param  string $title
+     * @return Topic
      */
     public function setTitle($title)
     {
         $this->title = $title;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -105,14 +144,14 @@ class Topic extends AbstractTopic
     /**
      * Set closedDate
      *
-     * @param \datetime $closedDate
-	 * @return Topic
+     * @param  \datetime $closedDate
+     * @return Topic
      */
     public function setClosedDate($closedDate)
     {
         $this->closedDate = $closedDate;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -128,14 +167,14 @@ class Topic extends AbstractTopic
     /**
      * Set deletedDate
      *
-     * @param \datetime $deletedDate
-	 * @return Topic
+     * @param  \datetime $deletedDate
+     * @return Topic
      */
     public function setDeletedDate($deletedDate)
     {
         $this->deletedDate = $deletedDate;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -147,18 +186,18 @@ class Topic extends AbstractTopic
     {
         return $this->isSticky;
     }
-	
+
     /**
      * Set isSticky
      *
-     * @param boolean $isSticky
-	 * @return Topic
+     * @param  boolean $isSticky
+     * @return Topic
      */
     public function setIsSticky($isSticky)
     {
         $this->isSticky = $isSticky;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -174,14 +213,14 @@ class Topic extends AbstractTopic
     /**
      * Set isClosed
      *
-     * @param boolean $isClosed
-	 * @return Topic
+     * @param  boolean $isClosed
+     * @return Topic
      */
     public function setIsClosed($isClosed)
     {
         $this->isClosed = $isClosed;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -197,14 +236,14 @@ class Topic extends AbstractTopic
     /**
      * Set isDeleted
      *
-     * @param boolean $isDeleted
-	 * @return Topic
+     * @param  boolean $isDeleted
+     * @return Topic
      */
     public function setIsDeleted($isDeleted)
     {
         $this->isDeleted = $isDeleted;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -220,14 +259,14 @@ class Topic extends AbstractTopic
     /**
      * Set cachedViewCount
      *
-     * @param integer $cachedViewCount
-	 * @return Topic
+     * @param  integer $cachedViewCount
+     * @return Topic
      */
     public function setCachedViewCount($cachedViewCount)
     {
         $this->cachedViewCount = $cachedViewCount;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -243,14 +282,14 @@ class Topic extends AbstractTopic
     /**
      * Set cachedReplyCount
      *
-     * @param integer $cachedReplyCount
-	 * @return Topic
+     * @param  integer $cachedReplyCount
+     * @return Topic
      */
     public function setCachedReplyCount($cachedReplyCount)
     {
         $this->cachedReplyCount = $cachedReplyCount;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -262,17 +301,17 @@ class Topic extends AbstractTopic
     {
         return $this->stickiedDate;
     }
-	
+
     /**
      * Set stickiedDate
      *
-     * @param \datetime $stickiedDate
-	 * @return Topic
+     * @param  \datetime $stickiedDate
+     * @return Topic
      */
     public function setStickiedDate($stickiedDate)
     {
         $this->stickiedDate = $stickiedDate;
-		
-		return $this;
+
+        return $this;
     }
 }

@@ -30,14 +30,14 @@
 						</label>
 					</div>
 				</div>
-				
+
 				{{- form_errors(form) -}}
 
 				{{- form_widget(form) -}}
-			
+
 				<div class="form-actions">
 					<input type="submit" class="btn btn-danger" value="{{- 'ccdn_forum_forum.form.button.topic.move_to_board' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]">
-				
+
 					<a class="btn" href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.id}) -}}">
 						{{- 'ccdn_forum_forum.form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
 					</a>
@@ -46,7 +46,7 @@
 			</fieldset>
 		</form>
 	</section>
-	
+
 	{%- endspaceless -%}
 
 {% endblock body_content %}

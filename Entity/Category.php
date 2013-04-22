@@ -13,31 +13,49 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use CCDNForum\ForumBundle\Model\Category as AbstractCategory;
 
+/**
+ *
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
+ */
 class Category extends AbstractCategory
 {
-    /** @var integer $id */
+    /**
+     *
+     * @var integer $id
+     */
     protected $id;
 
-    /** @var string $name */
+    /**
+     *
+     * @var string $name
+     */
     protected $name;
 
-    /** @var integer $listOrderPriority */
+    /**
+     *
+     * @var integer $listOrderPriority
+     */
     protected $listOrderPriority;
-	
-	/**
-	 *
-	 * @access public
-	 */
+
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         parent::__construct();
         // your own logic
     }
-	
+
     /**
      * Get id
      *
@@ -57,18 +75,18 @@ class Category extends AbstractCategory
     {
         return $this->name;
     }
-	
+
     /**
      * Set name
      *
-     * @param string $name
-	 * @return Category
+     * @param  string   $name
+     * @return Category
      */
     public function setName($name)
     {
         $this->name = $name;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -80,17 +98,17 @@ class Category extends AbstractCategory
     {
         return $this->listOrderPriority;
     }
-	
+
     /**
      * Set list_order_priority
      *
-     * @param integer $listOrderPriority
-	 * @return Category
+     * @param  integer  $listOrderPriority
+     * @return Category
      */
     public function setListOrderPriority($listOrderPriority)
     {
         $this->listOrderPriority = $listOrderPriority;
-		
-		return $this;
+
+        return $this;
     }
 }

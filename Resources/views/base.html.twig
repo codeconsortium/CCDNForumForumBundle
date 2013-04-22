@@ -22,19 +22,19 @@
 
 {% block tool_bar %}
 	{%- spaceless -%}
-	
+
 	<div id="sub-nav" class="row-fluid">
 	    <div class="span2">
 			<h3>{% block sub_title %}<a href="{{ path('ccdn_forum_forum_index') }}">Forum</a>{% endblock sub_title %}</h3>
 		</div>
-				
+
 		<nav class="span10">
 			{%- block crumb_trail -%}
 				{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
 			{%- endblock crumb_trail -%}
 		</nav>
-	</div>	
-	
+	</div>
+
 	{%- endspaceless -%}
 {% endblock tool_bar %}
 

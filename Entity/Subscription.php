@@ -13,31 +13,49 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use CCDNForum\ForumBundle\Model\Subscription as AbstractSubscription;
 
+/**
+ *
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
+ */
 class Subscription extends AbstractSubscription
 {
-    /** @var integer $id */
+    /**
+     *
+     * @var integer $id
+     */
     protected $id;
 
-    /** @var Boolean $isRead */
+    /**
+     *
+     * @var Boolean $isRead
+     */
     protected $isRead = false;
 
-    /** @var Boolean $isSubscribed */
+    /**
+     *
+     * @var Boolean $isSubscribed
+     */
     protected $isSubscribed = false;
-	
-	/**
-	 *
-	 * @access public
-	 */
+
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         parent::__construct();
         // your own logic
     }
-	
+
     /**
      * Get id
      *
@@ -57,18 +75,18 @@ class Subscription extends AbstractSubscription
     {
         return $this->isRead;
     }
-	
+
     /**
      * Set isRead
      *
-     * @param boolean $isRead
-	 * @return Subscription
+     * @param  boolean      $isRead
+     * @return Subscription
      */
     public function setIsRead($isRead)
     {
         $this->isRead = $isRead;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -80,17 +98,17 @@ class Subscription extends AbstractSubscription
     {
         return $this->isSubscribed;
     }
-	
+
     /**
      * Set isSubscribed
      *
-     * @param boolean $isSubscribed
-	 * @return Subscription
+     * @param  boolean      $isSubscribed
+     * @return Subscription
      */
     public function setIsSubscribed($isSubscribed)
     {
         $this->isSubscribed = $isSubscribed;
-		
-		return $this;
+
+        return $this;
     }
 }

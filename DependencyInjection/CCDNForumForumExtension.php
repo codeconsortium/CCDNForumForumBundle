@@ -24,15 +24,21 @@ use Symfony\Component\Config\FileLocator;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class CCDNForumForumExtension extends Extension
 {
     /**
-	 *
+     *
      * @access public
-	 * @return string
+     * @return string
      */
     public function getAlias()
     {
@@ -42,7 +48,7 @@ class CCDNForumForumExtension extends Extension
     /**
      *
      * @access public
-	 * @param array $config
+     * @param array                                                   $config
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
     public function load(array $configs, ContainerBuilder $container)
@@ -53,35 +59,35 @@ class CCDNForumForumExtension extends Extension
 
         $config = $processor->processConfiguration($configuration, $configs);
 
-		// Class file namespaces.
+        // Class file namespaces.
         $this
-			->getEntitySection($config, $container)
-	        ->getRepositorySection($config, $container)
-	        ->getGatewaySection($config, $container)
-	        ->getManagerSection($config, $container)
-	        ->getFormSection($config, $container)
-			->getComponentSection($config, $container)
-		;
-			
-		// Configuration stuff.		
+            ->getEntitySection($config, $container)
+            ->getRepositorySection($config, $container)
+            ->getGatewaySection($config, $container)
+            ->getManagerSection($config, $container)
+            ->getFormSection($config, $container)
+            ->getComponentSection($config, $container)
+        ;
+
+        // Configuration stuff.
         $container->setParameter('ccdn_forum_forum.template.engine', $config['template']['engine']);
 
         $this
-			->getFixtureReferenceSection($config, $container)
-	        ->getSEOSection($config, $container)
-	        ->getCategorySection($config, $container)
-	        ->getBoardSection($config, $container)
-	        ->getTopicSection($config, $container)
-	        ->getPostSection($config, $container)
-	        ->getItemBoardSection($config, $container)
-	        ->getItemPostSection($config, $container)
-	        ->getItemSignatureSection($config, $container)
-	        ->getDraftSection($config, $container)
-	        ->getSubscriptionSection($config, $container)
-	        ->getTranscriptSection($config, $container)
-		;
-		
-		// Load Service definitions.
+            ->getFixtureReferenceSection($config, $container)
+            ->getSEOSection($config, $container)
+            ->getCategorySection($config, $container)
+            ->getBoardSection($config, $container)
+            ->getTopicSection($config, $container)
+            ->getPostSection($config, $container)
+            ->getItemBoardSection($config, $container)
+            ->getItemPostSection($config, $container)
+            ->getItemSignatureSection($config, $container)
+            ->getDraftSection($config, $container)
+            ->getSubscriptionSection($config, $container)
+            ->getTranscriptSection($config, $container)
+        ;
+
+        // Load Service definitions.
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
@@ -89,9 +95,9 @@ class CCDNForumForumExtension extends Extension
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getEntitySection(array $config, ContainerBuilder $container)
     {
@@ -100,18 +106,18 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.entity.topic.class', $config['entity']['topic']['class']);
         $container->setParameter('ccdn_forum_forum.entity.post.class', $config['entity']['post']['class']);
         $container->setParameter('ccdn_forum_forum.entity.draft.class', $config['entity']['draft']['class']);
-        $container->setParameter('ccdn_forum_forum.entity.subscription.class', $config['entity']['subscription']['class']);		
-        $container->setParameter('ccdn_forum_forum.entity.registry.class', $config['entity']['registry']['class']);	
-		
-		return $this;
-	}
-	
+        $container->setParameter('ccdn_forum_forum.entity.subscription.class', $config['entity']['subscription']['class']);
+        $container->setParameter('ccdn_forum_forum.entity.registry.class', $config['entity']['registry']['class']);
+
+        return $this;
+    }
+
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getRepositorySection(array $config, ContainerBuilder $container)
     {
@@ -120,18 +126,18 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.repository.topic.class', $config['repository']['topic']['class']);
         $container->setParameter('ccdn_forum_forum.repository.post.class', $config['repository']['post']['class']);
         $container->setParameter('ccdn_forum_forum.repository.draft.class', $config['repository']['draft']['class']);
-        $container->setParameter('ccdn_forum_forum.repository.subscription.class', $config['repository']['subscription']['class']);		
-        $container->setParameter('ccdn_forum_forum.repository.registry.class', $config['repository']['registry']['class']);	
-		
-		return $this;
-	}
-	
+        $container->setParameter('ccdn_forum_forum.repository.subscription.class', $config['repository']['subscription']['class']);
+        $container->setParameter('ccdn_forum_forum.repository.registry.class', $config['repository']['registry']['class']);
+
+        return $this;
+    }
+
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getGatewaySection(array $config, ContainerBuilder $container)
     {
@@ -142,18 +148,18 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.gateway.topic.class', $config['gateway']['topic']['class']);
         $container->setParameter('ccdn_forum_forum.gateway.post.class', $config['gateway']['post']['class']);
         $container->setParameter('ccdn_forum_forum.gateway.draft.class', $config['gateway']['draft']['class']);
-        $container->setParameter('ccdn_forum_forum.gateway.subscription.class', $config['gateway']['subscription']['class']);		
-        $container->setParameter('ccdn_forum_forum.gateway.registry.class', $config['gateway']['registry']['class']);	
-		
-		return $this;
-	}
-	
+        $container->setParameter('ccdn_forum_forum.gateway.subscription.class', $config['gateway']['subscription']['class']);
+        $container->setParameter('ccdn_forum_forum.gateway.registry.class', $config['gateway']['registry']['class']);
+
+        return $this;
+    }
+
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getManagerSection(array $config, ContainerBuilder $container)
     {
@@ -164,19 +170,19 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.manager.topic.class', $config['manager']['topic']['class']);
         $container->setParameter('ccdn_forum_forum.manager.post.class', $config['manager']['post']['class']);
         $container->setParameter('ccdn_forum_forum.manager.draft.class', $config['manager']['draft']['class']);
-        $container->setParameter('ccdn_forum_forum.manager.subscription.class', $config['manager']['subscription']['class']);		
-        $container->setParameter('ccdn_forum_forum.manager.registry.class', $config['manager']['registry']['class']);		
-        $container->setParameter('ccdn_forum_forum.manager.policy.class', $config['manager']['policy']['class']);		
-		
-		return $this;
-	}
-	
+        $container->setParameter('ccdn_forum_forum.manager.subscription.class', $config['manager']['subscription']['class']);
+        $container->setParameter('ccdn_forum_forum.manager.registry.class', $config['manager']['registry']['class']);
+        $container->setParameter('ccdn_forum_forum.manager.policy.class', $config['manager']['policy']['class']);
+
+        return $this;
+    }
+
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getFormSection(array $config, ContainerBuilder $container)
     {
@@ -191,79 +197,79 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.form.handler.post_create.class', $config['form']['handler']['post_create']['class']);
         $container->setParameter('ccdn_forum_forum.form.handler.post_update.class', $config['form']['handler']['post_update']['class']);
         $container->setParameter('ccdn_forum_forum.form.handler.change_topics_board.class', $config['form']['handler']['change_topics_board']['class']);
-		
-		return $this;
-	}
+
+        return $this;
+    }
 
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getComponentSection(array $config, ContainerBuilder $container)
     {
-        $container->setParameter('ccdn_forum_forum.component.dashboard.integrator.class', $config['component']['dashboard']['integrator']['class']);		
+        $container->setParameter('ccdn_forum_forum.component.dashboard.integrator.class', $config['component']['dashboard']['integrator']['class']);
 
-        $container->setParameter('ccdn_forum_forum.component.twig_extension.board_list.class', $config['component']['twig_extension']['board_list']['class']);		
+        $container->setParameter('ccdn_forum_forum.component.twig_extension.board_list.class', $config['component']['twig_extension']['board_list']['class']);
 
-        $container->setParameter('ccdn_forum_forum.component.flood_control.class', $config['component']['flood_control']['class']);		
-		
-		return $this;
-	}
-	
+        $container->setParameter('ccdn_forum_forum.component.flood_control.class', $config['component']['flood_control']['class']);
+
+        return $this;
+    }
+
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getFixtureReferenceSection(array $config, ContainerBuilder $container)
     {
         $container->setParameter('ccdn_forum_forum.fixtures.user_admin', $config['fixtures']['user_admin']);
-		
-		return $this;
+
+        return $this;
     }
-	
+
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getSEOSection(array $config, ContainerBuilder $container)
     {
         $container->setParameter('ccdn_forum_forum.seo.title_length', $config['seo']['title_length']);
-		
-		return $this;
+
+        return $this;
     }
 
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getCategorySection(array $config, ContainerBuilder $container)
     {
         $container->setParameter('ccdn_forum_forum.category.last_post_datetime_format', $config['category']['last_post_datetime_format']);
-		$container->setParameter('ccdn_forum_forum.category.enable_bb_parser', $config['category']['enable_bb_parser']);
+        $container->setParameter('ccdn_forum_forum.category.enable_bb_parser', $config['category']['enable_bb_parser']);
         $container->setParameter('ccdn_forum_forum.category.index.layout_template', $config['category']['index']['layout_template']);
         $container->setParameter('ccdn_forum_forum.category.show.layout_template', $config['category']['show']['layout_template']);
-		
-		return $this;
+
+        return $this;
     }
 
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getBoardSection(array $config, ContainerBuilder $container)
     {
@@ -272,22 +278,22 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.board.show.topic_title_truncate', $config['board']['show']['topic_title_truncate']);
         $container->setParameter('ccdn_forum_forum.board.show.first_post_datetime_format', $config['board']['show']['first_post_datetime_format']);
         $container->setParameter('ccdn_forum_forum.board.show.last_post_datetime_format', $config['board']['show']['last_post_datetime_format']);
-		
-		return $this;
+
+        return $this;
     }
 
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getTopicSection(array $config, ContainerBuilder $container)
     {
-		$container->setParameter('ccdn_forum_forum.topic.flood_control.post_limit', $config['topic']['flood_control']['post_limit']);
-		$container->setParameter('ccdn_forum_forum.topic.flood_control.block_for_minutes', $config['topic']['flood_control']['block_for_minutes']);
-		
+        $container->setParameter('ccdn_forum_forum.topic.flood_control.post_limit', $config['topic']['flood_control']['post_limit']);
+        $container->setParameter('ccdn_forum_forum.topic.flood_control.block_for_minutes', $config['topic']['flood_control']['block_for_minutes']);
+
         $container->setParameter('ccdn_forum_forum.topic.show.layout_template', $config['topic']['show']['layout_template']);
         $container->setParameter('ccdn_forum_forum.topic.show.posts_per_page', $config['topic']['show']['posts_per_page']);
         $container->setParameter('ccdn_forum_forum.topic.show.topic_closed_datetime_format', $config['topic']['show']['topic_closed_datetime_format']);
@@ -300,19 +306,19 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.topic.reply.layout_template', $config['topic']['reply']['layout_template']);
         $container->setParameter('ccdn_forum_forum.topic.reply.form_theme', $config['topic']['reply']['form_theme']);
         $container->setParameter('ccdn_forum_forum.topic.reply.enable_bb_editor', $config['topic']['reply']['enable_bb_editor']);
-		
+
         $container->setParameter('ccdn_forum_forum.topic.change_board.layout_template', $config['topic']['change_board']['layout_template']);
         $container->setParameter('ccdn_forum_forum.topic.change_board.form_theme', $config['topic']['change_board']['form_theme']);
-		
-		return $this;
+
+        return $this;
     }
 
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getPostSection(array $config, ContainerBuilder $container)
     {
@@ -329,30 +335,30 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.post.edit_post.enable_bb_editor', $config['post']['edit_post']['enable_bb_editor']);
 
         $container->setParameter('ccdn_forum_forum.post.delete_post.layout_template', $config['post']['delete_post']['layout_template']);
-		
-		return $this;
+
+        return $this;
     }
 
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getItemBoardSection(array $config, ContainerBuilder $container)
     {
         $container->setParameter('ccdn_forum_forum.item_board.enable_bb_parser', $config['item_board']['enable_bb_parser']);
 
-		return $this;
+        return $this;
     }
 
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getItemPostSection(array $config, ContainerBuilder $container)
     {
@@ -362,29 +368,29 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.item_post.post_deleted_datetime_format', $config['item_post']['post_deleted_datetime_format']);
         $container->setParameter('ccdn_forum_forum.item_post.enable_bb_parser', $config['item_post']['enable_bb_parser']);
 
-		return $this;
+        return $this;
     }
 
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getItemSignatureSection(array $config, ContainerBuilder $container)
     {
         $container->setParameter('ccdn_forum_forum.item_signature.enable_bb_parser', $config['item_signature']['enable_bb_parser']);
 
-		return $this;
+        return $this;
     }
 
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getDraftSection(array $config, ContainerBuilder $container)
     {
@@ -392,16 +398,16 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.draft.list.drafts_per_page', $config['draft']['list']['drafts_per_page']);
         $container->setParameter('ccdn_forum_forum.draft.list.topic_title_truncate', $config['draft']['list']['topic_title_truncate']);
         $container->setParameter('ccdn_forum_forum.draft.list.creation_datetime_format', $config['draft']['list']['creation_datetime_format']);
-		
-		return $this;
+
+        return $this;
     }
 
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getSubscriptionSection(array $config, ContainerBuilder $container)
     {
@@ -410,22 +416,22 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.subscription.list.topic_title_truncate', $config['subscription']['list']['topic_title_truncate']);
         $container->setParameter('ccdn_forum_forum.subscription.list.first_post_datetime_format', $config['subscription']['list']['first_post_datetime_format']);
         $container->setParameter('ccdn_forum_forum.subscription.list.last_post_datetime_format', $config['subscription']['list']['last_post_datetime_format']);
-		
-		return $this;
+
+        return $this;
     }
 
     /**
      *
      * @access private
-	 * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-	 * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
+     * @param  array                                                              $config
+     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
+     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
      */
     private function getTranscriptSection(array $config, ContainerBuilder $container)
     {
         $container->setParameter('ccdn_forum_forum.transcript.post_creation_datetime_format', $config['transcript']['post_creation_datetime_format']);
         $container->setParameter('ccdn_forum_forum.transcript.post_deleted_datetime_format', $config['transcript']['post_deleted_datetime_format']);
-		
-		return $this;
+
+        return $this;
     }
 }

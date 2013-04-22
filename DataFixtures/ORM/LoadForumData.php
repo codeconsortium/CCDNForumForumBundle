@@ -27,8 +27,14 @@ use CCDNForum\ForumBundle\Entity\Post;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class LoadForumData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
@@ -105,11 +111,11 @@ class LoadForumData extends AbstractFixture implements OrderedFixtureInterface, 
         return $post;
     }
 
-	/**
-	 *
-	 * @access public
-	 * @param ObjectManager $manager
-	 */
+    /**
+     *
+     * @access public
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $referencedUserAdmin = $this->getReference($this->container->getParameter('ccdn_forum_forum.fixtures.user_admin'));
@@ -143,14 +149,13 @@ class LoadForumData extends AbstractFixture implements OrderedFixtureInterface, 
         }
     }
 
-	/**
-	 *
-	 * @access public
-	 * @return int
-	 */
-	public function getOrder()
-	{
-		return 4;
-	}
-	
+    /**
+     *
+     * @access public
+     * @return int
+     */
+    public function getOrder()
+    {
+        return 4;
+    }
 }

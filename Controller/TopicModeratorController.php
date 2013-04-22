@@ -13,27 +13,27 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use CCDNForum\ForumBundle\Entity\Topic;
-use CCDNForum\ForumBundle\Entity\Post;
-use CCDNForum\ForumBundle\Entity\Draft;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class TopicModeratorController extends TopicBaseController
 {
     /**
      *
      * @access public
-     * @param int $topicId
+     * @param  int              $topicId
      * @return RedirectResponse
      */
     public function stickyAction($topicId)
@@ -42,9 +42,9 @@ class TopicModeratorController extends TopicBaseController
 
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-		$this->isAuthorisedToViewTopic($topic);
-		$this->isAuthorisedToStickyTopic($topic);
-		
+        $this->isAuthorisedToViewTopic($topic);
+        $this->isAuthorisedToStickyTopic($topic);
+
         $this->getTopicManager()->sticky($topic, $this->getUser())->flush();
 
         $this->setFlash('success', $this->trans('ccdn_forum_admin.flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
@@ -55,7 +55,7 @@ class TopicModeratorController extends TopicBaseController
     /**
      *
      * @access public
-     * @param int $topicId
+     * @param  int              $topicId
      * @return RedirectResponse
      */
     public function unstickyAction($topicId)
@@ -64,9 +64,9 @@ class TopicModeratorController extends TopicBaseController
 
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-		$this->isAuthorisedToViewTopic($topic);
-		$this->isAuthorisedToUnStickyTopic($topic);
-		
+        $this->isAuthorisedToViewTopic($topic);
+        $this->isAuthorisedToUnStickyTopic($topic);
+
         $this->getTopicManager()->unsticky($topic)->flush();
 
         $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.topic.unsticky.success', array('%topic_title%' => $topic->getTitle())));
@@ -79,7 +79,7 @@ class TopicModeratorController extends TopicBaseController
      * Once a topic is locked, no posts can be added, deleted or edited!
      *
      * @access public
-     * @param int $topicId
+     * @param  int              $topicId
      * @return RedirectResponse
      */
     public function closeAction($topicId)
@@ -88,9 +88,9 @@ class TopicModeratorController extends TopicBaseController
 
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-		$this->isAuthorisedToViewTopic($topic);
-		$this->isAuthorisedToCloseTopic($topic);
-		
+        $this->isAuthorisedToViewTopic($topic);
+        $this->isAuthorisedToCloseTopic($topic);
+
         $this->getTopicManager()->close($topic, $this->getUser())->flush();
 
         $this->setFlash('warning', $this->trans('ccdn_forum_admin.flash.topic.close.success', array('%topic_title%' => $topic->getTitle())));
@@ -101,7 +101,7 @@ class TopicModeratorController extends TopicBaseController
     /**
      *
      * @access public
-     * @param int $topicId
+     * @param  int              $topicId
      * @return RedirectResponse
      */
     public function reopenAction($topicId)
@@ -110,9 +110,9 @@ class TopicModeratorController extends TopicBaseController
 
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-		$this->isAuthorisedToViewTopic($topic);
-		$this->isAuthorisedToReOpenTopic($topic);
-		
+        $this->isAuthorisedToViewTopic($topic);
+        $this->isAuthorisedToReOpenTopic($topic);
+
         $this->getTopicManager()->reopen($topic)->flush();
 
         $this->setFlash('warning', $this->trans('ccdn_forum_admin.flash.topic.reopen.success', array('%topic_title%' => $topic->getTitle())));
@@ -123,7 +123,7 @@ class TopicModeratorController extends TopicBaseController
     /**
      *
      * @access public
-     * @param int $topicId
+     * @param  int            $topicId
      * @return RenderResponse
      */
     public function deleteAction($topicId)
@@ -132,9 +132,9 @@ class TopicModeratorController extends TopicBaseController
 
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-		$this->isAuthorisedToViewTopic($topic);
-		$this->isAuthorisedToDeleteTopic($topic);
-		
+        $this->isAuthorisedToViewTopic($topic);
+        $this->isAuthorisedToDeleteTopic($topic);
+
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
@@ -157,7 +157,7 @@ class TopicModeratorController extends TopicBaseController
     /**
      *
      * @access public
-     * @param int $topicId
+     * @param  int              $topicId
      * @return RedirectResponse
      */
     public function deleteConfirmedAction($topicId)
@@ -166,9 +166,9 @@ class TopicModeratorController extends TopicBaseController
 
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-		$this->isAuthorisedToViewTopic($topic);
-		$this->isAuthorisedToDeleteTopic($topic);
-		
+        $this->isAuthorisedToViewTopic($topic);
+        $this->isAuthorisedToDeleteTopic($topic);
+
         $this->getTopicManager()->softDelete($topic, $this->getUser())->flush();
 
         // set flash message
@@ -181,7 +181,7 @@ class TopicModeratorController extends TopicBaseController
     /**
      *
      * @access public
-     * @param int $topicId
+     * @param  int              $topicId
      * @return RedirectResponse
      */
     public function restoreAction($topicId)
@@ -190,9 +190,9 @@ class TopicModeratorController extends TopicBaseController
 
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-		$this->isAuthorisedToViewTopic($topic);
-		$this->isAuthorisedToRestoreTopic($topic);
-		
+        $this->isAuthorisedToViewTopic($topic);
+        $this->isAuthorisedToRestoreTopic($topic);
+
         $this->getTopicManager()->restore($topic)->flush();
 
         // set flash message
@@ -205,18 +205,18 @@ class TopicModeratorController extends TopicBaseController
     /**
      *
      * @access public
-     * @param int $topicId
+     * @param  int                             $topicId
      * @return RedirectResponse|RenderResponse
      */
     public function moveAction($topicId)
     {
-		$this->isAuthorised('ROLE_MODERATOR');
+        $this->isAuthorised('ROLE_MODERATOR');
 
-		$topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-		$this->isAuthorisedToViewTopic($topic);
-		$this->isAuthorisedToMoveTopic($topic);
-		
+        $this->isAuthorisedToViewTopic($topic);
+        $this->isAuthorisedToMoveTopic($topic);
+
         $formHandler = $this->getFormHandlerToChangeBoardOnTopic($topic);
 
         if ($formHandler->process($this->getRequest())) {

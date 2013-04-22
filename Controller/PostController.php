@@ -13,33 +13,36 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class PostController extends PostBaseController
 {
     /**
      *
      * @access public
-     * @param int $postId
+     * @param  int            $postId
      * @return RenderResponse
      */
     public function showAction($postId)
     {
-		// Get post by id.
-		$post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
-		$this->isFound($post);
-		$this->isAuthorisedToViewPost($post);
-		
+        // Get post by id.
+        $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
+        $this->isFound($post);
+        $this->isAuthorisedToViewPost($post);
+
         // Get the topic subscriptions.
-		$subscription = $this->getSubscriptionManager()->findSubscriptionForTopicById($post->getTopic()->getId());		
+        $subscription = $this->getSubscriptionManager()->findSubscriptionForTopicById($post->getTopic()->getId());
         $subscriberCount = $this->getSubscriptionManager()->countSubscriptionsForTopicById($post->getTopic()->getId());
 
         // Setup crumb trail.
@@ -66,32 +69,32 @@ class PostController extends PostBaseController
     /**
      *
      * @access public
-     * @param int $postId
+     * @param  int                             $postId
      * @return RedirectResponse|RenderResponse
      */
     public function editAction($postId)
     {
-		$this->isAuthorised('ROLE_USER');
+        $this->isAuthorised('ROLE_USER');
 
         $user = $this->getUser();
 
-		$post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
         $this->isFound($post);
-		$this->isAuthorisedToViewPost($post);
-		$this->isAuthorisedToEditPost($post);
+        $this->isAuthorisedToViewPost($post);
+        $this->isAuthorisedToEditPost($post);
 
-		// If post is the very first post of the topic then use a topic handler so user can change topic title.
+        // If post is the very first post of the topic then use a topic handler so user can change topic title.
         if ($post->getTopic()->getFirstPost()->getId() == $post->getId()) {
-			$formHandler = $this->getFormHandlerToEditTopic($post);
+            $formHandler = $this->getFormHandlerToEditTopic($post);
         } else {
-			$formHandler = $this->getFormHandlerToEditPost($post);
+            $formHandler = $this->getFormHandlerToEditPost($post);
         }
 
         if ($formHandler->process($this->getRequest())) {
-			// get posts for determining the page of the edited post
+            // get posts for determining the page of the edited post
             $topic = $post->getTopic();
 
-			$page = $this->getTopicManager()->getPageForPostOnTopic($topic, $post);
+            $page = $this->getTopicManager()->getPageForPostOnTopic($topic, $post);
 
             $this->setFlash('success', $this->trans('ccdn_forum_forum.flash.post.edit.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle())));
 
@@ -111,7 +114,7 @@ class PostController extends PostBaseController
             ->add($this->trans('ccdn_forum_forum.crumbs.post.edit') . $post->getId(), $this->path('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())));
 
         if ($post->getTopic()->getFirstPost()->getId() == $post->getId()) {
-			// render edit_topic if first post
+            // render edit_topic if first post
             $template = 'CCDNForumForumBundle:Post:edit_topic.html.';
         } else {
             // render edit_post if reply post
@@ -131,24 +134,24 @@ class PostController extends PostBaseController
     /**
      *
      * @access public
-     * @param int $postId
+     * @param  int                             $postId
      * @return RedirectResponse|RenderResponse
      */
     public function deleteAction($postId)
     {
-		$this->isAuthorised('ROLE_USER');
+        $this->isAuthorised('ROLE_USER');
 
-		$post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
         $this->isFound($post);
-		$this->isAuthorisedToViewPost($post);
-		$this->isAuthorisedToDeletePost($post);
+        $this->isAuthorisedToViewPost($post);
+        $this->isAuthorisedToDeletePost($post);
 
         $topic = $post->getTopic();
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
         if ($post->getTopic()->getFirstPost()->getId() == $post->getId() && $post->getTopic()->getCachedReplyCount() == 0) {
-			// if post is the very first post of the topic then use a topic handler so user can change topic title
+            // if post is the very first post of the topic then use a topic handler so user can change topic title
             $confirmationMessage = 'ccdn_forum_forum.topic.delete_topic_question';
             $crumbDelete = $this->trans('ccdn_forum_forum.crumbs.topic.delete');
             $pageTitle = $this->trans('ccdn_forum_forum.title.topic.delete', array('%topic_title%' => $topic->getTitle()));
@@ -178,18 +181,18 @@ class PostController extends PostBaseController
     /**
      *
      * @access public
-     * @param int $postId
+     * @param  int              $postId
      * @return RedirectResponse
      */
     public function deleteConfirmedAction($postId)
     {
-		$this->isAuthorised('ROLE_USER');
+        $this->isAuthorised('ROLE_USER');
 
-		$post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
         $this->isFound($post);
-		$this->isAuthorisedToViewPost($post);
-		$this->isAuthorisedToDeletePost($post);
-		
+        $this->isAuthorisedToViewPost($post);
+        $this->isAuthorisedToDeletePost($post);
+
         $this->getPostManager()->softDelete($post, $this->getUser())->flush();
 
         // set flash message

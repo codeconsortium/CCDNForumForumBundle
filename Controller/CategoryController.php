@@ -13,13 +13,16 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class CategoryController extends BaseController
 {
@@ -30,8 +33,8 @@ class CategoryController extends BaseController
      */
     public function indexAction()
     {
-		$categories = $this->getCategoryManager()->findAllWithBoards();
-			
+        $categories = $this->getCategoryManager()->findAllWithBoards();
+
         $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
         $crumbs = $this->getCrumbs()
@@ -47,14 +50,14 @@ class CategoryController extends BaseController
     /**
      *
      * @access public
-     * @param int $categoryId
+     * @param  int            $categoryId
      * @return RenderResponse
      */
     public function showAction($categoryId)
     {
-		$category = $this->getCategoryManager()->findOneByIdWithBoards($categoryId);
-		
-		$this->isFound($category);
+        $category = $this->getCategoryManager()->findOneByIdWithBoards($categoryId);
+
+        $this->isFound($category);
 
         $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
@@ -64,7 +67,7 @@ class CategoryController extends BaseController
 
         return $this->renderResponse('CCDNForumForumBundle:Category:show.html.', array(
             'crumbs' => $crumbs,
-			'category' => $category,
+            'category' => $category,
             'categories' => array($category),
             'topics_per_page' => $topicsPerPage,
         ));

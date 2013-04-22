@@ -5,10 +5,10 @@
 
 		<div class="well">
 			{%- for key, post in topic.getPosts -%}
-		
+
 				{%- if post.isDeleted == false or is_granted('ROLE_MODERATOR') -%}
 					{%- set author = create_profile(post.getCreatedBy) -%}
-		
+
 					<article class="row-fluid forum-post-item">
 					    <header{% if post.id %} id="post_{{- post.getId -}}"{% endif %} style="height:27px;">
 							<div class="span12">
@@ -33,5 +33,5 @@
 			{%- endfor -%}
 		</div>
 	</div>
-	
+
 {%- endspaceless -%}

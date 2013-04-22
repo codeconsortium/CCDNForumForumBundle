@@ -16,7 +16,6 @@ namespace CCDNForum\ForumBundle\Manager;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Manager\BaseManager;
@@ -25,49 +24,55 @@ use CCDNForum\ForumBundle\Entity\Registry;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class RegistryManager extends BaseManager implements BaseManagerInterface
 {
-	/**
-	 *
-	 * @access public
-	 * @param int $userId
-	 * @return \CCDNForum\ForumBundle\Entity\Registry
-	 */	
-	public function findRegistryForUserById($userId)
-	{
-		if (null == $userId || ! is_numeric($userId) || $userId == 0) {
-			throw new \Exception('User id "' . $userId . '" is invalid!');
-		}
-		
-		$params = array(':userId' => $userId);
-		
-		$qb = $this->createSelectQuery(array('r'));
-		
-		$qb->where('r.ownedBy = :userId');
-		
-		return $this->gateway->findRegistry($qb, $params);
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param Array $userIds
-	 * @return \Doctrine\Common\Collections\ArrayCollection
-	 */	
+    /**
+     *
+     * @access public
+     * @param  int                                    $userId
+     * @return \CCDNForum\ForumBundle\Entity\Registry
+     */
+    public function findRegistryForUserById($userId)
+    {
+        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+            throw new \Exception('User id "' . $userId . '" is invalid!');
+        }
+
+        $params = array(':userId' => $userId);
+
+        $qb = $this->createSelectQuery(array('r'));
+
+        $qb->where('r.ownedBy = :userId');
+
+        return $this->gateway->findRegistry($qb, $params);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  Array                                        $userIds
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
     public function findRegistriesForTheseUsersById($registryUserIds = array())
     {
-		if (! is_array($registryUserIds) || count($registryUserIds) < 1) {
-			throw new \Exception('Parameter 1 must be an array and contain at least 1 user id!');
-		}
-		
-		$qb = $this->createSelectQuery(array('r'));
-		
-		$qb->where($qb->expr()->in('r.ownedBy', $registryUserIds));
-		
-		$registriesTemp = $this->gateway->findRegistries($qb, $params);
+        if (! is_array($registryUserIds) || count($registryUserIds) < 1) {
+            throw new \Exception('Parameter 1 must be an array and contain at least 1 user id!');
+        }
+
+        $qb = $this->createSelectQuery(array('r'));
+
+        $qb->where($qb->expr()->in('r.ownedBy', $registryUserIds));
+
+        $registriesTemp = $this->gateway->findRegistries($qb, $params);
 
         // Sort the registries so that the user[id] is the key of the users registry entity.
         $registries = array();
@@ -82,7 +87,7 @@ class RegistryManager extends BaseManager implements BaseManagerInterface
 
         return $registries;
     }
-	
+
     /**
      *
      * @access public
@@ -114,7 +119,7 @@ class RegistryManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param Array $users
+     * @param  Array                                               $users
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function bulkUpdateCachedPostCountForUsers($users)

@@ -18,28 +18,34 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class TopicChangeBoardFormType extends AbstractType
 {
-	/**
-	 *
-	 * @access protected
-	 * @var string $topicClass
-	 */
-	protected $topicClass;
-	
-	/**
-	 *
-	 * @access public
-	 * @var string $topicClass
-	 */
-	public function __construct($topicClass)
-	{
-		$this->topicClass = $topicClass;
-	}
-	
+    /**
+     *
+     * @access protected
+     * @var string $topicClass
+     */
+    protected $topicClass;
+
+    /**
+     *
+     * @access public
+     * @var string $topicClass
+     */
+    public function __construct($topicClass)
+    {
+        $this->topicClass = $topicClass;
+    }
+
     /**
      *
      * @access public
@@ -48,16 +54,16 @@ class TopicChangeBoardFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add('board', 'entity',
-				array(
-		            'property'           => 'name',
-		            'class'              => 'CCDNForumForumBundle:Board',
-					'choices'            => $options['boards'],
-		            'label'              => 'ccdn_forum_forum.form.label.board',
-					'translation_domain' => 'CCDNForumForumBundle',
-		        )
-			)
-		;
+            ->add('board', 'entity',
+                array(
+                    'property'           => 'name',
+                    'class'              => 'CCDNForumForumBundle:Board',
+                    'choices'            => $options['boards'],
+                    'label'              => 'ccdn_forum_forum.form.label.board',
+                    'translation_domain' => 'CCDNForumForumBundle',
+                )
+            )
+        ;
     }
 
     /**
@@ -73,8 +79,8 @@ class TopicChangeBoardFormType extends AbstractType
             'csrf_field_name'    => '_token',
             // a unique key to help generate the secret token
             'intention'          => 'topic_change_board',
-			'validation_groups'  => array('topic_update'),
-			'boards'             => array(),
+            'validation_groups'  => array('topic_update'),
+            'boards'             => array(),
         );
     }
 

@@ -198,7 +198,7 @@ services:
 
     ccdn_forum_forum.form.handler.post_create:
         class: %ccdn_forum_forum.form.handler.post_create.class%
-        arguments: 
+        arguments:
             - @form.factory
             - @ccdn_forum_forum.form.type.post_create
             - @ccdn_forum_forum.manager.post
@@ -248,7 +248,7 @@ services:
 
     ccdn_forum_forum.form.type.change_topics_board:
         class: %ccdn_forum_forum.form.type.change_topics_board.class%
-        arguments: 
+        arguments:
             - %ccdn_forum_forum.entity.topic.class%
 
     ccdn_forum_forum.form.handler.change_topics_board:

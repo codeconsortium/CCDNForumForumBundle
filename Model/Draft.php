@@ -31,11 +31,11 @@ abstract class Draft
 
     /** @var Attachment $attachment */
     protected $attachment = null;
-	
-	/**
-	 *
-	 * @access public
-	 */
+
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         // your own logic
@@ -54,7 +54,7 @@ abstract class Draft
     /**
      * Set topic
      *
-     * @param Topic $topic
+     * @param  Topic $topic
      * @return Draft
      */
     public function setTopic(ConcreteTopic $topic = null)
@@ -77,7 +77,7 @@ abstract class Draft
     /**
      * Set created_by
      *
-     * @param UserInterface $createdBy
+     * @param  UserInterface $createdBy
      * @return Draft
      */
     public function setCreatedBy(UserInterface $createdBy = null)
@@ -100,7 +100,7 @@ abstract class Draft
     /**
      * Set board
      *
-     * @param Board $board
+     * @param  Board $board
      * @return Draft
      */
     public function setBoard(ConcreteBoard $board = null)

@@ -22,77 +22,83 @@ use CCDNForum\ForumBundle\Entity\Post;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class PostUpdateFormHandler
 {
     /**
-	 *
-	 * @access protected
-	 * @var \Symfony\Component\Form\FormFactory $factory
-	 */
+     *
+     * @access protected
+     * @var \Symfony\Component\Form\FormFactory $factory
+     */
     protected $factory;
-	
-	/**
-	 *
-	 * @access protected
-	 * @var \CCDNForum\ForumBundle\Form\Type\PostType $formPostType
-	 */
-	protected $formPostType;
-	
+
     /**
-	 *
-	 * @access protected
-	 * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $manager
-	 */
+     *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Form\Type\PostType $formPostType
+     */
+    protected $formPostType;
+
+    /**
+     *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $manager
+     */
     protected $manager;
 
     /**
-	 * 
-	 * @access protected
-	 * @var \CCDNForum\ForumBundle\Form\Type\PostType $form 
-	 */
+     *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Form\Type\PostType $form
+     */
     protected $form;
 
     /**
-	 * 
-	 * @access protected
-	 * @var \CCDNForum\ForumBundle\Entity\Post $post 
-	 */
+     *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Entity\Post $post
+     */
     protected $post;
-	
+
     /**
      *
      * @access public
-     * @param \Symfony\Component\Form\FormFactory $factory
-	 * @param \CCDNForum\ForumBundle\Form\Type\PostType $formPostType
-	 * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $manager
+     * @param \Symfony\Component\Form\FormFactory                 $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\PostType           $formPostType
+     * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $manager
      */
     public function __construct(FormFactory $factory, $formPostType, BaseManagerInterface $manager)
     {
         $this->factory = $factory;
-		$this->formPostType = $formPostType;
+        $this->formPostType = $formPostType;
         $this->manager = $manager;
     }
 
     /**
      *
      * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Post $post
-	 * @return \CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
+     * @param  \CCDNForum\ForumBundle\Entity\Post                        $post
+     * @return \CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
      */
-	public function setPost(Post $post)
-	{
-		$this->post = $post;
-		
-		return $this;
-	}
-	
+    public function setPost(Post $post)
+    {
+        $this->post = $post;
+
+        return $this;
+    }
+
     /**
      *
      * @access public
-	 * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param  \Symfony\Component\HttpFoundation\Request $request
      * @return bool
      */
     public function process(Request $request)
@@ -106,34 +112,34 @@ class PostUpdateFormHandler
             if ($this->form->isValid()) {
                 $formData = $this->form->getData();
 
-				if ($this->getSubmitAction($request) == 'post') {
-	                $this->onSuccess($formData);
+                if ($this->getSubmitAction($request) == 'post') {
+                    $this->onSuccess($formData);
 
-	                return true;					
-				}
+                    return true;
+                }
             }
         }
 
         return false;
     }
-	
-	/**
-	 *
-	 * @access public
-	 * @param \Symfony\Component\HttpFoundation\Request $request
-	 * @return string
-	 */
-	public function getSubmitAction(Request $request)
-	{
-		if ($request->request->has('submit')) {
-			$action = key($request->request->get('submit'));
-		} else {
-			$action = 'post';
-		}
-		
-		return $action;
-	}
-	
+
+    /**
+     *
+     * @access public
+     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @return string
+     */
+    public function getSubmitAction(Request $request)
+    {
+        if ($request->request->has('submit')) {
+            $action = key($request->request->get('submit'));
+        } else {
+            $action = 'post';
+        }
+
+        return $action;
+    }
+
     /**
      *
      * @access public
@@ -155,7 +161,7 @@ class PostUpdateFormHandler
     /**
      *
      * @access protected
-     * @param \CCDNForum\ForumBundle\Entity\Post $post
+     * @param  \CCDNForum\ForumBundle\Entity\Post         $post
      * @return \CCDNForum\ForumBundle\Manager\PostManager
      */
     protected function onSuccess(Post $post)
@@ -169,7 +175,7 @@ class PostUpdateFormHandler
             $post->setEditedDate(new \DateTime());
             $post->setEditedBy($this->manager->getUser());
         }
-		
+
         return $this->manager->updatePost($post)->flush();
     }
 }

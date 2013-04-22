@@ -17,22 +17,28 @@ use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class BoardListExtension extends \Twig_Extension
 {
     /**
      *
      * @access protected
-	 * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $categoryManager
+     * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $categoryManager
      */
     protected $categoryManager;
 
     /**
-     * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $categoryManager
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $categoryManager
      */
     public function __construct(BaseManagerInterface $categoryManager)
     {

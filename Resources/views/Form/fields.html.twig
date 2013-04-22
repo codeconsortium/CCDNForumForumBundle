@@ -62,28 +62,28 @@
 
 	{% block form_widget_compound %}
 		{% spaceless %}
-		
+
 		{{ block('form_rows') }}
-		    <div {{ block('widget_container_attributes') }} class="FUCK">		
+		    <div {{ block('widget_container_attributes') }} class="FUCK">
 		        {% if form.parent is empty %}
 		            {{ form_errors(form) }}
 		        {% endif %}
 		        {{ block('form_rows') }}
 		        {{ form_rest(form) }}
-		    </div>	
+		    </div>
 		{% endspaceless %}
 	{% endblock form_widget_compound %}
-#}	
+#}
 
 {% block form_row %}
 	{%- spaceless -%}
 		{%- if compound and not form.vars.block_prefixes[1] == 'field' -%}
 
 			{{- form_widget(form) -}}
-				
+
 		{%- else -%}
 			<div class="control-group{{- (form.vars.errors|length > 0) ? ' error': '' -}}">
-				{% if 'repeated' in form.vars.block_prefixes %} 		 
+				{% if 'repeated' in form.vars.block_prefixes %}
 					{% if form.vars.block_prefixes[1] == 'checkbox' %}
 						<div class="controls">
 							{{- form_errors(form) -}}
@@ -95,8 +95,8 @@
 						<div class="controls">
 							{{- form_errors(form) -}}
 							{{- form_widget(form) -}}
-						</div>			
-					{% endif %}	
+						</div>
+					{% endif %}
 				{% else %}
 					{% if form.vars.block_prefixes[2] == 'checkbox' %}
 						<div class="controls">
@@ -109,8 +109,8 @@
 						<div class="controls">
 							{{- form_errors(form) -}}
 							{{- form_widget(form) -}}
-						</div>			
-					{% endif %}	
+						</div>
+					{% endif %}
 				{% endif %}
 			</div>
 		{%- endif -%}
@@ -249,5 +249,3 @@
 		<input type="{{- type -}}" {{ block('widget_attributes') -}} style="display:block;clear:both;height:100%;width:100%;visibility:visible;">
 	{%- endspaceless -%}
 {% endblock widget_upload %}
-
-

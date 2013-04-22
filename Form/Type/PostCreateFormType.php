@@ -20,28 +20,34 @@ use CCDNForum\ForumBundle\Entity\Post;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class PostCreateFormType extends AbstractType
 {
-	/**
-	 *
-	 * @access protected
-	 * @var string $postClass
-	 */
-	protected $postClass;
-	
-	/**
-	 *
-	 * @access public
-	 * @var string $postClass
-	 */
-	public function __construct($postClass)
-	{
-		$this->postClass = $postClass;
-	}
-	
+    /**
+     *
+     * @access protected
+     * @var string $postClass
+     */
+    protected $postClass;
+
+    /**
+     *
+     * @access public
+     * @var string $postClass
+     */
+    public function __construct($postClass)
+    {
+        $this->postClass = $postClass;
+    }
+
     /**
      *
      * @access public
@@ -50,20 +56,20 @@ class PostCreateFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add('body', 'bb_editor',
-				array(
-					'label'              => 'ccdn_forum_forum.form.label.post.body',
-					'translation_domain' => 'CCDNForumForumBundle'
-		        )
-			)
-		;
+            ->add('body', 'bb_editor',
+                array(
+                    'label'              => 'ccdn_forum_forum.form.label.post.body',
+                    'translation_domain' => 'CCDNForumForumBundle'
+                )
+            )
+        ;
     }
 
     /**
      *
      * @access public
-     * @param array $options
-	 * @return array
+     * @param  array $options
+     * @return array
      */
     public function getDefaultOptions(array $options)
     {

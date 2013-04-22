@@ -30,7 +30,7 @@ ccdn_forum_forum_board_show_paginated:
 ccdn_forum_forum_topic_show:
     pattern: /{_locale}/forum/topic/{topicId}
     defaults: { _controller: CCDNForumForumBundle:Topic:show, _locale: en, page: 1 }
-    
+
 ccdn_forum_forum_topic_show_paginated:
     pattern: /{_locale}/forum/topic/{topicId}/page/{page}
     defaults: { _controller: CCDNForumForumBundle:Topic:show, _locale: en, page: 1 }

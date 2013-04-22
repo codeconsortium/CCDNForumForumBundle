@@ -24,11 +24,11 @@ abstract class Subscription
 
     /** @var UserInterface $ownedBy */
     protected $ownedBy = null;
-	
-	/**
-	 *
-	 * @access public
-	 */
+
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         // your own logic
@@ -47,7 +47,7 @@ abstract class Subscription
     /**
      * Set topic
      *
-     * @param Topic $topic
+     * @param  Topic        $topic
      * @return Subscription
      */
     public function setTopic(ConcreteTopic $topic = null)
@@ -70,7 +70,7 @@ abstract class Subscription
     /**
      * Set owned_by
      *
-     * @param UserInterface $ownedBy
+     * @param  UserInterface $ownedBy
      * @return Subscription
      */
     public function setOwnedBy(UserInterface $ownedBy = null)

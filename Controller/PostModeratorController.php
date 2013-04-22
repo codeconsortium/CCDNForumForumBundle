@@ -13,94 +13,94 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
-use CCDNForum\ForumBundle\Entity\Draft;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class PostModeratorController extends PostBaseController
 {
-	/**
-	 * Lock to prevent editing of post.
-	 *
-	 * @access public
-	 * @param int $postId
-	 * @return RedirectResponse
-	 */
-	public function lockAction($postId)
-	{
-	    $this->isAuthorised('ROLE_MODERATOR');
+    /**
+     * Lock to prevent editing of post.
+     *
+     * @access public
+     * @param  int              $postId
+     * @return RedirectResponse
+     */
+    public function lockAction($postId)
+    {
+        $this->isAuthorised('ROLE_MODERATOR');
 
-	    $user = $this->getUser();
+        $user = $this->getUser();
 
-	    $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
 
-	    $this->isFound($post);
-		$this->isAuthorisedToViewPost($post);
-		$this->isAuthorisedToEditPost($post);
-		
-	    $this->getPostManager()->lock($post, $user)->flush();
+        $this->isFound($post);
+        $this->isAuthorisedToViewPost($post);
+        $this->isAuthorisedToEditPost($post);
 
-	    $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.lock.success', array('%post_id%' => $postId)));
+        $this->getPostManager()->lock($post, $user)->flush();
 
-	    return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
-	}
+        $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.lock.success', array('%post_id%' => $postId)));
 
-	/**
-	 *
-	 * @access public
-	 * @param int $postId
-	 * @return RedirectResponse
-	 */
-	public function unlockAction($postId)
-	{
-	    $this->isAuthorised('ROLE_MODERATOR');
+        return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
+    }
 
-	    $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
+    /**
+     *
+     * @access public
+     * @param  int              $postId
+     * @return RedirectResponse
+     */
+    public function unlockAction($postId)
+    {
+        $this->isAuthorised('ROLE_MODERATOR');
 
-	    $this->isFound($post);
-		$this->isAuthorisedToViewPost($post);
-		$this->isAuthorisedToEditPost($post);
-		
-	    $this->getPostManager()->unlock($post)->flush();
+        $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
 
-	    $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.unlock.success', array('%post_id%' => $postId)));
+        $this->isFound($post);
+        $this->isAuthorisedToViewPost($post);
+        $this->isAuthorisedToEditPost($post);
 
-	    return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
-	}
+        $this->getPostManager()->unlock($post)->flush();
 
-	/**
-	 *
-	 * @access public
-	 * @param int $postId
-	 * @return RedirectResponse
-	 */
-	public function restoreAction($postId)
-	{
-	    $this->isAuthorised('ROLE_MODERATOR');
+        $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.unlock.success', array('%post_id%' => $postId)));
 
-	    $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
+        return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
+    }
 
-		$this->isFound($post);
-		$this->isAuthorisedToViewPost($post);
-		$this->isAuthorisedToRestorePost($post);
-		
-	    $this->getPostManager()->restore($post)->flush();
+    /**
+     *
+     * @access public
+     * @param  int              $postId
+     * @return RedirectResponse
+     */
+    public function restoreAction($postId)
+    {
+        $this->isAuthorised('ROLE_MODERATOR');
 
-	    // set flash message
-	    $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.restore.success', array('%post_id%' => $postId)));
+        $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
 
-	    // forward user
-	    return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
-	}
+        $this->isFound($post);
+        $this->isAuthorisedToViewPost($post);
+        $this->isAuthorisedToRestorePost($post);
+
+        $this->getPostManager()->restore($post)->flush();
+
+        // set flash message
+        $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.restore.success', array('%post_id%' => $postId)));
+
+        // forward user
+        return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
+    }
 }

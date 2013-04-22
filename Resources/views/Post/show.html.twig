@@ -18,7 +18,7 @@
 				{{- 'ccdn_forum_forum.topic.reply_count' |trans({}, 'CCDNForumForumBundle') -}}
 				{{- abbr_number(topic.cachedReplyCount) -}}
 			</span>
-				
+
 		    <span class="label label-inverse prominent-figure" title="{{- topic.cachedViewCount -}}">
 				{{- 'ccdn_forum_forum.topic.view_count' |trans({}, 'CCDNForumForumBundle') -}}
 				{{- abbr_number(topic.cachedViewCount) -}}
@@ -29,7 +29,7 @@
 					{{- 'ccdn_forum_forum.topic.subscription_count' |trans({}, 'CCDNForumForumBundle') -}}
 					{{- abbr_number(subscription_count) -}}
 				</span>
-		    {%- endif -%}				
+		    {%- endif -%}
 		</div>
 	</header>
 
@@ -41,9 +41,9 @@
 
 	            {{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}
 	            {{ topic_deleter.getProfilePath|raw }}
-	            
+
 				&nbsp;&#183;
-				
+
 	            {{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
 	        </div>
 	    {%- endif -%}
@@ -55,9 +55,9 @@
 
 	            {{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}
 	            {{ topic_closer.getProfilePath|raw }}
-	            
+
 				&nbsp;&#183;
-				
+
 	            {{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.topic_closed_datetime_format) -}}
 	        </div>
 	    {%- endif -%}
@@ -69,23 +69,23 @@
 
 	            {{- 'ccdn_forum_forum.topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}
 	            {{ topic_stickier.getProfilePath|raw }}
-	            
+
 				&nbsp;&#183;
-				
+
 	            {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
 	        </div>
 	    {%- endif -%}
 
 	    <div class="btn-toolbar">
-	        <div class="span12">		
+	        <div class="span12">
 	            {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
 	        </div>
 	    </div>
-	
+
 		{%- include "CCDNForumForumBundle:Post:item_post.html.twig" -%}
 
 	    <div class="btn-toolbar">
-	        <div class="span12">		
+	        <div class="span12">
 	            {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
 	        </div>
 	    </div>

@@ -18,28 +18,34 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class TopicUpdateFormType extends AbstractType
 {
-	/**
-	 *
-	 * @access protected
-	 * @var string $topicClass
-	 */
-	protected $topicClass;
-	
-	/**
-	 *
-	 * @access public
-	 * @var string $topicClass
-	 */
-	public function __construct($topicClass)
-	{
-		$this->topicClass = $topicClass;
-	}
-	
+    /**
+     *
+     * @access protected
+     * @var string $topicClass
+     */
+    protected $topicClass;
+
+    /**
+     *
+     * @access public
+     * @var string $topicClass
+     */
+    public function __construct($topicClass)
+    {
+        $this->topicClass = $topicClass;
+    }
+
     /**
      *
      * @access public
@@ -48,20 +54,20 @@ class TopicUpdateFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add('title', null,
-				array(
-			    	'label'              => 'ccdn_forum_forum.form.label.topic.title',
-					'translation_domain' => 'CCDNForumForumBundle'
-			    )
-			)
-		;
+            ->add('title', null,
+                array(
+                    'label'              => 'ccdn_forum_forum.form.label.topic.title',
+                    'translation_domain' => 'CCDNForumForumBundle'
+                )
+            )
+        ;
     }
 
     /**
      *
      * @access public
-     * @param array $options
-	 * @return array
+     * @param  array $options
+     * @return array
      */
     public function getDefaultOptions(array $options)
     {

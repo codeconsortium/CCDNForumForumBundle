@@ -10,14 +10,14 @@
 		        {{- editor.getProfilePath|raw -}}
 
 				&nbsp;&#183;
-				
+
 				<abbr class="timestamper" title="{{- post.getEditedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 		            {{- post.getEditedDate |date(ccdn_forum_forum.item_post.post_edited_datetime_format) -}}
 		        </abbr>
 		    </div>
 		{%- endif -%}
 	{%- endif -%}
-	
+
 	{%- if post.getIsDeleted == true -%}
 		<div class="label label-important forum-post-notice">
 			<div class="span8">
@@ -29,12 +29,12 @@
 		        {{ deleter.getProfilePath|raw }}
 
 				&nbsp;&#183;
-							
+
 		        <abbr class="timestamper" title="{{- post.getDeletedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 		            {{- post.getDeletedDate |date(ccdn_forum_forum.item_post.post_deleted_datetime_format) -}}
-		        </abbr>								
+		        </abbr>
 			</div>
-			
+
 	        {%- if is_granted('ROLE_MODERATOR') -%}
 				<div class="span4 content-right">
 	                <a class="accordion-toggle" data-toggle="collapse" data-parent="#post_{{- post.getId() -}}" href="#post_{{- post.getId() -}}_body">
@@ -51,9 +51,9 @@
 	{%- else -%}
 		<section id="post_{{- post.getId() -}}_body">
 		    {{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}
-		</section>	
+		</section>
 	{%- endif -%}
-	
+
 	{%- if post.getIsDeleted == false or is_granted('ROLE_MODERATOR') -%}
 		{%- if author.getSignature -%}
 		    <footer>
@@ -61,5 +61,5 @@
 			</footer>
 		{%- endif -%}
 	{%- endif -%}
-	
+
 {%- endspaceless -%}

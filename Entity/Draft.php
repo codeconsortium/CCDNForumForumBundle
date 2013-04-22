@@ -13,34 +13,55 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 use CCDNForum\ForumBundle\Model\Draft as AbstractDraft;
 
+/**
+ *
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
+ */
 class Draft extends AbstractDraft
 {
-    /** @var integer $id */
+    /**
+     *
+     * @var integer $id
+     */
     protected $id;
 
-    /** @var string $title */
+    /**
+     *
+     * @var string $title
+     */
     protected $title;
 
-    /** @var string $body */
+    /**
+     *
+     * @var string $body
+     */
     protected $body;
 
-    /** @var \Datetime $createdDate */
+    /**
+     *
+     * @var \Datetime $createdDate
+     */
     protected $createdDate;
-	
-	/**
-	 *
-	 * @access public
-	 */
+
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         parent::__construct();
         // your own logic
     }
-	
+
     /**
      * Get id
      *
@@ -60,20 +81,20 @@ class Draft extends AbstractDraft
     {
         return $this->body;
     }
-	
+
     /**
      * Set body
      *
-     * @param string $body
-	 * @return Draft
+     * @param  string $body
+     * @return Draft
      */
     public function setBody($body)
     {
         $this->body = $body;
-		
-		return $this;
+
+        return $this;
     }
-	
+
     /**
      * Get createdDate
      *
@@ -87,14 +108,14 @@ class Draft extends AbstractDraft
     /**
      * Set createdDate
      *
-     * @param \datetime $createdDate
-	 * @return Draft
+     * @param  \datetime $createdDate
+     * @return Draft
      */
     public function setCreatedDate($createdDate)
     {
         $this->createdDate = $createdDate;
-		
-		return $this;
+
+        return $this;
     }
 
     /**
@@ -110,13 +131,13 @@ class Draft extends AbstractDraft
     /**
      * Set title
      *
-     * @param string $title
-	 * @return Draft
+     * @param  string $title
+     * @return Draft
      */
     public function setTitle($title)
     {
         $this->title = $title;
-		
-		return $this;
+
+        return $this;
     }
 }

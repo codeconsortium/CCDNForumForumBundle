@@ -28,17 +28,17 @@
 			{%- if topic.getClosedDate -%}
 				<span class="label label-important">{{- 'ccdn_forum_forum.badge.topic.closed' |trans({}, 'CCDNForumForumBundle') -}}</span>&nbsp;
 			{%- endif -%}
-			
+
 			<a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.getId }) -}}" title="{{- topic.getTitle -}}">{{- truncDot(topic.getTitle, ccdn_forum_forum.board.show.topic_title_truncate) |title -}}</a>
-			
+
 			<br>
-			
+
 			{%- if topic.getFirstPost -%}
 
                 {% set topic_author = create_profile(topic.getFirstPost.getCreatedBy) %}
 
 				{{- 'ccdn_forum_forum.post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
-                
+
 				{{ topic_author.getProfilePath|raw }}
 
 				&nbsp;&#183;

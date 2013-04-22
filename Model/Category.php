@@ -22,10 +22,10 @@ abstract class Category
     /** @var ArrayCollection $boards */
     protected $boards;
 
-	/**
-	 *
-	 * @access public
-	 */
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         // your own logic
@@ -45,7 +45,7 @@ abstract class Category
     /**
      * Set boards
      *
-     * @param ArrayCollection $boards
+     * @param  ArrayCollection $boards
      * @return Category
      */
     public function setBoards(ArrayCollection $boards = null)
@@ -73,7 +73,7 @@ abstract class Category
     /**
      * Add board
      *
-     * @param Board $board
+     * @param  Board    $board
      * @return Category
      */
     public function addBoard(ConcreteBoard $board)

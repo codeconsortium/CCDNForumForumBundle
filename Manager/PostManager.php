@@ -25,277 +25,283 @@ use CCDNForum\ForumBundle\Entity\Post;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class PostManager extends BaseManager implements BaseManagerInterface
 {
-	/**
-	 *
-	 * @access public
-	 * @return bool
-	 */	
-	public function allowedToViewDeletedTopics()
-	{
-		return $this->managerBag->getPolicyManager()->allowedToViewDeletedTopics();
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param int $topicId
-	 * @return \CCDNForum\ForumBundle\Entity\Post
-	 */	
-	public function getFirstPostForTopicById($topicId)
-	{
-		if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
-			throw new \Exception('Topic id "' . $topicId . '" is invalid!');
-		}
-		
-		$params = array(':topicId' => $topicId);
-		
-		$qb = $this->createSelectQuery(array('p'));
-		
-		$qb
-			->where('p.topic = :topicId')
-			->orderBy('p.createdDate', 'ASC')
-			->setMaxResults(1);
-		
-		return $this->gateway->findPost($qb, $params);
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param int $topicId
-	 * @return \CCDNForum\ForumBundle\Entity\Post
-	 */	
-	public function getLastPostForTopicById($topicId)
-	{
-		if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
-			throw new \Exception('Topic id "' . $topicId . '" is invalid!');
-		}
-
-		$params = array(':topicId' => $topicId);
-		
-		$qb = $this->createSelectQuery(array('p'));
-
-		$qb
-			->where('p.topic = :topicId')
-			->orderBy('p.createdDate', 'DESC')
-			->setMaxResults(1);
-
-		return $this->gateway->findPost($qb, $params);
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param int $postId
-	 * @return \CCDNForum\ForumBundle\Entity\Post
-	 */	
-	public function findOneByIdWithTopicAndBoard($postId)
-	{
-		if (null == $postId || ! is_numeric($postId) || $postId == 0) {
-			throw new \Exception('Post id "' . $postId . '" is invalid!');
-		}
-		
-		$canViewDeleted = $this->allowedToViewDeletedTopics();
-		
-		$params = array(':postId' => $postId);
-		
-		$qb = $this->createSelectQuery(array('p', 't', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 'p_createdBy', 'p_editedBy', 'p_deletedBy'));
-		
-		$qb
-			->join('p.topic', 't')
-				->leftJoin('t.firstPost', 'fp')
-					->leftJoin('fp.createdBy', 'fp_author')
-				->leftJoin('t.lastPost', 'lp')
-					->leftJoin('lp.createdBy', 'lp_author')
-			->leftJoin('p.createdBy', 'p_createdBy')
-			->leftJoin('p.editedBy', 'p_editedBy')
-			->leftJoin('p.deletedBy', 'p_deletedBy')
-			->leftJoin('t.board', 'b')
-			->leftJoin('b.category', 'c')
-			->where(
-				$this->limitQueryByTopicsDeletedStateAndByPostId($qb, $canViewDeleted)
-			);
-		
-		return $this->gateway->findPost($qb, $params);
-	}
-	
-	/**
-	 *
-	 * @access protected
-	 * @param \Doctrine\ORM\QueryBuilder $qb
-	 * @param bool $canViewDeletedTopics
-	 * @return \Doctrine\ORM\QueryBuilder
-	 */
-	protected function limitQueryByTopicsDeletedStateAndByPostId(QueryBuilder $qb, $canViewDeletedTopics)
-	{
-		if ($canViewDeletedTopics) {
-			$expr = $qb->expr()->eq('p.id', ':postId');
-		} else {
-			$expr = $qb->expr()->andX(
-				$qb->expr()->eq('p.id', ':postId'),
-				$qb->expr()->eq('t.isDeleted', 'FALSE')
-			);
-		}
-		
-		return $expr;
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param int $topicId
-	 * @param int $page
-	 * @return \Pagerfanta\Pagerfanta
-	 */	
-	public function findAllPaginatedByTopicId($topicId, $page)
-	{
-		if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
-			throw new \Exception('Topic id "' . $topicId . '" is invalid!');
-		}
-				
-		$params = array(':topicId' => $topicId);
-		
-		$qb = $this->createSelectQuery(array('p', 't', 'b', 'fp', 'fp_author', 'lp', 'lp_author', 'p_createdBy', 'p_editedBy', 'p_deletedBy'));
-		
-		$qb
-			->join('p.topic', 't')
-				->leftJoin('t.firstPost', 'fp')
-					->leftJoin('fp.createdBy', 'fp_author')
-				->leftJoin('t.lastPost', 'lp')
-					->leftJoin('lp.createdBy', 'lp_author')
-			->leftJoin('p.createdBy', 'p_createdBy')
-			->leftJoin('p.editedBy', 'p_editedBy')
-			->leftJoin('p.deletedBy', 'p_deletedBy')
-			->leftJoin('t.board', 'b')
-			->where('p.topic = :topicId')
-			->setParameters($params)
-			->orderBy('p.createdDate', 'ASC');
-
-		return $this->gateway->paginateQuery($qb, $this->getPostsPerPageOnTopics(), $page);
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param Array $postIds
-	 * @return \Doctrine\Common\Collections\ArrayCollection
-	 */	
-	public function findThesePostsById($postIds = array())
-	{
-		if (! is_array($postIds) || count($postIds) < 1) {
-			throw new \Exception('Parameter 1 must be an array and contain at least 1 post id!');
-		}
-		
-		$qb = $this->createSelectQuery(array('p'));
-		
-		$qb
-			->where($qb->expr()->in('p.id', $postIds))
-			->orderBy('p.createdDate', 'ASC')
-		;
-		
-		return $this->gateway->findPosts($qb);
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param int $page
-	 * @return \Pagerfanta\Pagerfanta
-	 */
-	public function findLockedPostsForModeratorsPaginated($page)
-	{
-		$params = array(':isLocked' => true);
-		
-		$qb = $this->createSelectQuery(array('p', 't', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 'p_createdBy', 'p_editedBy', 'p_deletedBy'));
-		
-		$qb
-			->join('p.topic', 't')
-				->leftJoin('t.firstPost', 'fp')
-					->leftJoin('fp.createdBy', 'fp_author')
-				->leftJoin('t.lastPost', 'lp')
-					->leftJoin('lp.createdBy', 'lp_author')
-			->leftJoin('p.createdBy', 'p_createdBy')
-			->leftJoin('p.editedBy', 'p_editedBy')
-			->leftJoin('p.deletedBy', 'p_deletedBy')
-			->leftJoin('t.board', 'b')
-			->leftJoin('b.category', 'c')
-			->where('p.isLocked = :isLocked')
-			->setParameters($params)
-			->orderBy('p.createdDate', 'ASC');
-
-		return $this->gateway->paginateQuery($qb, $this->getPostsPerPageOnTopics(), $page);
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param int $page
-	 * @return \Pagerfanta\Pagerfanta
-	 */
-	public function findDeletedPostsForAdminsPaginated($page)
-	{
-		$params = array(':isDeleted' => true);
-		
-		$qb = $this->createSelectQuery(array('p', 't', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 'p_createdBy', 'p_editedBy', 'p_deletedBy'));
-		
-		$qb
-			->join('p.topic', 't')
-				->leftJoin('t.firstPost', 'fp')
-					->leftJoin('fp.createdBy', 'fp_author')
-				->leftJoin('t.lastPost', 'lp')
-					->leftJoin('lp.createdBy', 'lp_author')
-			->leftJoin('p.createdBy', 'p_createdBy')
-			->leftJoin('p.editedBy', 'p_editedBy')
-			->leftJoin('p.deletedBy', 'p_deletedBy')
-			->leftJoin('t.board', 'b')
-			->leftJoin('b.category', 'c')
-			->where('p.isDeleted = :isDeleted')
-			->setParameters($params)
-			->orderBy('p.createdDate', 'ASC');
-
-		return $this->gateway->paginateQuery($qb, $this->getPostsPerPageOnTopics(), $page);
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param int $userId
-	 * @return Array
-	 */
-	public function getPostCountForUserById($userId)
-	{
-		if (null == $userId || ! is_numeric($userId) || $userId == 0) {
-			throw new \Exception('User id "' . $userId . '" is invalid!');
-		}
-		
-		$qb = $this->getQueryBuilder();
-
-		$topicEntityClass = $this->gateway->getEntityClass();
-			
-		$qb
-			->select('COUNT(DISTINCT p.id) AS postCount')
-			->from($topicEntityClass, 'p')
-			->where('p.createdBy = :userId')
-			->setParameter(':userId', $userId);
-		
-		try {
-			return $qb->getQuery()->getSingleResult();			
-		} catch (\Doctrine\ORM\NoResultException $e) {
-			return array('postCount' => null);
-		} catch (\Exception $e) {
-			return array('postCount' => null);			
-		}
-	}
-	
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Entity\Post $post
+     * @return bool
+     */
+    public function allowedToViewDeletedTopics()
+    {
+        return $this->managerBag->getPolicyManager()->allowedToViewDeletedTopics();
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int                                $topicId
+     * @return \CCDNForum\ForumBundle\Entity\Post
+     */
+    public function getFirstPostForTopicById($topicId)
+    {
+        if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
+            throw new \Exception('Topic id "' . $topicId . '" is invalid!');
+        }
+
+        $params = array(':topicId' => $topicId);
+
+        $qb = $this->createSelectQuery(array('p'));
+
+        $qb
+            ->where('p.topic = :topicId')
+            ->orderBy('p.createdDate', 'ASC')
+            ->setMaxResults(1);
+
+        return $this->gateway->findPost($qb, $params);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int                                $topicId
+     * @return \CCDNForum\ForumBundle\Entity\Post
+     */
+    public function getLastPostForTopicById($topicId)
+    {
+        if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
+            throw new \Exception('Topic id "' . $topicId . '" is invalid!');
+        }
+
+        $params = array(':topicId' => $topicId);
+
+        $qb = $this->createSelectQuery(array('p'));
+
+        $qb
+            ->where('p.topic = :topicId')
+            ->orderBy('p.createdDate', 'DESC')
+            ->setMaxResults(1);
+
+        return $this->gateway->findPost($qb, $params);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int                                $postId
+     * @return \CCDNForum\ForumBundle\Entity\Post
+     */
+    public function findOneByIdWithTopicAndBoard($postId)
+    {
+        if (null == $postId || ! is_numeric($postId) || $postId == 0) {
+            throw new \Exception('Post id "' . $postId . '" is invalid!');
+        }
+
+        $canViewDeleted = $this->allowedToViewDeletedTopics();
+
+        $params = array(':postId' => $postId);
+
+        $qb = $this->createSelectQuery(array('p', 't', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 'p_createdBy', 'p_editedBy', 'p_deletedBy'));
+
+        $qb
+            ->join('p.topic', 't')
+                ->leftJoin('t.firstPost', 'fp')
+                    ->leftJoin('fp.createdBy', 'fp_author')
+                ->leftJoin('t.lastPost', 'lp')
+                    ->leftJoin('lp.createdBy', 'lp_author')
+            ->leftJoin('p.createdBy', 'p_createdBy')
+            ->leftJoin('p.editedBy', 'p_editedBy')
+            ->leftJoin('p.deletedBy', 'p_deletedBy')
+            ->leftJoin('t.board', 'b')
+            ->leftJoin('b.category', 'c')
+            ->where(
+                $this->limitQueryByTopicsDeletedStateAndByPostId($qb, $canViewDeleted)
+            );
+
+        return $this->gateway->findPost($qb, $params);
+    }
+
+    /**
+     *
+     * @access protected
+     * @param  \Doctrine\ORM\QueryBuilder $qb
+     * @param  bool                       $canViewDeletedTopics
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function limitQueryByTopicsDeletedStateAndByPostId(QueryBuilder $qb, $canViewDeletedTopics)
+    {
+        if ($canViewDeletedTopics) {
+            $expr = $qb->expr()->eq('p.id', ':postId');
+        } else {
+            $expr = $qb->expr()->andX(
+                $qb->expr()->eq('p.id', ':postId'),
+                $qb->expr()->eq('t.isDeleted', 'FALSE')
+            );
+        }
+
+        return $expr;
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int                    $topicId
+     * @param  int                    $page
+     * @return \Pagerfanta\Pagerfanta
+     */
+    public function findAllPaginatedByTopicId($topicId, $page)
+    {
+        if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
+            throw new \Exception('Topic id "' . $topicId . '" is invalid!');
+        }
+
+        $params = array(':topicId' => $topicId);
+
+        $qb = $this->createSelectQuery(array('p', 't', 'b', 'fp', 'fp_author', 'lp', 'lp_author', 'p_createdBy', 'p_editedBy', 'p_deletedBy'));
+
+        $qb
+            ->join('p.topic', 't')
+                ->leftJoin('t.firstPost', 'fp')
+                    ->leftJoin('fp.createdBy', 'fp_author')
+                ->leftJoin('t.lastPost', 'lp')
+                    ->leftJoin('lp.createdBy', 'lp_author')
+            ->leftJoin('p.createdBy', 'p_createdBy')
+            ->leftJoin('p.editedBy', 'p_editedBy')
+            ->leftJoin('p.deletedBy', 'p_deletedBy')
+            ->leftJoin('t.board', 'b')
+            ->where('p.topic = :topicId')
+            ->setParameters($params)
+            ->orderBy('p.createdDate', 'ASC');
+
+        return $this->gateway->paginateQuery($qb, $this->getPostsPerPageOnTopics(), $page);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  Array                                        $postIds
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function findThesePostsById($postIds = array())
+    {
+        if (! is_array($postIds) || count($postIds) < 1) {
+            throw new \Exception('Parameter 1 must be an array and contain at least 1 post id!');
+        }
+
+        $qb = $this->createSelectQuery(array('p'));
+
+        $qb
+            ->where($qb->expr()->in('p.id', $postIds))
+            ->orderBy('p.createdDate', 'ASC')
+        ;
+
+        return $this->gateway->findPosts($qb);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int                    $page
+     * @return \Pagerfanta\Pagerfanta
+     */
+    public function findLockedPostsForModeratorsPaginated($page)
+    {
+        $params = array(':isLocked' => true);
+
+        $qb = $this->createSelectQuery(array('p', 't', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 'p_createdBy', 'p_editedBy', 'p_deletedBy'));
+
+        $qb
+            ->join('p.topic', 't')
+                ->leftJoin('t.firstPost', 'fp')
+                    ->leftJoin('fp.createdBy', 'fp_author')
+                ->leftJoin('t.lastPost', 'lp')
+                    ->leftJoin('lp.createdBy', 'lp_author')
+            ->leftJoin('p.createdBy', 'p_createdBy')
+            ->leftJoin('p.editedBy', 'p_editedBy')
+            ->leftJoin('p.deletedBy', 'p_deletedBy')
+            ->leftJoin('t.board', 'b')
+            ->leftJoin('b.category', 'c')
+            ->where('p.isLocked = :isLocked')
+            ->setParameters($params)
+            ->orderBy('p.createdDate', 'ASC');
+
+        return $this->gateway->paginateQuery($qb, $this->getPostsPerPageOnTopics(), $page);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int                    $page
+     * @return \Pagerfanta\Pagerfanta
+     */
+    public function findDeletedPostsForAdminsPaginated($page)
+    {
+        $params = array(':isDeleted' => true);
+
+        $qb = $this->createSelectQuery(array('p', 't', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 'p_createdBy', 'p_editedBy', 'p_deletedBy'));
+
+        $qb
+            ->join('p.topic', 't')
+                ->leftJoin('t.firstPost', 'fp')
+                    ->leftJoin('fp.createdBy', 'fp_author')
+                ->leftJoin('t.lastPost', 'lp')
+                    ->leftJoin('lp.createdBy', 'lp_author')
+            ->leftJoin('p.createdBy', 'p_createdBy')
+            ->leftJoin('p.editedBy', 'p_editedBy')
+            ->leftJoin('p.deletedBy', 'p_deletedBy')
+            ->leftJoin('t.board', 'b')
+            ->leftJoin('b.category', 'c')
+            ->where('p.isDeleted = :isDeleted')
+            ->setParameters($params)
+            ->orderBy('p.createdDate', 'ASC');
+
+        return $this->gateway->paginateQuery($qb, $this->getPostsPerPageOnTopics(), $page);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int   $userId
+     * @return Array
+     */
+    public function getPostCountForUserById($userId)
+    {
+        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+            throw new \Exception('User id "' . $userId . '" is invalid!');
+        }
+
+        $qb = $this->getQueryBuilder();
+
+        $topicEntityClass = $this->gateway->getEntityClass();
+
+        $qb
+            ->select('COUNT(DISTINCT p.id) AS postCount')
+            ->from($topicEntityClass, 'p')
+            ->where('p.createdBy = :userId')
+            ->setParameter(':userId', $userId);
+
+        try {
+            return $qb->getQuery()->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return array('postCount' => null);
+        } catch (\Exception $e) {
+            return array('postCount' => null);
+        }
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function postTopicReply(Post $post)
@@ -309,18 +315,18 @@ class PostManager extends BaseManager implements BaseManagerInterface
         // Update affected Topic stats.
         $this->managerBag->getTopicManager()->updateStats($post->getTopic());
 
-		// Subscribe the user to the topic.
-		$this->managerBag->getSubscriptionManager()->subscribe($post->getTopic())->flush();
-		
-		$this->managerBag->getRegistryManager()->updateCachedPostCountForUser($post->getCreatedBy())->flush();
-		
+        // Subscribe the user to the topic.
+        $this->managerBag->getSubscriptionManager()->subscribe($post->getTopic())->flush();
+
+        $this->managerBag->getRegistryManager()->updateCachedPostCountForUser($post->getCreatedBy())->flush();
+
         return $this;
     }
 
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Entity\Post $post
+     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function updatePost(Post $post)
@@ -334,8 +340,8 @@ class PostManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Entity\Post $post
-	 * @param \Symfony\Component\Security\Core\User\UserInterface $user
+     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function lock(Post $post, UserInterface $user)
@@ -351,19 +357,19 @@ class PostManager extends BaseManager implements BaseManagerInterface
 
         return $this;
     }
-	
+
     /**
      *
      * @access public
-     * @param Array $posts
-	 * @param \Symfony\Component\Security\Core\User\UserInterface $user
+     * @param  Array                                               $posts
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function bulkLock($posts, UserInterface $user)
     {
         foreach ($posts as $post) {
             // Don't overwite previous users accountability.
-            if ( ! $post->getLockedBy() && ! $post->getLockedDate()) {
+            if (! $post->getLockedBy() && ! $post->getLockedDate()) {
                 $post->setIsLocked(true);
                 $post->setLockedBy($user);
                 $post->setLockedDate(new \DateTime());
@@ -374,11 +380,11 @@ class PostManager extends BaseManager implements BaseManagerInterface
 
         return $this;
     }
-	
+
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Entity\Post $post
+     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function unlock(Post $post)
@@ -395,7 +401,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param Array $posts
+     * @param  Array                                               $posts
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function bulkUnlock($posts)
@@ -410,11 +416,11 @@ class PostManager extends BaseManager implements BaseManagerInterface
 
         return $this;
     }
-	
+
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Entity\Post $post
+     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function restore(Post $post)
@@ -445,18 +451,18 @@ class PostManager extends BaseManager implements BaseManagerInterface
 
         return $this;
     }
-	
+
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Entity\Post $post
-	 * @param \Symfony\Component\Security\Core\User\UserInterface $user
+     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function softDelete(Post $post, UserInterface $user)
     {
         // Don't overwite previous users accountability.
-        if ( ! $post->getDeletedBy() && ! $post->getDeletedDate()) {
+        if (! $post->getDeletedBy() && ! $post->getDeletedDate()) {
             $post->setIsDeleted(true);
             $post->setDeletedBy($user);
             $post->setDeletedDate(new \DateTime());
@@ -475,7 +481,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
                 // if this is the first post and only post, then soft delete the topic aswell.
                 if ($topic->getCachedReplyCount() < 1) {
                     // Don't overwite previous users accountability.
-                    if ( ! $topic->getDeletedBy() && ! $topic->getDeletedDate()) {
+                    if (! $topic->getDeletedBy() && ! $topic->getDeletedDate()) {
                         $topic->setIsDeleted(true);
                         $topic->setDeletedBy($user);
                         $topic->setDeletedDate(new \DateTime());
@@ -500,7 +506,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param Array $posts
+     * @param  Array                                               $posts
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function bulkRestore($posts)
@@ -513,7 +519,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
                 $topic = $post->getTopic();
 
                 if ($topic->getBoard()) {
-                    if ( ! array_key_exists($topic->getBoard()->getId(), $boardsToUpdate)) {
+                    if (! array_key_exists($topic->getBoard()->getId(), $boardsToUpdate)) {
                         $boardsToUpdate[$topic->getBoard()->getId()] = $topic->getBoard();
                     }
                 }
@@ -547,8 +553,8 @@ class PostManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param Array $posts
-	 * @param \Symfony\Component\Security\Core\User\UserInterface $user
+     * @param  Array                                               $posts
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function bulkSoftDelete($posts, UserInterface $user)
@@ -557,7 +563,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
 
         foreach ($posts as $post) {
             // Don't overwite previous users accountability.
-            if ( ! $post->getDeletedBy() && ! $post->getDeletedDate()) {
+            if (! $post->getDeletedBy() && ! $post->getDeletedDate()) {
                 // Add the board of the topic to be updated.
                 if ($post->getTopic()) {
                     $topic = $post->getTopic();
@@ -598,7 +604,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param Array $posts
+     * @param  Array                                               $posts
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function bulkHardDelete($posts)
@@ -613,15 +619,15 @@ class PostManager extends BaseManager implements BaseManagerInterface
             if ($post->getTopic()) {
                 $topic = $post->getTopic();
 
-				//
+                //
                 // If post is the topics last post unlink it.
-				//
+                //
                 if ($topic->getLastPost()) {
                     if ($topic->getLastPost()->getId() == $post->getId()) {
                         $topic->setLastPost(null);
 
                         // Add the topic to the topics to be updated list.
-                        if ( ! array_key_exists($topic->getId(), $topicsToUpdate)) {
+                        if (! array_key_exists($topic->getId(), $topicsToUpdate)) {
                             $topicsToUpdate[$topic->getId()] = $topic;
                         }
 
@@ -644,9 +650,9 @@ class PostManager extends BaseManager implements BaseManagerInterface
                     }
                 }
 
-				//
+                //
                 // If post is the topics first post unlink it.
-				//
+                //
                 if ($topic->getFirstPost()) {
                     if ($topic->getFirstPost()->getId() == $post->getId()) {
                         $topic->setFirstPost(null);
@@ -654,7 +660,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
                         // We will hard delete the topic too
                         // if it is the only post in the topic.
                         if ($topic->getCachedReplyCount() < 1) {
-                            if ( ! array_key_exists($topic->getId(), $topicsToDelete)) {
+                            if (! array_key_exists($topic->getId(), $topicsToDelete)) {
                                 $topicsToDelete[$topic->getId()] = $topic;
 
                                 if (array_key_exists($topic->getId(), $topicsToUpdate)) {
@@ -663,7 +669,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
                             }
                         } else {
                             // Add the topic to the topics to be updated list.
-                            if ( ! array_key_exists($topic->getId(), $topicsToUpdate)) {
+                            if (! array_key_exists($topic->getId(), $topicsToUpdate)) {
                                 $topicsToUpdate[$topic->getId()] = $topic;
                             }
                         }
@@ -678,7 +684,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
             }
 
             // Add post to the delete chain
-            if ( ! array_key_exists($post->getId(), $postsToDelete)) {
+            if (! array_key_exists($post->getId(), $postsToDelete)) {
                 $postsToDelete[$post->getId()] = $post;
             }
 
@@ -686,7 +692,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
             if ($post->getCreatedBy()) {
                 $author = $post->getCreatedBy();
 
-                if ( ! array_key_exists($author->getId(), $usersPostCountToUpdate)) {
+                if (! array_key_exists($author->getId(), $usersPostCountToUpdate)) {
                     $usersPostCountToUpdate[$author->getId()] = $author;
                 }
             }

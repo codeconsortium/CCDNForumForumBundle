@@ -13,9 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Manager;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
-
 use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Manager\BaseManager;
 
@@ -25,8 +22,14 @@ use CCDNForum\ForumBundle\Entity\Draft;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class DraftManager extends BaseManager implements BaseManagerInterface
 {
@@ -36,7 +39,7 @@ class DraftManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param int $draftId
+     * @param  int                                           $draftId
      * @return \CCDNForum\ForumBundle\Entity\Post|null|array
      */
     public function getDraft($draftId)
@@ -93,7 +96,7 @@ class DraftManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Entity\Post $post
+     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function create(Post $post)
@@ -132,7 +135,7 @@ class DraftManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Entity\Draft $draft
+     * @param  \CCDNForum\ForumBundle\Entity\Draft                 $draft
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function update(Draft $draft)

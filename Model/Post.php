@@ -36,11 +36,11 @@ abstract class Post
 
     /** @var Attachment $attachment */
     protected $attachment = null;
-	
-	/**
-	 *
-	 * @access public
-	 */
+
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         // your own logic
@@ -59,7 +59,7 @@ abstract class Post
     /**
      * Set topic
      *
-     * @param Topic $topic
+     * @param  Topic $topic
      * @return Post
      */
     public function setTopic(ConcreteTopic $topic = null)
@@ -82,7 +82,7 @@ abstract class Post
     /**
      * Set created_by
      *
-     * @param UserInterface $createdBy
+     * @param  UserInterface $createdBy
      * @return Post
      */
     public function setCreatedBy(UserInterface $createdBy = null)
@@ -105,7 +105,7 @@ abstract class Post
     /**
      * Set edited_by
      *
-     * @param UserInterface $editedBy
+     * @param  UserInterface $editedBy
      * @return Post
      */
     public function setEditedBy(UserInterface $editedBy = null)
@@ -128,7 +128,7 @@ abstract class Post
     /**
      * Set deleted_by
      *
-     * @param UserInterface $deletedBy
+     * @param  UserInterface $deletedBy
      * @return Post
      */
     public function setDeletedBy(UserInterface $deletedBy = null)
@@ -151,7 +151,7 @@ abstract class Post
     /**
      * Set locked_by
      *
-     * @param UserInterface $lockedBy
+     * @param  UserInterface $lockedBy
      * @return Post
      */
     public function setLockedBy(UserInterface $lockedBy = null)

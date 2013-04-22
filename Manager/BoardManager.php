@@ -14,7 +14,6 @@
 namespace CCDNForum\ForumBundle\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Manager\BaseManager;
@@ -23,132 +22,139 @@ use CCDNForum\ForumBundle\Entity\Board;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class BoardManager extends BaseManager implements BaseManagerInterface
 {
-	/**
-	 *
-	 * @access public
-	 * @param int $boardId
-	 * @return \CCDNForum\ForumBundle\Entity\Board
-	 */	
-	public function findOneById($boardId)
-	{
-		if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
-			throw new \Exception('Board id "' . $boardId . '" is invalid!');
-		}
-		
-		$qb = $this->createSelectQuery(array('b'));
-				
-		$qb->where('b.id = :boardId');
-		
-		$board = $this->gateway->findBoard($qb, array(':boardId' => $boardId));
-		
-		$boards = $this->filterViewableBoards($board);
-		
-		if (count($boards)) {
-			return $boards[0];
-		} else {
-			return null;
-		}
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param int $boardId
-	 * @return \CCDNForum\ForumBundle\Entity\Board
-	 */	
-	public function findOneByIdWithCategory($boardId)
-	{
-		if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
-			throw new \Exception('Board id "' . $boardId . '" is invalid!');
-		}
-		
-		$qb = $this->createSelectQuery(array('b', 'c'));
-		
-		$qb
-			->leftJoin('b.category', 'c')
-			->where('b.id = :boardId');
-		
-		$board = $this->gateway->findBoard($qb, array(':boardId' => $boardId));
-		
-		$boards = $this->filterViewableBoards($board);
-		
-		if (count($boards)) {
-			return $boards[0];
-		} else {
-			return null;
-		}
-	}
-		
-	/**
-	 *
-	 * @access public
-	 * @return \Doctrine\Common\Collections\ArrayCollection
-	 */	
-	public function findAllForFormDropDown()
-	{
-		$qb = $this->createSelectQuery(array('b'));
-				
-		$boards = $this->gateway->findBoards($qb);
-		
-		return $this->filterViewableBoards($boards);
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param int $boardId
-	 * @return Array
-	 */	
-	public function getTopicAndPostCountForBoardById($boardId)
-	{
-		if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
-			throw new \Exception('Board id "' . $boardId . '" is invalid!');
-		}
-		
-		$qb = $this->getQueryBuilder();
+    /**
+     *
+     * @access public
+     * @param  int                                 $boardId
+     * @return \CCDNForum\ForumBundle\Entity\Board
+     */
+    public function findOneById($boardId)
+    {
+        if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
+            throw new \Exception('Board id "' . $boardId . '" is invalid!');
+        }
 
-		$topicEntityClass = $this->managerBag->getTopicManager()->getGateway()->getEntityClass();
-			
-		$qb
-			->select('COUNT(DISTINCT t.id) AS topicCount, COUNT(DISTINCT p.id) AS postCount')
-			->from($topicEntityClass, 't')
-			->leftJoin('t.posts', 'p')
-			->where('t.board = :boardId')
-			->andWhere('t.isDeleted = FALSE')
-			->andWhere('p.isDeleted = FALSE')
-			->setParameter(':boardId', $boardId)
-			->groupBy('t.board');
-		
-		try {
-			return $qb->getQuery()->getSingleResult();			
-		} catch (\Doctrine\ORM\NoResultException $e) {
-			return array('topicCount' => null, 'postCount' => null);
-		} catch (\Exception $e) {
-			return array('topicCount' => null, 'postCount' => null);			
-		}
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @param Array $boards
-	 * @return Array
-	 */
+        $qb = $this->createSelectQuery(array('b'));
+
+        $qb->where('b.id = :boardId');
+
+        $board = $this->gateway->findBoard($qb, array(':boardId' => $boardId));
+
+        $boards = $this->filterViewableBoards($board);
+
+        if (count($boards)) {
+            return $boards[0];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int                                 $boardId
+     * @return \CCDNForum\ForumBundle\Entity\Board
+     */
+    public function findOneByIdWithCategory($boardId)
+    {
+        if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
+            throw new \Exception('Board id "' . $boardId . '" is invalid!');
+        }
+
+        $qb = $this->createSelectQuery(array('b', 'c'));
+
+        $qb
+            ->leftJoin('b.category', 'c')
+            ->where('b.id = :boardId');
+
+        $board = $this->gateway->findBoard($qb, array(':boardId' => $boardId));
+
+        $boards = $this->filterViewableBoards($board);
+
+        if (count($boards)) {
+            return $boards[0];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     *
+     * @access public
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function findAllForFormDropDown()
+    {
+        $qb = $this->createSelectQuery(array('b'));
+
+        $boards = $this->gateway->findBoards($qb);
+
+        return $this->filterViewableBoards($boards);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int   $boardId
+     * @return Array
+     */
+    public function getTopicAndPostCountForBoardById($boardId)
+    {
+        if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
+            throw new \Exception('Board id "' . $boardId . '" is invalid!');
+        }
+
+        $qb = $this->getQueryBuilder();
+
+        $topicEntityClass = $this->managerBag->getTopicManager()->getGateway()->getEntityClass();
+
+        $qb
+            ->select('COUNT(DISTINCT t.id) AS topicCount, COUNT(DISTINCT p.id) AS postCount')
+            ->from($topicEntityClass, 't')
+            ->leftJoin('t.posts', 'p')
+            ->where('t.board = :boardId')
+            ->andWhere('t.isDeleted = FALSE')
+            ->andWhere('p.isDeleted = FALSE')
+            ->setParameter(':boardId', $boardId)
+            ->groupBy('t.board')
+        ;
+
+        try {
+            return $qb->getQuery()->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return array('topicCount' => null, 'postCount' => null);
+        } catch (\Exception $e) {
+            return array('topicCount' => null, 'postCount' => null);
+        }
+    }
+
+    /**
+     *
+     * @access public
+     * @param  Array $boards
+     * @return Array
+     */
     public function filterViewableBoards($boards)
     {
-		if (! is_array($boards)) {
-			if (! is_object($boards) || ! $boards instanceof Board) {
-				throw new \Exception('$boards must be type of Array containing instances of \CCDNForum\ForumBundle\Entity\Board');
-			}
-			
-			$boards = array($boards);
-		}
-		
+        if (! is_array($boards)) {
+            if (! is_object($boards) || ! $boards instanceof Board) {
+                throw new \Exception('$boards must be type of Array containing instances of \CCDNForum\ForumBundle\Entity\Board');
+            }
+
+            $boards = array($boards);
+        }
+
         foreach ($boards as $boardKey => $board) {
             if (! $board->isAuthorisedToRead($this->securityContext)) {
                 unset($boards[$boardKey]);
@@ -157,38 +163,38 @@ class BoardManager extends BaseManager implements BaseManagerInterface
 
         return $boards;
     }
-	
-	/**
-	 *
-	 * @access public
-	 * @return Array
-	 */
-	public function getBoardCount()
-	{	
-		$qb = $this->createCountQuery();
-			
-		$qb
-			->select('COUNT(DISTINCT b.id) AS boardCount')
-		;
-		
-		try {
-			return $qb->getQuery()->getSingleResult();			
-		} catch (\Doctrine\ORM\NoResultException $e) {
-			return array('boardCount' => null);
-		} catch (\Exception $e) {
-			return array('boardCount' => null);			
-		}
-	}
-	
+
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Entity\Board $board
+     * @return Array
+     */
+    public function getBoardCount()
+    {
+        $qb = $this->createCountQuery();
+
+        $qb
+            ->select('COUNT(DISTINCT b.id) AS boardCount')
+        ;
+
+        try {
+            return $qb->getQuery()->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return array('boardCount' => null);
+        } catch (\Exception $e) {
+            return array('boardCount' => null);
+        }
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function saveNewBoard(Board $board)
     {
-		$boardCount = $this->getBoardCount();
+        $boardCount = $this->getBoardCount();
 
         $board->setListOrderPriority(++$boardCount['boardCount']);
 
@@ -201,7 +207,7 @@ class BoardManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Entity\Board $board
+     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function updateBoard(Board $board)
@@ -211,30 +217,30 @@ class BoardManager extends BaseManager implements BaseManagerInterface
 
         return $this;
     }
-	
+
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Entity\Board $board
+     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function updateStats(Board $board)
     {
-		$stats = $this->getTopicAndPostCountForBoardById($board->getId());
-		
+        $stats = $this->getTopicAndPostCountForBoardById($board->getId());
+
         // set the board topic / post count
         $board->setCachedTopicCount($stats['topicCount']);
         $board->setCachedPostCount($stats['postCount']);
-        
+
         $lastTopic = $this->managerBag->getTopicManager()->findLastTopicForBoardByIdWithLastPost($board->getId());
-        
+
         // set last_post for board
         if ($lastTopic) {
             $board->setLastPost($lastTopic->getLastPost() ?: null);
         } else {
             $board->setLastPost(null);
         }
-        
+
         $this->persist($board)->flush();
 
         return $this;
@@ -243,7 +249,7 @@ class BoardManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param Array $boards
+     * @param  Array                                               $boards
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function bulkUpdateStats($boards)
@@ -256,13 +262,13 @@ class BoardManager extends BaseManager implements BaseManagerInterface
 
         return $this;
     }
-	
+
     /**
      *
      * @access public
-     * @param array $boards
-	 * @param int $boardId
-	 * @param string $direction
+     * @param  array                                               $boards
+     * @param  int                                                 $boardId
+     * @param  string                                              $direction
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function reorder($boards, $boardId, $direction)
@@ -305,8 +311,8 @@ class BoardManager extends BaseManager implements BaseManagerInterface
 
         foreach ($boards as $board) { $this->persist($board); }
 
-		$this->flush();
-		
+        $this->flush();
+
         return $this;
     }
 }

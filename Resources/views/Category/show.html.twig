@@ -19,13 +19,13 @@
 	<style type="text/css">
 		header {border:none;}
 	</style>
-	
+
 	{%- for category in categories -%}
 		{%- include "CCDNForumForumBundle:Category:item_category.html.twig" -%}
 	{%- else -%}
 		<div class="well">{{- 'ccdn_forum_forum.categories.empty' | trans({}, 'CCDNForumForumBundle') -}}</div>
 	{%- endfor -%}
-	
+
 	{%- endspaceless -%}
 
 {% endblock body_content %}

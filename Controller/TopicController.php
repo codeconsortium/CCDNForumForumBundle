@@ -13,45 +13,46 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
-use CCDNForum\ForumBundle\Entity\Draft;
 
 /**
  *
- * @author Reece Fowell <reece@codeconsortium.com>
- * @version 1.0
+ * @category CCDNForum
+ * @package  ForumBundle
+ *
+ * @author   Reece Fowell <reece@codeconsortium.com>
+ * @license  http://opensource.org/licenses/MIT MIT
+ * @version  Release: 2.0
+ * @link     https://github.com/codeconsortium/CCDNForumForumBundle
+ *
  */
 class TopicController extends TopicBaseController
 {
     /**
      *
      * @access public
-     * @param int $topicId, int $page
+     * @param  int                             $topicId, int $page
      * @return RedirectResponse|RenderResponse
      */
     public function showAction($topicId, $page)
     {
-		// Get topic.
-		$topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
-		$this->isFound($topic);
-		$this->isAuthorisedToViewTopic($topic);
-		
-		// Get posts for topic paginated.
-		$postsPager = $this->getPostManager()->findAllPaginatedByTopicId($topicId, $page);
-		$this->isFound($postsPager->getCurrentPageResults());
+        // Get topic.
+        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
+        $this->isFound($topic);
+        $this->isAuthorisedToViewTopic($topic);
+
+        // Get posts for topic paginated.
+        $postsPager = $this->getPostManager()->findAllPaginatedByTopicId($topicId, $page);
+        $this->isFound($postsPager->getCurrentPageResults());
 
         // get the topic subscriptions.
-		$subscription = $this->getSubscriptionManager()->findSubscriptionForTopicById($topicId);		
+        $subscription = $this->getSubscriptionManager()->findSubscriptionForTopicById($topicId);
         $subscriberCount = $this->getSubscriptionManager()->countSubscriptionsForTopicById($topicId);
 
-		// Incremenet view counter.
+        // Incremenet view counter.
         $this->getTopicManager()->incrementViewCounter($topic);
 
         // setup crumb trail.
@@ -78,31 +79,31 @@ class TopicController extends TopicBaseController
     /**
      *
      * @access public
-     * @param int $boardId, int $draftId
+     * @param  int                             $boardId, int $draftId
      * @return RedirectResponse|RenderResponse
      */
     public function createAction($boardId, $draftId)
     {
         $this->isAuthorised('ROLE_USER');
 
-		$board = $this->getBoardManager()->findOneByIdWithCategory($boardId);
+        $board = $this->getBoardManager()->findOneByIdWithCategory($boardId);
         $this->isFound($board);
-		$this->isAuthorisedToCreateTopic($board);
+        $this->isAuthorisedToCreateTopic($board);
 
-		$formHandler = $this->getFormHandlerToCreateTopic($board, $draftId);
+        $formHandler = $this->getFormHandlerToCreateTopic($board, $draftId);
 
-		// Flood Control.
-		if (! $this->getFloodControl()->isFlooded()) {
+        // Flood Control.
+        if (! $this->getFloodControl()->isFlooded()) {
             if ($formHandler->process($this->getRequest())) {
                 $this->getFloodControl()->incrementCounter();
 
-				$this->setFlash('success', $this->trans('ccdn_forum_forum.flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle())));
+                $this->setFlash('success', $this->trans('ccdn_forum_forum.flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle())));
 
                 return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $formHandler->getForm()->getData()->getTopic()->getId() )));
             }
-		} else {
-			$this->setFlash('warning', $this->trans('ccdn_forum_forum.flash.topic.flood_control'));
-		}
+        } else {
+            $this->setFlash('warning', $this->trans('ccdn_forum_forum.flash.topic.flood_control'));
+        }
 
         // setup crumb trail.
         $category = $board->getCategory();
@@ -124,36 +125,36 @@ class TopicController extends TopicBaseController
     /**
      *
      * @access public
-     * @param int $topicId, int $quoteId, int $draftId
+     * @param  int                             $topicId, int $quoteId, int $draftId
      * @return RedirectResponse|RenderResponse
      */
     public function replyAction($topicId, $quoteId, $draftId)
     {
         $this->isAuthorised('ROLE_USER');
 
-		$topic = $this->getTopicManager()->findOneByIdWithPostsByTopicId($topicId);
+        $topic = $this->getTopicManager()->findOneByIdWithPostsByTopicId($topicId);
         $this->isFound($topic);
-		$this->isAuthorisedToViewTopic($topic);
-		$this->isAuthorisedToReplyToTopic($topic);
+        $this->isAuthorisedToViewTopic($topic);
+        $this->isAuthorisedToReplyToTopic($topic);
 
-		$formHandler = $this->getFormHandlerToReplyToTopic($topic, $draftId, $quoteId);
+        $formHandler = $this->getFormHandlerToReplyToTopic($topic, $draftId, $quoteId);
 
-		// Flood Control.
-		if ( ! $this->getFloodControl()->isFlooded()) {
+        // Flood Control.
+        if ( ! $this->getFloodControl()->isFlooded()) {
             if ($formHandler->process($this->getRequest())) {
-				$this->getFloodControl()->incrementCounter();
-				
+                $this->getFloodControl()->incrementCounter();
+
                 // Page of the last post.
-				$page = $this->getTopicManager()->getPageForPostOnTopic($topic, $topic->getLastPost());
-				
+                $page = $this->getTopicManager()->getPageForPostOnTopic($topic, $topic->getLastPost());
+
                 $this->setFlash('success', $this->trans('ccdn_forum_forum.flash.topic.reply.success', array('%topic_title%' => $topic->getTitle())));
 
                 return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show_paginated_anchored', array('topicId' => $topicId, 'page' => $page, 'postId' => $topic->getLastPost()->getId()) ));
             }
-		} else {
-			$this->setFlash('warning', $this->trans('ccdn_forum_forum.flash.topic.flood_control'));
-		}
-		
+        } else {
+            $this->setFlash('warning', $this->trans('ccdn_forum_forum.flash.topic.flood_control'));
+        }
+
         // setup crumb trail.
         $board = $topic->getBoard();
         $category = $board->getCategory();

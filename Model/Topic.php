@@ -46,11 +46,11 @@ abstract class Topic
 
     /** @var ArrayCollection $subscriptions */
     protected $subscriptions;
-	
-	/**
-	 *
-	 * @access public
-	 */
+
+    /**
+     *
+     * @access public
+     */
     public function __construct()
     {
         // your own logic
@@ -71,7 +71,7 @@ abstract class Topic
     /**
      * Set board
      *
-     * @param Board $board
+     * @param  Board $board
      * @return Topic
      */
     public function setBoard(ConcreteBoard $board = null)
@@ -94,7 +94,7 @@ abstract class Topic
     /**
      * Set closed_by
      *
-     * @param UserInterface $closedBy
+     * @param  UserInterface $closedBy
      * @return Topic
      */
     public function setClosedBy(UserInterface $closedBy = null)
@@ -117,7 +117,7 @@ abstract class Topic
     /**
      * Set deleted_by
      *
-     * @param UserInterface $deletedBy
+     * @param  UserInterface $deletedBy
      * @return Topic
      */
     public function setDeletedBy(UserInterface $deletedBy = null)
@@ -140,7 +140,7 @@ abstract class Topic
     /**
      * Set stickiedBy
      *
-     * @param UserInterface $stickiedBy
+     * @param  UserInterface $stickiedBy
      * @return Topic
      */
     public function setStickiedBy(UserInterface $stickiedBy = null)
@@ -163,7 +163,7 @@ abstract class Topic
     /**
      * Set first_post
      *
-     * @param Post $firstPost
+     * @param  Post  $firstPost
      * @return Topic
      */
     public function setFirstPost(ConcretePost $firstPost = null)
@@ -186,7 +186,7 @@ abstract class Topic
     /**
      * Set last_post
      *
-     * @param Post $lastPost
+     * @param  Post  $lastPost
      * @return Topic
      */
     public function setLastPost(ConcretePost $lastPost = null)
@@ -209,7 +209,7 @@ abstract class Topic
     /**
      * Set posts
      *
-     * @param ArrayCollection $posts
+     * @param  ArrayCollection $posts
      * @return Topic
      */
     public function setPosts(ArrayCollection $posts = null)
@@ -227,7 +227,7 @@ abstract class Topic
 //     */
 //    public function addPosts(ArrayCollection $posts)
 //    {
-//        foreach($posts as $post) {
+//        foreach ($posts as $post) {
 //            $this->posts->add($post);
 //        }
 //
@@ -237,7 +237,7 @@ abstract class Topic
     /**
      * Add post
      *
-     * @param Post $post
+     * @param  Post  $post
      * @return Topic
      */
     public function addPost(ConcretePost $post)
@@ -258,7 +258,7 @@ abstract class Topic
     }
 
     /**
-     * @param ArrayCollection $subscriptions
+     * @param  ArrayCollection $subscriptions
      * @return Topic
      */
     public function setSubscriptions(ArrayCollection $subscriptions = null)
@@ -271,7 +271,7 @@ abstract class Topic
     /**
      * Add subscription
      *
-     * @param Subscription $subscription
+     * @param  Subscription $subscription
      * @return Topic
      */
     public function addSubscription(ConcreteSubscription $subscription)
