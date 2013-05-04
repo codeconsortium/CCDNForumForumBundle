@@ -196,7 +196,7 @@ class TopicUpdateFormHandler
         // if post is less than 15 minutes old, don't add that it was edited.
         if ($interval->format('%i') > 15) {
             $post->setEditedDate(new \DateTime());
-            $post->setEditedBy($this->manager->getUser());
+            $post->setEditedBy($this->postManager->getUser());
         }
 
         return $this->postManager->updatePost($post)->flush();

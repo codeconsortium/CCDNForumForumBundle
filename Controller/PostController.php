@@ -34,7 +34,7 @@ class PostController extends PostBaseController
      * @param  int            $postId
      * @return RenderResponse
      */
-    public function showAction($postId)
+    public function showAction($postId, $raw)
     {
         // Get post by id.
         $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
@@ -63,6 +63,7 @@ class PostController extends PostBaseController
             'post' => $post,
             'subscription' => $subscription,
             'subscription_count' => $subscriberCount,
+			'raw' => $raw,
         ));
     }
 

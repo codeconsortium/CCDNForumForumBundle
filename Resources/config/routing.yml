@@ -64,7 +64,11 @@ ccdn_forum_forum_topic_reply_with_quote:
 #
 ccdn_forum_forum_post_show:
     pattern: /{_locale}/forum/post/{postId}
-    defaults: { _controller: CCDNForumForumBundle:Post:show, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:Post:show, _locale: en, raw: false }
+
+ccdn_forum_forum_post_show_raw:
+    pattern: /{_locale}/forum/post/{postId}/raw
+    defaults: { _controller: CCDNForumForumBundle:Post:show, _locale: en, raw: true }
 
 ccdn_forum_forum_post_edit:
     pattern: /{_locale}/forum/post/{postId}/edit

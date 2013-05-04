@@ -1,14 +1,15 @@
 {
     "name": "codeconsortium/ccdn-forum-bundle",
-    "type": "symfony-bundle",
     "description": "CCDN Forum Bundle",
     "keywords": ["ccdn", "codeconsortium", "forum", "board"],
     "homepage": "http://github.com/codeconsortium/CCDNForumForumBundle",
+    "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
         {
-            "name": "reecefowell",
-            "email": "reece@codeconsortium.com"
+            "name": "Reece Fowell",
+            "email": "reece@codeconsortium.com",
+			"homepage": "http://www.reecefowell.com"
         }
     ],
     "minimum-stability": "dev",

@@ -45,12 +45,28 @@
 		</div>
 		{%- if is_granted('ROLE_MODERATOR') -%}
 			<section class="accordion-body collapse" id="post_{{- post.getId() -}}_body">
-			    {{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}
+				{%- if raw is defined -%}
+					{%- if raw -%}
+						{{- post.getBody -}}
+					{%- else -%}
+					    {{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}
+					{%- endif -%}
+				{%- else -%}
+					{{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}
+				{%- endif -%}
 			</section>
 		{%- endif -%}
 	{%- else -%}
 		<section id="post_{{- post.getId() -}}_body">
-		    {{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}
+			{%- if raw is defined -%}
+				{%- if raw -%}
+					{{- post.getBody -}}
+				{%- else -%}
+				    {{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}
+				{%- endif -%}
+			{%- else -%}
+				{{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}
+			{%- endif -%}
 		</section>
 	{%- endif -%}
 
