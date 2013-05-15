@@ -51,7 +51,7 @@ class PostController extends PostBaseController
         $category = $board->getCategory();
 
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'))
+            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_forum_category_index'))
             ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())))
             ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())))
             ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())))
@@ -97,7 +97,7 @@ class PostController extends PostBaseController
 
             $page = $this->getTopicManager()->getPageForPostOnTopic($topic, $post);
 
-            $this->setFlash('success', $this->trans('ccdn_forum_forum.flash.post.edit.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle())));
+            $this->setFlash('success', $this->trans('flash.post.edit.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle())));
 
             return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show_paginated_anchored', array('topicId' => $topic->getId(), 'page' => $page, 'postId' => $post->getId() ) ));
         }
@@ -108,11 +108,11 @@ class PostController extends PostBaseController
         $category = $board->getCategory();
 
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'))
+            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_forum_category_index'))
             ->add($category->getName(),	$this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())))
             ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())))
             ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())))
-            ->add($this->trans('ccdn_forum_forum.crumbs.post.edit') . $post->getId(), $this->path('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())));
+            ->add($this->trans('crumbs.post.edit') . $post->getId(), $this->path('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())));
 
         if ($post->getTopic()->getFirstPost()->getId() == $post->getId()) {
             // render edit_topic if first post
@@ -164,7 +164,7 @@ class PostController extends PostBaseController
 
         // setup crumb trail.
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'))
+            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_forum_category_index'))
             ->add($category->getName(),	$this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())))
             ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())))
             ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())))
@@ -197,7 +197,7 @@ class PostController extends PostBaseController
         $this->getPostManager()->softDelete($post, $this->getUser())->flush();
 
         // set flash message
-        $this->setFlash('notice', $this->trans('ccdn_forum_forum.flash.post.delete.success', array('%post_id%' => $postId)));
+        $this->setFlash('notice', $this->trans('flash.post.success.delete', array('%post_id%' => $postId)));
 
         return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
     }

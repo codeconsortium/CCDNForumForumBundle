@@ -2,71 +2,66 @@
 
 	{%- set sidebar_categories = board_list() -%}
 
-	{#{%- if sidebar_categories is not null -%}#}
-		{%- for sidebar_category in sidebar_categories -%}
-			{%- if sidebar_category.boards |length -%}
+	{%- for sidebar_category in sidebar_categories -%}
+		{%- if sidebar_category.boards |length -%}
 
-				{%- if category is defined and route == 'ccdn_forum_forum_category_show' -%}
-					{%- if sidebar_category.id == category.id -%}
-						<li class="active">
-							<a href="{{- path('ccdn_forum_forum_category_show', {'categoryId': sidebar_category.id}) -}}" title="{{- sidebar_category.name -}}">
-								<i class="icon-white icon-folder-open"></i>
-								{{- truncDot(sidebar_category.name, 20) -}}
-							</a>
-						</li>
-					{%- else -%}
-						<li>
-							<a href="{{- path('ccdn_forum_forum_category_show', {'categoryId': sidebar_category.id}) -}}" title="{{- sidebar_category.name -}}">
-								<i class="icon-folder-open"></i>
-								{{- truncDot(sidebar_category.name, 20) -}}
-							</a>
-
-						</li>
-					{%- endif -%}
+			{%- if category is defined and route == 'ccdn_forum_forum_category_show' -%}
+				{%- if sidebar_category.id == category.id -%}
+					<li class="active">
+						<a href="{{- path('ccdn_forum_forum_category_show', {'categoryId': sidebar_category.id}) -}}" title="{{- sidebar_category.name -}}">
+							<i class="icon-white icon-folder-open"></i>
+							{{- sidebar_category.name -}}
+						</a>
+					</li>
 				{%- else -%}
 					<li>
 						<a href="{{- path('ccdn_forum_forum_category_show', {'categoryId': sidebar_category.id}) -}}" title="{{- sidebar_category.name -}}">
 							<i class="icon-folder-open"></i>
-							{{- truncDot(sidebar_category.name, 20) -}}
+							{{- sidebar_category.name -}}
 						</a>
+
 					</li>
 				{%- endif -%}
-
-				{#
-				<li class="nav-header">{{- truncDot(sidebar_category.name, 15) -}}</li>
-				#}
+			{%- else -%}
 				<li>
-					<ul class="nav nav-pills nav-stacked">
-						{%- for sidebar_board in sidebar_category.boards -%}
-							{%- if board is defined -%}
-								{%- if sidebar_board.id == board.id -%}
-									<li class="active">
-										<a href="{{- path('ccdn_forum_forum_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}">
-											<i class="icon-white icon-folder-open"></i>
-											{{- truncDot(sidebar_board.name, 20) -}}
-										</a>
-									</li>
-								{%- else -%}
-									<li>
-										<a href="{{- path('ccdn_forum_forum_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}">
-											<i class="icon-folder-close"></i>
-											{{- truncDot(sidebar_board.name, 20) -}}
-										</a>
-									</li>
-								{%- endif -%}
+					<a href="{{- path('ccdn_forum_forum_category_show', {'categoryId': sidebar_category.id}) -}}" title="{{- sidebar_category.name -}}">
+						<i class="icon-folder-open"></i>
+						{{- sidebar_category.name -}}
+					</a>
+				</li>
+			{%- endif -%}
+
+			<li>
+				<ul class="nav nav-pills nav-stacked">
+					{%- for sidebar_board in sidebar_category.boards -%}
+						{%- if board is defined -%}
+							{%- if sidebar_board.id == board.id -%}
+								<li class="active">
+									<a href="{{- path('ccdn_forum_forum_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}">
+										<i class="icon-white icon-folder-open"></i>
+										{{- sidebar_board.name -}}
+									</a>
+								</li>
 							{%- else -%}
 								<li>
 									<a href="{{- path('ccdn_forum_forum_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}">
 										<i class="icon-folder-close"></i>
-										{{- truncDot(sidebar_board.name, 20) -}}
+										{{- sidebar_board.name -}}
 									</a>
 								</li>
 							{%- endif -%}
-						{%- endfor -%}
-					</ul>
-				<li>
-			{%- endif -%}
-		{%- endfor -%}
-	{#{%- endif -%}#}
+						{%- else -%}
+							<li>
+								<a href="{{- path('ccdn_forum_forum_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}">
+									<i class="icon-folder-close"></i>
+									{{- sidebar_board.name -}}
+								</a>
+							</li>
+						{%- endif -%}
+					{%- endfor -%}
+				</ul>
+			<li>
+		{%- endif -%}
+	{%- endfor -%}
 
 {%- endspaceless -%}

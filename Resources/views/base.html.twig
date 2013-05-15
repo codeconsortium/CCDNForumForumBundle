@@ -19,40 +19,32 @@
 {% endblock javascripts %}
 
 
-{%- block crumb_bar -%}
-	{{- parent() -}}
-	{%- spaceless -%}
-	<nav class="row-fluid site-header-crumbs">
-		<div id="sub-nav" class="row-fluid">
-		    <div class="span2">
-				<h3>{% block sub_title %}<a href="{{ path('ccdn_forum_forum_index') }}">Forum</a>{% endblock sub_title %}</h3>
-			</div>
-
-			<nav class="span10">
-				{%- block crumb_trail -%}
-					{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
-				{%- endblock crumb_trail -%}
-			</nav>
-		</div>
-	</nav>
-	{%- endspaceless -%}
-{%- endblock crumb_bar -%}
 
 {% block tool_bar %}
 	{%- spaceless -%}
-	{#
-	<div id="sub-nav" class="row-fluid">
-	    <div class="span2">
-			<h3>{% block sub_title %}<a href="{{ path('ccdn_forum_forum_index') }}">Forum</a>{% endblock sub_title %}</h3>
-		</div>
+		<header>
+			<div class="container-fluid clear-top crumb-bar-container">
+				<div class="row-fluid">
+				    <div class="span2">
+						<h3>
+							{% block sub_title %}
+								<a href="{{ path('ccdn_forum_forum_index') }}">
+									Forum
+								</a>
+							{% endblock sub_title %}
+						</h3>
+					</div>
 
-		<nav class="span10">
-			{%- block crumb_trail -%}
-				{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
-			{%- endblock crumb_trail -%}
-		</nav>
-	</div>
-	#}
+					{%- if crumbs is defined -%}
+						<nav class="span10">
+							{%- block crumb_trail -%}
+								{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
+							{%- endblock crumb_trail -%}
+						</nav>
+					{%- endif -%}
+				</div>
+			</div>
+		</header>
 	{%- endspaceless -%}
 {% endblock tool_bar %}
 
@@ -64,7 +56,9 @@
     {{ parent() }}
 
 	{%- block sidebar_extra_top -%}{%- endblock sidebar_extra_top -%}
+	
     {%- include 'CCDNForumForumBundle:Sidebar:sidebar.html.twig' -%}
+	
 	{%- block sidebar_extra_bottom -%}{%- endblock sidebar_extra_bottom -%}
 
 	{%- endspaceless -%}

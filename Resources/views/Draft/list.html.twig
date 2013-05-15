@@ -2,7 +2,7 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.draft.list.layout_template %}
 
-{% block title %}{{- truncDot('ccdn_forum_forum.title.drafts.show' | trans({}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
+{% block title %}{{- truncDot('title.drafts.index' | trans({}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
 
 
 {% block body_content %}
@@ -14,7 +14,7 @@
 	</style>
 
 	<header>
-		<h3>{{- 'ccdn_forum_forum.title.drafts.show' | trans({}, 'CCDNForumForumBundle' ) -}}</h3>
+		<h3>{{- 'title.draft.index' | trans({}, 'CCDNForumForumBundle' ) -}}</h3>
 	</header>
 
 	<section>

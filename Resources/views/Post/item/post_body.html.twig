@@ -6,8 +6,7 @@
 				<i class="icon-white icon-pencil"></i>
 		        {% set editor = create_profile(post.getEditedBy) %}
 
-		        {{- 'ccdn_forum_forum.post.edited_by' |trans({}, 'CCDNForumForumBundle') -}}
-		        {{- editor.getProfilePath|raw -}}
+		        {{- 'generic.edited_by' |trans({'%name%': editor.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
 
 				&nbsp;&#183;
 
@@ -24,9 +23,7 @@
 		        <i class="icon-white icon-trash"></i>
 		        {% set deleter = create_profile(post.getDeletedBy) %}
 
-		        {{- 'ccdn_forum_forum.post.is_deleted' | trans({}, 'CCDNForumForumBundle') -}}&nbsp;
-		        {{- 'ccdn_forum_forum.post.deleted_by' |trans({}, 'CCDNForumForumBundle') -}}
-		        {{ deleter.getProfilePath|raw }}
+		        {{- 'generic.deleted_by' |trans({'%name%': deleter.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
 
 				&nbsp;&#183;
 
@@ -38,11 +35,12 @@
 	        {%- if is_granted('ROLE_MODERATOR') -%}
 				<div class="span4 content-right">
 	                <a class="accordion-toggle" data-toggle="collapse" data-parent="#post_{{- post.getId() -}}" href="#post_{{- post.getId() -}}_body">
-	                    {{- 'ccdn_forum_forum.post.show_hide' |trans({}, 'CCDNForumForumBundle') -}}
+	                    {{- 'generic.show_hide' |trans({}, 'CCDNForumForumBundle') -}}
 	                </a>
 				</div>
 			{%- endif -%}
 		</div>
+		
 		{%- if is_granted('ROLE_MODERATOR') -%}
 			<section class="accordion-body collapse" id="post_{{- post.getId() -}}_body">
 				{%- if raw is defined -%}

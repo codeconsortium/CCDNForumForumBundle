@@ -59,7 +59,7 @@ class TopicChangeBoardFormType extends AbstractType
                     'property'           => 'name',
                     'class'              => 'CCDNForumForumBundle:Board',
                     'choices'            => $options['boards'],
-                    'label'              => 'ccdn_forum_forum.form.label.board',
+                    'label'              => 'form.label.board',
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )

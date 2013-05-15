@@ -2,7 +2,7 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.topic.change_board.layout_template %}
 
-{% block title %}{{- truncDot('ccdn_forum_forum.title.topic.change_board' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
+{% block title %}{{- truncDot('title.topic.change_board' | trans({}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
 
 
 {% block body_content %}
@@ -16,18 +16,18 @@
 
 				<div class="control-group form-title">
 					<div class="controls">
-						<h3>{{- 'ccdn_forum_forum.title.topic.change_board' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}</h3>
+						<h3>{{- 'title.topic.change_board' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}</h3>
 					</div>
 				</div>
 
 				<div class="control-group">
 					<label class="control-label">
-						Topic:
+						{{- 'generic.thead.topic' |trans({}, 'CCDNForumForumBundle') -}}
 					</label>
 					<div class="controls">
-						<label class="label">
+						<pre>
 							{{- topic.getTitle -}}
-						</label>
+						</pre>
 					</div>
 				</div>
 
@@ -36,10 +36,10 @@
 				{{- form_widget(form) -}}
 
 				<div class="form-actions">
-					<input type="submit" class="btn btn-danger" value="{{- 'ccdn_forum_forum.form.button.topic.move_to_board' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]">
+					<input type="submit" class="btn btn-danger" value="{{- 'form.button.topic.move' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]">
 
 					<a class="btn" href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.id}) -}}">
-						{{- 'ccdn_forum_forum.form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
+						{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
 					</a>
 				</div>
 

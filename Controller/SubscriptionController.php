@@ -45,8 +45,8 @@ class SubscriptionController extends TopicBaseController
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'))
-            ->add($this->trans('ccdn_forum_forum.crumbs.topic.subscriptions'), $this->path('ccdn_forum_forum_subscription_list'));
+            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_forum_category_index'))
+            ->add($this->trans('crumbs.subscription.index'), $this->path('ccdn_forum_forum_subscription_list'));
 
         return $this->renderResponse('CCDNForumForumBundle:Subscription:list.html.', array(
             'crumbs' => $crumbs,
@@ -71,7 +71,7 @@ class SubscriptionController extends TopicBaseController
 
         $this->getSubscriptionManager()->subscribe($topic)->flush();
 
-        $this->setFlash('notice', $this->trans('ccdn_forum_forum.flash.subscription.topic.subscribed', array('%topic_title%' => $topic->getTitle() )));
+        $this->setFlash('notice', $this->trans('flash.subscription.topic.subscribed', array('%topic_title%' => $topic->getTitle() )));
 
         return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topicId)) );
     }
@@ -92,7 +92,7 @@ class SubscriptionController extends TopicBaseController
 
         $this->getSubscriptionManager()->unsubscribe($topic)->flush();
 
-        $this->setFlash('notice', $this->trans('ccdn_forum_forum.flash.subscription.topic.unsubscribed', array('%topic_title%' => $topic->getTitle() )));
+        $this->setFlash('notice', $this->trans('flash.subscription.topic.unsubscribed', array('%topic_title%' => $topic->getTitle() )));
 
         return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topicId)) );
     }

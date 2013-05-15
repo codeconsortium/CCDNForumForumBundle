@@ -47,7 +47,7 @@ class TopicModeratorController extends TopicBaseController
 
         $this->getTopicManager()->sticky($topic, $this->getUser())->flush();
 
-        $this->setFlash('success', $this->trans('ccdn_forum_admin.flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
+        $this->setFlash('success', $this->trans('flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
 
         return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId()) ));
     }
@@ -69,7 +69,7 @@ class TopicModeratorController extends TopicBaseController
 
         $this->getTopicManager()->unsticky($topic)->flush();
 
-        $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.topic.unsticky.success', array('%topic_title%' => $topic->getTitle())));
+        $this->setFlash('notice', $this->trans('flash.topic.unsticky.success', array('%topic_title%' => $topic->getTitle())));
 
         return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId()) ));
     }
@@ -93,7 +93,7 @@ class TopicModeratorController extends TopicBaseController
 
         $this->getTopicManager()->close($topic, $this->getUser())->flush();
 
-        $this->setFlash('warning', $this->trans('ccdn_forum_admin.flash.topic.close.success', array('%topic_title%' => $topic->getTitle())));
+        $this->setFlash('warning', $this->trans('flash.topic.close.success', array('%topic_title%' => $topic->getTitle())));
 
         return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId()) ));
     }
@@ -115,7 +115,7 @@ class TopicModeratorController extends TopicBaseController
 
         $this->getTopicManager()->reopen($topic)->flush();
 
-        $this->setFlash('warning', $this->trans('ccdn_forum_admin.flash.topic.reopen.success', array('%topic_title%' => $topic->getTitle())));
+        $this->setFlash('warning', $this->trans('flash.topic.reopen.success', array('%topic_title%' => $topic->getTitle())));
 
         return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId()) ));
     }
@@ -142,7 +142,7 @@ class TopicModeratorController extends TopicBaseController
 
         // setup crumb trail.
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'))
+            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_forum_category_index'))
             ->add($category->getName(),	$this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())))
             ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())))
             ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())))
@@ -172,7 +172,7 @@ class TopicModeratorController extends TopicBaseController
         $this->getTopicManager()->softDelete($topic, $this->getUser())->flush();
 
         // set flash message
-        $this->setFlash('warning', $this->trans('ccdn_forum_admin.flash.topic.delete.success', array('%topic_title%' => $topic->getTitle())));
+        $this->setFlash('warning', $this->trans('flash.topic.delete.success', array('%topic_title%' => $topic->getTitle())));
 
         // forward user
         return $this->redirectResponse($this->path('ccdn_forum_forum_board_show', array('boardId' => $topic->getBoard()->getId()) ));
@@ -196,7 +196,7 @@ class TopicModeratorController extends TopicBaseController
         $this->getTopicManager()->restore($topic)->flush();
 
         // set flash message
-        $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.topic.restore.success', array('%topic_title%' => $topic->getTitle())));
+        $this->setFlash('notice', $this->trans('flash.topic.restore.success', array('%topic_title%' => $topic->getTitle())));
 
         // forward user
         return $this->redirectResponse($this->path('ccdn_forum_forum_board_show', array('boardId' => $topic->getBoard()->getId()) ));
@@ -220,7 +220,7 @@ class TopicModeratorController extends TopicBaseController
         $formHandler = $this->getFormHandlerToChangeBoardOnTopic($topic);
 
         if ($formHandler->process($this->getRequest())) {
-            $this->setFlash('warning', $this->trans('ccdn_forum_admin.flash.topic.move.success', array('%topic_title%' => $topic->getTitle())));
+            $this->setFlash('warning', $this->trans('flash.topic.success.move', array('%topic_title%' => $topic->getTitle())));
 
             return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId()) ));
         } else {
@@ -229,11 +229,11 @@ class TopicModeratorController extends TopicBaseController
 
             // setup crumb trail.
             $crumbs = $this->getCrumbs()
-                ->add($this->trans('ccdn_forum_forum.crumbs.forum_index'), $this->path('ccdn_forum_forum_category_index'))
+                ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_forum_category_index'))
                 ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())))
                 ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())))
                 ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())))
-                ->add($this->trans('ccdn_forum_admin.crumbs.topic.change_board'), $this->path('ccdn_forum_forum_topic_change_board', array('topicId' => $topic->getId())));
+                ->add($this->trans('crumbs.topic.move'), $this->path('ccdn_forum_forum_topic_change_board', array('topicId' => $topic->getId())));
 
             return $this->renderResponse('CCDNForumForumBundle:Topic:change_board.html.', array(
                 'crumbs' => $crumbs,

@@ -10,12 +10,11 @@
 	<div class="row-fluid">
 		<div class="row-fluid">
 		    <div class="span7">
-		        {{- 'ccdn_forum_forum.post.posted_by' |trans({}, 'CCDNForumForumBundle') -}}
-		        {{- author.getProfilePath|raw -}}
+		        {{- 'generic.posted_by' |trans({'%name%': author.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
 
 		        &nbsp;&#183;
 
-		        <span class="timestamper"  title="{{- post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+		        <span class="timestamper" title="{{- post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 		            {{- post.getCreatedDate |date(ccdn_forum_forum.item_post.post_created_datetime_format) -}}
 		        </span>
 		    </div>
@@ -26,10 +25,10 @@
 					{%- if post.getIsLocked or post.getIsDeleted-%}
 						<span class="label label-important">
 				            {%- if post.getIsLocked -%}
-								<i class="icon-white icon-lock" data-tip="bottom" title="{{- 'ccdn_forum_forum.post.has_been_locked' |trans({}, 'CCDNForumForumBundle') -}}"></i>
+								<i class="icon-white icon-lock" data-tip="bottom" title="{{- 'post.has_been_locked' |trans({}, 'CCDNForumForumBundle') -}}"></i>
 				            {%- endif -%}
 				            {%- if post.getIsDeleted -%}
-								<i class="icon-white icon-trash" data-tip="bottom" title="{{- 'ccdn_forum_forum.post.has_been_deleted' |trans({}, 'CCDNForumForumBundle') -}}"></i>
+								<i class="icon-white icon-trash" data-tip="bottom" title="{{- 'post.has_been_deleted' |trans({}, 'CCDNForumForumBundle') -}}"></i>
 				            {%- endif -%}
 						</span>
 					{%- endif -%}
@@ -66,13 +65,13 @@
 		                        <li>
 									<a rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply', {'topicId': post.getTopic.getId }) -}}">
 										<i class="icon-pencil"></i>
-										{{- 'ccdn_forum_forum.link.post.reply' | trans({}, 'CCDNForumForumBundle') -}}
+										{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
 									</a>
 								</li>
 		                        <li>
 									<a rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply_with_quote', {'topicId': post.getTopic.getId, 'quoteId': post.getId }) -}}">
 										<i class="icon-pencil"></i>
-										{{- 'ccdn_forum_forum.link.post.quote' | trans({}, 'CCDNForumForumBundle') -}}
+										{{- 'link.post.quote' | trans({}, 'CCDNForumForumBundle') -}}
 									</a>
 								</li>
 
@@ -81,14 +80,14 @@
 		                                <li>
 											<a rel="nofollow" href="{{- path('ccdn_forum_forum_post_edit', {'postId': post.getId }) -}}">
 												<i class="icon-pencil"></i>
-												{{- 'ccdn_forum_forum.link.post.edit' | trans({}, 'CCDNForumForumBundle') -}}
+												{{- 'link.post.edit' | trans({}, 'CCDNForumForumBundle') -}}
 											</a>
 										</li>
 		                                {%- if not post.getDeletedBy -%}
 		                                    <li>
 												<a rel="nofollow" href="{{- path('ccdn_forum_forum_post_delete', {'postId': post.getId }) -}}">
 													<i class="icon-trash"></i>
-													{{- 'ccdn_forum_forum.link.post.delete' | trans({}, 'CCDNForumForumBundle') -}}
+													{{- 'link.post.delete' | trans({}, 'CCDNForumForumBundle') -}}
 												</a>
 											</li>
 		                                {%- endif -%}
@@ -99,7 +98,7 @@
 		                            <li>
 										<a rel="nofollow" href="{{- path('ccdn_forum_forum_post_edit', {'postId': post.getId }) -}}">
 											<i class="icon-pencil"></i>
-											{{- 'ccdn_forum_forum.link.post.edit' | trans({}, 'CCDNForumForumBundle') -}}
+											{{- 'link.post.edit' | trans({}, 'CCDNForumForumBundle') -}}
 										</a>
 									</li>
 
@@ -107,14 +106,14 @@
 		                                <li>
 		                                    <a rel="nofollow" href="{{- path('ccdn_forum_admin_post_restore', {'postId': post.getId }) -}}">
 		                                        <i class="icon-trash"></i>
-												{{- 'ccdn_forum_forum.link.post.restore' | trans({}, 'CCDNForumForumBundle') -}}
+												{{- 'link.post.restore' | trans({}, 'CCDNForumForumBundle') -}}
 		                                    </a>
 		                                </li>
 		                            {%- else -%}
 		                                <li>
 		                                    <a rel="nofollow" href="{{- path('ccdn_forum_forum_post_delete', {'postId': post.getId }) -}}">
 		                                        <i class="icon-trash"></i>
-												{{- 'ccdn_forum_forum.link.post.delete' | trans({}, 'CCDNForumForumBundle') -}}
+												{{- 'link.post.delete' | trans({}, 'CCDNForumForumBundle') -}}
 		                                    </a>
 		                                </li>
 		                            {%- endif -%}
@@ -123,14 +122,14 @@
 		                                <li>
 		                                    <a rel="nofollow" href="{{- path('ccdn_forum_admin_post_unlock', {'postId': post.getId }) -}}">
 		                                        <i class="icon-lock"></i>
-												{{- 'ccdn_forum_forum.link.post.unlock' | trans({}, 'CCDNForumForumBundle') -}}
+												{{- 'link.post.unlock' | trans({}, 'CCDNForumForumBundle') -}}
 		                                    </a>
 		                                </li>
 		                            {%- else -%}
 		                                <li>
 		                                    <a rel="nofollow" href="{{- path('ccdn_forum_admin_post_lock', {'postId': post.getId }) -}}">
 		                                        <i class="icon-lock"></i>
-												{{- 'ccdn_forum_forum.link.post.lock' | trans({}, 'CCDNForumForumBundle') -}}
+												{{- 'link.post.lock' | trans({}, 'CCDNForumForumBundle') -}}
 		                                    </a>
 		                                </li>
 		                            {%- endif -%}

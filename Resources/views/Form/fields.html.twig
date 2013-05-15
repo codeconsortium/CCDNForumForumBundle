@@ -1,7 +1,7 @@
 {% block field_errors %}{# errors for next to each field #}
 	{%- spaceless -%}
 	    {%- if errors|length > 0 -%}
-			<div class="alert alert-error alert-block span10">
+			<div class="alert alert-error alert-block">
 			    <ul>
 			        {%- for error in errors -%}
 			            <li>
@@ -23,7 +23,7 @@
 {% block form_errors %}{# for the overall form #}
 	{%- spaceless -%}
 	    {%- if errors|length > 0 -%}
-			<div class="alert alert-error alert-block span10">
+			<div class="alert alert-error alert-block">
 			    <ul>
 			        {%- for error in errors -%}
 			            <li>
@@ -124,7 +124,7 @@
 		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' control-label' ~ (required ? ' control-label-required':'')}) -%}
 	    <label for="{{- id -}}" {{ block('widget_attributes') -}}>
 			{%- if required -%}
-				<span style="color:#f00;" title="{{- 'ccdn_forum_forum.form.field.required' |trans({}, 'CCDNForumForumBundle') -}}">*</span>
+				<span title="{{- 'form.required' |trans({}, 'CCDNForumForumBundle') -}}">*</span>
 			{%- endif -%}
 			{{- label |trans({}, translation_domain) | raw -}}
 		</label>
@@ -136,7 +136,7 @@
 {% block field_widget %}
 	{%- spaceless -%}
 	    {%- set type = type|default('text') -%}
-		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' input-xxlarge span10'}) -%}
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' input-xxlarge span12'}) -%}
 	    <input type="{{- type -}}" value="{{- value -}}" {{ block('widget_attributes') -}} />
 	{%- endspaceless -%}
 {% endblock field_widget %}
@@ -147,10 +147,7 @@
 	{%- spaceless -%}
 	    {%- set type = type|default('text') -%}
 		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' input-xxlarge span12'}) -%}
-		<div class="input-prepend span10">
-			<span class="add-on"><i class="icon-envelope"></i></span>
-		    <input type="{{- type -}}" value="{{- value -}}" {{ block('widget_attributes') -}} />
-		</div>
+	    <input type="{{- type -}}" value="{{- value -}}" {{ block('widget_attributes') -}} />
 	{%- endspaceless -%}
 {% endblock email_widget %}
 
@@ -159,11 +156,8 @@
 {% block password_widget %}
 	{%- spaceless -%}
 	    {%- set type = type|default('password') -%}
-		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' input-xxlarge span10'}) -%}
-		<div class="input-prepend row-fluid">
-			<span class="add-on"><i class="icon-lock"></i></span>
-		    <input type="{{- type -}}" value="{{- value -}}" {{ block('widget_attributes') -}} />
-		</div>
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' input-xxlarge span12'}) -%}
+	    <input type="{{- type -}}" value="{{- value -}}" {{ block('widget_attributes') -}} />
 	{%- endspaceless -%}
 {% endblock password_widget %}
 
@@ -171,7 +165,7 @@
 
 {% block textarea_widget %}
 	{%- spaceless -%}
-		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' text-xxlarge span10', 'style': attr.style|default('') ~ 'height:250px;'}) -%}
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' text-xxlarge span12', 'style': attr.style|default('') ~ 'height:250px;'}) -%}
 	    <textarea {{ block('widget_attributes') -}}>{{- value -}}</textarea>
 	{%- endspaceless -%}
 {% endblock textarea_widget %}
@@ -187,7 +181,7 @@
 {% block choice_widget %}
     {% spaceless %}
         {% if expanded %}
-            {%- set attr = attr|merge({'class': attr.class|default('') ~ ' span10'}) -%}
+            {%- set attr = attr|merge({'class': attr.class|default('') ~ ' span12'}) -%}
             <div {{ block('widget_container_attributes') }}>
                 <table class="table table-condensed">
                     <tbody>
@@ -225,7 +219,7 @@
 	{% spaceless %}
 	    {% if form.vars.ewz_recaptcha_enabled %}
 			<div class="clearfix" style="display:block;clear:both;">
-		        {% if attr.options is defined %}
+				{% if attr.options is defined %}
 		            <script type="text/javascript">
 		                var RecaptchaOptions = {{ attr.options|json_encode|raw }}
 		            </script>

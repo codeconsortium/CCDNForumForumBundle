@@ -26,7 +26,7 @@
 		</td>
 		<td class="left">
 			{%- if topic.getClosedDate -%}
-				<span class="label label-important">{{- 'ccdn_forum_forum.badge.topic.closed' |trans({}, 'CCDNForumForumBundle') -}}</span>&nbsp;
+				<span class="label label-important">{{- 'topic.badge.closed' |trans({}, 'CCDNForumForumBundle') -}}</span>&nbsp;
 			{%- endif -%}
 
 			<a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.getId }) -}}" title="{{- topic.getTitle -}}">{{- truncDot(topic.getTitle, ccdn_forum_forum.board.show.topic_title_truncate) |title -}}</a>
@@ -37,9 +37,7 @@
 
                 {% set topic_author = create_profile(topic.getFirstPost.getCreatedBy) %}
 
-				{{- 'ccdn_forum_forum.post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
-
-				{{ topic_author.getProfilePath|raw }}
+				{{- 'generic.posted_by' | trans({'%name%': topic_author.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
 
 				&nbsp;&#183;
                 <a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.getId }) -}}">
@@ -63,11 +61,12 @@
 			{%- if topic.getLastPost -%}
                 {% set last_author = create_profile(topic.getLastPost.getCreatedBy) %}
 
-                {{- 'ccdn_forum_forum.post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
-                {{ last_author.getProfilePath|raw }}
+                {{- 'generic.posted_by' | trans({'%name%': last_author.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
 
                 {%- set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) -%}
+				
 				<br>
+				
 				{%- if page < 2 -%}
 					<a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.getId } ) -}}#{{- topic.getLastPost.getId -}}">
 						<i class="icon-arrow-right"></i>

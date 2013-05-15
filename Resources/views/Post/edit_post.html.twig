@@ -2,7 +2,7 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.post.edit_post.layout_template %}
 
-{% block title %}{{- truncDot('ccdn_forum_forum.title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
+{% block title %}{{- truncDot('title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
 
 {% block javascripts_extra %}
 	<script src="{{- asset('bundles/ccdncomponentbbcode/js/jquery.bbeditor.js') -}}" type="text/javascript"></script>
@@ -20,7 +20,7 @@
 
 				<div class="control-group form-title">
 					<div class="controls">
-						<h3>{{- 'ccdn_forum_forum.title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}</h3>
+						<h3>{{- 'title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}</h3>
 					</div>
 				</div>
 
@@ -29,11 +29,12 @@
 				{{- form_widget(form) -}}
 
 	            <div class="form-actions">
-	                <input type="submit" class="btn btn-primary" value="{{- 'ccdn_forum_forum.form.button.post.edit' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]">
+	                <input type="submit" class="btn btn-primary" value="{{- 'form.button.post.edit' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]">
+					
 					{#<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">#}
 
 	                <a class="btn" href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.id}) -}}">
-						{{- 'ccdn_forum_forum.form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
+						{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
 					</a>
 	            </div>
 	        </fieldset>

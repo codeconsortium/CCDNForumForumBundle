@@ -51,7 +51,7 @@ class PostModeratorController extends PostBaseController
 
         $this->getPostManager()->lock($post, $user)->flush();
 
-        $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.lock.success', array('%post_id%' => $postId)));
+        $this->setFlash('notice', $this->trans('flash.post.success.lock', array('%post_id%' => $postId)));
 
         return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
     }
@@ -74,7 +74,7 @@ class PostModeratorController extends PostBaseController
 
         $this->getPostManager()->unlock($post)->flush();
 
-        $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.unlock.success', array('%post_id%' => $postId)));
+        $this->setFlash('notice', $this->trans('flash.post.unlock.success', array('%post_id%' => $postId)));
 
         return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
     }

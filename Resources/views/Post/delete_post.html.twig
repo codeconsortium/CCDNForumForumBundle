@@ -2,7 +2,7 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.post.delete_post.layout_template %}
 
-{% block title %}{{- truncDot(page_title, ccdn_forum_forum.seo.title_length) -}}{% endblock %}
+{% block title %}{{- truncDot('title.post.delete' |trans({'%post_id%': post.id}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
 
 
 {% block body_content %}
@@ -11,16 +11,24 @@
 
 	<section class="form-confirmation">
 
-		<h3>{{- page_title -}}</h3>
+		<h3>
+			{{- 'title.post.delete' |trans({'%post_id%': post.id}, 'CCDNForumForumBundle') -}}
+		</h3>
 
 		<div class="form-question">
-			<span class="lead">{{- confirmation_message | trans({}, 'CCDNForumForumBundle') -}}</span>
+			<span class="lead">
+				{{- 'post.delete_confirm' |trans({}, 'CCDNForumForumBundle') -}}
+			</span>
 		</div>
 
 		<div class="form-answer">
-			<a class="btn btn-danger" href="{{- path('ccdn_forum_forum_post_delete_confirmed', {'postId': post.id }) -}}">{{- 'ccdn_forum_forum.post.delete.confirm_yes' | trans({}, 'CCDNForumForumBundle') -}}</a>
-			&nbsp;&nbsp;&nbsp;
-			<a class="btn" href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.id }) -}}">{{- 'ccdn_forum_forum.post.delete.confirm_no' | trans({}, 'CCDNForumForumBundle') -}}</a>
+			<a class="btn btn-danger" href="{{- path('ccdn_forum_forum_post_delete_confirmed', {'postId': post.id }) -}}">
+				{{- 'form.button.yes' |trans({}, 'CCDNForumForumBundle') -}}
+			</a>
+			
+			<a class="btn" href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.id }) -}}">
+				{{- 'form.button.no' |trans({}, 'CCDNForumForumBundle') -}}
+			</a>
 		</div>
 
 	</section>

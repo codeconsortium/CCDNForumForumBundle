@@ -58,7 +58,7 @@ class PostCreateFormType extends AbstractType
         $builder
             ->add('body', 'bb_editor',
                 array(
-                    'label'              => 'ccdn_forum_forum.form.label.post.body',
+                    'label'              => 'form.label.post.body',
                     'translation_domain' => 'CCDNForumForumBundle'
                 )
             )

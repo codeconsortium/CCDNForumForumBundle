@@ -48,10 +48,10 @@
 
 	                {% set profile = create_profile(board.getLastPost.getCreatedBy) %}
 
-	                {{- 'ccdn_forum_forum.post.posted_by' | trans({}, 'CCDNForumForumBundle') -}}
-	                {{- profile.getProfilePath|raw -}}
+	                {{- 'generic.posted_by' | trans({'%name%': profile.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
 
 	                <br>
+					
 	                {%- if page < 2 -%}
 	                    <a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': board.getLastPost.getTopic.getId } ) -}}#{{- board.getLastPost.getId -}}">
 							<i class="icon-arrow-right"></i>

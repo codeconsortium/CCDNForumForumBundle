@@ -28,21 +28,21 @@
 	{%- endif -%}
 
 	<li class="nav-header">
-		{{- 'ccdn_forum_forum.sidebar.header.navigation' | trans({}, 'CCDNForumForumBundle') -}}
+		{{- 'sidebar.header.navigation' | trans({}, 'CCDNForumForumBundle') -}}
 	</li>
 
 	{%- if route == 'ccdn_homepage' or route == 'ccdn_forum_forum_index' or route == 'ccdn_forum_forum_category_index' -%}
 		<li class="active">
 			<a href="{{- path('ccdn_forum_forum_index') -}}">
 				<i class="icon-white icon-home"></i>
-				{{- 'ccdn_forum_forum.sidebar.link.forum_index' |trans({}, 'CCDNForumForumBundle') -}}
+				{{- 'link.category.index' |trans({}, 'CCDNForumForumBundle') -}}
 			</a>
 		</li>
 	{%- else -%}
 		<li>
 			<a href="{{- path('ccdn_forum_forum_index') -}}">
 				<i class="icon-home"></i>
-				{{- 'ccdn_forum_forum.sidebar.link.forum_index' |trans({}, 'CCDNForumForumBundle') -}}
+				{{- 'link.category.index' |trans({}, 'CCDNForumForumBundle') -}}
 			</a>
 		</li>
 	{%- endif -%}
@@ -52,23 +52,33 @@
 			<li class="active">
 				<a rel="nofollow" href="{{- path('ccdn_forum_forum_subscription_list') -}}">
 					<i class="icon-white icon-heart"></i>
-					{{- 'ccdn_forum_forum.sidebar.link.subscriptions' | trans({}, 'CCDNForumForumBundle') -}}
+					{{- 'link.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}
 				</a>
 			</li>
 		{%- else -%}
 			<li>
 				<a rel="nofollow" href="{{- path('ccdn_forum_forum_subscription_list') -}}">
 					<i class="icon-heart"></i>
-					{{- 'ccdn_forum_forum.sidebar.link.subscriptions' | trans({}, 'CCDNForumForumBundle') -}}
+					{{- 'link.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}
 				</a>
 			</li>
 		{%- endif -%}
 
 		{#
 		{%- if route == 'ccdn_forum_forum_draft_list' -%}
-			<li class="active"><a rel="nofollow" href="{{- path('ccdn_forum_forum_draft_list') -}}"><i class="icon-white icon-pencil"></i>{{- 'ccdn_forum_forum.sidebar.link.drafts' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
+			<li class="active">
+				<a rel="nofollow" href="{{- path('ccdn_forum_forum_draft_list') -}}">
+					<i class="icon-white icon-pencil"></i>
+					{{- 'link.draft.index' | trans({}, 'CCDNForumForumBundle') -}}
+				</a>
+			</li>
 		{%- else -%}
-			<li><a rel="nofollow" href="{{- path('ccdn_forum_forum_draft_list') -}}"><i class="icon-pencil"></i>{{- 'ccdn_forum_forum.sidebar.link.drafts' | trans({}, 'CCDNForumForumBundle') -}}</a></li>
+			<li>
+				<a rel="nofollow" href="{{- path('ccdn_forum_forum_draft_list') -}}">
+					<i class="icon-pencil"></i>
+					{{- 'link.draft.index' | trans({}, 'CCDNForumForumBundle') -}}
+				</a>
+			</li>
 		{%- endif -%}
 		#}
 	{%- endif -%}

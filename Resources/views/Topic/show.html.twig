@@ -2,10 +2,9 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.topic.show.layout_template %}
 
-{% block title %}{{- truncDot('ccdn_forum_forum.title.topic.show' | trans({'%topic_title%': topic.getTitle |capitalize}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
+{% block title %}{{- truncDot('title.topic.show' | trans({'%topic_title%': topic.getTitle |capitalize}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
 
-
-{% block body_content %}
+{%- block body_content -%}
 
     {%- spaceless -%}
 
@@ -15,18 +14,18 @@
 		</div>
 		<div class="span6 content-right">
 		    <span class="label label-inverse prominent-figure" title="{{- topic.cachedReplyCount -}}">
-				{{- 'ccdn_forum_forum.topic.reply_count' |trans({}, 'CCDNForumForumBundle') -}}
+				{{- 'topic.count.replies' |trans({}, 'CCDNForumForumBundle') -}}
 				{{- abbr_number(topic.cachedReplyCount) -}}
 			</span>
 
 		    <span class="label label-inverse prominent-figure" title="{{- topic.cachedViewCount -}}">
-				{{- 'ccdn_forum_forum.topic.view_count' |trans({}, 'CCDNForumForumBundle') -}}
+				{{- 'topic.count.views' |trans({}, 'CCDNForumForumBundle') -}}
 				{{- abbr_number(topic.cachedViewCount) -}}
 			</span>
 
 		    {%- if subscription_count is defined -%}
 		        <span class="label label-inverse prominent-figure" title="{{- subscription_count -}}">
-					{{- 'ccdn_forum_forum.topic.subscription_count' |trans({}, 'CCDNForumForumBundle') -}}
+					{{- 'topic.count.subscriptions' |trans({}, 'CCDNForumForumBundle') -}}
 					{{- abbr_number(subscription_count) -}}
 				</span>
 		    {%- endif -%}
@@ -34,65 +33,54 @@
 	</header>
 
 
-	<section>
-	    {%- if topic.isDeleted -%}
-	        <div class="alert alert-error block-alert">
-	            <i class="icon-trash"></i>
-	            {% set topic_deleter = create_profile(topic.getDeletedBy) %}
+	{%- if topic.isDeleted or topic.isClosed or topic.isSticky -%}
+		<section class="row-fluid">
+			<div class="span12">
+				{%- if topic.isDeleted or topic.isClosed %}
+			        <div class="alert alert-error block-alert">	
+					    {%- if topic.isDeleted -%}
+				            <i class="icon-trash"></i>
+				            {% set topic_deleter = create_profile(topic.getDeletedBy) %}
 
-	            {{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}
-	            {{ topic_deleter.getProfilePath|raw }}
+				            {{- 'generic.deleted_by' | trans({'%name%': topic_deleter.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
 
-				&nbsp;&#183;
+							&nbsp;&#183;
 
-	            {{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
-	        </div>
-	    {%- endif -%}
+				            {{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
+					    {%- endif -%}
 
-	    {%- if topic.isClosed -%}
-	        <div class="alert alert-error block-alert">
-	            <i class="icon-lock"></i>
-	            {% set topic_closer = create_profile(topic.getClosedBy) %}
+					    {%- if topic.isClosed -%}
+							{%- if topic.isDeleted -%}<br>{%- endif -%}
+				            <i class="icon-lock"></i>
+				            {% set topic_closer = create_profile(topic.getClosedBy) %}
 
-	            {{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}
-	            {{ topic_closer.getProfilePath|raw }}
+				            {{- 'topic.closed_by' | trans({'%name%': topic_closer.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
 
-				&nbsp;&#183;
+							&nbsp;&#183;
 
-	            {{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.topic_closed_datetime_format) -}}
-	        </div>
-	    {%- endif -%}
+				            {{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.topic_closed_datetime_format) -}}
+					    {%- endif -%}
+			        </div>
+				{%- endif -%}
+			
+			    {%- if topic.isSticky -%}
+			        <div class="alert alert-inverse block-alert">
+				        <i class="icon-white icon-bullhorn"></i>
+			            {% set topic_stickier = create_profile(topic.stickiedBy) %}
+				
+			            {{- 'topic.stickied_by' | trans({'%name%': topic_stickier.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
 
-	    {%- if topic.isSticky -%}
-	        <div class="alert alert-inverse block-alert">
-		        <i class="icon-bullhorn"></i>
-	            {% set topic_stickier = create_profile(topic.stickiedBy) %}
+						&nbsp;&#183;
 
-	            {{- 'ccdn_forum_forum.topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}
-	            {{ topic_stickier.getProfilePath|raw }}
-
-				&nbsp;&#183;
-
-	            {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
-	        </div>
-	    {%- endif -%}
-
-	    <div class="btn-toolbar">
-	        <div class="span6">
-	            {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
-	        </div>
-	        {%- if pager.haveToPaginate -%}
-	            <nav class="span6 btn-right">
-		            {{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_topic_show_paginated', 'routeParams':{'topicId':topic.getId}} ) -}}
-	            </nav>
-	        {%- endif -%}
-	    </div>
-
-	    {%- for key, post in pager.getCurrentPageResults -%}
-	        {%- include "CCDNForumForumBundle:Post:item_post.html.twig" with {'key': key} -%}
-	    {%- endfor -%}
-
-	    <div class="btn-toolbar">
+			            {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.topic_deleted_datetime_format) -}}
+			        </div>
+			    {%- endif -%}
+			</div>
+		</section>
+	{%- endif -%}
+		
+	<section class="row-fluid">
+	    <div class="span12 btn-toolbar">
 	        <div class="span6">
 	            {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
 	        </div>
@@ -103,7 +91,26 @@
 	        {%- endif -%}
 	    </div>
 	</section>
+	
+	<section>
+	    {%- for key, post in pager.getCurrentPageResults -%}
+	        {%- include "CCDNForumForumBundle:Post:item/post.html.twig" -%}
+	    {%- endfor -%}
+	</section>
 
+	<section class="row-fluid">
+	    <div class="span12 btn-toolbar">
+	        <div class="span6">
+	            {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
+	        </div>
+	        {%- if pager.haveToPaginate -%}
+	            <nav class="span6 btn-right">
+		            {{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_topic_show_paginated', 'routeParams':{'topicId':topic.getId}} ) -}}
+	            </nav>
+	        {%- endif -%}
+	    </div>
+	</section>
+	
     {%- endspaceless -%}
 
 {% endblock body_content %}

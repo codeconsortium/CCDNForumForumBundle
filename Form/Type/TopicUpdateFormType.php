@@ -56,7 +56,7 @@ class TopicUpdateFormType extends AbstractType
         $builder
             ->add('title', null,
                 array(
-                    'label'              => 'ccdn_forum_forum.form.label.topic.title',
+                    'label'              => 'form.label.topic.title',
                     'translation_domain' => 'CCDNForumForumBundle'
                 )
             )
