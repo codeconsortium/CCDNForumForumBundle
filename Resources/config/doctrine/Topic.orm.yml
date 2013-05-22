@@ -57,6 +57,7 @@ CCDNForum\ForumBundle\Entity\Topic:
         board:
             targetEntity: CCDNForum\ForumBundle\Entity\Board
             cascade: ["persist"]
+            inversedBy: topics
             joinColumn:
                 name: fk_board_id
                 referencedColumnName: id
