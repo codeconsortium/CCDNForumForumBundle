@@ -56,10 +56,10 @@ class PostUpdateFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('body', 'bb_editor',
+            ->add('body', 'textarea',
                 array(
                     'label'              => 'form.label.post.body',
-                    'translation_domain' => 'CCDNForumForumBundle'
+                    'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
         ;

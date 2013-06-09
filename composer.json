@@ -17,7 +17,13 @@
         "php": ">=5.3.2",
         "symfony/symfony": "2.1.*",
         "doctrine/doctrine-bundle": "*"
+		"codeconsortium/ccdn-forum-admin-bundle": "2.0.*@dev",
     },
+	"suggest": {
+		"codeconsortium/ccdn-component-bb-code-bundle": "2.0.*@dev",
+		"reecefowell/jquery-timestamper": "dev-master",
+		"reecefowell/jquery-checkboxes": "dev-master"
+	},
     "autoload": {
         "psr-0": { "CCDNForum\\ForumBundle": "" }
     },

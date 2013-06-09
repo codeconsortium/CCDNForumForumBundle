@@ -79,9 +79,7 @@ class CCDNForumForumExtension extends Extension
             ->getBoardSection($config, $container)
             ->getTopicSection($config, $container)
             ->getPostSection($config, $container)
-            ->getItemBoardSection($config, $container)
             ->getItemPostSection($config, $container)
-            ->getItemSignatureSection($config, $container)
             ->getDraftSection($config, $container)
             ->getSubscriptionSection($config, $container)
             ->getTranscriptSection($config, $container)
@@ -257,7 +255,6 @@ class CCDNForumForumExtension extends Extension
     private function getCategorySection(array $config, ContainerBuilder $container)
     {
         $container->setParameter('ccdn_forum_forum.category.last_post_datetime_format', $config['category']['last_post_datetime_format']);
-        $container->setParameter('ccdn_forum_forum.category.enable_bb_parser', $config['category']['enable_bb_parser']);
         $container->setParameter('ccdn_forum_forum.category.index.layout_template', $config['category']['index']['layout_template']);
         $container->setParameter('ccdn_forum_forum.category.show.layout_template', $config['category']['show']['layout_template']);
 
@@ -301,11 +298,9 @@ class CCDNForumForumExtension extends Extension
 
         $container->setParameter('ccdn_forum_forum.topic.create.layout_template', $config['topic']['create']['layout_template']);
         $container->setParameter('ccdn_forum_forum.topic.create.form_theme', $config['topic']['create']['form_theme']);
-        $container->setParameter('ccdn_forum_forum.topic.create.enable_bb_editor', $config['topic']['create']['enable_bb_editor']);
 
         $container->setParameter('ccdn_forum_forum.topic.reply.layout_template', $config['topic']['reply']['layout_template']);
         $container->setParameter('ccdn_forum_forum.topic.reply.form_theme', $config['topic']['reply']['form_theme']);
-        $container->setParameter('ccdn_forum_forum.topic.reply.enable_bb_editor', $config['topic']['reply']['enable_bb_editor']);
 
         $container->setParameter('ccdn_forum_forum.topic.change_board.layout_template', $config['topic']['change_board']['layout_template']);
         $container->setParameter('ccdn_forum_forum.topic.change_board.form_theme', $config['topic']['change_board']['form_theme']);
@@ -328,27 +323,11 @@ class CCDNForumForumExtension extends Extension
 
         $container->setParameter('ccdn_forum_forum.post.edit_topic.layout_template', $config['post']['edit_topic']['layout_template']);
         $container->setParameter('ccdn_forum_forum.post.edit_topic.form_theme', $config['post']['edit_topic']['form_theme']);
-        $container->setParameter('ccdn_forum_forum.post.edit_topic.enable_bb_editor', $config['post']['edit_topic']['enable_bb_editor']);
 
         $container->setParameter('ccdn_forum_forum.post.edit_post.layout_template', $config['post']['edit_post']['layout_template']);
         $container->setParameter('ccdn_forum_forum.post.edit_post.form_theme', $config['post']['edit_post']['form_theme']);
-        $container->setParameter('ccdn_forum_forum.post.edit_post.enable_bb_editor', $config['post']['edit_post']['enable_bb_editor']);
 
         $container->setParameter('ccdn_forum_forum.post.delete_post.layout_template', $config['post']['delete_post']['layout_template']);
-
-        return $this;
-    }
-
-    /**
-     *
-     * @access private
-     * @param  array                                                              $config
-     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
-     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
-     */
-    private function getItemBoardSection(array $config, ContainerBuilder $container)
-    {
-        $container->setParameter('ccdn_forum_forum.item_board.enable_bb_parser', $config['item_board']['enable_bb_parser']);
 
         return $this;
     }
@@ -366,21 +345,6 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.item_post.post_edited_datetime_format', $config['item_post']['post_edited_datetime_format']);
         $container->setParameter('ccdn_forum_forum.item_post.post_locked_datetime_format', $config['item_post']['post_locked_datetime_format']);
         $container->setParameter('ccdn_forum_forum.item_post.post_deleted_datetime_format', $config['item_post']['post_deleted_datetime_format']);
-        $container->setParameter('ccdn_forum_forum.item_post.enable_bb_parser', $config['item_post']['enable_bb_parser']);
-
-        return $this;
-    }
-
-    /**
-     *
-     * @access private
-     * @param  array                                                              $config
-     * @param  \Symfony\Component\DependencyInjection\ContainerBuilder            $container
-     * @return \CCDNForum\ForumBundle\DependencyInjection\CCDNForumForumExtension
-     */
-    private function getItemSignatureSection(array $config, ContainerBuilder $container)
-    {
-        $container->setParameter('ccdn_forum_forum.item_signature.enable_bb_parser', $config['item_signature']['enable_bb_parser']);
 
         return $this;
     }

@@ -43,37 +43,13 @@
 		
 		{%- if is_granted('ROLE_MODERATOR') -%}
 			<section class="accordion-body collapse" id="post_{{- post.getId() -}}_body">
-				{%- if raw is defined -%}
-					{%- if raw -%}
-						{{- post.getBody -}}
-					{%- else -%}
-					    {{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}
-					{%- endif -%}
-				{%- else -%}
-					{{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}
-				{%- endif -%}
+			    {{- post.getBody -}}
 			</section>
 		{%- endif -%}
 	{%- else -%}
 		<section id="post_{{- post.getId() -}}_body">
-			{%- if raw is defined -%}
-				{%- if raw -%}
-					{{- post.getBody -}}
-				{%- else -%}
-				    {{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}
-				{%- endif -%}
-			{%- else -%}
-				{{- BBCode(post.getBody | raw, ccdn_forum_forum.item_post.enable_bb_parser) | raw -}}
-			{%- endif -%}
+			{{- post.getBody -}}
 		</section>
-	{%- endif -%}
-
-	{%- if post.getIsDeleted == false or is_granted('ROLE_MODERATOR') -%}
-		{%- if author.getSignature -%}
-		    <footer>
-		        {{- BBCode(author.getSignature|raw, ccdn_forum_forum.item_signature.enable_bb_parser) | raw -}}
-			</footer>
-		{%- endif -%}
 	{%- endif -%}
 
 {%- endspaceless -%}
