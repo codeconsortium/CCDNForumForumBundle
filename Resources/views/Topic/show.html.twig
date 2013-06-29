@@ -84,16 +84,15 @@
 	        <div class="span6">
 	            {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
 	        </div>
-	        {%- if pager.haveToPaginate -%}
-	            <nav class="span6 btn-right">
-		            {{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_topic_show_paginated', 'routeParams':{'topicId':topic.getId}} ) -}}
-	            </nav>
-	        {%- endif -%}
+
+			<nav class="span6 btn-right paginate">
+				{{- knp_pagination_render(pager) -}}
+			</nav>
 	    </div>
 	</section>
 	
 	<section>
-	    {%- for key, post in pager.getCurrentPageResults -%}
+	    {%- for key, post in pager.getItems() -%}
 	        {%- include "CCDNForumForumBundle:Post:item/post.html.twig" -%}
 	    {%- endfor -%}
 	</section>
@@ -103,11 +102,10 @@
 	        <div class="span6">
 	            {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
 	        </div>
-	        {%- if pager.haveToPaginate -%}
-	            <nav class="span6 btn-right">
-		            {{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_topic_show_paginated', 'routeParams':{'topicId':topic.getId}} ) -}}
-	            </nav>
-	        {%- endif -%}
+
+			<nav class="span6 btn-right paginate">
+				{{- knp_pagination_render(pager) -}}
+			</nav>
 	    </div>
 	</section>
 	

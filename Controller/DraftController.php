@@ -35,11 +35,12 @@ class DraftController extends BaseController
     /**
      *
      * @access public
-     * @param  int            $page
      * @return RenderResponse
      */
-    public function listAction($page)
+    public function listAction()
     {
+		$page = $this->getQuery('page', 1);
+
         $this->isAuthorised('ROLE_USER');
 
         $user = $this->getUser();

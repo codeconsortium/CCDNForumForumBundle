@@ -16,9 +16,6 @@ namespace CCDNForum\ForumBundle\Gateway;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\QueryBuilder;
 
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
-
 use CCDNForum\ForumBundle\Gateway\BaseGatewayInterface;
 use CCDNForum\ForumBundle\Gateway\Bag\GatewayBagInterface;
 
@@ -54,6 +51,13 @@ abstract class BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access protected
+     * @var $paginator
+     */
+    protected $paginator;
+	
+    /**
+     *
+     * @access protected
      * @var \Doctrine\ORM\EntityManager $em
      */
     protected $em;
@@ -80,10 +84,12 @@ abstract class BaseGateway implements BaseGatewayInterface
      * @param \CCDNForum\ForumBundle\Gateway\Bag\GatewayBagInterface $gatewayBag
      * @param string                                                 $entityClass
      */
-    public function __construct(Registry $doctrine, $repository, GatewayBagInterface $gatewayBag, $entityClass)
+    public function __construct(Registry $doctrine, $paginator, $repository, GatewayBagInterface $gatewayBag, $entityClass)
     {
         $this->doctrine = $doctrine;
 
+		$this->paginator = $paginator;
+		
         $this->em = $doctrine->getEntityManager();
 
         $this->repository = $repository;
@@ -169,22 +175,11 @@ abstract class BaseGateway implements BaseGatewayInterface
      * @param  \Doctrine\ORM\QueryBuilder $qb
      * @param  int                        $itemsPerPage
      * @param  int                        $page
-     * @return \Pagerfanta\Pagerfanta
+     * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
     public function paginateQuery(QueryBuilder $qb, $itemsPerPage, $page)
     {
-        try {
-            $pager = new Pagerfanta(new DoctrineORMAdapter($qb));
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        } catch (\Exception $e) {
-            return null;
-        }
-
-        $pager->setMaxPerPage($itemsPerPage);
-        $pager->setCurrentPage($page, false, true);
-
-        return $pager;
+		return $this->paginator->paginate($qb, $page, $itemsPerPage);
     }
 
     /**

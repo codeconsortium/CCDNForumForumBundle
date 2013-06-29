@@ -31,15 +31,15 @@ class SubscriptionController extends TopicBaseController
     /**
      *
      * @access public
-     * @param  int            $page
      * @return RenderResponse
      */
-    public function showAction($page)
+    public function showAction()
     {
         $this->isAuthorised('ROLE_USER');
 
+		$page = $this->getQuery('page', 1);
+
         $subscriptionPager = $this->getSubscriptionManager()->findAllPaginated($page);
-        $this->isFound($subscriptionPager->getCurrentPageResults());
 
         // this is necessary for working out the last page for each topic.
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');

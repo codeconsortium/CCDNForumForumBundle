@@ -34,11 +34,13 @@ class TopicController extends TopicBaseController
     /**
      *
      * @access public
-     * @param  int                             $topicId, int $page
+     * @param  int                             $topicId
      * @return RedirectResponse|RenderResponse
      */
-    public function showAction($topicId, $page)
+    public function showAction($topicId)
     {
+		$page = $this->getQuery('page', 1);
+		
         // Get topic.
         $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
@@ -46,7 +48,6 @@ class TopicController extends TopicBaseController
 
         // Get posts for topic paginated.
         $postsPager = $this->getPostManager()->findAllPaginatedByTopicId($topicId, $page);
-        $this->isFound($postsPager->getCurrentPageResults());
 
         // get the topic subscriptions.
         $subscription = $this->getSubscriptionManager()->findSubscriptionForTopicById($topicId);

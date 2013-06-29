@@ -18,26 +18,14 @@ ccdn_forum_forum_category_show:
 #
 ccdn_forum_forum_board_show:
     pattern: /{_locale}/forum/board/{boardId}
-    defaults: { _controller: CCDNForumForumBundle:Board:show, _locale: en, page: 1 }
-ccdn_forum_forum_board_show_paginated:
-    pattern: /{_locale}/forum/board/{boardId}/page/{page}
-    defaults: { _controller: CCDNForumForumBundle:Board:show, _locale: en, page: 1 }
-
+    defaults: { _controller: CCDNForumForumBundle:Board:show, _locale: en }
 
 #
 # Topics.
 #
 ccdn_forum_forum_topic_show:
     pattern: /{_locale}/forum/topic/{topicId}
-    defaults: { _controller: CCDNForumForumBundle:Topic:show, _locale: en, page: 1 }
-
-ccdn_forum_forum_topic_show_paginated:
-    pattern: /{_locale}/forum/topic/{topicId}/page/{page}
-    defaults: { _controller: CCDNForumForumBundle:Topic:show, _locale: en, page: 1 }
-
-# item anchored below is only for use in creating a path, not for a request!
-ccdn_forum_forum_topic_show_paginated_anchored:
-    pattern: /{_locale}/forum/topic/{topicId}/page/{page}#{postId}
+    defaults: { _controller: CCDNForumForumBundle:Topic:show, _locale: en }
 
 ccdn_forum_forum_topic_create:
     pattern: /{_locale}/forum/topic/create/for/board/{boardId}
@@ -64,11 +52,7 @@ ccdn_forum_forum_topic_reply_with_quote:
 #
 ccdn_forum_forum_post_show:
     pattern: /{_locale}/forum/post/{postId}
-    defaults: { _controller: CCDNForumForumBundle:Post:show, _locale: en, raw: false }
-
-ccdn_forum_forum_post_show_raw:
-    pattern: /{_locale}/forum/post/{postId}/raw
-    defaults: { _controller: CCDNForumForumBundle:Post:show, _locale: en, raw: true }
+    defaults: { _controller: CCDNForumForumBundle:Post:show, _locale: en }
 
 ccdn_forum_forum_post_edit:
     pattern: /{_locale}/forum/post/{postId}/edit
@@ -87,11 +71,7 @@ ccdn_forum_forum_post_delete_confirmed:
 #
 ccdn_forum_forum_draft_list:
     pattern: /{_locale}/forum/drafts
-    defaults: { _controller: CCDNForumForumBundle:Draft:list, _locale: en, page: 1 }
-
-ccdn_forum_forum_draft_list_paginated:
-    pattern: /{_locale}/forum/drafts/page/{page}
-    defaults: { _controller: CCDNForumForumBundle:Draft:list, _locale: en, page: 1 }
+    defaults: { _controller: CCDNForumForumBundle:Draft:list, _locale: en }
 
 ccdn_forum_forum_draft_show:
     pattern: /{_locale}/forum/draft/{draftId}/show
@@ -110,11 +90,7 @@ ccdn_forum_forum_draft_publish:
 #
 ccdn_forum_forum_subscription_list:
     pattern: /{_locale}/forum/subscriptions
-    defaults: { _controller: CCDNForumForumBundle:Subscription:show, _locale: en, page: 1 }
-
-ccdn_forum_forum_subscription_list_paginated:
-    pattern: /{_locale}/forum/subscriptions/page/{page}
-    defaults: { _controller: CCDNForumForumBundle:Subscription:show, _locale: en, page: 1 }
+    defaults: { _controller: CCDNForumForumBundle:Subscription:show, _locale: en }
 
 ccdn_forum_forum_subscription_subscribe:
     pattern: /{_locale}/forum/subscriptions/topic/{topicId}/subscribe

@@ -29,11 +29,13 @@ class BoardController extends BoardBaseController
     /**
      *
      * @access public
-     * @param  int                             $boardId, int $page
+     * @param  int                             $boardId
      * @return RedirectResponse|RenderResponse
      */
-    public function showAction($boardId, $page)
+    public function showAction($boardId)
     {
+		$page = $this->getQuery('page', 1);
+		
         $board = $this->getBoardManager()->findOneByIdWithCategory($boardId);
 
         $stickyTopics = $this->getTopicManager()->findAllStickiedByBoardId($boardId);

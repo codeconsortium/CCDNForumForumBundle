@@ -39,7 +39,7 @@ interface BaseGatewayInterface
      * @param \CCDNForum\ForumBundle\Gateway\Bag\GatewayBagInterface $gatewayBag
      * @param string                                                 $entityClass
      */
-    public function __construct(Registry $doctrine, $repository, GatewayBagInterface $gatewayBag, $entityClass);
+    public function __construct(Registry $doctrine, $paginator, $repository, GatewayBagInterface $gatewayBag, $entityClass);
 
     /**
      *
@@ -86,6 +86,7 @@ interface BaseGatewayInterface
      * @param \Doctrine\ORM\QueryBuilder $qb
      * @param int                        $itemsPerPage
      * @param int                        $page
+	 * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
     public function paginateQuery(QueryBuilder $qb, $itemsPerPage, $page);
 

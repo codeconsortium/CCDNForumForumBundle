@@ -75,7 +75,7 @@
 						</abbr>
 					</a>
 				{%- else -%}
-					<a href="{{- path('ccdn_forum_forum_topic_show_paginated', {'topicId': topic.getId, 'page':page }) -}}#{{- topic.getLastPost.getId -}}">
+					<a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.getId, 'page':page }) -}}#{{- topic.getLastPost.getId -}}">
 						<i class="icon-arrow-right"></i>
 						<abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 							{{- topic.getLastPost.getCreatedDate |date(ccdn_forum_forum.board.show.last_post_datetime_format) -}}

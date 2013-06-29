@@ -67,6 +67,7 @@ services:
         class: %ccdn_forum_forum.gateway.category.class%
         arguments:
             - @doctrine
+            - @knp_paginator
             - @ccdn_forum_forum.repository.category
             - @ccdn_forum_forum.gateway_bag
             - %ccdn_forum_forum.entity.category.class%
@@ -75,6 +76,7 @@ services:
         class: %ccdn_forum_forum.gateway.board.class%
         arguments:
             - @doctrine
+            - @knp_paginator
             - @ccdn_forum_forum.repository.board
             - @ccdn_forum_forum.gateway_bag
             - %ccdn_forum_forum.entity.board.class%
@@ -83,6 +85,7 @@ services:
         class: %ccdn_forum_forum.gateway.topic.class%
         arguments:
             - @doctrine
+            - @knp_paginator
             - @ccdn_forum_forum.repository.topic
             - @ccdn_forum_forum.gateway_bag
             - %ccdn_forum_forum.entity.topic.class%
@@ -91,6 +94,7 @@ services:
         class: %ccdn_forum_forum.gateway.post.class%
         arguments:
             - @doctrine
+            - @knp_paginator
             - @ccdn_forum_forum.repository.post
             - @ccdn_forum_forum.gateway_bag
             - %ccdn_forum_forum.entity.post.class%
@@ -99,6 +103,7 @@ services:
         class: %ccdn_forum_forum.gateway.draft.class%
         arguments:
             - @doctrine
+            - @knp_paginator
             - @ccdn_forum_forum.repository.draft
             - @ccdn_forum_forum.gateway_bag
             - %ccdn_forum_forum.entity.draft.class%
@@ -107,6 +112,7 @@ services:
         class: %ccdn_forum_forum.gateway.registry.class%
         arguments:
             - @doctrine
+            - @knp_paginator
             - @ccdn_forum_forum.repository.registry
             - @ccdn_forum_forum.gateway_bag
             - %ccdn_forum_forum.entity.registry.class%
@@ -115,6 +121,7 @@ services:
         class: %ccdn_forum_forum.gateway.subscription.class%
         arguments:
             - @doctrine
+            - @knp_paginator
             - @ccdn_forum_forum.repository.subscription
             - @ccdn_forum_forum.gateway_bag
             - %ccdn_forum_forum.entity.subscription.class%

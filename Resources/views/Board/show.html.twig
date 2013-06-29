@@ -43,11 +43,10 @@
 					{{- 'link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}
 				</a>
 	        </div>
-	        {%- if pager.haveToPaginate -%}
-	            <nav class="span6 btn-right paginate">
-		            {{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_board_show_paginated', 'routeParams':{'boardId':board.getId}} ) -}}
-	            </nav>
-	        {%- endif -%}
+
+			<nav class="span6 btn-right paginate">
+				{{- knp_pagination_render(pager) -}}
+			</nav>
 	    </div>
 	</section>
 	
@@ -84,7 +83,7 @@
 					</tr>
 			    {%- endif -%}
 
-		        {%- for row, topic in pager.getCurrentPageResults -%}
+		        {%- for row, topic in pager.getItems() -%}
 		            {%- if not topic.isDeleted or is_granted('ROLE_MODERATOR') -%}
 		                {%- include 'CCDNForumForumBundle:Board:item_topic_list.html.twig' -%}
 		            {%- endif -%}
@@ -98,13 +97,11 @@
             </tbody>
         </table>
 
-	    {%- if pager.haveToPaginate -%}
-	        <div class="btn-toolbar">
-	            <nav class="span12 btn-right paginate">
-	                {{- pagerfanta(pager, 'twitter_bootstrap_compact', {'routeName':'ccdn_forum_forum_board_show_paginated', 'routeParams':{'boardId':board.getId}} ) -}}
-	            </nav>
-	        </div>
-	    {%- endif -%}
+		<div class="btn-toolbar">
+			<nav class="span12 btn-right paginate">
+				{{- knp_pagination_render(pager) -}}
+			</nav>
+		</div>
 	</section>
 
     {%- endspaceless -%}
