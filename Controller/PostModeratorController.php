@@ -43,13 +43,13 @@ class PostModeratorController extends PostBaseController
 
         $user = $this->getUser();
 
-        $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOneByIdWithTopicAndBoard($postId);
 
         $this->isFound($post);
         $this->isAuthorisedToViewPost($post);
         $this->isAuthorisedToEditPost($post);
 
-        $this->getPostManager()->lock($post, $user)->flush();
+        $this->getPostModel()->lock($post, $user)->flush();
 
         $this->setFlash('notice', $this->trans('flash.post.success.lock', array('%post_id%' => $postId)));
 
@@ -66,13 +66,13 @@ class PostModeratorController extends PostBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOneByIdWithTopicAndBoard($postId);
 
         $this->isFound($post);
         $this->isAuthorisedToViewPost($post);
         $this->isAuthorisedToEditPost($post);
 
-        $this->getPostManager()->unlock($post)->flush();
+        $this->getPostModel()->unlock($post)->flush();
 
         $this->setFlash('notice', $this->trans('flash.post.unlock.success', array('%post_id%' => $postId)));
 
@@ -89,13 +89,13 @@ class PostModeratorController extends PostBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOneByIdWithTopicAndBoard($postId);
 
         $this->isFound($post);
         $this->isAuthorisedToViewPost($post);
         $this->isAuthorisedToRestorePost($post);
 
-        $this->getPostManager()->restore($post)->flush();
+        $this->getPostModel()->restore($post)->flush();
 
         // set flash message
         $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.restore.success', array('%post_id%' => $postId)));

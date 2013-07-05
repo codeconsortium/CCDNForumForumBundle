@@ -13,7 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
-use CCDNForum\ForumBundle\Model\Post as AbstractPost;
+use CCDNForum\ForumBundle\Entity\Model\Post as AbstractPost;
 
 /**
  *

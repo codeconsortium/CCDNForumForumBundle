@@ -13,7 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
-use CCDNForum\ForumBundle\Model\Draft as AbstractDraft;
+use CCDNForum\ForumBundle\Entity\Model\Draft as AbstractDraft;
 
 /**
  *

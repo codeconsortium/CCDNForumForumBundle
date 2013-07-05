@@ -34,16 +34,16 @@ class PostController extends PostBaseController
      * @param  int            $postId
      * @return RenderResponse
      */
-    public function showAction($postId, $raw)
+    public function showAction($postId)
     {
         // Get post by id.
-        $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOneByIdWithTopicAndBoard($postId);
         $this->isFound($post);
         $this->isAuthorisedToViewPost($post);
 
         // Get the topic subscriptions.
-        $subscription = $this->getSubscriptionManager()->findSubscriptionForTopicById($post->getTopic()->getId());
-        $subscriberCount = $this->getSubscriptionManager()->countSubscriptionsForTopicById($post->getTopic()->getId());
+        $subscription = $this->getSubscriptionModel()->findSubscriptionForTopicById($post->getTopic()->getId());
+        $subscriberCount = $this->getSubscriptionModel()->countSubscriptionsForTopicById($post->getTopic()->getId());
 
         // Setup crumb trail.
         $topic = $post->getTopic();
@@ -63,7 +63,6 @@ class PostController extends PostBaseController
             'post' => $post,
             'subscription' => $subscription,
             'subscription_count' => $subscriberCount,
-			'raw' => $raw,
         ));
     }
 
@@ -79,7 +78,7 @@ class PostController extends PostBaseController
 
         $user = $this->getUser();
 
-        $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOneByIdWithTopicAndBoard($postId);
         $this->isFound($post);
         $this->isAuthorisedToViewPost($post);
         $this->isAuthorisedToEditPost($post);
@@ -95,7 +94,7 @@ class PostController extends PostBaseController
             // get posts for determining the page of the edited post
             $topic = $post->getTopic();
 
-            $page = $this->getTopicManager()->getPageForPostOnTopic($topic, $post);
+            $page = $this->getModelManager()->getPageForPostOnTopic($topic, $post);
 
             $this->setFlash('success', $this->trans('flash.post.edit.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle())));
 
@@ -142,7 +141,7 @@ class PostController extends PostBaseController
     {
         $this->isAuthorised('ROLE_USER');
 
-        $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOneByIdWithTopicAndBoard($postId);
         $this->isFound($post);
         $this->isAuthorisedToViewPost($post);
         $this->isAuthorisedToDeletePost($post);
@@ -189,12 +188,12 @@ class PostController extends PostBaseController
     {
         $this->isAuthorised('ROLE_USER');
 
-        $post = $this->getPostManager()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOneByIdWithTopicAndBoard($postId);
         $this->isFound($post);
         $this->isAuthorisedToViewPost($post);
         $this->isAuthorisedToDeletePost($post);
 
-        $this->getPostManager()->softDelete($post, $this->getUser())->flush();
+        $this->getPostModel()->softDelete($post, $this->getUser())->flush();
 
         // set flash message
         $this->setFlash('notice', $this->trans('flash.post.success.delete', array('%post_id%' => $postId)));

@@ -36,10 +36,10 @@ class BoardController extends BoardBaseController
     {
 		$page = $this->getQuery('page', 1);
 		
-        $board = $this->getBoardManager()->findOneByIdWithCategory($boardId);
+        $board = $this->getBoardModel()->findOneByIdWithCategory($boardId);
 
-        $stickyTopics = $this->getTopicManager()->findAllStickiedByBoardId($boardId);
-        $topicsPager = $this->getTopicManager()->findAllPaginatedByBoardId($boardId, $page);
+        $stickyTopics = $this->getTopicModel()->findAllStickiedByBoardId($boardId);
+        $topicsPager = $this->getTopicModel()->findAllPaginatedByBoardId($boardId, $page);
 
         // check board exists.
         $this->isFound($board);

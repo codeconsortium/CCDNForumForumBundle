@@ -40,12 +40,12 @@ class TopicModeratorController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
         $this->isAuthorisedToStickyTopic($topic);
 
-        $this->getTopicManager()->sticky($topic, $this->getUser())->flush();
+        $this->getTopicModel()->sticky($topic, $this->getUser())->flush();
 
         $this->setFlash('success', $this->trans('flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
 
@@ -62,12 +62,12 @@ class TopicModeratorController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
         $this->isAuthorisedToUnStickyTopic($topic);
 
-        $this->getTopicManager()->unsticky($topic)->flush();
+        $this->getTopicModel()->unsticky($topic)->flush();
 
         $this->setFlash('notice', $this->trans('flash.topic.unsticky.success', array('%topic_title%' => $topic->getTitle())));
 
@@ -86,12 +86,12 @@ class TopicModeratorController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
         $this->isAuthorisedToCloseTopic($topic);
 
-        $this->getTopicManager()->close($topic, $this->getUser())->flush();
+        $this->getTopicModel()->close($topic, $this->getUser())->flush();
 
         $this->setFlash('warning', $this->trans('flash.topic.close.success', array('%topic_title%' => $topic->getTitle())));
 
@@ -108,12 +108,12 @@ class TopicModeratorController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
         $this->isAuthorisedToReOpenTopic($topic);
 
-        $this->getTopicManager()->reopen($topic)->flush();
+        $this->getTopicModel()->reopen($topic)->flush();
 
         $this->setFlash('warning', $this->trans('flash.topic.reopen.success', array('%topic_title%' => $topic->getTitle())));
 
@@ -130,7 +130,7 @@ class TopicModeratorController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
         $this->isAuthorisedToDeleteTopic($topic);
@@ -164,12 +164,12 @@ class TopicModeratorController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
         $this->isAuthorisedToDeleteTopic($topic);
 
-        $this->getTopicManager()->softDelete($topic, $this->getUser())->flush();
+        $this->getTopicModel()->softDelete($topic, $this->getUser())->flush();
 
         // set flash message
         $this->setFlash('warning', $this->trans('flash.topic.delete.success', array('%topic_title%' => $topic->getTitle())));
@@ -188,12 +188,12 @@ class TopicModeratorController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
         $this->isAuthorisedToRestoreTopic($topic);
 
-        $this->getTopicManager()->restore($topic)->flush();
+        $this->getTopicModel()->restore($topic)->flush();
 
         // set flash message
         $this->setFlash('notice', $this->trans('flash.topic.restore.success', array('%topic_title%' => $topic->getTitle())));
@@ -212,7 +212,7 @@ class TopicModeratorController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
         $this->isAuthorisedToMoveTopic($topic);

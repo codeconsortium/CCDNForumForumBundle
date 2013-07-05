@@ -64,45 +64,45 @@ class BaseController extends ContainerAware
 
     /**
      *
-     * @var \CCDNForum\ForumBundle\Manager\CategoryManager $categoryManager
+     * @var \CCDNForum\ForumBundle\Model\Model\CategoryModel $categoryModel
      */
-    private $categoryManager;
+    private $categoryModel;
 
     /**
      *
-     * @var \CCDNForum\ForumBundle\Manager\BoardManager $boardManager
+     * @var \CCDNForum\ForumBundle\Model\Model\BoardModel $boardModel
      */
-    private $boardManager;
+    private $boardModel;
 
     /**
      *
-     * @var \CCDNForum\ForumBundle\Manager\TopicManager $topicManager
+     * @var \CCDNForum\ForumBundle\Model\Model\TopicModel $topicModel
      */
-    private $topicManager;
+    private $topicModel;
 
     /**
      *
-     * @var \CCDNForum\ForumBundle\Manager\PostManager $postManager
+     * @var \CCDNForum\ForumBundle\Model\Model\PostModel $postModel
      */
-    private $postManager;
+    private $postModel;
 
     /**
      *
-     * @var \CCDNForum\ForumBundle\Manager\DraftManager $draftManager
+     * @var \CCDNForum\ForumBundle\Model\Model\DraftModel $draftModel
      */
-    private $draftManager;
+    private $draftModel;
 
     /**
      *
-     * @var \CCDNForum\ForumBundle\Manager\RegistryManager $registryManager
+     * @var \CCDNForum\ForumBundle\Model\Model\RegistryModel $registryModel
      */
-    private $registryManager;
+    private $registryModel;
 
     /**
      *
-     * @var \CCDNForum\ForumBundle\Manager\SubscriptionManager $subscriptionManager
+     * @var \CCDNForum\ForumBundle\Model\Model\SubscriptionModel $subscriptionModel
      */
-    private $subscriptionManager;
+    private $subscriptionModel;
 
     /**
      *
@@ -370,99 +370,99 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Manager\CategoryManager
+     * @return \CCDNForum\ForumBundle\Model\Model\CategoryManager
      */
-    protected function getCategoryManager()
+    protected function getCategoryModel()
     {
-        if (null == $this->categoryManager) {
-            $this->categoryManager = $this->container->get('ccdn_forum_forum.manager.category');
+        if (null == $this->categoryModel) {
+            $this->categoryModel = $this->container->get('ccdn_forum_forum.model.category');
         }
 
-        return $this->categoryManager;
+        return $this->categoryModel;
     }
 
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Manager\BoardManager
+     * @return \CCDNForum\ForumBundle\Model\Model\BoardManager
      */
-    protected function getBoardManager()
+    protected function getBoardModel()
     {
-        if (null == $this->boardManager) {
-            $this->boardManager = $this->container->get('ccdn_forum_forum.manager.board');
+        if (null == $this->boardModel) {
+            $this->boardModel = $this->container->get('ccdn_forum_forum.model.board');
         }
 
-        return $this->boardManager;
+        return $this->boardModel;
     }
 
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Manager\TopicManager
+     * @return \CCDNForum\ForumBundle\Model\Model\TopicManager
      */
-    protected function getTopicManager()
+    protected function getTopicModel()
     {
-        if (null == $this->topicManager) {
-            $this->topicManager = $this->container->get('ccdn_forum_forum.manager.topic');
+        if (null == $this->topicModel) {
+            $this->topicModel = $this->container->get('ccdn_forum_forum.model.topic');
         }
 
-        return $this->topicManager;
+        return $this->topicModel;
     }
 
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Manager\PostManager
+     * @return \CCDNForum\ForumBundle\Model\Model\PostManager
      */
-    protected function getPostManager()
+    protected function getPostModel()
     {
-        if (null == $this->postManager) {
-            $this->postManager = $this->container->get('ccdn_forum_forum.manager.post');
+        if (null == $this->postModel) {
+            $this->postModel = $this->container->get('ccdn_forum_forum.model.post');
         }
 
-        return $this->postManager;
+        return $this->postModel;
     }
 
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Manager\DraftManager
+     * @return \CCDNForum\ForumBundle\Model\Model\DraftManager
      */
-    protected function getDraftManager()
+    protected function getDraftModel()
     {
-        if (null == $this->draftManager) {
-            $this->draftManager = $this->container->get('ccdn_forum_forum.manager.draft');
+        if (null == $this->draftModel) {
+            $this->draftModel = $this->container->get('ccdn_forum_forum.model.draft');
         }
 
-        return $this->draftManager;
+        return $this->draftModel;
     }
 
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Manager\RegistryManager
+     * @return \CCDNForum\ForumBundle\Model\Model\RegistryManager
      */
-    protected function getRegistryManager()
+    protected function getRegistryModel()
     {
-        if (null == $this->registryManager) {
-            $this->registryManager = $this->container->get('ccdn_forum_forum.manager.registry');
+        if (null == $this->registryModel) {
+            $this->registryModel = $this->container->get('ccdn_forum_forum.model.registry');
         }
 
-        return $this->registryManager;
+        return $this->registryModel;
     }
 
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Manager\SubscriptionManager
+     * @return \CCDNForum\ForumBundle\Model\Model\SubscriptionManager
      */
-    protected function getSubscriptionManager()
+    protected function getSubscriptionModel()
     {
-        if (null == $this->subscriptionManager) {
-            $this->subscriptionManager = $this->container->get('ccdn_forum_forum.manager.subscription');
+        if (null == $this->subscriptionModel) {
+            $this->subscriptionModel = $this->container->get('ccdn_forum_forum.model.subscription');
         }
 
-        return $this->subscriptionManager;
+        return $this->subscriptionModel;
     }
 
     /**

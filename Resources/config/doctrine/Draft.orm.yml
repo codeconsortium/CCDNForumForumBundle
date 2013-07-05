@@ -1,7 +1,7 @@
 CCDNForum\ForumBundle\Entity\Draft:
     type: entity
     table: cc_forum_draft
-    repositoryClass: CCDNForum\ForumBundle\Repository\DraftRepository
+    #repositoryClass: CCDNForum\ForumBundle\Repository\DraftRepository
     id:
         id:
             type: integer

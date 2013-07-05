@@ -1,0 +1,16 @@
+CCDNForum\ForumBundle\Entity\Forum:
+    type: entity
+    table: cc_forum_forum
+    #repositoryClass: CCDNForum\ForumBundle\Repository\ForumRepository
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+    oneToMany:
+        categories:
+            targetEntity: CCDNForum\ForumBundle\Entity\Category
+            mappedBy: forum
+            cascade: ["persist"]

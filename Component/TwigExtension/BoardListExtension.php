@@ -13,7 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Component\TwigExtension;
 
-use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
+use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
 
 /**
  *
@@ -31,18 +31,18 @@ class BoardListExtension extends \Twig_Extension
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $categoryManager
+     * @var \CCDNForum\ForumBundle\Model\Model\BaseModelInterface $categoryModel
      */
-    protected $categoryManager;
+    protected $categoryModel;
 
     /**
      *
      * @access public
      * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $categoryManager
      */
-    public function __construct(BaseManagerInterface $categoryManager)
+    public function __construct(BaseModelInterface $categoryModel)
     {
-        $this->categoryManager = $categoryManager;
+        $this->categoryModel = $categoryModel;
     }
 
     /**
@@ -65,7 +65,7 @@ class BoardListExtension extends \Twig_Extension
      */
     public function boardList()
     {
-        return $this->categoryManager->findAllBoardsGroupedByCategory();
+        return $this->categoryModel->findAllBoardsGroupedByCategory();
     }
 
     /**

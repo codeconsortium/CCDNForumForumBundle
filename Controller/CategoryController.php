@@ -33,7 +33,7 @@ class CategoryController extends BaseController
      */
     public function indexAction()
     {
-        $categories = $this->getCategoryManager()->findAllWithBoards();
+        $categories = $this->getCategoryModel()->findAllWithBoards();
 
         $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
@@ -55,7 +55,7 @@ class CategoryController extends BaseController
      */
     public function showAction($categoryId)
     {
-        $category = $this->getCategoryManager()->findOneByIdWithBoards($categoryId);
+        $category = $this->getCategoryModel()->findOneByIdWithBoards($categoryId);
 
         $this->isFound($category);
 

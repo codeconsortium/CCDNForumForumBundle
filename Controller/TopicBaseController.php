@@ -222,7 +222,7 @@ class TopicBaseController extends BaseController
         //}
 
         if ( ! empty($quoteId)) {
-            $quote = $this->getPostManager()->findOneByIdWithTopicAndBoard($quoteId);
+            $quote = $this->getPostModel()->findOneByIdWithTopicAndBoard($quoteId);
 
             $formHandler->setPostToQuote($quote);
         }

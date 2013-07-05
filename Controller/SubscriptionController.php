@@ -39,7 +39,7 @@ class SubscriptionController extends TopicBaseController
 
 		$page = $this->getQuery('page', 1);
 
-        $subscriptionPager = $this->getSubscriptionManager()->findAllPaginated($page);
+        $subscriptionPager = $this->getSubscriptionModel()->findAllPaginated($page);
 
         // this is necessary for working out the last page for each topic.
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
@@ -65,11 +65,11 @@ class SubscriptionController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_USER');
 
-        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
 
-        $this->getSubscriptionManager()->subscribe($topic)->flush();
+        $this->getSubscriptionModel()->subscribe($topic)->flush();
 
         $this->setFlash('notice', $this->trans('flash.subscription.topic.subscribed', array('%topic_title%' => $topic->getTitle() )));
 
@@ -86,11 +86,11 @@ class SubscriptionController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_USER');
 
-        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
 
-        $this->getSubscriptionManager()->unsubscribe($topic)->flush();
+        $this->getSubscriptionModel()->unsubscribe($topic)->flush();
 
         $this->setFlash('notice', $this->trans('flash.subscription.topic.unsubscribed', array('%topic_title%' => $topic->getTitle() )));
 

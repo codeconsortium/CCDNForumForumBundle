@@ -42,19 +42,19 @@ class TopicController extends TopicBaseController
 		$page = $this->getQuery('page', 1);
 		
         // Get topic.
-        $topic = $this->getTopicManager()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
 
         // Get posts for topic paginated.
-        $postsPager = $this->getPostManager()->findAllPaginatedByTopicId($topicId, $page);
+        $postsPager = $this->getPostModel()->findAllPaginatedByTopicId($topicId, $page);
 
         // get the topic subscriptions.
-        $subscription = $this->getSubscriptionManager()->findSubscriptionForTopicById($topicId);
-        $subscriberCount = $this->getSubscriptionManager()->countSubscriptionsForTopicById($topicId);
+        $subscription = $this->getSubscriptionModel()->findSubscriptionForTopicById($topicId);
+        $subscriberCount = $this->getSubscriptionModel()->countSubscriptionsForTopicById($topicId);
 
         // Incremenet view counter.
-        $this->getTopicManager()->incrementViewCounter($topic);
+        $this->getTopicModel()->incrementViewCounter($topic);
 
         // setup crumb trail.
         $board = $topic->getBoard();
@@ -87,7 +87,7 @@ class TopicController extends TopicBaseController
     {
         $this->isAuthorised('ROLE_USER');
 
-        $board = $this->getBoardManager()->findOneByIdWithCategory($boardId);
+        $board = $this->getBoardModel()->findOneByIdWithCategory($boardId);
         $this->isFound($board);
         $this->isAuthorisedToCreateTopic($board);
 
@@ -146,7 +146,7 @@ class TopicController extends TopicBaseController
                 $this->getFloodControl()->incrementCounter();
 
                 // Page of the last post.
-                $page = $this->getTopicManager()->getPageForPostOnTopic($topic, $topic->getLastPost());
+                $page = $this->getTopicModel()->getPageForPostOnTopic($topic, $topic->getLastPost());
 
                 $this->setFlash('success', $this->trans('flash.topic.reply.success', array('%topic_title%' => $topic->getTitle())));
 

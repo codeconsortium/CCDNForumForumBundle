@@ -1,7 +1,7 @@
 CCDNForum\ForumBundle\Entity\Post:
     type: entity
     table: cc_forum_post
-    repositoryClass: CCDNForum\ForumBundle\Repository\PostRepository
+    #repositoryClass: CCDNForum\ForumBundle\Repository\PostRepository
     id:
         id:
             type: integer

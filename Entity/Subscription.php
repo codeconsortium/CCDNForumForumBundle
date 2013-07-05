@@ -13,7 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
-use CCDNForum\ForumBundle\Model\Subscription as AbstractSubscription;
+use CCDNForum\ForumBundle\Entity\Model\Subscription as AbstractSubscription;
 
 /**
  *

@@ -1,7 +1,7 @@
 CCDNForum\ForumBundle\Entity\Category:
     type: entity
     table: cc_forum_category
-    repositoryClass: CCDNForum\ForumBundle\Repository\CategoryRepository
+    #repositoryClass: CCDNForum\ForumBundle\Repository\CategoryRepository
     id:
         id:
             type: integer
@@ -17,3 +17,12 @@ CCDNForum\ForumBundle\Entity\Category:
             targetEntity: CCDNForum\ForumBundle\Entity\Board
             mappedBy: category
             cascade: ["persist"]
+    manyToOne:
+        forum:
+            targetEntity: CCDNForum\ForumBundle\Entity\Forum
+            inversedBy: categories
+            nullable: true
+            joinColumn:
+                name: fk_forum_id
+                referencedColumnName: id
+                onDelete: SET NULL

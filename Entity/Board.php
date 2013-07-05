@@ -13,7 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
-use CCDNForum\ForumBundle\Model\Board as AbstractBoard;
+use CCDNForum\ForumBundle\Entity\Model\Board as AbstractBoard;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**

@@ -13,7 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Entity;
 
-use CCDNForum\ForumBundle\Model\Registry as AbstractRegistry;
+use CCDNForum\ForumBundle\Entity\Model\Registry as AbstractRegistry;
 
 /**
  *
