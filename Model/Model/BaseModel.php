@@ -41,10 +41,10 @@ abstract class BaseModel
 	
 	public function __construct($repository, $manager, $modelBag)
 	{
-		//$repository->setModel($this);
+		$repository->setModel($this);
 		$this->repository = $repository;
 		
-		//$manager->setModel($this);
+		$manager->setModel($this);
 		$this->manager = $manager;
 		
 		$this->modelBag = $modelBag;

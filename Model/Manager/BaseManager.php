@@ -72,6 +72,8 @@ abstract class BaseManager implements BaseManagerInterface
      */
     protected $managerBag;
 
+	protected $model;
+	
     /**
      *
      * @access public
@@ -92,6 +94,11 @@ abstract class BaseManager implements BaseManagerInterface
 
         $this->managerBag = $managerBag;
     }
+	
+	public function setModel($model)
+	{
+		$this->model = $model;
+	}
 	
     /**
      *

@@ -34,30 +34,30 @@ use CCDNForum\ForumBundle\Entity\Forum;
  */
 class ForumManager extends BaseManager implements BaseManagerInterface
 {
-    /**
-     *
-     * @access public
-     * @param  int                                    $categoryId
-     * @return \CCDNForum\ForumBundle\Entity\Category
-     */
-    public function findOneById($categoryId)
-    {
-        if (null == $categoryId || ! is_numeric($categoryId) || $categoryId == 0) {
-            throw new \Exception('Category id "' . $categoryId . '" is invalid!');
-        }
-
-        $qb = $this->createSelectQuery(array('c'));
-
-        $qb->where('c.id = :categoryId');
-
-        $category = $this->gateway->findCategory($qb, array(':categoryId' => $categoryId));
-
-        $categories = $this->filterViewableCategoriesAndBoards($category);
-
-        if (count($categories)) {
-            return $categories[0];
-        } else {
-            return null;
-        }
-    }
+//    /**
+//     *
+//     * @access public
+//     * @param  int                                    $categoryId
+//     * @return \CCDNForum\ForumBundle\Entity\Category
+//     */
+//    public function findOneById($categoryId)
+//    {
+//        if (null == $categoryId || ! is_numeric($categoryId) || $categoryId == 0) {
+//            throw new \Exception('Category id "' . $categoryId . '" is invalid!');
+//        }
+//
+//        $qb = $this->createSelectQuery(array('c'));
+//
+//        $qb->where('c.id = :categoryId');
+//
+//        $category = $this->gateway->findCategory($qb, array(':categoryId' => $categoryId));
+//
+//        $categories = $this->filterViewableCategoriesAndBoards($category);
+//
+//        if (count($categories)) {
+//            return $categories[0];
+//        } else {
+//            return null;
+//        }
+//    }
 }
