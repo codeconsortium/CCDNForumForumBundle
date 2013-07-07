@@ -26,5 +26,115 @@ namespace CCDNForum\ForumBundle\Controller;
  */
 class AdminCategoryController extends BaseController
 {
+    /**
+     *
+     * @access public
+     * @return RenderResponse
+     */
+    public function listAction()
+    {
+        $this->isAuthorised('ROLE_ADMIN');
+
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/list.html.', 
+			array(
+
+	        )
+		);
+    }
 	
+    /**
+     *
+     * @access public
+     * @return RenderResponse
+     */
+    public function createAction()
+    {
+        $this->isAuthorised('ROLE_ADMIN');
+
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/create.html.', 
+			array(
+
+	        )
+		);
+    }
+	
+    /**
+     *
+     * @access public
+     * @return RenderResponse
+     */
+    public function createProcessAction()
+    {
+        $this->isAuthorised('ROLE_ADMIN');
+
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/create.html.', 
+			array(
+
+	        )
+		);
+		
+		return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
+    }
+	
+    /**
+     *
+     * @access public
+     * @return RenderResponse
+     */
+    public function editAction()
+    {
+        $this->isAuthorised('ROLE_ADMIN');
+
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/edit.html.', 
+			array(
+
+	        )
+		);
+    }
+	
+    /**
+     *
+     * @access public
+     * @return RenderResponse
+     */
+    public function editProcessAction()
+    {
+        $this->isAuthorised('ROLE_ADMIN');
+
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/edit.html.', 
+			array(
+
+	        )
+		);
+		
+		return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
+    }
+	
+    /**
+     *
+     * @access public
+     * @return RenderResponse
+     */
+    public function deleteAction()
+    {
+        $this->isAuthorised('ROLE_ADMIN');
+
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/delete.html.', 
+			array(
+
+	        )
+		);
+    }
+	
+    /**
+     *
+     * @access public
+     * @return RedirectResponse
+     */
+    public function deleteConfirmedAction()
+    {
+        $this->isAuthorised('ROLE_ADMIN');
+
+		return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
+    }
 }

@@ -1,0 +1,80 @@
+{% extends LayoutTemplate %}
+
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{- asset('bundles/ccdnforumforum/css/theme.css') -}}" rel="stylesheet" type="text/css">
+	{% block stylesheets_extra %}
+	{% endblock stylesheets_extra %}
+{% endblock stylesheets %}
+
+
+
+{% block javascripts %}
+	{{ parent() }}
+	{% block javascripts_extra %}
+	{% endblock javascripts_extra %}
+{% endblock javascripts %}
+
+
+
+{% block tool_bar %}
+	{%- spaceless -%}
+		<header>
+			<div class="container-fluid clear-top crumb-bar-container">
+				<div class="row-fluid">
+				    <div class="span2">
+						<h3>
+							{% block sub_title %}
+								<a href="{{ path('ccdn_forum_user_category_index') }}">
+									Forum
+								</a>
+							{% endblock sub_title %}
+						</h3>
+					</div>
+
+					{%- if crumbs is defined -%}
+						<nav class="span10">
+							{%- block crumb_trail -%}
+								{%- include 'CCDNComponentCrumbTrailBundle:Trail:trail.html.twig' with {'crumbs': crumbs } -%}
+							{%- endblock crumb_trail -%}
+						</nav>
+					{%- endif -%}
+				</div>
+			</div>
+		</header>
+	{%- endspaceless -%}
+{% endblock tool_bar %}
+
+
+
+{% block sidebar %}
+	{%- spaceless -%}
+
+    {{ parent() }}
+
+	{%- block sidebar_extra_top -%}{%- endblock sidebar_extra_top -%}
+	
+    {%- include 'CCDNForumForumBundle:Admin:/Layout/sidebar.html.twig' -%}
+	
+	{%- block sidebar_extra_bottom -%}{%- endblock sidebar_extra_bottom -%}
+
+	{%- endspaceless -%}
+{% endblock %}
+
+
+{% block body %}
+	{%- spaceless -%}
+
+    {%- include 'CCDNComponentCommonBundle:Flashes:flashes.html.twig' -%}
+
+	{%- block body_content -%}
+	{%- endblock body_content -%}
+
+	{%- block body_footer -%}
+		{%- include 'CCDNForumForumBundle:Footer:footer.html.twig' -%}
+	{%- endblock body_footer -%}
+
+	{%- endspaceless -%}
+{% endblock body %}

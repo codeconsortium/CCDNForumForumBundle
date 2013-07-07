@@ -35,15 +35,10 @@ class AdminPanelController extends BaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-        //$crumbs = $this->getCrumbs()
-        //    ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
-        //    ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
-        //    ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
-        //    ->add($topic->getTitle(), $this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId())))
-        //    ->add('#' . $post->getId(), $this->path('ccdn_forum_user_post_show', array('postId' => $post->getId())));
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Panel/index.html.', 
+			array(
 
-        return $this->renderResponse('CCDNForumForumBundle:Admin:/Panel/index.html.', array(
-
-        ));
+	        )
+		);
     }
 }
