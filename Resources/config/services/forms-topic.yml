@@ -1,0 +1,49 @@
+parameters:
+
+    # Service Parameters defined in app/config.
+
+services:
+
+    #
+    # Topic Forms.
+    #
+    ccdn_forum_forum.form.type.topic_create:
+        class: %ccdn_forum_forum.form.type.topic_create.class%
+        arguments:
+            - %ccdn_forum_forum.entity.topic.class%
+
+    ccdn_forum_forum.form.handler.topic_create:
+        class: %ccdn_forum_forum.form.handler.topic_create.class%
+        arguments:
+            - @form.factory
+            - @ccdn_forum_forum.form.type.topic_create
+            - @ccdn_forum_forum.form.type.post_create
+            - @ccdn_forum_forum.manager.topic
+            - @ccdn_forum_forum.manager.board
+
+    ccdn_forum_forum.form.type.topic_update:
+        class: %ccdn_forum_forum.form.type.topic_update.class%
+        arguments:
+            - %ccdn_forum_forum.entity.topic.class%
+
+    ccdn_forum_forum.form.handler.topic_update:
+        class: %ccdn_forum_forum.form.handler.topic_update.class%
+        arguments:
+            - @form.factory
+            - @ccdn_forum_forum.form.type.topic_update
+            - @ccdn_forum_forum.form.type.post_update
+            - @ccdn_forum_forum.manager.topic
+            - @ccdn_forum_forum.manager.post
+
+    ccdn_forum_forum.form.type.change_topics_board:
+        class: %ccdn_forum_forum.form.type.change_topics_board.class%
+        arguments:
+            - %ccdn_forum_forum.entity.topic.class%
+
+    ccdn_forum_forum.form.handler.change_topics_board:
+        class: %ccdn_forum_forum.form.handler.change_topics_board.class%
+        arguments:
+            - @form.factory
+            - @ccdn_forum_forum.form.type.change_topics_board
+            - @ccdn_forum_forum.manager.topic
+            - @ccdn_forum_forum.manager.board

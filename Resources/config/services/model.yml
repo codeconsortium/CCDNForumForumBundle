@@ -1,0 +1,69 @@
+parameters:
+
+    # Service Parameters defined in app/config.
+
+services:
+
+    #
+    # Models.
+    #
+
+    ccdn_forum_forum.model_bag:
+        class: %ccdn_forum_forum.model_bag.class%
+        arguments: [@service_container]
+
+    ccdn_forum_forum.model.category:
+        class: %ccdn_forum_forum.model.category.class%
+        arguments:
+            - @ccdn_forum_forum.repository.category
+            - @ccdn_forum_forum.manager.category
+            - @ccdn_forum_forum.model_bag
+            - @ccdn_forum_forum.model.utility_bag
+
+    ccdn_forum_forum.model.board:
+        class: %ccdn_forum_forum.model.board.class%
+        arguments:
+            - @ccdn_forum_forum.repository.board
+            - @ccdn_forum_forum.manager.board
+            - @ccdn_forum_forum.model_bag
+            - @ccdn_forum_forum.model.utility_bag
+
+    ccdn_forum_forum.model.topic:
+        class: %ccdn_forum_forum.model.topic.class%
+        arguments:
+            - @ccdn_forum_forum.repository.topic
+            - @ccdn_forum_forum.manager.topic
+            - @ccdn_forum_forum.model_bag
+            - @ccdn_forum_forum.model.utility_bag
+
+    ccdn_forum_forum.model.post:
+        class: %ccdn_forum_forum.model.post.class%
+        arguments:
+            - @ccdn_forum_forum.repository.post
+            - @ccdn_forum_forum.manager.post
+            - @ccdn_forum_forum.model_bag
+            - @ccdn_forum_forum.model.utility_bag
+
+    ccdn_forum_forum.model.registry:
+        class: %ccdn_forum_forum.model.registry.class%
+        arguments:
+            - @ccdn_forum_forum.repository.registry
+            - @ccdn_forum_forum.manager.registry
+            - @ccdn_forum_forum.model_bag
+            - @ccdn_forum_forum.model.utility_bag
+
+    ccdn_forum_forum.model.draft:
+        class: %ccdn_forum_forum.model.draft.class%
+        arguments:
+            - @ccdn_forum_forum.repository.draft
+            - @ccdn_forum_forum.manager.draft
+            - @ccdn_forum_forum.model_bag
+            - @ccdn_forum_forum.model.utility_bag
+
+    ccdn_forum_forum.model.subscription:
+        class: %ccdn_forum_forum.model.subscription.class%
+        arguments:
+            - @ccdn_forum_forum.repository.subscription
+            - @ccdn_forum_forum.manager.subscription
+            - @ccdn_forum_forum.model_bag
+            - @ccdn_forum_forum.model.utility_bag

@@ -1,28 +1,28 @@
 
 ccdn_forum_admin_forum_list:
     pattern: /
-    defaults: { _controller: CCDNForumForumBundle:ForumAdmin:, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminForum:, _locale: en }
 
 ccdn_forum_admin_forum_create:
     pattern: /create
-    defaults: { _controller: CCDNForumForumBundle:ForumAdmin:, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminForum:, _locale: en }
 
 ccdn_forum_admin_forum_create_process:
     pattern: /create/process
-    defaults: { _controller: CCDNForumForumBundle:ForumAdmin:, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminForum:, _locale: en }
 
 ccdn_forum_admin_forum_edit:
     pattern: /edit/{forumId}
-    defaults: { _controller: CCDNForumForumBundle:ForumAdmin:, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminForum:, _locale: en }
 
 ccdn_forum_admin_forum_edit_process:
     pattern: /edit/{forumId}/process
-    defaults: { _controller: CCDNForumForumBundle:ForumAdmin:, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminForum:, _locale: en }
 
 ccdn_forum_admin_forum_remove:
     pattern: /remove/{forumId}
-    defaults: { _controller: CCDNForumForumBundle:ForumAdmin:, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminForum:, _locale: en }
 
 ccdn_forum_admin_forum_remove_confirm:
     pattern: /remove/{forumId}/confirm
-    defaults: { _controller: CCDNForumForumBundle:ForumAdmin:, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminForum:, _locale: en }

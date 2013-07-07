@@ -1,0 +1,69 @@
+parameters:
+
+    # Service Parameters defined in app/config.
+
+services:
+
+    #
+    # Gateways.
+    #
+
+    ccdn_forum_forum.gateway_bag:
+        class: %ccdn_forum_forum.gateway_bag.class%
+        arguments: [@service_container]
+
+    ccdn_forum_forum.gateway.category:
+        class: %ccdn_forum_forum.gateway.category.class%
+        arguments:
+            - @doctrine
+            - @knp_paginator
+            - @ccdn_forum_forum.gateway_bag
+            - %ccdn_forum_forum.entity.category.class%
+
+    ccdn_forum_forum.gateway.board:
+        class: %ccdn_forum_forum.gateway.board.class%
+        arguments:
+            - @doctrine
+            - @knp_paginator
+            - @ccdn_forum_forum.gateway_bag
+            - %ccdn_forum_forum.entity.board.class%
+
+    ccdn_forum_forum.gateway.topic:
+        class: %ccdn_forum_forum.gateway.topic.class%
+        arguments:
+            - @doctrine
+            - @knp_paginator
+            - @ccdn_forum_forum.gateway_bag
+            - %ccdn_forum_forum.entity.topic.class%
+
+    ccdn_forum_forum.gateway.post:
+        class: %ccdn_forum_forum.gateway.post.class%
+        arguments:
+            - @doctrine
+            - @knp_paginator
+            - @ccdn_forum_forum.gateway_bag
+            - %ccdn_forum_forum.entity.post.class%
+
+    ccdn_forum_forum.gateway.draft:
+        class: %ccdn_forum_forum.gateway.draft.class%
+        arguments:
+            - @doctrine
+            - @knp_paginator
+            - @ccdn_forum_forum.gateway_bag
+            - %ccdn_forum_forum.entity.draft.class%
+
+    ccdn_forum_forum.gateway.registry:
+        class: %ccdn_forum_forum.gateway.registry.class%
+        arguments:
+            - @doctrine
+            - @knp_paginator
+            - @ccdn_forum_forum.gateway_bag
+            - %ccdn_forum_forum.entity.registry.class%
+
+    ccdn_forum_forum.gateway.subscription:
+        class: %ccdn_forum_forum.gateway.subscription.class%
+        arguments:
+            - @doctrine
+            - @knp_paginator
+            - @ccdn_forum_forum.gateway_bag
+            - %ccdn_forum_forum.entity.subscription.class%

@@ -1,0 +1,23 @@
+parameters:
+
+    # Service Parameters defined in app/config.
+
+services:
+
+    #
+    # Flood Control.
+    #
+    ccdn_forum_forum.component.flood_control:
+       class: %ccdn_forum_forum.component.flood_control.class%
+       arguments:
+           - @session
+           - %ccdn_forum_forum.topic.flood_control.post_limit%
+           - %ccdn_forum_forum.topic.flood_control.block_for_minutes%
+
+    #
+    # Dashboard Integrator.
+    #
+    ccdn_forum_forum.component.dashboard.integrator:
+        class: %ccdn_forum_forum.component.dashboard.integrator.class%
+        tags:
+            - { name: ccdn_component_dashboard.integrator }

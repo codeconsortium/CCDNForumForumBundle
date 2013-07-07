@@ -1,0 +1,65 @@
+parameters:
+
+    # Service Parameters defined in app/config.
+
+services:
+
+    #
+    # Repositories.
+    #
+
+    ccdn_forum_forum.repository.category:
+        class: %ccdn_forum_forum.repository.category.class%
+        arguments:
+            - @doctrine
+            - @security.context
+            - @ccdn_forum_forum.gateway.category
+            - @ccdn_forum_forum.model.utility_bag
+
+    ccdn_forum_forum.repository.board:
+        class: %ccdn_forum_forum.repository.board.class%
+        arguments:
+            - @doctrine
+            - @security.context
+            - @ccdn_forum_forum.gateway.board
+            - @ccdn_forum_forum.model.utility_bag
+
+    ccdn_forum_forum.repository.topic:
+        class: %ccdn_forum_forum.repository.topic.class%
+        arguments:
+            - @doctrine
+            - @security.context
+            - @ccdn_forum_forum.gateway.topic
+            - @ccdn_forum_forum.model.utility_bag
+
+    ccdn_forum_forum.repository.post:
+        class: %ccdn_forum_forum.repository.post.class%
+        arguments:
+            - @doctrine
+            - @security.context
+            - @ccdn_forum_forum.gateway.post
+            - @ccdn_forum_forum.model.utility_bag
+
+    ccdn_forum_forum.repository.draft:
+        class: %ccdn_forum_forum.repository.draft.class%
+        arguments:
+            - @doctrine
+            - @security.context
+            - @ccdn_forum_forum.gateway.draft
+            - @ccdn_forum_forum.model.utility_bag
+
+    ccdn_forum_forum.repository.registry:
+        class: %ccdn_forum_forum.repository.registry.class%
+        arguments:
+            - @doctrine
+            - @security.context
+            - @ccdn_forum_forum.gateway.registry
+            - @ccdn_forum_forum.model.utility_bag
+
+    ccdn_forum_forum.repository.subscription:
+        class: %ccdn_forum_forum.repository.subscription.class%
+        arguments:
+            - @doctrine
+            - @security.context
+            - @ccdn_forum_forum.gateway.subscription
+            - @ccdn_forum_forum.model.utility_bag

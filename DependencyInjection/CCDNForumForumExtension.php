@@ -89,6 +89,19 @@ class CCDNForumForumExtension extends Extension
         // Load Service definitions.
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+		$loader->load('services/components.yml');
+
+		$loader->load('services/model-utils.yml');
+		$loader->load('services/model-gateway.yml');
+		$loader->load('services/model-repository.yml');
+		$loader->load('services/model-manager.yml');
+		$loader->load('services/model.yml');
+
+		$loader->load('services/forms-topic.yml');
+		$loader->load('services/forms-post.yml');
+
+		$loader->load('services/twig_extensions.yml');
     }
 
     /**

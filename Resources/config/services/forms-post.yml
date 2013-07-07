@@ -1,0 +1,32 @@
+parameters:
+
+    # Service Parameters defined in app/config.
+
+services:
+
+    #
+    # Post Forms.
+    #
+    ccdn_forum_forum.form.type.post_create:
+        class: %ccdn_forum_forum.form.type.post_create.class%
+        arguments:
+            - %ccdn_forum_forum.entity.post.class%
+
+    ccdn_forum_forum.form.handler.post_create:
+        class: %ccdn_forum_forum.form.handler.post_create.class%
+        arguments:
+            - @form.factory
+            - @ccdn_forum_forum.form.type.post_create
+            - @ccdn_forum_forum.manager.post
+
+    ccdn_forum_forum.form.type.post_update:
+        class: %ccdn_forum_forum.form.type.post_update.class%
+        arguments:
+            - %ccdn_forum_forum.entity.post.class%
+
+    ccdn_forum_forum.form.handler.post_update:
+        class: %ccdn_forum_forum.form.handler.post_update.class%
+        arguments:
+            - @form.factory
+            - @ccdn_forum_forum.form.type.post_update
+            - @ccdn_forum_forum.manager.post
