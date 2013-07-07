@@ -13,6 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Entity\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 use CCDNForum\ForumBundle\Entity\Category as ConcreteCategory;
 
 abstract class Forum
