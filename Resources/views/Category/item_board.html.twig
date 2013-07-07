@@ -18,7 +18,7 @@
 
 	    <td class="left">
 	        <h4>
-	            <a href="{{- path('ccdn_forum_forum_board_show', {'boardId': board.getId }) -}}" title="{{- board.getName -}}">
+	            <a href="{{- path('ccdn_forum_user_board_show', {'boardId': board.getId }) -}}" title="{{- board.getName -}}">
 	                {{- truncDot(board.getName, ccdn_forum_forum.seo.title_length) -}}
 	            </a>
 	        </h4>
@@ -53,14 +53,14 @@
 	                <br>
 					
 	                {%- if page < 2 -%}
-	                    <a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': board.getLastPost.getTopic.getId } ) -}}#{{- board.getLastPost.getId -}}">
+	                    <a href="{{- path('ccdn_forum_user_topic_show', {'topicId': board.getLastPost.getTopic.getId } ) -}}#{{- board.getLastPost.getId -}}">
 							<i class="icon-arrow-right"></i>
 	                        <abbr class="timestamper" title="{{- board.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 	                            {{- board.getLastPost.getCreatedDate |date(ccdn_forum_forum.category.last_post_datetime_format) -}}
 	                        </abbr>
 	                    </a>
 	                {%- else -%}
-	                    <a href="{{- path('ccdn_forum_forum_topic_show_paginated', {'topicId': board.getLastPost.getTopic.getId, 'page':page }) -}}#{{- board.getLastPost.getId -}}">
+	                    <a href="{{- path('ccdn_forum_user_topic_show_paginated', {'topicId': board.getLastPost.getTopic.getId, 'page':page }) -}}#{{- board.getLastPost.getId -}}">
 							<i class="icon-arrow-right"></i>
 	                        <abbr class="timestamper" title="{{- board.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 	                            {{- board.getLastPost.getCreatedDate |date(ccdn_forum_forum.category.last_post_datetime_format) -}}

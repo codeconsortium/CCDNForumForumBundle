@@ -26,7 +26,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class SubscriptionController extends TopicBaseController
+class UserSubscriptionController extends UserTopicBaseController
 {
     /**
      *
@@ -45,8 +45,8 @@ class SubscriptionController extends TopicBaseController
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_forum_category_index'))
-            ->add($this->trans('crumbs.subscription.index'), $this->path('ccdn_forum_forum_subscription_list'));
+            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
+            ->add($this->trans('crumbs.subscription.index'), $this->path('ccdn_forum_user_subscription_list'));
 
         return $this->renderResponse('CCDNForumForumBundle:Subscription:list.html.', array(
             'crumbs' => $crumbs,
@@ -73,7 +73,7 @@ class SubscriptionController extends TopicBaseController
 
         $this->setFlash('notice', $this->trans('flash.subscription.topic.subscribed', array('%topic_title%' => $topic->getTitle() )));
 
-        return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topicId)) );
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array('topicId' => $topicId)) );
     }
 
     /**
@@ -94,6 +94,6 @@ class SubscriptionController extends TopicBaseController
 
         $this->setFlash('notice', $this->trans('flash.subscription.topic.unsubscribed', array('%topic_title%' => $topic->getTitle() )));
 
-        return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $topicId)) );
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array('topicId' => $topicId)) );
     }
 }

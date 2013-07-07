@@ -1,7 +1,7 @@
 {%- spaceless -%}
 
 	<h3 title="{{- category.name -}}">
-		<a href="{{- path('ccdn_forum_forum_category_show', {'categoryId': category.id }) -}}" title="{{- category.name -}}">
+		<a href="{{- path('ccdn_forum_user_category_show', {'categoryId': category.id }) -}}" title="{{- category.name -}}">
 			{{- truncDot(category.name, ccdn_forum_forum.seo.title_length) -}}
 		</a>
 	</h3>

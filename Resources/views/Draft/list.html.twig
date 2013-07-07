@@ -47,7 +47,7 @@
 						{%- if draft.getTopic -%}
 							<td class="left" colspan="2">
 								<b>Reply: </b>
-								<a href="{{- path('ccdn_forum_forum_topic_show', {'topicId': draft.getTopic.getId }) -}}">
+								<a href="{{- path('ccdn_forum_user_topic_show', {'topicId': draft.getTopic.getId }) -}}">
 									{{- draft.getTopic.getTitle -}}
 								</a>
 							</td>
@@ -58,7 +58,7 @@
 							</td>
 							<td class="left">
 								{%- if draft.getBoard -%}
-									<a href="{{- path('ccdn_forum_forum_board_show', {'boardId': draft.getBoard.getId}) -}}">
+									<a href="{{- path('ccdn_forum_user_board_show', {'boardId': draft.getBoard.getId}) -}}">
 										{{- draft.getBoard.getName -}}
 									</a>
 								{%- endif -%}
@@ -68,11 +68,11 @@
 							{{- draft.getCreatedDate |date(ccdn_forum_forum.draft.list.creation_datetime_format) -}}
 						</td>
 						<td class="center">
-							<a class="btn btn-danger" href="{{- path('ccdn_forum_forum_draft_delete', {'draftId': draft.getId }) -}}">
+							<a class="btn btn-danger" href="{{- path('ccdn_forum_user_draft_delete', {'draftId': draft.getId }) -}}">
 								{{- 'ccdn_forum_forum.link.draft.delete' | trans({}, 'CCDNForumForumBundle') -}}
 							</a>
 
-							<a class="btn btn-primary" href="{{- path('ccdn_forum_forum_draft_publish', {'draftId': draft.getId }) -}}">
+							<a class="btn btn-primary" href="{{- path('ccdn_forum_user_draft_publish', {'draftId': draft.getId }) -}}">
 								{{- 'ccdn_forum_forum.link.draft.publish' | trans({}, 'CCDNForumForumBundle') -}}
 							</a>
 						</td>

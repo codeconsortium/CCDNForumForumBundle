@@ -1,0 +1,27 @@
+
+#
+# CRUD
+#
+ccdn_forum_user_topic_show:
+    pattern: /{topicId}
+    defaults: { _controller: CCDNForumForumBundle:UserTopic:show, _locale: en }
+
+ccdn_forum_user_topic_create:
+    pattern: /create/for/board/{boardId}
+    defaults: { _controller: CCDNForumForumBundle:UserTopic:create, _locale: en, draftId: 0 }
+
+ccdn_forum_user_topic_create_from_draft:
+    pattern: /create/for/board/{boardId}/from/draft/{draftId}
+    defaults: { _controller: CCDNForumForumBundle:UserTopic:create, _locale: en, draftId: 0 }
+
+ccdn_forum_user_topic_reply:
+    pattern: /{topicId}/reply
+    defaults: { _controller: CCDNForumForumBundle:UserTopic:reply, _locale: en, quoteId: 0, draftId: 0 }
+
+ccdn_forum_user_topic_reply_from_draft:
+    pattern: /{topicId}/reply/from/draft/{draftId}
+    defaults: { _controller: CCDNForumForumBundle:UserTopic:reply, _locale: en, quoteId: 0, draftId: 0 }
+
+ccdn_forum_user_topic_reply_with_quote:
+    pattern: /{topicId}/reply/quote/{quoteId}
+    defaults: { _controller: CCDNForumForumBundle:UserTopic:reply, _locale: en, quoteId: 0, draftId: 0 }

@@ -38,7 +38,7 @@
 	        <div class="span6">
 	            {% set is_topic_create_disabled = board.isAuthorisedToCreateTopic(app.security) ? '': ' disabled' %}
 
-	            <a class="btn btn-danger{{ is_topic_create_disabled }}" rel="nofollow" href="{{- path('ccdn_forum_forum_topic_create', {'boardId': board.getId }) -}}">
+	            <a class="btn btn-danger{{ is_topic_create_disabled }}" rel="nofollow" href="{{- path('ccdn_forum_user_topic_create', {'boardId': board.getId }) -}}">
 					<i class="icon-white icon-asterisk"></i>
 					{{- 'link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}
 				</a>

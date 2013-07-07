@@ -5,17 +5,17 @@
 	{%- for sidebar_category in sidebar_categories -%}
 		{%- if sidebar_category.boards |length -%}
 
-			{%- if category is defined and route == 'ccdn_forum_forum_category_show' -%}
+			{%- if category is defined and route == 'ccdn_forum_user_category_show' -%}
 				{%- if sidebar_category.id == category.id -%}
 					<li class="active">
-						<a href="{{- path('ccdn_forum_forum_category_show', {'categoryId': sidebar_category.id}) -}}" title="{{- sidebar_category.name -}}">
+						<a href="{{- path('ccdn_forum_user_category_show', {'categoryId': sidebar_category.id}) -}}" title="{{- sidebar_category.name -}}">
 							<i class="icon-white icon-folder-open"></i>
 							{{- sidebar_category.name -}}
 						</a>
 					</li>
 				{%- else -%}
 					<li>
-						<a href="{{- path('ccdn_forum_forum_category_show', {'categoryId': sidebar_category.id}) -}}" title="{{- sidebar_category.name -}}">
+						<a href="{{- path('ccdn_forum_user_category_show', {'categoryId': sidebar_category.id}) -}}" title="{{- sidebar_category.name -}}">
 							<i class="icon-folder-open"></i>
 							{{- sidebar_category.name -}}
 						</a>
@@ -24,7 +24,7 @@
 				{%- endif -%}
 			{%- else -%}
 				<li>
-					<a href="{{- path('ccdn_forum_forum_category_show', {'categoryId': sidebar_category.id}) -}}" title="{{- sidebar_category.name -}}">
+					<a href="{{- path('ccdn_forum_user_category_show', {'categoryId': sidebar_category.id}) -}}" title="{{- sidebar_category.name -}}">
 						<i class="icon-folder-open"></i>
 						{{- sidebar_category.name -}}
 					</a>
@@ -37,14 +37,14 @@
 						{%- if board is defined -%}
 							{%- if sidebar_board.id == board.id -%}
 								<li class="active">
-									<a href="{{- path('ccdn_forum_forum_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}">
+									<a href="{{- path('ccdn_forum_user_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}">
 										<i class="icon-white icon-folder-open"></i>
 										{{- sidebar_board.name -}}
 									</a>
 								</li>
 							{%- else -%}
 								<li>
-									<a href="{{- path('ccdn_forum_forum_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}">
+									<a href="{{- path('ccdn_forum_user_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}">
 										<i class="icon-folder-close"></i>
 										{{- sidebar_board.name -}}
 									</a>
@@ -52,7 +52,7 @@
 							{%- endif -%}
 						{%- else -%}
 							<li>
-								<a href="{{- path('ccdn_forum_forum_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}">
+								<a href="{{- path('ccdn_forum_user_board_show', {'boardId': sidebar_board.id}) -}}" title="{{- sidebar_board.name -}}">
 									<i class="icon-folder-close"></i>
 									{{- sidebar_board.name -}}
 								</a>

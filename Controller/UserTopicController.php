@@ -29,7 +29,7 @@ use CCDNForum\ForumBundle\Entity\Post;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class TopicController extends TopicBaseController
+class UserTopicController extends UserTopicBaseController
 {
     /**
      *
@@ -61,10 +61,10 @@ class TopicController extends TopicBaseController
         $category = $board->getCategory();
 
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_forum_category_index'))
-            ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())))
-            ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())))
-            ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())));
+            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
+            ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
+            ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
+            ->add($topic->getTitle(), $this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId())));
 
         return $this->renderResponse('CCDNForumForumBundle:Topic:show.html.', array(
             'crumbs' => $crumbs,
@@ -100,7 +100,7 @@ class TopicController extends TopicBaseController
 
                 $this->setFlash('success', $this->trans('flash.topic.create.success', array('%topic_title%' => $formHandler->getForm()->getData()->getTopic()->getTitle())));
 
-                return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $formHandler->getForm()->getData()->getTopic()->getId() )));
+                return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array('topicId' => $formHandler->getForm()->getData()->getTopic()->getId() )));
             }
         } else {
             $this->setFlash('warning', $this->trans('flash.topic.flood_control'));
@@ -110,10 +110,10 @@ class TopicController extends TopicBaseController
         $category = $board->getCategory();
 
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_forum_category_index'))
-            ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())))
-            ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())))
-            ->add($this->trans('crumbs.topic.create'), $this->path('ccdn_forum_forum_topic_create', array('boardId' => $board->getId())));
+            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
+            ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
+            ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
+            ->add($this->trans('crumbs.topic.create'), $this->path('ccdn_forum_user_topic_create', array('boardId' => $board->getId())));
 
         return $this->renderResponse('CCDNForumForumBundle:Topic:create.html.', array(
             'crumbs' => $crumbs,
@@ -150,7 +150,7 @@ class TopicController extends TopicBaseController
 
                 $this->setFlash('success', $this->trans('flash.topic.reply.success', array('%topic_title%' => $topic->getTitle())));
 
-                return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show_paginated_anchored', array('topicId' => $topicId, 'page' => $page, 'postId' => $topic->getLastPost()->getId()) ));
+                return $this->redirectResponse($this->path('ccdn_forum_user_topic_show_paginated_anchored', array('topicId' => $topicId, 'page' => $page, 'postId' => $topic->getLastPost()->getId()) ));
             }
         } else {
             $this->setFlash('warning', $this->trans('flash.topic.flood_control'));
@@ -161,11 +161,11 @@ class TopicController extends TopicBaseController
         $category = $board->getCategory();
 
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_forum_category_index'))
-            ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())))
-            ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $board->getId())))
-            ->add($topic->getTitle(), $this->path('ccdn_forum_forum_topic_show', array('topicId' => $topic->getId())))
-            ->add($this->trans('crumbs.topic.reply'), $this->path('ccdn_forum_forum_topic_reply', array('topicId' => $topic->getId())));
+            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
+            ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
+            ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
+            ->add($topic->getTitle(), $this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId())))
+            ->add($this->trans('crumbs.topic.reply'), $this->path('ccdn_forum_user_topic_reply', array('topicId' => $topic->getId())));
 
         return $this->renderResponse('CCDNForumForumBundle:Topic:reply.html.', array(
             'crumbs' => $crumbs,

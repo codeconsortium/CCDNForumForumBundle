@@ -1,0 +1,12 @@
+
+ccdn_forum_moderator_post_lock:
+    pattern: /{postId}/lock
+    defaults: { _controller: CCDNForumForumBundle:ModeratorPost:lock, _locale: en }
+
+ccdn_forum_moderator_post_unlock:
+    pattern: /{postId}/unlock
+    defaults: { _controller: CCDNForumForumBundle:ModeratorPost:unlock, _locale: en }
+
+ccdn_forum_moderator_post_restore:
+    pattern: /{postId}/restore
+    defaults: { _controller: CCDNForumForumBundle:ModeratorPost:restore, _locale: en }

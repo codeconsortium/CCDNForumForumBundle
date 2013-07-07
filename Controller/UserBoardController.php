@@ -24,7 +24,7 @@ namespace CCDNForum\ForumBundle\Controller;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class BoardController extends BoardBaseController
+class UserBoardController extends UserBoardBaseController
 {
     /**
      *
@@ -52,9 +52,9 @@ class BoardController extends BoardBaseController
         $category = $board->getCategory();
 
         $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_forum_category_index'))
-            ->add($category->getName(), $this->path('ccdn_forum_forum_category_show', array('categoryId' => $category->getId())))
-            ->add($board->getName(), $this->path('ccdn_forum_forum_board_show', array('boardId' => $boardId)));
+            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
+            ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
+            ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $boardId)));
 
         return $this->renderResponse('CCDNForumForumBundle:Board:show.html.', array(
             'crumbs' => $crumbs,

@@ -28,7 +28,7 @@ use CCDNForum\ForumBundle\Entity\Post;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class PostModeratorController extends PostBaseController
+class ModeratorPostController extends UserPostBaseController
 {
     /**
      * Lock to prevent editing of post.
@@ -53,7 +53,7 @@ class PostModeratorController extends PostBaseController
 
         $this->setFlash('notice', $this->trans('flash.post.success.lock', array('%post_id%' => $postId)));
 
-        return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array('topicId' => $post->getTopic()->getId()) ));
     }
 
     /**
@@ -76,7 +76,7 @@ class PostModeratorController extends PostBaseController
 
         $this->setFlash('notice', $this->trans('flash.post.unlock.success', array('%post_id%' => $postId)));
 
-        return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array('topicId' => $post->getTopic()->getId()) ));
     }
 
     /**
@@ -101,6 +101,6 @@ class PostModeratorController extends PostBaseController
         $this->setFlash('notice', $this->trans('ccdn_forum_admin.flash.post.restore.success', array('%post_id%' => $postId)));
 
         // forward user
-        return $this->redirectResponse($this->path('ccdn_forum_forum_topic_show', array('topicId' => $post->getTopic()->getId()) ));
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array('topicId' => $post->getTopic()->getId()) ));
     }
 }

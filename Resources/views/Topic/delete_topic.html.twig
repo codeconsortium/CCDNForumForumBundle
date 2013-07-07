@@ -18,11 +18,11 @@
 		</div>
 
 		<div class="form-answer">
-			<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_topic_delete_confirmed', {'topicId': topic.id }) -}}">
+			<a class="btn btn-danger" href="{{- path('ccdn_forum_moderator_topic_delete_confirmed', {'topicId': topic.id }) -}}">
 				{{- 'form.button.yes' | trans({}, 'CCDNForumForumBundle') -}}
 			</a>
 
-			<a class="btn" href="{{- path('ccdn_forum_forum_topic_show', {'topicId': topic.id }) -}}">
+			<a class="btn" href="{{- path('ccdn_forum_user_topic_show', {'topicId': topic.id }) -}}">
 				{{- 'form.button.no' | trans({}, 'CCDNForumForumBundle') -}}
 			</a>
 		</div>

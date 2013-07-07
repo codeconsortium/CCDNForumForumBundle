@@ -24,7 +24,7 @@ namespace CCDNForum\ForumBundle\Controller;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class TopicAdminController extends BoardBaseController
+class AdminTopicController extends BaseController
 {
 	
 }

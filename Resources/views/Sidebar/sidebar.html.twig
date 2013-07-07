@@ -31,16 +31,16 @@
 		{{- 'sidebar.header.navigation' | trans({}, 'CCDNForumForumBundle') -}}
 	</li>
 
-	{%- if route == 'ccdn_homepage' or route == 'ccdn_forum_forum_index' or route == 'ccdn_forum_forum_category_index' -%}
+	{%- if route == 'ccdn_homepage' or route == 'ccdn_forum_user_category_index' or route == 'ccdn_forum_user_category_index' -%}
 		<li class="active">
-			<a href="{{- path('ccdn_forum_forum_index') -}}">
+			<a href="{{- path('ccdn_forum_user_category_index') -}}">
 				<i class="icon-white icon-home"></i>
 				{{- 'link.category.index' |trans({}, 'CCDNForumForumBundle') -}}
 			</a>
 		</li>
 	{%- else -%}
 		<li>
-			<a href="{{- path('ccdn_forum_forum_index') -}}">
+			<a href="{{- path('ccdn_forum_user_category_index') -}}">
 				<i class="icon-home"></i>
 				{{- 'link.category.index' |trans({}, 'CCDNForumForumBundle') -}}
 			</a>
@@ -48,16 +48,16 @@
 	{%- endif -%}
 
 	{%- if is_granted('ROLE_USER') -%}
-		{%- if route == 'ccdn_forum_forum_subscription_list' -%}
+		{%- if route == 'ccdn_forum_user_subscription_list' -%}
 			<li class="active">
-				<a rel="nofollow" href="{{- path('ccdn_forum_forum_subscription_list') -}}">
+				<a rel="nofollow" href="{{- path('ccdn_forum_user_subscription_list') -}}">
 					<i class="icon-white icon-heart"></i>
 					{{- 'link.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}
 				</a>
 			</li>
 		{%- else -%}
 			<li>
-				<a rel="nofollow" href="{{- path('ccdn_forum_forum_subscription_list') -}}">
+				<a rel="nofollow" href="{{- path('ccdn_forum_user_subscription_list') -}}">
 					<i class="icon-heart"></i>
 					{{- 'link.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}
 				</a>
@@ -65,16 +65,16 @@
 		{%- endif -%}
 
 		{#
-		{%- if route == 'ccdn_forum_forum_draft_list' -%}
+		{%- if route == 'ccdn_forum_user_draft_list' -%}
 			<li class="active">
-				<a rel="nofollow" href="{{- path('ccdn_forum_forum_draft_list') -}}">
+				<a rel="nofollow" href="{{- path('ccdn_forum_user_draft_list') -}}">
 					<i class="icon-white icon-pencil"></i>
 					{{- 'link.draft.index' | trans({}, 'CCDNForumForumBundle') -}}
 				</a>
 			</li>
 		{%- else -%}
 			<li>
-				<a rel="nofollow" href="{{- path('ccdn_forum_forum_draft_list') -}}">
+				<a rel="nofollow" href="{{- path('ccdn_forum_user_draft_list') -}}">
 					<i class="icon-pencil"></i>
 					{{- 'link.draft.index' | trans({}, 'CCDNForumForumBundle') -}}
 				</a>

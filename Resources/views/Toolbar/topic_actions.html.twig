@@ -7,7 +7,7 @@
 
 	    {% set authorised_to_reply = board.isAuthorisedToTopicReply(app.security) %}
 
-	    <a class="btn btn-danger{{ authorised_to_reply ? '': ' disabled' }}" rel="nofollow" href="{{- path('ccdn_forum_forum_topic_reply', {'topicId': topic.getId }) -}}">
+	    <a class="btn btn-danger{{ authorised_to_reply ? '': ' disabled' }}" rel="nofollow" href="{{- path('ccdn_forum_user_topic_reply', {'topicId': topic.getId }) -}}">
 			<i class="icon-white{{ authorised_to_reply ? ' icon-comment': ' icon-lock' }}"></i>
 			{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
 		</a>
@@ -16,24 +16,24 @@
 			{%- if subscription is defined -%}
 				{%- if subscription is not null -%}
 					{%- if subscription.isSubscribed == true -%}
-						<a class="btn" href="{{- path('ccdn_forum_forum_subscription_unsubscribe', {'topicId': topic.getId }) -}}">
+						<a class="btn" href="{{- path('ccdn_forum_user_subscription_unsubscribe', {'topicId': topic.getId }) -}}">
 							<i class="icon-eye-close"></i>
 							{{- 'link.topic.unsubscribe' | trans({}, 'CCDNForumForumBundle') -}}
 						</a>
 					{%- else -%}
-						<a class="btn" href="{{- path('ccdn_forum_forum_subscription_subscribe', {'topicId': topic.getId }) -}}">
+						<a class="btn" href="{{- path('ccdn_forum_user_subscription_subscribe', {'topicId': topic.getId }) -}}">
 							<i class="icon-eye-open"></i>
 							{{- 'link.topic.subscribe' | trans({}, 'CCDNForumForumBundle') -}}
 						</a>
 					{%- endif -%}
 				{%- else -%}
-					<a class="btn" href="{{- path('ccdn_forum_forum_subscription_subscribe', {'topicId': topic.getId }) -}}">
+					<a class="btn" href="{{- path('ccdn_forum_user_subscription_subscribe', {'topicId': topic.getId }) -}}">
 						<i class="icon-eye-open"></i>
 						{{- 'link.topic.subscribe' | trans({}, 'CCDNForumForumBundle') -}}
 					</a>
 				{%- endif -%}
 			{%- else -%}
-				<a class="btn" href="{{- path('ccdn_forum_forum_subscription_subscribe', {'topicId': topic.getId }) -}}">
+				<a class="btn" href="{{- path('ccdn_forum_user_subscription_subscribe', {'topicId': topic.getId }) -}}">
 					<i class="icon-eye-open"></i>
 					{{- 'link.topic.subscribe' | trans({}, 'CCDNForumForumBundle') -}}
 				</a>
@@ -50,12 +50,12 @@
 				<ul class="dropdown-menu">
 					<li>
 						{%- if topic.isSticky -%}
-							<a href="{{- path('ccdn_forum_admin_topic_unsticky', {'topicId': topic.getId }) -}}">
+							<a href="{{- path('ccdn_forum_moderator_topic_unsticky', {'topicId': topic.getId }) -}}">
 								<i class="icon-bullhorn"></i>
 								{{- 'link.topic.unsticky' |trans({}, 'CCDNForumForumBundle') -}}
 							</a>
 						{%- else -%}
-							<a href="{{- path('ccdn_forum_admin_topic_sticky', {'topicId': topic.getId }) -}}">
+							<a href="{{- path('ccdn_forum_moderator_topic_sticky', {'topicId': topic.getId }) -}}">
 								<i class="icon-bullhorn"></i>
 								{{- 'link.topic.sticky' |trans({}, 'CCDNForumForumBundle') -}}
 							</a>
@@ -63,7 +63,7 @@
 					</li>
 
 					<li>
-						<a href="{{- path('ccdn_forum_forum_topic_change_board', {'topicId': topic.getId }) -}}">
+						<a href="{{- path('ccdn_forum_user_topic_change_board', {'topicId': topic.getId }) -}}">
 							<i class="icon-move"></i>
 							{{- 'link.topic.change_board' | trans({}, 'CCDNForumForumBundle') -}}
 						</a>
@@ -71,12 +71,12 @@
 
 					<li>
 						{%- if topic.closedBy -%}
-							<a href="{{- path('ccdn_forum_admin_topic_reopen', {'topicId': topic.getId }) -}}">
+							<a href="{{- path('ccdn_forum_moderator_topic_reopen', {'topicId': topic.getId }) -}}">
 								<i class="icon-lock"></i>
 								{{- 'link.topic.reopen' | trans({}, 'CCDNForumForumBundle') -}}
 							</a>
 						{%- else -%}
-							<a href="{{- path('ccdn_forum_admin_topic_close', {'topicId': topic.getId }) -}}">
+							<a href="{{- path('ccdn_forum_moderator_topic_close', {'topicId': topic.getId }) -}}">
 								<i class="icon-lock"></i>
 								{{- 'link.topic.close' | trans({}, 'CCDNForumForumBundle') -}}
 							</a>
@@ -85,12 +85,12 @@
 
 					<li>
 						{%- if topic.deletedBy -%}
-							<a href="{{- path('ccdn_forum_admin_topic_restore', {'topicId': topic.getId }) -}}">
+							<a href="{{- path('ccdn_forum_moderator_topic_restore', {'topicId': topic.getId }) -}}">
 								<i class="icon-trash"></i>
 								{{- 'link.topic.restore' |trans({}, 'CCDNForumForumBundle') -}}
 							</a>
 						{%- else -%}
-							<a href="{{- path('ccdn_forum_admin_topic_delete', {'topicId': topic.getId }) -}}">
+							<a href="{{- path('ccdn_forum_moderator_topic_delete', {'topicId': topic.getId }) -}}">
 								<i class="icon-trash"></i>
 								{{- 'link.topic.delete' |trans({}, 'CCDNForumForumBundle') -}}
 							</a>

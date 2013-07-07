@@ -29,7 +29,7 @@ use CCDNForum\ForumBundle\Entity\Topic;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class TopicBaseController extends BaseController
+class UserTopicBaseController extends BaseController
 {
     /**
      *

@@ -28,7 +28,7 @@ use CCDNForum\ForumBundle\Entity\Post;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class PostBaseController extends BaseController
+class UserPostBaseController extends BaseController
 {
     /**
      *

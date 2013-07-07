@@ -1,0 +1,19 @@
+#
+# CRUD
+#
+ccdn_forum_user_post_show:
+    pattern: /{postId}
+    defaults: { _controller: CCDNForumForumBundle:UserPost:show, _locale: en }
+
+ccdn_forum_user_post_edit:
+    pattern: /{postId}/edit
+    defaults: { _controller: CCDNForumForumBundle:UserPost:edit, _locale: en }
+
+ccdn_forum_user_post_delete:
+    pattern: /{postId}/delete
+    defaults: { _controller: CCDNForumForumBundle:UserPost:delete, _locale: en }
+
+ccdn_forum_user_post_delete_confirmed:
+    pattern: /{postId}/delete/confirm
+    defaults: { _controller: CCDNForumForumBundle:UserPost:deleteConfirmed, _locale: en }
+

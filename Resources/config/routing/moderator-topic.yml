@@ -1,0 +1,32 @@
+
+ccdn_forum_moderator_topic_close:
+    pattern: /{topicId}/close
+    defaults: { _controller: CCDNForumForumBundle:TopicModerator:close, _locale: en }
+
+ccdn_forum_moderator_topic_reopen:
+    pattern: /{topicId}/reopen
+    defaults: { _controller: CCDNForumForumBundle:TopicModerator:reopen, _locale: en }
+
+ccdn_forum_moderator_topic_sticky:
+    pattern: /{topicId}/sticky
+    defaults: { _controller: CCDNForumForumBundle:TopicModerator:sticky, _locale: en }
+
+ccdn_forum_moderator_topic_unsticky:
+    pattern: /{topicId}/unsticky
+    defaults: { _controller: CCDNForumForumBundle:TopicModerator:unsticky, _locale: en }
+
+ccdn_forum_moderator_topic_delete:
+    pattern: /{topicId}/delete
+    defaults: { _controller: CCDNForumForumBundle:TopicModerator:delete, _locale: en }
+
+ccdn_forum_moderator_topic_delete_confirmed:
+    pattern: /{topicId}/delete/confirm
+    defaults: { _controller: CCDNForumForumBundle:TopicModerator:deleteConfirmed, _locale: en }
+
+ccdn_forum_moderator_topic_restore:
+    pattern: /{topicId}/restore
+    defaults: { _controller: CCDNForumForumBundle:TopicModerator:restore, _locale: en }
+
+ccdn_forum_user_topic_change_board:
+    pattern: /{topicId}/change-board
+    defaults: { _controller: CCDNForumForumBundle:TopicModerator:move, _locale: en }

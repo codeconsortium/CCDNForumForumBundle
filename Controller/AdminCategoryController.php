@@ -13,10 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
-use CCDNForum\ForumBundle\Entity\Board;
-
 /**
  *
  * @category CCDNForum
@@ -28,17 +24,7 @@ use CCDNForum\ForumBundle\Entity\Board;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class BoardBaseController extends BaseController
+class AdminCategoryController extends BaseController
 {
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Board                              $board
-     * @return bool
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function isAuthorisedToViewBoard(Board $board)
-    {
-        return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToViewBoard($board));
-    }
+	
 }
