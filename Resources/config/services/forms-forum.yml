@@ -1,0 +1,37 @@
+parameters:
+
+    # Service Parameters defined in app/config.
+    ccdn_forum_forum.form.type.forum_create.class:    CCDNForum\ForumBundle\Form\Type\ForumCreateFormType
+    ccdn_forum_forum.form.handler.forum_create.class: CCDNForum\ForumBundle\Form\Handler\ForumCreateFormHandler
+    ccdn_forum_forum.entity.forum.class:              CCDNForum\ForumBundle\Entity\Forum 
+
+services:
+
+    #
+    # Topic Forms.
+    #
+    ccdn_forum_forum.form.type.forum_create:
+        class: %ccdn_forum_forum.form.type.forum_create.class%
+        arguments:
+            - %ccdn_forum_forum.entity.forum.class%
+
+    ccdn_forum_forum.form.handler.forum_create:
+        class: %ccdn_forum_forum.form.handler.forum_create.class%
+        arguments:
+            - @form.factory
+            - @ccdn_forum_forum.form.type.forum_create
+            - @ccdn_forum_forum.model.forum
+
+    #ccdn_forum_forum.form.type.topic_update:
+    #    class: %ccdn_forum_forum.form.type.topic_update.class%
+    #    arguments:
+    #        - %ccdn_forum_forum.entity.topic.class%
+    #
+    #ccdn_forum_forum.form.handler.topic_update:
+    #    class: %ccdn_forum_forum.form.handler.topic_update.class%
+    #    arguments:
+    #        - @form.factory
+    #        - @ccdn_forum_forum.form.type.topic_update
+    #        - @ccdn_forum_forum.form.type.post_update
+    #        - @ccdn_forum_forum.manager.topic
+    #        - @ccdn_forum_forum.manager.post

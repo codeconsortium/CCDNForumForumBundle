@@ -24,7 +24,7 @@ namespace CCDNForum\ForumBundle\Controller;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class AdminForumController extends BaseController
+class AdminForumController extends AdminForumBaseController
 {
     /**
      *
@@ -52,10 +52,12 @@ class AdminForumController extends BaseController
     public function createAction()
     {
         $this->isAuthorised('ROLE_ADMIN');
-
+		
+		$formHandler = $this->getFormHandlerToCreateForum();
+		
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/create.html.', 
 			array(
-
+				'form' => $formHandler->getForm()->createView()
 	        )
 		);
     }
@@ -69,13 +71,17 @@ class AdminForumController extends BaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
+		$formHandler = $this->getFormHandlerToCreateForum();
+		
+		if ($formHandler->process($this->getRequest())) {
+			return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
+		}
+		
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/create.html.', 
 			array(
-
+				'form' => $formHandler->getForm()->createView()
 	        )
 		);
-		
-		return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
     }
 	
     /**

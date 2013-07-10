@@ -11,17 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Model\Model;
-
-use Symfony\Component\Security\Core\User\UserInterface;
-
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
-
-use CCDNForum\ForumBundle\Model\Model\BaseModel;
-use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
-
-use CCDNForum\ForumBundle\Entity\Forum;
+namespace CCDNForum\ForumBundle\Controller;
 
 /**
  *
@@ -34,15 +24,17 @@ use CCDNForum\ForumBundle\Entity\Forum;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class ForumModel extends BaseModel implements BaseModelInterface
+class AdminForumBaseController extends BaseController
 {
-	public function findAllForums()
+	/**
+	 *
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Form\Handler\ForumCreateFormHandler
+	 */
+	public function getFormHandlerToCreateForum()
 	{
-		return $this->getRepository()->findAllForums();
-	}
-	
-	public function saveNewForum(Forum $forum)
-	{
-		return $this->getManager()->saveNewForum($forum);
+	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.forum_create');
+
+	    return $formHandler;
 	}
 }

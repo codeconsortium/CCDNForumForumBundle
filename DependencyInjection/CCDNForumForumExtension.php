@@ -98,6 +98,7 @@ class CCDNForumForumExtension extends Extension
 		$loader->load('services/model-manager.yml');
 		$loader->load('services/model.yml');
 
+		$loader->load('services/forms-forum.yml');
 		$loader->load('services/forms-topic.yml');
 		$loader->load('services/forms-post.yml');
 
