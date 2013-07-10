@@ -64,6 +64,12 @@ class BaseController extends ContainerAware
 
     /**
      *
+     * @var \CCDNForum\ForumBundle\Model\Model\ForumModel $forumModel
+     */
+    private $forumModel;
+
+    /**
+     *
      * @var \CCDNForum\ForumBundle\Model\Model\CategoryModel $categoryModel
      */
     private $categoryModel;
@@ -366,11 +372,25 @@ class BaseController extends ContainerAware
 	{
 		return $this->getRequest()->query->get($query, $default);
 	}
-	
+
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Model\Model\CategoryManager
+     * @return \CCDNForum\ForumBundle\Model\Model\ForumModel
+     */
+    protected function getForumModel()
+    {
+        if (null == $this->forumModel) {
+            $this->forumModel = $this->container->get('ccdn_forum_forum.model.forum');
+        }
+
+        return $this->forumModel;
+    }
+		
+    /**
+     *
+     * @access protected
+     * @return \CCDNForum\ForumBundle\Model\Model\CategoryModel
      */
     protected function getCategoryModel()
     {
@@ -384,7 +404,7 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Model\Model\BoardManager
+     * @return \CCDNForum\ForumBundle\Model\Model\BoardModel
      */
     protected function getBoardModel()
     {
@@ -398,7 +418,7 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Model\Model\TopicManager
+     * @return \CCDNForum\ForumBundle\Model\Model\TopicModel
      */
     protected function getTopicModel()
     {
@@ -412,7 +432,7 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Model\Model\PostManager
+     * @return \CCDNForum\ForumBundle\Model\Model\PostModel
      */
     protected function getPostModel()
     {
@@ -426,7 +446,7 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Model\Model\DraftManager
+     * @return \CCDNForum\ForumBundle\Model\Model\DraftModel
      */
     protected function getDraftModel()
     {
@@ -440,7 +460,7 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Model\Model\RegistryManager
+     * @return \CCDNForum\ForumBundle\Model\Model\RegistryModel
      */
     protected function getRegistryModel()
     {
@@ -454,7 +474,7 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Model\Model\SubscriptionManager
+     * @return \CCDNForum\ForumBundle\Model\Model\SubscriptionModel
      */
     protected function getSubscriptionModel()
     {
@@ -468,7 +488,7 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Manager\PolicyManager
+     * @return \CCDNForum\ForumBundle\Manager\PolicyModel
      */
     protected function getPolicyManager()
     {

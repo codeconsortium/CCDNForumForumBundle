@@ -35,9 +35,11 @@ class AdminForumController extends BaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/list.html.', 
+		$forums = $this->getForumModel()->findAllForums();
+		
+		return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/list.html.', 
 			array(
-
+				'forums' => $forums
 	        )
 		);
     }

@@ -36,5 +36,8 @@ use CCDNForum\ForumBundle\Entity\Forum;
  */
 class ForumModel extends BaseModel implements BaseModelInterface
 {
-	
+	public function findAllForums()
+	{
+		return $this->getRepository()->findAllForums();
+	}
 }

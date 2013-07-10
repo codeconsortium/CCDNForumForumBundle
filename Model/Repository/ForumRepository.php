@@ -34,5 +34,15 @@ use CCDNForum\ForumBundle\Model\Repository\BaseRepositoryInterface;
  */
 class ForumRepository extends BaseRepository implements BaseRepositoryInterface
 {
-	
+    /**
+     *
+     * @access public
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function findAllForums()
+    {
+        $qb = $this->createSelectQuery(array('f'));
+
+        return $this->gateway->findForums($qb);
+    }
 }

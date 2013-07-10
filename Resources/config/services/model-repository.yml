@@ -1,12 +1,21 @@
 parameters:
 
     # Service Parameters defined in app/config.
+    ccdn_forum_forum.repository.forum.class: CCDNForum\ForumBundle\Model\Repository\ForumRepository
 
 services:
 
     #
     # Repositories.
     #
+
+    ccdn_forum_forum.repository.forum:
+        class: %ccdn_forum_forum.repository.forum.class%
+        arguments:
+            - @doctrine
+            - @security.context
+            - @ccdn_forum_forum.gateway.forum
+            - @ccdn_forum_forum.model.utility_bag
 
     ccdn_forum_forum.repository.category:
         class: %ccdn_forum_forum.repository.category.class%

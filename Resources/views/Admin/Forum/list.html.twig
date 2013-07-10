@@ -1,0 +1,31 @@
+{% extends 'CCDNForumForumBundle:Admin:/Layout/base.html.twig' %}
+
+{% set LayoutTemplate = ccdn_forum_forum.topic.create.layout_template %}
+
+{% block title %}{% endblock %}
+
+
+{%- block body_content -%}
+
+	{%- spaceless -%}
+	
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				{%- for forum_index, forum in forums -%}
+					<tr>
+						<td>{{- forum.id -}}</td>
+						<td>{{- forum.name -}}</td>
+					</tr>
+				{%- endfor -%}
+			</tbody>
+		</table>
+	
+	{%- endspaceless -%}
+	
+{%- endblock body_content -%}

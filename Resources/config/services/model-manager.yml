@@ -1,6 +1,7 @@
 parameters:
 
     # Service Parameters defined in app/config.
+    ccdn_forum_forum.manager.forum.class: CCDNForum\ForumBundle\Model\Manager\ForumManager
 
 services:
 
@@ -11,6 +12,15 @@ services:
     ccdn_forum_forum.manager_bag:
         class: %ccdn_forum_forum.manager_bag.class%
         arguments: [@service_container]
+
+    ccdn_forum_forum.manager.forum:
+        class: %ccdn_forum_forum.manager.forum.class%
+        arguments:
+            - @doctrine
+            - @security.context
+            - @ccdn_forum_forum.gateway.forum
+            - @ccdn_forum_forum.manager_bag
+            - @ccdn_forum_forum.model.utility_bag
 
     ccdn_forum_forum.manager.category:
         class: %ccdn_forum_forum.manager.category.class%

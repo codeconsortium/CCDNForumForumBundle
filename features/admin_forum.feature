@@ -10,30 +10,30 @@ Feature: Forum Management
           | admin@foo.com  | root     | 1       | ROLE_ADMIN    |
           | user@foo.com   | root     | 1       | ROLE_USER     |
         And there are following forums defined:
-          | name           | order    |
-		  | test_f_1       | 1        |
-		  | test_f_2       | 2        |
-		  | test_f_3       | 3        |
+          | name               | order    |
+		  | test_forum_1       | 1        |
+		  | test_forum_2       | 2        |
+		  | test_forum_3       | 3        |
         And there are following categories defined:
-          | name           | order    |
-          | test_c_1       | 1        |
-		  | test_c_2       | 2        |
-		  | test_c_3       | 3        |
+          | name                  | order    |
+          | test_category_1       | 1        |
+		  | test_category_2       | 2        |
+		  | test_category_3       | 3        |
         And there are following boards defined:
-          | name           | description          |
-          | test_b_1       | testing board 1      |
-          | test_b_2       | testing board 2      |
-          | test_b_3       | testing board 3      |
+          | name               | description          |
+          | test_board_1       | testing board 1      |
+          | test_board_2       | testing board 2      |
+          | test_board_3       | testing board 3      |
 
 	Scenario: See forum list
         Given I am on "/en/forum/admin/" 
           And I should see "hello world"
 	  
 	Scenario: See forum list
-        Given I am on "/en/forum/admin/manage-forums/list" 
-          And I should see "test_f_1"
-          And I should see "test_f_2"
-          And I should see "test_f_3"
+        Given I am on "/en/forum/admin/manage-forums/" 
+          And I should see "test_forum_1"
+          And I should see "test_forum_2"
+          And I should see "test_forum_3"
 
     Scenario: See forum create
         Given I am on "/en/forum/admin/manage-forums/create"
