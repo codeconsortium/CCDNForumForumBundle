@@ -39,7 +39,12 @@ Feature: Forum Management
           And I should see "FooBar"
 
     Scenario: See forum update
-        Given I am on "/en/forum/admin/manage-forums/update"
+	    Given I am on "/en/forum/admin/manage-forums/"
+		  And I follow "test_forum_1"
+          And I fill in "ForumUpdate[name]" with "FooBaz"
+          And I press "Update"
+		 Then I should be on "/en/forum/admin/manage-forums/"
+          And I should see "FooBaz"
 
     Scenario: See forum delete
         Given I am on "/en/forum/admin/manage-forums/delete"

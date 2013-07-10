@@ -41,6 +41,11 @@ class ForumModel extends BaseModel implements BaseModelInterface
 		return $this->getRepository()->findAllForums();
 	}
 	
+	public function findOneForumById($forumId)
+	{
+		return $this->getRepository()->findOneForumById($forumId);
+	}
+	
 	public function saveNewForum(Forum $forum)
 	{
 		return $this->getManager()->saveNewForum($forum);

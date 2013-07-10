@@ -16,6 +16,7 @@
 				<tr>
 					<th>ID</th>
 					<th>Name</th>
+					<td></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -23,6 +24,11 @@
 					<tr>
 						<td>{{- forum.id -}}</td>
 						<td>{{- forum.name -}}</td>
+						<td>
+							<a class="btn" href="{{- path('ccdn_forum_admin_forum_edit', {'forumId': forum.id}) -}}" id="{{- forum.name -}}">
+								Edit
+							</a>
+						</td>
 					</tr>
 				{%- endfor -%}
 			</tbody>

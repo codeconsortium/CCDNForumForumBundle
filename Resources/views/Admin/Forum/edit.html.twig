@@ -1,0 +1,41 @@
+{% extends 'CCDNForumForumBundle::base.html.twig' %}
+
+{% set LayoutTemplate = ccdn_forum_forum.post.edit_topic.layout_template %}
+
+{% block title %}{% endblock %}
+
+{% block body_content %}
+
+    {%- spaceless -%}
+
+	<section>
+	    {%- form_theme form ccdn_forum_forum.post.edit_topic.form_theme -%}
+	    <form action="{{- path('ccdn_forum_admin_forum_edit_process', {'forumId': forum.id}) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
+	        <fieldset>
+
+				<div class="control-group form-title">
+					<div class="controls">
+						<h4>Create New Forum</h4>
+					</div>
+				</div>
+
+				{{- form_errors(form) -}}
+
+				{{- form_rest(form) -}}
+
+	            <div class="form-actions">
+	                <input type="submit" class="btn btn-primary" value="Update" name="submit[post]">
+					
+					{#<input type="submit" class="btn" value="{{- 'form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">#}
+
+	                <a class="btn" href="{{- path('ccdn_forum_admin_forum_list') -}}">
+						{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
+					</a>
+	            </div>
+	        </fieldset>
+	    </form>
+	</section>
+
+    {%- endspaceless -%}
+
+{% endblock body_content %}

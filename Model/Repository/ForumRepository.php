@@ -45,4 +45,23 @@ class ForumRepository extends BaseRepository implements BaseRepositoryInterface
 
         return $this->gateway->findForums($qb);
     }
+	
+    /**
+     *
+     * @access public
+     * @param int $forumId
+     * @return \CCDNForum\ForumBundle\Entity\Forum
+     */
+    public function findOneForumById($forumId)
+    {
+		$params = array(':forumId' => $forumId);
+		
+        $qb = $this->createSelectQuery(array('f'));
+		
+		$qb
+			->where('f.id = :forumId');
+		;
+		
+        return $this->gateway->findForum($qb, $params);
+    }
 }

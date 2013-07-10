@@ -13,6 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
+use CCDNForum\ForumBundle\Entity\Forum;
+
 /**
  *
  * @category CCDNForum
@@ -35,6 +37,20 @@ class AdminForumBaseController extends BaseController
 	{
 	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.forum_create');
 
+	    return $formHandler;
+	}
+	
+	/**
+	 *
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Form\Handler\ForumCreateFormHandler
+	 */
+	public function getFormHandlerToUpdateForum(Forum $forum)
+	{
+	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.forum_update');
+
+		$formHandler->setForum($forum);
+		
 	    return $formHandler;
 	}
 }

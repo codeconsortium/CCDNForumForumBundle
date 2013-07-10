@@ -89,13 +89,20 @@ class AdminForumController extends AdminForumBaseController
      * @access public
      * @return RenderResponse
      */
-    public function editAction()
+    public function editAction($forumId)
     {
         $this->isAuthorised('ROLE_ADMIN');
 
+		$forum = $this->getForumModel()->findOneForumById($forumId);
+	
+		$this->isFound($forum);
+		
+		$formHandler = $this->getFormHandlerToUpdateForum($forum);
+		
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/edit.html.', 
 			array(
-
+				'form' => $formHandler->getForm()->createView(),
+				'forum' => $forum
 	        )
 		);
     }
@@ -105,17 +112,26 @@ class AdminForumController extends AdminForumBaseController
      * @access public
      * @return RenderResponse
      */
-    public function editProcessAction()
+    public function editProcessAction($forumId)
     {
         $this->isAuthorised('ROLE_ADMIN');
 
+		$forum = $this->getForumModel()->findOneForumById($forumId);
+	
+		$this->isFound($forum);
+		
+		$formHandler = $this->getFormHandlerToUpdateForum($forum);
+
+		if ($formHandler->process($this->getRequest())) {
+			return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
+		}
+		
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/edit.html.', 
 			array(
-
+				'form' => $formHandler->getForm()->createView(),
+				'forum' => $forum
 	        )
 		);
-		
-		return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
     }
 	
     /**

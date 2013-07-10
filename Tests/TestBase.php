@@ -63,108 +63,128 @@ class TestBase extends WebTestCase
 		$posts      = $this->addFixturesForPosts($topics, $users);
     }
 	
-    public function purge()
+    protected function purge()
     {
         $purger = new ORMPurger($this->em);
         $executor = new ORMExecutor($this->em, $purger);
         $executor->purge();
 	}
 	
-	public function addFixturesForUsers()
+	protected function addUser($username, $email, $password)
+	{
+		$user = new User();
+		
+		$user->setUsername($username);
+		$user->setEmail($email);
+		$user->setPlainPassword($password);
+		
+		$this->em->persist($user);
+		$this->em->flush();
+		
+		$this->em->refresh($user);
+		
+		return $user;
+	}
+	
+	protected function addFixturesForUsers()
 	{
 		$userNames = array('admin', 'tom', 'dick', 'harry');
 		$users = array();
 		
 		foreach ($userNames as $username) {
-			$user = new User();
-			
-			$user->setUsername($username);
-			$user->setEmail($username . '@foobar.com');
-			$user->setPlainPassword('password');
-			
-			$this->em->persist($user);
-			$this->em->flush();
-			
-			$this->em->refresh($user);
-			
-			$users[] = $user;
+			$users[] = $this->addUser($username, $username . '@foobar.com', 'password');
 		}
 	
 		return $users;
 	}
+	
+	protected function addNewForum($forumName)
+	{
+		$forum = new Forum();
+		
+		$forum->setName($forumName);
+		
+		$this->em->persist($forum);
+		$this->em->flush();
 
-	public function addFixturesForForums()
+		$this->em->refresh($forum);
+		
+		return $forum;
+	}
+	
+	protected function addFixturesForForums()
 	{
 		$forumNames = array('test_forum_1', 'test_forum_2', 'test_forum_3');
 		$forums = array();
 		
 		foreach ($forumNames as $forumName) {
-			$forum = new Forum();
-			
-			$forum->setName($forumName);
-			
-			$this->em->persist($forum);
-			$this->em->flush();
-
-			$this->em->refresh($forum);
-			
-			$forums[] = $forum;
+			$forums[] = $this->addNewForum($forumName);
 		}
 		
 		return $forums;
 	}
 	
-	public function addFixturesForCategories($forums)
+	protected function addNewCategory($categoryName, $order)
+	{
+		$category = new Category();
+		
+		$category->setName($categoryName);
+		$category->setListOrderPriority($order);
+		
+		$this->em->persist($category);
+		$this->em->flush();
+		
+		$this->em->refresh($category);
+		
+		return $category;
+	}
+	
+	protected function addFixturesForCategories($forums)
 	{
 		$categoryNames = array('test_category_1', 'test_category_2', 'test_category_3');
 		$categories = array();
 		
 		foreach ($categoryNames as $index => $categoryName) {
-			$category = new Category();
-			
-			$category->setName($categoryName);
-			$category->setListOrderPriority($index);
-			
-			$this->em->persist($category);
-			$this->em->flush();
-			
-			$this->em->refresh($category);
-			
-			$categories[] = $category;
+			$categories[] = $this->addNewCategory($categoryName, $index);
 		}
 		
 		return $categories;
 	}
 	
-	public function addFixturesForBoards($categories)
+	protected function addNewBoard($boardName, $boardDescription, $order)
+	{
+		$board = new Board();
+		
+		$board->setName($boardName);
+		$board->setDescription($boardDescription);
+		$board->setListOrderPriority($order);
+		
+		$this->em->persist($board);
+		$this->em->flush();
+		
+		$this->em->refresh($board);
+		
+		return $board;
+	}
+	
+	protected function addFixturesForBoards($categories)
 	{
 		$boardNames = array('test_board_1', 'test_board_2', 'test_board_3');
 		$boards = array();
 		
 		foreach ($boardNames as $index => $boardName) {
-			$board = new Board();
-			
-			$board->setName($boardName);
-			$board->setDescription($boardName);
-			$board->setListOrderPriority($index);
-			
-			$this->em->persist($board);
-			$this->em->flush();
-			
-			$this->em->refresh($board);
-			
-			$boards[] = $board;
+			$boards[] = $this->addNewBoard($boardName, $boardName, $index);
 		}
 		
 		return $boards;
 	}
 	
-	public function addFixturesForTopics($boards)
+	protected function addFixturesForTopics($boards)
 	{
 		return array();
 	}
 	
-	public function addFixturesForPosts($topics, $users)
+	protected function addFixturesForPosts($topics, $users)
 	{
 		
 		return array();
