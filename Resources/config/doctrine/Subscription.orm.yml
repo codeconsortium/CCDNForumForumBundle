@@ -20,6 +20,7 @@ CCDNForum\ForumBundle\Entity\Subscription:
             targetEntity: CCDNForum\ForumBundle\Entity\Topic
             cascade: ["persist"]
             inversedBy: subscriptions
+            nullable: true
             joinColumn:
                 name: fk_topic_id
                 referencedColumnName: id
@@ -27,6 +28,7 @@ CCDNForum\ForumBundle\Entity\Subscription:
         ownedBy:
             targetEntity: Symfony\Component\Security\Core\User\UserInterface
             cascade: ["persist"]
+            nullable: true
             joinColumn:
                 name: fk_owned_by_user_id
                 referencedColumnName: id

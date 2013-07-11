@@ -15,7 +15,8 @@
 
 				<div class="control-group form-title">
 					<div class="controls">
-						<h4>Create New Forum</h4>
+						<h4>Update Forum {{ forum.id -}}</h4>
+						<h5>{{- forum.name -}}</h5>
 					</div>
 				</div>
 
@@ -24,7 +25,7 @@
 				{{- form_rest(form) -}}
 
 	            <div class="form-actions">
-	                <input type="submit" class="btn btn-primary" value="Update" name="submit[post]">
+	                <input type="submit" class="btn btn-primary" value="Update" name="submit[post]" id="submit[post]">
 					
 					{#<input type="submit" class="btn" value="{{- 'form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">#}
 

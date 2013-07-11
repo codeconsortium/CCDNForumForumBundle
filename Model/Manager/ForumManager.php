@@ -41,4 +41,30 @@ class ForumManager extends BaseManager implements BaseManagerInterface
 
         return $this;
 	}
+	
+	public function deleteForum(Forum $forum)
+	{
+		// If we do not refresh the forum, AND we have reassigned the categories to null, 
+		// then its lazy-loaded categories are dirty, as the categories in memory will
+		// still have the old category id set. Removing the forum will cascade into deleting
+		// categories aswell, even though in the db the relation has been set to null.
+		$this->refresh($forum);
+		
+		$this->remove($forum)->flush();
+		
+		return $this;
+	}
+	
+	public function reassignCategoriesToForum(ArrayCollection $categories, Forum $forum = null)
+	{
+		foreach ($categories as $category) {
+			$category->setForum(null);
+			
+			$this->persist($category);
+		}
+
+		$this->flush();
+		
+		return $this;
+	}
 }

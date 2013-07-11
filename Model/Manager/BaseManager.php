@@ -17,10 +17,9 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNForum\ForumBundle\Model\Manager\BaseManagerInterface;
-use CCDNForum\ForumBundle\Model\Manager\Bag\ManagerBagInterface;
-
 use CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface;
+use CCDNForum\ForumBundle\Model\Manager\BaseManagerInterface;
+use CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface;
 
 /**
  *
@@ -68,21 +67,21 @@ abstract class BaseManager implements BaseManagerInterface
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Manager\Bag\ManagerBagInterface $managerBag
+     * @var \CCDNForum\ForumBundle\Manager\Bag\ManagerBagInterface $modelBag
      */
-    protected $managerBag;
+    protected $modelBag;
 
 	protected $model;
 	
     /**
      *
      * @access public
-     * @param \Doctrine\Bundle\DoctrineBundle\Registry               $doctrine
-     * @param \Symfony\Component\Security\Core\SecurityContext       $securityContext
-     * @param \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface    $gateway
-     * @param \CCDNForum\ForumBundle\Manager\Bag\ManagerBagInterface $managerBag
+     * @param \Doctrine\Bundle\DoctrineBundle\Registry                 $doctrine
+     * @param \Symfony\Component\Security\Core\SecurityContext         $securityContext
+     * @param \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface      $gateway
+     * @param \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface $modelBag
      */
-    public function __construct(Registry $doctrine, SecurityContext $securityContext, BaseGatewayInterface $gateway, ManagerBagInterface $managerBag)
+    public function __construct(Registry $doctrine, SecurityContext $securityContext, BaseGatewayInterface $gateway, ModelBagInterface $modelBag)
     {
         $this->doctrine = $doctrine;
 
@@ -92,8 +91,18 @@ abstract class BaseManager implements BaseManagerInterface
 
         $this->gateway = $gateway;
 
-        $this->managerBag = $managerBag;
+        $this->modelBag = $modelBag;
     }
+	
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
+	 */
+	public function getModelBag()
+	{
+		return $this->modelBag;
+	}
 	
 	public function setModel($model)
 	{

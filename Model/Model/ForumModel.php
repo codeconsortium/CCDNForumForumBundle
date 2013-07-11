@@ -50,4 +50,14 @@ class ForumModel extends BaseModel implements BaseModelInterface
 	{
 		return $this->getManager()->saveNewForum($forum);
 	}
+	
+	public function deleteForum(Forum $forum)
+	{
+		return $this->getManager()->deleteForum($forum);
+	}
+	
+	public function reassignCategoriesToForum(ArrayCollection $categories, Forum $forum = null)
+	{
+		return $this->getManager()->reassignCategoriesToForum($categories, $forum);
+	}
 }

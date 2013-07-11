@@ -36,7 +36,7 @@ CCDNForum\ForumBundle\Entity\Board:
         topics:
             targetEntity: CCDNForum\ForumBundle\Entity\Topic
             mappedBy: board
-            #cascade: ["remove"]
+            cascade: ["remove"]
     manyToOne:
         category:
             targetEntity: CCDNForum\ForumBundle\Entity\Category
@@ -48,7 +48,7 @@ CCDNForum\ForumBundle\Entity\Board:
                 onDelete: SET NULL
         lastPost:
             targetEntity: CCDNForum\ForumBundle\Entity\Post
-            cascade: ["persist"]
+            cascade: ["persist", "detach"]
             nullable: true
             joinColumn:
                 name: fk_last_post_id

@@ -35,7 +35,7 @@ CCDNForum\ForumBundle\Entity\Post:
     manyToOne:
         topic:
             targetEntity: CCDNForum\ForumBundle\Entity\Topic
-            cascade: ["persist"]
+            cascade: []
             inversedBy: posts
             #nullable: true
             joinColumn:
@@ -44,28 +44,32 @@ CCDNForum\ForumBundle\Entity\Post:
                 onDelete: SET NULL
         createdBy:
             targetEntity: Symfony\Component\Security\Core\User\UserInterface
-            cascade: ["persist"]
+            cascade: []
+            nullable: true
             joinColumn:
                 name: fk_created_by_user_id
                 referencedColumnName: id
                 onDelete: SET NULL
         editedBy:
             targetEntity: Symfony\Component\Security\Core\User\UserInterface
-            cascade: ["persist"]
+            cascade: []
+            nullable: true
             joinColumn:
                 name: fk_edited_by_user_id
                 referencedColumnName: id
                 onDelete: SET NULL
         deletedBy:
             targetEntity: Symfony\Component\Security\Core\User\UserInterface
-            cascade: ["persist"]
+            cascade: []
+            nullable: true
             joinColumn:
                 name: fk_deleted_by_user_id
                 referencedColumnName: id
                 onDelete: SET NULL
         lockedBy:
             targetEntity: Symfony\Component\Security\Core\User\UserInterface
-            cascade: ["persist"]
+            cascade: []
+            nullable: true
             joinColumn:
                 name: fk_locked_by_user_id
                 referencedColumnName: id

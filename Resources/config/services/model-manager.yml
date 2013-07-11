@@ -9,9 +9,9 @@ services:
     # Managers.
     #
 
-    ccdn_forum_forum.manager_bag:
-        class: %ccdn_forum_forum.manager_bag.class%
-        arguments: [@service_container]
+    #ccdn_forum_forum.manager_bag:
+    #    class: %ccdn_forum_forum.manager_bag.class%
+    #    arguments: [@service_container]
 
     ccdn_forum_forum.manager.forum:
         class: %ccdn_forum_forum.manager.forum.class%
@@ -19,7 +19,7 @@ services:
             - @doctrine
             - @security.context
             - @ccdn_forum_forum.gateway.forum
-            - @ccdn_forum_forum.manager_bag
+            - @ccdn_forum_forum.model_bag
             - @ccdn_forum_forum.model.utility_bag
 
     ccdn_forum_forum.manager.category:
@@ -28,7 +28,7 @@ services:
             - @doctrine
             - @security.context
             - @ccdn_forum_forum.gateway.category
-            - @ccdn_forum_forum.manager_bag
+            - @ccdn_forum_forum.model_bag
             - @ccdn_forum_forum.model.utility_bag
 
     ccdn_forum_forum.manager.board:
@@ -37,7 +37,7 @@ services:
             - @doctrine
             - @security.context
             - @ccdn_forum_forum.gateway.board
-            - @ccdn_forum_forum.manager_bag
+            - @ccdn_forum_forum.model_bag
             - @ccdn_forum_forum.model.utility_bag
 
     ccdn_forum_forum.manager.topic:
@@ -46,7 +46,7 @@ services:
             - @doctrine
             - @security.context
             - @ccdn_forum_forum.gateway.topic
-            - @ccdn_forum_forum.manager_bag
+            - @ccdn_forum_forum.model_bag
             - @ccdn_forum_forum.model.utility_bag
 
     ccdn_forum_forum.manager.post:
@@ -55,7 +55,7 @@ services:
             - @doctrine
             - @security.context
             - @ccdn_forum_forum.gateway.post
-            - @ccdn_forum_forum.manager_bag
+            - @ccdn_forum_forum.model_bag
             - @ccdn_forum_forum.model.utility_bag
 
     ccdn_forum_forum.manager.registry:
@@ -64,7 +64,7 @@ services:
             - @doctrine
             - @security.context
             - @ccdn_forum_forum.gateway.registry
-            - @ccdn_forum_forum.manager_bag
+            - @ccdn_forum_forum.model_bag
             - @ccdn_forum_forum.model.utility_bag
 
     ccdn_forum_forum.manager.draft:
@@ -73,7 +73,7 @@ services:
             - @doctrine
             - @security.context
             - @ccdn_forum_forum.gateway.draft
-            - @ccdn_forum_forum.manager_bag
+            - @ccdn_forum_forum.model_bag
             - @ccdn_forum_forum.model.utility_bag
 
     ccdn_forum_forum.manager.subscription:
@@ -82,5 +82,5 @@ services:
             - @doctrine
             - @security.context
             - @ccdn_forum_forum.gateway.subscription
-            - @ccdn_forum_forum.manager_bag
+            - @ccdn_forum_forum.model_bag
             - @ccdn_forum_forum.model.utility_bag

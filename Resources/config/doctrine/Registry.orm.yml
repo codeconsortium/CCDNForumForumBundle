@@ -23,6 +23,7 @@ CCDNForum\ForumBundle\Entity\Registry:
         ownedBy:
             targetEntity: Symfony\Component\Security\Core\User\UserInterface
             cascade: ["persist"]
+            nullable: true
             joinColumn:
                 name: fk_owned_by_user_id
                 referencedColumnName: id

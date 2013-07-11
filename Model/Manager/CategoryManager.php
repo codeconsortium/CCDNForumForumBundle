@@ -118,4 +118,16 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
 
         return $this;
     }
+	
+	public function deleteSubordinates(Category $category)
+	{
+		// Get All Boards
+		$boards = $category->getBoards();
+		
+		$boardModel = $this->getModelBag()->getBoardModel();
+		
+		foreach ($boards as $board) {
+			$boardModel->deleteSubordinates($board);
+		}
+	}
 }

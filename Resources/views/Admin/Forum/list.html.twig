@@ -16,7 +16,8 @@
 				<tr>
 					<th>ID</th>
 					<th>Name</th>
-					<td></th>
+					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -25,8 +26,13 @@
 						<td>{{- forum.id -}}</td>
 						<td>{{- forum.name -}}</td>
 						<td>
-							<a class="btn" href="{{- path('ccdn_forum_admin_forum_edit', {'forumId': forum.id}) -}}" id="{{- forum.name -}}">
+							<a class="btn" href="{{- path('ccdn_forum_admin_forum_edit', {'forumId': forum.id}) -}}" id="update_forum[{{- forum.name -}}]">
 								Edit
+							</a>
+						</td>
+						<td>
+							<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_forum_delete', {'forumId': forum.id}) -}}" id="delete_forum[{{- forum.name -}}]">
+								Delete
 							</a>
 						</td>
 					</tr>

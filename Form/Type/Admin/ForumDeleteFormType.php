@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Type;
+namespace CCDNForum\ForumBundle\Form\Type\Admin;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,7 +29,7 @@ use CCDNForum\ForumBundle\Entity\Forum;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class ForumUpdateFormType extends AbstractType
+class ForumDeleteFormType extends AbstractType
 {
     /**
      *
@@ -56,12 +56,26 @@ class ForumUpdateFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text',
-                array(
-                    'label'              => 'form.label.forum.name',
-                    'translation_domain' => 'CCDNForumForumBundle',
-                )
-            )
+			->add('confirm_delete', 'choice',
+				array(
+					'choices' => array(
+						'delete_forum' => 'Yes, I want to delete this forum.',
+					),
+					'multiple' => true,
+					'expanded' => true,
+					'mapped' => false
+				)
+			)
+			->add('confirm_subordinates', 'choice',
+				array(
+					'choices' => array(
+						'delete_subordinates' => 'Also delete categories, boards and topics.'
+					),
+					'multiple' => true,
+					'expanded' => true,
+					'mapped' => false
+				)
+			)
         ;
     }
 
@@ -79,7 +93,7 @@ class ForumUpdateFormType extends AbstractType
             'csrf_field_name'     => '_token',
             // a unique key to help generate the secret token
             'intention'           => 'forum_item',
-            'validation_groups'   => array('forum_update'),
+            'validation_groups'   => array('forum_delete'),
             'cascade_validation'  => true,
         );
     }
@@ -91,6 +105,6 @@ class ForumUpdateFormType extends AbstractType
      */
     public function getName()
     {
-        return 'ForumUpdate';
+        return 'ForumDelete';
     }
 }

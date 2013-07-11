@@ -156,4 +156,9 @@ class BoardModel extends BaseModel implements BaseModelInterface
     {
         return $this->getManager()->reorder($boards, $boardId, $direction);
     }
+	
+	public function deleteBoard(Board $board)
+	{
+		return $this->getManager()->deleteBoard($board);
+	}
 }

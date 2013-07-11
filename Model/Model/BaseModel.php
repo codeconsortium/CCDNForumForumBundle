@@ -18,6 +18,7 @@ use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Model\Model\BaseModel;
 use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
+use CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface;
 
 /**
  *
@@ -39,7 +40,7 @@ abstract class BaseModel
 	
 	protected $modelBag;
 	
-	public function __construct($repository, $manager, $modelBag)
+	public function __construct($repository, $manager, ModelBagInterface $modelBag)
 	{
 		$repository->setModel($this);
 		$this->repository = $repository;
@@ -60,6 +61,12 @@ abstract class BaseModel
 		return $this->manager;
 	}
 	
+	
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
+	 */
 	public function getModelBag()
 	{
 		return $this->modelBag;

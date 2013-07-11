@@ -16,7 +16,7 @@ namespace CCDNForum\ForumBundle\Model\Utility;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\SecurityContext;
 
-use CCDNForum\ForumBundle\Model\Manager\Bag\ManagerBagInterface;
+use CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface;
 
 use CCDNForum\ForumBundle\Entity\Category;
 use CCDNForum\ForumBundle\Entity\Board;
@@ -46,9 +46,9 @@ class PolicyManager
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Manager\Bag\ManagerBagInterface $managerBag
+     * @var \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface $modelBag
      */
-    protected $managerBag;
+    protected $modelBag;
 
     /**
      *
@@ -60,14 +60,14 @@ class PolicyManager
     /**
      *
      * @access public
-     * @param \Symfony\Component\Security\Core\SecurityContext       $securityContext
-     * @param \CCDNForum\ForumBundle\Manager\Bag\ManagerBagInterface $managerBag
+     * @param \Symfony\Component\Security\Core\SecurityContext         $securityContext
+     * @param \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface $modelBag
      */
-    public function __construct(SecurityContext $securityContext, ManagerBagInterface $managerBag)
+    public function __construct(SecurityContext $securityContext, ModelBagInterface $modelBag)
     {
         $this->securityContext = $securityContext;
 
-        $this->managerBag = $managerBag;
+        $this->modelBag = $modelBag;
     }
 
     /**

@@ -33,7 +33,7 @@ class AdminForumController extends AdminForumBaseController
      */
     public function listAction()
     {
-        $this->isAuthorised('ROLE_ADMIN');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
 
 		$forums = $this->getForumModel()->findAllForums();
 		
@@ -51,7 +51,7 @@ class AdminForumController extends AdminForumBaseController
      */
     public function createAction()
     {
-        $this->isAuthorised('ROLE_ADMIN');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
 		
 		$formHandler = $this->getFormHandlerToCreateForum();
 		
@@ -69,7 +69,7 @@ class AdminForumController extends AdminForumBaseController
      */
     public function createProcessAction()
     {
-        $this->isAuthorised('ROLE_ADMIN');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
 
 		$formHandler = $this->getFormHandlerToCreateForum();
 		
@@ -91,7 +91,7 @@ class AdminForumController extends AdminForumBaseController
      */
     public function editAction($forumId)
     {
-        $this->isAuthorised('ROLE_ADMIN');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
 
 		$forum = $this->getForumModel()->findOneForumById($forumId);
 	
@@ -114,7 +114,7 @@ class AdminForumController extends AdminForumBaseController
      */
     public function editProcessAction($forumId)
     {
-        $this->isAuthorised('ROLE_ADMIN');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
 
 		$forum = $this->getForumModel()->findOneForumById($forumId);
 	
@@ -139,13 +139,20 @@ class AdminForumController extends AdminForumBaseController
      * @access public
      * @return RenderResponse
      */
-    public function deleteAction()
+    public function deleteAction($forumId)
     {
-        $this->isAuthorised('ROLE_ADMIN');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
+
+		$forum = $this->getForumModel()->findOneForumById($forumId);
+	
+		$this->isFound($forum);
+		
+		$formHandler = $this->getFormHandlerToDeleteForum($forum);
 
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/delete.html.', 
 			array(
-
+				'form' => $formHandler->getForm()->createView(),
+				'forum' => $forum
 	        )
 		);
     }
@@ -155,10 +162,25 @@ class AdminForumController extends AdminForumBaseController
      * @access public
      * @return RedirectResponse
      */
-    public function deleteConfirmedAction()
+    public function deleteConfirmedAction($forumId)
     {
-        $this->isAuthorised('ROLE_ADMIN');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
 
-		return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
+		$forum = $this->getForumModel()->findOneForumById($forumId);
+	
+		$this->isFound($forum);
+		
+		$formHandler = $this->getFormHandlerToDeleteForum($forum);
+
+		if ($formHandler->process($this->getRequest())) {
+			return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
+		}
+		
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/delete.html.', 
+			array(
+				'form' => $formHandler->getForm()->createView(),
+				'forum' => $forum
+	        )
+		);
     }
 }

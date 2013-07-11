@@ -17,7 +17,7 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface;
-use CCDNForum\ForumBundle\Model\Gateway\Bag\GatewayBagInterface;
+use CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface;
 
 /**
  *
@@ -65,18 +65,18 @@ abstract class BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Gateway\Bag\GatewayBagInterface $gatewayBag
+     * @var \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface $modelBag
      */
-    protected $gatewayBag;
+    protected $modelBag;
 
     /**
      *
      * @access public
-     * @param \Doctrine\Bundle\DoctrineBundle\Registry               $doctrine
-     * @param \CCDNForum\ForumBundle\Gateway\Bag\GatewayBagInterface $gatewayBag
-     * @param string                                                 $entityClass
+     * @param \Doctrine\Bundle\DoctrineBundle\Registry                 $doctrine
+     * @param \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface $modelBag
+     * @param string                                                   $entityClass
      */
-    public function __construct(Registry $doctrine, $paginator, GatewayBagInterface $gatewayBag, $entityClass)
+    public function __construct(Registry $doctrine, $paginator, ModelBagInterface $modelBag, $entityClass)
     {
         $this->doctrine = $doctrine;
 
@@ -84,11 +84,22 @@ abstract class BaseGateway implements BaseGatewayInterface
 		
         $this->em = $doctrine->getEntityManager();
 
-        $this->gatewayBag = $gatewayBag;
+        $this->modelBag = $modelBag;
 
         $this->entityClass = $entityClass;
     }
 
+	
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
+	 */
+	public function getModelBag()
+	{
+		return $this->modelBag;
+	}
+	
     /**
      *
      * @access public

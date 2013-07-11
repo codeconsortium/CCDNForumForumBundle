@@ -84,6 +84,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     }
 
     /**
+     * 
      * {@inheritdoc}
      */
     public function setKernel(KernelInterface $kernel)
@@ -92,6 +93,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     }
 
     /**
+     * 
      * @BeforeScenario
      */
     public function purgeDatabase()
@@ -103,12 +105,11 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     }
 	
     /**
+     * 
      * @Given /^I am logged in as admin$/
      */
     public function iAmLoggedInAsAdmin()
     {
-        //throw new PendingException();
-
 		$session = $this->getMainContext()->getSession();
 		$session->setBasicAuth('admin@foo.com', 'root');
     }

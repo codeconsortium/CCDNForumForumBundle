@@ -25,11 +25,11 @@ services:
         class: %ccdn_forum_forum.manager.policy.class%
         arguments:
             - @security.context
-            - @ccdn_forum_forum.manager_bag
+            - @ccdn_forum_forum.model_bag
 
     ccdn_forum_forum.manager.policy:
         class: %ccdn_forum_forum.manager.policy.class%
         arguments:
             - @security.context
-            - @ccdn_forum_forum.manager_bag
+            - @ccdn_forum_forum.model_bag
 

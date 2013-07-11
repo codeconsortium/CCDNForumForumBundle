@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Handler;
+namespace CCDNForum\ForumBundle\Form\Handler\Admin;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;

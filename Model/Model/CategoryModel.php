@@ -143,4 +143,9 @@ class CategoryModel extends BaseModel implements BaseModelInterface
     {
         return $this->getManager()->reorder($categories, $categoryId, $direction);
     }
+	
+	public function deleteCategory(Category $category)
+	{
+		return $this->getManager()->deleteForum($category);
+	}
 }

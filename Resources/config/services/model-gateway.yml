@@ -10,16 +10,16 @@ services:
     # Gateways.
     #
 
-    ccdn_forum_forum.gateway_bag:
-        class: %ccdn_forum_forum.gateway_bag.class%
-        arguments: [@service_container]
+    #ccdn_forum_forum.gateway_bag:
+    #    class: %ccdn_forum_forum.gateway_bag.class%
+    #    arguments: [@service_container]
 
     ccdn_forum_forum.gateway.forum:
         class: %ccdn_forum_forum.gateway.forum.class%
         arguments:
             - @doctrine
             - @knp_paginator
-            - @ccdn_forum_forum.gateway_bag
+            - @ccdn_forum_forum.model_bag
             - %ccdn_forum_forum.entity.forum.class%
 
     ccdn_forum_forum.gateway.category:
@@ -27,7 +27,7 @@ services:
         arguments:
             - @doctrine
             - @knp_paginator
-            - @ccdn_forum_forum.gateway_bag
+            - @ccdn_forum_forum.model_bag
             - %ccdn_forum_forum.entity.category.class%
 
     ccdn_forum_forum.gateway.board:
@@ -35,7 +35,7 @@ services:
         arguments:
             - @doctrine
             - @knp_paginator
-            - @ccdn_forum_forum.gateway_bag
+            - @ccdn_forum_forum.model_bag
             - %ccdn_forum_forum.entity.board.class%
 
     ccdn_forum_forum.gateway.topic:
@@ -43,7 +43,7 @@ services:
         arguments:
             - @doctrine
             - @knp_paginator
-            - @ccdn_forum_forum.gateway_bag
+            - @ccdn_forum_forum.model_bag
             - %ccdn_forum_forum.entity.topic.class%
 
     ccdn_forum_forum.gateway.post:
@@ -51,7 +51,7 @@ services:
         arguments:
             - @doctrine
             - @knp_paginator
-            - @ccdn_forum_forum.gateway_bag
+            - @ccdn_forum_forum.model_bag
             - %ccdn_forum_forum.entity.post.class%
 
     ccdn_forum_forum.gateway.draft:
@@ -59,7 +59,7 @@ services:
         arguments:
             - @doctrine
             - @knp_paginator
-            - @ccdn_forum_forum.gateway_bag
+            - @ccdn_forum_forum.model_bag
             - %ccdn_forum_forum.entity.draft.class%
 
     ccdn_forum_forum.gateway.registry:
@@ -67,7 +67,7 @@ services:
         arguments:
             - @doctrine
             - @knp_paginator
-            - @ccdn_forum_forum.gateway_bag
+            - @ccdn_forum_forum.model_bag
             - %ccdn_forum_forum.entity.registry.class%
 
     ccdn_forum_forum.gateway.subscription:
@@ -75,5 +75,5 @@ services:
         arguments:
             - @doctrine
             - @knp_paginator
-            - @ccdn_forum_forum.gateway_bag
+            - @ccdn_forum_forum.model_bag
             - %ccdn_forum_forum.entity.subscription.class%

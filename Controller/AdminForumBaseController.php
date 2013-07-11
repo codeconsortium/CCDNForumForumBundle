@@ -53,4 +53,18 @@ class AdminForumBaseController extends BaseController
 		
 	    return $formHandler;
 	}
+	
+	/**
+	 *
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Form\Handler\ForumCreateFormHandler
+	 */
+	public function getFormHandlerToDeleteForum(Forum $forum)
+	{
+	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.forum_delete');
+
+		$formHandler->setForum($forum);
+		
+	    return $formHandler;
+	}
 }

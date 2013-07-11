@@ -10,12 +10,13 @@
 
 	<section>
 	    {%- form_theme form ccdn_forum_forum.post.edit_topic.form_theme -%}
-	    <form action="{{- path('ccdn_forum_admin_forum_create_process') -}}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
+	    <form action="{{- path('ccdn_forum_admin_forum_delete_confirmed', {'forumId': forum.id}) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
 	        <fieldset>
 
 				<div class="control-group form-title">
 					<div class="controls">
-						<h4>Create New Forum</h4>
+						<h4>Delete Forum {{ forum.id -}}</h4>
+						<h5>{{- forum.name -}}</h5>
 					</div>
 				</div>
 
@@ -24,7 +25,7 @@
 				{{- form_rest(form) -}}
 
 	            <div class="form-actions">
-	                <input type="submit" class="btn btn-primary" value="Save" name="submit[post]" id="submit[post]">
+	                <input type="submit" class="btn btn-danger" value="Confirm Delete" name="submit[post]" id="submit[post]">
 					
 					{#<input type="submit" class="btn" value="{{- 'form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">#}
 

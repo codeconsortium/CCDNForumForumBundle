@@ -1,10 +1,12 @@
 parameters:
 
     # Service Parameters defined in app/config.
-    ccdn_forum_forum.form.type.forum_create.class:    CCDNForum\ForumBundle\Form\Type\ForumCreateFormType
-    ccdn_forum_forum.form.handler.forum_create.class: CCDNForum\ForumBundle\Form\Handler\ForumCreateFormHandler
-    ccdn_forum_forum.form.type.forum_update.class:    CCDNForum\ForumBundle\Form\Type\ForumUpdateFormType
-    ccdn_forum_forum.form.handler.forum_update.class: CCDNForum\ForumBundle\Form\Handler\ForumUpdateFormHandler
+    ccdn_forum_forum.form.type.forum_create.class:    CCDNForum\ForumBundle\Form\Type\Admin\ForumCreateFormType
+    ccdn_forum_forum.form.handler.forum_create.class: CCDNForum\ForumBundle\Form\Handler\Admin\ForumCreateFormHandler
+    ccdn_forum_forum.form.type.forum_update.class:    CCDNForum\ForumBundle\Form\Type\Admin\ForumUpdateFormType
+    ccdn_forum_forum.form.handler.forum_update.class: CCDNForum\ForumBundle\Form\Handler\Admin\ForumUpdateFormHandler
+    ccdn_forum_forum.form.type.forum_delete.class:    CCDNForum\ForumBundle\Form\Type\Admin\ForumDeleteFormType
+    ccdn_forum_forum.form.handler.forum_delete.class: CCDNForum\ForumBundle\Form\Handler\Admin\ForumDeleteFormHandler
 
     ccdn_forum_forum.entity.forum.class:              CCDNForum\ForumBundle\Entity\Forum 
 
@@ -35,4 +37,16 @@ services:
         arguments:
             - @form.factory
             - @ccdn_forum_forum.form.type.forum_update
-            - @ccdn_forum_forum.manager.forum
+            - @ccdn_forum_forum.model.forum
+
+    ccdn_forum_forum.form.type.forum_delete:
+        class: %ccdn_forum_forum.form.type.forum_delete.class%
+        arguments:
+            - %ccdn_forum_forum.entity.forum.class%
+    
+    ccdn_forum_forum.form.handler.forum_delete:
+        class: %ccdn_forum_forum.form.handler.forum_delete.class%
+        arguments:
+            - @form.factory
+            - @ccdn_forum_forum.form.type.forum_delete
+            - @ccdn_forum_forum.model.forum

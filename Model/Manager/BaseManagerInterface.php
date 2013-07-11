@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNForum\ForumBundle\Model\Manager\Bag\ManagerBagInterface;
+use CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface;
 use CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface;
 
 /**
@@ -36,14 +36,22 @@ interface BaseManagerInterface
     /**
      *
      * @access public
-     * @param \Doctrine\Bundle\DoctrineBundle\Registry               $doctrine
-     * @param \Symfony\Component\Security\Core\SecurityContext       $securityContext
-     * @param \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface    $gateway
-     * @param \CCDNForum\ForumBundle\Manager\Bag\ManagerBagInterface $managerBag
+     * @param \Doctrine\Bundle\DoctrineBundle\Registry                  $doctrine
+     * @param \Symfony\Component\Security\Core\SecurityContext          $securityContext
+     * @param \CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface $gateway
+     * @param \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface  $modelBag
      */
-    public function __construct(Registry $doctrine, SecurityContext $securityContext, BaseGatewayInterface $gateway, ManagerBagInterface $managerBag);
+    public function __construct(Registry $doctrine, SecurityContext $securityContext, BaseGatewayInterface $gateway, ModelBagInterface $modelBag);
 
-    /**
+	
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
+	 */
+	public function getModelBag();
+
+	/**
      *
      * @access public
      * @param  string $role

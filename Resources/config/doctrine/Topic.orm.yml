@@ -47,12 +47,10 @@ CCDNForum\ForumBundle\Entity\Topic:
             targetEntity: CCDNForum\ForumBundle\Entity\Post
             mappedBy: topic
             cascade: ["persist", "remove"]
-            #onDelete: SET NULL
         subscriptions:
             targetEntity: CCDNForum\ForumBundle\Entity\Subscription
             mappedBy: topic
             cascade: ["persist", "remove"]
-            #onDelete: SET NULL
     manyToOne:
         board:
             targetEntity: CCDNForum\ForumBundle\Entity\Board
@@ -79,21 +77,21 @@ CCDNForum\ForumBundle\Entity\Topic:
                 onDelete: SET NULL
         closedBy:
             targetEntity: Symfony\Component\Security\Core\User\UserInterface
-            cascade: ["remove"]
+            cascade: []
             joinColumn:
                 name: fk_closed_by_user_id
                 referencedColumnName: id
                 onDelete: SET NULL
         deletedBy:
             targetEntity: Symfony\Component\Security\Core\User\UserInterface
-            cascade: ["remove"]
+            cascade: []
             joinColumn:
                 name: fk_deleted_by_user_id
                 referencedColumnName: id
                 onDelete: SET NULL
         stickiedBy:
             targetEntity: Symfony\Component\Security\Core\User\UserInterface
-            cascade: ["remove"]
+            cascade: []
             joinColumn:
                 name: fk_stickied_by_user_id
                 referencedColumnName: id

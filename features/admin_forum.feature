@@ -6,9 +6,9 @@ Feature: Forum Management
     Background:
         Given I am logged in as admin
         And there are following users defined:
-          | email          | password | enabled  | role          |
-          | admin@foo.com  | root     | 1        | ROLE_ADMIN    |
-          | user@foo.com   | root     | 1        | ROLE_USER     |
+          | email          | password | enabled  | role                |
+          | admin@foo.com  | root     | 1        | ROLE_SUPER_ADMIN    |
+          | user@foo.com   | root     | 1        | ROLE_USER           |
         And there are following forums defined:
           | name                      | order    |
 		  | test_forum_1              | 1        |
@@ -33,18 +33,29 @@ Feature: Forum Management
 
     Scenario: See forum create
         Given I am on "/en/forum/admin/manage-forums/create"
+		  And I should see "Create New Forum"
           And I fill in "ForumCreate[name]" with "FooBar"
-          And I press "Save"
+          And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-forums/"
           And I should see "FooBar"
 
     Scenario: See forum update
 	    Given I am on "/en/forum/admin/manage-forums/"
-		  And I follow "test_forum_1"
+		  And I follow "update_forum[test_forum_1]"
+		  And I should see "Update Forum"
+		  And I should see "test_forum_1"
           And I fill in "ForumUpdate[name]" with "FooBaz"
-          And I press "Update"
+          And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-forums/"
+		  And I should not see "test_forum_1"
           And I should see "FooBaz"
 
     Scenario: See forum delete
-        Given I am on "/en/forum/admin/manage-forums/delete"
+	    Given I am on "/en/forum/admin/manage-forums/"
+		  And I follow "delete_forum[test_forum_3]"
+		  And I should see "Delete Forum"
+		  And I should see "test_forum_3"
+		  And I check "ForumDelete[confirm_delete][]"
+          And I press "submit[post]"
+		 Then I should be on "/en/forum/admin/manage-forums/"
+          And I should not see "test_forum_3"
