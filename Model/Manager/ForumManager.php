@@ -39,6 +39,17 @@ class ForumManager extends BaseManager implements BaseManagerInterface
         // insert a new row
         $this->persist($forum)->flush();
 
+		$this->refresh($forum);
+		
+        return $this;
+	}
+	
+	public function updateForum(Forum $forum)
+	{
+        $this->persist($forum)->flush();
+
+		$this->refresh($forum);
+		
         return $this;
 	}
 	

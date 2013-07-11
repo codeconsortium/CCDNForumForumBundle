@@ -31,7 +31,7 @@ class TestBase extends WebTestCase
 	 *
      * @var \Doctrine\ORM\EntityManager
      */
-    private $em;
+    protected $em;
 	
 	/**
 	 *
@@ -124,12 +124,13 @@ class TestBase extends WebTestCase
 		return $forums;
 	}
 	
-	protected function addNewCategory($categoryName, $order)
+	protected function addNewCategory($categoryName, $order, Forum $forum = null)
 	{
 		$category = new Category();
 		
 		$category->setName($categoryName);
 		$category->setListOrderPriority($order);
+		$category->setForum($forum);
 		
 		$this->em->persist($category);
 		$this->em->flush();
@@ -144,20 +145,23 @@ class TestBase extends WebTestCase
 		$categoryNames = array('test_category_1', 'test_category_2', 'test_category_3');
 		$categories = array();
 		
-		foreach ($categoryNames as $index => $categoryName) {
-			$categories[] = $this->addNewCategory($categoryName, $index);
+		foreach ($forums as $forum) {
+			foreach ($categoryNames as $index => $categoryName) {
+				$categories[] = $this->addNewCategory($categoryName, $index, $forum);
+			}
 		}
 		
 		return $categories;
 	}
 	
-	protected function addNewBoard($boardName, $boardDescription, $order)
+	protected function addNewBoard($boardName, $boardDescription, $order, Category $category = null)
 	{
 		$board = new Board();
 		
 		$board->setName($boardName);
 		$board->setDescription($boardDescription);
 		$board->setListOrderPriority($order);
+		$board->setCategory($category);
 		
 		$this->em->persist($board);
 		$this->em->flush();
@@ -172,8 +176,10 @@ class TestBase extends WebTestCase
 		$boardNames = array('test_board_1', 'test_board_2', 'test_board_3');
 		$boards = array();
 		
-		foreach ($boardNames as $index => $boardName) {
-			$boards[] = $this->addNewBoard($boardName, $boardName, $index);
+		foreach ($categories as $category) {
+			foreach ($boardNames as $index => $boardName) {
+				$boards[] = $this->addNewBoard($boardName, $boardName, $index, $category);
+			}
 		}
 		
 		return $boards;

@@ -167,6 +167,6 @@ class ForumUpdateFormHandler
      */
     protected function onSuccess(Forum $forum)
     {
-        return $this->forumModel->saveNewForum($forum)->flush();
+        return $this->forumModel->updateForum($forum)->flush();
     }
 }
