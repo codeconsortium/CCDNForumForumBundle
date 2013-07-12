@@ -27,8 +27,6 @@ class ForumManagerTest extends TestBase
 		
 		$this->getForumModel()->getManager()->saveNewForum($forum);
 		
-		//$this->getForumModel()->getManager()->getGateway()->refresh($forum);
-		
 		$this->assertTrue(is_numeric($forum->getId()));
 	}
 	

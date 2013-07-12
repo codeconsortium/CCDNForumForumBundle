@@ -14,48 +14,38 @@ Feature: Forum Management
 		  | test_forum_1              | 1        |
 		  | test_forum_2              | 2        |
 		  | test_forum_3              | 3        |
-        And there are following categories defined:
-          | name                      | order    |
-          | test_category_1           | 1        |
-		  | test_category_2           | 2        |
-		  | test_category_3           | 3        |
-        And there are following boards defined:
-          | name                      | description          |
-          | test_board_1              | testing board 1      |
-          | test_board_2              | testing board 2      |
-          | test_board_3              | testing board 3      |
 
-	Scenario: See forum list
+	Scenario: See Forum list
         Given I am on "/en/forum/admin/manage-forums/" 
           And I should see "test_forum_1"
           And I should see "test_forum_2"
           And I should see "test_forum_3"
 
-    Scenario: See forum create
+    Scenario: Create a new Forum
         Given I am on "/en/forum/admin/manage-forums/create"
 		  And I should see "Create New Forum"
-          And I fill in "ForumCreate[name]" with "FooBar"
+          And I fill in "Forum_ForumCreate[name]" with "FooBar"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-forums/"
           And I should see "FooBar"
 
-    Scenario: See forum update
+    Scenario: Update existing Forum
 	    Given I am on "/en/forum/admin/manage-forums/"
 		  And I follow "update_forum[test_forum_1]"
 		  And I should see "Update Forum"
 		  And I should see "test_forum_1"
-          And I fill in "ForumUpdate[name]" with "FooBaz"
+          And I fill in "Forum_ForumUpdate[name]" with "FooBaz"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-forums/"
 		  And I should not see "test_forum_1"
           And I should see "FooBaz"
 
-    Scenario: See forum delete
+    Scenario: Delete existing Forum
 	    Given I am on "/en/forum/admin/manage-forums/"
 		  And I follow "delete_forum[test_forum_3]"
 		  And I should see "Delete Forum"
 		  And I should see "test_forum_3"
-		  And I check "ForumDelete[confirm_delete][]"
+		  And I check "Forum_ForumDelete[confirm_delete][]"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-forums/"
           And I should not see "test_forum_3"

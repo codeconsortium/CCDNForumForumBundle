@@ -32,7 +32,7 @@ use CCDNForum\ForumBundle\Entity\Forum;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class ForumCreateFormHandler
+class CategoryCreateFormHandler
 {
     /**
      *
@@ -44,9 +44,9 @@ class ForumCreateFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\Admin\ForumCreateFormType $forumCreateFormType
+     * @var \CCDNForum\ForumBundle\Form\Type\Admin\CategoryCreateFormType $categoryCreateFormType
      */
-    protected $forumCreateFormType;
+    protected $categoryCreateFormType;
 
     /**
      *

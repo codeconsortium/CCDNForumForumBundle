@@ -29,23 +29,23 @@ use CCDNForum\ForumBundle\Entity\Forum;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class ForumUpdateFormType extends AbstractType
+class CategoryDeleteFormType extends AbstractType
 {
     /**
      *
      * @access protected
-     * @var string $forumClass
+     * @var string $categoryClass
      */
-    protected $forumClass;
+    protected $categoryClass;
 
     /**
      *
      * @access public
-     * @var string $forumClass
+     * @var string $categoryClass
      */
-    public function __construct($forumClass)
+    public function __construct($categoryClass)
     {
-        $this->forumClass = $forumClass;
+        $this->categoryClass = $categoryClass;
     }
 
     /**
@@ -56,12 +56,26 @@ class ForumUpdateFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text',
-                array(
-                    'label'              => 'form.label.forum.name',
-                    'translation_domain' => 'CCDNForumForumBundle',
-                )
-            )
+			->add('confirm_delete', 'choice',
+				array(
+					'choices' => array(
+						'delete_forum' => 'Yes, I want to delete this forum.',
+					),
+					'multiple' => true,
+					'expanded' => true,
+					'mapped' => false
+				)
+			)
+			->add('confirm_subordinates', 'choice',
+				array(
+					'choices' => array(
+						'delete_subordinates' => 'Also delete categories, boards and topics.'
+					),
+					'multiple' => true,
+					'expanded' => true,
+					'mapped' => false
+				)
+			)
         ;
     }
 
@@ -74,12 +88,12 @@ class ForumUpdateFormType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class'          => $this->forumClass,
+            'data_class'          => $this->categoryClass,
             'csrf_protection'     => true,
             'csrf_field_name'     => '_token',
             // a unique key to help generate the secret token
-            'intention'           => 'forum_forum_update_item',
-            'validation_groups'   => array('forum_forum_update'),
+            'intention'           => 'forum_category_delete_item',
+            'validation_groups'   => array('forum_category_delete'),
             'cascade_validation'  => true,
         );
     }
@@ -91,6 +105,6 @@ class ForumUpdateFormType extends AbstractType
      */
     public function getName()
     {
-        return 'Forum_ForumUpdate';
+        return 'Forum_CategoryDelete';
     }
 }

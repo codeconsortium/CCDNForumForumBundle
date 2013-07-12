@@ -41,7 +41,7 @@ class ForumDeleteFormType extends AbstractType
     /**
      *
      * @access public
-     * @var string $postClass
+     * @var string $forumClass
      */
     public function __construct($forumClass)
     {
@@ -92,8 +92,8 @@ class ForumDeleteFormType extends AbstractType
             'csrf_protection'     => true,
             'csrf_field_name'     => '_token',
             // a unique key to help generate the secret token
-            'intention'           => 'forum_item',
-            'validation_groups'   => array('forum_delete'),
+            'intention'           => 'forum_forum_delete_item',
+            'validation_groups'   => array('forum_forum_delete'),
             'cascade_validation'  => true,
         );
     }
@@ -105,6 +105,6 @@ class ForumDeleteFormType extends AbstractType
      */
     public function getName()
     {
-        return 'ForumDelete';
+        return 'Forum_ForumDelete';
     }
 }

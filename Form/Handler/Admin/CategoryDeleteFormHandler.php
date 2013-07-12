@@ -17,6 +17,8 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 
 use CCDNForum\ForumBundle\Entity\Forum;
@@ -32,7 +34,7 @@ use CCDNForum\ForumBundle\Entity\Forum;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class ForumCreateFormHandler
+class CategoryDeleteFormHandler
 {
     /**
      *
@@ -64,6 +66,13 @@ class ForumCreateFormHandler
 
     /**
      *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Entity\Forum $forum
+     */
+    protected $forum;
+	
+    /**
+     *
      * @access public
      * @param \Symfony\Component\Form\FormFactory                  $factory
      * @param \CCDNForum\ForumBundle\Form\Type\ForumCreateFormType $forumCreateFormType
@@ -76,6 +85,19 @@ class ForumCreateFormHandler
         $this->forumModel = $forumModel;
     }
 
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Forum $forum
+	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\ForumUpdateFormHandler
+	 */
+	public function setForum(Forum $forum)
+	{
+		$this->forum = $forum;
+		
+		return $this;
+	}
+	
     /**
      *
      * @access public
@@ -129,7 +151,11 @@ class ForumCreateFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-            $this->form = $this->factory->create($this->forumCreateFormType);
+			if (!is_object($this->forum) && !$this->forum instanceof Forum) {
+				throw new \Exception('Forum object must be specified to delete.');
+			}
+			
+            $this->form = $this->factory->create($this->forumCreateFormType, $this->forum);
         }
 
         return $this->form;
@@ -143,6 +169,20 @@ class ForumCreateFormHandler
      */
     protected function onSuccess(Forum $forum)
     {
-        return $this->forumModel->saveNewForum($forum)->flush();
+		$confirmA = $this->form->get('confirm_delete')->getData();
+		$confirmB = $this->form->get('confirm_subordinates')->getData();
+		$confirm = array_merge($confirmA, $confirmB);
+		
+		if (in_array('delete_forum', $confirm)) {
+			if (! in_array('delete_subordinates', $confirm)) {
+				$categories = new ArrayCollection($forum->getCategories()->toArray());
+				
+				$this->forumModel->reassignCategoriesToForum($categories, null)->flush();
+			}
+
+	        $this->forumModel->deleteForum($forum)->flush();
+		}
+		
+		return $this->forumModel;
     }
 }

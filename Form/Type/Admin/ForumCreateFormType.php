@@ -41,7 +41,7 @@ class ForumCreateFormType extends AbstractType
     /**
      *
      * @access public
-     * @var string $postClass
+     * @var string $forumClass
      */
     public function __construct($forumClass)
     {
@@ -78,8 +78,8 @@ class ForumCreateFormType extends AbstractType
             'csrf_protection'     => true,
             'csrf_field_name'     => '_token',
             // a unique key to help generate the secret token
-            'intention'           => 'forum_item',
-            'validation_groups'   => array('forum_create'),
+            'intention'           => 'forum_forum_create_item',
+            'validation_groups'   => array('forum_forum_create'),
             'cascade_validation'  => true,
         );
     }
@@ -91,6 +91,6 @@ class ForumCreateFormType extends AbstractType
      */
     public function getName()
     {
-        return 'ForumCreate';
+        return 'Forum_ForumCreate';
     }
 }

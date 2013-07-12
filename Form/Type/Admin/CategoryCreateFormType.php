@@ -29,23 +29,23 @@ use CCDNForum\ForumBundle\Entity\Forum;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class ForumUpdateFormType extends AbstractType
+class CategoryCreateFormType extends AbstractType
 {
     /**
      *
      * @access protected
-     * @var string $forumClass
+     * @var string $categoryClass
      */
-    protected $forumClass;
+    protected $categoryClass;
 
     /**
      *
      * @access public
-     * @var string $forumClass
+     * @var string $categoryClass
      */
-    public function __construct($forumClass)
+    public function __construct($categoryClass)
     {
-        $this->forumClass = $forumClass;
+        $this->categoryClass = $categoryClass;
     }
 
     /**
@@ -74,12 +74,12 @@ class ForumUpdateFormType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class'          => $this->forumClass,
+            'data_class'          => $this->categoryClass,
             'csrf_protection'     => true,
             'csrf_field_name'     => '_token',
             // a unique key to help generate the secret token
-            'intention'           => 'forum_forum_update_item',
-            'validation_groups'   => array('forum_forum_update'),
+            'intention'           => 'forum_category_create_item',
+            'validation_groups'   => array('forum_category_create'),
             'cascade_validation'  => true,
         );
     }
@@ -91,6 +91,6 @@ class ForumUpdateFormType extends AbstractType
      */
     public function getName()
     {
-        return 'Forum_ForumUpdate';
+        return 'Forum_CategoryCreate';
     }
 }

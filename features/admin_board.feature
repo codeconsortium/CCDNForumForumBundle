@@ -1,4 +1,4 @@
-Feature: Forum Board Management
+Feature: Board Management
 	In order to manage boards
 	As an administrator
 	I want to be able to list, create, edit and delete boards.
@@ -6,36 +6,56 @@ Feature: Forum Board Management
     Background:
         Given I am logged in as admin
         And there are following users defined:
-          | email          | password | enabled | role          |
-          | admin@foo.com  | root     | 1       | ROLE_ADMIN    |
-          | user@foo.com   | root     | 1       | ROLE_USER     |
+          | email          | password | enabled  | role                |
+          | admin@foo.com  | root     | 1        | ROLE_SUPER_ADMIN    |
+          | user@foo.com   | root     | 1        | ROLE_USER           |
         And there are following forums defined:
-          | name           | order    |
-		  | test_f_1       | 1        |
-		  | test_f_2       | 2        |
-		  | test_f_3       | 3        |
+          | name                      | order    |
+		  | test_forum_1              | 1        |
+		  | test_forum_2              | 2        |
+		  | test_forum_3              | 3        |
         And there are following categories defined:
-          | name           | order    |
-          | test_c_1       | 1        |
-		  | test_c_2       | 2        |
-		  | test_c_3       | 3        |
+          | name                      | order    |
+          | test_category_1           | 1        |
+		  | test_category_2           | 2        |
+		  | test_category_3           | 3        |
         And there are following boards defined:
-          | name           | description          |
-          | test_b_1       | testing board 1      |
-          | test_b_2       | testing board 2      |
-          | test_b_3       | testing board 3      |
+          | name                      | description          |
+          | test_board_1              | testing board 1      |
+          | test_board_2              | testing board 2      |
+          | test_board_3              | testing board 3      |
 
-	Scenario: See board list
-	    Given I am on "/en/forum/admin/manage-boards/list"
+	Scenario: See Board list
+        Given I am on "/en/forum/admin/manage-boards/" 
+          And I should see "test_board_1"
+          And I should see "test_board_2"
+          And I should see "test_board_3"
 
-	Scenario: See board create
-	    Given I am on "/en/forum/admin/manage-boards/create"
+    Scenario: Create a new Board
+        Given I am on "/en/forum/admin/manage-boards/create"
+		  And I should see "Create New Board"
+          And I fill in "Forum_BoardCreate[name]" with "FooBar"
+          And I press "submit[post]"
+		 Then I should be on "/en/forum/admin/manage-boards/"
+          And I should see "FooBar"
 
-	Scenario: See board read
-	    Given I am on "/en/forum/admin/manage-boards/show"
+    Scenario: Update existing Board
+	    Given I am on "/en/forum/admin/manage-boards/"
+		  And I follow "update_board[test_board_1]"
+		  And I should see "Update Board"
+		  And I should see "test_board_1"
+          And I fill in "Forum_BoardUpdate[name]" with "FooBaz"
+          And I press "submit[post]"
+		 Then I should be on "/en/forum/admin/manage-boards/"
+		  And I should not see "test_board_1"
+          And I should see "FooBaz"
 
-	Scenario: See board update
-	    Given I am on "/en/forum/admin/manage-boards/update"
-
-	Scenario: See board delete
-	    Given I am on "/en/forum/admin/manage-boards/delete"
+    Scenario: Delete existing Board
+	    Given I am on "/en/forum/admin/manage-boards/"
+		  And I follow "delete_board[test_board_3]"
+		  And I should see "Delete Board"
+		  And I should see "test_board_3"
+		  And I check "Forum_BoardDelete[confirm_delete][]"
+          And I press "submit[post]"
+		 Then I should be on "/en/forum/admin/manage-boards/"
+          And I should not see "test_board_3"

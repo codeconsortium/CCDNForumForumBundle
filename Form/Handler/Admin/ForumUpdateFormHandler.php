@@ -44,7 +44,7 @@ class ForumUpdateFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\ForumCreateFormType $forumCreateFormType
+     * @var \CCDNForum\ForumBundle\Form\Type\Admin\ForumCreateFormType $forumCreateFormType
      */
     protected $forumCreateFormType;
 
@@ -58,7 +58,7 @@ class ForumUpdateFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\TopicType $form
+     * @var \Symfony\Component\Form\Form $form
      */
     protected $form;
 
@@ -87,7 +87,7 @@ class ForumUpdateFormHandler
 	 * 
 	 * @access public
 	 * @param \CCDNForum\ForumBundle\Entity\Forum $forum
-	 * @return \CCDNForum\ForumBundle\Form\Handler\ForumUpdateFormHandler
+	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\ForumUpdateFormHandler
 	 */
 	public function setForum(Forum $forum)
 	{
@@ -144,7 +144,7 @@ class ForumUpdateFormHandler
     /**
      *
      * @access public
-     * @return Form
+     * @return \Symfony\Component\Form\Form
      */
     public function getForm()
     {

@@ -32,7 +32,7 @@ use CCDNForum\ForumBundle\Entity\Forum;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class ForumCreateFormHandler
+class CategoryUpdateFormHandler
 {
     /**
      *
@@ -58,10 +58,17 @@ class ForumCreateFormHandler
     /**
      *
      * @access protected
-     * @var \Symfony\Component\Form\Form $form
+     * @var \CCDNForum\ForumBundle\Form\Type\TopicType $form
      */
     protected $form;
 
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\Form\Form $forum
+     */
+    protected $forum;
+	
     /**
      *
      * @access public
@@ -76,6 +83,19 @@ class ForumCreateFormHandler
         $this->forumModel = $forumModel;
     }
 
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Forum $forum
+	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\ForumUpdateFormHandler
+	 */
+	public function setForum(Forum $forum)
+	{
+		$this->forum = $forum;
+		
+		return $this;
+	}
+	
     /**
      *
      * @access public
@@ -129,7 +149,11 @@ class ForumCreateFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-            $this->form = $this->factory->create($this->forumCreateFormType);
+			if (!is_object($this->forum) && !$this->forum instanceof Forum) {
+				throw new \Exception('Forum object must be specified to edit.');
+			}
+			
+            $this->form = $this->factory->create($this->forumCreateFormType, $this->forum);
         }
 
         return $this->form;
@@ -143,6 +167,6 @@ class ForumCreateFormHandler
      */
     protected function onSuccess(Forum $forum)
     {
-        return $this->forumModel->saveNewForum($forum)->flush();
+        return $this->forumModel->updateForum($forum)->flush();
     }
 }
