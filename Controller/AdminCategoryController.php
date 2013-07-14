@@ -35,13 +35,15 @@ class AdminCategoryController extends BaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/list.html.', 
+		$categories = $this->getCategoryModel()->findAllCategories();
+		
+		return $this->renderResponse('CCDNForumForumBundle:Admin:/Category/list.html.', 
 			array(
-
+				'categories' => $categories
 	        )
 		);
     }
-	
+
     /**
      *
      * @access public
@@ -131,7 +133,7 @@ class AdminCategoryController extends BaseController
      * @access public
      * @return RedirectResponse
      */
-    public function deleteConfirmedAction()
+    public function deleteProcessAction()
     {
         $this->isAuthorised('ROLE_ADMIN');
 

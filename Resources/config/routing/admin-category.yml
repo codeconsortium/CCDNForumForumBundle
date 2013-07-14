@@ -1,28 +1,28 @@
 
 ccdn_forum_admin_category_list:
     pattern: /
-    defaults: { _controller: CCDNForumForumBundle:AdminCategory:, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminCategory:list, _locale: en }
 
 ccdn_forum_admin_category_create:
     pattern: /create
-    defaults: { _controller: CCDNForumForumBundle:AdminCategory:, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminCategory:create, _locale: en }
 
 ccdn_forum_admin_category_create_process:
     pattern: /create/process
-    defaults: { _controller: CCDNForumForumBundle:AdminCategory:, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminCategory:createProcess, _locale: en }
 
 ccdn_forum_admin_category_edit:
     pattern: /edit/{categoryId}
-    defaults: { _controller: CCDNForumForumBundle:AdminCategory:, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminCategory:edit, _locale: en }
 
 ccdn_forum_admin_category_edit_process:
     pattern: /edit/{categoryId}/process
-    defaults: { _controller: CCDNForumForumBundle:AdminCategory:, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminCategory:editProcess, _locale: en }
 
-ccdn_forum_admin_category_remove:
-    pattern: /remove/{categoryId}
-    defaults: { _controller: CCDNForumForumBundle:AdminCategory:, _locale: en }
+ccdn_forum_admin_category_delete:
+    pattern: /delete/{categoryId}
+    defaults: { _controller: CCDNForumForumBundle:AdminCategory:delete, _locale: en }
 
-ccdn_forum_admin_category_remove_confirm:
-    pattern: /remove/{categoryId}/confirm
-    defaults: { _controller: CCDNForumForumBundle:AdminCategory:, _locale: en }
+ccdn_forum_admin_category_delete_confirm:
+    pattern: /delete/{categoryId}/process
+    defaults: { _controller: CCDNForumForumBundle:AdminCategory:deleteProcess, _locale: en }

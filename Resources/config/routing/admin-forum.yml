@@ -25,4 +25,4 @@ ccdn_forum_admin_forum_delete:
 
 ccdn_forum_admin_forum_delete_confirmed:
     pattern: /delete/{forumId}/process
-    defaults: { _controller: CCDNForumForumBundle:AdminForum:deleteConfirmed, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminForum:deleteProcess, _locale: en }

@@ -1,0 +1,45 @@
+{% extends 'CCDNForumForumBundle:Admin:/Layout/base.html.twig' %}
+
+{% set LayoutTemplate = ccdn_forum_forum.topic.create.layout_template %}
+
+{% block title %}{% endblock %}
+
+
+{%- block body_content -%}
+
+	{%- spaceless -%}
+	
+		<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_category_create') -}}">Create Category</a>
+		
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{%- for category_index, category in categories -%}
+					<tr>
+						<td>{{- category.id -}}</td>
+						<td>{{- category.name -}}</td>
+						<td>
+							<a class="btn" href="{{- path('ccdn_forum_admin_category_edit', {'categoryId': category.id}) -}}" id="update_category[{{- category.name -}}]">
+								Edit
+							</a>
+						</td>
+						<td>
+							<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_category_delete', {'categoryId': category.id}) -}}" id="delete_category[{{- category.name -}}]">
+								Delete
+							</a>
+						</td>
+					</tr>
+				{%- endfor -%}
+			</tbody>
+		</table>
+	
+	{%- endspaceless -%}
+	
+{%- endblock body_content -%}

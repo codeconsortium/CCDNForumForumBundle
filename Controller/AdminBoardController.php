@@ -131,7 +131,7 @@ class AdminBoardController extends BaseController
      * @access public
      * @return RedirectResponse
      */
-    public function deleteConfirmedAction()
+    public function deleteProcessAction()
     {
         $this->isAuthorised('ROLE_ADMIN');
 

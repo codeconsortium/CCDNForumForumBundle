@@ -162,7 +162,7 @@ class AdminForumController extends AdminForumBaseController
      * @access public
      * @return RedirectResponse
      */
-    public function deleteConfirmedAction($forumId)
+    public function deleteProcessAction($forumId)
     {
         $this->isAuthorised('ROLE_SUPER_ADMIN');
 
