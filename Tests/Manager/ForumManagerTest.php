@@ -23,11 +23,14 @@ class ForumManagerTest extends TestBase
 	public function testSaveNewForum()
 	{
 		$forum = new Forum();
-		$forum->setName('FooBar');
+		$forum->setName('NewForumTest');
 		
 		$this->getForumModel()->getManager()->saveNewForum($forum);
 		
+		//$this->em->refresh($category);
+		
 		$this->assertTrue(is_numeric($forum->getId()));
+		$this->assertSame('NewForumTest', $forum->getName());
 	}
 	
 	public function testUpdateForum()

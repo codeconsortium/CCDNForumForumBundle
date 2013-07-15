@@ -43,7 +43,7 @@ class AdminForumBaseController extends BaseController
 	/**
 	 *
 	 * @access public
-	 * @return \CCDNForum\ForumBundle\Form\Handler\ForumCreateFormHandler
+	 * @return \CCDNForum\ForumBundle\Form\Handler\ForumUpdateFormHandler
 	 */
 	public function getFormHandlerToUpdateForum(Forum $forum)
 	{
@@ -57,7 +57,7 @@ class AdminForumBaseController extends BaseController
 	/**
 	 *
 	 * @access public
-	 * @return \CCDNForum\ForumBundle\Form\Handler\ForumCreateFormHandler
+	 * @return \CCDNForum\ForumBundle\Form\Handler\ForumDeleteFormHandler
 	 */
 	public function getFormHandlerToDeleteForum(Forum $forum)
 	{

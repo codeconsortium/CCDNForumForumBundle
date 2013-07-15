@@ -1,0 +1,52 @@
+parameters:
+
+    # Service Parameters defined in app/config.
+    ccdn_forum_forum.form.type.category_create.class:    CCDNForum\ForumBundle\Form\Type\Admin\CategoryCreateFormType
+    ccdn_forum_forum.form.handler.category_create.class: CCDNForum\ForumBundle\Form\Handler\Admin\CategoryCreateFormHandler
+    ccdn_forum_forum.form.type.category_update.class:    CCDNForum\ForumBundle\Form\Type\Admin\CategoryUpdateFormType
+    ccdn_forum_forum.form.handler.category_update.class: CCDNForum\ForumBundle\Form\Handler\Admin\CategoryUpdateFormHandler
+    ccdn_forum_forum.form.type.category_delete.class:    CCDNForum\ForumBundle\Form\Type\Admin\CategoryDeleteFormType
+    ccdn_forum_forum.form.handler.category_delete.class: CCDNForum\ForumBundle\Form\Handler\Admin\CategoryDeleteFormHandler
+
+    ccdn_forum_forum.entity.category.class:              CCDNForum\ForumBundle\Entity\Category
+
+services:
+
+    #
+    # Topic Forms.
+    #
+    ccdn_forum_forum.form.type.category_create:
+        class: %ccdn_forum_forum.form.type.category_create.class%
+        arguments:
+            - %ccdn_forum_forum.entity.category.class%
+
+    ccdn_forum_forum.form.handler.category_create:
+        class: %ccdn_forum_forum.form.handler.category_create.class%
+        arguments:
+            - @form.factory
+            - @ccdn_forum_forum.form.type.category_create
+            - @ccdn_forum_forum.model.category
+
+    ccdn_forum_forum.form.type.category_update:
+        class: %ccdn_forum_forum.form.type.category_update.class%
+        arguments:
+            - %ccdn_forum_forum.entity.category.class%
+    
+    ccdn_forum_forum.form.handler.category_update:
+        class: %ccdn_forum_forum.form.handler.category_update.class%
+        arguments:
+            - @form.factory
+            - @ccdn_forum_forum.form.type.category_update
+            - @ccdn_forum_forum.model.category
+
+    ccdn_forum_forum.form.type.category_delete:
+        class: %ccdn_forum_forum.form.type.category_delete.class%
+        arguments:
+            - %ccdn_forum_forum.entity.category.class%
+    
+    ccdn_forum_forum.form.handler.category_delete:
+        class: %ccdn_forum_forum.form.handler.category_delete.class%
+        arguments:
+            - @form.factory
+            - @ccdn_forum_forum.form.type.category_delete
+            - @ccdn_forum_forum.model.category

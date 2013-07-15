@@ -42,12 +42,14 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
      */
     public function saveNewCategory(Category $category)
     {
-        $categoryCount = $this->getCategoryCount();
+        $categoryCount = $this->model->getCategoryCount();
 
         $category->setListOrderPriority(++$categoryCount['categoryCount']);
 
         // insert a new row
-        $this->persist($category);
+        $this->persist($category)->flush();
+
+		$this->refresh($category);
 
         return $this;
     }

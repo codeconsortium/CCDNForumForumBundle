@@ -24,7 +24,7 @@ namespace CCDNForum\ForumBundle\Controller;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class AdminCategoryController extends BaseController
+class AdminCategoryController extends AdminCategoryBaseController
 {
     /**
      *
@@ -52,10 +52,12 @@ class AdminCategoryController extends BaseController
     public function createAction()
     {
         $this->isAuthorised('ROLE_ADMIN');
-
-        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/create.html.', 
+		
+		$formHandler = $this->getFormHandlerToCreateCategory();
+		
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Category/create.html.', 
 			array(
-
+				'form' => $formHandler->getForm()->createView()
 	        )
 		);
     }
@@ -69,13 +71,17 @@ class AdminCategoryController extends BaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/create.html.', 
+		$formHandler = $this->getFormHandlerToCreateCategory();
+		
+		if ($formHandler->process($this->getRequest())) {
+			return $this->redirectResponse($this->path('ccdn_forum_admin_category_list'));
+		}
+		
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Category/create.html.', 
 			array(
-
+				'form' => $formHandler->getForm()->createView()
 	        )
 		);
-		
-		return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
     }
 	
     /**

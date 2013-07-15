@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 
-use CCDNForum\ForumBundle\Entity\Forum;
+use CCDNForum\ForumBundle\Entity\Category;
 
 /**
  *
@@ -51,9 +51,9 @@ class CategoryCreateFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\ForumModel $forumModel
+     * @var \CCDNForum\ForumBundle\Model\Model\CategoryModel $categoryModel
      */
-    protected $forumModel;
+    protected $categoryModel;
 
     /**
      *
@@ -65,15 +65,15 @@ class CategoryCreateFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\Form\FormFactory                  $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\ForumCreateFormType $forumCreateFormType
-     * @param \CCDNForum\ForumBundle\Model\Model\ForumModel        $forumModel
+     * @param \Symfony\Component\Form\FormFactory                     $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\CategoryCreateFormType $categoryCreateFormType
+     * @param \CCDNForum\ForumBundle\Model\Model\CategoryModel        $categoryModel
      */
-    public function __construct(FormFactory $factory, $forumCreateFormType, $forumModel)
+    public function __construct(FormFactory $factory, $categoryCreateFormType, $categoryModel)
     {
         $this->factory = $factory;
-        $this->forumCreateFormType = $forumCreateFormType;
-        $this->forumModel = $forumModel;
+        $this->categoryCreateFormType = $categoryCreateFormType;
+        $this->categoryModel = $categoryModel;
     }
 
     /**
@@ -129,7 +129,7 @@ class CategoryCreateFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-            $this->form = $this->factory->create($this->forumCreateFormType);
+            $this->form = $this->factory->create($this->categoryCreateFormType);
         }
 
         return $this->form;
@@ -138,11 +138,11 @@ class CategoryCreateFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Forum           $forum
-     * @return \CCDNForum\ForumBundle\Model\Model\ForumModel
+     * @param  \CCDNForum\ForumBundle\Entity\Category           $category
+     * @return \CCDNForum\ForumBundle\Model\Model\CategoryModel
      */
-    protected function onSuccess(Forum $forum)
+    protected function onSuccess(Category $category)
     {
-        return $this->forumModel->saveNewForum($forum)->flush();
+        return $this->categoryModel->saveNewCategory($category)->flush();
     }
 }
