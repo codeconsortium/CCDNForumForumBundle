@@ -121,15 +121,29 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
         return $this;
     }
 	
-	public function deleteSubordinates(Category $category)
+	public function deleteCategory(Category $category)
 	{
-		// Get All Boards
-		$boards = $category->getBoards();
+		// If we do not refresh the category, AND we have reassigned the boards to null, 
+		// then its lazy-loaded boards are dirty, as the boards in memory will still
+		// have the old category id set. Removing the category will cascade into deleting
+		// boards aswell, even though in the db the relation has been set to null.
+		$this->refresh($category);
 		
-		$boardModel = $this->getModelBag()->getBoardModel();
+		$this->remove($category)->flush();
 		
+		return $this;
+	}
+
+	public function reassignBoardsToCategory(ArrayCollection $boards, Category $category = null)
+	{
 		foreach ($boards as $board) {
-			$boardModel->deleteSubordinates($board);
+			$board->setCategory(null);
+			
+			$this->persist($board);
 		}
+
+		$this->flush();
+		
+		return $this;
 	}
 }

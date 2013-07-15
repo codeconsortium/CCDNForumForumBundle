@@ -45,34 +45,36 @@ class CategoryManagerTest extends TestBase
 		$this->assertTrue(is_numeric($category->getId()));
 		$this->assertEquals('CategoryTestUpdated', $category->getName());
 	}
-//	
-//	public function testDeleteForum()
-//	{
-//		$forum = $this->addNewForum('FooBar');
-//		
-//		$this->getForumModel()->getManager()->deleteForum($forum);
-//		
-//		$foundForum = $this->getForumModel()->getRepository()->findOneForumById($forum->getId());
-//		
-//		$this->assertNull($foundForum);
-//	}
-//	
-//	public function testReassignCategoriesToForum()
-//	{
-//		$forums = $this->addFixturesForForums();
-//		$this->addFixturesForCategories($forums);
-//		
-//		$forum1 = $forums[0];
-//		$forum2 = $forums[1];
-//		$categories = new ArrayCollection($forum1->getCategories()->toArray());
-//		
-//		$this->assertCount(3, $forum1->getCategories());
-//		$this->getForumModel()->getManager()->reassignCategoriesToForum($categories, null);
-//		$this->em->refresh($forum1);
-//		$this->assertCount(0, $forum1->getCategories());
-//		
-//		$this->getForumModel()->getManager()->reassignCategoriesToForum($categories, $forum2);
-//		$this->em->refresh($forum2);
-//		$this->assertCount(3, $forum2->getCategories());
-//	}
+	
+	public function testDeleteCategory()
+	{
+		$category = $this->addNewCategory('DeleteCategoryTest', 1);
+		
+		$categoryId = $category->getId();
+		$this->getCategoryModel()->getManager()->deleteCategory($category);
+		
+		$foundCategory = $this->getCategoryModel()->getRepository()->findOneCategoryById($categoryId);
+		
+		$this->assertNull($foundCategory);
+	}
+	
+	public function testReassignBoardsToCategory()
+	{
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$boards = $this->addFixturesForBoards($categories);
+		
+		$category1 = $categories[0];
+		$category2 = $categories[1];
+		$boards = new ArrayCollection($category1->getBoards()->toArray());
+		
+		$this->assertCount(3, $category1->getBoards());
+		$this->getCategoryModel()->getManager()->reassignBoardsToCategory($boards, null);
+		$this->em->refresh($category1);
+		$this->assertCount(0, $category1->getBoards());
+		
+		$this->getCategoryModel()->getManager()->reassignBoardsToCategory($boards, $category2);
+		$this->em->refresh($category2);
+		$this->assertCount(3, $category2->getBoards());
+	}
 }

@@ -10,7 +10,7 @@
 
 	<section>
 	    {%- form_theme form ccdn_forum_forum.post.edit_topic.form_theme -%}
-	    <form action="{{- path('ccdn_forum_admin_forum_delete_confirmed', {'forumId': forum.id}) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
+	    <form action="{{- path('ccdn_forum_admin_forum_delete_process', {'forumId': forum.id}) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
 	        <fieldset>
 
 				<div class="control-group form-title">

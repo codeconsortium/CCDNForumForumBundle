@@ -134,19 +134,25 @@ class AdminCategoryController extends AdminCategoryBaseController
 		);
     }
 
-	
     /**
      *
      * @access public
      * @return RenderResponse
      */
-    public function deleteAction()
+    public function deleteAction($categoryId)
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/delete.html.', 
-			array(
+		$category = $this->getCategoryModel()->findOneCategoryById($categoryId);
+	
+		$this->isFound($category);
+		
+		$formHandler = $this->getFormHandlerToDeleteCategory($category);
 
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Category/delete.html.', 
+			array(
+				'form' => $formHandler->getForm()->createView(),
+				'category' => $category
 	        )
 		);
     }
@@ -156,10 +162,26 @@ class AdminCategoryController extends AdminCategoryBaseController
      * @access public
      * @return RedirectResponse
      */
-    public function deleteProcessAction()
+    public function deleteProcessAction($categoryId)
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-		return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
+		$category = $this->getCategoryModel()->findOneCategoryById($categoryId);
+	
+		$this->isFound($category);
+		
+		$formHandler = $this->getFormHandlerToDeleteCategory($category);
+
+		if ($formHandler->process($this->getRequest())) {
+			return $this->redirectResponse($this->path('ccdn_forum_admin_category_list'));
+		}
+		
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/delete.html.', 
+			array(
+				'form' => $formHandler->getForm()->createView(),
+				'category' => $category
+	        )
+		);
     }
+
 }

@@ -59,7 +59,7 @@ class CategoryDeleteFormType extends AbstractType
 			->add('confirm_delete', 'choice',
 				array(
 					'choices' => array(
-						'delete_forum' => 'Yes, I want to delete this forum.',
+						'delete_category' => 'Yes, I want to delete this category.',
 					),
 					'multiple' => true,
 					'expanded' => true,
@@ -69,7 +69,7 @@ class CategoryDeleteFormType extends AbstractType
 			->add('confirm_subordinates', 'choice',
 				array(
 					'choices' => array(
-						'delete_subordinates' => 'Also delete categories, boards and topics.'
+						'delete_subordinates' => 'Also delete boards and topics.'
 					),
 					'multiple' => true,
 					'expanded' => true,

@@ -47,9 +47,10 @@ class ForumManagerTest extends TestBase
 	{
 		$forum = $this->addNewForum('FooBar');
 		
+		$forumId = $forum->getId();
 		$this->getForumModel()->getManager()->deleteForum($forum);
 		
-		$foundForum = $this->getForumModel()->getRepository()->findOneForumById($forum->getId());
+		$foundForum = $this->getForumModel()->getRepository()->findOneForumById($forumId);
 		
 		$this->assertNull($foundForum);
 	}

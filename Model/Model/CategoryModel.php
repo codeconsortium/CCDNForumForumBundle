@@ -157,6 +157,11 @@ class CategoryModel extends BaseModel implements BaseModelInterface
 	
 	public function deleteCategory(Category $category)
 	{
-		return $this->getManager()->deleteForum($category);
+		return $this->getManager()->deleteCategory($category);
+	}
+	
+	public function reassignBoardsToCategory(ArrayCollection $boards, Category $category = null)
+	{
+		return $this->getManager()->reassignBoardsToCategory($boards, $category);
 	}
 }

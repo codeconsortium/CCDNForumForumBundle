@@ -34,6 +34,12 @@ Feature: Category Management
 		 Then I should be on "/en/forum/admin/manage-categories/"
           And I should see "FooBar"
 
+    Scenario: Abort Create a new Category
+        Given I am on "/en/forum/admin/manage-categories/create"
+		  And I should see "Create New Category"
+          And I follow "Cancel"
+		 Then I should be on "/en/forum/admin/manage-categories/"
+
     Scenario: Update existing Category
 	    Given I am on "/en/forum/admin/manage-categories/"
 		  And I follow "update_category[test_category_1]"
@@ -45,6 +51,15 @@ Feature: Category Management
 		  And I should not see "test_category_1"
           And I should see "FooBaz"
 
+    Scenario: Abort Update existing Category
+	    Given I am on "/en/forum/admin/manage-categories/"
+		  And I follow "update_category[test_category_1]"
+		  And I should see "Update Category"
+		  And I should see "test_category_1"
+          And I follow "Cancel"
+		 Then I should be on "/en/forum/admin/manage-categories/"
+		  And I should see "test_category_1"
+
     Scenario: Delete existing Category
 	    Given I am on "/en/forum/admin/manage-categories/"
 		  And I follow "delete_category[test_category_3]"
@@ -52,5 +67,14 @@ Feature: Category Management
 		  And I should see "test_category_3"
 		  And I check "Forum_CategoryDelete[confirm_delete][]"
           And I press "submit[post]"
+		 Then I should be on "/en/forum/admin/manage-categories/"
+          And I should not see "test_categories_3"
+
+    Scenario: Abort existing Category
+	    Given I am on "/en/forum/admin/manage-categories/"
+		  And I follow "delete_category[test_category_3]"
+		  And I should see "Delete Category"
+		  And I should see "test_category_3"
+		  And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-categories/"
           And I should not see "test_categories_3"

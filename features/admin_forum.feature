@@ -29,6 +29,12 @@ Feature: Forum Management
 		 Then I should be on "/en/forum/admin/manage-forums/"
           And I should see "FooBar"
 
+    Scenario: Abort Create a new Forum
+        Given I am on "/en/forum/admin/manage-forums/create"
+		  And I should see "Create New Forum"
+          And I follow "Cancel"
+		 Then I should be on "/en/forum/admin/manage-forums/"
+
     Scenario: Update existing Forum
 	    Given I am on "/en/forum/admin/manage-forums/"
 		  And I follow "update_forum[test_forum_1]"
@@ -40,6 +46,15 @@ Feature: Forum Management
 		  And I should not see "test_forum_1"
           And I should see "FooBaz"
 
+    Scenario: Abort Update existing Forum
+	    Given I am on "/en/forum/admin/manage-forums/"
+		  And I follow "update_forum[test_forum_1]"
+		  And I should see "Update Forum"
+		  And I should see "test_forum_1"
+          And I follow "Cancel"
+		 Then I should be on "/en/forum/admin/manage-forums/"
+		  And I should see "test_forum_1"
+		  
     Scenario: Delete existing Forum
 	    Given I am on "/en/forum/admin/manage-forums/"
 		  And I follow "delete_forum[test_forum_3]"
@@ -49,3 +64,12 @@ Feature: Forum Management
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-forums/"
           And I should not see "test_forum_3"
+
+    Scenario: Abort Delete existing Forum
+	    Given I am on "/en/forum/admin/manage-forums/"
+		  And I follow "delete_forum[test_forum_3]"
+		  And I should see "Delete Forum"
+		  And I should see "test_forum_3"
+		  And I follow "Cancel"
+		 Then I should be on "/en/forum/admin/manage-forums/"
+          And I should see "test_forum_3"
