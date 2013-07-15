@@ -26,7 +26,7 @@ class ForumRepositoryTest extends TestBase
 	
 	public function testFindOneForumById()
 	{
-		$forum = $this->addNewForum('FooBaz');
+		$forum = $this->addNewForum('TestForum');
 		
 		$foundForum = $this->getForumModel()->getRepository()->findOneForumById($forum->getId());
 		

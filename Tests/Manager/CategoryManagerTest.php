@@ -34,17 +34,17 @@ class CategoryManagerTest extends TestBase
 		$this->assertSame('NewCategoryTest', $category->getName());
 	}
 	
-//	public function testUpdateForum()
-//	{
-//		$forum = $this->addNewForum('FooBar');
-//		
-//		$forum->setName('FooBaz');
-//		
-//		$this->getForumModel()->getManager()->updateForum($forum);
-//		
-//		$this->assertTrue(is_numeric($forum->getId()));
-//		$this->assertEquals('FooBaz', $forum->getName());
-//	}
+	public function testUpdateCategory()
+	{
+		$category = $this->addNewCategory('UpdateCategoryTest', 1);
+		
+		$category->setName('CategoryTestUpdated');
+		
+		$this->getCategoryModel()->getManager()->updateCategory($category);
+		
+		$this->assertTrue(is_numeric($category->getId()));
+		$this->assertEquals('CategoryTestUpdated', $category->getName());
+	}
 //	
 //	public function testDeleteForum()
 //	{

@@ -39,6 +39,53 @@ class CategoryRepository extends BaseRepository implements BaseRepositoryInterfa
     /**
      *
      * @access public
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function findAllCategories()
+    {
+        $qb = $this->createSelectQuery(array('c'));
+
+        $qb->addOrderBy('c.listOrderPriority', 'ASC');
+
+        return $this->gateway->findCategories($qb);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int                                    $categoryId
+     * @return \CCDNForum\ForumBundle\Entity\Category
+     */
+    public function findOneCategoryById($categoryId)
+    {
+        if (null == $categoryId || ! is_numeric($categoryId) || $categoryId == 0) {
+            throw new \Exception('Category id "' . $categoryId . '" is invalid!');
+        }
+
+        $qb = $this->createSelectQuery(array('c'));
+
+        $qb->where('c.id = :categoryId');
+
+        return $this->gateway->findCategory($qb, array(':categoryId' => $categoryId));
+
+        //$categories = $this->filterViewableCategoriesAndBoards($category);
+        //
+        //if (count($categories)) {
+        //    return $categories[0];
+        //} else {
+        //    return null;
+        //}
+    }
+
+
+
+
+
+
+
+    /**
+     *
+     * @access public
      * @param  int                                    $categoryId
      * @return \CCDNForum\ForumBundle\Entity\Category
      */
@@ -93,22 +140,6 @@ class CategoryRepository extends BaseRepository implements BaseRepositoryInterfa
         } else {
             return null;
         }
-    }
-
-    /**
-     *
-     * @access public
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function findAllCategories()
-    {
-        $qb = $this->createSelectQuery(array('c'));
-
-        $qb
-            ->addOrderBy('c.listOrderPriority', 'ASC')
-        ;
-
-        return $this->gateway->findCategories($qb);
     }
 
     /**

@@ -17,9 +17,7 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 
-use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
-
-use CCDNForum\ForumBundle\Entity\Forum;
+use CCDNForum\ForumBundle\Entity\Category;
 
 /**
  *
@@ -44,54 +42,54 @@ class CategoryUpdateFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\Admin\ForumCreateFormType $forumCreateFormType
+     * @var \CCDNForum\ForumBundle\Form\Type\Admin\CategoryCreateFormType $categoryCreateFormType
      */
-    protected $forumCreateFormType;
+    protected $categoryCreateFormType;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\ForumModel $forumModel
+     * @var \CCDNForum\ForumBundle\Model\Model\CategoryModel $categoryModel
      */
-    protected $forumModel;
+    protected $categoryModel;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\TopicType $form
+     * @var \Symfony\Component\Form\Form $form
      */
     protected $form;
 
     /**
      *
      * @access protected
-     * @var \Symfony\Component\Form\Form $forum
+     * @var \CCDNForum\ForumBundle\Entity\Category $category
      */
-    protected $forum;
+    protected $category;
 	
     /**
      *
      * @access public
-     * @param \Symfony\Component\Form\FormFactory                  $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\ForumCreateFormType $forumCreateFormType
-     * @param \CCDNForum\ForumBundle\Model\Model\ForumModel        $forumModel
+     * @param \Symfony\Component\Form\FormFactory                     $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\CategoryCreateFormType $categoryUpdateFormType
+     * @param \CCDNForum\ForumBundle\Model\Model\CategoryModel        $categoryModel
      */
-    public function __construct(FormFactory $factory, $forumCreateFormType, $forumModel)
+    public function __construct(FormFactory $factory, $categoryCreateFormType, $categoryModel)
     {
         $this->factory = $factory;
-        $this->forumCreateFormType = $forumCreateFormType;
-        $this->forumModel = $forumModel;
+        $this->categoryCreateFormType = $categoryCreateFormType;
+        $this->categoryModel = $categoryModel;
     }
 
 	/**
 	 * 
 	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum $forum
-	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\ForumUpdateFormHandler
+	 * @param \CCDNForum\ForumBundle\Entity\Category $category
+	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\CategoryUpdateFormHandler
 	 */
-	public function setForum(Forum $forum)
+	public function setCategory(Category $category)
 	{
-		$this->forum = $forum;
+		$this->category = $category;
 		
 		return $this;
 	}
@@ -149,11 +147,11 @@ class CategoryUpdateFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-			if (!is_object($this->forum) && !$this->forum instanceof Forum) {
-				throw new \Exception('Forum object must be specified to edit.');
+			if (!is_object($this->category) && !$this->category instanceof Category) {
+				throw new \Exception('Category object must be specified to edit.');
 			}
 			
-            $this->form = $this->factory->create($this->forumCreateFormType, $this->forum);
+            $this->form = $this->factory->create($this->categoryCreateFormType, $this->category);
         }
 
         return $this->form;
@@ -162,11 +160,11 @@ class CategoryUpdateFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Forum           $forum
-     * @return \CCDNForum\ForumBundle\Model\Model\ForumModel
+     * @param  \CCDNForum\ForumBundle\Entity\Category           $category
+     * @return \CCDNForum\ForumBundle\Model\Model\CategoryModel
      */
-    protected function onSuccess(Forum $forum)
+    protected function onSuccess(Category $category)
     {
-        return $this->forumModel->updateForum($forum)->flush();
+        return $this->categoryModel->updateCategory($category)->flush();
     }
 }

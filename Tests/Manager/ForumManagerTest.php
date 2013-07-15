@@ -27,22 +27,20 @@ class ForumManagerTest extends TestBase
 		
 		$this->getForumModel()->getManager()->saveNewForum($forum);
 		
-		//$this->em->refresh($category);
-		
 		$this->assertTrue(is_numeric($forum->getId()));
 		$this->assertSame('NewForumTest', $forum->getName());
 	}
 	
 	public function testUpdateForum()
 	{
-		$forum = $this->addNewForum('FooBar');
+		$forum = $this->addNewForum('TestUpdateForum');
 		
-		$forum->setName('FooBaz');
+		$forum->setName('TestForumUpdated');
 		
 		$this->getForumModel()->getManager()->updateForum($forum);
 		
 		$this->assertTrue(is_numeric($forum->getId()));
-		$this->assertEquals('FooBaz', $forum->getName());
+		$this->assertEquals('TestForumUpdated', $forum->getName());
 	}
 	
 	public function testDeleteForum()

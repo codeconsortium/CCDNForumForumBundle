@@ -39,6 +39,27 @@ class CategoryModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function findAllCategories()
+    {
+        return $this->getRepository()->findAllCategories();
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int                                    $categoryId
+     * @return \CCDNForum\ForumBundle\Entity\Category
+     */
+    public function findOneCategoryById($categoryId)
+    {
+        return $this->getRepository()->findOneCategoryById($categoryId);
+    }
+
+    /**
+     *
+     * @access public
      * @param  int                                    $categoryId
      * @return \CCDNForum\ForumBundle\Entity\Category
      */
@@ -56,16 +77,6 @@ class CategoryModel extends BaseModel implements BaseModelInterface
     public function findOneByIdWithBoards($categoryId)
     {
         return $this->getRepository()->findOneByIdWithBoards($categoryId);
-    }
-
-    /**
-     *
-     * @access public
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function findAllCategories()
-    {
-        return $this->getRepository()->findallCategories();
     }
 
     /**

@@ -24,4 +24,14 @@ class CategoryRepositoryTest extends TestBase
 		// 3 Forums, with 3 categories each respectively, 3x3 = 9 Categories total.
 		$this->assertCount(9, $categories);
 	}
+	
+	public function testFindOneCategoriesById()
+	{
+		$category = $this->addNewCategory('TestCategory', 1);
+		
+		$foundCategory = $this->getCategoryModel()->getRepository()->findOneCategoryById($category->getId());
+		
+		$this->assertNotNull($foundCategory);
+		$this->assertEquals($foundCategory->getId(), $category->getId());
+	}
 }

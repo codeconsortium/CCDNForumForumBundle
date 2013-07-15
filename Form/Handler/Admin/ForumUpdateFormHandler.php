@@ -17,8 +17,6 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 
-use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
-
 use CCDNForum\ForumBundle\Entity\Forum;
 
 /**
@@ -44,7 +42,7 @@ class ForumUpdateFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\Admin\ForumCreateFormType $forumCreateFormType
+     * @var \CCDNForum\ForumBundle\Form\Type\Admin\ForumCreateFormType $forumUpdateFormType
      */
     protected $forumCreateFormType;
 
@@ -73,7 +71,7 @@ class ForumUpdateFormHandler
      *
      * @access public
      * @param \Symfony\Component\Form\FormFactory                  $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\ForumCreateFormType $forumCreateFormType
+     * @param \CCDNForum\ForumBundle\Form\Type\ForumCreateFormType $forumUpdateFormType
      * @param \CCDNForum\ForumBundle\Model\Model\ForumModel        $forumModel
      */
     public function __construct(FormFactory $factory, $forumCreateFormType, $forumModel)

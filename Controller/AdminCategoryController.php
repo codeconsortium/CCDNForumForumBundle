@@ -89,13 +89,20 @@ class AdminCategoryController extends AdminCategoryBaseController
      * @access public
      * @return RenderResponse
      */
-    public function editAction()
+    public function editAction($categoryId)
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/edit.html.', 
+		$category = $this->getCategoryModel()->findOneCategoryById($categoryId);
+	
+		$this->isFound($category);
+		
+		$formHandler = $this->getFormHandlerToUpdateCategory($category);
+		
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Category/edit.html.', 
 			array(
-
+				'form' => $formHandler->getForm()->createView(),
+				'category' => $category
 	        )
 		);
     }
@@ -105,18 +112,28 @@ class AdminCategoryController extends AdminCategoryBaseController
      * @access public
      * @return RenderResponse
      */
-    public function editProcessAction()
+    public function editProcessAction($categoryId)
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/edit.html.', 
-			array(
+		$category = $this->getCategoryModel()->findOneCategoryById($categoryId);
+	
+		$this->isFound($category);
+		
+		$formHandler = $this->getFormHandlerToUpdateCategory($category);
 
+		if ($formHandler->process($this->getRequest())) {
+			return $this->redirectResponse($this->path('ccdn_forum_admin_category_list'));
+		}
+		
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Category/edit.html.', 
+			array(
+				'form' => $formHandler->getForm()->createView(),
+				'category' => $category
 	        )
 		);
-		
-		return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
     }
+
 	
     /**
      *
