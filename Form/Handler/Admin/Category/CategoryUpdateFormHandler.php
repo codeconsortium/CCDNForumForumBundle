@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Handler\Admin;
+namespace CCDNForum\ForumBundle\Form\Handler\Admin\Category;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
@@ -30,7 +30,7 @@ use CCDNForum\ForumBundle\Entity\Category;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class CategoryCreateFormHandler
+class CategoryUpdateFormHandler
 {
     /**
      *
@@ -42,9 +42,9 @@ class CategoryCreateFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\Admin\CategoryCreateFormType $categoryCreateFormType
+     * @var \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryUpdateFormType $categoryUpdateFormType
      */
-    protected $categoryCreateFormType;
+    protected $categoryUpdateFormType;
 
     /**
      *
@@ -62,18 +62,38 @@ class CategoryCreateFormHandler
 
     /**
      *
-     * @access public
-     * @param \Symfony\Component\Form\FormFactory                     $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\CategoryCreateFormType $categoryCreateFormType
-     * @param \CCDNForum\ForumBundle\Model\Model\CategoryModel        $categoryModel
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Entity\Category $category
      */
-    public function __construct(FormFactory $factory, $categoryCreateFormType, $categoryModel)
+    protected $category;
+	
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\Form\FormFactory                                    $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryUpdateFormType $categoryUpdateFormType
+     * @param \CCDNForum\ForumBundle\Model\Model\CategoryModel                       $categoryModel
+     */
+    public function __construct(FormFactory $factory, $categoryUpdateFormType, $categoryModel)
     {
         $this->factory = $factory;
-        $this->categoryCreateFormType = $categoryCreateFormType;
+        $this->categoryUpdateFormType = $categoryUpdateFormType;
         $this->categoryModel = $categoryModel;
     }
 
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Category $category
+	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryUpdateFormHandler
+	 */
+	public function setCategory(Category $category)
+	{
+		$this->category = $category;
+		
+		return $this;
+	}
+	
     /**
      *
      * @access public
@@ -127,7 +147,11 @@ class CategoryCreateFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-            $this->form = $this->factory->create($this->categoryCreateFormType);
+			if (!is_object($this->category) && !$this->category instanceof Category) {
+				throw new \Exception('Category object must be specified to edit.');
+			}
+			
+            $this->form = $this->factory->create($this->categoryUpdateFormType, $this->category);
         }
 
         return $this->form;
@@ -141,6 +165,6 @@ class CategoryCreateFormHandler
      */
     protected function onSuccess(Category $category)
     {
-        return $this->categoryModel->saveNewCategory($category)->flush();
+        return $this->categoryModel->updateCategory($category)->flush();
     }
 }

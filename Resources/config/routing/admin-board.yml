@@ -23,6 +23,6 @@ ccdn_forum_admin_board_delete:
     pattern: /delete/{boardId}
     defaults: { _controller: CCDNForumForumBundle:AdminBoard:delete, _locale: en }
 
-ccdn_forum_admin_board_delete_confirm:
+ccdn_forum_admin_board_delete_process:
     pattern: /delete/{boardId}/process
     defaults: { _controller: CCDNForumForumBundle:AdminBoard:deleteProcess, _locale: en }

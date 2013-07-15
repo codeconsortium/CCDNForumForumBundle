@@ -100,6 +100,7 @@ class CCDNForumForumExtension extends Extension
 
 		$loader->load('services/forms-forum.yml');
 		$loader->load('services/forms-category.yml');
+		$loader->load('services/forms-board.yml');
 		$loader->load('services/forms-topic.yml');
 		$loader->load('services/forms-post.yml');
 

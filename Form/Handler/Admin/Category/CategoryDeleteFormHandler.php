@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Handler\Admin;
+namespace CCDNForum\ForumBundle\Form\Handler\Admin\Category;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-use CCDNForum\ForumBundle\Entity\Forum;
+use CCDNForum\ForumBundle\Entity\Category;
 
 /**
  *
@@ -32,7 +32,7 @@ use CCDNForum\ForumBundle\Entity\Forum;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class ForumDeleteFormHandler
+class CategoryDeleteFormHandler
 {
     /**
      *
@@ -44,16 +44,16 @@ class ForumDeleteFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\Admin\ForumCreateFormType $forumCreateFormType
+     * @var \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryDeleteFormType $categoryDeleteFormType
      */
-    protected $forumCreateFormType;
+    protected $categoryDeleteFormType;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\ForumModel $forumModel
+     * @var \CCDNForum\ForumBundle\Model\Model\CategoryModel $categoryModel
      */
-    protected $forumModel;
+    protected $categoryModel;
 
     /**
      *
@@ -65,33 +65,33 @@ class ForumDeleteFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Entity\Forum $forum
+     * @var \CCDNForum\ForumBundle\Entity\Category $category
      */
-    protected $forum;
+    protected $category;
 	
     /**
      *
      * @access public
-     * @param \Symfony\Component\Form\FormFactory                  $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\ForumCreateFormType $forumCreateFormType
-     * @param \CCDNForum\ForumBundle\Model\Model\ForumModel        $forumModel
+     * @param \Symfony\Component\Form\FormFactory                                    $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryDeleteFormType $categoryDeleteFormType
+     * @param \CCDNForum\ForumBundle\Model\Model\CategoryModel                       $categoryModel
      */
-    public function __construct(FormFactory $factory, $forumCreateFormType, $forumModel)
+    public function __construct(FormFactory $factory, $categoryDeleteFormType, $categoryModel)
     {
         $this->factory = $factory;
-        $this->forumCreateFormType = $forumCreateFormType;
-        $this->forumModel = $forumModel;
+        $this->categoryDeleteFormType = $categoryDeleteFormType;
+        $this->categoryModel = $categoryModel;
     }
 
 	/**
 	 * 
 	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum $forum
-	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\ForumUpdateFormHandler
+	 * @param \CCDNForum\ForumBundle\Entity\Category $category
+	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryDeleteFormHandler
 	 */
-	public function setForum(Forum $forum)
+	public function setCategory(Category $category)
 	{
-		$this->forum = $forum;
+		$this->category = $category;
 		
 		return $this;
 	}
@@ -149,11 +149,11 @@ class ForumDeleteFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-			if (!is_object($this->forum) && !$this->forum instanceof Forum) {
-				throw new \Exception('Forum object must be specified to delete.');
+			if (!is_object($this->category) && !$this->category instanceof Category) {
+				throw new \Exception('Category object must be specified to delete.');
 			}
 			
-            $this->form = $this->factory->create($this->forumCreateFormType, $this->forum);
+            $this->form = $this->factory->create($this->categoryDeleteFormType, $this->category);
         }
 
         return $this->form;
@@ -162,25 +162,25 @@ class ForumDeleteFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Forum           $forum
-     * @return \CCDNForum\ForumBundle\Model\Model\ForumModel
+     * @param  \CCDNForum\ForumBundle\Entity\Category           $category
+     * @return \CCDNForum\ForumBundle\Model\Model\CategoryModel
      */
-    protected function onSuccess(Forum $forum)
+    protected function onSuccess(Category $category)
     {
 		$confirmA = $this->form->get('confirm_delete')->getData();
 		$confirmB = $this->form->get('confirm_subordinates')->getData();
 		$confirm = array_merge($confirmA, $confirmB);
 		
-		if (in_array('delete_forum', $confirm)) {
+		if (in_array('delete_category', $confirm)) {
 			if (! in_array('delete_subordinates', $confirm)) {
-				$categories = new ArrayCollection($forum->getCategories()->toArray());
+				$boards = new ArrayCollection($category->getBoards()->toArray());
 				
-				$this->forumModel->reassignCategoriesToForum($categories, null)->flush();
+				$this->categoryModel->reassignBoardsToCategory($boards, null)->flush();
 			}
 
-	        $this->forumModel->deleteForum($forum)->flush();
+	        $this->categoryModel->deleteCategory($category)->flush();
 		}
 		
-		return $this->forumModel;
+		return $this->categoryModel;
     }
 }

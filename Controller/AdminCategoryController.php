@@ -176,12 +176,11 @@ class AdminCategoryController extends AdminCategoryBaseController
 			return $this->redirectResponse($this->path('ccdn_forum_admin_category_list'));
 		}
 		
-        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/delete.html.', 
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Category/delete.html.', 
 			array(
 				'form' => $formHandler->getForm()->createView(),
 				'category' => $category
 	        )
 		);
     }
-
 }

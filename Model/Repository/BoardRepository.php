@@ -39,6 +39,28 @@ class BoardRepository extends BaseRepository implements BaseRepositoryInterface
     /**
      *
      * @access public
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function findAllBoards()
+    {
+        $qb = $this->createSelectQuery(array('b'));
+
+        $qb->addOrderBy('b.listOrderPriority', 'ASC');
+
+        return $this->gateway->findBoards($qb);
+    }
+
+
+
+
+
+
+
+
+
+    /**
+     *
+     * @access public
      * @param  int                                 $boardId
      * @return \CCDNForum\ForumBundle\Entity\Board
      */

@@ -11,12 +11,10 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Type\Admin;
+namespace CCDNForum\ForumBundle\Form\Type\Admin\Board;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-
-use CCDNForum\ForumBundle\Entity\Forum;
 
 /**
  *
@@ -29,23 +27,23 @@ use CCDNForum\ForumBundle\Entity\Forum;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class CategoryUpdateFormType extends AbstractType
+class BoardDeleteFormType extends AbstractType
 {
     /**
      *
      * @access protected
-     * @var string $categoryClass
+     * @var string $boardClass
      */
-    protected $categoryClass;
+    protected $boardClass;
 
     /**
      *
      * @access public
-     * @var string $categoryClass
+     * @var string $boardClass
      */
-    public function __construct($categoryClass)
+    public function __construct($boardClass)
     {
-        $this->categoryClass = $categoryClass;
+        $this->boardClass = $boardClass;
     }
 
     /**
@@ -56,12 +54,26 @@ class CategoryUpdateFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text',
-                array(
-                    'label'              => 'form.label.forum.name',
-                    'translation_domain' => 'CCDNForumForumBundle',
-                )
-            )
+			->add('confirm_delete', 'choice',
+				array(
+					'choices' => array(
+						'delete_board' => 'Yes, I want to delete this board.',
+					),
+					'multiple' => true,
+					'expanded' => true,
+					'mapped' => false
+				)
+			)
+			->add('confirm_subordinates', 'choice',
+				array(
+					'choices' => array(
+						'delete_subordinates' => 'Also delete topics.'
+					),
+					'multiple' => true,
+					'expanded' => true,
+					'mapped' => false
+				)
+			)
         ;
     }
 
@@ -74,12 +86,12 @@ class CategoryUpdateFormType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class'          => $this->categoryClass,
+            'data_class'          => $this->boardClass,
             'csrf_protection'     => true,
             'csrf_field_name'     => '_token',
             // a unique key to help generate the secret token
-            'intention'           => 'forum_category_update_item',
-            'validation_groups'   => array('forum_category_update'),
+            'intention'           => 'forum_board_delete_item',
+            'validation_groups'   => array('forum_board_delete'),
             'cascade_validation'  => true,
         );
     }
@@ -91,6 +103,6 @@ class CategoryUpdateFormType extends AbstractType
      */
     public function getName()
     {
-        return 'Forum_CategoryUpdate';
+        return 'Forum_BoardDelete';
     }
 }

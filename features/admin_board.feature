@@ -39,6 +39,12 @@ Feature: Board Management
 		 Then I should be on "/en/forum/admin/manage-boards/"
           And I should see "FooBar"
 
+    Scenario: Abort Create a new Board
+        Given I am on "/en/forum/admin/manage-boards/create"
+		  And I should see "Create New Board"
+          And I follow "Cancel"
+		 Then I should be on "/en/forum/admin/manage-boards/"
+
     Scenario: Update existing Board
 	    Given I am on "/en/forum/admin/manage-boards/"
 		  And I follow "update_board[test_board_1]"
@@ -50,12 +56,30 @@ Feature: Board Management
 		  And I should not see "test_board_1"
           And I should see "FooBaz"
 
+    Scenario: Abort Update existing Board
+	    Given I am on "/en/forum/admin/manage-boards/"
+		  And I follow "update_category[test_board_1]"
+		  And I should see "Update Board"
+		  And I should see "test_board_1"
+          And I follow "Cancel"
+		 Then I should be on "/en/forum/admin/manage-boards/"
+		  And I should see "test_board_1"
+
     Scenario: Delete existing Board
 	    Given I am on "/en/forum/admin/manage-boards/"
-		  And I follow "delete_board[test_board_3]"
+		  And I follow "delete_category[test_board_3]"
 		  And I should see "Delete Board"
 		  And I should see "test_board_3"
 		  And I check "Forum_BoardDelete[confirm_delete][]"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-boards/"
           And I should not see "test_board_3"
+
+    Scenario: Abort existing Board
+	    Given I am on "/en/forum/admin/manage-boards/"
+		  And I follow "delete_category[test_board_3]"
+		  And I should see "Delete Board"
+		  And I should see "test_board_3"
+		  And I follow "Cancel"
+		 Then I should be on "/en/forum/admin/manage-boards/"
+          And I should see "test_board_3"

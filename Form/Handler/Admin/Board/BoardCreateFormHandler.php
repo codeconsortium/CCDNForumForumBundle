@@ -11,15 +11,13 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Handler\Admin;
+namespace CCDNForum\ForumBundle\Form\Handler\Admin\Board;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
-use CCDNForum\ForumBundle\Entity\Category;
+use CCDNForum\ForumBundle\Entity\Board;
 
 /**
  *
@@ -32,7 +30,7 @@ use CCDNForum\ForumBundle\Entity\Category;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class CategoryDeleteFormHandler
+class BoardCreateFormHandler
 {
     /**
      *
@@ -44,16 +42,16 @@ class CategoryDeleteFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\Admin\CategoryDeleteFormType $categoryDeleteFormType
+     * @var \CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardCreateFormType $boardCreateFormType
      */
-    protected $categoryDeleteFormType;
+    protected $boardCreateFormType;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\CategoryModel $categoryModel
+     * @var \CCDNForum\ForumBundle\Model\Model\BoardModel $boardModel
      */
-    protected $categoryModel;
+    protected $boardModel;
 
     /**
      *
@@ -64,38 +62,18 @@ class CategoryDeleteFormHandler
 
     /**
      *
-     * @access protected
-     * @var \CCDNForum\ForumBundle\Entity\Category $category
-     */
-    protected $category;
-	
-    /**
-     *
      * @access public
-     * @param \Symfony\Component\Form\FormFactory                     $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\CategoryDeleteFormType $categoryDeleteFormType
-     * @param \CCDNForum\ForumBundle\Model\Model\CategoryModel        $categoryModel
+     * @param \Symfony\Component\Form\FormFactory                        $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\Board\BoardCreateFormType $boardCreateFormType
+     * @param \CCDNForum\ForumBundle\Model\Model\BoardModel              $boardModel
      */
-    public function __construct(FormFactory $factory, $categoryDeleteFormType, $categoryModel)
+    public function __construct(FormFactory $factory, $boardCreateFormType, $boardModel)
     {
         $this->factory = $factory;
-        $this->categoryDeleteFormType = $categoryDeleteFormType;
-        $this->categoryModel = $categoryModel;
+        $this->boardCreateFormType = $boardCreateFormType;
+        $this->boardModel = $boardModel;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Category $category
-	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\CategoryDeleteFormHandler
-	 */
-	public function setCategory(Category $category)
-	{
-		$this->category = $category;
-		
-		return $this;
-	}
-	
     /**
      *
      * @access public
@@ -149,11 +127,7 @@ class CategoryDeleteFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-			if (!is_object($this->category) && !$this->category instanceof Category) {
-				throw new \Exception('Category object must be specified to delete.');
-			}
-			
-            $this->form = $this->factory->create($this->categoryDeleteFormType, $this->category);
+            $this->form = $this->factory->create($this->boardCreateFormType);
         }
 
         return $this->form;
@@ -162,25 +136,11 @@ class CategoryDeleteFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Category           $category
-     * @return \CCDNForum\ForumBundle\Model\Model\CategoryModel
+     * @param  \CCDNForum\ForumBundle\Entity\Board           $board
+     * @return \CCDNForum\ForumBundle\Model\Model\BoardModel
      */
-    protected function onSuccess(Category $category)
+    protected function onSuccess(Board $board)
     {
-		$confirmA = $this->form->get('confirm_delete')->getData();
-		$confirmB = $this->form->get('confirm_subordinates')->getData();
-		$confirm = array_merge($confirmA, $confirmB);
-		
-		if (in_array('delete_category', $confirm)) {
-			if (! in_array('delete_subordinates', $confirm)) {
-				$boards = new ArrayCollection($category->getBoards()->toArray());
-				
-				$this->categoryModel->reassignBoardsToCategory($boards, null)->flush();
-			}
-
-	        $this->categoryModel->deleteCategory($category)->flush();
-		}
-		
-		return $this->categoryModel;
+        return $this->boardModel->saveNewBoard($board)->flush();
     }
 }

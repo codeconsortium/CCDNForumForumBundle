@@ -24,7 +24,7 @@ namespace CCDNForum\ForumBundle\Controller;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class AdminBoardController extends BaseController
+class AdminBoardController extends AdminBoardBaseController
 {
     /**
      *
@@ -35,13 +35,15 @@ class AdminBoardController extends BaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/list.html.', 
+		$boards = $this->getBoardModel()->findAllBoards();
+		
+		return $this->renderResponse('CCDNForumForumBundle:Admin:/Board/list.html.', 
 			array(
-
+				'boards' => $boards
 	        )
 		);
     }
-	
+
     /**
      *
      * @access public
@@ -50,10 +52,12 @@ class AdminBoardController extends BaseController
     public function createAction()
     {
         $this->isAuthorised('ROLE_ADMIN');
-
-        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/create.html.', 
+		
+		$formHandler = $this->getFormHandlerToCreateBoard();
+		
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Board/create.html.', 
 			array(
-
+				'form' => $formHandler->getForm()->createView()
 	        )
 		);
     }
@@ -67,47 +71,17 @@ class AdminBoardController extends BaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/create.html.', 
-			array(
-
-	        )
-		);
+		$formHandler = $this->getFormHandlerToCreateBoard();
 		
-		return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
-    }
-	
-    /**
-     *
-     * @access public
-     * @return RenderResponse
-     */
-    public function editAction()
-    {
-        $this->isAuthorised('ROLE_ADMIN');
-
-        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/edit.html.', 
-			array(
-
-	        )
-		);
-    }
-	
-    /**
-     *
-     * @access public
-     * @return RenderResponse
-     */
-    public function editProcessAction()
-    {
-        $this->isAuthorised('ROLE_ADMIN');
-
-        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/edit.html.', 
-			array(
-
-	        )
-		);
+		if ($formHandler->process($this->getRequest())) {
+			return $this->redirectResponse($this->path('ccdn_forum_admin_board_list'));
+		}
 		
-		return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Board/create.html.', 
+			array(
+				'form' => $formHandler->getForm()->createView()
+	        )
+		);
     }
 	
     /**
@@ -115,13 +89,70 @@ class AdminBoardController extends BaseController
      * @access public
      * @return RenderResponse
      */
-    public function deleteAction()
+    public function editAction($boardId)
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-        return $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/delete.html.', 
+		$board = $this->getBoardModel()->findOneBoardById($boardId);
+	
+		$this->isFound($board);
+		
+		$formHandler = $this->getFormHandlerToUpdateBoard($board);
+		
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Board/edit.html.', 
 			array(
+				'form' => $formHandler->getForm()->createView(),
+				'board' => $board
+	        )
+		);
+    }
+	
+    /**
+     *
+     * @access public
+     * @return RenderResponse
+     */
+    public function editProcessAction($boardId)
+    {
+        $this->isAuthorised('ROLE_ADMIN');
 
+		$board = $this->getBoardModel()->findOneBoardById($boardId);
+	
+		$this->isFound($board);
+		
+		$formHandler = $this->getFormHandlerToUpdateBoard($board);
+
+		if ($formHandler->process($this->getRequest())) {
+			return $this->redirectResponse($this->path('ccdn_forum_admin_board_list'));
+		}
+		
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Board/edit.html.', 
+			array(
+				'form' => $formHandler->getForm()->createView(),
+				'board' => $board
+	        )
+		);
+    }
+
+    /**
+     *
+     * @access public
+     * @return RenderResponse
+     */
+    public function deleteAction($boardId)
+    {
+        $this->isAuthorised('ROLE_ADMIN');
+
+		$board = $this->getBoardModel()->findOneBoardById($boardId);
+	
+		$this->isFound($board);
+		
+		$formHandler = $this->getFormHandlerToDeleteBoard($board);
+
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Board/delete.html.', 
+			array(
+				'form' => $formHandler->getForm()->createView(),
+				'board' => $board
 	        )
 		);
     }
@@ -131,10 +162,25 @@ class AdminBoardController extends BaseController
      * @access public
      * @return RedirectResponse
      */
-    public function deleteProcessAction()
+    public function deleteProcessAction($boardId)
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-		return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
+		$board = $this->getBoardModel()->findOneBoardById($boardId);
+	
+		$this->isFound($board);
+		
+		$formHandler = $this->getFormHandlerToDeleteBoard($board);
+
+		if ($formHandler->process($this->getRequest())) {
+			return $this->redirectResponse($this->path('ccdn_forum_admin_board_list'));
+		}
+		
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Board/delete.html.', 
+			array(
+				'form' => $formHandler->getForm()->createView(),
+				'board' => $board
+	        )
+		);
     }
 }

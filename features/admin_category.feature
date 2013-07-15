@@ -68,7 +68,7 @@ Feature: Category Management
 		  And I check "Forum_CategoryDelete[confirm_delete][]"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-categories/"
-          And I should not see "test_categories_3"
+          And I should not see "test_category_3"
 
     Scenario: Abort existing Category
 	    Given I am on "/en/forum/admin/manage-categories/"
@@ -77,4 +77,4 @@ Feature: Category Management
 		  And I should see "test_category_3"
 		  And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-categories/"
-          And I should not see "test_categories_3"
+          And I should see "test_category_3"

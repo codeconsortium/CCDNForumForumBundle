@@ -11,13 +11,13 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Handler\Admin;
+namespace CCDNForum\ForumBundle\Form\Handler\Admin\Board;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 
-use CCDNForum\ForumBundle\Entity\Forum;
+use CCDNForum\ForumBundle\Entity\Board;
 
 /**
  *
@@ -30,7 +30,7 @@ use CCDNForum\ForumBundle\Entity\Forum;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class ForumUpdateFormHandler
+class BoardUpdateFormHandler
 {
     /**
      *
@@ -42,16 +42,16 @@ class ForumUpdateFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\Admin\ForumCreateFormType $forumUpdateFormType
+     * @var \CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardUpdateFormType $boardUpdateFormType
      */
-    protected $forumCreateFormType;
+    protected $boardUpdateFormType;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\ForumModel $forumModel
+     * @var \CCDNForum\ForumBundle\Model\Model\BoardModel $boardModel
      */
-    protected $forumModel;
+    protected $boardModel;
 
     /**
      *
@@ -63,33 +63,33 @@ class ForumUpdateFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Entity\Forum $forum
+     * @var \CCDNForum\ForumBundle\Entity\Board $board
      */
-    protected $forum;
+    protected $board;
 	
     /**
      *
      * @access public
-     * @param \Symfony\Component\Form\FormFactory                  $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\ForumCreateFormType $forumUpdateFormType
-     * @param \CCDNForum\ForumBundle\Model\Model\ForumModel        $forumModel
+     * @param \Symfony\Component\Form\FormFactory                              $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardUpdateFormType $boardUpdateFormType
+     * @param \CCDNForum\ForumBundle\Model\Model\BoardModel                    $boardModel
      */
-    public function __construct(FormFactory $factory, $forumCreateFormType, $forumModel)
+    public function __construct(FormFactory $factory, $boardUpdateFormType, $boardModel)
     {
         $this->factory = $factory;
-        $this->forumCreateFormType = $forumCreateFormType;
-        $this->forumModel = $forumModel;
+        $this->boardUpdateFormType = $boardUpdateFormType;
+        $this->boardModel = $boardModel;
     }
 
 	/**
 	 * 
 	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum $forum
-	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\ForumUpdateFormHandler
+	 * @param \CCDNForum\ForumBundle\Entity\Board $board
+	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Board\BoardUpdateFormHandler
 	 */
-	public function setForum(Forum $forum)
+	public function setBoard(Board $board)
 	{
-		$this->forum = $forum;
+		$this->board = $board;
 		
 		return $this;
 	}
@@ -147,11 +147,11 @@ class ForumUpdateFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-			if (!is_object($this->forum) && !$this->forum instanceof Forum) {
-				throw new \Exception('Forum object must be specified to edit.');
+			if (!is_object($this->board) && !$this->board instanceof Board) {
+				throw new \Exception('Board object must be specified to edit.');
 			}
 			
-            $this->form = $this->factory->create($this->forumCreateFormType, $this->forum);
+            $this->form = $this->factory->create($this->boardUpdateFormType, $this->board);
         }
 
         return $this->form;
@@ -160,11 +160,11 @@ class ForumUpdateFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Forum           $forum
-     * @return \CCDNForum\ForumBundle\Model\Model\ForumModel
+     * @param  \CCDNForum\ForumBundle\Entity\Board           $board
+     * @return \CCDNForum\ForumBundle\Model\Model\BoardModel
      */
-    protected function onSuccess(Forum $forum)
+    protected function onSuccess(Board $board)
     {
-        return $this->forumModel->updateForum($forum)->flush();
+        return $this->boardModel->updateBoard($board)->flush();
     }
 }

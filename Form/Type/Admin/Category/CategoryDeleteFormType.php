@@ -11,12 +11,10 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Type\Admin;
+namespace CCDNForum\ForumBundle\Form\Type\Admin\Category;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-
-use CCDNForum\ForumBundle\Entity\Forum;
 
 /**
  *
@@ -29,23 +27,23 @@ use CCDNForum\ForumBundle\Entity\Forum;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class ForumDeleteFormType extends AbstractType
+class CategoryDeleteFormType extends AbstractType
 {
     /**
      *
      * @access protected
-     * @var string $forumClass
+     * @var string $categoryClass
      */
-    protected $forumClass;
+    protected $categoryClass;
 
     /**
      *
      * @access public
-     * @var string $forumClass
+     * @var string $categoryClass
      */
-    public function __construct($forumClass)
+    public function __construct($categoryClass)
     {
-        $this->forumClass = $forumClass;
+        $this->categoryClass = $categoryClass;
     }
 
     /**
@@ -59,7 +57,7 @@ class ForumDeleteFormType extends AbstractType
 			->add('confirm_delete', 'choice',
 				array(
 					'choices' => array(
-						'delete_forum' => 'Yes, I want to delete this forum.',
+						'delete_category' => 'Yes, I want to delete this category.',
 					),
 					'multiple' => true,
 					'expanded' => true,
@@ -69,7 +67,7 @@ class ForumDeleteFormType extends AbstractType
 			->add('confirm_subordinates', 'choice',
 				array(
 					'choices' => array(
-						'delete_subordinates' => 'Also delete categories, boards and topics.'
+						'delete_subordinates' => 'Also delete boards and topics.'
 					),
 					'multiple' => true,
 					'expanded' => true,
@@ -88,12 +86,12 @@ class ForumDeleteFormType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class'          => $this->forumClass,
+            'data_class'          => $this->categoryClass,
             'csrf_protection'     => true,
             'csrf_field_name'     => '_token',
             // a unique key to help generate the secret token
-            'intention'           => 'forum_forum_delete_item',
-            'validation_groups'   => array('forum_forum_delete'),
+            'intention'           => 'forum_category_delete_item',
+            'validation_groups'   => array('forum_category_delete'),
             'cascade_validation'  => true,
         );
     }
@@ -105,6 +103,6 @@ class ForumDeleteFormType extends AbstractType
      */
     public function getName()
     {
-        return 'Forum_ForumDelete';
+        return 'Forum_CategoryDelete';
     }
 }

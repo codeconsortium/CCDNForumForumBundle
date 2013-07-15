@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Handler\Admin;
+namespace CCDNForum\ForumBundle\Form\Handler\Admin\Forum;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
@@ -30,7 +30,7 @@ use CCDNForum\ForumBundle\Entity\Forum;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class ForumCreateFormHandler
+class ForumUpdateFormHandler
 {
     /**
      *
@@ -42,9 +42,9 @@ class ForumCreateFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\Admin\ForumCreateFormType $forumCreateFormType
+     * @var \CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumUpdateFormType $forumUpdateFormType
      */
-    protected $forumCreateFormType;
+    protected $forumUpdateFormType;
 
     /**
      *
@@ -62,18 +62,38 @@ class ForumCreateFormHandler
 
     /**
      *
-     * @access public
-     * @param \Symfony\Component\Form\FormFactory                  $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\ForumCreateFormType $forumCreateFormType
-     * @param \CCDNForum\ForumBundle\Model\Model\ForumModel        $forumModel
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Entity\Forum $forum
      */
-    public function __construct(FormFactory $factory, $forumCreateFormType, $forumModel)
+    protected $forum;
+	
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\Form\FormFactory                              $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumUpdateFormType $forumUpdateFormType
+     * @param \CCDNForum\ForumBundle\Model\Model\ForumModel                    $forumModel
+     */
+    public function __construct(FormFactory $factory, $forumUpdateFormType, $forumModel)
     {
         $this->factory = $factory;
-        $this->forumCreateFormType = $forumCreateFormType;
+        $this->forumUpdateFormType = $forumUpdateFormType;
         $this->forumModel = $forumModel;
     }
 
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Forum $forum
+	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Forum\ForumUpdateFormHandler
+	 */
+	public function setForum(Forum $forum)
+	{
+		$this->forum = $forum;
+		
+		return $this;
+	}
+	
     /**
      *
      * @access public
@@ -127,7 +147,11 @@ class ForumCreateFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-            $this->form = $this->factory->create($this->forumCreateFormType);
+			if (!is_object($this->forum) && !$this->forum instanceof Forum) {
+				throw new \Exception('Forum object must be specified to edit.');
+			}
+			
+            $this->form = $this->factory->create($this->forumUpdateFormType, $this->forum);
         }
 
         return $this->form;
@@ -141,6 +165,6 @@ class ForumCreateFormHandler
      */
     protected function onSuccess(Forum $forum)
     {
-        return $this->forumModel->saveNewForum($forum)->flush();
+        return $this->forumModel->updateForum($forum)->flush();
     }
 }

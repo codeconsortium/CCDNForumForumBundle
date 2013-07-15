@@ -11,12 +11,10 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Type\Admin;
+namespace CCDNForum\ForumBundle\Form\Type\Admin\Forum;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-
-use CCDNForum\ForumBundle\Entity\Forum;
 
 /**
  *
@@ -29,23 +27,23 @@ use CCDNForum\ForumBundle\Entity\Forum;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class CategoryCreateFormType extends AbstractType
+class ForumCreateFormType extends AbstractType
 {
     /**
      *
      * @access protected
-     * @var string $categoryClass
+     * @var string $forumClass
      */
-    protected $categoryClass;
+    protected $forumClass;
 
     /**
      *
      * @access public
-     * @var string $categoryClass
+     * @var string $forumClass
      */
-    public function __construct($categoryClass)
+    public function __construct($forumClass)
     {
-        $this->categoryClass = $categoryClass;
+        $this->forumClass = $forumClass;
     }
 
     /**
@@ -74,12 +72,12 @@ class CategoryCreateFormType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class'          => $this->categoryClass,
+            'data_class'          => $this->forumClass,
             'csrf_protection'     => true,
             'csrf_field_name'     => '_token',
             // a unique key to help generate the secret token
-            'intention'           => 'forum_category_create_item',
-            'validation_groups'   => array('forum_category_create'),
+            'intention'           => 'forum_forum_create_item',
+            'validation_groups'   => array('forum_forum_create'),
             'cascade_validation'  => true,
         );
     }
@@ -91,6 +89,6 @@ class CategoryCreateFormType extends AbstractType
      */
     public function getName()
     {
-        return 'Forum_CategoryCreate';
+        return 'Forum_ForumCreate';
     }
 }

@@ -1,0 +1,45 @@
+{% extends 'CCDNForumForumBundle:Admin:/Layout/base.html.twig' %}
+
+{% set LayoutTemplate = ccdn_forum_forum.topic.create.layout_template %}
+
+{% block title %}{% endblock %}
+
+
+{%- block body_content -%}
+
+	{%- spaceless -%}
+	
+		<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_board_create') -}}">Create Board</a>
+		
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{%- for board_index, board in boards -%}
+					<tr>
+						<td>{{- board.id -}}</td>
+						<td>{{- board.name -}}</td>
+						<td>
+							<a class="btn" href="{{- path('ccdn_forum_admin_board_edit', {'boardId': board.id}) -}}" id="update_board[{{- board.name -}}]">
+								Edit
+							</a>
+						</td>
+						<td>
+							<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_board_delete', {'boardId': board.id}) -}}" id="delete_board[{{- board.name -}}]">
+								Delete
+							</a>
+						</td>
+					</tr>
+				{%- endfor -%}
+			</tbody>
+		</table>
+	
+	{%- endspaceless -%}
+	
+{%- endblock body_content -%}
