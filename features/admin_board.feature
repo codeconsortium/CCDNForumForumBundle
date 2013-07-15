@@ -60,7 +60,7 @@ Feature: Board Management
 
     Scenario: Abort Update existing Board
 	    Given I am on "/en/forum/admin/manage-boards/"
-		  And I follow "update_category[test_board_1]"
+		  And I follow "update_board[test_board_1]"
 		  And I should see "Update Board"
 		  And I should see "test_board_1"
           And I follow "Cancel"
