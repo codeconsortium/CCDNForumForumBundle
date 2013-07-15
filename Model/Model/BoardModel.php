@@ -46,7 +46,16 @@ class BoardModel extends BaseModel implements BaseModelInterface
         return $this->getRepository()->findAllBoards();
     }
 
-
+    /**
+     *
+     * @access public
+     * @param  int                                 $boardId
+     * @return \CCDNForum\ForumBundle\Entity\Board
+     */
+    public function findOneBoardById($boardId)
+    {
+        return $this->getRepository()->findOneBoardById($boardId);
+    }
 
 
 

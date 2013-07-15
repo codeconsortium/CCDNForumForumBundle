@@ -34,10 +34,11 @@ Feature: Board Management
     Scenario: Create a new Board
         Given I am on "/en/forum/admin/manage-boards/create"
 		  And I should see "Create New Board"
-          And I fill in "Forum_BoardCreate[name]" with "FooBar"
+          And I fill in "Forum_BoardCreate[name]" with "Test Board"
+		  And I fill in "Forum_BoardCreate[description]" with "Some description"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-boards/"
-          And I should see "FooBar"
+          And I should see "Test Board"
 
     Scenario: Abort Create a new Board
         Given I am on "/en/forum/admin/manage-boards/create"
@@ -50,11 +51,12 @@ Feature: Board Management
 		  And I follow "update_board[test_board_1]"
 		  And I should see "Update Board"
 		  And I should see "test_board_1"
-          And I fill in "Forum_BoardUpdate[name]" with "FooBaz"
+          And I fill in "Forum_BoardUpdate[name]" with "Testing Board update form"
+		  And I fill in "Forum_BoardUpdate[description]" with "new board description"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-boards/"
 		  And I should not see "test_board_1"
-          And I should see "FooBaz"
+          And I should see "Testing Board update form"
 
     Scenario: Abort Update existing Board
 	    Given I am on "/en/forum/admin/manage-boards/"

@@ -41,7 +41,7 @@ class BoardManager extends BaseManager implements BaseManagerInterface
      */
     public function saveNewBoard(Board $board)
     {
-        $boardCount = $this->getBoardCount();
+        $boardCount = $this->model->getBoardCount();
 
         $board->setListOrderPriority(++$boardCount['boardCount']);
 

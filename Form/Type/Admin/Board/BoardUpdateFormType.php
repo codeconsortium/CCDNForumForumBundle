@@ -60,6 +60,12 @@ class BoardUpdateFormType extends AbstractType
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
+            ->add('description', 'textarea',
+                array(
+                    'label'              => 'form.label.board.description',
+                    'translation_domain' => 'CCDNForumForumBundle',
+				)
+			)
         ;
     }
 
