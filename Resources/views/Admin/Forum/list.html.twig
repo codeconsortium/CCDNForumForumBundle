@@ -11,11 +11,12 @@
 	
 		<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_forum_create') -}}">Create Forum</a>
 		
-		<table>
+		<table class="table table-bordered">
 			<thead>
 				<tr>
 					<th>ID</th>
 					<th>Name</th>
+					<th>Category Count</th>
 					<th></th>
 					<th></th>
 				</tr>
@@ -25,6 +26,7 @@
 					<tr>
 						<td>{{- forum.id -}}</td>
 						<td>{{- forum.name -}}</td>
+						<td>{{- forum.categories |length -}}</td>
 						<td>
 							<a class="btn" href="{{- path('ccdn_forum_admin_forum_edit', {'forumId': forum.id}) -}}" id="update_forum[{{- forum.name -}}]">
 								Edit

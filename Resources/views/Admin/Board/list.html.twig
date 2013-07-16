@@ -11,11 +11,14 @@
 	
 		<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_board_create') -}}">Create Board</a>
 		
-		<table>
+		<table class="table table-bordered">
 			<thead>
 				<tr>
 					<th>ID</th>
 					<th>Name</th>
+					<th>Forum</th>
+					<th>Category</th>
+					<th>Topic Count</th>
 					<th></th>
 					<th></th>
 				</tr>
@@ -25,6 +28,19 @@
 					<tr>
 						<td>{{- board.id -}}</td>
 						<td>{{- board.name -}}</td>
+						<td>
+							{%- if board.category -%}
+								{%- if board.category.forum -%}
+									{{- board.category.forum.name -}}
+								{%- endif -%}
+							{%- endif -%}
+						</td>
+						<td>
+							{%- if board.category -%}
+								{{- board.category.name -}}
+							{%- endif -%}
+						</td>
+						<td>{{- board.topics |length -}}</td>
 						<td>
 							<a class="btn" href="{{- path('ccdn_forum_admin_board_edit', {'boardId': board.id}) -}}" id="update_board[{{- board.name -}}]">
 								Edit
