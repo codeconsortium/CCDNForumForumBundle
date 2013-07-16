@@ -25,7 +25,7 @@ class CategoryRepositoryTest extends TestBase
 		$this->assertCount(9, $categories);
 	}
 	
-	public function testFindOneCategoriesById()
+	public function testFindOneCategoryById()
 	{
 		$category = $this->addNewCategory('TestCategory', 1);
 		

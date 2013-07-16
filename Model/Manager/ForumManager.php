@@ -69,7 +69,7 @@ class ForumManager extends BaseManager implements BaseManagerInterface
 	public function reassignCategoriesToForum(ArrayCollection $categories, Forum $forum = null)
 	{
 		foreach ($categories as $category) {
-			$category->setForum(null);
+			$category->setForum($forum);
 			
 			$this->persist($category);
 		}

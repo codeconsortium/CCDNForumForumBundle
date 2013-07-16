@@ -69,7 +69,7 @@ Feature: Board Management
 
     Scenario: Delete existing Board
 	    Given I am on "/en/forum/admin/manage-boards/"
-		  And I follow "delete_category[test_board_3]"
+		  And I follow "delete_board[test_board_3]"
 		  And I should see "Delete Board"
 		  And I should see "test_board_3"
 		  And I check "Forum_BoardDelete[confirm_delete][]"
@@ -79,7 +79,7 @@ Feature: Board Management
 
     Scenario: Abort existing Board
 	    Given I am on "/en/forum/admin/manage-boards/"
-		  And I follow "delete_category[test_board_3]"
+		  And I follow "delete_board[test_board_3]"
 		  And I should see "Delete Board"
 		  And I should see "test_board_3"
 		  And I follow "Cancel"

@@ -28,8 +28,6 @@ class CategoryManagerTest extends TestBase
 		
 		$this->getCategoryModel()->getManager()->saveNewCategory($category);
 		
-		//$this->em->refresh($category);
-		
 		$this->assertTrue(is_numeric($category->getId()));
 		$this->assertSame('NewCategoryTest', $category->getName());
 	}
@@ -75,6 +73,6 @@ class CategoryManagerTest extends TestBase
 		
 		$this->getCategoryModel()->getManager()->reassignBoardsToCategory($boards, $category2);
 		$this->em->refresh($category2);
-		$this->assertCount(3, $category2->getBoards());
+		$this->assertCount(6, $category2->getBoards());
 	}
 }

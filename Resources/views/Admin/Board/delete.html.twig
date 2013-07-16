@@ -1,0 +1,40 @@
+{% extends 'CCDNForumForumBundle:Admin:/Layout/base.html.twig' %}
+
+{% set LayoutTemplate = ccdn_forum_forum.post.edit_topic.layout_template %}
+
+{% block title %}{% endblock %}
+
+{% block body_content %}
+
+    {%- spaceless -%}
+
+	<section>
+	    {%- form_theme form ccdn_forum_forum.post.edit_topic.form_theme -%}
+	    <form action="{{- path('ccdn_forum_admin_board_delete_process', {'boardId': board.id}) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
+	        <fieldset>
+
+				<div class="control-group form-title">
+					<div class="controls">
+						<h4>Delete Board {{ board.id -}}</h4>
+						<h5>{{- board.name -}}</h5>
+					</div>
+				</div>
+
+				{{- form_errors(form) -}}
+
+				{{- form_rest(form) -}}
+
+	            <div class="form-actions">
+	                <input type="submit" class="btn btn-danger" value="Confirm Delete" name="submit[post]" id="submit[post]">
+					
+	                <a class="btn" href="{{- path('ccdn_forum_admin_board_list') -}}">
+						{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
+					</a>
+	            </div>
+	        </fieldset>
+	    </form>
+	</section>
+
+    {%- endspaceless -%}
+
+{% endblock body_content %}

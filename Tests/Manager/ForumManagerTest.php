@@ -71,6 +71,6 @@ class ForumManagerTest extends TestBase
 		
 		$this->getForumModel()->getManager()->reassignCategoriesToForum($categories, $forum2);
 		$this->em->refresh($forum2);
-		$this->assertCount(3, $forum2->getCategories());
+		$this->assertCount(6, $forum2->getCategories());
 	}
 }

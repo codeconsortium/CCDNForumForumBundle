@@ -46,7 +46,9 @@ class BoardManager extends BaseManager implements BaseManagerInterface
         $board->setListOrderPriority(++$boardCount['boardCount']);
 
         // insert a new row
-        $this->persist($board);
+        $this->persist($board)->flush();
+		
+		$this->refresh($board);
 
         return $this;
     }
@@ -162,4 +164,30 @@ class BoardManager extends BaseManager implements BaseManagerInterface
 
         return $this;
     }
+	
+	public function reassignTopicsToBoard(ArrayCollection $topics, Board $board = null)
+	{
+		foreach ($topics as $topic) {
+			$topic->setBoard($board);
+			
+			$this->persist($topic);
+		}
+
+		$this->flush();
+		
+		return $this;
+	}
+	
+	public function deleteBoard(Board $board)
+	{
+		// If we do not refresh the board, AND we have reassigned the topics to null, 
+		// then its lazy-loaded topics are dirty, as the topics in memory will still
+		// have the old board id set. Removing the board will cascade into deleting
+		// topics aswell, even though in the db the relation has been set to null.
+		$this->refresh($board);
+		
+		$this->remove($board)->flush();
+		
+		return $this;
+	}
 }

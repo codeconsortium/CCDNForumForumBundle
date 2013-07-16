@@ -185,9 +185,34 @@ class TestBase extends WebTestCase
 		return $boards;
 	}
 	
+	protected function addNewTopic($title, Board $board = null)
+	{
+		$topic = new Topic();
+		
+		$topic->setTitle($title);
+		$topic->setBoard($board);
+		
+		$this->em->persist($topic);
+		$this->em->flush();
+		
+		$this->em->refresh($topic);
+		
+		return $topic;
+	}
+	
 	protected function addFixturesForTopics($boards)
 	{
-		return array();
+		$topicTitles = array('test_topic_1', 'test_topic_2', 'test_topic_3');
+		$topics = array();
+		
+		foreach ($boards as $board) {
+			foreach ($topicTitles as $index => $topicTitle) {
+				$topics[] = $this->addNewTopic($topicTitle, $board);
+			}
+		}
+		
+		return $topics;
+		
 	}
 	
 	protected function addFixturesForPosts($topics, $users)

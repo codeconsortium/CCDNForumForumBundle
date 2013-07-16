@@ -137,7 +137,7 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
 	public function reassignBoardsToCategory(ArrayCollection $boards, Category $category = null)
 	{
 		foreach ($boards as $board) {
-			$board->setCategory(null);
+			$board->setCategory($category);
 			
 			$this->persist($board);
 		}

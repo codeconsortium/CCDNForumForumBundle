@@ -190,4 +190,9 @@ class BoardModel extends BaseModel implements BaseModelInterface
 	{
 		return $this->getManager()->deleteBoard($board);
 	}
+	
+	public function reassignTopicsToBoard(ArrayCollection $topics, Board $board = null)
+	{
+		return $this->getManager()->reassignTopicsToBoard($topics, $board);
+	}
 }
