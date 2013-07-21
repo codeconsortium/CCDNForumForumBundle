@@ -9,45 +9,87 @@
 
 	{%- spaceless -%}
 	
-		<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_category_create') -}}">Create Category</a>
-		
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Forum</th>
-					<th>Board Count</th>
-					<th></th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				{%- for category_index, category in categories -%}
-					<tr>
-						<td>{{- category.id -}}</td>
-						<td>{{- category.name -}}</td>
-						<td>
-							{%- if category.forum -%}
-								{{- category.forum.name -}}
-							{%- endif -%}
-						</td>
-						<td>{{- category.boards |length -}}</td>
-						<td>
-							<a class="btn" href="{{- path('ccdn_forum_admin_category_edit', {'categoryId': category.id}) -}}" id="update_category[{{- category.name -}}]">
-								Edit
-							</a>
-						</td>
-						<td>
-							<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_category_delete', {'categoryId': category.id}) -}}" id="delete_category[{{- category.name -}}]">
-								Delete
-							</a>
-						</td>
-					</tr>
-				{%- endfor -%}
-			</tbody>
-		</table>
+		<section>
+			<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_category_create') -}}">Create Category</a>
+		</section>
 	
+		<section class="span12">
+			<ul class="nav nav-list span2">
+				<li {%- if category_filter is null or category_filter == '' %} class="active" {%- endif -%}>
+					<a href="{{- path('ccdn_forum_admin_category_list') -}}">
+						<i class="icon-exclamation-sign"></i>
+						Unassigned
+					</a>
+				</li>
+				{%- for forum in forums -%}
+					<li {%- if category_filter == forum.id %} class="active" {%- endif -%}>
+						<a href="{{- path('ccdn_forum_admin_category_list', {'filter': forum.id}) -}}">
+							{{- forum.name -}}
+						</a>
+					</li>
+				{%- endfor -%}
+			</ul>
+		
+			<div class="span9">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Forum</th>
+							<th>Board Count</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{%- for category_index, category in categories -%}
+							<tr>
+								<td>{{- category.id -}}</td>
+								<td>{{- category.name -}}</td>
+								<td>
+									{%- if category.forum -%}
+										{{- category.forum.name -}}
+									{%- endif -%}
+								</td>
+								<td>{{- category.boards |length -}}</td>
+								<td>
+									<a class="btn" href="{{- path('ccdn_forum_admin_category_edit', {'categoryId': category.id}) -}}" id="update_category[{{- category.name -}}]">
+										Edit
+									</a>
+
+									<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_category_delete', {'categoryId': category.id}) -}}" id="delete_category[{{- category.name -}}]">
+										Delete
+									</a>
+								</td>
+								<td>
+									{#
+									{% if loop.length %}
+										<div class="btn-group">
+											<a class="btn" href="">
+												{%- if loop.first -%}
+													<i class="icon-retweet"></i>
+												{%- else -%}
+													<i class="icon-chevron-up"></i>
+												{%- endif -%}
+											</a>
+											<a class="btn" href="">
+												{%- if loop.last -%}
+													<i class="icon-retweet"></i>
+												{%- else -%}
+													<i class="icon-chevron-down"></i>
+												{%- endif -%}
+											</a>
+										</div>
+									{%- endif -%}
+									#}
+								</td>
+							</tr>
+						{%- endfor -%}
+					</tbody>
+				</table>
+			</div>
+		</section>
 	{%- endspaceless -%}
 	
 {%- endblock body_content -%}

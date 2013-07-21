@@ -10,6 +10,7 @@ parameters:
     ccdn_forum_forum.form.type.category_delete.class:    CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryDeleteFormType
 
     ccdn_forum_forum.entity.category.class:              CCDNForum\ForumBundle\Entity\Category
+    ccdn_forum_forum.entity.forum.class:              CCDNForum\ForumBundle\Entity\Forum
 
 services:
 
@@ -20,6 +21,7 @@ services:
         class: %ccdn_forum_forum.form.type.category_create.class%
         arguments:
             - %ccdn_forum_forum.entity.category.class%
+            - %ccdn_forum_forum.entity.forum.class%
 
     ccdn_forum_forum.form.handler.category_create:
         class: %ccdn_forum_forum.form.handler.category_create.class%
@@ -32,7 +34,8 @@ services:
         class: %ccdn_forum_forum.form.type.category_update.class%
         arguments:
             - %ccdn_forum_forum.entity.category.class%
-    
+            - %ccdn_forum_forum.entity.forum.class%
+
     ccdn_forum_forum.form.handler.category_update:
         class: %ccdn_forum_forum.form.handler.category_update.class%
         arguments:

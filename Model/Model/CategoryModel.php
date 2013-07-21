@@ -49,6 +49,16 @@ class CategoryModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function findAllCategoriesForForum($forumId)
+    {
+        return $this->getRepository()->findAllCategoriesForForum($forumId);
+    }
+
+    /**
+     *
+     * @access public
      * @param  int                                    $categoryId
      * @return \CCDNForum\ForumBundle\Entity\Category
      */

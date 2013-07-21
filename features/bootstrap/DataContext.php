@@ -132,6 +132,8 @@ class DataContext extends BehatContext implements KernelAwareInterface
         return $user;
     }
 
+	protected $forums = array();
+
     /**
      * 
      * @Given /^there are following forums defined:$/
@@ -141,12 +143,12 @@ class DataContext extends BehatContext implements KernelAwareInterface
         $manager = $this->getEntityManager();
 
         foreach ($table->getHash() as $data) {
-            $this->thereIsForum(
+            $this->forums[] = $this->thereIsForum(
 				isset($data['name']) ? $data['name'] : sha1(uniqid(mt_rand(), true))
             );
         }
     }
-
+	
     public function thereIsForum($name)
     {
         $forum = new Forum();
@@ -159,6 +161,8 @@ class DataContext extends BehatContext implements KernelAwareInterface
         return $forum;
     }
 	
+	protected $categories = array();
+	
     /**
      * 
      * @Given /^there are following categories defined:$/
@@ -168,25 +172,34 @@ class DataContext extends BehatContext implements KernelAwareInterface
         $manager = $this->getEntityManager();
 
         foreach ($table->getHash() as $index => $data) {
-            $this->thereIsCategory(
+            $this->categories[] = $this->thereIsCategory(
 				isset($data['name']) ? $data['name'] : sha1(uniqid(mt_rand(), true)),
-				isset($data['order']) ? $data['order'] : $index
+				isset($data['order']) ? $data['order'] : $index,
+				isset($data['forum']) ? $data['forum'] : null
             );
         }
     }
 
-    public function thereIsCategory($name, $order)
+    public function thereIsCategory($name, $order, $forumName = null)
     {
         $category = new Category();
 
 		$category->setName($name);
 		$category->setListOrderPriority($order);
 		
+		foreach ($this->forums as $forum) {
+			if ($forum->getName() == $forumName) {
+				$category->setForum($forum);
+			}
+		}
+		
         $this->getEntityManager()->persist($category);
         $this->getEntityManager()->flush();
 
         return $category;
     }
+	
+	protected $boards = array();
 	
     /**
      * 
@@ -197,21 +210,28 @@ class DataContext extends BehatContext implements KernelAwareInterface
         $manager = $this->getEntityManager();
 
         foreach ($table->getHash() as $index => $data) {
-            $this->thereIsBoard(
+            $this->boards[] = $this->thereIsBoard(
 				isset($data['name']) ? $data['name'] : sha1(uniqid(mt_rand(), true)),
 				isset($data['description']) ? $data['description'] : sha1(uniqid(mt_rand(), true)),
-				isset($data['order']) ? $data['order'] : $index
+				isset($data['order']) ? $data['order'] : $index,
+				isset($data['category']) ? $data['category'] : null
             );
         }
     }
 
-    public function thereIsBoard($name, $description, $order)
+    public function thereIsBoard($name, $description, $order, $categoryName = null)
     {
         $board = new Board();
 
 		$board->setName($name);
         $board->setDescription($description);
 		$board->setListOrderPriority($order);
+		
+		foreach ($this->categories as $category) {
+			if ($category->getName() == $categoryName) {
+				$board->setCategory($category);
+			}
+		}
 		
         $this->getEntityManager()->persist($board);
         $this->getEntityManager()->flush();

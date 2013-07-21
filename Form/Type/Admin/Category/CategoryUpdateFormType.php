@@ -38,12 +38,20 @@ class CategoryUpdateFormType extends AbstractType
 
     /**
      *
+     * @access protected
+     * @var string $forumClass
+     */
+    protected $forumClass;
+
+    /**
+     *
      * @access public
      * @var string $categoryClass
      */
-    public function __construct($categoryClass)
+    public function __construct($categoryClass, $forumClass)
     {
         $this->categoryClass = $categoryClass;
+		$this->forumClass = $forumClass;
     }
 
     /**
@@ -54,6 +62,15 @@ class CategoryUpdateFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('forum', 'entity',
+                array(
+					'property'           => 'name',
+					'class'              => $this->forumClass,
+					'required'           => false,
+                    'label'              => 'form.label.forum.name',
+                    'translation_domain' => 'CCDNForumForumBundle',
+                )
+            )
             ->add('name', 'text',
                 array(
                     'label'              => 'form.label.forum.name',

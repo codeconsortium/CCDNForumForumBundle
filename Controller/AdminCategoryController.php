@@ -35,11 +35,16 @@ class AdminCategoryController extends AdminCategoryBaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-		$categories = $this->getCategoryModel()->findAllCategories();
+		$forums = $this->getForumModel()->findAllForums();
+
+		$categoryFilter = $this->getQuery('filter', null);
+		$categories = $this->getCategoryModel()->findAllCategoriesForForum($categoryFilter);
 		
 		return $this->renderResponse('CCDNForumForumBundle:Admin:/Category/list.html.', 
 			array(
-				'categories' => $categories
+				'forums' => $forums,
+				'categories' => $categories,
+				'category_filter' => $categoryFilter
 	        )
 		);
     }

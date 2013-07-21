@@ -53,6 +53,29 @@ class CategoryRepository extends BaseRepository implements BaseRepositoryInterfa
     /**
      *
      * @access public
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function findAllCategoriesForForum($forumId)
+    {
+		$params = array();
+
+        $qb = $this->createSelectQuery(array('c'));
+
+		if ($forumId == null) {
+	        $qb->where('c.forum IS NULL');
+		} else {
+			$params[':forumId'] = $forumId;
+	        $qb->where('c.forum = :forumId');
+		}
+		
+        $qb->addOrderBy('c.listOrderPriority', 'ASC');
+
+        return $this->gateway->findCategories($qb, $params);
+    }
+
+    /**
+     *
+     * @access public
      * @param  int                                    $categoryId
      * @return \CCDNForum\ForumBundle\Entity\Category
      */

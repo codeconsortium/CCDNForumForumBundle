@@ -213,6 +213,32 @@ abstract class BaseGateway implements BaseGatewayInterface
         }
     }
 
+	/**
+	 * 
+	 * @access protected
+	 * @param string                    $defaultOrderBy
+	 * @param string                    $direction
+	 * @param Doctrine\ORM\QueryBuilder $qb
+	 */
+	protected function hasDefaultOrderBy($defaultOrderBy, $direction, QueryBuilder $qb)
+	{
+		$sorts = $qb->getDQLPart('orderBy');
+		
+		$isSorted = false;
+		
+		foreach ($sorts as $sort) {
+			if (strstr($sort->__toString(), $defaultOrderBy)) {
+				$isSorted = true;
+				
+				break;
+			}
+		}
+		
+		if (! $isSorted) {
+	        $qb->addOrderBy($defaultOrderBy, $direction);
+		}
+	}
+
     /**
      *
      * @access public
