@@ -15,16 +15,28 @@
 	
 		<section class="span12">
 			<ul class="nav nav-list span2">
-				<li {%- if category_filter is null or category_filter == '' %} class="active" {%- endif -%}>
+				<li class="nav-header">
+					Forums
+				</li>
+				
+				<li {%- if forum_filter is null or forum_filter == '' %} class="active" {%- endif -%}>
 					<a href="{{- path('ccdn_forum_admin_category_list') -}}">
 						<i class="icon-exclamation-sign"></i>
 						Unassigned
 					</a>
 				</li>
 				{%- for forum in forums -%}
-					<li {%- if category_filter == forum.id %} class="active" {%- endif -%}>
-						<a href="{{- path('ccdn_forum_admin_category_list', {'filter': forum.id}) -}}">
-							{{- forum.name -}}
+					<li {%- if forum_filter == forum.id %} class="active" {%- endif -%}>
+						<a href="{{- path('ccdn_forum_admin_category_list', {'forum_filter': forum.id}) -}}" title="{{- forum.name -}}">
+							
+							<span class="ellipsis">
+								{{- forum.name -}}
+							</span>
+							
+							<span class="label pull-right">
+								{{- forum.getCategories | length -}}
+							</span>
+							
 						</a>
 					</li>
 				{%- endfor -%}
@@ -36,9 +48,7 @@
 						<tr>
 							<th>ID</th>
 							<th>Name</th>
-							<th>Forum</th>
 							<th>Board Count</th>
-							<th></th>
 							<th></th>
 						</tr>
 					</thead>
@@ -47,11 +57,6 @@
 							<tr>
 								<td>{{- category.id -}}</td>
 								<td>{{- category.name -}}</td>
-								<td>
-									{%- if category.forum -%}
-										{{- category.forum.name -}}
-									{%- endif -%}
-								</td>
 								<td>{{- category.boards |length -}}</td>
 								<td>
 									<a class="btn" href="{{- path('ccdn_forum_admin_category_edit', {'categoryId': category.id}) -}}" id="update_category[{{- category.name -}}]">
@@ -61,8 +66,7 @@
 									<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_category_delete', {'categoryId': category.id}) -}}" id="delete_category[{{- category.name -}}]">
 										Delete
 									</a>
-								</td>
-								<td>
+
 									{#
 									{% if loop.length %}
 										<div class="btn-group">
@@ -90,6 +94,7 @@
 				</table>
 			</div>
 		</section>
+		
 	{%- endspaceless -%}
 	
 {%- endblock body_content -%}

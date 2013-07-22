@@ -25,6 +25,19 @@ class CategoryRepositoryTest extends TestBase
 		$this->assertCount(9, $categories);
 	}
 	
+	public function testFindAllCategoriesForForum()
+	{
+		$forums = $this->addFixturesForForums();
+		$this->addFixturesForCategories($forums);
+		//$boards = $this->addFixturesForBoards($categories);
+
+		foreach ($forums as $forum) {
+			$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForum($forum->getId());
+	
+			$this->assertCount(3, $categories);
+		}
+	}
+	
 	public function testFindOneCategoryById()
 	{
 		$category = $this->addNewCategory('TestCategory', 1);

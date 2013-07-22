@@ -9,53 +9,104 @@
 
 	{%- spaceless -%}
 	
-		<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_board_create') -}}">Create Board</a>
+		<section>
+			<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_board_create') -}}">Create Board</a>
+		</section>
 		
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Forum</th>
-					<th>Category</th>
-					<th>Topic Count</th>
-					<th></th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				{%- for board_index, board in boards -%}
-					<tr>
-						<td>{{- board.id -}}</td>
-						<td>{{- board.name -}}</td>
-						<td>
-							{%- if board.category -%}
-								{%- if board.category.forum -%}
-									{{- board.category.forum.name -}}
-								{%- endif -%}
-							{%- endif -%}
-						</td>
-						<td>
-							{%- if board.category -%}
-								{{- board.category.name -}}
-							{%- endif -%}
-						</td>
-						<td>{{- board.topics |length -}}</td>
-						<td>
-							<a class="btn" href="{{- path('ccdn_forum_admin_board_edit', {'boardId': board.id}) -}}" id="update_board[{{- board.name -}}]">
-								Edit
-							</a>
-						</td>
-						<td>
-							<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_board_delete', {'boardId': board.id}) -}}" id="delete_board[{{- board.name -}}]">
-								Delete
-							</a>
-						</td>
-					</tr>
+		<section class="span12">
+			<ul class="nav nav-list span2">
+				<li class="nav-header">
+					Forums
+				</li>
+				
+				<li {%- if forum_filter is null or forum_filter == '' %} class="active" {%- endif -%}>
+					<a href="{{- path('ccdn_forum_admin_board_list') -}}">
+						<i class="icon-exclamation-sign"></i>
+						Unassigned
+					</a>
+				</li>
+				{%- for forum in forums -%}
+					<li {%- if forum_filter == forum.id %} class="active" {%- endif -%}>
+						<a href="{{- path('ccdn_forum_admin_board_list', {'forum_filter': forum.id}) -}}" title="{{- forum.name -}}">
+							
+							<span class="label pull-right">
+								{{- forum.getCategories | length -}}
+							</span>
+
+							<span class="ellipsis">
+								{{- forum.name -}}
+							</span>
+							
+						</a>
+					</li>
 				{%- endfor -%}
-			</tbody>
-		</table>
-	
+			</ul>
+		
+			<ul class="nav nav-list span2">
+				<li class="nav-header">
+					Categories
+				</li>
+				
+				<li {%- if category_filter is null or category_filter == '' %} class="active" {%- endif -%}>
+					<a href="{{- path('ccdn_forum_admin_board_list') -}}">
+						<i class="icon-exclamation-sign"></i>
+						Unassigned
+					</a>
+				</li>
+				{%- for category in categories -%}
+					<li {%- if category_filter == category.id %} class="active" {%- endif -%}>
+						<a href="
+							{%- if category.forum -%}
+								{{- path('ccdn_forum_admin_board_list', {'forum_filter': category.forum.id, 'category_filter': category.id}) -}}
+							{%- else -%}
+								{{- path('ccdn_forum_admin_board_list', {'category_filter': category.id}) -}}
+							{%- endif -%}
+						 " title="{{- category.name -}}">
+							<span class="label pull-right">
+								{{- category.getBoards | length -}}
+							</span>
+
+							<span class="ellipsis">
+								{{- category.name -}}
+							</span>
+							
+						</a>
+					</li>
+				{%- endfor -%}
+			</ul>
+			
+			<div class="span7">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Topic Count</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{%- for board_index, board in boards -%}
+							<tr>
+								<td>{{- board.id -}}</td>
+								<td>{{- board.name -}}</td>
+								<td>{{- board.topics |length -}}</td>
+								<td>
+									<a class="btn" href="{{- path('ccdn_forum_admin_board_edit', {'boardId': board.id}) -}}" id="update_board[{{- board.name -}}]">
+										Edit
+									</a>
+
+									<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_board_delete', {'boardId': board.id}) -}}" id="delete_board[{{- board.name -}}]">
+										Delete
+									</a>
+								</td>
+							</tr>
+						{%- endfor -%}
+					</tbody>
+				</table>
+			</div>
+		</section>
+		
 	{%- endspaceless -%}
 	
 {%- endblock body_content -%}

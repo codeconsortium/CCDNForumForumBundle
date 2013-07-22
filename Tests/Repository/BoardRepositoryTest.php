@@ -26,6 +26,19 @@ class BoardRepositoryTest extends TestBase
 		$this->assertCount(27, $boards);
 	}
 	
+	public function testFindAllBoardsForCategory()
+	{
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$this->addFixturesForBoards($categories);
+
+		foreach ($categories as $category) {
+			$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategory($category->getId());
+	
+			$this->assertCount(3, $boards);
+		}
+	}
+	
 	public function testFindOneBoardById()
 	{
 		$board = $this->addNewBoard('TestBoard', 'generic description', 1);

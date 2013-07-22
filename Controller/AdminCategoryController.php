@@ -35,16 +35,17 @@ class AdminCategoryController extends AdminCategoryBaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
+		$forumFilter = $this->getQuery('forum_filter', null);
+
 		$forums = $this->getForumModel()->findAllForums();
 
-		$categoryFilter = $this->getQuery('filter', null);
-		$categories = $this->getCategoryModel()->findAllCategoriesForForum($categoryFilter);
+		$categories = $this->getCategoryModel()->findAllCategoriesForForum($forumFilter);
 		
 		return $this->renderResponse('CCDNForumForumBundle:Admin:/Category/list.html.', 
 			array(
 				'forums' => $forums,
+				'forum_filter' => $forumFilter,
 				'categories' => $categories,
-				'category_filter' => $categoryFilter
 	        )
 		);
     }
@@ -146,7 +147,7 @@ class AdminCategoryController extends AdminCategoryBaseController
      */
     public function deleteAction($categoryId)
     {
-        $this->isAuthorised('ROLE_ADMIN');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
 
 		$category = $this->getCategoryModel()->findOneCategoryById($categoryId);
 	
@@ -169,7 +170,7 @@ class AdminCategoryController extends AdminCategoryBaseController
      */
     public function deleteProcessAction($categoryId)
     {
-        $this->isAuthorised('ROLE_ADMIN');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
 
 		$category = $this->getCategoryModel()->findOneCategoryById($categoryId);
 	

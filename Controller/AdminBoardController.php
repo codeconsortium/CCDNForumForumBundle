@@ -35,11 +35,37 @@ class AdminBoardController extends AdminBoardBaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-		$boards = $this->getBoardModel()->findAllBoards();
+		// Forum / Category Parametric Filter.
+		$forumFilter = $this->getQuery('forum_filter', null);
+		$categoryFilter = $this->getQuery('category_filter', null);
+
+		// Corrective Measure incase forum/category filters fall out of sync.
+		if ($categoryFilter) {
+			$category = $this->getCategoryModel()->findOneById($categoryFilter);
+			
+			if ($category->getForum()) {
+				$forumFilter = $category->getForum()->getId();
+			} else {
+				$forumFilter = null; // Force it to be blank so 'unassigned' is highlighted.
+			}
+		}
+
+		// Forums for the parametric filter.
+		$forums = $this->getForumModel()->findAllForums();
+
+		// Categories for the parametric filter.
+		$categories = $this->getCategoryModel()->findAllCategoriesForForum($forumFilter);
+
+		// Boards for the configuration table list.
+		$boards = $this->getBoardModel()->findAllBoardsForCategory($categoryFilter);
 		
 		return $this->renderResponse('CCDNForumForumBundle:Admin:/Board/list.html.', 
 			array(
-				'boards' => $boards
+				'forums' => $forums,
+				'forum_filter' => $forumFilter,
+				'categories' => $categories,
+				'category_filter' => $categoryFilter,
+				'boards' => $boards,
 	        )
 		);
     }
@@ -141,7 +167,7 @@ class AdminBoardController extends AdminBoardBaseController
      */
     public function deleteAction($boardId)
     {
-        $this->isAuthorised('ROLE_ADMIN');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
 
 		$board = $this->getBoardModel()->findOneBoardById($boardId);
 	
@@ -164,7 +190,7 @@ class AdminBoardController extends AdminBoardBaseController
      */
     public function deleteProcessAction($boardId)
     {
-        $this->isAuthorised('ROLE_ADMIN');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
 
 		$board = $this->getBoardModel()->findOneBoardById($boardId);
 	
