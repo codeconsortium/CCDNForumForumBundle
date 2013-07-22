@@ -1,6 +1,7 @@
 parameters:
 
     # Service Parameters defined in app/config.
+    ccdn_forum_forum.component.role_helper.class: CCDNForum\ForumBundle\Component\Helper\RoleHelper
 
 services:
 
@@ -21,3 +22,9 @@ services:
         class: %ccdn_forum_forum.component.dashboard.integrator.class%
         tags:
             - { name: ccdn_component_dashboard.integrator }
+
+    ccdn_forum_forum.component.role_helper:
+        class: %ccdn_forum_forum.component.role_helper.class%
+        arguments:
+            - @security.context
+            - %security.role_hierarchy.roles%

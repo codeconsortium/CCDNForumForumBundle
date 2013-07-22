@@ -67,6 +67,19 @@ class CategoryModel extends BaseModel implements BaseModelInterface
         return $this->getRepository()->findOneCategoryById($categoryId);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      *
      * @access public

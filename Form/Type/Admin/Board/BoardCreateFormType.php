@@ -45,14 +45,23 @@ class BoardCreateFormType extends AbstractType
 
     /**
      *
+     * @access protected
+     * @var Object $roleHelper
+     */
+    protected $roleHelper;
+
+    /**
+     *
      * @access public
      * @var string $boardClass
 	 * @var string $categoryClass
+	 * @var Object $roleHelper
      */
-    public function __construct($boardClass, $categoryClass)
+    public function __construct($boardClass, $categoryClass, $roleHelper)
     {
         $this->boardClass = $boardClass;
 		$this->categoryClass = $categoryClass;
+		$this->roleHelper = $roleHelper;
     }
 
     /**
@@ -84,6 +93,36 @@ class BoardCreateFormType extends AbstractType
                     'translation_domain' => 'CCDNForumForumBundle',
 				)
 			)
+            ->add('readAuthorisedRoles', 'choice',
+                array(
+                    'required'           => false,
+                    'expanded'           => true,
+                    'multiple'           => true,
+                    'choices'            => $options['available_roles'],
+                    'label'              => 'form.label.board.view_roles',
+                    'translation_domain' => 'CCDNForumAdminBundle',
+                )
+            )
+            ->add('topicCreateAuthorisedRoles', 'choice',
+                array(
+                    'required'           => false,
+                    'expanded'           => true,
+                    'multiple'           => true,
+                    'choices'            => $options['available_roles'],
+                    'label'              => 'form.label.topic.create_roles',
+                    'translation_domain' => 'CCDNForumAdminBundle',
+                )
+            )
+            ->add('topicReplyAuthorisedRoles', 'choice',
+                array(
+                    'required'           => false,
+                    'expanded'           => true,
+                    'multiple'           => true,
+                    'choices'            => $options['available_roles'],
+                    'label'              => 'form.label.topic.reply_roles',
+                    'translation_domain' => 'CCDNForumAdminBundle',
+                )
+            )
         ;
     }
 
@@ -103,6 +142,7 @@ class BoardCreateFormType extends AbstractType
             'intention'           => 'forum_board_create_item',
             'validation_groups'   => array('forum_board_create'),
             'cascade_validation'  => true,
+			'available_roles'     => $this->roleHelper->getRoleHierarchy(),
         );
     }
 

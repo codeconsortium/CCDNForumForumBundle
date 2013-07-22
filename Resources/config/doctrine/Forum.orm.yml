@@ -9,6 +9,10 @@ CCDNForum\ForumBundle\Entity\Forum:
     fields:
         name:
             type: string
+        readAuthorisedRoles:
+            type: array
+            column: read_authorised_roles
+            nullable: true
     oneToMany:
         categories:
             targetEntity: CCDNForum\ForumBundle\Entity\Category

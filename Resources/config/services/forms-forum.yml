@@ -20,6 +20,7 @@ services:
         class: %ccdn_forum_forum.form.type.forum_create.class%
         arguments:
             - %ccdn_forum_forum.entity.forum.class%
+            - @ccdn_forum_forum.component.role_helper
 
     ccdn_forum_forum.form.handler.forum_create:
         class: %ccdn_forum_forum.form.handler.forum_create.class%
@@ -32,6 +33,7 @@ services:
         class: %ccdn_forum_forum.form.type.forum_update.class%
         arguments:
             - %ccdn_forum_forum.entity.forum.class%
+            - @ccdn_forum_forum.component.role_helper
     
     ccdn_forum_forum.form.handler.forum_update:
         class: %ccdn_forum_forum.form.handler.forum_update.class%

@@ -14,6 +14,7 @@
 namespace CCDNForum\ForumBundle\Entity;
 
 use CCDNForum\ForumBundle\Entity\Model\Category as AbstractCategory;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  *
@@ -48,12 +49,20 @@ class Category extends AbstractCategory
 
     /**
      *
+     * @var array $readAuthorisedRoles
+     */
+    protected $readAuthorisedRoles;
+
+    /**
+     *
      * @access public
      */
     public function __construct()
     {
         parent::__construct();
+		
         // your own logic
+        $this->readAuthorisedRoles = array();
     }
 
     /**
@@ -110,5 +119,56 @@ class Category extends AbstractCategory
         $this->listOrderPriority = $listOrderPriority;
 
         return $this;
+    }
+	
+    /**
+     *
+     * @return array
+     */
+    public function getReadAuthorisedRoles()
+    {
+        return $this->readAuthorisedRoles;
+    }
+
+    /**
+     *
+     * @param  array $roles
+     * @return Board
+     */
+    public function setReadAuthorisedRoles(array $roles = null)
+    {
+        $this->readAuthorisedRoles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * 
+     * @param $role
+     * @return bool
+     */
+    public function hasReadAuthorisedRole($role)
+    {
+        return in_array($role, $this->readAuthorisedRoles);
+    }
+
+    /**
+     *
+     * @param SecurityContextInterface $securityContext
+     * @return bool
+     */
+    public function isAuthorisedToRead(SecurityContextInterface $securityContext)
+    {
+        if (0 == count($this->readAuthorisedRoles)) {
+            return true;
+        }
+
+        foreach ($this->readAuthorisedRoles as $role) {
+            if ($securityContext->isGranted($role)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

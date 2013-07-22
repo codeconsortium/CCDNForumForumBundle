@@ -12,6 +12,10 @@ CCDNForum\ForumBundle\Entity\Category:
         listOrderPriority:
             type: integer
             column: list_order_priority
+        readAuthorisedRoles:
+            type: array
+            column: read_authorised_roles
+            nullable: true
     oneToMany:
         boards:
             targetEntity: CCDNForum\ForumBundle\Entity\Board

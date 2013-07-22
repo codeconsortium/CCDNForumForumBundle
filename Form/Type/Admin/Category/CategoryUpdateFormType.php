@@ -45,14 +45,23 @@ class CategoryUpdateFormType extends AbstractType
 
     /**
      *
+     * @access protected
+     * @var Object $roleHelper
+     */
+    protected $roleHelper;
+
+    /**
+     *
      * @access public
      * @var string $categoryClass
      * @var string $forumClass
+	 * @var Object $roleHelper
      */
-    public function __construct($categoryClass, $forumClass)
+    public function __construct($categoryClass, $forumClass, $roleHelper)
     {
         $this->categoryClass = $categoryClass;
 		$this->forumClass = $forumClass;
+		$this->roleHelper = $roleHelper;
     }
 
     /**
@@ -78,6 +87,16 @@ class CategoryUpdateFormType extends AbstractType
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
+            ->add('readAuthorisedRoles', 'choice',
+                array(
+                    'required'           => false,
+                    'expanded'           => true,
+                    'multiple'           => true,
+                    'choices'            => $options['available_roles'],
+                    'label'              => 'form.label.board.view_roles',
+                    'translation_domain' => 'CCDNForumAdminBundle',
+                )
+            )
         ;
     }
 
@@ -97,6 +116,7 @@ class CategoryUpdateFormType extends AbstractType
             'intention'           => 'forum_category_update_item',
             'validation_groups'   => array('forum_category_update'),
             'cascade_validation'  => true,
+			'available_roles'     => $this->roleHelper->getRoleHierarchy(),
         );
     }
 
