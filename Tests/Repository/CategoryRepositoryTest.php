@@ -29,7 +29,6 @@ class CategoryRepositoryTest extends TestBase
 	{
 		$forums = $this->addFixturesForForums();
 		$this->addFixturesForCategories($forums);
-		//$boards = $this->addFixturesForBoards($categories);
 
 		foreach ($forums as $forum) {
 			$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForum($forum->getId());

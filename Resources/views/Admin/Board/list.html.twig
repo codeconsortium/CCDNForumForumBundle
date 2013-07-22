@@ -96,9 +96,11 @@
 										Edit
 									</a>
 
-									<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_board_delete', {'boardId': board.id}) -}}" id="delete_board[{{- board.name -}}]">
-										Delete
-									</a>
+									{%- if is_granted('ROLE_SUPER_ADMIN') -%}
+										<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_board_delete', {'boardId': board.id}) -}}" id="delete_board[{{- board.name -}}]">
+											Delete
+										</a>
+									{%- endif -%}
 								</td>
 							</tr>
 						{%- endfor -%}

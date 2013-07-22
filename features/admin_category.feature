@@ -144,7 +144,7 @@ Feature: Category Management
 		 Then I should be on "/en/forum/admin/manage-categories/"
           And I should not see "test_category_3"
 
-    Scenario: Abort existing Category
+    Scenario: Abort deleting existing Category
 	    Given I am on "/en/forum/admin/manage-categories/"
 		  And I follow "delete_category[test_category_3]"
 		  And I should see "Delete Category"

@@ -63,9 +63,11 @@
 										Edit
 									</a>
 
-									<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_category_delete', {'categoryId': category.id}) -}}" id="delete_category[{{- category.name -}}]">
-										Delete
-									</a>
+									{%- if is_granted('ROLE_SUPER_ADMIN') -%}
+										<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_category_delete', {'categoryId': category.id}) -}}" id="delete_category[{{- category.name -}}]">
+											Delete
+										</a>
+									{%- endif -%}
 
 									{#
 									{% if loop.length %}

@@ -9,6 +9,7 @@ parameters:
     ccdn_forum_forum.form.type.board_update.class:    CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardUpdateFormType
     ccdn_forum_forum.form.type.board_delete.class:    CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardDeleteFormType
 
+    ccdn_forum_forum.entity.category.class:              CCDNForum\ForumBundle\Entity\Category
     ccdn_forum_forum.entity.board.class:              CCDNForum\ForumBundle\Entity\Board
 
 services:
@@ -20,6 +21,7 @@ services:
         class: %ccdn_forum_forum.form.type.board_create.class%
         arguments:
             - %ccdn_forum_forum.entity.board.class%
+            - %ccdn_forum_forum.entity.category.class%
 
     ccdn_forum_forum.form.handler.board_create:
         class: %ccdn_forum_forum.form.handler.board_create.class%
@@ -32,7 +34,8 @@ services:
         class: %ccdn_forum_forum.form.type.board_update.class%
         arguments:
             - %ccdn_forum_forum.entity.board.class%
-    
+            - %ccdn_forum_forum.entity.category.class%
+
     ccdn_forum_forum.form.handler.board_update:
         class: %ccdn_forum_forum.form.handler.board_update.class%
         arguments:

@@ -134,7 +134,7 @@ Feature: Board Management
 		  And I should see "test_board_c3_2"
 		  And I should see "test_board_c3_3"
 
-    Scenario: Create a new Board
+    Scenario: Create a new Board (Unassigned)
         Given I am on "/en/forum/admin/manage-boards/create"
 		  And I should see "Create New Board"
           And I fill in "Forum_BoardCreate[name]" with "Test Board"
@@ -143,22 +143,57 @@ Feature: Board Management
 		 Then I should be on "/en/forum/admin/manage-boards/"
           And I should see "Test Board"
 
+    Scenario: Create a new Board (Assigned)
+        Given I am on "/en/forum/admin/manage-boards/create"
+		  And I should see "Create New Board"
+		  And I select "test_category_f1_1" from "Forum_BoardCreate[category]"
+          And I fill in "Forum_BoardCreate[name]" with "New Test Board"
+		  And I fill in "Forum_BoardCreate[description]" with "Some description"
+          And I press "submit[post]"
+		 Then I should be on "/en/forum/admin/manage-boards/"
+		  And I should not see "New Test Board"
+		  And I follow "test_forum_1"
+		  And I should not see "New Test Board"
+		  And I follow "test_category_f1_1"
+          And I should see "New Test Board"
+
     Scenario: Abort Create a new Board
         Given I am on "/en/forum/admin/manage-boards/create"
 		  And I should see "Create New Board"
           And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-boards/"
 
-    Scenario: Update existing Board
+    Scenario: Update existing Board (Assign)
 	    Given I am on "/en/forum/admin/manage-boards/"
 		  And I follow "update_board[test_board_1]"
 		  And I should see "Update Board"
 		  And I should see "test_board_1"
+		  And I select "test_category_f1_1" from "Forum_BoardUpdate[category]"
           And I fill in "Forum_BoardUpdate[name]" with "Testing Board update form"
 		  And I fill in "Forum_BoardUpdate[description]" with "new board description"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-boards/"
 		  And I should not see "test_board_1"
+	  	  And I should not see "Testing Board update form"
+	  	  And I follow "test_forum_1"
+		  And I should not see "test_board_1"
+	  	  And I should not see "Testing Board update form"
+	  	  And I follow "test_category_f1_1"
+          And I should see "Testing Board update form"
+
+    Scenario: Update existing Board (Unassign)
+	    Given I am on "/en/forum/admin/manage-boards/"
+		  And I follow "test_forum_1"
+		  And I follow "test_category_f1_1"
+		  And I follow "update_board[test_board_c2_1]"
+		  And I should see "Update Board"
+		  And I should see "test_board_c2_1"
+		  And I select "" from "Forum_BoardUpdate[category]"
+          And I fill in "Forum_BoardUpdate[name]" with "Testing Board update form"
+		  And I fill in "Forum_BoardUpdate[description]" with "new board description"
+          And I press "submit[post]"
+		 Then I should be on "/en/forum/admin/manage-boards/"
+		  And I should not see "test_board_c2_1"
           And I should see "Testing Board update form"
 
     Scenario: Abort Update existing Board
@@ -180,7 +215,7 @@ Feature: Board Management
 		 Then I should be on "/en/forum/admin/manage-boards/"
           And I should not see "test_board_3"
 
-    Scenario: Abort existing Board
+    Scenario: Abort deleting existing Board
 	    Given I am on "/en/forum/admin/manage-boards/"
 		  And I follow "delete_board[test_board_3]"
 		  And I should see "Delete Board"

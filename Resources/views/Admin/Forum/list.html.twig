@@ -18,7 +18,6 @@
 					<th>Name</th>
 					<th>Category Count</th>
 					<th></th>
-					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -31,11 +30,12 @@
 							<a class="btn" href="{{- path('ccdn_forum_admin_forum_edit', {'forumId': forum.id}) -}}" id="update_forum[{{- forum.name -}}]">
 								Edit
 							</a>
-						</td>
-						<td>
-							<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_forum_delete', {'forumId': forum.id}) -}}" id="delete_forum[{{- forum.name -}}]">
-								Delete
-							</a>
+
+							{%- if is_granted('ROLE_SUPER_ADMIN') -%}
+								<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_forum_delete', {'forumId': forum.id}) -}}" id="delete_forum[{{- forum.name -}}]">
+									Delete
+								</a>
+							{%- endif -%}
 						</td>
 					</tr>
 				{%- endfor -%}

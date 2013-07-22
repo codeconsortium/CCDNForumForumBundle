@@ -16,7 +16,7 @@ CCDNForum\ForumBundle\Entity\Category:
         boards:
             targetEntity: CCDNForum\ForumBundle\Entity\Board
             mappedBy: category
-            cascade: ["persist"]
+            cascade: ["persist", "remove"]
     manyToOne:
         forum:
             targetEntity: CCDNForum\ForumBundle\Entity\Forum

@@ -65,7 +65,7 @@ Feature: Forum Management
 		 Then I should be on "/en/forum/admin/manage-forums/"
           And I should not see "test_forum_3"
 
-    Scenario: Abort Delete existing Forum
+    Scenario: Abort deleting existing Forum
 	    Given I am on "/en/forum/admin/manage-forums/"
 		  And I follow "delete_forum[test_forum_3]"
 		  And I should see "Delete Forum"
