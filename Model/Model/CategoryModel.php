@@ -67,7 +67,53 @@ class CategoryModel extends BaseModel implements BaseModelInterface
         return $this->getRepository()->findOneCategoryById($categoryId);
     }
 
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function saveNewCategory(Category $category)
+    {
+        return $this->getManager()->saveNewCategory($category);
+    }
 
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function updateCategory(Category $category)
+    {
+        return $this->getManager()->updateCategory($category);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  Array                                               $categories
+     * @param  int                                                 $categoryId
+     * @param  string                                              $direction
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function reorderCategories($categories, Category $category, $direction)
+    {
+        return $this->getManager()->reorderCategories($categories, $category, $direction);
+    }
+	
+	public function deleteCategory(Category $category)
+	{
+		return $this->getManager()->deleteCategory($category);
+	}
+	
+	public function reassignBoardsToCategory(ArrayCollection $boards, Category $category = null)
+	{
+		return $this->getManager()->reassignBoardsToCategory($boards, $category);
+	}
+	
+	
+	
 
 
 
@@ -143,48 +189,5 @@ class CategoryModel extends BaseModel implements BaseModelInterface
         return $this->getRepository()->getCategoryCount();
     }
 
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function saveNewCategory(Category $category)
-    {
-        return $this->getManager()->saveNewCategory($category);
-    }
 
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function updateCategory(Category $category)
-    {
-        return $this->getManager()->updateCategory($category);
-    }
-
-    /**
-     *
-     * @access public
-     * @param  Array                                               $categories
-     * @param  int                                                 $categoryId
-     * @param  string                                              $direction
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function reorder($categories, $categoryId, $direction)
-    {
-        return $this->getManager()->reorder($categories, $categoryId, $direction);
-    }
-	
-	public function deleteCategory(Category $category)
-	{
-		return $this->getManager()->deleteCategory($category);
-	}
-	
-	public function reassignBoardsToCategory(ArrayCollection $boards, Category $category = null)
-	{
-		return $this->getManager()->reassignBoardsToCategory($boards, $category);
-	}
 }

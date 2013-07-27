@@ -25,7 +25,7 @@ Feature: Category Management
           | test_category_f2_1        | 1        | test_forum_2        |
 		  | test_category_f2_2        | 2        | test_forum_2        |
 		  | test_category_f2_3        | 3        | test_forum_2        |
-		  
+
 	Scenario: See Category list
         Given I am on "/en/forum/admin/manage-categories/" 
           And I should see "test_category_1"
@@ -152,3 +152,28 @@ Feature: Category Management
 		  And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-categories/"
           And I should see "test_category_3"
+
+	Scenario: Reorder categories
+		Given I am on "/en/forum/admin/manage-categories/"
+		  And I follow "test_forum_1"
+          And I should see "test_category_f1_1"
+          And "test_category_f1_1" should precede "test_category_f1_2" for the query "table#admin-categories-list tr td:nth-child(2)"
+          And "test_category_f1_2" should precede "test_category_f1_3" for the query "table#admin-categories-list tr td:nth-child(2)"
+		  And I follow "reorder_up_category[test_category_f1_1]"
+          And "test_category_f1_2" should precede "test_category_f1_3" for the query "table#admin-categories-list tr td:nth-child(2)"
+          And "test_category_f1_3" should precede "test_category_f1_1" for the query "table#admin-categories-list tr td:nth-child(2)"
+		  And I follow "reorder_up_category[test_category_f1_1]"
+          And "test_category_f1_2" should precede "test_category_f1_1" for the query "table#admin-categories-list tr td:nth-child(2)"
+          And "test_category_f1_1" should precede "test_category_f1_3" for the query "table#admin-categories-list tr td:nth-child(2)"
+		  And I follow "reorder_up_category[test_category_f1_1]"
+          And "test_category_f1_1" should precede "test_category_f1_2" for the query "table#admin-categories-list tr td:nth-child(2)"
+          And "test_category_f1_2" should precede "test_category_f1_3" for the query "table#admin-categories-list tr td:nth-child(2)"
+		  And I follow "reorder_down_category[test_category_f1_1]"
+          And "test_category_f1_2" should precede "test_category_f1_1" for the query "table#admin-categories-list tr td:nth-child(2)"
+          And "test_category_f1_1" should precede "test_category_f1_3" for the query "table#admin-categories-list tr td:nth-child(2)"
+		  And I follow "reorder_down_category[test_category_f1_1]"
+          And "test_category_f1_2" should precede "test_category_f1_3" for the query "table#admin-categories-list tr td:nth-child(2)"
+          And "test_category_f1_3" should precede "test_category_f1_1" for the query "table#admin-categories-list tr td:nth-child(2)"
+		  And I follow "reorder_down_category[test_category_f1_1]"
+          And "test_category_f1_1" should precede "test_category_f1_2" for the query "table#admin-categories-list tr td:nth-child(2)"
+          And "test_category_f1_2" should precede "test_category_f1_3" for the query "table#admin-categories-list tr td:nth-child(2)"

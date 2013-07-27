@@ -8,39 +8,43 @@
 {%- block body_content -%}
 
 	{%- spaceless -%}
-	
-		<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_forum_create') -}}">Create Forum</a>
-		
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Category Count</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				{%- for forum_index, forum in forums -%}
-					<tr>
-						<td>{{- forum.id -}}</td>
-						<td>{{- forum.name -}}</td>
-						<td>{{- forum.categories |length -}}</td>
-						<td>
-							<a class="btn" href="{{- path('ccdn_forum_admin_forum_edit', {'forumId': forum.id}) -}}" id="update_forum[{{- forum.name -}}]">
-								Edit
-							</a>
 
-							{%- if is_granted('ROLE_SUPER_ADMIN') -%}
-								<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_forum_delete', {'forumId': forum.id}) -}}" id="delete_forum[{{- forum.name -}}]">
-									Delete
-								</a>
-							{%- endif -%}
-						</td>
+		<section>
+			<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_forum_create') -}}">Create Forum</a>
+		</section>
+		
+		<section>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Category Count</th>
+						<th></th>
 					</tr>
-				{%- endfor -%}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{%- for forum_index, forum in forums -%}
+						<tr>
+							<td>{{- forum.id -}}</td>
+							<td>{{- forum.name -}}</td>
+							<td>{{- forum.categories |length -}}</td>
+							<td>
+								<a class="btn" href="{{- path('ccdn_forum_admin_forum_edit', {'forumId': forum.id}) -}}" id="update_forum[{{- forum.name -}}]">
+									Edit
+								</a>
+
+								{%- if is_granted('ROLE_SUPER_ADMIN') -%}
+									<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_forum_delete', {'forumId': forum.id}) -}}" id="delete_forum[{{- forum.name -}}]">
+										Delete
+									</a>
+								{%- endif -%}
+							</td>
+						</tr>
+					{%- endfor -%}
+				</tbody>
+			</table>
+		</section>
 	
 	{%- endspaceless -%}
 	

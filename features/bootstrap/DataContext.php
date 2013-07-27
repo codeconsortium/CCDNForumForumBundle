@@ -13,30 +13,10 @@
 
 namespace CCDNForum\ForumBundle\features\bootstrap;
 
-//use Behat\Behat\Context\ClosuredContextInterface,
-//    Behat\Behat\Context\TranslatedContextInterface,
-//    Behat\Behat\Context\BehatContext,
-//    Behat\Behat\Exception\PendingException;
-//use Behat\Gherkin\Node\PyStringNode,
-//    Behat\Gherkin\Node\TableNode;
-//
-//use Behat\MinkExtension\Context\RawMinkContext;
-//
-//use Behat\Symfony2Extension\Context\KernelAwareInterface;
-//use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-//use Symfony\Component\HttpFoundation\Request;
-//use Symfony\Component\HttpKernel\KernelInterface;
-
-
-
 use Behat\Behat\Context\BehatContext;
 use Behat\Gherkin\Node\TableNode;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-//use Faker\Factory as FakerFactory;
-//use Sylius\Bundle\AddressingBundle\Model\ZoneInterface;
-//use Sylius\Bundle\CoreBundle\Entity\User;
-//use Sylius\Bundle\ShippingBundle\Calculator\DefaultCalculators;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Locale\Locale;
@@ -237,19 +217,6 @@ class DataContext extends BehatContext implements KernelAwareInterface
         $this->getEntityManager()->flush();
 
         return $board;
-    }
-	
-    /**
-     * 
-     * Get repository by resource name.
-     *
-     * @param string $resource
-     *
-     * @return ObjectRepository
-     */
-    public function getRepository($resource)
-    {
-        return $this->getService('sylius.repository.'.$resource);
     }
 
     /**

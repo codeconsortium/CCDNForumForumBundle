@@ -75,4 +75,64 @@ class CategoryManagerTest extends TestBase
 		$this->em->refresh($category2);
 		$this->assertCount(6, $category2->getBoards());
 	}
+	
+	const REORDER_UP = 0;
+	const REORDER_DOWN = 1;
+	
+	public function testReorderCategories()
+	{
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		
+		$forum = $forums[1];
+		$categories = $forum->getCategories();
+		$this->assertCount(3, $categories);
+
+		// 123 - Initial order.
+		$this->assertSame('test_category_1', $categories[0]->getName());
+		$this->assertSame('test_category_2', $categories[1]->getName());
+		$this->assertSame('test_category_3', $categories[2]->getName());
+		
+		// 123 -> 213
+		$this->getCategoryModel()->getManager()->reorderCategories($categories, $categories[0], $this::REORDER_DOWN);
+		$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForum($forum->getId());
+		$this->assertSame('test_category_2', $categories[0]->getName());
+		$this->assertSame('test_category_1', $categories[1]->getName());
+		$this->assertSame('test_category_3', $categories[2]->getName());
+
+		// 213 -> 231
+		$this->getCategoryModel()->getManager()->reorderCategories($categories, $categories[1], $this::REORDER_DOWN);
+		$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForum($forum->getId());
+		$this->assertSame('test_category_2', $categories[0]->getName());
+		$this->assertSame('test_category_3', $categories[1]->getName());
+		$this->assertSame('test_category_1', $categories[2]->getName());
+
+		// 231 -> 123
+		$this->getCategoryModel()->getManager()->reorderCategories($categories, $categories[2], $this::REORDER_DOWN);
+		$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForum($forum->getId());
+		$this->assertSame('test_category_1', $categories[0]->getName());
+		$this->assertSame('test_category_2', $categories[1]->getName());
+		$this->assertSame('test_category_3', $categories[2]->getName());
+		
+		// 123 <- 231
+		$this->getCategoryModel()->getManager()->reorderCategories($categories, $categories[0], $this::REORDER_UP);
+		$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForum($forum->getId());
+		$this->assertSame('test_category_2', $categories[0]->getName());
+		$this->assertSame('test_category_3', $categories[1]->getName());
+		$this->assertSame('test_category_1', $categories[2]->getName());
+		
+		// 231 <- 213
+		$this->getCategoryModel()->getManager()->reorderCategories($categories, $categories[2], $this::REORDER_UP);
+		$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForum($forum->getId());
+		$this->assertSame('test_category_2', $categories[0]->getName());
+		$this->assertSame('test_category_1', $categories[1]->getName());
+		$this->assertSame('test_category_3', $categories[2]->getName());
+		
+		// 213 <- 123
+		$this->getCategoryModel()->getManager()->reorderCategories($categories, $categories[1], $this::REORDER_UP);
+		$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForum($forum->getId());
+		$this->assertSame('test_category_1', $categories[0]->getName());
+		$this->assertSame('test_category_2', $categories[1]->getName());
+		$this->assertSame('test_category_3', $categories[2]->getName());
+	}
 }

@@ -189,4 +189,33 @@ class AdminCategoryController extends AdminCategoryBaseController
 	        )
 		);
     }
+	
+    /**
+     *
+     * @access public
+     * @return RedirectResponse
+     */
+    public function reorderAction($categoryId, $direction)
+    {
+        $this->isAuthorised('ROLE_ADMIN');
+
+		$category = $this->getCategoryModel()->findOneCategoryById($categoryId);
+	
+		$this->isFound($category);
+		
+		$params = array();
+		
+		// We do not re-order categories not set to a forum.
+		if ($category->getForum()) {
+			$forumFilter = $category->getForum()->getId();
+			
+			$params['forum_filter'] = $forumFilter;
+		
+			$categories = $this->getCategoryModel()->findAllCategoriesForForum($forumFilter);
+			
+			$this->getCategoryModel()->reorderCategories($categories, $category, $direction);
+		}
+	
+        return $this->redirectResponse($this->path('ccdn_forum_admin_category_list', $params));
+    }
 }

@@ -43,7 +43,7 @@
 			</ul>
 		
 			<div class="span9">
-				<table class="table table-bordered">
+				<table class="table table-bordered" id="admin-categories-list">
 					<thead>
 						<tr>
 							<th>ID</th>
@@ -68,27 +68,29 @@
 											Delete
 										</a>
 									{%- endif -%}
-
-									{#
-									{% if loop.length %}
-										<div class="btn-group">
-											<a class="btn" href="">
-												{%- if loop.first -%}
-													<i class="icon-retweet"></i>
-												{%- else -%}
-													<i class="icon-chevron-up"></i>
-												{%- endif -%}
-											</a>
-											<a class="btn" href="">
-												{%- if loop.last -%}
-													<i class="icon-retweet"></i>
-												{%- else -%}
-													<i class="icon-chevron-down"></i>
-												{%- endif -%}
-											</a>
-										</div>
+									
+									{%- if forum_filter is not null and forum_filter != '' %}
+										{% if loop.length > 1 %}
+											<div class="btn-group">
+												<a class="btn" href="{{- path('ccdn_forum_admin_category_reorder_up', {'categoryId': category.id}) -}}"
+												 id="reorder_up_category[{{- category.name -}}]">
+													{%- if loop.first -%}
+														<i class="icon-retweet"></i>
+													{%- else -%}
+														<i class="icon-chevron-up"></i>
+													{%- endif -%}
+												</a>
+												<a class="btn" href="{{- path('ccdn_forum_admin_category_reorder_down', {'categoryId': category.id}) -}}"
+												 id="reorder_down_category[{{- category.name -}}]">
+													{%- if loop.last -%}
+														<i class="icon-retweet"></i>
+													{%- else -%}
+														<i class="icon-chevron-down"></i>
+													{%- endif -%}
+												</a>
+											</div>
+										{%- endif -%}
 									{%- endif -%}
-									#}
 								</td>
 							</tr>
 						{%- endfor -%}

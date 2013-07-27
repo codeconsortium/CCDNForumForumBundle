@@ -47,15 +47,17 @@ class WebUser extends MinkContext implements KernelAwareInterface
     protected $kernel;
 	
     /**
+     * 
      * Constructor.
      */
     public function __construct()
     {
-        // Sylius data creation context.
+        // Bundle data creation context.
         $this->useContext('data', new DataContext());
     }
 
     /**
+     * 
      * {@inheritdoc}
      */
     public function setKernel(KernelInterface $kernel)

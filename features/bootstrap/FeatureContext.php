@@ -27,6 +27,8 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
 //
 // Require 3rd-party libraries here:
 //
@@ -104,6 +106,11 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
         $purger->purge();
     }
 	
+	private function getPage()
+	{
+		return $this->getMainContext()->getSession()->getPage();
+	}
+
     /**
      * 
      * @Given /^I am logged in as admin$/
@@ -112,5 +119,26 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     {
 		$session = $this->getMainContext()->getSession();
 		$session->setBasicAuth('admin@foo.com', 'root');
+    }
+
+    /**
+     * 
+     * @Then /^"([^"]*)" should precede "([^"]*)" for the query "([^"]*)"$/
+     */
+    public function shouldPrecedeForTheQuery($textBefore, $textAfter, $cssQuery)
+    {
+		// http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
+        $items = array_map(
+            function ($element) {
+                return $element->getText();
+            },
+            $this->getPage()->findAll('css', $cssQuery)
+        );
+
+        WebTestCase::assertGreaterThan(
+            array_search($textBefore, $items),
+            array_search($textAfter, $items),
+            "$textBefore does not proceed $textAfter"
+        );
     }
 }

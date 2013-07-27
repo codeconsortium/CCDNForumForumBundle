@@ -72,50 +72,97 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
      *
      * @access public
      * @param  Array                                               $categories
-     * @param  int                                                 $categoryId
-     * @param  string                                              $direction
+     * @param  \CCDNForum\ForumBundle\Entity\Category              $categoryShift
+     * @param  int                                                 $direction
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function reorder($categories, $categoryId, $direction)
+    public function reorderCategories($categories, Category $categoryShift, $direction)
     {
-        $categoryCount = count($categories);
-        for ($index = 0, $priority = 1, $align = false; $index < $categoryCount; $index++, $priority++) {
-            if ($categories[$index]->getId() == $categoryId) {
-                if ($align == false) { // if aligning then other indices priorities are being corrected
-                    // **************
-                    // **** DOWN ****
-                    // **************
-                    if ($direction == 'down') {
-                        if ($index < ($categoryCount - 1)) { // <-- must be lower because we need to alter an offset of the next index.
-                            $categories[$index]->setListOrderPriority($priority+1); // move this down the page
-                            $categories[$index+1]->setListOrderPriority($priority); // move this up the page
-                            $index+=1; $priority++; // the next index has already been changed
-                        } else {
-                            $categories[$index]->setListOrderPriority(1); // move to the top of the page
-                            $index = -1; $priority = 1; // alter offsets for alignment of all other priorities
-                        }
-                    // **************
-                    // ***** UP *****
-                    // **************
-                    } else {
-                        if ($index > 0) {
-                            $categories[$index]->setListOrderPriority($priority-1); // move this up the page
-                            $categories[$index-1]->setListOrderPriority($priority); // move this down the page
-                            $index+=1; $priority++;
-                        } else {
-                            $categories[$index]->setListOrderPriority($categoryCount); // move to the bottom of the page
-                            $index = -1; $priority = -1; // alter offsets for alignment of all other priorities
-                        }
-                    } // end down / up direction
-                    $align = true; continue;
-                }// end align
-            } else {
-                $categories[$index]->setListOrderPriority($priority);
-            } // end category id match
-        } // end loop
+		$categoryCount = (count($categories) - 1);
+		
+		// Find categort in collection to shift and use list order as array key for easier editing.
+		$sorted = array();
+		$shiftIndex = null;
+		foreach ($categories as $categoryIndex => $category) {
+			if ($categories[$categoryIndex]->getId() == $categoryShift->getId()) {
+				$shiftIndex = $categoryIndex;
+			}
+			
+			$sorted[$categoryIndex] = $category;
+		}
 
-        foreach ($categories as $category) { $this->persist($category); }
-
+		$incrementKeysAfterIndex = function($index, $arr) {
+			$hydrated = array();
+		
+			foreach ($arr as $key => $el) {
+				if ($key > $index) {
+					$hydrated[$key + 1] = $el;
+				} else {
+					$hydrated[$key] = $el;
+				}
+			}
+		
+			return $hydrated;
+		};
+		
+		$decrementKeysBeforeIndex = function($index, $arr) {
+			$hydrated = array();
+		
+			foreach ($arr as $key => $el) {
+				if ($key < $index) {
+					$hydrated[$key - 1] = $el;
+				} else {
+					$hydrated[$key] = $el;
+				}
+			}
+			
+			return $hydrated;
+		};
+			
+		$shifted = array();
+		
+		// First Category needs reordering??
+		if ($shiftIndex == 0) {
+			if ($direction) { // Down (move down 1)
+				$shifted = $sorted;
+				$shifted[$shiftIndex] = $sorted[$shiftIndex + 1];
+				$shifted[$shiftIndex + 1] = $sorted[$shiftIndex];
+			} else { // Up (send to bottom)
+				$shifted[$categoryCount] = $sorted[0];
+				unset($sorted[0]);
+				$shifted = array_merge($decrementKeysBeforeIndex($categoryCount + 1, $sorted), $shifted);
+			}
+		} else {
+			// Last categorie needs reordering??
+			if ($shiftIndex == $categoryCount) {
+				if ($direction) { // Down (send to top)
+					$shifted[0] = $sorted[$categoryCount];
+					unset($sorted[$categoryCount]);
+					$shifted = array_merge($shifted, $incrementKeysAfterIndex(-1, $sorted));
+				} else { // Up (move up 1)
+					$shifted = $sorted;
+					$shifted[$shiftIndex] = $sorted[$shiftIndex - 1];
+					$shifted[$shiftIndex - 1] = $sorted[$shiftIndex];
+				}
+			} else {
+				// Swap 2 categories not at beginning or end.
+				$shifted = $sorted;
+				if ($direction) { // Down (move down 1)
+					$shifted[$shiftIndex] = $sorted[$shiftIndex + 1];
+					$shifted[$shiftIndex + 1] = $sorted[$shiftIndex];
+				} else { // Up (move up 1)
+					$shifted[$shiftIndex] = $sorted[$shiftIndex - 1];
+					$shifted[$shiftIndex - 1] = $sorted[$shiftIndex];
+				}
+			}
+		}
+		
+		// Set the order from the $index arranged prior and persist.
+		foreach ($shifted as $index => $category) {
+			$category->setListOrderPriority($index);
+			$this->persist($category);
+		}
+		
         $this->flush();
 
         return $this;
