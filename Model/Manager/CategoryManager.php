@@ -42,10 +42,6 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
      */
     public function saveNewCategory(Category $category)
     {
-        $categoryCount = $this->model->getCategoryCount();
-
-        $category->setListOrderPriority(++$categoryCount['categoryCount']);
-
         // insert a new row
         $this->persist($category)->flush();
 
@@ -62,9 +58,11 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
      */
     public function updateCategory(Category $category)
     {
-        // update a record
-        $this->persist($category);
+        // update a record.
+        $this->persist($category)->flush();
 
+		$this->refresh($category);
+		
         return $this;
     }
 

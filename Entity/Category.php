@@ -45,7 +45,7 @@ class Category extends AbstractCategory
      *
      * @var integer $listOrderPriority
      */
-    protected $listOrderPriority;
+    protected $listOrderPriority = 0;
 
     /**
      *

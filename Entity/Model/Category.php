@@ -56,6 +56,22 @@ abstract class Category
      */
     public function setForum(ConcreteForum $forum = null)
     {
+		if ($this->forum) {
+			if ($forum) {
+				if ($this->forum->getId() != $forum->getId()) {
+					$this->setListOrderPriority(count($forum->getCategories()) + 1);
+				}
+			} else {
+				$this->setListOrderPriority(0);
+			}
+		} else {
+			if ($forum) {
+				$this->setListOrderPriority(count($forum->getCategories()) + 1);
+			} else {
+				$this->setListOrderPriority(0);
+			}
+		}
+		
         $this->forum = $forum;
 
         return $this;

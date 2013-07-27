@@ -62,8 +62,10 @@ class ForumManagerTest extends TestBase
 		
 		$forum1 = $forums[0];
 		$forum2 = $forums[1];
+		$this->em->refresh($forum1);
+		$this->em->refresh($forum2);
 		$categories = new ArrayCollection($forum1->getCategories()->toArray());
-		
+
 		$this->assertCount(3, $forum1->getCategories());
 		$this->getForumModel()->getManager()->reassignCategoriesToForum($categories, null);
 		$this->em->refresh($forum1);

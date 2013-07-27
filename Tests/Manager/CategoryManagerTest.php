@@ -85,6 +85,7 @@ class CategoryManagerTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		
 		$forum = $forums[1];
+		$this->em->refresh($forum);
 		$categories = $forum->getCategories();
 		$this->assertCount(3, $categories);
 
