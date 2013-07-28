@@ -79,11 +79,16 @@ class AdminBoardController extends AdminBoardBaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 		
-		$formHandler = $this->getFormHandlerToCreateBoard();
+		$forumFilter = $this->getQuery('forum_filter', null);
+		$categoryFilter = $this->getQuery('category_filter', null);
+		
+		$formHandler = $this->getFormHandlerToCreateBoard($categoryFilter);
 		
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Board/create.html.', 
 			array(
-				'form' => $formHandler->getForm()->createView()
+				'form' => $formHandler->getForm()->createView(),
+				'forum_filter' => $forumFilter,
+				'category_filter' => $categoryFilter
 	        )
 		);
     }
@@ -97,15 +102,23 @@ class AdminBoardController extends AdminBoardBaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-		$formHandler = $this->getFormHandlerToCreateBoard();
+		$forumFilter = $this->getQuery('forum_filter', null);
+		$categoryFilter = $this->getQuery('category_filter', null);
+		
+		$formHandler = $this->getFormHandlerToCreateBoard($categoryFilter);
 		
 		if ($formHandler->process($this->getRequest())) {
-			return $this->redirectResponse($this->path('ccdn_forum_admin_board_list'));
+			
+			$params = $this->getFilterQueryStrings($formHandler->getForm()->getData());
+			
+			return $this->redirectResponse($this->path('ccdn_forum_admin_board_list', $params));
 		}
 		
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Board/create.html.', 
 			array(
-				'form' => $formHandler->getForm()->createView()
+				'form' => $formHandler->getForm()->createView(),
+				'forum_filter' => $forumFilter,
+				'category_filter' => $categoryFilter
 	        )
 		);
     }
@@ -125,10 +138,15 @@ class AdminBoardController extends AdminBoardBaseController
 		
 		$formHandler = $this->getFormHandlerToUpdateBoard($board);
 		
+		$forumFilter = $this->getQuery('forum_filter', null);
+		$categoryFilter = $this->getQuery('forum_filter', null);
+		
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Board/edit.html.', 
 			array(
 				'form' => $formHandler->getForm()->createView(),
-				'board' => $board
+				'board' => $board,
+				'forum_filter' => $forumFilter,
+				'category_filter' => $categoryFilter
 	        )
 		);
     }
@@ -149,13 +167,21 @@ class AdminBoardController extends AdminBoardBaseController
 		$formHandler = $this->getFormHandlerToUpdateBoard($board);
 
 		if ($formHandler->process($this->getRequest())) {
-			return $this->redirectResponse($this->path('ccdn_forum_admin_board_list'));
+
+			$params = $this->getFilterQueryStrings($board);
+			
+			return $this->redirectResponse($this->path('ccdn_forum_admin_board_list', $params));
 		}
+		
+		$forumFilter = $this->getQuery('forum_filter', null);
+		$categoryFilter = $this->getQuery('category_filter', null);
 		
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Board/edit.html.', 
 			array(
 				'form' => $formHandler->getForm()->createView(),
-				'board' => $board
+				'board' => $board,
+				'forum_filter' => $forumFilter,
+				'category_filter' => $categoryFilter
 	        )
 		);
     }
@@ -175,10 +201,15 @@ class AdminBoardController extends AdminBoardBaseController
 		
 		$formHandler = $this->getFormHandlerToDeleteBoard($board);
 
+		$forumFilter = $this->getQuery('forum_filter', null);
+		$categoryFilter = $this->getQuery('category_filter', null);
+		
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Board/delete.html.', 
 			array(
 				'form' => $formHandler->getForm()->createView(),
-				'board' => $board
+				'board' => $board,
+				'forum_filter' => $forumFilter,
+				'category_filter' => $categoryFilter
 	        )
 		);
     }
@@ -197,15 +228,23 @@ class AdminBoardController extends AdminBoardBaseController
 		$this->isFound($board);
 		
 		$formHandler = $this->getFormHandlerToDeleteBoard($board);
-
+		
 		if ($formHandler->process($this->getRequest())) {
-			return $this->redirectResponse($this->path('ccdn_forum_admin_board_list'));
+			
+			$params = $this->getFilterQueryStrings($board);
+			
+			return $this->redirectResponse($this->path('ccdn_forum_admin_board_list', $params));
 		}
+		
+		$forumFilter = $this->getQuery('forum_filter', null);
+		$categoryFilter = $this->getQuery('category_filter', null);
 		
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Board/delete.html.', 
 			array(
 				'form' => $formHandler->getForm()->createView(),
-				'board' => $board
+				'board' => $board,
+				'forum_filter' => $forumFilter,
+				'category_filter' => $categoryFilter
 	        )
 		);
     }

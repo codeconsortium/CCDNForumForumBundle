@@ -76,6 +76,7 @@ class CategoryCreateFormType extends AbstractType
                 array(
 					'property'           => 'name',
 					'class'              => $this->forumClass,
+					'data'               => $options['default_forum'],
 					'required'           => false,
                     'label'              => 'form.label.forum',
                     'translation_domain' => 'CCDNForumForumBundle',
@@ -117,6 +118,7 @@ class CategoryCreateFormType extends AbstractType
             'validation_groups'   => array('forum_category_create'),
             'cascade_validation'  => true,
 			'available_roles'     => $this->roleHelper->getRoleHierarchy(),
+			'default_forum'       => null
         );
     }
 

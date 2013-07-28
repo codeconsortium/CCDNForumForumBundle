@@ -17,6 +17,7 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 
+use CCDNForum\ForumBundle\Entity\Category;
 use CCDNForum\ForumBundle\Entity\Board;
 
 /**
@@ -62,6 +63,13 @@ class BoardCreateFormHandler
 
     /**
      *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Entity\Category $defaultCategory
+     */
+    protected $defaultCategory;
+
+    /**
+     *
      * @access public
      * @param \Symfony\Component\Form\FormFactory                        $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Board\BoardCreateFormType $boardCreateFormType
@@ -74,6 +82,19 @@ class BoardCreateFormHandler
         $this->boardModel = $boardModel;
     }
 
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Forum $forum
+	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryCreateFormHandler
+	 */
+	public function setDefaultCategory(Category $category)
+	{
+		$this->defaultCategory = $category;
+		
+		return $this;
+	}
+	
     /**
      *
      * @access public
@@ -127,7 +148,11 @@ class BoardCreateFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-            $this->form = $this->factory->create($this->boardCreateFormType);
+			$options = array(
+				'default_category' => $this->defaultCategory
+			);
+			
+            $this->form = $this->factory->create($this->boardCreateFormType, null, $options);
         }
 
         return $this->form;

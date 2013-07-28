@@ -59,15 +59,18 @@ class AdminCategoryController extends AdminCategoryBaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 		
-		$formHandler = $this->getFormHandlerToCreateCategory();
+		$forumFilter = $this->getQuery('forum_filter', null);
+		
+		$formHandler = $this->getFormHandlerToCreateCategory($forumFilter);
 		
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Category/create.html.', 
 			array(
-				'form' => $formHandler->getForm()->createView()
+				'form' => $formHandler->getForm()->createView(),
+				'forum_filter' => $forumFilter
 	        )
 		);
     }
-	
+
     /**
      *
      * @access public
@@ -77,15 +80,21 @@ class AdminCategoryController extends AdminCategoryBaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-		$formHandler = $this->getFormHandlerToCreateCategory();
+		$forumFilter = $this->getQuery('forum_filter', null);
+
+		$formHandler = $this->getFormHandlerToCreateCategory($forumFilter);
 		
 		if ($formHandler->process($this->getRequest())) {
-			return $this->redirectResponse($this->path('ccdn_forum_admin_category_list'));
+			
+			$params = $this->getFilterQueryStrings($formHandler->getForm()->getData());
+			
+			return $this->redirectResponse($this->path('ccdn_forum_admin_category_list', $params));
 		}
 		
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Category/create.html.', 
 			array(
-				'form' => $formHandler->getForm()->createView()
+				'form' => $formHandler->getForm()->createView(),
+				'forum_filter' => $forumFilter
 	        )
 		);
     }
@@ -105,10 +114,13 @@ class AdminCategoryController extends AdminCategoryBaseController
 		
 		$formHandler = $this->getFormHandlerToUpdateCategory($category);
 		
+		$forumFilter = $this->getQuery('forum_filter', null);
+		
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Category/edit.html.', 
 			array(
 				'form' => $formHandler->getForm()->createView(),
-				'category' => $category
+				'category' => $category,
+				'forum_filter' => $forumFilter
 	        )
 		);
     }
@@ -129,13 +141,19 @@ class AdminCategoryController extends AdminCategoryBaseController
 		$formHandler = $this->getFormHandlerToUpdateCategory($category);
 
 		if ($formHandler->process($this->getRequest())) {
-			return $this->redirectResponse($this->path('ccdn_forum_admin_category_list'));
+			
+			$params = $this->getFilterQueryStrings($category);
+			
+			return $this->redirectResponse($this->path('ccdn_forum_admin_category_list', $params));
 		}
+		
+		$forumFilter = $this->getQuery('forum_filter', null);
 		
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Category/edit.html.', 
 			array(
 				'form' => $formHandler->getForm()->createView(),
-				'category' => $category
+				'category' => $category,
+				'forum_filter' => $forumFilter
 	        )
 		);
     }
@@ -155,10 +173,13 @@ class AdminCategoryController extends AdminCategoryBaseController
 		
 		$formHandler = $this->getFormHandlerToDeleteCategory($category);
 
+		$forumFilter = $this->getQuery('forum_filter', null);
+
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Category/delete.html.', 
 			array(
 				'form' => $formHandler->getForm()->createView(),
-				'category' => $category
+				'category' => $category,
+				'forum_filter' => $forumFilter
 	        )
 		);
     }
@@ -179,13 +200,19 @@ class AdminCategoryController extends AdminCategoryBaseController
 		$formHandler = $this->getFormHandlerToDeleteCategory($category);
 
 		if ($formHandler->process($this->getRequest())) {
-			return $this->redirectResponse($this->path('ccdn_forum_admin_category_list'));
+			
+			$params = $this->getFilterQueryStrings($category);
+			
+			return $this->redirectResponse($this->path('ccdn_forum_admin_category_list', $params));
 		}
+		
+		$forumFilter = $this->getQuery('forum_filter', null);
 		
         return $this->renderResponse('CCDNForumForumBundle:Admin:/Category/delete.html.', 
 			array(
 				'form' => $formHandler->getForm()->createView(),
-				'category' => $category
+				'category' => $category,
+				'forum_filter' => $forumFilter
 	        )
 		);
     }

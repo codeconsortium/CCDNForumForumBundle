@@ -140,7 +140,6 @@ Feature: Board Management
           And I fill in "Forum_BoardCreate[name]" with "Test Board"
 		  And I fill in "Forum_BoardCreate[description]" with "Some description"
           And I press "submit[post]"
-		 Then I should be on "/en/forum/admin/manage-boards/"
           And I should see "Test Board"
 
     Scenario: Create a new Board (Assigned)
@@ -150,18 +149,15 @@ Feature: Board Management
           And I fill in "Forum_BoardCreate[name]" with "New Test Board"
 		  And I fill in "Forum_BoardCreate[description]" with "Some description"
           And I press "submit[post]"
-		 Then I should be on "/en/forum/admin/manage-boards/"
-		  And I should not see "New Test Board"
-		  And I follow "test_forum_1"
-		  And I should not see "New Test Board"
-		  And I follow "test_category_f1_1"
           And I should see "New Test Board"
+		Given I am on "/en/forum/admin/manage-boards/"
+          And I should not see "New Test Board"
 
     Scenario: Abort Create a new Board
         Given I am on "/en/forum/admin/manage-boards/create"
 		  And I should see "Create New Board"
           And I follow "Cancel"
-		 Then I should be on "/en/forum/admin/manage-boards/"
+		  And I should not see "Create New Board"
 
     Scenario: Update existing Board (Assign)
 	    Given I am on "/en/forum/admin/manage-boards/"
@@ -174,11 +170,6 @@ Feature: Board Management
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-boards/"
 		  And I should not see "test_board_1"
-	  	  And I should not see "Testing Board update form"
-	  	  And I follow "test_forum_1"
-		  And I should not see "test_board_1"
-	  	  And I should not see "Testing Board update form"
-	  	  And I follow "test_category_f1_1"
           And I should see "Testing Board update form"
 
     Scenario: Update existing Board (Unassign)

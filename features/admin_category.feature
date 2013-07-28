@@ -75,8 +75,15 @@ Feature: Category Management
 		  And I should see "Create New Category"
           And I fill in "Forum_CategoryCreate[name]" with "My_New_Category_1"
           And I press "submit[post]"
-		 Then I should be on "/en/forum/admin/manage-categories/"
+		 Then I am on "/en/forum/admin/manage-categories/"
+		  And I should not see "Create New Category"
           And I should see "My_New_Category_1"
+		 Then I follow "test_forum_1"
+          And I should not see "My_New_Category_1"
+		 Then I follow "test_forum_2"
+          And I should not see "My_New_Category_1"
+		 Then I follow "test_forum_3"
+          And I should not see "My_New_Category_1"
 
     Scenario: Create a new Category (Assigned)
         Given I am on "/en/forum/admin/manage-categories/create"
@@ -84,8 +91,10 @@ Feature: Category Management
 		  And I select "test_forum_1" from "Forum_CategoryCreate[forum]"
           And I fill in "Forum_CategoryCreate[name]" with "My_New_Category_2"
           And I press "submit[post]"
-		 Then I should be on "/en/forum/admin/manage-categories/"
-		  And I should not see "My_New_Category_2"
+		  And I should not see "Create New Category"
+		  And I should see "My_New_Category_2"
+        Given I am on "/en/forum/admin/manage-categories/"
+          And I should not see "My_New_Category_2"
 		 Then I follow "test_forum_1"
           And I should see "My_New_Category_2"
 
@@ -94,6 +103,7 @@ Feature: Category Management
 		  And I should see "Create New Category"
           And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-categories/"
+		  And I should not see "Create New Category"
 
     Scenario: Update existing Category (Assign)
 	    Given I am on "/en/forum/admin/manage-categories/"
@@ -103,11 +113,12 @@ Feature: Category Management
           And I fill in "Forum_CategoryUpdate[name]" with "UpdatedCategoryName_1"
 		  And I select "test_forum_1" from "Forum_CategoryUpdate[forum]"
           And I press "submit[post]"
-		 Then I should be on "/en/forum/admin/manage-categories/"
-		  And I should not see "test_category_1"
-		  And I follow "test_forum_1"
+		  And I should not see "Update Category"
 		  And I should not see "test_category_1"
           And I should see "UpdatedCategoryName_1"
+		Given I am on "/en/forum/admin/manage-categories/"
+		  And I should not see "test_category_1"
+          And I should not see "UpdatedCategoryName_1"
 
     Scenario: Update existing Category (Unassign)
 	    Given I am on "/en/forum/admin/manage-categories/"
@@ -118,10 +129,16 @@ Feature: Category Management
           And I fill in "Forum_CategoryUpdate[name]" with "UpdatedCategoryName_2"
 		  And I select "" from "Forum_CategoryUpdate[forum]"
           And I press "submit[post]"
-		 Then I should be on "/en/forum/admin/manage-categories/"
+		  And I should not see "Update Category"
 		  And I should not see "test_category_f1_2"
           And I should see "UpdatedCategoryName_2"
 		  And I follow "test_forum_1"
+		  And I should not see "test_category_f1_2"
+		  And I should not see "UpdatedCategoryName_2"
+		  And I follow "test_forum_2"
+		  And I should not see "test_category_f1_2"
+		  And I should not see "UpdatedCategoryName_2"
+		  And I follow "test_forum_3"
 		  And I should not see "test_category_f1_2"
 		  And I should not see "UpdatedCategoryName_2"
 
@@ -132,6 +149,7 @@ Feature: Category Management
 		  And I should see "test_category_1"
           And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-categories/"
+	      And I should not see "Update Category"
 		  And I should see "test_category_1"
 
     Scenario: Delete existing Category
@@ -141,7 +159,7 @@ Feature: Category Management
 		  And I should see "test_category_3"
 		  And I check "Forum_CategoryDelete[confirm_delete][]"
           And I press "submit[post]"
-		 Then I should be on "/en/forum/admin/manage-categories/"
+		  And I should not see "Delete Category"
           And I should not see "test_category_3"
 
     Scenario: Abort deleting existing Category
@@ -151,6 +169,7 @@ Feature: Category Management
 		  And I should see "test_category_3"
 		  And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-categories/"
+		  And I should not see "Delete Category"
           And I should see "test_category_3"
 
 	Scenario: Reorder categories

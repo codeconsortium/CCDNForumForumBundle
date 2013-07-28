@@ -10,7 +10,9 @@
 	{%- spaceless -%}
 	
 		<section>
-			<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_board_create') -}}">Create Board</a>
+			<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_board_create', {'forum_filter': forum_filter, 'category_filter': category_filter}) -}}">
+				Create Board
+			</a>
 		</section>
 		
 		<section class="span12">
@@ -92,12 +94,14 @@
 								<td>{{- board.name -}}</td>
 								<td>{{- board.topics |length -}}</td>
 								<td>
-									<a class="btn" href="{{- path('ccdn_forum_admin_board_edit', {'boardId': board.id}) -}}" id="update_board[{{- board.name -}}]">
+									<a class="btn" href="{{- path('ccdn_forum_admin_board_edit', {'boardId': board.id, 'forum_filter': forum_filter, 'category_filter': category_filter}) -}}"
+									 id="update_board[{{- board.name -}}]">
 										Edit
 									</a>
 
 									{%- if is_granted('ROLE_SUPER_ADMIN') -%}
-										<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_board_delete', {'boardId': board.id}) -}}" id="delete_board[{{- board.name -}}]">
+										<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_board_delete', {'boardId': board.id, 'forum_filter': forum_filter, 'category_filter': category_filter}) -}}"
+										 id="delete_board[{{- board.name -}}]">
 											Delete
 										</a>
 									{%- endif -%}

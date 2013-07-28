@@ -33,10 +33,18 @@ class AdminBoardBaseController extends BaseController
 	 * @access public
 	 * @return \CCDNForum\ForumBundle\Form\Handler\BoardCreateFormHandler
 	 */
-	public function getFormHandlerToCreateBoard()
+	protected function getFormHandlerToCreateBoard($categoryFilter = null)
 	{
 	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.board_create');
 
+		if ($categoryFilter) {
+			$category = $this->getCategoryModel()->findOneCategoryById($categoryFilter);
+		
+			if ($category) {
+				$formHandler->setDefaultCategory($category);
+			}
+		}
+		
 	    return $formHandler;
 	}
 	
@@ -45,7 +53,7 @@ class AdminBoardBaseController extends BaseController
 	 * @access public
 	 * @return \CCDNForum\ForumBundle\Form\Handler\BoardUpdateFormHandler
 	 */
-	public function getFormHandlerToUpdateBoard(Board $board)
+	protected function getFormHandlerToUpdateBoard(Board $board)
 	{
 	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.board_update');
 
@@ -59,12 +67,27 @@ class AdminBoardBaseController extends BaseController
 	 * @access public
 	 * @return \CCDNForum\ForumBundle\Form\Handler\BoardDeleteFormHandler
 	 */
-	public function getFormHandlerToDeleteBoard(Board $board)
+	protected function getFormHandlerToDeleteBoard(Board $board)
 	{
 	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.board_delete');
 
 		$formHandler->setBoard($board);
 		
 	    return $formHandler;
+	}
+	
+	protected function getFilterQueryStrings(Board $board)
+	{
+		$params = array();
+		
+		if ($board->getCategory()) {
+			$params['category_filter'] = $board->getCategory()->getId();
+
+			if ($board->getCategory()->getForum()) {
+				$params['forum_filter'] = $board->getCategory()->getForum()->getId();
+			}
+		}
+
+		return $params;
 	}
 }

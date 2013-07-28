@@ -10,7 +10,8 @@
 
 	<section>
 	    {%- form_theme form ccdn_forum_forum.post.edit_topic.form_theme -%}
-	    <form action="{{- path('ccdn_forum_admin_board_create_process') -}}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
+	    <form action="{{- path('ccdn_forum_admin_board_create_process', {'forum_filter': forum_filter, 'category_filter': category_filter}) -}}"
+		 method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
 	        <fieldset>
 
 				<div class="control-group form-title">
@@ -26,7 +27,7 @@
 	            <div class="form-actions">
 	                <input type="submit" class="btn btn-primary" value="Save" name="submit[post]" id="submit[post]">
 					
-	                <a class="btn" href="{{- path('ccdn_forum_admin_board_list') -}}">
+	                <a class="btn" href="{{- path('ccdn_forum_admin_board_list', {'forum_filter': forum_filter, 'category_filter': category_filter}) -}}">
 						{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
 					</a>
 	            </div>

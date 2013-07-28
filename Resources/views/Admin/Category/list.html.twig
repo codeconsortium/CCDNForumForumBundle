@@ -10,7 +10,9 @@
 	{%- spaceless -%}
 	
 		<section>
-			<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_category_create') -}}">Create Category</a>
+			<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_category_create', {'forum_filter': forum_filter}) -}}">
+				Create Category
+			</a>
 		</section>
 	
 		<section class="span12">
@@ -59,12 +61,14 @@
 								<td>{{- category.name -}}</td>
 								<td>{{- category.boards |length -}}</td>
 								<td>
-									<a class="btn" href="{{- path('ccdn_forum_admin_category_edit', {'categoryId': category.id}) -}}" id="update_category[{{- category.name -}}]">
+									<a class="btn" href="{{- path('ccdn_forum_admin_category_edit', {'categoryId': category.id, 'forum_filter': forum_filter}) -}}"
+									 id="update_category[{{- category.name -}}]">
 										Edit
 									</a>
 
 									{%- if is_granted('ROLE_SUPER_ADMIN') -%}
-										<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_category_delete', {'categoryId': category.id}) -}}" id="delete_category[{{- category.name -}}]">
+										<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_category_delete', {'categoryId': category.id, 'forum_filter': forum_filter}) -}}"
+										 id="delete_category[{{- category.name -}}]">
 											Delete
 										</a>
 									{%- endif -%}
@@ -72,7 +76,7 @@
 									{%- if forum_filter is not null and forum_filter != '' %}
 										{% if loop.length > 1 %}
 											<div class="btn-group">
-												<a class="btn" href="{{- path('ccdn_forum_admin_category_reorder_up', {'categoryId': category.id}) -}}"
+												<a class="btn" href="{{- path('ccdn_forum_admin_category_reorder_up', {'categoryId': category.id, 'forum_filter': forum_filter}) -}}"
 												 id="reorder_up_category[{{- category.name -}}]">
 													{%- if loop.first -%}
 														<i class="icon-retweet"></i>
@@ -80,7 +84,7 @@
 														<i class="icon-chevron-up"></i>
 													{%- endif -%}
 												</a>
-												<a class="btn" href="{{- path('ccdn_forum_admin_category_reorder_down', {'categoryId': category.id}) -}}"
+												<a class="btn" href="{{- path('ccdn_forum_admin_category_reorder_down', {'categoryId': category.id, 'forum_filter': forum_filter}) -}}"
 												 id="reorder_down_category[{{- category.name -}}]">
 													{%- if loop.last -%}
 														<i class="icon-retweet"></i>
