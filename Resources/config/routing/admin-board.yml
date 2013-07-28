@@ -26,3 +26,11 @@ ccdn_forum_admin_board_delete:
 ccdn_forum_admin_board_delete_process:
     pattern: /delete/{boardId}/process
     defaults: { _controller: CCDNForumForumBundle:AdminBoard:deleteProcess, _locale: en }
+
+ccdn_forum_admin_board_reorder_up:
+    pattern: /reorder/{boardId}/up
+    defaults: { _controller: CCDNForumForumBundle:AdminBoard:reorder, _locale: en, direction: 0 }
+
+ccdn_forum_admin_board_reorder_down:
+    pattern: /reorder/{boardId}/down
+    defaults: { _controller: CCDNForumForumBundle:AdminBoard:reorder, _locale: en, direction: 1 }

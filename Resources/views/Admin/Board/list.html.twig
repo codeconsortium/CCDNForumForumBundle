@@ -78,7 +78,7 @@
 			</ul>
 			
 			<div class="span7">
-				<table class="table table-bordered">
+				<table class="table table-bordered" id="admin-boards-list">
 					<thead>
 						<tr>
 							<th>ID</th>
@@ -104,6 +104,30 @@
 										 id="delete_board[{{- board.name -}}]">
 											Delete
 										</a>
+									{%- endif -%}
+									
+									{%- if category_filter is not null and category_filter != '' %}
+										{% if loop.length > 1 %}
+											<div class="btn-group">
+												<a class="btn" href="{{- path('ccdn_forum_admin_board_reorder_up', {'boardId': board.id, 'forum_filter': forum_filter, 'category_filter': category_filter}) -}}"
+												 id="reorder_up_board[{{- board.name -}}]">
+													{%- if loop.first -%}
+														<i class="icon-retweet"></i>
+													{%- else -%}
+														<i class="icon-chevron-up"></i>
+													{%- endif -%}
+												</a>
+												
+												<a class="btn" href="{{- path('ccdn_forum_admin_board_reorder_down', {'boardId': board.id, 'forum_filter': forum_filter, 'category_filter': category_filter}) -}}"
+												 id="reorder_down_board[{{- board.name -}}]">
+													{%- if loop.last -%}
+														<i class="icon-retweet"></i>
+													{%- else -%}
+														<i class="icon-chevron-down"></i>
+													{%- endif -%}
+												</a>
+											</div>
+										{%- endif -%}
 									{%- endif -%}
 								</td>
 							</tr>

@@ -82,7 +82,7 @@ class CategoryManagerTest extends TestBase
 	public function testReorderCategories()
 	{
 		$forums = $this->addFixturesForForums();
-		$categories = $this->addFixturesForCategories($forums);
+		$this->addFixturesForCategories($forums);
 		
 		$forum = $forums[1];
 		$this->em->refresh($forum);

@@ -78,7 +78,7 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
     {
 		$categoryCount = (count($categories) - 1);
 		
-		// Find categort in collection to shift and use list order as array key for easier editing.
+		// Find category in collection to shift and use list order as array key for easier editing.
 		$sorted = array();
 		$shiftIndex = null;
 		foreach ($categories as $categoryIndex => $category) {
@@ -131,7 +131,7 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
 				$shifted = array_merge($decrementKeysBeforeIndex($categoryCount + 1, $sorted), $shifted);
 			}
 		} else {
-			// Last categorie needs reordering??
+			// Last category needs reordering??
 			if ($shiftIndex == $categoryCount) {
 				if ($direction) { // Down (send to top)
 					$shifted[0] = $sorted[$categoryCount];

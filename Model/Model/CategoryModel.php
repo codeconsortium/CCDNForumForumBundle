@@ -93,8 +93,8 @@ class CategoryModel extends BaseModel implements BaseModelInterface
      *
      * @access public
      * @param  Array                                               $categories
-     * @param  int                                                 $categoryId
-     * @param  string                                              $direction
+     * @param  \CCDNForum\ForumBundle\Entity\Category              $categoryShift
+     * @param  int                                                 $direction
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function reorderCategories($categories, Category $category, $direction)

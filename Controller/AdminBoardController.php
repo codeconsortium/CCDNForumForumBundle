@@ -248,4 +248,37 @@ class AdminBoardController extends AdminBoardBaseController
 	        )
 		);
     }
+
+    /**
+     *
+     * @access public
+     * @return RedirectResponse
+     */
+    public function reorderAction($boardId, $direction)
+    {
+        $this->isAuthorised('ROLE_ADMIN');
+    
+		$board = $this->getBoardModel()->findOneBoardById($boardId);
+	
+		$this->isFound($board);
+		
+		$params = array();
+		
+		// We do not re-order boards not set to a category.
+		if ($board->getCategory()) {
+			$categoryFilter = $board->getCategory()->getId();
+			
+			$params['category_filter'] = $categoryFilter;
+			
+			if ($board->getCategory()->getForum()) {
+				$params['forum_filter'] = $board->getCategory()->getForum()->getId();
+			}
+		
+			$boards = $this->getBoardModel()->findAllBoardsForCategory($categoryFilter);
+			
+			$this->getBoardModel()->reorderBoards($boards, $board, $direction);
+		}
+	
+        return $this->redirectResponse($this->path('ccdn_forum_admin_board_list', $params));
+    }
 }

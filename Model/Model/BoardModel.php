@@ -67,6 +67,60 @@ class BoardModel extends BaseModel implements BaseModelInterface
         return $this->getRepository()->findOneBoardById($boardId);
     }
 
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function saveNewBoard(Board $board)
+    {
+        return $this->getManager()->saveNewBoard($board);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function updateBoard(Board $board)
+    {
+       return $this->getManager()->updateBoard($board);
+    }
+	
+	public function deleteBoard(Board $board)
+	{
+		return $this->getManager()->deleteBoard($board);
+	}
+	
+	public function reassignTopicsToBoard(ArrayCollection $topics, Board $board = null)
+	{
+		return $this->getManager()->reassignTopicsToBoard($topics, $board);
+	}
+	
+    /**
+     *
+     * @access public
+     * @param  Array                                               $boards
+     * @param  \CCDNForum\ForumBundle\Entity\Board                 $boardShift
+     * @param  int                                                 $direction
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function reorderBoards($boards, Board $board, $direction)
+    {
+        return $this->getManager()->reorderBoards($boards, $board, $direction);
+    }
+
+	
+
+	
+
+
+
+	
+	
+
 
 
 
@@ -139,27 +193,7 @@ class BoardModel extends BaseModel implements BaseModelInterface
         return $this->getRepository()->filterViewableBoards($boards);
     }
 
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function saveNewBoard(Board $board)
-    {
-        return $this->getManager()->saveNewBoard($board);
-    }
 
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function updateBoard(Board $board)
-    {
-       return $this->getManager()->updateBoard($board);
-    }
 
     /**
      *
@@ -183,26 +217,5 @@ class BoardModel extends BaseModel implements BaseModelInterface
         return $this->getManager()->bulkUpdateStats($boards);
     }
 
-    /**
-     *
-     * @access public
-     * @param  array                                               $boards
-     * @param  int                                                 $boardId
-     * @param  string                                              $direction
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function reorder($boards, $boardId, $direction)
-    {
-        return $this->getManager()->reorder($boards, $boardId, $direction);
-    }
-	
-	public function deleteBoard(Board $board)
-	{
-		return $this->getManager()->deleteBoard($board);
-	}
-	
-	public function reassignTopicsToBoard(ArrayCollection $topics, Board $board = null)
-	{
-		return $this->getManager()->reassignTopicsToBoard($topics, $board);
-	}
+
 }

@@ -77,4 +77,66 @@ class BoardManagerTest extends TestBase
 		$this->em->refresh($board2);
 		$this->assertCount(6, $board2->getTopics());
 	}
+	
+	const REORDER_UP = 0;
+	const REORDER_DOWN = 1;
+	
+	public function testReorderBoards()
+	{
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$this->addFixturesForBoards($categories);
+		
+		$category = $categories[1];
+		$this->em->refresh($category);
+		$boards = $category->getBoards();
+		$this->assertCount(3, $boards);
+
+		// 123 - Initial order.
+		$this->assertSame('test_board_1', $boards[0]->getName());
+		$this->assertSame('test_board_2', $boards[1]->getName());
+		$this->assertSame('test_board_3', $boards[2]->getName());
+		
+		// 123 -> 213
+		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[0], $this::REORDER_DOWN);
+		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategory($category->getId());
+		$this->assertSame('test_board_2', $boards[0]->getName());
+		$this->assertSame('test_board_1', $boards[1]->getName());
+		$this->assertSame('test_board_3', $boards[2]->getName());
+
+		// 213 -> 231
+		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[1], $this::REORDER_DOWN);
+		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategory($category->getId());
+		$this->assertSame('test_board_2', $boards[0]->getName());
+		$this->assertSame('test_board_3', $boards[1]->getName());
+		$this->assertSame('test_board_1', $boards[2]->getName());
+
+		// 231 -> 123
+		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[2], $this::REORDER_DOWN);
+		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategory($category->getId());
+		$this->assertSame('test_board_1', $boards[0]->getName());
+		$this->assertSame('test_board_2', $boards[1]->getName());
+		$this->assertSame('test_board_3', $boards[2]->getName());
+		
+		// 123 <- 231
+		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[0], $this::REORDER_UP);
+		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategory($category->getId());
+		$this->assertSame('test_board_2', $boards[0]->getName());
+		$this->assertSame('test_board_3', $boards[1]->getName());
+		$this->assertSame('test_board_1', $boards[2]->getName());
+		
+		// 231 <- 213
+		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[2], $this::REORDER_UP);
+		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategory($category->getId());
+		$this->assertSame('test_board_2', $boards[0]->getName());
+		$this->assertSame('test_board_1', $boards[1]->getName());
+		$this->assertSame('test_board_3', $boards[2]->getName());
+		
+		// 213 <- 123
+		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[1], $this::REORDER_UP);
+		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategory($category->getId());
+		$this->assertSame('test_board_1', $boards[0]->getName());
+		$this->assertSame('test_board_2', $boards[1]->getName());
+		$this->assertSame('test_board_3', $boards[2]->getName());
+	}
 }

@@ -115,51 +115,98 @@ class BoardManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  array                                               $boards
-     * @param  int                                                 $boardId
-     * @param  string                                              $direction
+     * @param  Array                                               $boards
+     * @param  \CCDNForum\ForumBundle\Entity\Board                 $boardShift
+     * @param  int                                                 $direction
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function reorder($boards, $boardId, $direction)
+    public function reorderBoards($boards, Board $boardShift, $direction)
     {
-        $boardCount = count($boards);
-        for ($index = 0, $priority = 1, $align = false; $index < $boardCount; $index++, $priority++) {
-            if ($boards[$index]->getId() == $boardId) {
-                if ($align == false) { // if aligning then other indices priorities are being corrected
-                    // **************
-                    // **** DOWN ****
-                    // **************
-                    if ($direction == 'down') {
-                        if ($index < ($boardCount - 1)) { // <-- must be lower because we need to alter an offset of the next index.
-                            $boards[$index]->setListOrderPriority($priority+1); // move this down the page
-                            $boards[$index+1]->setListOrderPriority($priority); // move this up the page
-                            $index+=1; $priority++; // the next index has already been changed
-                        } else {
-                            $boards[$index]->setListOrderPriority(1); // move to the top of the page
-                            $index = -1; $priority = 1; // alter offsets for alignment of all other priorities
-                        }
-                    // **************
-                    // ***** UP *****
-                    // **************
-                    } else {
-                        if ($index > 0) {
-                            $boards[$index]->setListOrderPriority($priority-1); // move this up the page
-                            $boards[$index-1]->setListOrderPriority($priority); // move this down the page
-                            $index+=1; $priority++;
-                        } else {
-                            $boards[$index]->setListOrderPriority($boardCount); // move to the bottom of the page
-                            $index = -1; $priority = -1; // alter offsets for alignment of all other priorities
-                        }
-                    } // end down / up direction
-                    $align = true; continue;
-                }// end align
-            } else {
-                $boards[$index]->setListOrderPriority($priority);
-            } // end board id match
-        } // end loop
+		$boardCount = (count($boards) - 1);
+		
+		// Find board in collection to shift and use list order as array key for easier editing.
+		$sorted = array();
+		$shiftIndex = null;
+		foreach ($boards as $boardIndex => $board) {
+			if ($boards[$boardIndex]->getId() == $boardShift->getId()) {
+				$shiftIndex = $boardIndex;
+			}
+			
+			$sorted[$boardIndex] = $board;
+		}
 
-        foreach ($boards as $board) { $this->persist($board); }
-
+		$incrementKeysAfterIndex = function($index, $arr) {
+			$hydrated = array();
+		
+			foreach ($arr as $key => $el) {
+				if ($key > $index) {
+					$hydrated[$key + 1] = $el;
+				} else {
+					$hydrated[$key] = $el;
+				}
+			}
+		
+			return $hydrated;
+		};
+		
+		$decrementKeysBeforeIndex = function($index, $arr) {
+			$hydrated = array();
+		
+			foreach ($arr as $key => $el) {
+				if ($key < $index) {
+					$hydrated[$key - 1] = $el;
+				} else {
+					$hydrated[$key] = $el;
+				}
+			}
+			
+			return $hydrated;
+		};
+			
+		$shifted = array();
+		
+		// First Board needs reordering??
+		if ($shiftIndex == 0) {
+			if ($direction) { // Down (move down 1)
+				$shifted = $sorted;
+				$shifted[$shiftIndex] = $sorted[$shiftIndex + 1];
+				$shifted[$shiftIndex + 1] = $sorted[$shiftIndex];
+			} else { // Up (send to bottom)
+				$shifted[$boardCount] = $sorted[0];
+				unset($sorted[0]);
+				$shifted = array_merge($decrementKeysBeforeIndex($boardCount + 1, $sorted), $shifted);
+			}
+		} else {
+			// Last board needs reordering??
+			if ($shiftIndex == $boardCount) {
+				if ($direction) { // Down (send to top)
+					$shifted[0] = $sorted[$boardCount];
+					unset($sorted[$boardCount]);
+					$shifted = array_merge($shifted, $incrementKeysAfterIndex(-1, $sorted));
+				} else { // Up (move up 1)
+					$shifted = $sorted;
+					$shifted[$shiftIndex] = $sorted[$shiftIndex - 1];
+					$shifted[$shiftIndex - 1] = $sorted[$shiftIndex];
+				}
+			} else {
+				// Swap 2 boards not at beginning or end.
+				$shifted = $sorted;
+				if ($direction) { // Down (move down 1)
+					$shifted[$shiftIndex] = $sorted[$shiftIndex + 1];
+					$shifted[$shiftIndex + 1] = $sorted[$shiftIndex];
+				} else { // Up (move up 1)
+					$shifted[$shiftIndex] = $sorted[$shiftIndex - 1];
+					$shifted[$shiftIndex - 1] = $sorted[$shiftIndex];
+				}
+			}
+		}
+		
+		// Set the order from the $index arranged prior and persist.
+		foreach ($shifted as $index => $board) {
+			$board->setListOrderPriority($index);
+			$this->persist($board);
+		}
+		
         $this->flush();
 
         return $this;
