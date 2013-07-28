@@ -50,7 +50,7 @@
 				</li>
 				
 				<li {%- if category_filter is null or category_filter == '' %} class="active" {%- endif -%}>
-					<a href="{{- path('ccdn_forum_admin_board_list') -}}">
+					<a href="{{- path('ccdn_forum_admin_board_list', {'forum_filter': forum_filter}) -}}">
 						<i class="icon-exclamation-sign"></i>
 						Unassigned
 					</a>
