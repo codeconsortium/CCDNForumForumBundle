@@ -97,6 +97,11 @@ class Board extends AbstractBoard
         $this->topicReplyAuthorisedRoles = array();
     }
 
+	public function __toString()
+	{
+		return $this->name;
+	}
+
     /**
      * Get id
      *

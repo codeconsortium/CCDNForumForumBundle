@@ -15,6 +15,7 @@ namespace CCDNForum\ForumBundle\Form\Type\Admin\Board;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Doctrine\ORM\EntityRepository;
 
 /**
  *
@@ -76,6 +77,15 @@ class BoardUpdateFormType extends AbstractType
                 array(
 					'property'           => 'name',
 					'class'              => $this->categoryClass,
+					'group_by'           => 'category.forum.name',
+					'query_builder'      =>
+						function(EntityRepository $er) {
+							return $er
+								->createQueryBuilder('c')
+					        	->leftJoin('c.forum', 'f')
+								//->groupBy('c.forum')
+							;
+						},
 					'required'           => false,
                     'label'              => 'form.label.category',
                     'translation_domain' => 'CCDNForumForumBundle',

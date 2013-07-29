@@ -65,6 +65,20 @@ class Category extends AbstractCategory
         $this->readAuthorisedRoles = array();
     }
 
+	public function __toString()
+	{
+		return $this->name;
+	}
+
+	public function forumName()
+	{
+		if ($this->getForum()) {
+			return $this->getForum()->getName();
+		}
+		
+		return 'Unassigned';
+	}
+	
     /**
      * Get id
      *

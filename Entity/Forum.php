@@ -59,6 +59,11 @@ class Forum extends AbstractForum
         $this->readAuthorisedRoles = array();
     }
 
+	public function __toString()
+	{
+		return $this->name;
+	}
+
     /**
      * Get id
      *

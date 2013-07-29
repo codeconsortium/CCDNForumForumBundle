@@ -177,7 +177,7 @@
 	{%- endspaceless -%}
 {% endblock checkbox_widget %}
 
-
+{#
 {% block choice_widget %}
     {% spaceless %}
         {% if expanded %}
@@ -212,6 +212,75 @@
         {% endif %}
     {% endspaceless %}
 {% endblock choice_widget %}
+#}
+
+
+
+
+{% block choice_widget %}
+	{% spaceless %}
+	    {% if expanded %}
+	        {{ block('choice_widget_expanded') }}
+	    {% else %}
+	        {{ block('choice_widget_collapsed') }}
+	    {% endif %}
+	{% endspaceless %}
+{% endblock choice_widget %}
+
+{% block choice_widget_expanded %}
+	{% spaceless %}
+		{%- set attr = attr|merge({'class': attr.class|default('') ~ ' span12'}) -%}
+		<div {{ block('widget_container_attributes') }}>
+		    <table class="table table-condensed">
+		        <tbody>
+		            {% for child in form %}
+		                <tr>
+		                    <td>{{ form_widget(child) }}</td>
+		                    <td>{{ form_label(child) }}</td>
+		                </tr>
+		            {% endfor %}
+		        </tbody>
+		    </table>
+		</div>
+	{% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block choice_widget_collapsed %}
+	{% spaceless %}
+	    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+	        {% if empty_value is not none %}
+	            <option {% if required %} disabled="disabled"{% if value is empty %} selected="selected"{% endif %}{% else %} value=""{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
+	        {% endif %}
+			
+	        {% if preferred_choices|length > 0 %}
+	            {% set options = preferred_choices %}
+	            {{ block('choice_widget_options') }}
+	            {% if choices|length > 0 and separator is not none %}
+	                <option disabled="disabled">{{- separator -}}</option>
+	            {% endif %}
+	        {% endif %}
+			
+	        {% set options = choices %}
+	        {{ block('choice_widget_options') }}
+	    </select>
+	{% endspaceless %}
+{% endblock choice_widget_collapsed %}
+
+{% block choice_widget_options %}
+	{% spaceless %}
+	    {% for group_label, choice in options %}
+	        {% if choice is iterable %}
+	            <optgroup label="{{ group_label|trans({}, translation_domain) }}">
+	                {% set options = choice %}
+	                {{ block('choice_widget_options') }}
+	            </optgroup>
+	        {% else %}
+	            <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|trans({}, translation_domain) }}</option>
+	        {% endif %}
+	    {% endfor %}
+	{% endspaceless %}
+{% endblock choice_widget_options %}
+
 
 
 

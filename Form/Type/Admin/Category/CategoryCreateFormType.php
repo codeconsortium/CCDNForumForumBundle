@@ -15,6 +15,7 @@ namespace CCDNForum\ForumBundle\Form\Type\Admin\Category;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Doctrine\ORM\EntityRepository;
 
 /**
  *
@@ -76,6 +77,12 @@ class CategoryCreateFormType extends AbstractType
                 array(
 					'property'           => 'name',
 					'class'              => $this->forumClass,
+					'query_builder'      =>
+						function(EntityRepository $er) {
+							return $er
+								->createQueryBuilder('f')
+							;
+						},
 					'data'               => $options['default_forum'],
 					'required'           => false,
                     'label'              => 'form.label.forum',
