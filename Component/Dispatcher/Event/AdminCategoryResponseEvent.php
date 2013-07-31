@@ -32,15 +32,32 @@ use CCDNForum\ForumBundle\Entity\Category;
  */
 class AdminCategoryResponseEvent extends AdminCategoryEvent
 {
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\HttpFoundation\Response $response
+	 */
 	protected $response;
-	
+
+	/**
+	 * 
+	 * @access public
+	 * @param \Symfony\Component\HttpFoundation\Request  $request
+	 * @param \CCDNForum\ForumBundle\Entity\Category     $category
+	 * @param \Symfony\Component\HttpFoundation\Response $response
+	 */
 	public function __construct(Request $request, Category $category = null, Response $response)
 	{
 		$this->request = $request;
 		$this->category = $category;
 		$this->response = $response;
 	}
-	
+
+	/**
+	 * 
+	 * @access public
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
 	public function getResponse()
 	{
 		return $this->response;

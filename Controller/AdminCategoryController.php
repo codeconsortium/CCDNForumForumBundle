@@ -67,8 +67,6 @@ class AdminCategoryController extends AdminCategoryBaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 		
-		$this->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_INITIALISE, new AdminCategoryEvent($this->getRequest(), null));
-		
 		$forumFilter = $this->getQuery('forum_filter', null);
 		
 		$formHandler = $this->getFormHandlerToCreateCategory($forumFilter);
@@ -94,13 +92,11 @@ class AdminCategoryController extends AdminCategoryBaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-		$this->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_INITIALISE, new AdminCategoryEvent($this->getRequest(), null));
-
 		$forumFilter = $this->getQuery('forum_filter', null);
 
 		$formHandler = $this->getFormHandlerToCreateCategory($forumFilter);
 		
-		if ($formHandler->process($this->getRequest())) {
+		if ($formHandler->process()) {
 			
 			$category = $formHandler->getForm()->getData();
 			
@@ -133,8 +129,6 @@ class AdminCategoryController extends AdminCategoryBaseController
         $this->isAuthorised('ROLE_ADMIN');
 
 		$category = $this->getCategoryModel()->findOneCategoryById($categoryId);
-
-		$this->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_INITIALISE, new AdminCategoryEvent($this->getRequest(), $category));
 	
 		$this->isFound($category);
 		
@@ -166,13 +160,11 @@ class AdminCategoryController extends AdminCategoryBaseController
 
 		$category = $this->getCategoryModel()->findOneCategoryById($categoryId);
 
-		$this->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_INITIALISE, new AdminCategoryEvent($this->getRequest(), $category));
-
 		$this->isFound($category);
 		
 		$formHandler = $this->getFormHandlerToUpdateCategory($category);
 
-		if ($formHandler->process($this->getRequest())) {
+		if ($formHandler->process()) {
 			
 			$category = $formHandler->getForm()->getData();
 			
@@ -209,8 +201,6 @@ class AdminCategoryController extends AdminCategoryBaseController
         $this->isAuthorised('ROLE_SUPER_ADMIN');
 
 		$category = $this->getCategoryModel()->findOneCategoryById($categoryId);
-
-		$this->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_INITIALISE, new AdminCategoryEvent($this->getRequest(), $category));
 	
 		$this->isFound($category);
 		
@@ -242,13 +232,11 @@ class AdminCategoryController extends AdminCategoryBaseController
 
 		$category = $this->getCategoryModel()->findOneCategoryById($categoryId);
 
-		$this->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_INITIALISE, new AdminCategoryEvent($this->getRequest(), $category));
-
 		$this->isFound($category);
 		
 		$formHandler = $this->getFormHandlerToDeleteCategory($category);
 
-		if ($formHandler->process($this->getRequest())) {
+		if ($formHandler->process()) {
 			
 			$category = $formHandler->getForm()->getData();
 			

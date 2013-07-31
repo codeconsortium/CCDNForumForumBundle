@@ -37,6 +37,8 @@ class AdminCategoryBaseController extends BaseController
 	{
 	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.category_create');
 
+		$formHandler->setRequest($this->getRequest());
+		
 		if ($forumFilter) {
 			$forum = $this->getForumModel()->findOneForumById($forumFilter);
 		
@@ -57,6 +59,8 @@ class AdminCategoryBaseController extends BaseController
 	{
 	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.category_update');
 
+		$formHandler->setRequest($this->getRequest());
+		
 		$formHandler->setCategory($category);
 		
 	    return $formHandler;
@@ -71,6 +75,8 @@ class AdminCategoryBaseController extends BaseController
 	{
 	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.category_delete');
 
+		$formHandler->setRequest($this->getRequest());
+		
 		$formHandler->setCategory($category);
 		
 	    return $formHandler;

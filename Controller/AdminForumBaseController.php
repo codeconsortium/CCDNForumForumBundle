@@ -37,6 +37,8 @@ class AdminForumBaseController extends BaseController
 	{
 	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.forum_create');
 
+		$formHandler->setRequest($this->getRequest());
+		
 	    return $formHandler;
 	}
 	
@@ -49,6 +51,8 @@ class AdminForumBaseController extends BaseController
 	{
 	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.forum_update');
 
+		$formHandler->setRequest($this->getRequest());
+		
 		$formHandler->setForum($forum);
 		
 	    return $formHandler;
@@ -63,6 +67,8 @@ class AdminForumBaseController extends BaseController
 	{
 	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.forum_delete');
 
+		$formHandler->setRequest($this->getRequest());
+		
 		$formHandler->setForum($forum);
 		
 	    return $formHandler;

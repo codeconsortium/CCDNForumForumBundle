@@ -140,7 +140,7 @@ Feature: Board Management
           And I fill in "Forum_BoardCreate[name]" with "Test Board"
 		  And I fill in "Forum_BoardCreate[description]" with "Some description"
           And I press "submit[post]"
-          And I should see "Test Board"
+          And I should see "Test Board" for the query "table#admin-boards-list tr td:nth-child(2)"
 
     Scenario: Create a new Board (Assigned)
         Given I am on "/en/forum/admin/manage-boards/create"
@@ -149,9 +149,9 @@ Feature: Board Management
           And I fill in "Forum_BoardCreate[name]" with "New Test Board"
 		  And I fill in "Forum_BoardCreate[description]" with "Some description"
           And I press "submit[post]"
-          And I should see "New Test Board"
+          And I should see "New Test Board" for the query "table#admin-boards-list tr td:nth-child(2)"
 		Given I am on "/en/forum/admin/manage-boards/"
-          And I should not see "New Test Board"
+          And I should not see "New Test Board" for the query "table#admin-boards-list tr td:nth-child(2)"
 
     Scenario: Abort Create a new Board
         Given I am on "/en/forum/admin/manage-boards/create"
@@ -169,8 +169,8 @@ Feature: Board Management
 		  And I fill in "Forum_BoardUpdate[description]" with "new board description"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-boards/"
-		  And I should not see "test_board_1"
-          And I should see "Testing Board update form"
+		  And I should not see "test_board_1" for the query "table#admin-boards-list tr td:nth-child(2)"
+          And I should see "Testing Board update form" for the query "table#admin-boards-list tr td:nth-child(2)"
 
     Scenario: Update existing Board (Unassign)
 	    Given I am on "/en/forum/admin/manage-boards/"
@@ -184,8 +184,8 @@ Feature: Board Management
 		  And I fill in "Forum_BoardUpdate[description]" with "new board description"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-boards/"
-		  And I should not see "test_board_c2_1"
-          And I should see "Testing Board update form"
+		  And I should not see "test_board_c2_1" for the query "table#admin-boards-list tr td:nth-child(2)"
+          And I should see "Testing Board update form" for the query "table#admin-boards-list tr td:nth-child(2)"
 
     Scenario: Abort Update existing Board
 	    Given I am on "/en/forum/admin/manage-boards/"
@@ -194,7 +194,7 @@ Feature: Board Management
 		  And I should see "test_board_1"
           And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-boards/"
-		  And I should see "test_board_1"
+		  And I should see "test_board_1" for the query "table#admin-boards-list tr td:nth-child(2)"
 
     Scenario: Delete existing Board
 	    Given I am on "/en/forum/admin/manage-boards/"
@@ -204,7 +204,7 @@ Feature: Board Management
 		  And I check "Forum_BoardDelete[confirm_delete][]"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-boards/"
-          And I should not see "test_board_3"
+          And I should not see "test_board_3" for the query "table#admin-boards-list tr td:nth-child(2)"
 
     Scenario: Abort deleting existing Board
 	    Given I am on "/en/forum/admin/manage-boards/"
@@ -213,7 +213,7 @@ Feature: Board Management
 		  And I should see "test_board_3"
 		  And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-boards/"
-          And I should see "test_board_3"
+          And I should see "test_board_3" for the query "table#admin-boards-list tr td:nth-child(2)"
 
 	Scenario: Reorder boards
 		Given I am on "/en/forum/admin/manage-boards/"

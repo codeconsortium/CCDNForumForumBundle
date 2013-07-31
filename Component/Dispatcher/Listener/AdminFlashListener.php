@@ -15,6 +15,8 @@ namespace CCDNForum\ForumBundle\Component\Dispatcher\Listener;
 
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent;
@@ -33,8 +35,18 @@ use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
  */
 class AdminFlashListener implements EventSubscriberInterface
 {
-	private $session;
+	/**
+	 * 
+	 * @access private
+	 * @var \Symfony\Component\HttpFoundation\Session\Session $session
+	 */
+	protected $session;
 
+	/**
+	 * 
+	 * @access public
+	 * @param \Symfony\Component\HttpFoundation\Session\Session $session
+	 */
 	public function __construct($session)
 	{
 		$this->session = $session;
@@ -58,7 +70,12 @@ class AdminFlashListener implements EventSubscriberInterface
 			ForumEvents::ADMIN_BOARD_DELETE_COMPLETE    => 'onBoardDeleteComplete',
 		);
 	}
-	
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent $event
+	 */
 	public function onForumCreateComplete(AdminForumEvent $event)
 	{
 		if ($event->getForum()) {
@@ -68,6 +85,11 @@ class AdminFlashListener implements EventSubscriberInterface
 		}
 	}
 
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent $event
+	 */
 	public function onForumEditComplete(AdminForumEvent $event)
 	{
 		if ($event->getForum()) {
@@ -77,6 +99,11 @@ class AdminFlashListener implements EventSubscriberInterface
 		}
 	}
 
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent $event
+	 */
 	public function onForumDeleteComplete(AdminForumEvent $event)
 	{
 		if ($event->getForum()) {
@@ -86,6 +113,11 @@ class AdminFlashListener implements EventSubscriberInterface
 		}
 	}
 
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent $event
+	 */
 	public function onCategoryCreateComplete(AdminCategoryEvent $event)
 	{
 		if ($event->getCategory()) {
@@ -95,6 +127,11 @@ class AdminFlashListener implements EventSubscriberInterface
 		}
 	}
 
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent $event
+	 */
 	public function onCategoryEditComplete(AdminCategoryEvent $event)
 	{
 		if ($event->getCategory()) {
@@ -104,6 +141,11 @@ class AdminFlashListener implements EventSubscriberInterface
 		}
 	}
 
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent $event
+	 */
 	public function onCategoryDeleteComplete(AdminCategoryEvent $event)
 	{
 		if ($event->getCategory()) {
@@ -113,6 +155,11 @@ class AdminFlashListener implements EventSubscriberInterface
 		}
 	}
 
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent $event
+	 */
 	public function onBoardCreateComplete(AdminBoardEvent $event)
 	{
 		if ($event->getBoard()) {
@@ -122,6 +169,11 @@ class AdminFlashListener implements EventSubscriberInterface
 		}
 	}
 
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent $event
+	 */
 	public function onBoardEditComplete(AdminBoardEvent $event)
 	{
 		if ($event->getBoard()) {
@@ -131,6 +183,11 @@ class AdminFlashListener implements EventSubscriberInterface
 		}
 	}
 
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent $event
+	 */
 	public function onBoardDeleteComplete(AdminBoardEvent $event)
 	{
 		if ($event->getBoard()) {

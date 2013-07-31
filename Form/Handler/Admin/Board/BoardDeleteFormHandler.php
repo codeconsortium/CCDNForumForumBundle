@@ -80,6 +80,13 @@ class BoardDeleteFormHandler
 	 */
 	protected $dispatcher;
 
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\HttpFoundation\Request $request
+	 */
+	protected $request;
+
     /**
      *
      * @access public
@@ -108,26 +115,35 @@ class BoardDeleteFormHandler
 		
 		return $this;
 	}
-	
+
     /**
      *
      * @access public
      * @param  \Symfony\Component\HttpFoundation\Request $request
+     */
+	public function setRequest(Request $request)
+	{
+		$this->request = $request;
+	}
+
+    /**
+     *
+     * @access public
      * @return bool
      */
-    public function process(Request $request)
+    public function process()
     {
         $this->getForm();
 
-        if ($request->getMethod() == 'POST') {
-            $this->form->bind($request);
+        if ($this->request->getMethod() == 'POST') {
+            $this->form->bind($this->request);
 
             // Validate
             if ($this->form->isValid()) {
                 $formData = $this->form->getData();
 
-                if ($this->getSubmitAction($request) == 'post') {
-                    $this->onSuccess($formData, $request);
+                if ($this->getSubmitAction() == 'post') {
+                    $this->onSuccess($formData);
 
                     return true;
                 }
@@ -140,13 +156,12 @@ class BoardDeleteFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
      * @return string
      */
-    public function getSubmitAction(Request $request)
+    public function getSubmitAction()
     {
-        if ($request->request->has('submit')) {
-            $action = key($request->request->get('submit'));
+        if ($this->request->request->has('submit')) {
+            $action = key($this->request->request->get('submit'));
         } else {
             $action = 'post';
         }
@@ -166,6 +181,8 @@ class BoardDeleteFormHandler
 				throw new \Exception('Board object must be specified to delete.');
 			}
 			
+			$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_DELETE_INITIALISE, new AdminBoardEvent($this->request, $this->board));
+			
             $this->form = $this->factory->create($this->boardDeleteFormType, $this->board);
         }
 
@@ -176,12 +193,11 @@ class BoardDeleteFormHandler
      *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Board           $board
-     * @param  \Symfony\Component\HttpFoundation\Request     $request
      * @return \CCDNForum\ForumBundle\Model\Model\BoardModel
      */
-    protected function onSuccess(Board $board, Request $request)
+    protected function onSuccess(Board $board)
     {
-		$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_DELETE_SUCCESS, new AdminBoardEvent($request, $board));
+		$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_DELETE_SUCCESS, new AdminBoardEvent($this->request, $board));
 		
 		$confirmA = $this->form->get('confirm_delete')->getData();
 		$confirmB = $this->form->get('confirm_subordinates')->getData();

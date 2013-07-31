@@ -32,15 +32,32 @@ use CCDNForum\ForumBundle\Entity\Board;
  */
 class AdminBoardResponseEvent extends AdminBoardEvent
 {
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\HttpFoundation\Response $response
+	 */
 	protected $response;
-	
+
+	/**
+	 * 
+	 * @access public
+	 * @param \Symfony\Component\HttpFoundation\Request  $request
+	 * @param \CCDNForum\ForumBundle\Entity\Board        $board
+	 * @param \Symfony\Component\HttpFoundation\Response $response
+	 */
 	public function __construct(Request $request, Board $board = null, Response $response)
 	{
 		$this->request = $request;
 		$this->board = $board;
 		$this->response = $response;
 	}
-	
+
+	/**
+	 * 
+	 * @access public
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
 	public function getResponse()
 	{
 		return $this->response;

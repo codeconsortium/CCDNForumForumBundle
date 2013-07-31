@@ -77,13 +77,13 @@ Feature: Category Management
           And I press "submit[post]"
 		 Then I am on "/en/forum/admin/manage-categories/"
 		  And I should not see "Create New Category"
-          And I should see "My_New_Category_1"
+          And I should see "My_New_Category_1" for the query "table#admin-categories-list tr td:nth-child(2)"
 		 Then I follow "test_forum_1"
-          And I should not see "My_New_Category_1"
+          And I should not see "My_New_Category_1" for the query "table#admin-categories-list tr td:nth-child(2)"
 		 Then I follow "test_forum_2"
-          And I should not see "My_New_Category_1"
+          And I should not see "My_New_Category_1" for the query "table#admin-categories-list tr td:nth-child(2)"
 		 Then I follow "test_forum_3"
-          And I should not see "My_New_Category_1"
+          And I should not see "My_New_Category_1" for the query "table#admin-categories-list tr td:nth-child(2)"
 
     Scenario: Create a new Category (Assigned)
         Given I am on "/en/forum/admin/manage-categories/create"
@@ -92,11 +92,11 @@ Feature: Category Management
           And I fill in "Forum_CategoryCreate[name]" with "My_New_Category_2"
           And I press "submit[post]"
 		  And I should not see "Create New Category"
-		  And I should see "My_New_Category_2"
+		  And I should see "My_New_Category_2" for the query "table#admin-categories-list tr td:nth-child(2)"
         Given I am on "/en/forum/admin/manage-categories/"
-          And I should not see "My_New_Category_2"
+          And I should not see "My_New_Category_2" for the query "table#admin-categories-list tr td:nth-child(2)"
 		 Then I follow "test_forum_1"
-          And I should see "My_New_Category_2"
+          And I should see "My_New_Category_2" for the query "table#admin-categories-list tr td:nth-child(2)"
 
     Scenario: Abort Create a new Category
         Given I am on "/en/forum/admin/manage-categories/create"
@@ -117,8 +117,8 @@ Feature: Category Management
 		  And I should not see "test_category_1"
           And I should see "UpdatedCategoryName_1"
 		Given I am on "/en/forum/admin/manage-categories/"
-		  And I should not see "test_category_1"
-          And I should not see "UpdatedCategoryName_1"
+		  And I should not see "test_category_1" for the query "table#admin-categories-list tr td:nth-child(2)"
+          And I should not see "UpdatedCategoryName_1" for the query "table#admin-categories-list tr td:nth-child(2)"
 
     Scenario: Update existing Category (Unassign)
 	    Given I am on "/en/forum/admin/manage-categories/"
@@ -130,17 +130,17 @@ Feature: Category Management
 		  And I select "" from "Forum_CategoryUpdate[forum]"
           And I press "submit[post]"
 		  And I should not see "Update Category"
-		  And I should not see "test_category_f1_2"
-          And I should see "UpdatedCategoryName_2"
+		  And I should not see "test_category_f1_2" for the query "table#admin-categories-list tr td:nth-child(2)"
+          And I should see "UpdatedCategoryName_2" for the query "table#admin-categories-list tr td:nth-child(2)"
 		  And I follow "test_forum_1"
-		  And I should not see "test_category_f1_2"
-		  And I should not see "UpdatedCategoryName_2"
+		  And I should not see "test_category_f1_2" for the query "table#admin-categories-list tr td:nth-child(2)"
+		  And I should not see "UpdatedCategoryName_2" for the query "table#admin-categories-list tr td:nth-child(2)"
 		  And I follow "test_forum_2"
-		  And I should not see "test_category_f1_2"
-		  And I should not see "UpdatedCategoryName_2"
+		  And I should not see "test_category_f1_2" for the query "table#admin-categories-list tr td:nth-child(2)"
+		  And I should not see "UpdatedCategoryName_2" for the query "table#admin-categories-list tr td:nth-child(2)"
 		  And I follow "test_forum_3"
-		  And I should not see "test_category_f1_2"
-		  And I should not see "UpdatedCategoryName_2"
+		  And I should not see "test_category_f1_2" for the query "table#admin-categories-list tr td:nth-child(2)"
+		  And I should not see "UpdatedCategoryName_2" for the query "table#admin-categories-list tr td:nth-child(2)"
 
     Scenario: Abort Update existing Category
 	    Given I am on "/en/forum/admin/manage-categories/"
@@ -150,7 +150,7 @@ Feature: Category Management
           And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-categories/"
 	      And I should not see "Update Category"
-		  And I should see "test_category_1"
+		  And I should see "test_category_1" for the query "table#admin-categories-list tr td:nth-child(2)"
 
     Scenario: Delete existing Category
 	    Given I am on "/en/forum/admin/manage-categories/"
@@ -160,7 +160,7 @@ Feature: Category Management
 		  And I check "Forum_CategoryDelete[confirm_delete][]"
           And I press "submit[post]"
 		  And I should not see "Delete Category"
-          And I should not see "test_category_3"
+          And I should not see "test_category_3" for the query "table#admin-categories-list tr td:nth-child(2)"
 
     Scenario: Abort deleting existing Category
 	    Given I am on "/en/forum/admin/manage-categories/"
@@ -170,7 +170,7 @@ Feature: Category Management
 		  And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-categories/"
 		  And I should not see "Delete Category"
-          And I should see "test_category_3"
+          And I should see "test_category_3" for the query "table#admin-categories-list tr td:nth-child(2)"
 
 	Scenario: Reorder categories
 		Given I am on "/en/forum/admin/manage-categories/"

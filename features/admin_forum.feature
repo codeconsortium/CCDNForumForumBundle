@@ -27,7 +27,7 @@ Feature: Forum Management
           And I fill in "Forum_ForumCreate[name]" with "FooBar"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-forums/"
-          And I should see "FooBar"
+          And I should see "FooBar" for the query "table#admin-forums-list tr td:nth-child(2)"
 
     Scenario: Abort Create a new Forum
         Given I am on "/en/forum/admin/manage-forums/create"
@@ -43,8 +43,8 @@ Feature: Forum Management
           And I fill in "Forum_ForumUpdate[name]" with "FooBaz"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-forums/"
-		  And I should not see "test_forum_1"
-          And I should see "FooBaz"
+		  And I should not see "test_forum_1" for the query "table#admin-forums-list tr td:nth-child(2)"
+          And I should see "FooBaz" for the query "table#admin-forums-list tr td:nth-child(2)"
 
     Scenario: Abort Update existing Forum
 	    Given I am on "/en/forum/admin/manage-forums/"
@@ -53,7 +53,7 @@ Feature: Forum Management
 		  And I should see "test_forum_1"
           And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-forums/"
-		  And I should see "test_forum_1"
+		  And I should see "test_forum_1" for the query "table#admin-forums-list tr td:nth-child(2)"
 		  
     Scenario: Delete existing Forum
 	    Given I am on "/en/forum/admin/manage-forums/"
@@ -63,7 +63,7 @@ Feature: Forum Management
 		  And I check "Forum_ForumDelete[confirm_delete][]"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-forums/"
-          And I should not see "test_forum_3"
+          And I should not see "test_forum_3" for the query "table#admin-forums-list tr td:nth-child(2)"
 
     Scenario: Abort deleting existing Forum
 	    Given I am on "/en/forum/admin/manage-forums/"
@@ -72,4 +72,4 @@ Feature: Forum Management
 		  And I should see "test_forum_3"
 		  And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-forums/"
-          And I should see "test_forum_3"
+          And I should see "test_forum_3" for the query "table#admin-forums-list tr td:nth-child(2)"

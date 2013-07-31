@@ -37,6 +37,8 @@ class AdminBoardBaseController extends BaseController
 	{
 	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.board_create');
 
+		$formHandler->setRequest($this->getRequest());
+		
 		if ($categoryFilter) {
 			$category = $this->getCategoryModel()->findOneCategoryById($categoryFilter);
 		
@@ -57,6 +59,8 @@ class AdminBoardBaseController extends BaseController
 	{
 	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.board_update');
 
+		$formHandler->setRequest($this->getRequest());
+		
 		$formHandler->setBoard($board);
 		
 	    return $formHandler;
@@ -71,6 +75,8 @@ class AdminBoardBaseController extends BaseController
 	{
 	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.board_delete');
 
+		$formHandler->setRequest($this->getRequest());
+		
 		$formHandler->setBoard($board);
 		
 	    return $formHandler;

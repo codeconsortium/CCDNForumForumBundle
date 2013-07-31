@@ -80,6 +80,13 @@ class ForumDeleteFormHandler
 	 */
 	protected $dispatcher;
 
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\HttpFoundation\Request $request
+	 */
+	protected $request;
+
     /**
      *
      * @access public
@@ -108,26 +115,35 @@ class ForumDeleteFormHandler
 		
 		return $this;
 	}
-	
+
     /**
      *
      * @access public
      * @param  \Symfony\Component\HttpFoundation\Request $request
+     */
+	public function setRequest(Request $request)
+	{
+		$this->request = $request;
+	}
+
+    /**
+     *
+     * @access public
      * @return bool
      */
-    public function process(Request $request)
+    public function process()
     {
         $this->getForm();
 
-        if ($request->getMethod() == 'POST') {
-            $this->form->bind($request);
+        if ($this->request->getMethod() == 'POST') {
+            $this->form->bind($this->request);
 
             // Validate
             if ($this->form->isValid()) {
                 $formData = $this->form->getData();
 
-                if ($this->getSubmitAction($request) == 'post') {
-                    $this->onSuccess($formData, $request);
+                if ($this->getSubmitAction() == 'post') {
+                    $this->onSuccess($formData);
 
                     return true;
                 }
@@ -140,13 +156,12 @@ class ForumDeleteFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
      * @return string
      */
-    public function getSubmitAction(Request $request)
+    public function getSubmitAction()
     {
-        if ($request->request->has('submit')) {
-            $action = key($request->request->get('submit'));
+        if ($this->request->request->has('submit')) {
+            $action = key($this->request->request->get('submit'));
         } else {
             $action = 'post';
         }
@@ -166,6 +181,8 @@ class ForumDeleteFormHandler
 				throw new \Exception('Forum object must be specified to delete.');
 			}
 			
+			$this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_DELETE_INITIALISE, new AdminForumEvent($this->request, $this->forum));
+			
             $this->form = $this->factory->create($this->forumDeleteFormType, $this->forum);
         }
 
@@ -176,12 +193,11 @@ class ForumDeleteFormHandler
      *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Forum           $forum
-     * @param  \Symfony\Component\HttpFoundation\Request $request
      * @return \CCDNForum\ForumBundle\Model\Model\ForumModel
      */
-    protected function onSuccess(Forum $forum, Request $request)
+    protected function onSuccess(Forum $forum)
     {
-		$this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_DELETE_SUCCESS, new AdminForumEvent($request, $forum));
+		$this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_DELETE_SUCCESS, new AdminForumEvent($this->request, $forum));
 		
 		$confirmA = $this->form->get('confirm_delete')->getData();
 		$confirmB = $this->form->get('confirm_subordinates')->getData();

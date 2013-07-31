@@ -87,8 +87,6 @@ class AdminBoardController extends AdminBoardBaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 		
-		$this->dispatch(ForumEvents::ADMIN_BOARD_CREATE_INITIALISE, new AdminBoardEvent($this->getRequest(), null));
-		
 		$forumFilter = $this->getQuery('forum_filter', null);
 		$categoryFilter = $this->getQuery('category_filter', null);
 		
@@ -116,14 +114,12 @@ class AdminBoardController extends AdminBoardBaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-		$this->dispatch(ForumEvents::ADMIN_BOARD_CREATE_INITIALISE, new AdminBoardEvent($this->getRequest(), null));
-
 		$forumFilter = $this->getQuery('forum_filter', null);
 		$categoryFilter = $this->getQuery('category_filter', null);
 		
 		$formHandler = $this->getFormHandlerToCreateBoard($categoryFilter);
 		
-		if ($formHandler->process($this->getRequest())) {
+		if ($formHandler->process()) {
 			
 			$board = $formHandler->getForm()->getData();
 			
@@ -158,8 +154,6 @@ class AdminBoardController extends AdminBoardBaseController
         $this->isAuthorised('ROLE_ADMIN');
 
 		$board = $this->getBoardModel()->findOneBoardById($boardId);
-
-		$this->dispatch(ForumEvents::ADMIN_BOARD_EDIT_INITIALISE, new AdminBoardEvent($this->getRequest(), $board));
 	
 		$this->isFound($board);
 		
@@ -193,13 +187,11 @@ class AdminBoardController extends AdminBoardBaseController
 
 		$board = $this->getBoardModel()->findOneBoardById($boardId);
 	
-		$this->dispatch(ForumEvents::ADMIN_BOARD_EDIT_INITIALISE, new AdminBoardEvent($this->getRequest(), $board));
-	
 		$this->isFound($board);
 		
 		$formHandler = $this->getFormHandlerToUpdateBoard($board);
 
-		if ($formHandler->process($this->getRequest())) {
+		if ($formHandler->process()) {
 
 			$board = $formHandler->getForm()->getData();
 			
@@ -239,8 +231,6 @@ class AdminBoardController extends AdminBoardBaseController
 
 		$board = $this->getBoardModel()->findOneBoardById($boardId);
 	
-		$this->dispatch(ForumEvents::ADMIN_BOARD_DELETE_INITIALISE, new AdminBoardEvent($this->getRequest(), $board));
-	
 		$this->isFound($board);
 		
 		$formHandler = $this->getFormHandlerToDeleteBoard($board);
@@ -273,13 +263,11 @@ class AdminBoardController extends AdminBoardBaseController
 
 		$board = $this->getBoardModel()->findOneBoardById($boardId);
 	
-		$this->dispatch(ForumEvents::ADMIN_BOARD_DELETE_INITIALISE, new AdminBoardEvent($this->getRequest(), $board));
-	
 		$this->isFound($board);
 		
 		$formHandler = $this->getFormHandlerToDeleteBoard($board);
 		
-		if ($formHandler->process($this->getRequest())) {
+		if ($formHandler->process()) {
 			
 			$board = $formHandler->getForm()->getData();
 			

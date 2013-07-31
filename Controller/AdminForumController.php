@@ -61,8 +61,6 @@ class AdminForumController extends AdminForumBaseController
     {
         $this->isAuthorised('ROLE_SUPER_ADMIN');
 		
-		$this->dispatch(ForumEvents::ADMIN_FORUM_CREATE_INITIALISE, new AdminForumEvent($this->getRequest(), null));
-		
 		$formHandler = $this->getFormHandlerToCreateForum();
 		
         $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/create.html.', 
@@ -85,11 +83,9 @@ class AdminForumController extends AdminForumBaseController
     {
         $this->isAuthorised('ROLE_SUPER_ADMIN');
 
-		$this->dispatch(ForumEvents::ADMIN_FORUM_CREATE_INITIALISE, new AdminForumEvent($this->getRequest(), null));
-
 		$formHandler = $this->getFormHandlerToCreateForum();
 		
-		if ($formHandler->process($this->getRequest())) {
+		if ($formHandler->process()) {
 			
 			$forum = $formHandler->getForm()->getData();
 
@@ -120,8 +116,6 @@ class AdminForumController extends AdminForumBaseController
         $this->isAuthorised('ROLE_SUPER_ADMIN');
 
 		$forum = $this->getForumModel()->findOneForumById($forumId);
-	
-		$this->dispatch(ForumEvents::ADMIN_FORUM_EDIT_INITIALISE, new AdminForumEvent($this->getRequest(), $forum));
 
 		$this->isFound($forum);
 		
@@ -149,14 +143,12 @@ class AdminForumController extends AdminForumBaseController
         $this->isAuthorised('ROLE_SUPER_ADMIN');
 
 		$forum = $this->getForumModel()->findOneForumById($forumId);
-
-		$this->dispatch(ForumEvents::ADMIN_FORUM_EDIT_INITIALISE, new AdminForumEvent($this->getRequest(), $forum));
 	
 		$this->isFound($forum);
 		
 		$formHandler = $this->getFormHandlerToUpdateForum($forum);
 
-		if ($formHandler->process($this->getRequest())) {
+		if ($formHandler->process()) {
 			
 			$forum = $formHandler->getForm()->getData();
 			
@@ -188,8 +180,6 @@ class AdminForumController extends AdminForumBaseController
         $this->isAuthorised('ROLE_SUPER_ADMIN');
 
 		$forum = $this->getForumModel()->findOneForumById($forumId);
-
-		$this->dispatch(ForumEvents::ADMIN_FORUM_DELETE_INITIALISE, new AdminForumEvent($this->getRequest(), $forum));
 	
 		$this->isFound($forum);
 		
@@ -217,14 +207,12 @@ class AdminForumController extends AdminForumBaseController
         $this->isAuthorised('ROLE_SUPER_ADMIN');
 
 		$forum = $this->getForumModel()->findOneForumById($forumId);
-
-		$this->dispatch(ForumEvents::ADMIN_FORUM_DELETE_INITIALISE, new AdminForumEvent($this->getRequest(), $forum));
 	
 		$this->isFound($forum);
 		
 		$formHandler = $this->getFormHandlerToDeleteForum($forum);
 
-		if ($formHandler->process($this->getRequest())) {
+		if ($formHandler->process()) {
 			
 			$forum = $formHandler->getForm()->getData();
 			

@@ -78,6 +78,13 @@ class BoardUpdateFormHandler
 	 */
 	protected $dispatcher;
 
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\HttpFoundation\Request $request
+	 */
+	protected $request;
+
     /**
      *
      * @access public
@@ -106,26 +113,35 @@ class BoardUpdateFormHandler
 		
 		return $this;
 	}
-	
+
     /**
      *
      * @access public
      * @param  \Symfony\Component\HttpFoundation\Request $request
+     */
+	public function setRequest(Request $request)
+	{
+		$this->request = $request;
+	}
+
+    /**
+     *
+     * @access public
      * @return bool
      */
-    public function process(Request $request)
+    public function process()
     {
         $this->getForm();
 
-        if ($request->getMethod() == 'POST') {
-            $this->form->bind($request);
+        if ($this->request->getMethod() == 'POST') {
+            $this->form->bind($this->request);
 
             // Validate
             if ($this->form->isValid()) {
                 $formData = $this->form->getData();
 
-                if ($this->getSubmitAction($request) == 'post') {
-                    $this->onSuccess($formData, $request);
+                if ($this->getSubmitAction() == 'post') {
+                    $this->onSuccess($formData);
 
                     return true;
                 }
@@ -138,13 +154,12 @@ class BoardUpdateFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
      * @return string
      */
-    public function getSubmitAction(Request $request)
+    public function getSubmitAction()
     {
-        if ($request->request->has('submit')) {
-            $action = key($request->request->get('submit'));
+        if ($this->request->request->has('submit')) {
+            $action = key($this->request->request->get('submit'));
         } else {
             $action = 'post';
         }
@@ -164,6 +179,8 @@ class BoardUpdateFormHandler
 				throw new \Exception('Board object must be specified to edit.');
 			}
 			
+			$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_EDIT_INITIALISE, new AdminBoardEvent($this->request, $this->board));
+			
             $this->form = $this->factory->create($this->boardUpdateFormType, $this->board);
         }
 
@@ -174,12 +191,11 @@ class BoardUpdateFormHandler
      *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Board           $board
-     * @param  \Symfony\Component\HttpFoundation\Request     $request
      * @return \CCDNForum\ForumBundle\Model\Model\BoardModel
      */
-    protected function onSuccess(Board $board, Request $request)
+    protected function onSuccess(Board $board)
     {
-		$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_EDIT_SUCCESS, new AdminBoardEvent($request, $board));
+		$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_EDIT_SUCCESS, new AdminBoardEvent($this->request, $board));
 		
         return $this->boardModel->updateBoard($board)->flush();
     }

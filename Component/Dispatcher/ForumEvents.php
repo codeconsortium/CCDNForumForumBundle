@@ -26,58 +26,399 @@ namespace CCDNForum\ForumBundle\Component\Dispatcher;
  */
 final class ForumEvents
 {
+	/**
+	 * 
+	 * The ADMIN_FORUM_CREATE_INITIALISE event occurs when the forum creation process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the forum entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent instance.
+	 */
 	const ADMIN_FORUM_CREATE_INITIALISE = 'ccdn_forum.admin.forum.create.initialise';
-	const ADMIN_FORUM_CREATE_SUCCESS    = 'ccdn_forum.admin.forum.create.success';
-	const ADMIN_FORUM_CREATE_COMPLETE   = 'ccdn_forum.admin.forum.create.complete';
-	const ADMIN_FORUM_CREATE_RESPONSE   = 'ccdn_forum.admin.forum.create.response';
 
-	const ADMIN_FORUM_EDIT_INITIALISE   = 'ccdn_forum.admin.forum.edit.initialise';
-	const ADMIN_FORUM_EDIT_SUCCESS      = 'ccdn_forum.admin.forum.edit.success';
-	const ADMIN_FORUM_EDIT_COMPLETE     = 'ccdn_forum.admin.forum.edit.complete';
-	const ADMIN_FORUM_EDIT_RESPONSE     = 'ccdn_forum.admin.forum.edit.response';
+	/**
+	 * 
+	 * The ADMIN_FORUM_CREATE_SUCCESS event occurs when the forum creation process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the forum entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent instance.
+	 */
+	const ADMIN_FORUM_CREATE_SUCCESS = 'ccdn_forum.admin.forum.create.success';
 
-	const ADMIN_FORUM_DELETE_INITIALISE   = 'ccdn_forum.admin.forum.delete.initialise';
-	const ADMIN_FORUM_DELETE_SUCCESS      = 'ccdn_forum.admin.forum.delete.success';
-	const ADMIN_FORUM_DELETE_COMPLETE     = 'ccdn_forum.admin.forum.delete.complete';
-	const ADMIN_FORUM_DELETE_RESPONSE     = 'ccdn_forum.admin.forum.delete.response';
+	/**
+	 * 
+	 * The ADMIN_FORUM_CREATE_COMPLETE event occurs when the forum creation process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the forum entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent instance.
+	 */
+	const ADMIN_FORUM_CREATE_COMPLETE = 'ccdn_forum.admin.forum.create.complete';
 
+	/**
+	 * 
+	 * The ADMIN_FORUM_CREATE_RESPONSE event occurs when the forum creation process finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent instance.
+	 */
+	const ADMIN_FORUM_CREATE_RESPONSE = 'ccdn_forum.admin.forum.create.response';
+
+	/**
+	 * 
+	 * The ADMIN_FORUM_EDIT_INITIALISE event occurs when the forum editing process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the forum entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent instance.
+	 */
+	const ADMIN_FORUM_EDIT_INITIALISE = 'ccdn_forum.admin.forum.edit.initialise';
+
+	/**
+	 * 
+	 * The ADMIN_FORUM_EDIT_SUCCESS event occurs when the forum editing process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the forum entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent instance.
+	 */
+	const ADMIN_FORUM_EDIT_SUCCESS = 'ccdn_forum.admin.forum.edit.success';
+
+	/**
+	 * 
+	 * The ADMIN_FORUM_EDIT_COMPLETE event occurs when the forum editing process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the forum entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent instance.
+	 */
+	const ADMIN_FORUM_EDIT_COMPLETE = 'ccdn_forum.admin.forum.edit.complete';
+
+	/**
+	 * 
+	 * The ADMIN_FORUM_EDIT_RESPONS event occurs when the forum editing process finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent instance.
+	 */
+	const ADMIN_FORUM_EDIT_RESPONSE = 'ccdn_forum.admin.forum.edit.response';
+
+	/**
+	 * 
+	 * The ADMIN_FORUM_DELETE_INITIALISE event occurs when the forum deleting process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the forum entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent instance.
+	 */
+	const ADMIN_FORUM_DELETE_INITIALISE = 'ccdn_forum.admin.forum.delete.initialise';
+
+	/**
+	 * 
+	 * The ADMIN_FORUM_DELETE_SUCCESS event occurs when the forum deleting process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the forum entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent instance.
+	 */
+	const ADMIN_FORUM_DELETE_SUCCESS = 'ccdn_forum.admin.forum.delete.success';
+
+	/**
+	 * 
+	 * The ADMIN_FORUM_DELETE_COMPLETE event occurs when the forum deleting process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the forum entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent instance.
+	 */
+	const ADMIN_FORUM_DELETE_COMPLETE = 'ccdn_forum.admin.forum.delete.complete';
+
+	/**
+	 * 
+	 * The ADMIN_FORUM_DELETE_RESPONSE event occurs when the forum deleting process finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent instance.
+	 */
+	const ADMIN_FORUM_DELETE_RESPONSE = 'ccdn_forum.admin.forum.delete.response';
+
+	/**
+	 * 
+	 * The ADMIN_CATEGORY_CREATE_INITIALISE event occurs when the category creation process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the category entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 */
 	const ADMIN_CATEGORY_CREATE_INITIALISE = 'ccdn_forum.admin.category.create.initialise';
-	const ADMIN_CATEGORY_CREATE_SUCCESS    = 'ccdn_forum.admin.category.create.success';
-	const ADMIN_CATEGORY_CREATE_COMPLETE   = 'ccdn_forum.admin.category.create.complete';
-	const ADMIN_CATEGORY_CREATE_RESPONSE   = 'ccdn_forum.admin.category.create.response';
 
-	const ADMIN_CATEGORY_EDIT_INITIALISE   = 'ccdn_forum.admin.category.edit.initialise';
-	const ADMIN_CATEGORY_EDIT_SUCCESS      = 'ccdn_forum.admin.category.edit.success';
-	const ADMIN_CATEGORY_EDIT_COMPLETE     = 'ccdn_forum.admin.category.edit.complete';
-	const ADMIN_CATEGORY_EDIT_RESPONSE     = 'ccdn_forum.admin.category.edit.response';
+	/**
+	 * 
+	 * The ADMIN_CATEGORY_CREATE_SUCCESS event occurs when the category creation process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the category entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 */
+	const ADMIN_CATEGORY_CREATE_SUCCESS = 'ccdn_forum.admin.category.create.success';
 
-	const ADMIN_CATEGORY_DELETE_INITIALISE   = 'ccdn_forum.admin.category.delete.initialise';
-	const ADMIN_CATEGORY_DELETE_SUCCESS      = 'ccdn_forum.admin.category.delete.success';
-	const ADMIN_CATEGORY_DELETE_COMPLETE     = 'ccdn_forum.admin.category.delete.complete';
-	const ADMIN_CATEGORY_DELETE_RESPONSE     = 'ccdn_forum.admin.category.delete.response';
+	/**
+	 * 
+	 * The ADMIN_CATEGORY_CREATE_COMPLETE event occurs when the category creation process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the category entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 */
+	const ADMIN_CATEGORY_CREATE_COMPLETE = 'ccdn_forum.admin.category.create.complete';
 
-	const ADMIN_CATEGORY_REORDER_INITIALISE   = 'ccdn_forum.admin.category.reorder.initialise';
-	const ADMIN_CATEGORY_REORDER_SUCCESS      = 'ccdn_forum.admin.category.reorder.success';
-	const ADMIN_CATEGORY_REORDER_COMPLETE     = 'ccdn_forum.admin.category.reorder.complete';
-	const ADMIN_CATEGORY_REORDER_RESPONSE     = 'ccdn_forum.admin.category.reorder.response';
+	/**
+	 * 
+	 * The ADMIN_CATEGORY_CREATE_RESPONSE event occurs when the category creation process finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 */
+	const ADMIN_CATEGORY_CREATE_RESPONSE = 'ccdn_forum.admin.category.create.response';
 
+	/**
+	 * 
+	 * The ADMIN_CATEGORY_EDIT_INITIALISE event occurs when the category editing process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the category entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 */
+	const ADMIN_CATEGORY_EDIT_INITIALISE = 'ccdn_forum.admin.category.edit.initialise';
+
+	/**
+	 * 
+	 * The ADMIN_CATEGORY_EDIT_SUCCESS event occurs when the category editing process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the category entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 */
+	const ADMIN_CATEGORY_EDIT_SUCCESS = 'ccdn_forum.admin.category.edit.success';
+
+	/**
+	 * 
+	 * The ADMIN_CATEGORY_EDIT_COMPLETE event occurs when the category editing process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the category entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 */
+	const ADMIN_CATEGORY_EDIT_COMPLETE = 'ccdn_forum.admin.category.edit.complete';
+
+	/**
+	 * 
+	 * The ADMIN_CATEGORY_EDIT_RESPONSE event occurs when the category editing process finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 */
+	const ADMIN_CATEGORY_EDIT_RESPONSE = 'ccdn_forum.admin.category.edit.response';
+
+	/**
+	 * 
+	 * The ADMIN_CATEGORY_DELETE_INITIALISE event occurs when the category deleting process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the category entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 */
+	const ADMIN_CATEGORY_DELETE_INITIALISE = 'ccdn_forum.admin.category.delete.initialise';
+
+	/**
+	 * 
+	 * The ADMIN_CATEGORY_DELETE_SUCCESS event occurs when the category deleting process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the category entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 */
+	const ADMIN_CATEGORY_DELETE_SUCCESS = 'ccdn_forum.admin.category.delete.success';
+
+	/**
+	 * 
+	 * The ADMIN_CATEGORY_DELETE_COMPLETE event occurs when the category deleting process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the category entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 */
+	const ADMIN_CATEGORY_DELETE_COMPLETE = 'ccdn_forum.admin.category.delete.complete';
+
+	/**
+	 * 
+	 * The ADMIN_CATEGORY_DELETE_RESPONSE event occurs when the category deleting finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 */
+	const ADMIN_CATEGORY_DELETE_RESPONSE = 'ccdn_forum.admin.category.delete.response';
+
+	/**
+	 * 
+	 * The ADMIN_CATEGORY_REORDER_INITIALISE event occurs when the category reorder process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the category entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 */
+	const ADMIN_CATEGORY_REORDER_INITIALISE = 'ccdn_forum.admin.category.reorder.initialise';
+
+	/**
+	 * 
+	 * The ADMIN_CATEGORY_REORDER_SUCCESS event occurs when the category reorder process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the category entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 */
+	const ADMIN_CATEGORY_REORDER_SUCCESS = 'ccdn_forum.admin.category.reorder.success';
+
+	/**
+	 * 
+	 * The ADMIN_CATEGORY_REORDER_COMPLETE event occurs when the category reorder process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the category entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 */
+	const ADMIN_CATEGORY_REORDER_COMPLETE = 'ccdn_forum.admin.category.reorder.complete';
+
+	/**
+	 * 
+	 * The ADMIN_CATEGORY_REORDER_RESPONSE event occurs when the category reorder process finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 */
+	const ADMIN_CATEGORY_REORDER_RESPONSE = 'ccdn_forum.admin.category.reorder.response';
+
+	/**
+	 * 
+	 * The ADMIN_BOARD_CREATE_INITIALISE event occurs when the board creation process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the board entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 */
 	const ADMIN_BOARD_CREATE_INITIALISE = 'ccdn_forum.admin.board.create.initialise';
-	const ADMIN_BOARD_CREATE_SUCCESS    = 'ccdn_forum.admin.board.create.success';
-	const ADMIN_BOARD_CREATE_COMPLETE   = 'ccdn_forum.admin.board.create.complete';
-	const ADMIN_BOARD_CREATE_RESPONSE   = 'ccdn_forum.admin.board.create.response';
 
-	const ADMIN_BOARD_EDIT_INITIALISE   = 'ccdn_forum.admin.board.edit.initialise';
-	const ADMIN_BOARD_EDIT_SUCCESS      = 'ccdn_forum.admin.board.edit.success';
-	const ADMIN_BOARD_EDIT_COMPLETE     = 'ccdn_forum.admin.board.edit.complete';
-	const ADMIN_BOARD_EDIT_RESPONSE     = 'ccdn_forum.admin.board.edit.response';
+	/**
+	 * 
+	 * The ADMIN_BOARD_CREATE_SUCCESS event occurs when the board creation process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the board entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 */
+	const ADMIN_BOARD_CREATE_SUCCESS = 'ccdn_forum.admin.board.create.success';
 
-	const ADMIN_BOARD_DELETE_INITIALISE   = 'ccdn_forum.admin.board.delete.initialise';
-	const ADMIN_BOARD_DELETE_SUCCESS      = 'ccdn_forum.admin.board.delete.success';
-	const ADMIN_BOARD_DELETE_COMPLETE     = 'ccdn_forum.admin.board.delete.complete';
-	const ADMIN_BOARD_DELETE_RESPONSE     = 'ccdn_forum.admin.board.delete.response';
+	/**
+	 * 
+	 * The ADMIN_BOARD_CREATE_COMPLETE event occurs when the board creation process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the board entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 */
+	const ADMIN_BOARD_CREATE_COMPLETE = 'ccdn_forum.admin.board.create.complete';
 
-	const ADMIN_BOARD_REORDER_INITIALISE   = 'ccdn_forum.admin.board.reorder.initialise';
-	const ADMIN_BOARD_REORDER_SUCCESS      = 'ccdn_forum.admin.board.reorder.success';
-	const ADMIN_BOARD_REORDER_COMPLETE     = 'ccdn_forum.admin.board.reorder.complete';
-	const ADMIN_BOARD_REORDER_RESPONSE     = 'ccdn_forum.admin.board.reorder.response';
+	/**
+	 * 
+	 * The ADMIN_BOARD_CREATE_RESPONSE event occurs when the board creation process finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 */
+	const ADMIN_BOARD_CREATE_RESPONSE = 'ccdn_forum.admin.board.create.response';
+
+	/**
+	 * 
+	 * The ADMIN_BOARD_EDIT_INITIALISE event occurs when the board editing process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the board entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 */
+	const ADMIN_BOARD_EDIT_INITIALISE = 'ccdn_forum.admin.board.edit.initialise';
+
+	/**
+	 * 
+	 * The ADMIN_BOARD_EDIT_SUCCESS event occurs when the board editing process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the board entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 */
+	const ADMIN_BOARD_EDIT_SUCCESS = 'ccdn_forum.admin.board.edit.success';
+
+	/**
+	 * 
+	 * The ADMIN_BOARD_EDIT_COMPLETE event occurs when the board editing process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the board entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 */
+	const ADMIN_BOARD_EDIT_COMPLETE = 'ccdn_forum.admin.board.edit.complete';
+
+	/**
+	 * 
+	 * The ADMIN_BOARD_EDIT_RESPONSE event occurs when the board editing process finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 */
+	const ADMIN_BOARD_EDIT_RESPONSE = 'ccdn_forum.admin.board.edit.response';
+
+	/**
+	 * 
+	 * The ADMIN_BOARD_DELETE_INITIALISE event occurs when the board deleting process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the board entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 */
+	const ADMIN_BOARD_DELETE_INITIALISE = 'ccdn_forum.admin.board.delete.initialise';
+
+	/**
+	 * 
+	 * The ADMIN_BOARD_DELETE_SUCCESS event occurs when the board deleting process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the board entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 */
+	const ADMIN_BOARD_DELETE_SUCCESS = 'ccdn_forum.admin.board.delete.success';
+
+	/**
+	 * 
+	 * The ADMIN_BOARD_DELETE_COMPLETE event occurs when the board deleting process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the board entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 */
+	const ADMIN_BOARD_DELETE_COMPLETE = 'ccdn_forum.admin.board.delete.complete';
+
+	/**
+	 * 
+	 * The ADMIN_BOARD_DELETE_RESPONSE event occurs when the board deleting process finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 */
+	const ADMIN_BOARD_DELETE_RESPONSE = 'ccdn_forum.admin.board.delete.response';
+
+	/**
+	 * 
+	 * The ADMIN_BOARD_REORDER_INITIALISE event occurs when the board reorder process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the board entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 */
+	const ADMIN_BOARD_REORDER_INITIALISE = 'ccdn_forum.admin.board.reorder.initialise';
+
+	/**
+	 * 
+	 * The ADMIN_BOARD_REORDER_SUCCESS event occurs when the board reorder process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the board entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 */
+	const ADMIN_BOARD_REORDER_SUCCESS = 'ccdn_forum.admin.board.reorder.success';
+
+	/**
+	 * 
+	 * The ADMIN_BOARD_REORDER_COMPLETE event occurs when the board reorder process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the board entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 */
+	const ADMIN_BOARD_REORDER_COMPLETE = 'ccdn_forum.admin.board.reorder.complete';
+
+	/**
+	 * 
+	 * The ADMIN_BOARD_REORDER_RESPONSE event occurs when the board reorder process finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 */
+	const ADMIN_BOARD_REORDER_RESPONSE = 'ccdn_forum.admin.board.reorder.response';
 }

@@ -141,4 +141,44 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
             "$textBefore does not proceed $textAfter"
         );
     }
+
+    /**
+     * 
+     * @Given /^I should see "([^"]*)" for the query "([^"]*)"$/
+     */
+    public function shouldSeeForTheQuery($text, $cssQuery)
+    {
+		// http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
+        $items = array_map(
+            function ($element) {
+                return $element->getText();
+            },
+            $this->getPage()->findAll('css', $cssQuery)
+        );
+
+        WebTestCase::assertTrue(
+            in_array($text, $items),
+            "$text was not found."
+        );
+    }
+	
+    /**
+     * 
+     * @Given /^I should not see "([^"]*)" for the query "([^"]*)"$/
+     */
+    public function shouldNotSeeForTheQuery($text, $cssQuery)
+    {
+		// http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
+        $items = array_map(
+            function ($element) {
+                return $element->getText();
+            },
+            $this->getPage()->findAll('css', $cssQuery)
+        );
+
+        WebTestCase::assertFalse(
+            in_array($text, $items),
+            "$text was found but should not."
+        );
+    }
 }
