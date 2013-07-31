@@ -16,8 +16,12 @@ namespace CCDNForum\ForumBundle\Form\Handler\Admin\Board;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
 use Doctrine\Common\Collections\ArrayCollection;
+
+use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
 
 use CCDNForum\ForumBundle\Entity\Board;
 
@@ -68,19 +72,28 @@ class BoardDeleteFormHandler
      * @var \CCDNForum\ForumBundle\Entity\Board $board
      */
     protected $board;
-	
+
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+	 */
+	protected $dispatcher;
+
     /**
      *
      * @access public
-     * @param \Symfony\Component\Form\FormFactory                              $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardDeleteFormType $boardDeleteFormType
-     * @param \CCDNForum\ForumBundle\Model\Model\BoardModel                    $boardModel
+     * @param \Symfony\Component\Form\FormFactory                                        $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardDeleteFormType           $boardDeleteFormType
+     * @param \CCDNForum\ForumBundle\Model\Model\BoardModel                              $boardModel
+     * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
      */
-    public function __construct(FormFactory $factory, $boardDeleteFormType, $boardModel)
+    public function __construct(FormFactory $factory, $boardDeleteFormType, $boardModel, ContainerAwareTraceableEventDispatcher $dispatcher)
     {
         $this->factory = $factory;
         $this->boardDeleteFormType = $boardDeleteFormType;
         $this->boardModel = $boardModel;
+		$this->dispatcher = $dispatcher;
     }
 
 	/**
@@ -114,7 +127,7 @@ class BoardDeleteFormHandler
                 $formData = $this->form->getData();
 
                 if ($this->getSubmitAction($request) == 'post') {
-                    $this->onSuccess($formData);
+                    $this->onSuccess($formData, $request);
 
                     return true;
                 }
@@ -163,10 +176,13 @@ class BoardDeleteFormHandler
      *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Board           $board
+     * @param  \Symfony\Component\HttpFoundation\Request     $request
      * @return \CCDNForum\ForumBundle\Model\Model\BoardModel
      */
-    protected function onSuccess(Board $board)
+    protected function onSuccess(Board $board, Request $request)
     {
+		$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_DELETE_SUCCESS, new AdminBoardEvent($request, $board));
+		
 		$confirmA = $this->form->get('confirm_delete')->getData();
 		$confirmB = $this->form->get('confirm_subordinates')->getData();
 		$confirm = array_merge($confirmA, $confirmB);

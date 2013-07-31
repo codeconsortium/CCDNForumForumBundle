@@ -2,7 +2,7 @@ parameters:
 
     # Service Parameters defined in app/config.
     ccdn_forum_forum.component.role_helper.class: CCDNForum\ForumBundle\Component\Helper\RoleHelper
-
+    ccdn_forum_admin.component.event.admin_flash_notices.class: CCDNForum\ForumBundle\Component\Dispatcher\Listener\AdminFlashListener
 services:
 
     #
@@ -28,3 +28,12 @@ services:
         arguments:
             - @security.context
             - %security.role_hierarchy.roles%
+
+    #
+    # Event Subscribers.
+    #
+    ccdn_forum_admin.component.event.admin_flash_notices:
+        class: %ccdn_forum_admin.component.event.admin_flash_notices.class%
+        arguments: [@session]
+        tags:
+            - { name: kernel.event_subscriber }

@@ -16,6 +16,10 @@ namespace CCDNForum\ForumBundle\Form\Handler\Admin\Board;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
+
+use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
 
 use CCDNForum\ForumBundle\Entity\Category;
 use CCDNForum\ForumBundle\Entity\Board;
@@ -68,18 +72,27 @@ class BoardCreateFormHandler
      */
     protected $defaultCategory;
 
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+	 */
+	protected $dispatcher;
+
     /**
      *
      * @access public
-     * @param \Symfony\Component\Form\FormFactory                        $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\Board\BoardCreateFormType $boardCreateFormType
-     * @param \CCDNForum\ForumBundle\Model\Model\BoardModel              $boardModel
+     * @param \Symfony\Component\Form\FormFactory                                        $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\Board\BoardCreateFormType                 $boardCreateFormType
+     * @param \CCDNForum\ForumBundle\Model\Model\BoardModel                              $boardModel
+     * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
      */
-    public function __construct(FormFactory $factory, $boardCreateFormType, $boardModel)
+    public function __construct(FormFactory $factory, $boardCreateFormType, $boardModel, ContainerAwareTraceableEventDispatcher $dispatcher)
     {
         $this->factory = $factory;
         $this->boardCreateFormType = $boardCreateFormType;
         $this->boardModel = $boardModel;
+		$this->dispatcher = $dispatcher;
     }
 
 	/**
@@ -113,7 +126,7 @@ class BoardCreateFormHandler
                 $formData = $this->form->getData();
 
                 if ($this->getSubmitAction($request) == 'post') {
-                    $this->onSuccess($formData);
+                    $this->onSuccess($formData, $request);
 
                     return true;
                 }
@@ -162,10 +175,13 @@ class BoardCreateFormHandler
      *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Board           $board
+     * @param  \Symfony\Component\HttpFoundation\Request     $request
      * @return \CCDNForum\ForumBundle\Model\Model\BoardModel
      */
-    protected function onSuccess(Board $board)
+    protected function onSuccess(Board $board, Request $request)
     {
+		$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_CREATE_SUCCESS, new AdminBoardEvent($request, $board));
+		
         return $this->boardModel->saveNewBoard($board)->flush();
     }
 }

@@ -16,6 +16,10 @@ namespace CCDNForum\ForumBundle\Form\Handler\Admin\Category;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
+
+use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent;
 
 use CCDNForum\ForumBundle\Entity\Category;
 
@@ -66,19 +70,28 @@ class CategoryUpdateFormHandler
      * @var \CCDNForum\ForumBundle\Entity\Category $category
      */
     protected $category;
-	
+
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+	 */
+	protected $dispatcher;
+
     /**
      *
      * @access public
-     * @param \Symfony\Component\Form\FormFactory                                    $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryUpdateFormType $categoryUpdateFormType
-     * @param \CCDNForum\ForumBundle\Model\Model\CategoryModel                       $categoryModel
+     * @param \Symfony\Component\Form\FormFactory                                        $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryUpdateFormType     $categoryUpdateFormType
+     * @param \CCDNForum\ForumBundle\Model\Model\CategoryModel                           $categoryModel
+     * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
      */
-    public function __construct(FormFactory $factory, $categoryUpdateFormType, $categoryModel)
+    public function __construct(FormFactory $factory, $categoryUpdateFormType, $categoryModel, ContainerAwareTraceableEventDispatcher $dispatcher)
     {
         $this->factory = $factory;
         $this->categoryUpdateFormType = $categoryUpdateFormType;
         $this->categoryModel = $categoryModel;
+		$this->dispatcher = $dispatcher;
     }
 
 	/**
@@ -112,7 +125,7 @@ class CategoryUpdateFormHandler
                 $formData = $this->form->getData();
 
                 if ($this->getSubmitAction($request) == 'post') {
-                    $this->onSuccess($formData);
+                    $this->onSuccess($formData, $request);
 
                     return true;
                 }
@@ -161,10 +174,13 @@ class CategoryUpdateFormHandler
      *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Category           $category
+     * @param  \Symfony\Component\HttpFoundation\Request        $request
      * @return \CCDNForum\ForumBundle\Model\Model\CategoryModel
      */
-    protected function onSuccess(Category $category)
+    protected function onSuccess(Category $category, Request $request)
     {
+		$this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_SUCCESS, new AdminCategoryEvent($request, $category));
+		
         return $this->categoryModel->updateCategory($category)->flush();
     }
 }

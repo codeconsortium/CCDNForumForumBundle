@@ -16,6 +16,10 @@ namespace CCDNForum\ForumBundle\Form\Handler\Admin\Forum;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
+
+use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent;
 
 use CCDNForum\ForumBundle\Entity\Forum;
 
@@ -60,18 +64,27 @@ class ForumCreateFormHandler
      */
     protected $form;
 
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+	 */
+	protected $dispatcher;
+
     /**
      *
      * @access public
-     * @param \Symfony\Component\Form\FormFactory                              $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumCreateFormType $forumCreateFormType
-     * @param \CCDNForum\ForumBundle\Model\Model\ForumModel                    $forumModel
+     * @param \Symfony\Component\Form\FormFactory                                        $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumCreateFormType           $forumCreateFormType
+     * @param \CCDNForum\ForumBundle\Model\Model\ForumModel                              $forumModel
+     * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
      */
-    public function __construct(FormFactory $factory, $forumCreateFormType, $forumModel)
+    public function __construct(FormFactory $factory, $forumCreateFormType, $forumModel, ContainerAwareTraceableEventDispatcher $dispatcher)
     {
         $this->factory = $factory;
         $this->forumCreateFormType = $forumCreateFormType;
         $this->forumModel = $forumModel;
+		$this->dispatcher = $dispatcher;
     }
 
     /**
@@ -92,7 +105,7 @@ class ForumCreateFormHandler
                 $formData = $this->form->getData();
 
                 if ($this->getSubmitAction($request) == 'post') {
-                    $this->onSuccess($formData);
+                    $this->onSuccess($formData, $request);
 
                     return true;
                 }
@@ -137,10 +150,13 @@ class ForumCreateFormHandler
      *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Forum           $forum
+     * @param  \Symfony\Component\HttpFoundation\Request     $request
      * @return \CCDNForum\ForumBundle\Model\Model\ForumModel
      */
-    protected function onSuccess(Forum $forum)
+    protected function onSuccess(Forum $forum, Request $request)
     {
+		$this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_CREATE_SUCCESS, new AdminForumEvent($request, $forum));
+		
         return $this->forumModel->saveNewForum($forum)->flush();
     }
 }

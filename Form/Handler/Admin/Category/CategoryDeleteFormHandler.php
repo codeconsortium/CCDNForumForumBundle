@@ -16,8 +16,12 @@ namespace CCDNForum\ForumBundle\Form\Handler\Admin\Category;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
 use Doctrine\Common\Collections\ArrayCollection;
+
+use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent;
 
 use CCDNForum\ForumBundle\Entity\Category;
 
@@ -68,19 +72,28 @@ class CategoryDeleteFormHandler
      * @var \CCDNForum\ForumBundle\Entity\Category $category
      */
     protected $category;
-	
+
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+	 */
+	protected $dispatcher;
+
     /**
      *
      * @access public
-     * @param \Symfony\Component\Form\FormFactory                                    $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryDeleteFormType $categoryDeleteFormType
-     * @param \CCDNForum\ForumBundle\Model\Model\CategoryModel                       $categoryModel
+     * @param \Symfony\Component\Form\FormFactory                                        $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryDeleteFormType     $categoryDeleteFormType
+     * @param \CCDNForum\ForumBundle\Model\Model\CategoryModel                           $categoryModel
+     * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
      */
-    public function __construct(FormFactory $factory, $categoryDeleteFormType, $categoryModel)
+    public function __construct(FormFactory $factory, $categoryDeleteFormType, $categoryModel, ContainerAwareTraceableEventDispatcher $dispatcher)
     {
         $this->factory = $factory;
         $this->categoryDeleteFormType = $categoryDeleteFormType;
         $this->categoryModel = $categoryModel;
+		$this->dispatcher = $dispatcher;
     }
 
 	/**
@@ -114,7 +127,7 @@ class CategoryDeleteFormHandler
                 $formData = $this->form->getData();
 
                 if ($this->getSubmitAction($request) == 'post') {
-                    $this->onSuccess($formData);
+                    $this->onSuccess($formData, $request);
 
                     return true;
                 }
@@ -163,10 +176,13 @@ class CategoryDeleteFormHandler
      *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Category           $category
+     * @param  \Symfony\Component\HttpFoundation\Request        $request
      * @return \CCDNForum\ForumBundle\Model\Model\CategoryModel
      */
-    protected function onSuccess(Category $category)
+    protected function onSuccess(Category $category, Request $request)
     {
+		$this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_SUCCESS, new AdminCategoryEvent($request, $category));
+		
 		$confirmA = $this->form->get('confirm_delete')->getData();
 		$confirmB = $this->form->get('confirm_subordinates')->getData();
 		$confirm = array_merge($confirmA, $confirmB);

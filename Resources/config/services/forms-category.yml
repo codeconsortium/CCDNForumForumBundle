@@ -30,6 +30,7 @@ services:
             - @form.factory
             - @ccdn_forum_forum.form.type.category_create
             - @ccdn_forum_forum.model.category
+            - @event_dispatcher
 
     ccdn_forum_forum.form.type.category_update:
         class: %ccdn_forum_forum.form.type.category_update.class%
@@ -44,6 +45,7 @@ services:
             - @form.factory
             - @ccdn_forum_forum.form.type.category_update
             - @ccdn_forum_forum.model.category
+            - @event_dispatcher
 
     ccdn_forum_forum.form.type.category_delete:
         class: %ccdn_forum_forum.form.type.category_delete.class%
@@ -56,3 +58,4 @@ services:
             - @form.factory
             - @ccdn_forum_forum.form.type.category_delete
             - @ccdn_forum_forum.model.category
+            - @event_dispatcher
