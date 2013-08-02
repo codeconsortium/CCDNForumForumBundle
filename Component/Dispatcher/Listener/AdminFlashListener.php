@@ -47,7 +47,7 @@ class AdminFlashListener implements EventSubscriberInterface
 	 * @access public
 	 * @param \Symfony\Component\HttpFoundation\Session\Session $session
 	 */
-	public function __construct($session)
+	public function __construct(Session $session)
 	{
 		$this->session = $session;
 	}

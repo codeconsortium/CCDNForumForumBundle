@@ -18,7 +18,6 @@
         "symfony/symfony": "2.1.*",
         "doctrine/doctrine-bundle": "*",
 		"knplabs/knp-paginator-bundle": "dev-master",
-		"codeconsortium/ccdn-forum-admin-bundle": "2.0.*@dev"
     },
 	"suggest": {
 		"codeconsortium/ccdn-component-bb-code-bundle": "2.0.*@dev",
