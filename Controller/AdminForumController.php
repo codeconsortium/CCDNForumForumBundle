@@ -43,8 +43,11 @@ class AdminForumController extends AdminForumBaseController
 
 		$forums = $this->getForumModel()->findAllForums();
 		
+		$crumbs = $this->getCrumbs()->addAdminManageForumsIndex();
+		
 		$response = $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/list.html.', 
 			array(
+				'crumbs' => $crumbs,
 				'forums' => $forums
 	        )
 		);
@@ -63,8 +66,11 @@ class AdminForumController extends AdminForumBaseController
 		
 		$formHandler = $this->getFormHandlerToCreateForum();
 		
+		$crumbs = $this->getCrumbs()->addAdminManageForumsCreate();
+		
         $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/create.html.', 
 			array(
+				'crumbs' => $crumbs,
 				'form' => $formHandler->getForm()->createView()
 	        )
 		);
@@ -94,8 +100,11 @@ class AdminForumController extends AdminForumBaseController
 			$response = $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
 		} else {
 		
+			$crumbs = $this->getCrumbs()->addAdminManageForumsCreate();
+		
 	        $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/create.html.', 
 				array(
+					'crumbs' => $crumbs,
 					'form' => $formHandler->getForm()->createView()
 		        )
 			);
@@ -121,8 +130,11 @@ class AdminForumController extends AdminForumBaseController
 		
 		$formHandler = $this->getFormHandlerToUpdateForum($forum);
 		
+		$crumbs = $this->getCrumbs()->addAdminManageForumsEdit($forum);
+		
         $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/edit.html.', 
 			array(
+				'crumbs' => $crumbs,
 				'form' => $formHandler->getForm()->createView(),
 				'forum' => $forum
 	        )
@@ -157,8 +169,11 @@ class AdminForumController extends AdminForumBaseController
 			$response = $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
 		} else {
 			
+			$crumbs = $this->getCrumbs()->addAdminManageForumsEdit($forum);
+			
 	        $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/edit.html.', 
 				array(
+					'crumbs' => $crumbs,
 					'form' => $formHandler->getForm()->createView(),
 					'forum' => $forum
 		        )
@@ -185,8 +200,11 @@ class AdminForumController extends AdminForumBaseController
 		
 		$formHandler = $this->getFormHandlerToDeleteForum($forum);
 
+		$crumbs = $this->getCrumbs()->addAdminManageForumsDelete($forum);
+
         $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/delete.html.', 
 			array(
+				'crumbs' => $crumbs,
 				'form' => $formHandler->getForm()->createView(),
 				'forum' => $forum
 	        )
@@ -221,8 +239,11 @@ class AdminForumController extends AdminForumBaseController
 			$response = $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
 		} else {
 			
+			$crumbs = $this->getCrumbs()->addAdminManageForumsDelete($forum);
+			
 	        $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/delete.html.', 
 				array(
+					'crumbs' => $crumbs,
 					'form' => $formHandler->getForm()->createView(),
 					'forum' => $forum
 		        )

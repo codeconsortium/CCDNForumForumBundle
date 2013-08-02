@@ -50,15 +50,15 @@ class UserPostController extends UserPostBaseController
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
-        $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
-            ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
-            ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
-            ->add($topic->getTitle(), $this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId())))
-            ->add('#' . $post->getId(), $this->path('ccdn_forum_user_post_show', array('postId' => $post->getId())));
+        //$crumbs = $this->getCrumbs()
+        //    ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
+        //    ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
+        //    ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
+        //    ->add($topic->getTitle(), $this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId())))
+        //    ->add('#' . $post->getId(), $this->path('ccdn_forum_user_post_show', array('postId' => $post->getId())));
 
         return $this->renderResponse('CCDNForumForumBundle:Post:show.html.', array(
-            'crumbs' => $crumbs,
+        //    'crumbs' => $crumbs,
             'topic' => $topic,
             'post' => $post,
             'subscription' => $subscription,
@@ -106,12 +106,12 @@ class UserPostController extends UserPostBaseController
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
-        $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
-            ->add($category->getName(),	$this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
-            ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
-            ->add($topic->getTitle(), $this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId())))
-            ->add($this->trans('crumbs.post.edit') . $post->getId(), $this->path('ccdn_forum_user_topic_reply', array('topicId' => $topic->getId())));
+        //$crumbs = $this->getCrumbs()
+        //    ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
+        //    ->add($category->getName(),	$this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
+        //    ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
+        //    ->add($topic->getTitle(), $this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId())))
+        //    ->add($this->trans('crumbs.post.edit') . $post->getId(), $this->path('ccdn_forum_user_topic_reply', array('topicId' => $topic->getId())));
 
         if ($post->getTopic()->getFirstPost()->getId() == $post->getId()) {
             // render edit_topic if first post
@@ -125,7 +125,7 @@ class UserPostController extends UserPostBaseController
             'board' => $board,
             'topic' => $topic,
             'post' => $post,
-            'crumbs' => $crumbs,
+        //    'crumbs' => $crumbs,
             'preview' => $formHandler->getForm()->getData(),
             'form' => $formHandler->getForm()->createView(),
         ));
@@ -174,7 +174,7 @@ class UserPostController extends UserPostBaseController
             'confirmation_message' => $confirmationMessage,
             'topic' => $topic,
             'post' => $post,
-            'crumbs' => $crumbs,
+        //    'crumbs' => $crumbs,
         ));
     }
 

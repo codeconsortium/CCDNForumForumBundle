@@ -9,6 +9,23 @@ layout:
         forum:              "Forum"
 
 title:
+    admin:
+        index:              "Admin Index"
+        manage-forums:
+            index:          "Manage Forums"
+            create:         "Create New Forum"
+            edit:           "Edit Forum %forum_name%"
+            delete:         "Delete Forum %forum_name%"
+        manage-categories:
+            index:          "Manage Categories"
+            create:         "Create New Category"
+            edit:           "Edit Forum %category_name%"
+            delete:         "Delete Category %category_name%"
+        manage-boards:
+            index:          "Manage Boards"
+            create:         "Create New Board"
+            edit:           "Edit Board %board_name%"
+            delete:         "Delete Board %board_name%"
     category:
         index:              "Index"
         show:               "%category_name% Category"
@@ -31,6 +48,23 @@ title:
         index:              "Subscriptions"
 
 crumbs:
+    admin:
+        index:              "Admin Index"
+        manage-forums:
+            index:          "Manage Forums"
+            create:         "Create New Forum"
+            edit:           "Edit Forum %forum_name%"
+            delete:         "Delete Forum %forum_name%"
+        manage-categories:
+            index:          "Manage Categories"
+            create:         "Create New Category"
+            edit:           "Edit Forum %category_name%"
+            delete:         "Delete Category %category_name%"
+        manage-boards:
+            index:          "Manage Boards"
+            create:         "Create New Board"
+            edit:           "Edit Board %board_name%"
+            delete:         "Delete Board %board_name%"
     category:
         index:              "Forum Index"
     topic:

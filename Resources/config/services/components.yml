@@ -3,6 +3,9 @@ parameters:
     # Service Parameters defined in app/config.
     ccdn_forum_forum.component.role_helper.class: CCDNForum\ForumBundle\Component\Helper\RoleHelper
     ccdn_forum_admin.component.event.admin_flash_notices.class: CCDNForum\ForumBundle\Component\Dispatcher\Listener\AdminFlashListener
+    ccdn_forum_forum.component.crumb_factory.class:          CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbFactory
+    ccdn_forum_forum.component.crumb_builder.class:          CCDNForum\ForumBundle\Component\Crumbs\CrumbBuilder
+
 services:
 
     #
@@ -37,3 +40,17 @@ services:
         arguments: [@session]
         tags:
             - { name: kernel.event_subscriber }
+
+    #
+    # Crumbs.
+    #
+    ccdn_forum_forum.component.crumb_factory:
+        class: %ccdn_forum_forum.component.crumb_factory.class%
+        arguments:
+            - @translator
+            - @router
+
+    ccdn_forum_forum.component.crumb_builder:
+        class: %ccdn_forum_forum.component.crumb_builder.class%
+        arguments:
+            - @ccdn_forum_forum.component.crumb_factory

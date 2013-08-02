@@ -52,11 +52,11 @@ class UserDraftController extends BaseController
         $draftsPaginated->setMaxPerPage($draftsPerPage);
         $draftsPaginated->setCurrentPage($page, false, true);
 
-        $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.drafts_index'), $this->path('ccdn_forum_user_draft_list'));
+        //$crumbs = $this->getCrumbs()
+        //    ->add($this->trans('crumbs.drafts_index'), $this->path('ccdn_forum_user_draft_list'));
 
         return $this->renderResponse('CCDNForumForumBundle:Draft:list.html.', array(
-            'crumbs' => $crumbs,
+        //    'crumbs' => $crumbs,
             'pager' => $draftsPaginated,
         ));
     }

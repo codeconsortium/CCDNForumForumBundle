@@ -51,13 +51,13 @@ class UserBoardController extends UserBoardBaseController
         // setup bread crumbs.
         $category = $board->getCategory();
 
-        $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
-            ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
-            ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $boardId)));
+        //$crumbs = $this->getCrumbs()
+        //    ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
+        //    ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
+        //    ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $boardId)));
 
         return $this->renderResponse('CCDNForumForumBundle:Board:show.html.', array(
-            'crumbs' => $crumbs,
+        //    'crumbs' => $crumbs,
             'board' => $board,
             'pager' => $topicsPager,
             'posts_per_page' => $postsPerPage,

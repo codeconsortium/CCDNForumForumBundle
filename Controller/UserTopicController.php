@@ -60,14 +60,14 @@ class UserTopicController extends UserTopicBaseController
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
-        $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
-            ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
-            ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
-            ->add($topic->getTitle(), $this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId())));
+        //$crumbs = $this->getCrumbs()
+        //    ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
+        //    ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
+        //    ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
+        //    ->add($topic->getTitle(), $this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId())));
 
         return $this->renderResponse('CCDNForumForumBundle:Topic:show.html.', array(
-            'crumbs' => $crumbs,
+        //    'crumbs' => $crumbs,
             'pager' => $postsPager,
             'board' => $board,
             'topic' => $topic,
@@ -109,14 +109,14 @@ class UserTopicController extends UserTopicBaseController
         // setup crumb trail.
         $category = $board->getCategory();
 
-        $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
-            ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
-            ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
-            ->add($this->trans('crumbs.topic.create'), $this->path('ccdn_forum_user_topic_create', array('boardId' => $board->getId())));
+        //$crumbs = $this->getCrumbs()
+        //    ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
+        //    ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
+        //    ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
+        //    ->add($this->trans('crumbs.topic.create'), $this->path('ccdn_forum_user_topic_create', array('boardId' => $board->getId())));
 
         return $this->renderResponse('CCDNForumForumBundle:Topic:create.html.', array(
-            'crumbs' => $crumbs,
+        //    'crumbs' => $crumbs,
             'board' => $board,
             'preview' => $formHandler->getForm()->getData(),
             'form' => $formHandler->getForm()->createView(),
@@ -160,15 +160,15 @@ class UserTopicController extends UserTopicBaseController
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
-        $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
-            ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
-            ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
-            ->add($topic->getTitle(), $this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId())))
-            ->add($this->trans('crumbs.topic.reply'), $this->path('ccdn_forum_user_topic_reply', array('topicId' => $topic->getId())));
+        //$crumbs = $this->getCrumbs()
+        //    ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
+        //    ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
+        //    ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
+        //    ->add($topic->getTitle(), $this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId())))
+        //    ->add($this->trans('crumbs.topic.reply'), $this->path('ccdn_forum_user_topic_reply', array('topicId' => $topic->getId())));
 
         return $this->renderResponse('CCDNForumForumBundle:Topic:reply.html.', array(
-            'crumbs' => $crumbs,
+        //    'crumbs' => $crumbs,
             'topic' => $topic,
             //'preview' => $formHandler->getForm()->getData(),
             'form' => $formHandler->getForm()->createView(),

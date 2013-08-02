@@ -2,7 +2,11 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.post.edit_topic.layout_template %}
 
-{% block title %}{% endblock %}
+{%- block title -%}
+	{{- 'title.admin.manage-boards.create' |trans({}, 'CCDNForumForumBundle') -}}
+{%- endblock -%}
+
+
 
 {% block body_content %}
 

@@ -47,8 +47,11 @@ class AdminCategoryController extends AdminCategoryBaseController
 
 		$categories = $this->getCategoryModel()->findAllCategoriesForForum($forumFilter);
 		
+		$crumbs = $this->getCrumbs()->addAdminManageCategoriesIndex();
+		
 		$response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/list.html.', 
 			array(
+				'crumbs' => $crumbs,
 				'forums' => $forums,
 				'forum_filter' => $forumFilter,
 				'categories' => $categories,
@@ -71,8 +74,11 @@ class AdminCategoryController extends AdminCategoryBaseController
 		
 		$formHandler = $this->getFormHandlerToCreateCategory($forumFilter);
 		
+		$crumbs = $this->getCrumbs()->addAdminManageCategoriesCreate();
+		
         $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/create.html.', 
 			array(
+				'crumbs' => $crumbs,
 				'form' => $formHandler->getForm()->createView(),
 				'forum_filter' => $forumFilter
 	        )
@@ -106,8 +112,11 @@ class AdminCategoryController extends AdminCategoryBaseController
 			
 			$response = $this->redirectResponse($this->path('ccdn_forum_admin_category_list', $params));
 		} else {
+			$crumbs = $this->getCrumbs()->addAdminManageCategoriesCreate();
+			
 	        $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/create.html.', 
 				array(
+					'crumbs' => $crumbs,
 					'form' => $formHandler->getForm()->createView(),
 					'forum_filter' => $forumFilter
 		        )
@@ -136,8 +145,11 @@ class AdminCategoryController extends AdminCategoryBaseController
 		
 		$forumFilter = $this->getQuery('forum_filter', null);
 		
+		$crumbs = $this->getCrumbs()->addAdminManageCategoriesEdit($category);
+		
         $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/edit.html.', 
 			array(
+				'crumbs' => $crumbs,
 				'form' => $formHandler->getForm()->createView(),
 				'category' => $category,
 				'forum_filter' => $forumFilter
@@ -177,8 +189,11 @@ class AdminCategoryController extends AdminCategoryBaseController
 		
 			$forumFilter = $this->getQuery('forum_filter', null);
 		
+			$crumbs = $this->getCrumbs()->addAdminManageCategoriesEdit($category);
+		
 	        $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/edit.html.', 
 				array(
+					'crumbs' => $crumbs,
 					'form' => $formHandler->getForm()->createView(),
 					'category' => $category,
 					'forum_filter' => $forumFilter
@@ -208,8 +223,11 @@ class AdminCategoryController extends AdminCategoryBaseController
 
 		$forumFilter = $this->getQuery('forum_filter', null);
 
+		$crumbs = $this->getCrumbs()->addAdminManageCategoriesDelete($category);
+
         $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/delete.html.', 
 			array(
+				'crumbs' => $crumbs,
 				'form' => $formHandler->getForm()->createView(),
 				'category' => $category,
 				'forum_filter' => $forumFilter
@@ -249,8 +267,11 @@ class AdminCategoryController extends AdminCategoryBaseController
 
 			$forumFilter = $this->getQuery('forum_filter', null);
 		
+			$crumbs = $this->getCrumbs()->addAdminManageCategoriesDelete($category);
+		
 	        $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/delete.html.', 
 				array(
+					'crumbs' => $crumbs,
 					'form' => $formHandler->getForm()->createView(),
 					'category' => $category,
 					'forum_filter' => $forumFilter

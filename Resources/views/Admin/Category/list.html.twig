@@ -2,7 +2,10 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.topic.create.layout_template %}
 
-{% block title %}{% endblock %}
+{%- block title -%}
+	{{- 'title.admin.manage-categories.index' |trans({}, 'CCDNForumForumBundle') -}}
+{%- endblock -%}
+
 
 
 {%- block body_content -%}

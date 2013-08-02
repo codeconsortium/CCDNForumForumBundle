@@ -44,12 +44,12 @@ class UserSubscriptionController extends UserTopicBaseController
         // this is necessary for working out the last page for each topic.
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 
-        $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
-            ->add($this->trans('crumbs.subscription.index'), $this->path('ccdn_forum_user_subscription_list'));
+        //$crumbs = $this->getCrumbs()
+        //    ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
+        //    ->add($this->trans('crumbs.subscription.index'), $this->path('ccdn_forum_user_subscription_list'));
 
         return $this->renderResponse('CCDNForumForumBundle:Subscription:list.html.', array(
-            'crumbs' => $crumbs,
+        //    'crumbs' => $crumbs,
             'pager' => $subscriptionPager,
             'posts_per_page' => $postsPerPage,
         ));

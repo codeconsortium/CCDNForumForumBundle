@@ -105,7 +105,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
         $purger = new ORMPurger($entityManager);
         $purger->purge();
     }
-	
+
 	private function getPage()
 	{
 		return $this->getMainContext()->getSession()->getPage();
@@ -135,6 +135,9 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
             $this->getPage()->findAll('css', $cssQuery)
         );
 
+		WebTestCase::assertTrue(in_array($textBefore, $items), 'The before text was not found!');
+		WebTestCase::assertTrue(in_array($textAfter,  $items), 'The after text was not found!');
+			
         WebTestCase::assertGreaterThan(
             array_search($textBefore, $items),
             array_search($textAfter, $items),
@@ -161,7 +164,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
             "$text was not found."
         );
     }
-	
+
     /**
      * 
      * @Given /^I should not see "([^"]*)" for the query "([^"]*)"$/
