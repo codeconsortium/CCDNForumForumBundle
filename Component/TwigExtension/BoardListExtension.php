@@ -63,9 +63,11 @@ class BoardListExtension extends \Twig_Extension
      * @access public
      * @return array
      */
-    public function boardList()
+    public function boardList($forumName)
     {
-        return $this->categoryModel->findAllBoardsGroupedByCategory();
+        //return $this->categoryModel->findAllBoardsGroupedByCategory();
+		//return $this->categoryModel->findAllCategoriesWithBoardsForForumByName($forumName);
+		return null;
     }
 
     /**

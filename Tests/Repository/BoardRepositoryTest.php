@@ -26,14 +26,15 @@ class BoardRepositoryTest extends TestBase
 		$this->assertCount(27, $boards);
 	}
 	
-	public function testFindAllBoardsForCategory()
+	public function testFindAllBoardsForCategoryById()
 	{
-		$forums = $this->addFixturesForForums();
-		$categories = $this->addFixturesForCategories($forums);
-		$this->addFixturesForBoards($categories);
+		//$this->purge();
+		//$forums = $this->addFixturesForForums();
+		//$categories = $this->addFixturesForCategories($forums);
+		//$this->addFixturesForBoards($categories);
 
-		foreach ($categories as $category) {
-			$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategory($category->getId());
+		foreach ($this->categories as $category) {
+			$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
 	
 			$this->assertCount(3, $boards);
 		}

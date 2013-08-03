@@ -4,7 +4,7 @@ Feature: Forum Management
 	I want to be able to list, create, edit and delete forums.
 
     Background:
-        Given I am logged in as admin
+        Given I am logged in as "admin"
         And there are following users defined:
           | email          | password | enabled  | role                |
           | admin@foo.com  | root     | 1        | ROLE_SUPER_ADMIN    |

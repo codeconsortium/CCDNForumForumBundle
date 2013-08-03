@@ -55,7 +55,7 @@ class CategoryRepository extends BaseRepository implements BaseRepositoryInterfa
      * @access public
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function findAllCategoriesForForum($forumId)
+    public function findAllCategoriesForForumById($forumId)
     {
 		$params = array();
 
@@ -72,6 +72,27 @@ class CategoryRepository extends BaseRepository implements BaseRepositoryInterfa
 
         return $this->gateway->findCategories($qb, $params);
     }
+
+	public function findAllCategoriesWithBoardsForForumByName($forumName)
+	{
+		$params = array();
+
+        $qb = $this->createSelectQuery(array('c', 'f', 'b', 't', 'lp', 'lp_author'));
+
+		$params[':forumName'] = $forumName;
+		
+        $qb
+			->leftJoin('c.forum', 'f')
+			->leftJoin('c.boards', 'b')
+            ->leftJoin('b.lastPost', 'lp')
+            ->leftJoin('lp.topic', 't')
+            ->leftJoin('lp.createdBy', 'lp_author')
+			->where('f.name = :forumName')
+	        ->addOrderBy('c.listOrderPriority', 'ASC')
+		;
+
+        return $this->gateway->findCategories($qb, $params);
+	}
 
     /**
      *
@@ -90,14 +111,6 @@ class CategoryRepository extends BaseRepository implements BaseRepositoryInterfa
         $qb->where('c.id = :categoryId');
 
         return $this->gateway->findCategory($qb, array(':categoryId' => $categoryId));
-
-        //$categories = $this->filterViewableCategoriesAndBoards($category);
-        //
-        //if (count($categories)) {
-        //    return $categories[0];
-        //} else {
-        //    return null;
-        //}
     }
 
 

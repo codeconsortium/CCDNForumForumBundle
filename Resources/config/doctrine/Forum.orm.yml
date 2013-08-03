@@ -9,6 +9,7 @@ CCDNForum\ForumBundle\Entity\Forum:
     fields:
         name:
             type: string
+            unique: true
         readAuthorisedRoles:
             type: array
             column: read_authorised_roles

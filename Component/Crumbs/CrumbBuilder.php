@@ -290,4 +290,71 @@ class CrumbBuilder extends BaseCrumbBuilder
 			)
 		;
 	}
+	
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
+	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+	 */
+	public function addUserCategoryIndex(Forum $forum)
+	{
+        return $this->createCrumbTrail()
+			->add(
+				array(
+					'label' => 'crumbs.user.category.index',
+					'params' => array(
+						'%forum_name%' => $forum->getName()
+					)
+				),
+				array(
+					'route' => 'ccdn_forum_user_category_index',
+					'params' => array(
+						'forumName' => $forum->getName()
+					)
+				)
+			)
+		;
+	}
+	
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
+	 * @param \CCDNForum\ForumBundle\Entity\Category                      $category
+	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+	 */
+	public function addUserCategoryShow(Forum $forum, Category $category)
+	{
+        return $this->createCrumbTrail()
+			->add(
+				array(
+					'label' => 'crumbs.user.category.index',
+					'params' => array(
+						'%forum_name%' => $forum->getName()
+					)
+				),
+				array(
+					'route' => 'ccdn_forum_user_category_index',
+					'params' => array(
+						'forumName' => $forum->getName()
+					)
+				)
+			)
+			->add(
+				array(
+					'label' => 'crumbs.user.category.show',
+					'params' => array(
+						'%category_name%' => $category->getName()
+					)
+				),
+				array(
+					'route' => 'ccdn_forum_user_category_show',
+					'params' => array(
+						'categoryId' => $category->getId()
+					)
+				)
+			)
+		;
+	}
 }

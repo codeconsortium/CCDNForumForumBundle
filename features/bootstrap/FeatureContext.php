@@ -113,12 +113,12 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
 
     /**
      * 
-     * @Given /^I am logged in as admin$/
+     * @Given /^I am logged in as "([^"]*)"$/
      */
-    public function iAmLoggedInAsAdmin()
+    public function iAmLoggedInAs($user)
     {
 		$session = $this->getMainContext()->getSession();
-		$session->setBasicAuth('admin@foo.com', 'root');
+		$session->setBasicAuth($user . '@foo.com', 'root');
     }
 
     /**

@@ -24,19 +24,19 @@ class CategoryRepositoryTest extends TestBase
 		// 3 Forums, with 3 categories each respectively, 3x3 = 9 Categories total.
 		$this->assertCount(9, $categories);
 	}
-	
-	public function testFindAllCategoriesForForum()
-	{
-		$forums = $this->addFixturesForForums();
-		$this->addFixturesForCategories($forums);
 
-		foreach ($forums as $forum) {
-			$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForum($forum->getId());
+	public function testFindAllCategoriesForForumById()
+	{
+		//$forums = $this->addFixturesForForums();
+		//$this->addFixturesForCategories($forums);
+
+		foreach ($this->forums as $forum) {
+			$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForumById($forum->getId());
 	
 			$this->assertCount(3, $categories);
 		}
 	}
-	
+
 	public function testFindOneCategoryById()
 	{
 		$category = $this->addNewCategory('TestCategory', 1);
@@ -45,5 +45,20 @@ class CategoryRepositoryTest extends TestBase
 		
 		$this->assertNotNull($foundCategory);
 		$this->assertEquals($foundCategory->getId(), $category->getId());
+	}
+
+	public function testFindAllCategoriesWithBoardsForForumByName()
+	{
+		$forum = $this->addNewForum('testFindAllCategoriesWithBoardsForForumByName1');
+		$categories = $this->addFixturesForCategories(array($forum));
+		$boards = $this->addFixturesForBoards($categories);
+		
+		$foundCategories = $this->getCategoryModel()->getRepository()->findAllCategoriesWithBoardsForForumByName($forum->getName());
+			
+		$this->assertNotNull($foundCategories);
+		$this->assertCount(3, $foundCategories);
+		$this->assertCount(3, $foundCategories[0]->getBoards());
+		$this->assertCount(3, $foundCategories[1]->getBoards());
+		$this->assertCount(3, $foundCategories[2]->getBoards());
 	}
 }

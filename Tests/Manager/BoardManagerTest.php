@@ -59,8 +59,8 @@ class BoardManagerTest extends TestBase
 	
 	public function testReassignTopicsToBoard()
 	{
-		$forums = $this->addFixturesForForums();
-		$categories = $this->addFixturesForCategories($forums);
+		$forum = $this->addNewForum('testReassignTopicsToBoard');
+		$categories = $this->addFixturesForCategories(array($forum));
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
 		
@@ -83,11 +83,11 @@ class BoardManagerTest extends TestBase
 	
 	public function testReorderBoards()
 	{
-		$forums = $this->addFixturesForForums();
-		$categories = $this->addFixturesForCategories($forums);
+		$forum = $this->addNewForum('testReorderBoards');
+		$categories = $this->addFixturesForCategories(array($forum));
 		$this->addFixturesForBoards($categories);
 		
-		$category = $categories[1];
+		$category = $categories[count($categories) - 1];
 		$this->em->refresh($category);
 		$boards = $category->getBoards();
 		$this->assertCount(3, $boards);
@@ -99,42 +99,42 @@ class BoardManagerTest extends TestBase
 		
 		// 123 -> 213
 		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[0], $this::REORDER_DOWN);
-		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategory($category->getId());
+		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
 		$this->assertSame('test_board_2', $boards[0]->getName());
 		$this->assertSame('test_board_1', $boards[1]->getName());
 		$this->assertSame('test_board_3', $boards[2]->getName());
 
 		// 213 -> 231
 		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[1], $this::REORDER_DOWN);
-		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategory($category->getId());
+		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
 		$this->assertSame('test_board_2', $boards[0]->getName());
 		$this->assertSame('test_board_3', $boards[1]->getName());
 		$this->assertSame('test_board_1', $boards[2]->getName());
 
 		// 231 -> 123
 		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[2], $this::REORDER_DOWN);
-		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategory($category->getId());
+		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
 		$this->assertSame('test_board_1', $boards[0]->getName());
 		$this->assertSame('test_board_2', $boards[1]->getName());
 		$this->assertSame('test_board_3', $boards[2]->getName());
 		
 		// 123 <- 231
 		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[0], $this::REORDER_UP);
-		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategory($category->getId());
+		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
 		$this->assertSame('test_board_2', $boards[0]->getName());
 		$this->assertSame('test_board_3', $boards[1]->getName());
 		$this->assertSame('test_board_1', $boards[2]->getName());
 		
 		// 231 <- 213
 		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[2], $this::REORDER_UP);
-		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategory($category->getId());
+		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
 		$this->assertSame('test_board_2', $boards[0]->getName());
 		$this->assertSame('test_board_1', $boards[1]->getName());
 		$this->assertSame('test_board_3', $boards[2]->getName());
 		
 		// 213 <- 123
 		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[1], $this::REORDER_UP);
-		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategory($category->getId());
+		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
 		$this->assertSame('test_board_1', $boards[0]->getName());
 		$this->assertSame('test_board_2', $boards[1]->getName());
 		$this->assertSame('test_board_3', $boards[2]->getName());

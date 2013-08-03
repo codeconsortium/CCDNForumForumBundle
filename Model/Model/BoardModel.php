@@ -51,9 +51,9 @@ class BoardModel extends BaseModel implements BaseModelInterface
      * @access public
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function findAllBoardsForCategory($categoryId)
+    public function findAllBoardsForCategoryById($categoryId)
     {
-        return $this->getRepository()->findAllBoardsForCategory($categoryId);
+        return $this->getRepository()->findAllBoardsForCategoryById($categoryId);
     }
 
     /**

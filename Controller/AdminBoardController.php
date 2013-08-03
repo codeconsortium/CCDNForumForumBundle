@@ -60,10 +60,10 @@ class AdminBoardController extends AdminBoardBaseController
 		$forums = $this->getForumModel()->findAllForums();
 
 		// Categories for the parametric filter.
-		$categories = $this->getCategoryModel()->findAllCategoriesForForum($forumFilter);
+		$categories = $this->getCategoryModel()->findAllCategoriesForForumById($forumFilter);
 
 		// Boards for the configuration table list.
-		$boards = $this->getBoardModel()->findAllBoardsForCategory($categoryFilter);
+		$boards = $this->getBoardModel()->findAllBoardsForCategoryById($categoryFilter);
 		
 		$crumbs = $this->getCrumbs()->addAdminManageBoardsIndex();
 		
@@ -344,7 +344,7 @@ class AdminBoardController extends AdminBoardBaseController
 				$params['forum_filter'] = $board->getCategory()->getForum()->getId();
 			}
 		
-			$boards = $this->getBoardModel()->findAllBoardsForCategory($categoryFilter);
+			$boards = $this->getBoardModel()->findAllBoardsForCategoryById($categoryFilter);
 			
 			$this->getBoardModel()->reorderBoards($boards, $board, $direction);
 			

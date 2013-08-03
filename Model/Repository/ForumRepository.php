@@ -45,7 +45,7 @@ class ForumRepository extends BaseRepository implements BaseRepositoryInterface
 
         return $this->gateway->findForums($qb);
     }
-	
+
     /**
      *
      * @access public
@@ -60,6 +60,25 @@ class ForumRepository extends BaseRepository implements BaseRepositoryInterface
 		
 		$qb
 			->where('f.id = :forumId');
+		;
+		
+        return $this->gateway->findForum($qb, $params);
+    }
+
+    /**
+     *
+     * @access public
+     * @param string $forumName
+     * @return \CCDNForum\ForumBundle\Entity\Forum
+     */
+    public function findOneForumByName($forumName)
+    {
+		$params = array(':forumName' => $forumName);
+		
+        $qb = $this->createSelectQuery(array('f'));
+		
+		$qb
+			->where('f.name = :forumName');
 		;
 		
         return $this->gateway->findForum($qb, $params);

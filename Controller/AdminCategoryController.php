@@ -45,7 +45,7 @@ class AdminCategoryController extends AdminCategoryBaseController
 
 		$forums = $this->getForumModel()->findAllForums();
 
-		$categories = $this->getCategoryModel()->findAllCategoriesForForum($forumFilter);
+		$categories = $this->getCategoryModel()->findAllCategoriesForForumById($forumFilter);
 		
 		$crumbs = $this->getCrumbs()->addAdminManageCategoriesIndex();
 		
@@ -307,7 +307,7 @@ class AdminCategoryController extends AdminCategoryBaseController
 			
 			$params['forum_filter'] = $forumFilter;
 		
-			$categories = $this->getCategoryModel()->findAllCategoriesForForum($forumFilter);
+			$categories = $this->getCategoryModel()->findAllCategoriesForForumById($forumFilter);
 			
 			$this->getCategoryModel()->reorderCategories($categories, $category, $direction);
 

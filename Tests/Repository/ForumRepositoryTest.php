@@ -26,11 +26,22 @@ class ForumRepositoryTest extends TestBase
 	
 	public function testFindOneForumById()
 	{
-		$forum = $this->addNewForum('TestForum');
+		$forum = $this->addNewForum('TestForumById');
 		
 		$foundForum = $this->getForumModel()->getRepository()->findOneForumById($forum->getId());
 		
 		$this->assertNotNull($foundForum);
 		$this->assertEquals($foundForum->getId(), $forum->getId());
 	}
+
+    public function testFindOneForumByName()
+    {
+		$forum = $this->addNewForum('TestForumByName');
+		
+		$foundForum = $this->getForumModel()->getRepository()->findOneForumByName($forum->getName());
+		
+		$this->assertNotNull($foundForum);
+		$this->assertEquals($foundForum->getId(), $forum->getId());
+		$this->assertEquals($foundForum->getName(), $forum->getName());
+    }
 }

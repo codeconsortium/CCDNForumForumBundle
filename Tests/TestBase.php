@@ -39,6 +39,13 @@ class TestBase extends WebTestCase
 	 */
 	private $container;
 	
+	protected $users = array();
+	protected $forums = array();
+	protected $categories = array();
+	protected $boards = array();
+	protected $topics = array();
+	protected $posts = array();
+	
 	/**
 	 *
 	 * @access public
@@ -55,12 +62,12 @@ class TestBase extends WebTestCase
 		
 		$this->purge();
 		
-		$users      = $this->addFixturesForUsers();
-		$forums     = $this->addFixturesForForums();
-		$categories = $this->addFixturesForCategories($forums);
-		$boards     = $this->addFixturesForBoards($categories);
-		$topics     = $this->addFixturesForTopics($boards);
-		$posts      = $this->addFixturesForPosts($topics, $users);
+		$this->users      = $this->addFixturesForUsers();
+		$this->forums     = $this->addFixturesForForums();
+		$this->categories = $this->addFixturesForCategories($this->forums);
+		$this->boards     = $this->addFixturesForBoards($this->categories);
+		$this->topics     = $this->addFixturesForTopics($this->boards);
+		$this->posts      = $this->addFixturesForPosts($this->topics, $this->users);
     }
 	
     protected function purge()

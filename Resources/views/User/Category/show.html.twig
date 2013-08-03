@@ -17,7 +17,7 @@
 	{%- spaceless -%}
 
 	{%- for category in categories -%}
-		{%- include "CCDNForumForumBundle:Category:item_category.html.twig" -%}
+		{%- include "CCDNForumForumBundle:User:Category/Partial/item_category.html.twig" -%}
 	{%- else -%}
 		<div class="well">{{- 'category.none' | trans({}, 'CCDNForumForumBundle') -}}</div>
 	{%- endfor -%}

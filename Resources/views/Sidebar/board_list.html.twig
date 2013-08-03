@@ -1,6 +1,6 @@
 {%- spaceless -%}
 
-	{%- set sidebar_categories = board_list() -%}
+	{%- set sidebar_categories = board_list(forum.name) -%}
 
 	{%- for sidebar_category in sidebar_categories -%}
 		{%- if sidebar_category.boards |length -%}

@@ -55,7 +55,7 @@ class BoardRepository extends BaseRepository implements BaseRepositoryInterface
      * @access public
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function findAllBoardsForCategory($boardId)
+    public function findAllBoardsForCategoryById($boardId)
     {
 		$params = array();
 

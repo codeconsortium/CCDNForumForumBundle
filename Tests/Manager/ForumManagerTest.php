@@ -57,7 +57,9 @@ class ForumManagerTest extends TestBase
 	
 	public function testReassignCategoriesToForum()
 	{
-		$forums = $this->addFixturesForForums();
+		$forums = array();
+		$forums[0] = $this->addNewForum('testReassignCategoriesToForum0');
+		$forums[1] = $this->addNewForum('testReassignCategoriesToForum1');
 		$this->addFixturesForCategories($forums);
 		
 		$forum1 = $forums[0];
