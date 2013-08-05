@@ -1,6 +1,6 @@
 {%- spaceless -%}
 	{%- set route = app.request.attributes.get('_route') -%}
-
+	
 	{%- if topic is not defined -%}
 		{%- if post is defined -%}
 			{%- set topic = post.getTopic -%}
@@ -31,6 +31,15 @@
 		{{- 'sidebar.header.navigation' | trans({}, 'CCDNForumForumBundle') -}}
 	</li>
 
+	{%- if is_granted('ROLE_ADMIN') -%}
+		<li>
+			<a href="{{- path('ccdn_forum_admin_index') -}}">
+				<i class="icon-home"></i>
+				{{- 'link.admin.index' |trans({}, 'CCDNForumForumBundle') -}}
+			</a>
+		</li>
+	{%- endif -%}	
+	
 	{%- if route == 'ccdn_homepage' or route == 'ccdn_forum_user_category_index' or route == 'ccdn_forum_user_category_index' -%}
 		<li class="active">
 			<a href="{{- path('ccdn_forum_user_category_index') -}}">

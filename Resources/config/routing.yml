@@ -1,0 +1,59 @@
+CCDNForumForumBundle-Admin:
+    resource: "@CCDNForumForumBundle/Resources/config/routing/admin.yml"
+    prefix: /{_locale}/forum/admin
+
+CCDNForumForumBundle-Admin-Forum:
+    resource: "@CCDNForumForumBundle/Resources/config/routing/admin-forum.yml"
+    prefix: /{_locale}/forum/admin/manage-forums
+
+CCDNForumForumBundle-Admin-Category:
+    resource: "@CCDNForumForumBundle/Resources/config/routing/admin-category.yml"
+    prefix: /{_locale}/forum/admin/manage-categories
+
+CCDNForumForumBundle-Admin-Board:
+    resource: "@CCDNForumForumBundle/Resources/config/routing/admin-board.yml"
+    prefix: /{_locale}/forum/admin/manage-boards
+
+CCDNForumForumBundle-Admin-Topic:
+    resource: "@CCDNForumForumBundle/Resources/config/routing/admin-topic.yml"
+    prefix: /{_locale}/forum/admin/manage-topics
+
+CCDNForumForumBundle-Admin-Post:
+    resource: "@CCDNForumForumBundle/Resources/config/routing/admin-post.yml"
+    prefix: /{_locale}/forum/admin/manage-posts
+
+
+
+CCDNForumForumBundle-Moderator-Topic:
+    resource: "@CCDNForumForumBundle/Resources/config/routing/moderator-topic.yml"
+    prefix: /{_locale}/forum/moderator/manage-topics
+
+CCDNForumForumBundle-Moderator-Post:
+    resource: "@CCDNForumForumBundle/Resources/config/routing/moderator-post.yml"
+    prefix: /{_locale}/forum/moderator/manage-posts
+
+
+
+CCDNForumForumBundle-User-Category:
+    resource: "@CCDNForumForumBundle/Resources/config/routing/user-category.yml"
+    prefix: /{_locale}/forum/category
+
+CCDNForumForumBundle-User-Board:
+    resource: "@CCDNForumForumBundle/Resources/config/routing/user-board.yml"
+    prefix: /{_locale}/forum/board
+
+CCDNForumForumBundle-User-Topic:
+    resource: "@CCDNForumForumBundle/Resources/config/routing/user-topic.yml"
+    prefix: /{_locale}/forum/topic
+
+CCDNForumForumBundle-User-Post:
+    resource: "@CCDNForumForumBundle/Resources/config/routing/user-post.yml"
+    prefix: /{_locale}/forum/post
+
+CCDNForumForumBundle-User-Draft:
+    resource: "@CCDNForumForumBundle/Resources/config/routing/user-draft.yml"
+    prefix: /{_locale}/forum/draft
+
+CCDNForumForumBundle-User-Subscription:
+    resource: "@CCDNForumForumBundle/Resources/config/routing/user-subscription.yml"
+    prefix: /{_locale}/forum/subscription

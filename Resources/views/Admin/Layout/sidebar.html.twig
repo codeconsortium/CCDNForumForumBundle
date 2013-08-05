@@ -5,25 +5,32 @@
 		{{- 'sidebar.header.navigation' | trans({}, 'CCDNForumForumBundle') -}}
 	</li>
 
+	<li>
+		<a href="{{- path('ccdn_forum_user_category_index') -}}">
+			<i class="icon-home"></i>
+			{{- 'link.category.index' |trans({}, 'CCDNForumForumBundle') -}}
+		</a>
+	</li>
 
-	{%- if route == 'ccdn_forum_admin_forum_list'
-		or route == 'ccdn_forum_admin_forum_create'
-		or route == 'ccdn_forum_admin_forum_edit'
-		or route == 'ccdn_forum_admin_forum_delete'
-	 -%}
-		<li class="active">
-			<a href="{{- path('ccdn_forum_admin_forum_list') -}}">
-				<i class="icon-list icon-white"></i>
-	{%- else -%}
-		<li>
-			<a href="{{- path('ccdn_forum_admin_forum_list') -}}">
-				<i class="icon-list"></i>
+	{%- if is_granted('ROLE_SUPER_ADMIN') -%}
+		{%- if route == 'ccdn_forum_admin_forum_list'
+			or route == 'ccdn_forum_admin_forum_create'
+			or route == 'ccdn_forum_admin_forum_edit'
+			or route == 'ccdn_forum_admin_forum_delete'
+		 -%}
+			<li class="active">
+				<a href="{{- path('ccdn_forum_admin_forum_list') -}}">
+					<i class="icon-list icon-white"></i>
+		{%- else -%}
+			<li>
+				<a href="{{- path('ccdn_forum_admin_forum_list') -}}">
+					<i class="icon-list"></i>
+		{%- endif -%}
+					Manage Forums
+				</a>
+			</li>
 	{%- endif -%}
-				Manage Forums
-			</a>
-		</li>
 	
-
 	{%- if route == 'ccdn_forum_admin_category_list'
 		or route == 'ccdn_forum_admin_category_create'
 		or route == 'ccdn_forum_admin_category_edit'
