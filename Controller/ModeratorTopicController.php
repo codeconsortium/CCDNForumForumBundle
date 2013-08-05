@@ -40,7 +40,7 @@ class ModeratorTopicController extends UserTopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
         $this->isAuthorisedToStickyTopic($topic);
@@ -62,7 +62,7 @@ class ModeratorTopicController extends UserTopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
         $this->isAuthorisedToUnStickyTopic($topic);
@@ -86,7 +86,7 @@ class ModeratorTopicController extends UserTopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
         $this->isAuthorisedToCloseTopic($topic);
@@ -108,7 +108,7 @@ class ModeratorTopicController extends UserTopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
         $this->isAuthorisedToReOpenTopic($topic);
@@ -130,7 +130,7 @@ class ModeratorTopicController extends UserTopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
         $this->isAuthorisedToDeleteTopic($topic);
@@ -164,7 +164,7 @@ class ModeratorTopicController extends UserTopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
         $this->isAuthorisedToDeleteTopic($topic);
@@ -188,7 +188,7 @@ class ModeratorTopicController extends UserTopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
         $this->isAuthorisedToRestoreTopic($topic);
@@ -212,7 +212,7 @@ class ModeratorTopicController extends UserTopicBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
         $this->isAuthorisedToMoveTopic($topic);

@@ -34,20 +34,23 @@ class UserTopicController extends UserTopicBaseController
     /**
      *
      * @access public
+     * @param  string                          $forumName
      * @param  int                             $topicId
      * @return RedirectResponse|RenderResponse
      */
-    public function showAction($topicId)
+    public function showAction($forumName, $topicId)
     {
-		$page = $this->getQuery('page', 1);
+		$forum = $this->getForumModel()->findOneForumByName($forumName);
+		$this->isFound($forum);
 		
         // Get topic.
-        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
 
         // Get posts for topic paginated.
-        $postsPager = $this->getPostModel()->findAllPaginatedByTopicId($topicId, $page);
+		$page = $this->getQuery('page', 1);
+		$postsPager = $this->getPostModel()->findAllPaginatedByTopicId($topicId, $page);
 
         // get the topic subscriptions.
         $subscription = $this->getSubscriptionModel()->findSubscriptionForTopicById($topicId);
@@ -60,18 +63,14 @@ class UserTopicController extends UserTopicBaseController
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
-        //$crumbs = $this->getCrumbs()
-        //    ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
-        //    ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
-        //    ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
-        //    ->add($topic->getTitle(), $this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId())));
+		$crumbs = $this->getCrumbs()->addUserTopicShow($forum, $topic);
 
-        return $this->renderResponse('CCDNForumForumBundle:Topic:show.html.', array(
-        //    'crumbs' => $crumbs,
-            'pager' => $postsPager,
+        return $this->renderResponse('CCDNForumForumBundle:User:Topic/show.html.', array(
+            'crumbs' => $crumbs,
+			'forum' => $forum,
             'board' => $board,
             'topic' => $topic,
-            //'registries' => $registries,
+            'pager' => $postsPager,
             'subscription' => $subscription,
             'subscription_count' => $subscriberCount,
         ));

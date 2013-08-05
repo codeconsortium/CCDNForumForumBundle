@@ -37,6 +37,58 @@ class TopicRepository extends BaseRepository implements BaseRepositoryInterface
     /**
      *
      * @access public
+     * @param  int                                 $topicId
+     * @return \CCDNForum\ForumBundle\Entity\Topic
+     */
+    public function findOneTopicByIdWithBoardAndCategory($topicId, $canViewDeletedTopics = false)
+    {
+        if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
+            throw new \Exception('Topic id "' . $topicId . '" is invalid!');
+        }
+
+        $params = array(':topicId' => $topicId);
+
+        $qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
+
+        $qb
+            ->leftJoin('t.firstPost', 'fp')
+                ->leftJoin('fp.createdBy', 'fp_author')
+            ->leftJoin('t.lastPost', 'lp')
+                ->leftJoin('lp.createdBy', 'lp_author')
+            ->leftJoin('t.closedBy', 't_closedBy')
+            ->leftJoin('t.deletedBy', 't_deletedBy')
+            ->leftJoin('t.stickiedBy', 't_stickiedBy')
+            ->leftJoin('t.board', 'b')
+            ->leftJoin('b.category', 'c')
+            ->where(
+				call_user_func_array(function($canViewDeletedTopics, $qb) {
+			        if ($canViewDeletedTopics) {
+			            $expr = $qb->expr()->eq('t.id', ':topicId');
+			        } else {
+			            $expr = $qb->expr()->andX(
+			                $qb->expr()->eq('t.id', ':topicId'),
+			                $qb->expr()->eq('t.isDeleted', 'FALSE')
+			            );
+			        }
+					
+					return $expr;
+				}, array($canViewDeletedTopics, $qb))
+            );
+
+        return $this->gateway->findTopic($qb, $params);
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    /**
+     *
+     * @access public
      * @return bool
      */
     public function allowedToViewDeletedTopics()
@@ -113,40 +165,7 @@ class TopicRepository extends BaseRepository implements BaseRepositoryInterface
         return $this->gateway->findTopic($qb, $params);
     }
 
-    /**
-     *
-     * @access public
-     * @param  int                                 $topicId
-     * @return \CCDNForum\ForumBundle\Entity\Topic
-     */
-    public function findOneByIdWithBoardAndCategory($topicId)
-    {
-        if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
-            throw new \Exception('Topic id "' . $topicId . '" is invalid!');
-        }
 
-        $canViewDeleted = $this->allowedToViewDeletedTopics();
-
-        $params = array(':topicId' => $topicId);
-
-        $qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
-
-        $qb
-            ->innerJoin('t.firstPost', 'fp')
-                ->leftJoin('fp.createdBy', 'fp_author')
-            ->leftJoin('t.lastPost', 'lp')
-                ->leftJoin('lp.createdBy', 'lp_author')
-            ->leftJoin('t.closedBy', 't_closedBy')
-            ->leftJoin('t.deletedBy', 't_deletedBy')
-            ->leftJoin('t.stickiedBy', 't_stickiedBy')
-            ->leftJoin('t.board', 'b')
-            ->leftJoin('b.category', 'c')
-            ->where(
-                $this->limitQueryByDeletedStateAndByTopicId($qb, $canViewDeleted)
-            );
-
-        return $this->gateway->findTopic($qb, $params);
-    }
 
     /**
      *

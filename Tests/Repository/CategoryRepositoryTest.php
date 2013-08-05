@@ -27,9 +27,6 @@ class CategoryRepositoryTest extends TestBase
 
 	public function testFindAllCategoriesForForumById()
 	{
-		//$forums = $this->addFixturesForForums();
-		//$this->addFixturesForCategories($forums);
-
 		foreach ($this->forums as $forum) {
 			$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForumById($forum->getId());
 	

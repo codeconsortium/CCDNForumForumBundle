@@ -65,7 +65,7 @@ class UserSubscriptionController extends UserTopicBaseController
     {
         $this->isAuthorised('ROLE_USER');
 
-        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
 
@@ -86,7 +86,7 @@ class UserSubscriptionController extends UserTopicBaseController
     {
         $this->isAuthorised('ROLE_USER');
 
-        $topic = $this->getTopicModel()->findOneByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorisedToViewTopic($topic);
 
