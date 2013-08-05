@@ -27,6 +27,8 @@ use CCDNUser\UserBundle\Entity\User;
 use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Category;
 use CCDNForum\ForumBundle\Entity\Board;
+use CCDNForum\ForumBundle\Entity\Topic;
+use CCDNForum\ForumBundle\Entity\Post;
 
 //
 // Require 3rd-party libraries here:
@@ -73,6 +75,8 @@ class DataContext extends BehatContext implements KernelAwareInterface
         $this->kernel = $kernel;
     }
 
+	protected $users = array();
+
     /**
      * 
      * @Given /^there are following users defined:$/
@@ -82,7 +86,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
         $manager = $this->getEntityManager();
 
         foreach ($table->getHash() as $data) {
-            $this->thereIsUser(
+            $this->users[] = $this->thereIsUser(
 				isset($data['username']) ? $data['username'] : sha1(uniqid(mt_rand(), true)),
                 $data['email'],
                 isset($data['password']) ? $data['password'] : 'password',
@@ -217,6 +221,59 @@ class DataContext extends BehatContext implements KernelAwareInterface
         $this->getEntityManager()->flush();
 
         return $board;
+    }
+
+	protected $topics = array();
+
+    /**
+     * 
+     * @Given /^there are following topics defined:$/
+     */
+    public function thereAreFollowingTopicsDefined(TableNode $table)
+    {
+        $manager = $this->getEntityManager();
+
+        foreach ($table->getHash() as $index => $data) {
+            $this->topics[] = $this->thereIsTopic(
+				isset($data['title']) ? $data['title'] : sha1(uniqid(mt_rand(), true)),
+				isset($data['body']) ? $data['body'] : sha1(uniqid(mt_rand(), true)),
+				isset($data['board']) ? $data['board'] : null,
+				isset($data['user']) ? $data['user'] : null
+            );
+        }
+    }
+
+    public function thereIsTopic($title, $body, $boardName, $userEmail)
+    {
+        $topic = new Topic();
+
+		$topic->setTitle($title);
+		
+		$post = new Post();
+		
+		$post->setTopic($topic);
+		$post->setBody($body);
+		$post->setCreatedDate(new \DateTime('now'));
+		
+		foreach ($this->users as $user) {
+			if ($user->getEmail() == $userEmail) {
+				$post->setCreatedBy($user);
+			}
+		}
+
+		$topic->setFirstPost($post);
+		$topic->setLastPost($post);
+		
+		foreach ($this->boards as $board) {
+			if ($board->getName() == $boardName) {
+				$topic->setBoard($board);
+			}
+		}
+
+        $this->getEntityManager()->persist($topic);
+        $this->getEntityManager()->flush();
+
+        return $topic;
     }
 
     /**

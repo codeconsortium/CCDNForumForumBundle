@@ -75,6 +75,17 @@ class CategoryModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
+     * @param  int                                    $categoryId
+     * @return \CCDNForum\ForumBundle\Entity\Category
+     */
+    public function findOneCategoryByIdWithBoards($categoryId)
+    {
+        return $this->getRepository()->findOneCategoryByIdWithBoards($categoryId);
+    }
+
+    /**
+     *
+     * @access public
      * @param  \CCDNForum\ForumBundle\Entity\Category              $category
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
@@ -142,16 +153,6 @@ class CategoryModel extends BaseModel implements BaseModelInterface
         return $this->getRepository()->findOneById($categoryId);
     }
 
-    /**
-     *
-     * @access public
-     * @param  int                                    $categoryId
-     * @return \CCDNForum\ForumBundle\Entity\Category
-     */
-    public function findOneByIdWithBoards($categoryId)
-    {
-        return $this->getRepository()->findOneByIdWithBoards($categoryId);
-    }
 
     /**
      *

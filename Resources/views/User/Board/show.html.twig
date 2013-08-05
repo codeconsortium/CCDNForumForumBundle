@@ -38,7 +38,7 @@
 	        <div class="span6">
 	            {% set is_topic_create_disabled = board.isAuthorisedToCreateTopic(app.security) ? '': ' disabled' %}
 
-	            <a class="btn btn-danger{{ is_topic_create_disabled }}" rel="nofollow" href="{{- path('ccdn_forum_user_topic_create', {'boardId': board.getId }) -}}">
+	            <a class="btn btn-danger{{ is_topic_create_disabled }}" rel="nofollow" href="{{- path('ccdn_forum_user_topic_create', {'forumName': forum.name, 'boardId': board.getId }) -}}">
 					<i class="icon-white icon-asterisk"></i>
 					{{- 'link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}
 				</a>
@@ -72,7 +72,7 @@
 
 		            {%- for row, topic in sticky_topics -%}
 		                {%- if not topic.isDeleted or is_granted('ROLE_MODERATOR') -%}
-		                    {%- include 'CCDNForumForumBundle:Board:item_topic_list.html.twig' -%}
+		                    {%- include 'CCDNForumForumBundle:User:Board/Partial/item_topic_list.html.twig' -%}
 		                {%- endif -%}
 		            {%- endfor -%}
 
@@ -85,7 +85,7 @@
 
 		        {%- for row, topic in pager.getItems() -%}
 		            {%- if not topic.isDeleted or is_granted('ROLE_MODERATOR') -%}
-		                {%- include 'CCDNForumForumBundle:Board:item_topic_list.html.twig' -%}
+		                {%- include 'CCDNForumForumBundle:User:Board/Partial/item_topic_list.html.twig' -%}
 		            {%- endif -%}
 		        {%- else -%}
 		            <tr>

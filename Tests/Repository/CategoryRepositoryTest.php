@@ -47,6 +47,16 @@ class CategoryRepositoryTest extends TestBase
 		$this->assertEquals($foundCategory->getId(), $category->getId());
 	}
 
+	public function testFindOneCategoryByIdWithBoards()
+	{
+		$category = $this->addNewCategory('testFindOneCategoryByIdWithBoards', 1);
+		
+		$foundCategory = $this->getCategoryModel()->getRepository()->findOneCategoryByIdWithBoards($category->getId());
+		
+		$this->assertNotNull($foundCategory);
+		$this->assertEquals($foundCategory->getId(), $category->getId());
+	}
+
 	public function testFindAllCategoriesWithBoardsForForumByName()
 	{
 		$forum = $this->addNewForum('testFindAllCategoriesWithBoardsForForumByName1');

@@ -113,6 +113,36 @@ class CategoryRepository extends BaseRepository implements BaseRepositoryInterfa
         return $this->gateway->findCategory($qb, array(':categoryId' => $categoryId));
     }
 
+    /**
+     *
+     * @access public
+     * @param  int                                    $categoryId
+     * @return \CCDNForum\ForumBundle\Entity\Category
+     */
+    public function findOneCategoryByIdWithBoards($categoryId)
+    {
+        if (null == $categoryId || ! is_numeric($categoryId) || $categoryId == 0) {
+            throw new \Exception('Category id "' . $categoryId . '" is invalid!');
+        }
+
+        $qb = $this->createSelectQuery(array('c', 'b', 'lp', 't', 'lp_author'));
+
+        $qb
+            ->leftjoin('c.boards', 'b')
+            ->leftJoin('b.lastPost', 'lp')
+            ->leftJoin('lp.topic', 't')
+            ->leftJoin('lp.createdBy', 'lp_author')
+            ->where('c.id = :categoryId')
+            ->addOrderBy('b.listOrderPriority', 'ASC');
+        ;
+
+        return $this->gateway->findCategory($qb, array(':categoryId' => $categoryId));
+    }
+
+
+
+
+
 
 
 
@@ -134,38 +164,6 @@ class CategoryRepository extends BaseRepository implements BaseRepositoryInterfa
         $qb = $this->createSelectQuery(array('c'));
 
         $qb->where('c.id = :categoryId');
-
-        $category = $this->gateway->findCategory($qb, array(':categoryId' => $categoryId));
-
-        $categories = $this->filterViewableCategoriesAndBoards($category);
-
-        if (count($categories)) {
-            return $categories[0];
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     *
-     * @access public
-     * @param  int                                    $categoryId
-     * @return \CCDNForum\ForumBundle\Entity\Category
-     */
-    public function findOneByIdWithBoards($categoryId)
-    {
-        if (null == $categoryId || ! is_numeric($categoryId) || $categoryId == 0) {
-            throw new \Exception('Category id "' . $categoryId . '" is invalid!');
-        }
-
-        $qb = $this->createSelectQuery(array('c', 'b', 'lp', 't', 'lp_author'));
-
-        $qb = $this->joinToQueryBoardsAndLastPost($qb);
-
-        $qb
-            ->where('c.id = :categoryId')
-            ->addOrderBy('b.listOrderPriority', 'ASC');
-            ;
 
         $category = $this->gateway->findCategory($qb, array(':categoryId' => $categoryId));
 

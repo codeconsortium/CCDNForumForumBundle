@@ -29,21 +29,24 @@ class UserBoardController extends UserBoardBaseController
     /**
      *
      * @access public
+     * @param  string                          $forumName
      * @param  int                             $boardId
      * @return RedirectResponse|RenderResponse
      */
-    public function showAction($boardId)
+    public function showAction($forumName, $boardId)
     {
-		$page = $this->getQuery('page', 1);
+		$forum = $this->getForumModel()->findOneForumByName($forumName);
+		$this->isFound($forum);
 		
-        $board = $this->getBoardModel()->findOneByIdWithCategory($boardId);
-
-        $stickyTopics = $this->getTopicModel()->findAllStickiedByBoardId($boardId);
-        $topicsPager = $this->getTopicModel()->findAllPaginatedByBoardId($boardId, $page);
-
         // check board exists.
+        $board = $this->getBoardModel()->findOneByIdWithCategory($boardId);
         $this->isFound($board);
         $this->isAuthorisedToViewBoard($board);
+
+		// Get topics.
+		$page = $this->getQuery('page', 1);
+        $stickyTopics = $this->getTopicModel()->findAllStickiedByBoardId($boardId);
+        $topicsPager = $this->getTopicModel()->findAllPaginatedByBoardId($boardId, $page);
 
         // this is necessary for working out the last page for each topic.
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
@@ -51,17 +54,17 @@ class UserBoardController extends UserBoardBaseController
         // setup bread crumbs.
         $category = $board->getCategory();
 
-        //$crumbs = $this->getCrumbs()
-        //    ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
-        //    ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
-        //    ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $boardId)));
+		$crumbs = $this->getCrumbs()->addUserBoardShow($forum, $board);
 
-        return $this->renderResponse('CCDNForumForumBundle:Board:show.html.', array(
-        //    'crumbs' => $crumbs,
-            'board' => $board,
-            'pager' => $topicsPager,
-            'posts_per_page' => $postsPerPage,
-            'sticky_topics' => $stickyTopics,
-        ));
+        return $this->renderResponse('CCDNForumForumBundle:User:Board/show.html.',
+			array(
+	            'crumbs' => $crumbs,
+				'forum' => $forum,
+	            'board' => $board,
+	            'pager' => $topicsPager,
+	            'posts_per_page' => $postsPerPage,
+	            'sticky_topics' => $stickyTopics,
+	        )
+		);
     }
 }
