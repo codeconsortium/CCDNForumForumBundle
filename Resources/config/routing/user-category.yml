@@ -8,5 +8,5 @@ ccdn_forum_user_category_index:
     defaults: { _controller: CCDNForumForumBundle:UserCategory:index, _locale: en, forumName: default }
 
 ccdn_forum_user_category_show:
-    pattern: /{categoryId}
+    pattern: /category/{categoryId}
     defaults: { _controller: CCDNForumForumBundle:UserCategory:show, _locale: en, forumName: default }

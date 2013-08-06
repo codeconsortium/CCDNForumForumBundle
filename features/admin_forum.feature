@@ -11,15 +11,15 @@ Feature: Forum Management
           | user@foo.com   | root     | 1        | ROLE_USER           |
         And there are following forums defined:
           | name                      | order    |
-		  | test_forum_1              | 1        |
-		  | test_forum_2              | 2        |
-		  | test_forum_3              | 3        |
+		  | test_forum_f1             | 1        |
+		  | test_forum_f2             | 2        |
+		  | test_forum_f3             | 3        |
 
 	Scenario: See Forum list
         Given I am on "/en/forum/admin/manage-forums/" 
-          And I should see "test_forum_1"
-          And I should see "test_forum_2"
-          And I should see "test_forum_3"
+          And I should see "test_forum_f1"
+          And I should see "test_forum_f2"
+          And I should see "test_forum_f3"
 
     Scenario: Create a new Forum
         Given I am on "/en/forum/admin/manage-forums/create"
@@ -37,39 +37,39 @@ Feature: Forum Management
 
     Scenario: Update existing Forum
 	    Given I am on "/en/forum/admin/manage-forums/"
-		  And I follow "update_forum[test_forum_1]"
+		  And I follow "update_forum[test_forum_f1]"
 		  And I should see "Update Forum"
-		  And I should see "test_forum_1"
+		  And I should see "test_forum_f1"
           And I fill in "Forum_ForumUpdate[name]" with "FooBaz"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-forums/"
-		  And I should not see "test_forum_1" for the query "table#admin-forums-list tr td:nth-child(2)"
+		  And I should not see "test_forum_f1" for the query "table#admin-forums-list tr td:nth-child(2)"
           And I should see "FooBaz" for the query "table#admin-forums-list tr td:nth-child(2)"
 
     Scenario: Abort Update existing Forum
 	    Given I am on "/en/forum/admin/manage-forums/"
-		  And I follow "update_forum[test_forum_1]"
+		  And I follow "update_forum[test_forum_f1]"
 		  And I should see "Update Forum"
-		  And I should see "test_forum_1"
+		  And I should see "test_forum_f1"
           And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-forums/"
-		  And I should see "test_forum_1" for the query "table#admin-forums-list tr td:nth-child(2)"
+		  And I should see "test_forum_f1" for the query "table#admin-forums-list tr td:nth-child(2)"
 		  
     Scenario: Delete existing Forum
 	    Given I am on "/en/forum/admin/manage-forums/"
-		  And I follow "delete_forum[test_forum_3]"
+		  And I follow "delete_forum[test_forum_f3]"
 		  And I should see "Delete Forum"
-		  And I should see "test_forum_3"
+		  And I should see "test_forum_f3"
 		  And I check "Forum_ForumDelete[confirm_delete][]"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-forums/"
-          And I should not see "test_forum_3" for the query "table#admin-forums-list tr td:nth-child(2)"
+          And I should not see "test_forum_f3" for the query "table#admin-forums-list tr td:nth-child(2)"
 
     Scenario: Abort deleting existing Forum
 	    Given I am on "/en/forum/admin/manage-forums/"
-		  And I follow "delete_forum[test_forum_3]"
+		  And I follow "delete_forum[test_forum_f3]"
 		  And I should see "Delete Forum"
-		  And I should see "test_forum_3"
+		  And I should see "test_forum_f3"
 		  And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-forums/"
-          And I should see "test_forum_3" for the query "table#admin-forums-list tr td:nth-child(2)"
+          And I should see "test_forum_f3" for the query "table#admin-forums-list tr td:nth-child(2)"

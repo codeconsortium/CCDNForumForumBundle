@@ -11,128 +11,161 @@ Feature: Board Management
           | user@foo.com   | root     | 1        | ROLE_USER           |
         And there are following forums defined:
           | name                      | order    |
-		  | test_forum_1              | 1        |
-		  | test_forum_2              | 2        |
-		  | test_forum_3              | 3        |
+		  | test_forum_f1             | 1        |
+		  | test_forum_f2             | 2        |
+		  | test_forum_f3             | 3        |
         And there are following categories defined:
           | name                      | order    | forum               |
-          | test_category_1           | 1        |                     |
-		  | test_category_2           | 2        |                     |
-		  | test_category_3           | 3        |                     |
-          | test_category_f1_1        | 1        | test_forum_1        |
-		  | test_category_f1_2        | 2        | test_forum_1        |
-		  | test_category_f1_3        | 3        | test_forum_1        |
-          | test_category_f2_1        | 1        | test_forum_2        |
-		  | test_category_f2_2        | 2        | test_forum_2        |
-		  | test_category_f2_3        | 3        | test_forum_2        |
+          | test_category_fn_c1       | 1        |                     |
+		  | test_category_fn_c2       | 2        |                     |
+		  | test_category_fn_c3       | 3        |                     |
+          | test_category_f1_c1       | 1        | test_forum_f1       |
+		  | test_category_f1_c2       | 2        | test_forum_f1       |
+		  | test_category_f1_c3       | 3        | test_forum_f1       |
+          | test_category_f2_c1       | 1        | test_forum_f2       |
+		  | test_category_f2_c2       | 2        | test_forum_f2       |
+		  | test_category_f2_c3       | 3        | test_forum_f2       |
+          | test_category_f3_c1       | 1        | test_forum_f3       |
+		  | test_category_f3_c2       | 2        | test_forum_f3       |
+		  | test_category_f3_c3       | 3        | test_forum_f3       |
         And there are following boards defined:
-          | name                      | description          | order | category              |
-          | test_board_1              | testing board 1      | 1     |                       |
-          | test_board_2              | testing board 2      | 2     |                       |
-          | test_board_3              | testing board 3      | 3     |                       |
-          | test_board_c1_1           | testing board 1      | 1     | test_category_1       |
-          | test_board_c1_2           | testing board 2      | 2     | test_category_1       |
-          | test_board_c1_3           | testing board 3      | 3     | test_category_1       |
-          | test_board_c2_1           | testing board 1      | 1     | test_category_f1_1    |
-          | test_board_c2_2           | testing board 2      | 2     | test_category_f1_1    |
-          | test_board_c2_3           | testing board 3      | 3     | test_category_f1_1    |
-          | test_board_c3_1           | testing board 1      | 1     | test_category_f2_1    |
-          | test_board_c3_2           | testing board 2      | 2     | test_category_f2_1    |
-          | test_board_c3_3           | testing board 3      | 3     | test_category_f2_1    |
+          | name                      | description          | order   | category              |
+          | test_board_fn_cn_b1       | testing board 1      | 1       |                       |
+          | test_board_fn_cn_b2       | testing board 2      | 2       |                       |
+          | test_board_fn_cn_b3       | testing board 3      | 3       |                       |
+          | test_board_fn_c1_b1       | testing board 1      | 1       | test_category_fn_c1   |
+          | test_board_fn_c1_b2       | testing board 2      | 2       | test_category_fn_c1   |
+          | test_board_fn_c1_b3       | testing board 3      | 3       | test_category_fn_c1   |
+          | test_board_fn_c2_b1       | testing board 1      | 1       | test_category_fn_c2   |
+          | test_board_fn_c2_b2       | testing board 2      | 2       | test_category_fn_c2   |
+          | test_board_fn_c2_b3       | testing board 3      | 3       | test_category_fn_c2   |
+          | test_board_fn_c3_b1       | testing board 1      | 1       | test_category_fn_c3   |
+          | test_board_fn_c3_b2       | testing board 2      | 2       | test_category_fn_c3   |
+          | test_board_fn_c3_b3       | testing board 3      | 3       | test_category_fn_c3   |
+          | test_board_f1_c1_b1       | testing board 1      | 1       | test_category_f1_c1   |
+          | test_board_f1_c1_b2       | testing board 2      | 2       | test_category_f1_c1   |
+          | test_board_f1_c1_b3       | testing board 3      | 3       | test_category_f1_c1   |
+          | test_board_f1_c2_b1       | testing board 1      | 1       | test_category_f1_c2   |
+          | test_board_f1_c2_b2       | testing board 2      | 2       | test_category_f1_c2   |
+          | test_board_f1_c2_b3       | testing board 3      | 3       | test_category_f1_c2   |
+          | test_board_f1_c3_b1       | testing board 1      | 1       | test_category_f1_c3   |
+          | test_board_f1_c3_b2       | testing board 2      | 2       | test_category_f1_c3   |
+          | test_board_f1_c3_b3       | testing board 3      | 3       | test_category_f1_c3   |
+          | test_board_f2_c1_b1       | testing board 1      | 1       | test_category_f2_c1   |
+          | test_board_f2_c1_b2       | testing board 2      | 2       | test_category_f2_c1   |
+          | test_board_f2_c1_b3       | testing board 3      | 3       | test_category_f2_c1   |
+          | test_board_f2_c2_b1       | testing board 1      | 1       | test_category_f2_c2   |
+          | test_board_f2_c2_b2       | testing board 2      | 2       | test_category_f2_c2   |
+          | test_board_f2_c2_b3       | testing board 3      | 3       | test_category_f2_c2   |
+          | test_board_f2_c3_b1       | testing board 1      | 1       | test_category_f2_c3   |
+          | test_board_f2_c3_b2       | testing board 2      | 2       | test_category_f2_c3   |
+          | test_board_f2_c3_b3       | testing board 3      | 3       | test_category_f2_c3   |
+          | test_board_f3_c1_b1       | testing board 1      | 1       | test_category_f3_c1   |
+          | test_board_f3_c1_b2       | testing board 2      | 2       | test_category_f3_c1   |
+          | test_board_f3_c1_b3       | testing board 3      | 3       | test_category_f3_c1   |
+          | test_board_f3_c2_b1       | testing board 1      | 1       | test_category_f3_c1   |
+          | test_board_f3_c2_b2       | testing board 2      | 2       | test_category_f3_c1   |
+          | test_board_f3_c2_b3       | testing board 3      | 3       | test_category_f3_c1   |
+          | test_board_f3_c3_b1       | testing board 1      | 1       | test_category_f3_c1   |
+          | test_board_f3_c3_b2       | testing board 2      | 2       | test_category_f3_c1   |
+          | test_board_f3_c3_b3       | testing board 3      | 3       | test_category_f3_c1   |
 
 	Scenario: See Board list
         Given I am on "/en/forum/admin/manage-boards/" 
-          And I should see "test_board_1"
-          And I should see "test_board_2"
-          And I should see "test_board_3"
+          And I should see "test_board_fn_cn_b1"
+          And I should see "test_board_fn_cn_b2"
+          And I should see "test_board_fn_cn_b3"
 
 	Scenario: See Board list filtered by category parametric filter
         Given I am on "/en/forum/admin/manage-boards/"
-          And I should see "test_category_1"
-          And I should see "test_category_2"
-          And I should see "test_category_3"
-		  And I should not see "test_category_f1_1"
-		  And I should not see "test_category_f1_2"
-		  And I should not see "test_category_f1_3"
-		  And I should not see "test_category_f2_1"
-		  And I should not see "test_category_f2_2"
-		  And I should not see "test_category_f2_3"
-		  And I follow "test_forum_1"
-          And I should not see "test_category_1"
-          And I should not see "test_category_2"
-          And I should not see "test_category_3"
-		  And I should see "test_category_f1_1"
-		  And I should see "test_category_f1_2"
-		  And I should see "test_category_f1_3"
-		  And I should not see "test_category_f2_1"
-		  And I should not see "test_category_f2_2"
-		  And I should not see "test_category_f2_3"
-		  And I follow "test_forum_2"
-          And I should not see "test_category_1"
-          And I should not see "test_category_2"
-          And I should not see "test_category_3"
-		  And I should not see "test_category_f1_1"
-		  And I should not see "test_category_f1_2"
-		  And I should not see "test_category_f1_3"
-		  And I should see "test_category_f2_1"
-		  And I should see "test_category_f2_2"
-		  And I should see "test_category_f2_3"
+          And I should see "test_category_fn_c1"
+          And I should see "test_category_fn_c2"
+          And I should see "test_category_fn_c3"
+		  And I should not see "test_category_f1_c1"
+		  And I should not see "test_category_f1_c2"
+		  And I should not see "test_category_f1_c3"
+		  And I should not see "test_category_f2_c1"
+		  And I should not see "test_category_f2_c2"
+		  And I should not see "test_category_f2_c3"
+		  And I follow "test_forum_f1"
+          And I should not see "test_category_fn_c1"
+          And I should not see "test_category_fn_c2"
+          And I should not see "test_category_fn_c3"
+		  And I should see "test_category_f1_c1"
+		  And I should see "test_category_f1_c2"
+		  And I should see "test_category_f1_c3"
+		  And I should not see "test_category_f2_c1"
+		  And I should not see "test_category_f2_c2"
+		  And I should not see "test_category_f2_c3"
+		  And I follow "test_forum_f2"
+          And I should not see "test_category_fn_c1"
+          And I should not see "test_category_fn_c2"
+          And I should not see "test_category_fn_c3"
+		  And I should not see "test_category_f1_c1"
+		  And I should not see "test_category_f1_c2"
+		  And I should not see "test_category_f1_c3"
+		  And I should see "test_category_f2_c1"
+		  And I should see "test_category_f2_c2"
+		  And I should see "test_category_f2_c3"
 
 	Scenario: See Category list filtered by forum and category parametric filter
         Given I am on "/en/forum/admin/manage-boards/"
-		  And I should see "test_board_1"
-		  And I should see "test_board_2"
-		  And I should see "test_board_3"
-		  And I should not see "test_board_c1_1"
-		  And I should not see "test_board_c1_2"
-		  And I should not see "test_board_c1_3"
-		  And I should not see "test_board_c2_1"
-		  And I should not see "test_board_c2_2"
-		  And I should not see "test_board_c2_3"
-		  And I should not see "test_board_c3_1"
-		  And I should not see "test_board_c3_2"
-		  And I should not see "test_board_c3_3"
-          And I follow "test_category_1"
-		  And I should not see "test_board_1"
-		  And I should not see "test_board_2"
-		  And I should not see "test_board_3"
-		  And I should see "test_board_c1_1"
-		  And I should see "test_board_c1_2"
-		  And I should see "test_board_c1_3"
-		  And I should not see "test_board_c2_1"
-		  And I should not see "test_board_c2_2"
-		  And I should not see "test_board_c2_3"
-		  And I should not see "test_board_c3_1"
-		  And I should not see "test_board_c3_2"
-		  And I should not see "test_board_c3_3"
-		  And I follow "test_forum_1"
-		  And I follow "test_category_f1_1"
-		  And I should not see "test_board_1"
-		  And I should not see "test_board_2"
-		  And I should not see "test_board_3"
-		  And I should not see "test_board_c1_1"
-		  And I should not see "test_board_c1_2"
-		  And I should not see "test_board_c1_3"
-		  And I should see "test_board_c2_1"
-		  And I should see "test_board_c2_2"
-		  And I should see "test_board_c2_3"
-		  And I should not see "test_board_c3_1"
-		  And I should not see "test_board_c3_2"
-		  And I should not see "test_board_c3_3"
-		  And I follow "test_forum_2"
-		  And I follow "test_category_f2_1"
-		  And I should not see "test_board_1"
-		  And I should not see "test_board_2"
-		  And I should not see "test_board_3"
-		  And I should not see "test_board_c1_1"
-		  And I should not see "test_board_c1_2"
-		  And I should not see "test_board_c1_3"
-		  And I should not see "test_board_c2_1"
-		  And I should not see "test_board_c2_2"
-		  And I should not see "test_board_c2_3"
-		  And I should see "test_board_c3_1"
-		  And I should see "test_board_c3_2"
-		  And I should see "test_board_c3_3"
+		  And I should see "test_board_fn_cn_b1"
+		  And I should see "test_board_fn_cn_b2"
+		  And I should see "test_board_fn_cn_b3"
+		  And I should not see "test_board_fn_c1_b1"
+		  And I should not see "test_board_fn_c1_b2"
+		  And I should not see "test_board_fn_c1_b3"
+		  And I should not see "test_board_fn_c2_b1"
+		  And I should not see "test_board_fn_c2_b2"
+		  And I should not see "test_board_fn_c2_b3"
+		  And I should not see "test_board_fn_c3_b1"
+		  And I should not see "test_board_fn_c3_b2"
+		  And I should not see "test_board_fn_c3_b3"
+          And I follow "test_category_fn_c1"
+		  And I should not see "test_board_fn_cn_b1"
+		  And I should not see "test_board_fn_cn_b2"
+		  And I should not see "test_board_fn_cn_b3"
+		  And I should see "test_board_fn_c1_b1"
+		  And I should see "test_board_fn_c1_b2"
+		  And I should see "test_board_fn_c1_b3"
+		  And I should not see "test_board_fn_c2_b1"
+		  And I should not see "test_board_fn_c2_b2"
+		  And I should not see "test_board_fn_c2_b3"
+		  And I should not see "test_board_fn_c3_b1"
+		  And I should not see "test_board_fn_c3_b2"
+		  And I should not see "test_board_fn_c3_b3"
+		  And I follow "test_forum_f1"
+		  And I follow "test_category_f1_c1"
+		  And I should not see "test_board_fn_cn_b1"
+		  And I should not see "test_board_fn_cn_b2"
+		  And I should not see "test_board_fn_cn_b3"
+		  And I should not see "test_board_fn_c1_b1"
+		  And I should not see "test_board_fn_c1_b2"
+		  And I should not see "test_board_fn_c1_b3"
+		  And I should see "test_board_f1_c1_b1"
+		  And I should see "test_board_f1_c1_b2"
+		  And I should see "test_board_f1_c1_b3"
+		  And I should not see "test_board_f1_c2_b1"
+		  And I should not see "test_board_f1_c2_b2"
+		  And I should not see "test_board_f1_c2_b3"
+		  And I should not see "test_board_f1_c3_b1"
+		  And I should not see "test_board_f1_c3_b2"
+		  And I should not see "test_board_f1_c3_b3"
+		  And I follow "test_forum_f2"
+		  And I follow "test_category_f2_c1"
+		  And I should not see "test_board_f2_cn_b1"
+		  And I should not see "test_board_f2_cn_b2"
+		  And I should not see "test_board_f2_cn_b3"
+		  And I should see "test_board_f2_c1_b1"
+		  And I should see "test_board_f2_c1_b2"
+		  And I should see "test_board_f2_c1_b3"
+		  And I should not see "test_board_f2_c2_b1"
+		  And I should not see "test_board_f2_c2_b2"
+		  And I should not see "test_board_f2_c2_b3"
+		  And I should not see "test_board_f2_c3_b1"
+		  And I should not see "test_board_f2_c3_b2"
+		  And I should not see "test_board_f2_c3_b3"
 
     Scenario: Create a new Board (Unassigned)
         Given I am on "/en/forum/admin/manage-boards/create"
@@ -145,7 +178,7 @@ Feature: Board Management
     Scenario: Create a new Board (Assigned)
         Given I am on "/en/forum/admin/manage-boards/create"
 		  And I should see "Create New Board"
-		  And I select "test_category_f1_1" from "Forum_BoardCreate[category]"
+		  And I select "test_category_f1_c1" from "Forum_BoardCreate[category]"
           And I fill in "Forum_BoardCreate[name]" with "New Test Board"
 		  And I fill in "Forum_BoardCreate[description]" with "Some description"
           And I press "submit[post]"
@@ -161,81 +194,115 @@ Feature: Board Management
 
     Scenario: Update existing Board (Assign)
 	    Given I am on "/en/forum/admin/manage-boards/"
-		  And I follow "update_board[test_board_1]"
+		  And I follow "update_board[test_board_fn_cn_b1]"
 		  And I should see "Update Board"
-		  And I should see "test_board_1"
-		  And I select "test_category_f1_1" from "Forum_BoardUpdate[category]"
+		  And I should see "test_board_fn_cn_b1"
+		  And I select "test_category_f1_c1" from "Forum_BoardUpdate[category]"
           And I fill in "Forum_BoardUpdate[name]" with "Testing Board update form"
 		  And I fill in "Forum_BoardUpdate[description]" with "new board description"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-boards/"
-		  And I should not see "test_board_1" for the query "table#admin-boards-list tr td:nth-child(2)"
+		  And I should not see "test_board_fn_cn_b1" for the query "table#admin-boards-list tr td:nth-child(2)"
+		  And I should see "test_forum_f1"
+		  And I follow "test_forum_f1"
+		  And I should see "test_category_f1_c1"
+		  And I follow "test_category_f1_c1"
           And I should see "Testing Board update form" for the query "table#admin-boards-list tr td:nth-child(2)"
 
     Scenario: Update existing Board (Unassign)
 	    Given I am on "/en/forum/admin/manage-boards/"
-		  And I follow "test_forum_1"
-		  And I follow "test_category_f1_1"
-		  And I follow "update_board[test_board_c2_1]"
+		  And I should see "test_forum_f1"
+		  And I follow "test_forum_f1"
+		  And I should see "test_category_f1_c2"
+		  And I follow "test_category_f1_c2"
+		  And I follow "update_board[test_board_f1_c2_b1]"
 		  And I should see "Update Board"
-		  And I should see "test_board_c2_1"
+		  And I should see "test_board_f1_c2_b1"
 		  And I select "" from "Forum_BoardUpdate[category]"
           And I fill in "Forum_BoardUpdate[name]" with "Testing Board update form"
 		  And I fill in "Forum_BoardUpdate[description]" with "new board description"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-boards/"
-		  And I should not see "test_board_c2_1" for the query "table#admin-boards-list tr td:nth-child(2)"
           And I should see "Testing Board update form" for the query "table#admin-boards-list tr td:nth-child(2)"
+		  And I should see "test_forum_f1"
+		  And I follow "test_forum_f1"
+		  And I should see "test_category_f1_c2"
+		  And I follow "test_category_f1_c2"
+		  And I should not see "test_board_f1_c2_b1" for the query "table#admin-boards-list tr td:nth-child(2)"
 
     Scenario: Abort Update existing Board
 	    Given I am on "/en/forum/admin/manage-boards/"
-		  And I follow "update_board[test_board_1]"
+		  And I should see "test_forum_f1"
+		  And I follow "test_forum_f1"
+		  And I should see "test_category_f1_c2"
+		  And I follow "test_category_f1_c2"
+		  And I follow "update_board[test_board_f1_c2_b3]"
 		  And I should see "Update Board"
-		  And I should see "test_board_1"
+		  And I should see "test_board_f1_c2_b3"
           And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-boards/"
-		  And I should see "test_board_1" for the query "table#admin-boards-list tr td:nth-child(2)"
+		  And I should see "test_forum_f1"
+		  And I follow "test_forum_f1"
+		  And I should see "test_category_f1_c2"
+		  And I follow "test_category_f1_c2"
+		  And I should see "test_board_f1_c2_b3" for the query "table#admin-boards-list tr td:nth-child(2)"
 
     Scenario: Delete existing Board
 	    Given I am on "/en/forum/admin/manage-boards/"
-		  And I follow "delete_board[test_board_3]"
+		  And I should see "test_forum_f1"
+		  And I follow "test_forum_f1"
+		  And I should see "test_category_f1_c3"
+		  And I follow "test_category_f1_c3"
+		  And I follow "delete_board[test_board_f1_c3_b1]"
 		  And I should see "Delete Board"
-		  And I should see "test_board_3"
+		  And I should see "test_board_f1_c3_b1"
 		  And I check "Forum_BoardDelete[confirm_delete][]"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-boards/"
-          And I should not see "test_board_3" for the query "table#admin-boards-list tr td:nth-child(2)"
+		  And I should see "test_forum_f1"
+		  And I follow "test_forum_f1"
+		  And I should see "test_category_f1_c3"
+		  And I follow "test_category_f1_c3"
+          And I should not see "test_board_f1_c3_b1" for the query "table#admin-boards-list tr td:nth-child(2)"
 
     Scenario: Abort deleting existing Board
 	    Given I am on "/en/forum/admin/manage-boards/"
-		  And I follow "delete_board[test_board_3]"
+		  And I should see "test_forum_f1"
+		  And I follow "test_forum_f1"
+		  And I should see "test_category_f1_c3"
+		  And I follow "test_category_f1_c3"
+		  And I follow "delete_board[test_board_f1_c3_b2]"
 		  And I should see "Delete Board"
-		  And I should see "test_board_3"
+		  And I should see "test_board_f1_c3_b2"
 		  And I follow "Cancel"
 		 Then I should be on "/en/forum/admin/manage-boards/"
-          And I should see "test_board_3" for the query "table#admin-boards-list tr td:nth-child(2)"
+		  And I should see "test_forum_f1"
+		  And I follow "test_forum_f1"
+		  And I should see "test_category_f1_c3"
+		  And I follow "test_category_f1_c3"
+          And I should see "test_board_f1_c3_b2" for the query "table#admin-boards-list tr td:nth-child(2)"
 
 	Scenario: Reorder boards
 		Given I am on "/en/forum/admin/manage-boards/"
-		  And I follow "test_forum_1"
-          And I follow "test_category_f1_1"
-		  And "test_board_c2_1" should precede "test_board_c2_2" for the query "table#admin-boards-list tr td:nth-child(2)"
-          And "test_board_c2_2" should precede "test_board_c2_3" for the query "table#admin-boards-list tr td:nth-child(2)"
-		  And I follow "reorder_up_board[test_board_c2_1]"
-          And "test_board_c2_2" should precede "test_board_c2_3" for the query "table#admin-boards-list tr td:nth-child(2)"
-          And "test_board_c2_3" should precede "test_board_c2_1" for the query "table#admin-boards-list tr td:nth-child(2)"
-		  And I follow "reorder_up_board[test_board_c2_1]"
-          And "test_board_c2_2" should precede "test_board_c2_1" for the query "table#admin-boards-list tr td:nth-child(2)"
-          And "test_board_c2_1" should precede "test_board_c2_3" for the query "table#admin-boards-list tr td:nth-child(2)"
-		  And I follow "reorder_up_board[test_board_c2_1]"
-          And "test_board_c2_1" should precede "test_board_c2_2" for the query "table#admin-boards-list tr td:nth-child(2)"
-          And "test_board_c2_2" should precede "test_board_c2_3" for the query "table#admin-boards-list tr td:nth-child(2)"
-		  And I follow "reorder_down_board[test_board_c2_1]"
-          And "test_board_c2_2" should precede "test_board_c2_1" for the query "table#admin-boards-list tr td:nth-child(2)"
-          And "test_board_c2_1" should precede "test_board_c2_3" for the query "table#admin-boards-list tr td:nth-child(2)"
-		  And I follow "reorder_down_board[test_board_c2_1]"
-          And "test_board_c2_2" should precede "test_board_c2_3" for the query "table#admin-boards-list tr td:nth-child(2)"
-          And "test_board_c2_3" should precede "test_board_c2_1" for the query "table#admin-boards-list tr td:nth-child(2)"
-		  And I follow "reorder_down_board[test_board_c2_1]"
-          And "test_board_c2_1" should precede "test_board_c2_2" for the query "table#admin-boards-list tr td:nth-child(2)"
-          And "test_board_c2_2" should precede "test_board_c2_3" for the query "table#admin-boards-list tr td:nth-child(2)"
+		  And I follow "test_forum_f2"
+          And I follow "test_category_f2_c3"
+		  And "test_board_f2_c3_b1" should precede "test_board_f2_c3_b2" for the query "table#admin-boards-list tr td:nth-child(2)"
+          And "test_board_f2_c3_b2" should precede "test_board_f2_c3_b3" for the query "table#admin-boards-list tr td:nth-child(2)"
+		  And I follow "reorder_up_board[test_board_f2_c3_b1]"
+          And "test_board_f2_c3_b2" should precede "test_board_f2_c3_b3" for the query "table#admin-boards-list tr td:nth-child(2)"
+          And "test_board_f2_c3_b3" should precede "test_board_f2_c3_b1" for the query "table#admin-boards-list tr td:nth-child(2)"
+		  And I follow "reorder_up_board[test_board_f2_c3_b1]"
+          And "test_board_f2_c3_b2" should precede "test_board_f2_c3_b1" for the query "table#admin-boards-list tr td:nth-child(2)"
+          And "test_board_f2_c3_b1" should precede "test_board_f2_c3_b3" for the query "table#admin-boards-list tr td:nth-child(2)"
+		  And I follow "reorder_up_board[test_board_f2_c3_b1]"
+          And "test_board_f2_c3_b1" should precede "test_board_f2_c3_b2" for the query "table#admin-boards-list tr td:nth-child(2)"
+          And "test_board_f2_c3_b2" should precede "test_board_f2_c3_b3" for the query "table#admin-boards-list tr td:nth-child(2)"
+		  And I follow "reorder_down_board[test_board_f2_c3_b1]"
+          And "test_board_f2_c3_b2" should precede "test_board_f2_c3_b1" for the query "table#admin-boards-list tr td:nth-child(2)"
+          And "test_board_f2_c3_b1" should precede "test_board_f2_c3_b3" for the query "table#admin-boards-list tr td:nth-child(2)"
+		  And I follow "reorder_down_board[test_board_f2_c3_b1]"
+          And "test_board_f2_c3_b2" should precede "test_board_f2_c3_b3" for the query "table#admin-boards-list tr td:nth-child(2)"
+          And "test_board_f2_c3_b3" should precede "test_board_f2_c3_b1" for the query "table#admin-boards-list tr td:nth-child(2)"
+		  And I follow "reorder_down_board[test_board_f2_c3_b1]"
+          And "test_board_f2_c3_b1" should precede "test_board_f2_c3_b2" for the query "table#admin-boards-list tr td:nth-child(2)"
+          And "test_board_f2_c3_b2" should precede "test_board_f2_c3_b3" for the query "table#admin-boards-list tr td:nth-child(2)"

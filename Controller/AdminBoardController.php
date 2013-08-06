@@ -47,12 +47,16 @@ class AdminBoardController extends AdminBoardBaseController
 
 		// Corrective Measure incase forum/category filters fall out of sync.
 		if ($categoryFilter) {
-			$category = $this->getCategoryModel()->findOneById($categoryFilter);
+			$category = $this->getCategoryModel()->findOneCategoryById($categoryFilter);
 			
-			if ($category->getForum()) {
-				$forumFilter = $category->getForum()->getId();
+			if ($category) {
+				if ($category->getForum()) {
+					$forumFilter = $category->getForum()->getId();
+				} else {
+					$forumFilter = null; // Force it to be blank so 'unassigned' is highlighted.
+				}
 			} else {
-				$forumFilter = null; // Force it to be blank so 'unassigned' is highlighted.
+				$forumFilter = null;
 			}
 		}
 
@@ -169,7 +173,7 @@ class AdminBoardController extends AdminBoardBaseController
 		$formHandler = $this->getFormHandlerToUpdateBoard($board);
 		
 		$forumFilter = $this->getQuery('forum_filter', null);
-		$categoryFilter = $this->getQuery('forum_filter', null);
+		$categoryFilter = $this->getQuery('category_filter', null);
 		
 		$crumbs = $this->getCrumbs()->addAdminManageBoardsEdit($board);
 		

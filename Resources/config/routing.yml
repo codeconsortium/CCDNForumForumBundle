@@ -36,19 +36,19 @@ CCDNForumForumBundle-Moderator-Post:
 
 CCDNForumForumBundle-User-Category:
     resource: "@CCDNForumForumBundle/Resources/config/routing/user-category.yml"
-    prefix: /{_locale}/forum/category
+    prefix: /{_locale}/forum/{forumName}
 
 CCDNForumForumBundle-User-Board:
     resource: "@CCDNForumForumBundle/Resources/config/routing/user-board.yml"
-    prefix: /{_locale}/forum/board
+    prefix: /{_locale}/forum/{forumName}/board
 
 CCDNForumForumBundle-User-Topic:
     resource: "@CCDNForumForumBundle/Resources/config/routing/user-topic.yml"
-    prefix: /{_locale}/forum/topic
+    prefix: /{_locale}/forum/{forumName}/topic
 
 CCDNForumForumBundle-User-Post:
     resource: "@CCDNForumForumBundle/Resources/config/routing/user-post.yml"
-    prefix: /{_locale}/forum/post
+    prefix: /{_locale}/forum/{forumName}/post
 
 CCDNForumForumBundle-User-Draft:
     resource: "@CCDNForumForumBundle/Resources/config/routing/user-draft.yml"
