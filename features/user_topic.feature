@@ -71,12 +71,12 @@ Feature: User Topic Traversal
           | test_board_f3_c3_b3       | testing board 3      | 3       | test_category_f3_c1   |
         And there are following topics defined:
           | title                     | body                           | board                 | user          |
-          | test_topic_f1_c1_b1_t1    | test_board_f1_c1_b1_t1_p1      | test_board_f1_c1_b1   | user@foo.com  |
-		  | test_topic_f1_c1_b1_t2    | test_board_f1_c1_b1_t2_p1      | test_board_f1_c1_b1   | user@foo.com  |
-          | test_topic_f1_c1_b1_t3    | test_board_f1_c1_b1_t3_p1      | test_board_f1_c1_b1   | user@foo.com  |
-		  | test_topic_f1_c1_b2_t4    | test_board_f1_c1_b2_t4_p1      | test_board_f1_c1_b2   | user@foo.com  |
-          | test_topic_f1_c1_b2_t5    | test_board_f1_c1_b2_t5_p1      | test_board_f1_c1_b2   | user@foo.com  |
-		  | test_topic_f1_c1_b2_t6    | test_board_f1_c1_b2_t6_p1      | test_board_f1_c1_b2   | user@foo.com  |
+          | test_topic_f1_c1_b1_t1    | test_post_f1_c1_b1_t1_p1       | test_board_f1_c1_b1   | user@foo.com  |
+		  | test_topic_f1_c1_b1_t2    | test_post_f1_c1_b1_t2_p1       | test_board_f1_c1_b1   | user@foo.com  |
+          | test_topic_f1_c1_b1_t3    | test_post_f1_c1_b1_t3_p1       | test_board_f1_c1_b1   | user@foo.com  |
+		  | test_topic_f1_c1_b2_t4    | test_post_f1_c1_b2_t4_p1       | test_board_f1_c1_b2   | user@foo.com  |
+          | test_topic_f1_c1_b2_t5    | test_post_f1_c1_b2_t5_p1       | test_board_f1_c1_b2   | user@foo.com  |
+		  | test_topic_f1_c1_b2_t6    | test_post_f1_c1_b2_t6_p1       | test_board_f1_c1_b2   | user@foo.com  |
 
 	Scenario: See Boards topic list filtered by forum and board show
         Given I am on "/en/forum/test_forum_f1"
@@ -88,8 +88,6 @@ Feature: User Topic Traversal
 		  And I should see "test_topic_f1_c1_b1_t1"
 		  And I should see "test_topic_f1_c1_b1_t2"
 		  And I should see "test_topic_f1_c1_b1_t3"
-		  And I follow "test_topic_f1_c1_b1_t1"
-		  And I should see "test_board_f1_c1_b1_t1_p1"
         Given I am on "/en/forum/test_forum_f1" 
 		  And I follow "test_category_f1_c1"
 		  And I should see "test_category_f1_c1"
@@ -99,6 +97,15 @@ Feature: User Topic Traversal
 		  And I should see "test_topic_f1_c1_b2_t4"
 		  And I should see "test_topic_f1_c1_b2_t5"
 		  And I should see "test_topic_f1_c1_b2_t6"
-		  And I follow "test_topic_f1_c1_b2_t4"
-		  And I should see "test_board_f1_c1_b2_t4_p1"
 
+	Scenario: Show existing topic
+        Given I am on "/en/forum/test_forum_f1"
+		  And I follow "test_category_f1_c1"
+		  And I should see "test_category_f1_c1"
+          And I should see "test_board_f1_c1_b1"
+		  And I follow "test_board_f1_c1_b1"
+          And I should see "test_board_f1_c1_b1"
+		  And I should see "test_topic_f1_c1_b1_t1"
+		  And I follow "test_topic_f1_c1_b1_t1"
+		  And I should see "test_topic_f1_c1_b1_t1"
+		  And I should see "test_post_f1_c1_b1_t1_p1"
