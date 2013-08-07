@@ -58,7 +58,7 @@ final class ForumEvents
 	 * The ADMIN_FORUM_CREATE_RESPONSE event occurs when the forum creation process finishes and returns a HTTP response.
 	 * 
 	 * This event allows you to modify the default values of the response object returned from the controller action.
-	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent instance.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumResponseEvent instance.
 	 */
 	const ADMIN_FORUM_CREATE_RESPONSE = 'ccdn_forum.admin.forum.create.response';
 
@@ -94,7 +94,7 @@ final class ForumEvents
 	 * The ADMIN_FORUM_EDIT_RESPONS event occurs when the forum editing process finishes and returns a HTTP response.
 	 * 
 	 * This event allows you to modify the default values of the response object returned from the controller action.
-	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent instance.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumResponseEvent instance.
 	 */
 	const ADMIN_FORUM_EDIT_RESPONSE = 'ccdn_forum.admin.forum.edit.response';
 
@@ -130,7 +130,7 @@ final class ForumEvents
 	 * The ADMIN_FORUM_DELETE_RESPONSE event occurs when the forum deleting process finishes and returns a HTTP response.
 	 * 
 	 * This event allows you to modify the default values of the response object returned from the controller action.
-	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent instance.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumResponseEvent instance.
 	 */
 	const ADMIN_FORUM_DELETE_RESPONSE = 'ccdn_forum.admin.forum.delete.response';
 
@@ -166,7 +166,7 @@ final class ForumEvents
 	 * The ADMIN_CATEGORY_CREATE_RESPONSE event occurs when the category creation process finishes and returns a HTTP response.
 	 * 
 	 * This event allows you to modify the default values of the response object returned from the controller action.
-	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryResponseEvent instance.
 	 */
 	const ADMIN_CATEGORY_CREATE_RESPONSE = 'ccdn_forum.admin.category.create.response';
 
@@ -202,7 +202,7 @@ final class ForumEvents
 	 * The ADMIN_CATEGORY_EDIT_RESPONSE event occurs when the category editing process finishes and returns a HTTP response.
 	 * 
 	 * This event allows you to modify the default values of the response object returned from the controller action.
-	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryResponseEvent instance.
 	 */
 	const ADMIN_CATEGORY_EDIT_RESPONSE = 'ccdn_forum.admin.category.edit.response';
 
@@ -238,7 +238,7 @@ final class ForumEvents
 	 * The ADMIN_CATEGORY_DELETE_RESPONSE event occurs when the category deleting finishes and returns a HTTP response.
 	 * 
 	 * This event allows you to modify the default values of the response object returned from the controller action.
-	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryResponseEvent instance.
 	 */
 	const ADMIN_CATEGORY_DELETE_RESPONSE = 'ccdn_forum.admin.category.delete.response';
 
@@ -274,7 +274,7 @@ final class ForumEvents
 	 * The ADMIN_CATEGORY_REORDER_RESPONSE event occurs when the category reorder process finishes and returns a HTTP response.
 	 * 
 	 * This event allows you to modify the default values of the response object returned from the controller action.
-	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent instance.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryResponseEvent instance.
 	 */
 	const ADMIN_CATEGORY_REORDER_RESPONSE = 'ccdn_forum.admin.category.reorder.response';
 
@@ -310,7 +310,7 @@ final class ForumEvents
 	 * The ADMIN_BOARD_CREATE_RESPONSE event occurs when the board creation process finishes and returns a HTTP response.
 	 * 
 	 * This event allows you to modify the default values of the response object returned from the controller action.
-	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardResponseEvent instance.
 	 */
 	const ADMIN_BOARD_CREATE_RESPONSE = 'ccdn_forum.admin.board.create.response';
 
@@ -346,7 +346,7 @@ final class ForumEvents
 	 * The ADMIN_BOARD_EDIT_RESPONSE event occurs when the board editing process finishes and returns a HTTP response.
 	 * 
 	 * This event allows you to modify the default values of the response object returned from the controller action.
-	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardResponseEvent instance.
 	 */
 	const ADMIN_BOARD_EDIT_RESPONSE = 'ccdn_forum.admin.board.edit.response';
 
@@ -382,7 +382,7 @@ final class ForumEvents
 	 * The ADMIN_BOARD_DELETE_RESPONSE event occurs when the board deleting process finishes and returns a HTTP response.
 	 * 
 	 * This event allows you to modify the default values of the response object returned from the controller action.
-	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardResponseEvent instance.
 	 */
 	const ADMIN_BOARD_DELETE_RESPONSE = 'ccdn_forum.admin.board.delete.response';
 
@@ -418,7 +418,52 @@ final class ForumEvents
 	 * The ADMIN_BOARD_REORDER_RESPONSE event occurs when the board reorder process finishes and returns a HTTP response.
 	 * 
 	 * This event allows you to modify the default values of the response object returned from the controller action.
-	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent instance.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardResponseEvent instance.
 	 */
 	const ADMIN_BOARD_REORDER_RESPONSE = 'ccdn_forum.admin.board.reorder.response';
+	
+	/**
+	 * 
+	 * The USER_TOPIC_CREATE_INITIALISE event occurs when the topic create process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the topic entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent instance.
+	 */
+	const USER_TOPIC_CREATE_INITIALISE = 'ccdn_forum.user.topic.create.initialise';
+
+	/**
+	 * 
+	 * The USER_TOPIC_CREATE_SUCCESS event occurs when the topic create process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the topic entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent instance.
+	 */
+	const USER_TOPIC_CREATE_SUCCESS = 'ccdn_forum.user.topic.create.success';
+
+	/**
+	 * 
+	 * The USER_TOPIC_CREATE_COMPLETE event occurs when the topic create process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the topic entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent instance.
+	 */
+	const USER_TOPIC_CREATE_COMPLETE = 'ccdn_forum.user.topic.create.complete';
+
+	/**
+	 * 
+	 * The USER_TOPIC_CREATE_RESPONSE event occurs when the topic create process finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicResponseEvent instance.
+	 */
+	const USER_TOPIC_CREATE_RESPONSE = 'ccdn_forum.user.topic.create.response';
+	
+	/**
+	 * 
+	 * The USER_TOPIC_CREATE_FLOODED event occurs when the topic create process fails due to flooding being raised.
+	 * 
+	 * This event allows you to modify the request object and set a flash message from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent instance.
+	 */
+	const USER_TOPIC_CREATE_FLOODED = 'ccdn_forum.user.topic.create.flooded';
 }

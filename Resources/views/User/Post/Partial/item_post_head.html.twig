@@ -68,13 +68,14 @@
 										{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
 									</a>
 								</li>
-		                        <li>
+		                        {#
+								<li>
 									<a rel="nofollow" href="{{- path('ccdn_forum_user_topic_reply_with_quote', {'topicId': post.getTopic.getId, 'quoteId': post.getId }) -}}">
 										<i class="icon-pencil"></i>
 										{{- 'link.post.quote' | trans({}, 'CCDNForumForumBundle') -}}
 									</a>
 								</li>
-
+								#}
 		                        {%- if post.getCreatedBy -%}
 		                            {%- if post.getCreatedBy.getId == app.user.getId and not is_granted('ROLE_MODERATOR') -%}
 		                                <li>

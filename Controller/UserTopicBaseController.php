@@ -15,6 +15,7 @@ namespace CCDNForum\ForumBundle\Controller;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Board;
 use CCDNForum\ForumBundle\Entity\Topic;
 
@@ -187,16 +188,20 @@ class UserTopicBaseController extends BaseController
     /**
      *
      * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
      * @param  \CCDNForum\ForumBundle\Entity\Board                        $board
      * @param  int                                                        $draftId
      * @return \CCDNForum\ForumBundle\Form\Handler\TopicCreateFormHandler
      */
-    public function getFormHandlerToCreateTopic(Board $board, $draftId)
+    public function getFormHandlerToCreateTopic(Forum $forum, Board $board)
     {
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_create');
 
+		$formHandler->setForum($forum);
         $formHandler->setBoard($board);
-
+		$formHandler->setUser($this->getUser());
+		$formHandler->setRequest($this->getRequest());
+		
         //if ( ! empty($draftId)) {
         //    $draft = $this->getDraftManager()->findOneById($draftId);
         //}

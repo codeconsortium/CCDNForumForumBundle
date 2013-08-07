@@ -83,8 +83,12 @@ class TopicManager extends BaseManager implements BaseManagerInterface
      * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function postNewTopic(Post $post)
+    public function saveNewTopic(Post $post)
     {
+		if (! $post->getTopic()) {
+			throw new \Exception('Post must have a set topic to be saved.');
+		}
+		
         // insert a new row.
         $this->persist($post)->flush();
 
@@ -99,15 +103,15 @@ class TopicManager extends BaseManager implements BaseManagerInterface
         $this->persist($topic)->flush();
         $this->refresh($topic);
 
-        if ($topic->getBoard()) {
-            // Update affected Board stats.
-            $this->managerBag->getBoardManager()->updateStats($topic->getBoard())->flush();
-        }
+        //if ($topic->getBoard()) {
+        //    // Update affected Board stats.
+        //    $this->managerBag->getBoardManager()->updateStats($topic->getBoard())->flush();
+        //}
 
         // Subscribe the user to the topic.
-        $this->managerBag->getSubscriptionManager()->subscribe($topic)->flush();
+        //$this->managerBag->getSubscriptionManager()->subscribe($topic)->flush();
 
-        $this->managerBag->getRegistryManager()->updateCachedPostCountForUser($post->getCreatedBy())->flush();
+        //$this->managerBag->getRegistryManager()->updateCachedPostCountForUser($post->getCreatedBy())->flush();
 
         return $this;
     }

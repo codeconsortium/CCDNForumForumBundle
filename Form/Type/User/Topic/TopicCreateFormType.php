@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the CCDNForum AdminBundle
+ * This file is part of the CCDNForum ForumBundle
  *
  * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
  *
@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Type;
+namespace CCDNForum\ForumBundle\Form\Type\User\Topic;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,7 +27,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class TopicChangeBoardFormType extends AbstractType
+class TopicCreateFormType extends AbstractType
 {
     /**
      *
@@ -63,13 +63,20 @@ class TopicChangeBoardFormType extends AbstractType
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
+            ->add('title', null,
+                array(
+                    'label'              => 'form.label.topic.title',
+                    'translation_domain' => 'CCDNForumForumBundle'
+                )
+            )
         ;
     }
 
     /**
      *
      * @access public
-     * @param array $options
+     * @param  array $options
+     * @return array
      */
     public function getDefaultOptions(array $options)
     {
@@ -78,8 +85,8 @@ class TopicChangeBoardFormType extends AbstractType
             'csrf_protection'    => true,
             'csrf_field_name'    => '_token',
             // a unique key to help generate the secret token
-            'intention'          => 'topic_change_board',
-            'validation_groups'  => array('topic_update'),
+            'intention'          => 'forum_topic_create_item',
+            'validation_groups'  => array('forum_topic_create'),
             'boards'             => array(),
         );
     }
@@ -91,6 +98,6 @@ class TopicChangeBoardFormType extends AbstractType
      */
     public function getName()
     {
-        return 'TopicChangeBoard';
+        return 'Topic';
     }
 }

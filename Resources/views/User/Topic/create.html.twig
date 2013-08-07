@@ -4,10 +4,6 @@
 
 {% block title %}{{- truncDot('title.topic.create' | trans({'%board_name%': board.getName }, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
 
-{% block javascripts_extra %}
-	<script src="{{- asset('bundles/ccdncomponentbbcode/js/jquery.bbeditor.js') -}}" type="text/javascript"></script>
-{% endblock %}
-
 
 {% block body_content %}
 
@@ -15,7 +11,7 @@
 
 	<section>
 		{%- form_theme form ccdn_forum_forum.topic.create.form_theme -%}
-		<form action="{{- path('ccdn_forum_user_topic_create', { 'boardId': board.id } ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
+		<form action="{{- path('ccdn_forum_user_topic_create_process', {'forumName': forum.name, 'boardId': board.id } ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
 			<fieldset>
 
 				<div class="control-group form-title">
@@ -33,12 +29,12 @@
 				{{- form_rest(form) -}}
 
 				<div class="form-actions">
-					<input type="submit" class="btn btn-primary" value="{{- 'form.button.topic.create' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]">
+					<input type="submit" class="btn btn-primary" value="{{- 'form.button.topic.create' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]" id="submit[post]">
 					{#
 					<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">
 					<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.save_draft' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_draft">
 					#}
-					<a class="btn" href="{{- path('ccdn_forum_user_board_show', {'boardId': board.id}) -}}">
+					<a class="btn" href="{{- path('ccdn_forum_user_board_show', {'forumName': forum.name, 'boardId': board.id}) -}}">
 						{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
 					</a>
 				</div>
@@ -48,7 +44,7 @@
 
     {%- if preview is defined -%}
         {%- if preview is not empty -%}
-            {%- include "CCDNForumForumBundle:Post:post_preview.html.twig" with {'post': preview} -%}
+            {%- include "CCDNForumForumBundle:User:Post/Partial/post_preview.html.twig" with {'post': preview} -%}
         {%- endif -%}
     {%- endif -%}
 

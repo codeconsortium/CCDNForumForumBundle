@@ -21,6 +21,8 @@ use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent;
 
 /**
  *
@@ -33,7 +35,7 @@ use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class AdminFlashListener implements EventSubscriberInterface
+class FlashListener implements EventSubscriberInterface
 {
 	/**
 	 * 
@@ -68,6 +70,8 @@ class AdminFlashListener implements EventSubscriberInterface
 			ForumEvents::ADMIN_BOARD_CREATE_COMPLETE    => 'onBoardCreateComplete',
 			ForumEvents::ADMIN_BOARD_EDIT_COMPLETE      => 'onBoardEditComplete',
 			ForumEvents::ADMIN_BOARD_DELETE_COMPLETE    => 'onBoardDeleteComplete',
+			ForumEvents::USER_TOPIC_CREATE_COMPLETE     => 'onTopicCreateComplete',
+			ForumEvents::USER_TOPIC_CREATE_FLOODED      => 'onTopicCreateFlooded',
 		);
 	}
 
@@ -195,5 +199,30 @@ class AdminFlashListener implements EventSubscriberInterface
 				$this->session->setFlash('success', 'Successfully deleted the board "' . $event->getBoard()->getName() .'"');
 			}
 		}
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
+	 */
+	public function onTopicCreateComplete(UserTopicEvent $event)
+	{
+		if ($event->getTopic()) {
+			if ($event->getTopic()->getId()) {
+				$this->session->setFlash('success', 'Successfully posted the topic "' . $event->getTopic()->getTitle() .'"');
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent $event
+	 */
+	public function onTopicCreateFlooded(UserTopicFloodEvent $event)
+	{
+		$this->session->setFlash('warning', 'You have posted too much in a short time, take a break.');
+	    //$this->setFlash('warning', $this->trans('flash.topic.flood_control'));
 	}
 }

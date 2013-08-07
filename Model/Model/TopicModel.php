@@ -22,6 +22,7 @@ use CCDNForum\ForumBundle\Model\Model\BaseModel;
 use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
 
 use CCDNForum\ForumBundle\Entity\Topic;
+use CCDNForum\ForumBundle\Entity\Post;
 
 /**
  *
@@ -46,12 +47,29 @@ class TopicModel extends BaseModel implements BaseModelInterface
     {
         return $this->getRepository()->findOneTopicByIdWithBoardAndCategory($topicId, $canViewDeletedTopics);
     }
-	
-	
-	
-	
-	
-	
+    /**
+     *
+     * Post must have a set topic for topic to be set correctly.
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function saveNewTopic(Post $post)
+    {
+        return $this->getManager()->saveNewTopic($post);
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -178,18 +196,7 @@ class TopicModel extends BaseModel implements BaseModelInterface
         return $this->getManager()->incrementViewCounter($topic);
     }
 
-    /**
-     *
-     * Post must have a set topic for topic to be set  correctly.
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function postNewTopic(Post $post)
-    {
-        return $this->getManager()->postNewTopic($post);
-    }
+
 
     /**
      *

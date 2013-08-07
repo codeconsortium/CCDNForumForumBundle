@@ -55,23 +55,47 @@ class BoardRepository extends BaseRepository implements BaseRepositoryInterface
      * @access public
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function findAllBoardsForCategoryById($boardId)
+    public function findAllBoardsForCategoryById($categoryId)
     {
 		$params = array();
 
         $qb = $this->createSelectQuery(array('b'));
 
-		if ($boardId == null) {
+		if ($categoryId == null) {
 	        $qb->where('b.category IS NULL');
 		} else {
-			$params[':boardId'] = $boardId;
-	        $qb->where('b.category = :boardId');
+			$params[':categoryId'] = $categoryId;
+	        $qb->where('b.category = :categoryId');
 		}
 		
         $qb->addOrderBy('b.listOrderPriority', 'ASC');
 
         return $this->gateway->findBoards($qb, $params);
     }
+
+    /**
+     *
+     * @access public
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function findAllBoardsForForumById($forumId)
+	{
+		$params = array();
+
+        $qb = $this->createSelectQuery(array('b'));
+
+		$params[':forumId'] = $forumId;
+
+		$qb
+			->leftJoin('b.category', 'c')
+			->leftJoin('c.forum', 'f')
+		    ->where('f.id = :forumId')
+		;
+		
+        $qb->addOrderBy('b.listOrderPriority', 'ASC');
+
+        return $this->gateway->findBoards($qb, $params);
+	}
 
     /**
      *

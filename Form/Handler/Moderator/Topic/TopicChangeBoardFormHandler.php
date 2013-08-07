@@ -11,13 +11,17 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Handler;
+namespace CCDNForum\ForumBundle\Form\Handler\Moderator\Topic;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
-use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
+use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
+//use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
+
+//use CCDNForum\ForumBundle\Model\BaseModelInterface;
 use CCDNForum\ForumBundle\Entity\Board;
 use CCDNForum\ForumBundle\Entity\Topic;
 
@@ -51,16 +55,16 @@ class TopicChangeBoardFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $topicManager
+     * @var \CCDNForum\ForumBundle\Model\BaseModelInterface $topicModel
      */
-    protected $topicManager;
+    protected $topicModel;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $boardManager
+     * @var \CCDNForum\ForumBundle\Model\BaseModelInterface $boardModel
      */
-    protected $boardManager;
+    protected $boardModel;
 
     /**
      *
@@ -76,20 +80,36 @@ class TopicChangeBoardFormHandler
      */
     protected $oldBoard;
 
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+	 */
+	protected $dispatcher;
+
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\HttpFoundation\Request $request
+	 */
+	protected $request;
+
     /**
      *
      * @access public
+     * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
      * @param \Symfony\Component\Form\FormFactory                   $factory
      * @param \CCDNForum\ForumBundle\Form\Type\TopicChangeBoardType $formTopicChangeBoardType
-     * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface   $topicManager
-     * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface   $boardManager
+     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface   $topicModel
+     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface   $boardModel
      */
-    public function __construct(FormFactory $factory, $formTopicChangeBoardType, BaseManagerInterface $topicManager, BaseManagerInterface $boardManager)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formTopicChangeBoardType, $topicModel, $boardModel)
     {
+		$this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->formTopicChangeBoardType = $formTopicChangeBoardType;
-        $this->topicManager = $topicManager;
-        $this->boardManager = $boardManager;
+        $this->topicModel = $topicModel;
+        $this->boardModel = $boardModel;
     }
 
     /**
@@ -109,20 +129,29 @@ class TopicChangeBoardFormHandler
      *
      * @access public
      * @param  \Symfony\Component\HttpFoundation\Request $request
+     */
+	public function setRequest(Request $request)
+	{
+		$this->request = $request;
+	}
+
+    /**
+     *
+     * @access public
      * @return bool
      */
-    public function process(Request $request)
+    public function process()
     {
         $this->getForm();
 
-        if ($request->getMethod() == 'POST') {
-            $this->form->bind($request);
+        if ($this->request->getMethod() == 'POST') {
+            $this->form->bind($this->request);
 
             // Validate
             if ($this->form->isValid()) {
                 $formData = $this->form->getData();
 
-                if ($this->getSubmitAction($request) == 'post') {
+                if ($this->getSubmitAction() == 'post') {
                     $this->onSuccess($formData);
 
                     return true;
@@ -136,13 +165,12 @@ class TopicChangeBoardFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
      * @return string
      */
-    public function getSubmitAction(Request $request)
+    public function getSubmitAction()
     {
-        if ($request->request->has('submit')) {
-            $action = key($request->request->get('submit'));
+        if ($this->request->request->has('submit')) {
+            $action = key($this->request->request->get('submit'));
         } else {
             $action = 'post';
         }
@@ -164,7 +192,7 @@ class TopicChangeBoardFormHandler
 
             // Boards are pre-filtered for proper rights managements, moderators may move Topics,
             // but some boards may only be accessible by admins, so moderators should not see them.
-            $filteredBoards = $this->boardManager->findAllForFormDropDown();
+            $filteredBoards = $this->boardModel->findAllForFormDropDown();
             $options = array('boards' => $filteredBoards);
 
             $this->form = $this->factory->create($this->formTopicChangeBoardType, $this->topic, $options);
@@ -177,22 +205,22 @@ class TopicChangeBoardFormHandler
      *
      * @access protected
      * @param $entity
-     * @return TopicManager
+     * @return TopicModel
      */
     protected function onSuccess(Topic $topic)
     {
-        $this->topicManager->updateTopic($topic)->flush();
+        $this->topicModel->updateTopic($topic)->flush();
 
         // Update stats of the topics old board.
         if ($this->oldBoard) {
-            $this->boardManager->updateStats($this->oldBoard)->flush();
+            $this->boardModel->updateStats($this->oldBoard)->flush();
         }
 
         // Setup stats on the topics new board.
         if ($topic->getBoard()) {
-            $this->boardManager->updateStats($topic->getBoard())->flush();
+            $this->boardModel->updateStats($topic->getBoard())->flush();
         }
 
-        return $this->topicManager;
+        return $this->topicModel;
     }
 }

@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Type;
+namespace CCDNForum\ForumBundle\Form\Type\User\Topic;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,7 +27,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class TopicCreateFormType extends AbstractType
+class TopicUpdateFormType extends AbstractType
 {
     /**
      *
@@ -54,15 +54,6 @@ class TopicCreateFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('board', 'entity',
-                array(
-                    'property'           => 'name',
-                    'class'              => 'CCDNForumForumBundle:Board',
-                    'choices'            => $options['boards'],
-                    'label'              => 'form.label.board',
-                    'translation_domain' => 'CCDNForumForumBundle',
-                )
-            )
             ->add('title', null,
                 array(
                     'label'              => 'form.label.topic.title',
@@ -81,13 +72,12 @@ class TopicCreateFormType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class'         => 'CCDNForum\ForumBundle\Entity\Topic',
+            'data_class'         => $this->topicClass,
             'csrf_protection'    => true,
             'csrf_field_name'    => '_token',
             // a unique key to help generate the secret token
             'intention'          => 'topic_item',
-            'validation_groups'  => array('topic_create'),
-            'boards'             => array(),
+            'validation_groups'  => array('topic_update'),
         );
     }
 

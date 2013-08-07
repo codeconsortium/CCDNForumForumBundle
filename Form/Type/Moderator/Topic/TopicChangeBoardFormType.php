@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the CCDNForum ForumBundle
+ * This file is part of the CCDNForum AdminBundle
  *
  * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
  *
@@ -11,12 +11,10 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Type;
+namespace CCDNForum\ForumBundle\Form\Type\Moderator\Topic;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-
-use CCDNForum\ForumBundle\Entity\Post;
 
 /**
  *
@@ -29,23 +27,23 @@ use CCDNForum\ForumBundle\Entity\Post;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class PostUpdateFormType extends AbstractType
+class TopicChangeBoardFormType extends AbstractType
 {
     /**
      *
      * @access protected
-     * @var string $postClass
+     * @var string $topicClass
      */
-    protected $postClass;
+    protected $topicClass;
 
     /**
      *
      * @access public
-     * @var string $postClass
+     * @var string $topicClass
      */
-    public function __construct($postClass)
+    public function __construct($topicClass)
     {
-        $this->postClass = $postClass;
+        $this->topicClass = $topicClass;
     }
 
     /**
@@ -56,9 +54,12 @@ class PostUpdateFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('body', 'textarea',
+            ->add('board', 'entity',
                 array(
-                    'label'              => 'form.label.post.body',
+                    'property'           => 'name',
+                    'class'              => 'CCDNForumForumBundle:Board',
+                    'choices'            => $options['boards'],
+                    'label'              => 'form.label.board',
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
@@ -68,19 +69,18 @@ class PostUpdateFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  array $options
-     * @return array
+     * @param array $options
      */
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class'          => $this->postClass,
-            'csrf_protection'     => true,
-            'csrf_field_name'     => '_token',
+            'data_class'         => $this->topicClass,
+            'csrf_protection'    => true,
+            'csrf_field_name'    => '_token',
             // a unique key to help generate the secret token
-            'intention'           => 'post_item',
-            'validation_groups'   => array('post_update'),
-            'cascade_validation'  => true,
+            'intention'          => 'topic_change_board',
+            'validation_groups'  => array('topic_update'),
+            'boards'             => array(),
         );
     }
 
@@ -91,6 +91,6 @@ class PostUpdateFormType extends AbstractType
      */
     public function getName()
     {
-        return 'Post';
+        return 'Topic';
     }
 }

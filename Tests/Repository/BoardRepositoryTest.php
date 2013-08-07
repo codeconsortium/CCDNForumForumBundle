@@ -40,6 +40,20 @@ class BoardRepositoryTest extends TestBase
 		}
 	}
 	
+	public function testFindAllBoardsForForumById()
+	{
+		//$this->purge();
+		//$forums = $this->addFixturesForForums();
+		//$categories = $this->addFixturesForCategories($forums);
+		//$this->addFixturesForBoards($categories);
+
+		foreach ($this->categories as $category) {
+			$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
+	
+			$this->assertCount(3, $boards);
+		}
+	}
+	
 	public function testFindOneBoardById()
 	{
 		$board = $this->addNewBoard('TestBoard', 'generic description', 1);

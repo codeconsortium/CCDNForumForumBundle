@@ -11,14 +11,21 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Handler;
+namespace CCDNForum\ForumBundle\Form\Handler\User\Topic;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
-use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 
+use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent;
+
+//use CCDNForum\ForumBundle\Model\BaseModelInterface;
+
+use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Board;
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
@@ -60,16 +67,16 @@ class TopicCreateFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $topicManager
+     * @var \CCDNForum\ForumBundle\Model\BaseModelInterface $topicModel
      */
-    protected $topicManager;
+    protected $topicModel;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $boardManager
+     * @var \CCDNForum\ForumBundle\Model\BaseModelInterface $boardModel
      */
-    protected $boardManager;
+    protected $boardModel;
 
     /**
      *
@@ -87,20 +94,76 @@ class TopicCreateFormHandler
 
     /**
      *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Entity\Forum $forum
+     */
+    protected $forum;
+
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+	 */
+	protected $dispatcher;
+
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\HttpFoundation\Request $request
+	 */
+	protected $request;
+
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\Security\Core\User\UserInterface
+	 */
+	protected $user;
+
+    /**
+     *
      * @access public
+     * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
      * @param \Symfony\Component\Form\FormFactory                 $factory
      * @param \CCDNForum\ForumBundle\Form\Type\TopicType          $formTopicType
      * @param \CCDNForum\ForumBundle\Form\Type\PostType           $formPostType
-     * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $topicManager
-     * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $boardManager
+     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface $topicModel
+     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface $boardModel
      */
-    public function __construct(FormFactory $factory, $formTopicType, $formPostType, BaseManagerInterface $topicManager, BaseManagerInterface $boardManager)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formTopicType, $formPostType, $topicModel, $boardModel)
     {
+		$this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->formTopicType = $formTopicType;
         $this->formPostType = $formPostType;
-        $this->topicManager = $topicManager;
-        $this->boardManager = $boardManager;
+        $this->topicModel = $topicModel;
+        $this->boardModel = $boardModel;
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \Symfony\Component\Security\Core\User\UserInterface       $user
+     * @return \CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
+     */
+	public function setUser(UserInterface $user)
+	{
+		$this->user = $user;
+		
+		return $this;
+	}
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
+     * @return \CCDNForum\ForumBundle\Form\Handler\TopicCreateFormHandler
+     */
+    public function setForum(Forum $forum)
+    {
+        $this->forum = $forum;
+
+        return $this;
     }
 
     /**
@@ -120,20 +183,29 @@ class TopicCreateFormHandler
      *
      * @access public
      * @param  \Symfony\Component\HttpFoundation\Request $request
+     */
+	public function setRequest(Request $request)
+	{
+		$this->request = $request;
+	}
+
+    /**
+     *
+     * @access public
      * @return bool
      */
-    public function process(Request $request)
+    public function process()
     {
         $this->getForm();
 
-        if ($request->getMethod() == 'POST') {
-            $this->form->bind($request);
+        if ($this->request->getMethod() == 'POST') {
+            $this->form->bind($this->request);
 
             // Validate
             if ($this->form->isValid()) {
                 $formData = $this->form->getData();
 
-                if ($this->getSubmitAction($request) == 'post') {
+                if ($this->getSubmitAction() == 'post') {
                     $this->onSuccess($formData);
 
                     return true;
@@ -147,13 +219,12 @@ class TopicCreateFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
      * @return string
      */
-    public function getSubmitAction(Request $request)
+    public function getSubmitAction()
     {
-        if ($request->request->has('submit')) {
-            $action = key($request->request->get('submit'));
+        if ($this->request->request->has('submit')) {
+            $action = key($this->request->request->get('submit'));
         } else {
             $action = 'post';
         }
@@ -173,7 +244,7 @@ class TopicCreateFormHandler
                 throw new \Exception('Board must be specified to be create a Topic in TopicCreateFormHandler');
             }
 
-            $filteredBoards = $this->boardManager->findAllForFormDropDown();
+            $filteredBoards = $this->boardModel->findAllBoardsForForumById($this->forum->getId());
             $topicOptions = array(
                 'boards' => $filteredBoards,
             );
@@ -183,7 +254,9 @@ class TopicCreateFormHandler
 
             $post = new Post();
             $post->setTopic($topic);
-            $post->setCreatedBy($this->topicManager->getUser());
+            $post->setCreatedBy($this->user);
+
+			$this->dispatcher->dispatch(ForumEvents::USER_TOPIC_CREATE_INITIALISE, new UserTopicEvent($this->request, $post->getTopic()));
 
             $this->form = $this->factory->create($this->formPostType, $post);
             $this->form->add($this->factory->create($this->formTopicType, $topic, $topicOptions));
@@ -195,13 +268,13 @@ class TopicCreateFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Post          $post
-     * @return \CCDNForum\ForumBundle\Manager\TopicManager
+     * @param  \CCDNForum\ForumBundle\Entity\Post      $post
+     * @return \CCDNForum\ForumBundle\Model\TopicModel
      */
     protected function onSuccess(Post $post)
     {
         $post->setCreatedDate(new \DateTime());
-        $post->setCreatedBy($this->topicManager->getUser());
+        $post->setCreatedBy($this->user);
         $post->setIsLocked(false);
         $post->setIsDeleted(false);
 
@@ -211,6 +284,8 @@ class TopicCreateFormHandler
         $post->getTopic()->setIsDeleted(false);
         $post->getTopic()->setIsSticky(false);
 
-        return $this->topicManager->postNewTopic($post)->flush();
+		$this->dispatcher->dispatch(ForumEvents::USER_TOPIC_CREATE_SUCCESS, new UserTopicEvent($this->request, $post->getTopic()));
+
+        return $this->topicModel->saveNewTopic($post)->flush();
     }
 }

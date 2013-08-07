@@ -11,10 +11,12 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Type;
+namespace CCDNForum\ForumBundle\Form\Type\User\Post;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+
+use CCDNForum\ForumBundle\Entity\Post;
 
 /**
  *
@@ -27,23 +29,23 @@ use Symfony\Component\Form\FormBuilderInterface;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class TopicUpdateFormType extends AbstractType
+class PostUpdateFormType extends AbstractType
 {
     /**
      *
      * @access protected
-     * @var string $topicClass
+     * @var string $postClass
      */
-    protected $topicClass;
+    protected $postClass;
 
     /**
      *
      * @access public
-     * @var string $topicClass
+     * @var string $postClass
      */
-    public function __construct($topicClass)
+    public function __construct($postClass)
     {
-        $this->topicClass = $topicClass;
+        $this->postClass = $postClass;
     }
 
     /**
@@ -54,10 +56,10 @@ class TopicUpdateFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', null,
+            ->add('body', 'textarea',
                 array(
-                    'label'              => 'form.label.topic.title',
-                    'translation_domain' => 'CCDNForumForumBundle'
+                    'label'              => 'form.label.post.body',
+                    'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
         ;
@@ -72,12 +74,13 @@ class TopicUpdateFormType extends AbstractType
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class'         => $this->topicClass,
-            'csrf_protection'    => true,
-            'csrf_field_name'    => '_token',
+            'data_class'          => $this->postClass,
+            'csrf_protection'     => true,
+            'csrf_field_name'     => '_token',
             // a unique key to help generate the secret token
-            'intention'          => 'topic_item',
-            'validation_groups'  => array('topic_update'),
+            'intention'           => 'post_item',
+            'validation_groups'   => array('post_update'),
+            'cascade_validation'  => true,
         );
     }
 
@@ -88,6 +91,6 @@ class TopicUpdateFormType extends AbstractType
      */
     public function getName()
     {
-        return 'Topic';
+        return 'Post';
     }
 }

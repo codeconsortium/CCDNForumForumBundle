@@ -15,11 +15,12 @@ services:
     ccdn_forum_forum.form.handler.topic_create:
         class: %ccdn_forum_forum.form.handler.topic_create.class%
         arguments:
+            - @event_dispatcher
             - @form.factory
             - @ccdn_forum_forum.form.type.topic_create
             - @ccdn_forum_forum.form.type.post_create
-            - @ccdn_forum_forum.manager.topic
-            - @ccdn_forum_forum.manager.board
+            - @ccdn_forum_forum.model.topic
+            - @ccdn_forum_forum.model.board
 
     ccdn_forum_forum.form.type.topic_update:
         class: %ccdn_forum_forum.form.type.topic_update.class%
@@ -29,11 +30,12 @@ services:
     ccdn_forum_forum.form.handler.topic_update:
         class: %ccdn_forum_forum.form.handler.topic_update.class%
         arguments:
+            - @event_dispatcher
             - @form.factory
             - @ccdn_forum_forum.form.type.topic_update
             - @ccdn_forum_forum.form.type.post_update
-            - @ccdn_forum_forum.manager.topic
-            - @ccdn_forum_forum.manager.post
+            - @ccdn_forum_forum.model.topic
+            - @ccdn_forum_forum.model.post
 
     ccdn_forum_forum.form.type.change_topics_board:
         class: %ccdn_forum_forum.form.type.change_topics_board.class%
@@ -43,7 +45,8 @@ services:
     ccdn_forum_forum.form.handler.change_topics_board:
         class: %ccdn_forum_forum.form.handler.change_topics_board.class%
         arguments:
+            - @event_dispatcher
             - @form.factory
             - @ccdn_forum_forum.form.type.change_topics_board
-            - @ccdn_forum_forum.manager.topic
-            - @ccdn_forum_forum.manager.board
+            - @ccdn_forum_forum.model.topic
+            - @ccdn_forum_forum.model.board

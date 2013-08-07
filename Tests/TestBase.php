@@ -77,7 +77,7 @@ class TestBase extends WebTestCase
         $executor->purge();
 	}
 	
-	protected function addUser($username, $email, $password)
+	protected function addNewUser($username, $email, $password)
 	{
 		$user = new User();
 		
@@ -99,7 +99,7 @@ class TestBase extends WebTestCase
 		$users = array();
 		
 		foreach ($userNames as $username) {
-			$users[] = $this->addUser($username, $username . '@foobar.com', 'password');
+			$users[$username] = $this->addNewUser($username, $username . '@foobar.com', 'password');
 		}
 	
 		return $users;

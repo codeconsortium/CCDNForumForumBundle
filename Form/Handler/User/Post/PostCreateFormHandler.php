@@ -11,13 +11,18 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Handler;
+namespace CCDNForum\ForumBundle\Form\Handler\User\Post;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
-use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
+use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
+//use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
+
+//use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
@@ -52,9 +57,9 @@ class PostCreateFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $manager
+     * @var \CCDNForum\ForumBundle\Model\BaseModelInterface $postModel
      */
-    protected $manager;
+    protected $postModel;
 
     /**
      *
@@ -77,19 +82,55 @@ class PostCreateFormHandler
      */
     protected $postToQuote;
 
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+	 */
+	protected $dispatcher;
+
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\HttpFoundation\Request $request
+	 */
+	protected $request;
+
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\Security\Core\User\UserInterface
+	 */
+	protected $user;
+
     /**
      *
      * @access public
+     * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
      * @param \Symfony\Component\Form\FormFactory                 $factory
      * @param \CCDNForum\ForumBundle\Form\Type\PostType           $formPostType
-     * @param \CCDNForum\ForumBundle\Manager\BaseManagerInterface $manager
+     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface     $postModel
      */
-    public function __construct(FormFactory $factory, $formPostType, BaseManagerInterface $manager)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formPostType, $postModel)
     {
+		$this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->formPostType = $formPostType;
-        $this->manager = $manager;
+        $this->postModel = $postModel;
     }
+
+    /**
+     *
+     * @access public
+     * @param  \Symfony\Component\Security\Core\User\UserInterface       $user
+     * @return \CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
+     */
+	public function setUser(UserInterface $user)
+	{
+		$this->user = $user;
+		
+		return $this;
+	}
 
     /**
      *
@@ -121,20 +162,29 @@ class PostCreateFormHandler
      *
      * @access public
      * @param  \Symfony\Component\HttpFoundation\Request $request
+     */
+	public function setRequest(Request $request)
+	{
+		$this->request = $request;
+	}
+
+    /**
+     *
+     * @access public
      * @return bool
      */
-    public function process(Request $request)
+    public function process()
     {
         $this->getForm();
 
-        if ($request->getMethod() == 'POST') {
-            $this->form->bind($request);
+        if ($this->request->getMethod() == 'POST') {
+            $this->form->bind($this->request);
 
             // Validate
             if ($this->form->isValid()) {
                 $formData = $this->form->getData();
 
-                if ($this->getSubmitAction($request) == 'post') {
+                if ($this->getSubmitAction() == 'post') {
                     $this->onSuccess($formData);
 
                     return true;
@@ -148,13 +198,12 @@ class PostCreateFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
      * @return string
      */
-    public function getSubmitAction(Request $request)
+    public function getSubmitAction()
     {
-        if ($request->request->has('submit')) {
-            $action = key($request->request->get('submit'));
+        if ($this->request->request->has('submit')) {
+            $action = key($this->request->request->get('submit'));
         } else {
             $action = 'post';
         }
@@ -212,11 +261,11 @@ class PostCreateFormHandler
     protected function onSuccess(Post $post)
     {
         $post->setCreatedDate(new \DateTime());
-        $post->setCreatedBy($this->manager->getUser());
+        $post->setCreatedBy($this->postModel->getUser());
         $post->setTopic($this->topic);
         $post->setIsLocked(false);
         $post->setIsDeleted(false);
 
-        return $this->manager->postTopicReply($post)->flush();
+        return $this->postModel->postTopicReply($post)->flush();
     }
 }
