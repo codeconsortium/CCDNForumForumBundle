@@ -227,7 +227,7 @@ class UserTopicBaseController extends BaseController
         //}
 
         //if ( ! empty($quoteId)) {
-        //    $quote = $this->getPostModel()->findOneByIdWithTopicAndBoard($quoteId);
+        //    $quote = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($quoteId);
         //
         //    $formHandler->setPostToQuote($quote);
         //}

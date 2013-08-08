@@ -31,15 +31,19 @@ class UserPostController extends UserPostBaseController
     /**
      *
      * @access public
+     * @param  string         $forumName
      * @param  int            $postId
      * @return RenderResponse
      */
-    public function showAction($postId)
+    public function showAction($forumName, $postId)
     {
+		$forum = $this->getForumModel()->findOneForumByName($forumName);
+		$this->isFound($forum);
+		
         // Get post by id.
-        $post = $this->getPostModel()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
         $this->isFound($post);
-        $this->isAuthorisedToViewPost($post);
+        //$this->isAuthorisedToViewPost($post);
 
         // Get the topic subscriptions.
         $subscription = $this->getSubscriptionModel()->findSubscriptionForTopicById($post->getTopic()->getId());
@@ -50,20 +54,18 @@ class UserPostController extends UserPostBaseController
         $board = $topic->getBoard();
         $category = $board->getCategory();
 
-        //$crumbs = $this->getCrumbs()
-        //    ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
-        //    ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
-        //    ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
-        //    ->add($topic->getTitle(), $this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId())))
-        //    ->add('#' . $post->getId(), $this->path('ccdn_forum_user_post_show', array('postId' => $post->getId())));
+		$crumbs = $this->getCrumbs()->addUserPostShow($forum, $post);
 
-        return $this->renderResponse('CCDNForumForumBundle:Post:show.html.', array(
-        //    'crumbs' => $crumbs,
-            'topic' => $topic,
-            'post' => $post,
-            'subscription' => $subscription,
-            'subscription_count' => $subscriberCount,
-        ));
+        return $this->renderResponse('CCDNForumForumBundle:User:Post/show.html.',
+			array(
+	            'crumbs' => $crumbs,
+				'forum' => $forum,
+	            'topic' => $topic,
+	            'post' => $post,
+	            'subscription' => $subscription,
+	            'subscription_count' => $subscriberCount,
+	        )
+		);
     }
 
     /**
@@ -78,7 +80,7 @@ class UserPostController extends UserPostBaseController
 
         $user = $this->getUser();
 
-        $post = $this->getPostModel()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId);
         $this->isFound($post);
         $this->isAuthorisedToViewPost($post);
         $this->isAuthorisedToEditPost($post);
@@ -141,7 +143,7 @@ class UserPostController extends UserPostBaseController
     {
         $this->isAuthorised('ROLE_USER');
 
-        $post = $this->getPostModel()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId);
         $this->isFound($post);
         $this->isAuthorisedToViewPost($post);
         $this->isAuthorisedToDeletePost($post);
@@ -188,7 +190,7 @@ class UserPostController extends UserPostBaseController
     {
         $this->isAuthorised('ROLE_USER');
 
-        $post = $this->getPostModel()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId);
         $this->isFound($post);
         $this->isAuthorisedToViewPost($post);
         $this->isAuthorisedToDeletePost($post);

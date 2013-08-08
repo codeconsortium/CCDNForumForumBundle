@@ -36,7 +36,8 @@
 
 		        {% if post.id %}
 		            <div class="btn-group">
-		                <a class="btn btn-mini btn-icon-only" href="{{- path('ccdn_forum_user_post_show', {'postId': post.getId }) -}}">
+		                <a class="btn btn-mini btn-icon-only" id="show_post[{{- post.getBody |slice(0,24) -}}]"
+						 href="{{- path('ccdn_forum_user_post_show', {'forumName': forum.name, 'postId': post.getId }) -}}">
 							<i class="icon-fullscreen"></i>
 						</a>
 		                <a class="btn btn-mini btn-icon-only" href="#post_{{- post.getId -}}">

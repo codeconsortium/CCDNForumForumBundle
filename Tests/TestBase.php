@@ -67,7 +67,7 @@ class TestBase extends WebTestCase
 		$this->categories = $this->addFixturesForCategories($this->forums);
 		$this->boards     = $this->addFixturesForBoards($this->categories);
 		$this->topics     = $this->addFixturesForTopics($this->boards);
-		$this->posts      = $this->addFixturesForPosts($this->topics, $this->users);
+		$this->posts      = $this->addFixturesForPosts($this->topics, $this->users['harry']);
     }
 	
     protected function purge()
@@ -219,13 +219,39 @@ class TestBase extends WebTestCase
 		}
 		
 		return $topics;
-		
 	}
-	
-	protected function addFixturesForPosts($topics, $users)
+
+	protected function addNewPost($body, $topic, $user)
 	{
+		$post = new Post();
+
+		$post->setTopic($topic);
+		$post->setBody($body);
+        $post->setCreatedDate(new \DateTime());
+        $post->setCreatedBy($user);
+        $post->setIsLocked(false);
+        $post->setIsDeleted(false);
 		
-		return array();
+		$this->em->persist($post);
+		$this->em->flush();
+		
+		$this->em->refresh($post);
+		
+		return $post;
+	}
+
+	protected function addFixturesForPosts($topics, $user)
+	{
+		$postBodies = array('test_post_1', 'test_post_2', 'test_post_3');
+		$posts = array();
+		
+		foreach ($topics as $topic) {
+			foreach ($postBodies as $index => $postBody) {
+				$posts[] = $this->addNewPost($postBody, $topic, $user);
+			}
+		}
+		
+		return $posts;
 	}
 
     /**

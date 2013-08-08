@@ -328,21 +328,7 @@ class CrumbBuilder extends BaseCrumbBuilder
 	 */
 	public function addUserCategoryShow(Forum $forum, Category $category)
 	{
-        return $this->createCrumbTrail()
-			->add(
-				array(
-					'label' => 'crumbs.user.category.index',
-					'params' => array(
-						'%forum_name%' => $forum->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_user_category_index',
-					'params' => array(
-						'forumName' => $forum->getName()
-					)
-				)
-			)
+        return $this->addUserCategoryIndex($forum)
 			->add(
 				array(
 					'label' => 'crumbs.user.category.show',
@@ -369,38 +355,7 @@ class CrumbBuilder extends BaseCrumbBuilder
 	 */
 	public function addUserBoardShow(Forum $forum, Board $board)
 	{
-        //    ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
-        //    ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
-        //    ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $boardId)));
-        return $this->createCrumbTrail()
-			->add(
-				array(
-					'label' => 'crumbs.user.category.index',
-					'params' => array(
-						'%forum_name%' => $forum->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_user_category_index',
-					'params' => array(
-						'forumName' => $forum->getName()
-					)
-				)
-			)
-			->add(
-				array(
-					'label' => 'crumbs.user.category.show',
-					'params' => array(
-						'%category_name%' => $board->getCategory()->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_user_category_show',
-					'params' => array(
-						'categoryId' => $board->getCategory()->getId()
-					)
-				)
-			)
+        return $this->addUserCategoryShow($forum, $board->getCategory())
 			->add(
 				array(
 					'label' => 'crumbs.user.board.show',
@@ -427,49 +382,7 @@ class CrumbBuilder extends BaseCrumbBuilder
 	 */
 	public function addUserTopicShow(Forum $forum, Topic $topic)
 	{
-        return $this->createCrumbTrail()
-			->add(
-				array(
-					'label' => 'crumbs.user.category.index',
-					'params' => array(
-						'%forum_name%' => $forum->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_user_category_index',
-					'params' => array(
-						'forumName' => $forum->getName()
-					)
-				)
-			)
-			->add(
-				array(
-					'label' => 'crumbs.user.category.show',
-					'params' => array(
-						'%category_name%' => $topic->getBoard()->getCategory()->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_user_category_show',
-					'params' => array(
-						'categoryId' => $topic->getBoard()->getCategory()->getId()
-					)
-				)
-			)
-			->add(
-				array(
-					'label' => 'crumbs.user.board.show',
-					'params' => array(
-						'%board_name%' => $topic->getBoard()->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_user_board_show',
-					'params' => array(
-						'boardId' => $topic->getBoard()->getId()
-					)
-				)
-			)
+        return $this->addUserBoardShow($forum, $topic->getBoard())
 			->add(
 				array(
 					'label' => 'crumbs.user.topic.show',
@@ -486,7 +399,7 @@ class CrumbBuilder extends BaseCrumbBuilder
 			)
 		;
 	}
-	
+
 	/**
 	 * 
 	 * @access public
@@ -496,49 +409,7 @@ class CrumbBuilder extends BaseCrumbBuilder
 	 */
 	public function addUserTopicCreate(Forum $forum, Board $board)
 	{
-        return $this->createCrumbTrail()
-			->add(
-				array(
-					'label' => 'crumbs.user.category.index',
-					'params' => array(
-						'%forum_name%' => $forum->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_user_category_index',
-					'params' => array(
-						'forumName' => $forum->getName()
-					)
-				)
-			)
-			->add(
-				array(
-					'label' => 'crumbs.user.category.show',
-					'params' => array(
-						'%category_name%' => $board->getCategory()->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_user_category_show',
-					'params' => array(
-						'categoryId' => $board->getCategory()->getId()
-					)
-				)
-			)
-			->add(
-				array(
-					'label' => 'crumbs.user.board.show',
-					'params' => array(
-						'%board_name%' => $board->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_user_board_show',
-					'params' => array(
-						'boardId' => $board->getId()
-					)
-				)
-			)
+        return $this->addUserBoardShow($forum, $topic->getBoard())
 			->add(
 				array(
 					'label' => 'crumbs.user.topic.create',
@@ -552,7 +423,7 @@ class CrumbBuilder extends BaseCrumbBuilder
 			)
 		;
 	}
-	
+
 	/**
 	 * 
 	 * @access public
@@ -562,60 +433,7 @@ class CrumbBuilder extends BaseCrumbBuilder
 	 */
 	public function addUserTopicReply(Forum $forum, Topic $topic)
 	{
-        return $this->createCrumbTrail()
-			->add(
-				array(
-					'label' => 'crumbs.user.category.index',
-					'params' => array(
-						'%forum_name%' => $forum->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_user_category_index',
-					'params' => array(
-						'forumName' => $forum->getName()
-					)
-				)
-			)
-			->add(
-				array(
-					'label' => 'crumbs.user.category.show',
-					'params' => array(
-						'%category_name%' => $topic->getBoard()->getCategory()->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_user_category_show',
-					'params' => array(
-						'categoryId' => $topic->getBoard()->getCategory()->getId()
-					)
-				)
-			)
-			->add(
-				array(
-					'label' => 'crumbs.user.board.show',
-					'params' => array(
-						'%board_name%' => $topic->getBoard()->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_user_board_show',
-					'params' => array(
-						'boardId' => $topic->getBoard()->getId()
-					)
-				)
-			)
-			->add(
-				array(
-					'label' => 'crumbs.user.topic.show',
-				),
-				array(
-					'route' => 'ccdn_forum_user_topic_show',
-					'params' => array(
-						'topicId' => $topic->getId()
-					)
-				)
-			)
+        return $this->addUserTopicShow($forum, $topic)
 			->add(
 				array(
 					'label' => 'crumbs.user.topic.reply',
@@ -624,6 +442,31 @@ class CrumbBuilder extends BaseCrumbBuilder
 					'route' => 'ccdn_forum_user_topic_reply',
 					'params' => array(
 						'topicId' => $topic->getId()
+					)
+				)
+			)
+		;
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
+	 * @param \CCDNForum\ForumBundle\Entity\Post                          $post
+	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+	 */
+	public function addUserPostShow(Forum $forum, Post $post)
+	{
+		return $this->addUserTopicShow($forum, $post->getTopic())
+			->add(
+				array(
+					'label' => 'crumbs.user.post.show',
+				),
+				array(
+					'route' => 'ccdn_forum_user_post_show',
+					'params' => array(
+						'forumName' => $forum->getName(),
+						'postId' => $post->getId()
 					)
 				)
 			)

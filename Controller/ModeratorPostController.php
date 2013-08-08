@@ -43,7 +43,7 @@ class ModeratorPostController extends UserPostBaseController
 
         $user = $this->getUser();
 
-        $post = $this->getPostModel()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId);
 
         $this->isFound($post);
         $this->isAuthorisedToViewPost($post);
@@ -66,7 +66,7 @@ class ModeratorPostController extends UserPostBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $post = $this->getPostModel()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId);
 
         $this->isFound($post);
         $this->isAuthorisedToViewPost($post);
@@ -89,7 +89,7 @@ class ModeratorPostController extends UserPostBaseController
     {
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $post = $this->getPostModel()->findOneByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId);
 
         $this->isFound($post);
         $this->isAuthorisedToViewPost($post);

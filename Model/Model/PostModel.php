@@ -39,6 +39,33 @@ class PostModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
+     * @param  int                                $postId
+     * @return \CCDNForum\ForumBundle\Entity\Post
+     */
+    public function findOnePostByIdWithTopicAndBoard($postId, $canViewDeletedTopics = false)
+    {
+        return $this->getRepository()->findOnePostByIdWithTopicAndBoard($postId, $canViewDeletedTopics);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     *
+     * @access public
      * @return bool
      */
     public function allowedToViewDeletedTopics()
@@ -68,16 +95,7 @@ class PostModel extends BaseModel implements BaseModelInterface
         return $this->getRepository()->getLastPostForTopicById($topicId);
     }
 
-    /**
-     *
-     * @access public
-     * @param  int                                $postId
-     * @return \CCDNForum\ForumBundle\Entity\Post
-     */
-    public function findOneByIdWithTopicAndBoard($postId)
-    {
-        return $this->getRepository()->findOneByIdWithTopicAndBoard($postId);
-    }
+
 
     /**
      *
