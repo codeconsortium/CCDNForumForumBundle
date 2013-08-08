@@ -212,25 +212,25 @@ class UserTopicBaseController extends BaseController
      *
      * @access public
      * @param  \CCDNForum\ForumBundle\Entity\Topic                        $topic
-     * @param  int                                                        $draftId
-     * @param  int                                                        $quoteId
      * @return \CCDNForum\ForumBundle\Form\Handler\TopicCreateFormHandler
      */
-    public function getFormHandlerToReplyToTopic(Topic $topic, $draftId, $quoteId)
+    public function getFormHandlerToReplyToTopic(Topic $topic)
     {
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_create');
 
         $formHandler->setTopic($topic);
+		$formHandler->setUser($this->getUser());
+		$formHandler->setRequest($this->getRequest());
 
         //if ( ! empty($draftId)) {
         //    $draft = $this->getDraftManager()->findOneById($draftId);
         //}
 
-        if ( ! empty($quoteId)) {
-            $quote = $this->getPostModel()->findOneByIdWithTopicAndBoard($quoteId);
-
-            $formHandler->setPostToQuote($quote);
-        }
+        //if ( ! empty($quoteId)) {
+        //    $quote = $this->getPostModel()->findOneByIdWithTopicAndBoard($quoteId);
+        //
+        //    $formHandler->setPostToQuote($quote);
+        //}
 
         return $formHandler;
     }

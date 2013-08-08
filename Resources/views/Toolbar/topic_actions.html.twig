@@ -7,7 +7,7 @@
 
 	    {% set authorised_to_reply = board.isAuthorisedToTopicReply(app.security) %}
 
-	    <a class="btn btn-danger{{ authorised_to_reply ? '': ' disabled' }}" rel="nofollow" href="{{- path('ccdn_forum_user_topic_reply', {'topicId': topic.getId }) -}}">
+	    <a class="btn btn-danger{{ authorised_to_reply ? '': ' disabled' }}" rel="nofollow" href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
 			<i class="icon-white{{ authorised_to_reply ? ' icon-comment': ' icon-lock' }}"></i>
 			{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
 		</a>

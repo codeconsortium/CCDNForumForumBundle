@@ -28,11 +28,6 @@ class BoardRepositoryTest extends TestBase
 	
 	public function testFindAllBoardsForCategoryById()
 	{
-		//$this->purge();
-		//$forums = $this->addFixturesForForums();
-		//$categories = $this->addFixturesForCategories($forums);
-		//$this->addFixturesForBoards($categories);
-
 		foreach ($this->categories as $category) {
 			$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
 	
@@ -42,16 +37,14 @@ class BoardRepositoryTest extends TestBase
 	
 	public function testFindAllBoardsForForumById()
 	{
-		//$this->purge();
-		//$forums = $this->addFixturesForForums();
-		//$categories = $this->addFixturesForCategories($forums);
-		//$this->addFixturesForBoards($categories);
-
-		foreach ($this->categories as $category) {
-			$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
+		$forum = $this->addNewForum('testFindAllBoardsForForumById');
+		
+		$categories = $this->addFixturesForCategories(array($forum));
+		$boards = $this->addFixturesForBoards($categories);
+		
+		$foundBoards = $this->getBoardModel()->getRepository()->findAllBoardsForForumById($forum->getId());
 	
-			$this->assertCount(3, $boards);
-		}
+		$this->assertCount(9, $foundBoards);
 	}
 	
 	public function testFindOneBoardById()
@@ -62,5 +55,22 @@ class BoardRepositoryTest extends TestBase
 		
 		$this->assertNotNull($foundBoard);
 		$this->assertEquals($foundBoard->getId(), $board->getId());
+	}
+	
+	public function testFindOneBoardByIdWithCategory()
+	{
+		$category = $this->addNewCategory('TestCategory', 1);
+		$board = $this->addNewBoard('TestBoard', 'generic description', 1);
+		
+		$board->setCategory($category);
+		$this->em->persist($board);
+		$this->em->flush();
+		
+		$foundBoard = $this->getBoardModel()->getRepository()->findOneBoardByIdWithCategory($board->getId());
+		
+		$this->assertNotNull($foundBoard);
+		$this->assertEquals($foundBoard->getId(), $board->getId());
+		$this->assertNotNull($foundBoard->getCategory()->getId());
+		$this->assertEquals($category->getId(), $foundBoard->getCategory()->getId());
 	}
 }

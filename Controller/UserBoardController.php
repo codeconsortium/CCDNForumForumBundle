@@ -39,7 +39,7 @@ class UserBoardController extends UserBoardBaseController
 		$this->isFound($forum);
 		
         // check board exists.
-        $board = $this->getBoardModel()->findOneByIdWithCategory($boardId);
+        $board = $this->getBoardModel()->findOneBoardByIdWithCategory($boardId);
         $this->isFound($board);
         $this->isAuthorisedToViewBoard($board);
 

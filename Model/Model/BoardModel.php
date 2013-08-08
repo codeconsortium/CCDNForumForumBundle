@@ -80,6 +80,17 @@ class BoardModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
+     * @param  int                                 $boardId
+     * @return \CCDNForum\ForumBundle\Entity\Board
+     */
+    public function findOneBoardByIdWithCategory($boardId)
+    {
+        return $this->getRepository()->findOneBoardByIdWithCategory($boardId);
+    }
+
+    /**
+     *
+     * @access public
      * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
@@ -150,16 +161,7 @@ class BoardModel extends BaseModel implements BaseModelInterface
         return $this->getRepository()->findOneById($boardId);
     }
 
-    /**
-     *
-     * @access public
-     * @param  int                                 $boardId
-     * @return \CCDNForum\ForumBundle\Entity\Board
-     */
-    public function findOneByIdWithCategory($boardId)
-    {
-        return $this->getRepository()->findOneByIdWithCategory($boardId);
-    }
+
 
     /**
      *

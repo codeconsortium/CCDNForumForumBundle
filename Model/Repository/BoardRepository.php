@@ -116,6 +116,42 @@ class BoardRepository extends BaseRepository implements BaseRepositoryInterface
         return $this->gateway->findBoard($qb, array(':boardId' => $boardId));
     }
 
+    /**
+     *
+     * @access public
+     * @param  int                                 $boardId
+     * @return \CCDNForum\ForumBundle\Entity\Board
+     */
+    public function findOneBoardByIdWithCategory($boardId)
+    {
+        if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
+            throw new \Exception('Board id "' . $boardId . '" is invalid!');
+        }
+
+        $qb = $this->createSelectQuery(array('b', 'c'));
+
+        $qb
+            ->leftJoin('b.category', 'c')
+            ->where('b.id = :boardId')
+		;
+
+        return $this->gateway->findBoard($qb, array(':boardId' => $boardId));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -149,34 +185,6 @@ class BoardRepository extends BaseRepository implements BaseRepositoryInterface
         }
     }
 
-    /**
-     *
-     * @access public
-     * @param  int                                 $boardId
-     * @return \CCDNForum\ForumBundle\Entity\Board
-     */
-    public function findOneByIdWithCategory($boardId)
-    {
-        if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
-            throw new \Exception('Board id "' . $boardId . '" is invalid!');
-        }
-
-        $qb = $this->createSelectQuery(array('b', 'c'));
-
-        $qb
-            ->leftJoin('b.category', 'c')
-            ->where('b.id = :boardId');
-
-        $board = $this->gateway->findBoard($qb, array(':boardId' => $boardId));
-
-        $boards = $this->filterViewableBoards($board);
-		
-        if (count($boards)) {
-            return $boards[0];
-        } else {
-            return null;
-        }
-    }
 
     /**
      *

@@ -96,7 +96,7 @@ class UserTopicController extends UserTopicBaseController
 		
         $this->isAuthorised('ROLE_USER');
 
-        $board = $this->getBoardModel()->findOneByIdWithCategory($boardId);
+        $board = $this->getBoardModel()->findOneBoardByIdWithCategory($boardId);
         $this->isFound($board);
         //$this->isAuthorisedToCreateTopic($board);
 
@@ -139,7 +139,7 @@ class UserTopicController extends UserTopicBaseController
 		
         $this->isAuthorised('ROLE_USER');
 
-        $board = $this->getBoardModel()->findOneByIdWithCategory($boardId);
+        $board = $this->getBoardModel()->findOneBoardByIdWithCategory($boardId);
         $this->isFound($board);
         //$this->isAuthorisedToCreateTopic($board);
 
@@ -154,7 +154,14 @@ class UserTopicController extends UserTopicBaseController
 				
 				$this->dispatch(ForumEvents::USER_TOPIC_CREATE_COMPLETE, new UserTopicEvent($this->getRequest(), $topic));
 
-                $response = $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId() )));
+                $response = $this->redirectResponse(
+					$this->path('ccdn_forum_user_topic_show',
+						array(
+							'forumName' => $forum->getName(),
+							'topicId' => $topic->getId() 
+						)
+					)
+				);
             }
         } else {
 			$this->dispatch(ForumEvents::USER_TOPIC_CREATE_FLOODED, new UserTopicFloodEvent($this->getRequest()));
@@ -183,52 +190,109 @@ class UserTopicController extends UserTopicBaseController
     /**
      *
      * @access public
-     * @param  int                             $topicId, int $quoteId, int $draftId
+     * @param  string                          $forumName
+     * @param  int                             $topicId
      * @return RedirectResponse|RenderResponse
      */
-    public function replyAction($topicId, $quoteId, $draftId)
+    public function replyAction($forumName, $topicId)
     {
+		$forum = $this->getForumModel()->findOneForumByName($forumName);
+		$this->isFound($forum);
+		
         $this->isAuthorised('ROLE_USER');
 
-        $topic = $this->getTopicManager()->findOneByIdWithPostsByTopicId($topicId);
+        $topic = $this->getTopicModel()->findOneTopicByIdWithPosts($topicId);
         $this->isFound($topic);
-        $this->isAuthorisedToViewTopic($topic);
-        $this->isAuthorisedToReplyToTopic($topic);
+        //$this->isAuthorisedToViewTopic($topic);
+        //$this->isAuthorisedToReplyToTopic($topic);
 
-        $formHandler = $this->getFormHandlerToReplyToTopic($topic, $draftId, $quoteId);
+        $formHandler = $this->getFormHandlerToReplyToTopic($topic);
 
         // Flood Control.
-        if ( ! $this->getFloodControl()->isFlooded()) {
-            if ($formHandler->process($this->getRequest())) {
-                $this->getFloodControl()->incrementCounter();
-
-                // Page of the last post.
-                $page = $this->getTopicModel()->getPageForPostOnTopic($topic, $topic->getLastPost());
-
-                $this->setFlash('success', $this->trans('flash.topic.reply.success', array('%topic_title%' => $topic->getTitle())));
-
-                return $this->redirectResponse($this->path('ccdn_forum_user_topic_show_paginated_anchored', array('topicId' => $topicId, 'page' => $page, 'postId' => $topic->getLastPost()->getId()) ));
-            }
-        } else {
-            $this->setFlash('warning', $this->trans('flash.topic.flood_control'));
+        if ($this->getFloodControl()->isFlooded()) {
+			$this->dispatch(ForumEvents::USER_TOPIC_REPLY_FLOODED, new UserTopicFloodEvent($this->getRequest()));
         }
 
         // setup crumb trail.
-        $board = $topic->getBoard();
-        $category = $board->getCategory();
+		$crumbs = $this->getCrumbs()->addUserTopicReply($forum, $topic);
 
-        //$crumbs = $this->getCrumbs()
-        //    ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
-        //    ->add($category->getName(), $this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
-        //    ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
-        //    ->add($topic->getTitle(), $this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId())))
-        //    ->add($this->trans('crumbs.topic.reply'), $this->path('ccdn_forum_user_topic_reply', array('topicId' => $topic->getId())));
+        $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/reply.html.',
+			array(
+	            'crumbs' => $crumbs,
+				'forum' => $forum,
+	            'topic' => $topic,
+	            'preview' => $formHandler->getForm()->getData(),
+	            'form' => $formHandler->getForm()->createView(),
+	        )
+		);
+		
+		$this->dispatch(ForumEvents::USER_TOPIC_REPLY_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData()->getTopic(), $response));
+		
+		return $response;
+    }
+	
+    /**
+     *
+     * @access public
+     * @param  string                          $forumName
+     * @param  int                             $topicId
+     * @return RedirectResponse|RenderResponse
+     */
+    public function replyProcessAction($forumName, $topicId)
+    {
+		$forum = $this->getForumModel()->findOneForumByName($forumName);
+		$this->isFound($forum);
+		
+        $this->isAuthorised('ROLE_USER');
 
-        return $this->renderResponse('CCDNForumForumBundle:Topic:reply.html.', array(
-        //    'crumbs' => $crumbs,
-            'topic' => $topic,
-            //'preview' => $formHandler->getForm()->getData(),
-            'form' => $formHandler->getForm()->createView(),
-        ));
+        $topic = $this->getTopicModel()->findOneTopicByIdWithPosts($topicId);
+        $this->isFound($topic);
+        //$this->isAuthorisedToViewTopic($topic);
+        //$this->isAuthorisedToReplyToTopic($topic);
+
+        $formHandler = $this->getFormHandlerToReplyToTopic($topic);
+
+        // Flood Control.
+        if (! $this->getFloodControl()->isFlooded()) {
+            if ($formHandler->process()) {
+                $this->getFloodControl()->incrementCounter();
+
+                // Page of the last post.
+                //$page = $this->getTopicModel()->getPageForPostOnTopic($topic, $topic->getLastPost());
+
+				$this->dispatch(ForumEvents::USER_TOPIC_REPLY_COMPLETE, new UserTopicEvent($this->getRequest(), $topic));
+
+                $response = $this->redirectResponse(
+					$this->path('ccdn_forum_user_topic_show',
+						array(
+							'forumName' => $forum->getName(),
+							'topicId' => $topicId,
+							//'page' => $page
+						)
+					) // . '#' . $topic->getLastPost()->getId()
+				);
+            }
+        } else {
+			$this->dispatch(ForumEvents::USER_TOPIC_REPLY_FLOODED, new UserTopicFloodEvent($this->getRequest()));
+        }
+
+		if (! isset($response)) {
+	        // setup crumb trail.
+			$crumbs = $this->getCrumbs()->addUserTopicReply($forum, $topic);
+
+	        $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/reply.html.',
+				array(
+		            'crumbs' => $crumbs,
+					'forum' => $forum,
+		            'topic' => $topic,
+		            'preview' => $formHandler->getForm()->getData(),
+		            'form' => $formHandler->getForm()->createView(),
+		        )
+			);
+		}
+		
+		$this->dispatch(ForumEvents::USER_TOPIC_REPLY_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData()->getTopic(), $response));
+		
+		return $response;
     }
 }

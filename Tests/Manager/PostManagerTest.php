@@ -13,38 +13,15 @@
 
 namespace CCDNForum\ForumBundle\Tests\Repository;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 use CCDNForum\ForumBundle\Tests\TestBase;
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
 
-class TopicRepositoryTest extends TestBase
+class PostManagerTest extends TestBase
 {
-	public function testFindOneTopicByIdWithBoardAndCategory()
-	{
-		$board = $this->addNewBoard('testFindOneTopicByIdWithBoardAndCategory', 'testFindOneTopicByIdWithBoardAndCategory', 1);
-
-		// Can view deleted topics.
-		$topic1 = $this->addNewTopic('topic1', $board);
-		$this->em->persist($topic1);
-		$this->em->flush($topic1);
-		$this->em->refresh($topic1);
-		$foundTopic1 = $this->getTopicModel()->getRepository()->findOneTopicByIdWithBoardAndCategory($topic1->getId(), true);
-		
-		$this->assertNotNull($foundTopic1);
-		$this->assertInstanceOf('CCDNForum\ForumBundle\Entity\Topic', $foundTopic1);
-        
-		// Can NOT view deleted topics.
-		$topic2 = $this->addNewTopic('topic2', $board);
-		$topic2->setIsDeleted(true);
-		$this->em->persist($topic2);
-		$this->em->flush();
-		$this->em->refresh($topic2);
-		$foundTopic2 = $this->getTopicModel()->getRepository()->findOneTopicByIdWithBoardAndCategory($topic2->getId(), false);
-        
-		$this->assertNull($foundTopic2);
-	}
-
-	public function testFindOneTopicByIdWithPosts()
+	public function testPostTopicReply()
 	{
 		$topic = new Topic();
 		$topic->setTitle('NewTopicTest');
@@ -63,7 +40,7 @@ class TopicRepositoryTest extends TestBase
         $post->setIsDeleted(false);
 
 		$this->getTopicModel()->getManager()->saveNewTopic($post);
-		
+
 		$this->em->refresh($post);
 		
 		$post2 = new Post();
@@ -76,7 +53,7 @@ class TopicRepositoryTest extends TestBase
 		
 		$this->getPostModel()->getManager()->postTopicReply($post2);
 		
-		$foundTopic = $this->getTopicModel()->getRepository()->findOneTopicByIdWithPosts($post->getTopic()->getId());
+		$foundTopic = $this->getTopicModel()->getRepository()->findOneTopicByIdWithBoardAndCategory($post->getTopic()->getId(), true);
 		
 		$this->assertNotNull($foundTopic);
 		$this->assertInstanceOf('CCDNForum\ForumBundle\Entity\Topic', $foundTopic);

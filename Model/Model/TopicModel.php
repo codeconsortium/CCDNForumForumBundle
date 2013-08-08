@@ -101,9 +101,9 @@ class TopicModel extends BaseModel implements BaseModelInterface
      * @param  int                                 $topicId
      * @return \CCDNForum\ForumBundle\Entity\Topic
      */
-    public function findOneByIdWithPostsByTopicId($topicId)
+    public function findOneTopicByIdWithPosts($topicId)
     {
-        return $this->getRepository()->findOneByIdWithPostsByTopicId($topicId);
+        return $this->getRepository()->findOneTopicByIdWithPosts($topicId);
     }
 
     /**

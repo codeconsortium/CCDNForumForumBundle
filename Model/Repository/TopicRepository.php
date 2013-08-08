@@ -135,7 +135,7 @@ class TopicRepository extends BaseRepository implements BaseRepositoryInterface
      * @param  int                                 $topicId
      * @return \CCDNForum\ForumBundle\Entity\Topic
      */
-    public function findOneByIdWithPostsByTopicId($topicId)
+    public function findOneTopicByIdWithPosts($topicId)
     {
         if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
             throw new \Exception('Topic id "' . $topicId . '" is invalid!');

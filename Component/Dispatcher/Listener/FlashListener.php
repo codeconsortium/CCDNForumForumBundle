@@ -72,6 +72,8 @@ class FlashListener implements EventSubscriberInterface
 			ForumEvents::ADMIN_BOARD_DELETE_COMPLETE    => 'onBoardDeleteComplete',
 			ForumEvents::USER_TOPIC_CREATE_COMPLETE     => 'onTopicCreateComplete',
 			ForumEvents::USER_TOPIC_CREATE_FLOODED      => 'onTopicCreateFlooded',
+			ForumEvents::USER_TOPIC_REPLY_COMPLETE      => 'onTopicReplyComplete',
+			ForumEvents::USER_TOPIC_REPLY_FLOODED       => 'onTopicReplyFlooded',
 		);
 	}
 
@@ -224,5 +226,29 @@ class FlashListener implements EventSubscriberInterface
 	{
 		$this->session->setFlash('warning', 'You have posted too much in a short time, take a break.');
 	    //$this->setFlash('warning', $this->trans('flash.topic.flood_control'));
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
+	 */
+	public function onTopicReplyComplete(UserTopicEvent $event)
+	{
+		if ($event->getTopic()) {
+			if ($event->getTopic()->getId()) {
+				$this->session->setFlash('success', 'Successfully replied to the topic "' . $event->getTopic()->getTitle() .'"');
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent $event
+	 */
+	public function onTopicReplyFlooded(UserTopicFloodEvent $event)
+	{
+		$this->session->setFlash('warning', 'You have posted too much in a short time, take a break.');
 	}
 }

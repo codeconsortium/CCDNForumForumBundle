@@ -14,18 +14,10 @@ ccdn_forum_user_topic_create_process:
     pattern: /create/for-board/{boardId}/process
     defaults: { _controller: CCDNForumForumBundle:UserTopic:createProcess, _locale: en, forumName: default }
 
-#ccdn_forum_user_topic_create_from_draft:
-#    pattern: /create/for/board/{boardId}/from/draft/{draftId}
-#    defaults: { _controller: CCDNForumForumBundle:UserTopic:create, _locale: en, forumName: default, draftId: 0 }
-
 ccdn_forum_user_topic_reply:
     pattern: /{topicId}/reply
-    defaults: { _controller: CCDNForumForumBundle:UserTopic:reply, _locale: en, forumName: default, quoteId: 0, draftId: 0 }
+    defaults: { _controller: CCDNForumForumBundle:UserTopic:reply, _locale: en, forumName: default }
 
-#ccdn_forum_user_topic_reply_from_draft:
-#    pattern: /{topicId}/reply/from/draft/{draftId}
-#    defaults: { _controller: CCDNForumForumBundle:UserTopic:reply, _locale: en, forumName: default, quoteId: 0, draftId: 0 }
-#
-#ccdn_forum_user_topic_reply_with_quote:
-#    pattern: /{topicId}/reply/quote/{quoteId}
-#    defaults: { _controller: CCDNForumForumBundle:UserTopic:reply, _locale: en, forumName: default, quoteId: 0, draftId: 0 }
+ccdn_forum_user_topic_reply_process:
+    pattern: /{topicId}/reply/process
+    defaults: { _controller: CCDNForumForumBundle:UserTopic:replyProcess, _locale: en, forumName: default }

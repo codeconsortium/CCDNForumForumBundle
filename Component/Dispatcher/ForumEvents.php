@@ -466,4 +466,49 @@ final class ForumEvents
 	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent instance.
 	 */
 	const USER_TOPIC_CREATE_FLOODED = 'ccdn_forum.user.topic.create.flooded';
+
+	/**
+	 * 
+	 * The USER_TOPIC_REPLY_INITIALISE event occurs when the reply create process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the post and topic entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent instance.
+	 */
+	const USER_TOPIC_REPLY_INITIALISE = 'ccdn_forum.user.topic.reply.initialise';
+
+	/**
+	 * 
+	 * The USER_TOPIC_REPLY_SUCCESS event occurs when the topic reply process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the post and topic entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent instance.
+	 */
+	const USER_TOPIC_REPLY_SUCCESS = 'ccdn_forum.user.topic.reply.success';
+
+	/**
+	 * 
+	 * The USER_TOPIC_REPLY_COMPLETE event occurs when the topic reply process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the post and topic entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent instance.
+	 */
+	const USER_TOPIC_REPLY_COMPLETE = 'ccdn_forum.user.topic.reply.complete';
+
+	/**
+	 * 
+	 * The USER_TOPIC_REPLY_RESPONSE event occurs when the topic reply process finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicResponseEvent instance.
+	 */
+	const USER_TOPIC_REPLY_RESPONSE = 'ccdn_forum.user.topic.reply.response';
+	
+	/**
+	 * 
+	 * The USER_TOPIC_REPLY_FLOODED event occurs when the topic reply process fails due to flooding being raised.
+	 * 
+	 * This event allows you to modify the request object and set a flash message from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent instance.
+	 */
+	const USER_TOPIC_REPLY_FLOODED = 'ccdn_forum.user.topic.reply.flooded';
 }

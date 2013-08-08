@@ -261,7 +261,7 @@ class PostCreateFormHandler
     protected function onSuccess(Post $post)
     {
         $post->setCreatedDate(new \DateTime());
-        $post->setCreatedBy($this->postModel->getUser());
+        $post->setCreatedBy($this->user);
         $post->setTopic($this->topic);
         $post->setIsLocked(false);
         $post->setIsDeleted(false);
