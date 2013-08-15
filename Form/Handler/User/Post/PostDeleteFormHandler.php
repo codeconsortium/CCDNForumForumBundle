@@ -11,19 +11,19 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Handler\Admin\Board;
+namespace CCDNForum\ForumBundle\Form\Handler\User\Post;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
-use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent;
 
-use CCDNForum\ForumBundle\Entity\Board;
+//use CCDNForum\ForumBundle\Model\BaseModelInterface;
+use CCDNForum\ForumBundle\Entity\Post;
 
 /**
  *
@@ -36,7 +36,7 @@ use CCDNForum\ForumBundle\Entity\Board;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class BoardDeleteFormHandler
+class PostDeleteFormHandler
 {
     /**
      *
@@ -48,30 +48,30 @@ class BoardDeleteFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardDeleteFormType $boardDeleteFormType
+     * @var \CCDNForum\ForumBundle\Form\Type\PostType $formPostType
      */
-    protected $boardDeleteFormType;
+    protected $formPostType;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\BoardModel $boardModel
+     * @var \CCDNForum\ForumBundle\Model\BaseModelInterface $postModel
      */
-    protected $boardModel;
+    protected $postModel;
 
     /**
      *
      * @access protected
-     * @var \Symfony\Component\Form\Form $form
+     * @var \CCDNForum\ForumBundle\Form\Type\PostType $form
      */
     protected $form;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Entity\Board $board
+     * @var \CCDNForum\ForumBundle\Entity\Post $post
      */
-    protected $board;
+    protected $post;
 
 	/**
 	 * 
@@ -87,34 +87,54 @@ class BoardDeleteFormHandler
 	 */
 	protected $request;
 
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\Security\Core\User\UserInterface
+	 */
+	protected $user;
+
     /**
      *
      * @access public
-     * @param \Symfony\Component\Form\FormFactory                                        $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardDeleteFormType           $boardDeleteFormType
-     * @param \CCDNForum\ForumBundle\Model\Model\BoardModel                              $boardModel
      * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     * @param \Symfony\Component\Form\FormFactory                 $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\PostType           $formPostType
+     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface     $postModel
      */
-    public function __construct(FormFactory $factory, $boardDeleteFormType, $boardModel, ContainerAwareTraceableEventDispatcher $dispatcher)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formPostType, $postModel)
     {
-        $this->factory = $factory;
-        $this->boardDeleteFormType = $boardDeleteFormType;
-        $this->boardModel = $boardModel;
 		$this->dispatcher = $dispatcher;
+        $this->factory = $factory;
+        $this->formPostType = $formPostType;
+        $this->postModel = $postModel;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Board $board
-	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Board\BoardDeleteFormHandler
-	 */
-	public function setBoard(Board $board)
+    /**
+     *
+     * @access public
+     * @param  \Symfony\Component\Security\Core\User\UserInterface       $user
+     * @return \CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
+     */
+	public function setUser(UserInterface $user)
 	{
-		$this->board = $board;
+		$this->user = $user;
 		
 		return $this;
 	}
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Post                        $post
+     * @return \CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
+     */
+    public function setPost(Post $post)
+    {
+        $this->post = $post;
+
+        return $this;
+    }
 
     /**
      *
@@ -172,18 +192,18 @@ class BoardDeleteFormHandler
     /**
      *
      * @access public
-     * @return \Symfony\Component\Form\Form
+     * @return Form
      */
     public function getForm()
     {
         if (null == $this->form) {
-			if (!is_object($this->board) && !$this->board instanceof Board) {
-				throw new \Exception('Board object must be specified to delete.');
-			}
-			
-			$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_DELETE_INITIALISE, new AdminBoardEvent($this->request, $this->board));
-			
-            $this->form = $this->factory->create($this->boardDeleteFormType, $this->board);
+            if (! is_object($this->post) || ! ($this->post instanceof Post)) {
+                throw new \Exception('Post must be specified to delete in PostDeleteFormHandler');
+            }
+
+			$this->dispatcher->dispatch(ForumEvents::USER_POST_SOFT_DELETE_INITIALISE, new UserPostEvent($this->request, $this->post));
+
+            $this->form = $this->factory->create($this->formPostType, $this->post);
         }
 
         return $this->form;
@@ -192,27 +212,23 @@ class BoardDeleteFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Board           $board
-     * @return \CCDNForum\ForumBundle\Model\Model\BoardModel
+     * @param  \CCDNForum\ForumBundle\Entity\Post     $post
+     * @return \CCDNForum\ForumBundle\Model\PostModel
      */
-    protected function onSuccess(Board $board)
+    protected function onSuccess(Post $post)
     {
-		$confirmA = $this->form->get('confirm_delete')->getData();
-		$confirmB = $this->form->get('confirm_subordinates')->getData();
-		$confirm = array_merge($confirmA, $confirmB);
-		
-		if (in_array('delete_board', $confirm)) {
-			$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_DELETE_SUCCESS, new AdminBoardEvent($this->request, $board));
+		$confirm = $this->form->get('confirm_delete')->getData();
 
-			if (! in_array('delete_subordinates', $confirm)) {
-				$topics = new ArrayCollection($board->getTopics()->toArray());
-				
-				$this->boardModel->reassignTopicsToBoard($topics, null)->flush();
-			}
+		if (in_array('delete_post', $confirm)) {
+	        $post->setDeletedDate(new \DateTime());
+	        $post->setDeletedBy($this->user);
+			$post->setIsDeleted(true);
 
-	        $this->boardModel->deleteBoard($board)->flush();
+	        $this->postModel->updatePost($post)->flush();
+
+			$this->dispatcher->dispatch(ForumEvents::USER_POST_SOFT_DELETE_SUCCESS, new UserPostEvent($this->request, $this->post));
 		}
 		
-		return $this->boardModel;
+        return $this->postModel;
     }
 }

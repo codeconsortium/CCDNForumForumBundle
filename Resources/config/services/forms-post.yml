@@ -1,6 +1,8 @@
 parameters:
 
     # Service Parameters defined in app/config.
+    ccdn_forum_forum.form.type.post_delete.class:    CCDNForum\ForumBundle\Form\Type\User\Post\PostDeleteFormType
+    ccdn_forum_forum.form.handler.post_delete.class: CCDNForum\ForumBundle\Form\Handler\User\Post\PostDeleteFormHandler
 
 services:
 
@@ -31,4 +33,17 @@ services:
             - @event_dispatcher
             - @form.factory
             - @ccdn_forum_forum.form.type.post_update
+            - @ccdn_forum_forum.model.post
+
+    ccdn_forum_forum.form.type.post_delete:
+        class: %ccdn_forum_forum.form.type.post_delete.class%
+        arguments:
+            - %ccdn_forum_forum.entity.post.class%
+
+    ccdn_forum_forum.form.handler.post_delete:
+        class: %ccdn_forum_forum.form.handler.post_delete.class%
+        arguments:
+            - @event_dispatcher
+            - @form.factory
+            - @ccdn_forum_forum.form.type.post_delete
             - @ccdn_forum_forum.model.post

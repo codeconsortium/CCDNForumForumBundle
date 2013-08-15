@@ -89,7 +89,8 @@
 										</li>
 		                                {%- if not post.getDeletedBy -%}
 		                                    <li>
-												<a rel="nofollow" href="{{- path('ccdn_forum_user_post_delete', {'forumName': forum.name, 'postId': post.getId }) -}}">
+												<a rel="nofollow" id="post_delete[{{- post.getBody |slice(0,24) -}}]"
+												 href="{{- path('ccdn_forum_user_post_delete', {'forumName': forum.name, 'postId': post.getId }) -}}">
 													<i class="icon-trash"></i>
 													{{- 'link.post.delete' | trans({}, 'CCDNForumForumBundle') -}}
 												</a>
@@ -115,7 +116,8 @@
 		                                </li>
 		                            {%- else -%}
 		                                <li>
-		                                    <a rel="nofollow" href="{{- path('ccdn_forum_user_post_delete', {'forumName': forum.name, 'postId': post.getId }) -}}">
+		                                    <a rel="nofollow" id="post_delete[{{- post.getBody |slice(0,24) -}}]"
+											 href="{{- path('ccdn_forum_user_post_delete', {'forumName': forum.name, 'postId': post.getId }) -}}">
 		                                        <i class="icon-trash"></i>
 												{{- 'link.post.delete' | trans({}, 'CCDNForumForumBundle') -}}
 		                                    </a>

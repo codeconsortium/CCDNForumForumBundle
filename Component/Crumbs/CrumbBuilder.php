@@ -472,4 +472,28 @@ class CrumbBuilder extends BaseCrumbBuilder
 			)
 		;
 	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
+	 * @param \CCDNForum\ForumBundle\Entity\Post                          $post
+	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+	 */
+	public function addUserPostDelete(Forum $forum, Post $post)
+	{
+        return $this->addUserPostShow($forum, $post)
+			->add(
+				array(
+					'label' => 'crumbs.user.post.delete',
+				),
+				array(
+					'route' => 'ccdn_forum_user_post_delete',
+					'params' => array(
+						'postId' => $post->getId()
+					)
+				)
+			)
+		;
+	}
 }

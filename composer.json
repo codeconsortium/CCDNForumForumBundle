@@ -17,7 +17,7 @@
         "php": ">=5.3.2",
         "symfony/symfony": "2.1.*",
         "doctrine/doctrine-bundle": "*",
-		"knplabs/knp-paginator-bundle": "dev-master",
+		"knplabs/knp-paginator-bundle": "dev-master"
     },
 	"suggest": {
 		"codeconsortium/ccdn-component-bb-code-bundle": "2.0.*@dev",

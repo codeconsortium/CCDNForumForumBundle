@@ -114,4 +114,21 @@ class UserPostBaseController extends BaseController
 		
         return $formHandler;
     }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Post                        $post
+     * @return \CCDNForum\ForumBundle\Form\Handler\PostDeleteFormHandler
+     */
+    public function getFormHandlerToDeletePost(Post $post)
+    {
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_delete');
+
+        $formHandler->setPost($post);
+		$formHandler->setUser($this->getUser());
+		$formHandler->setRequest($this->getRequest());
+		
+        return $formHandler;
+    }
 }

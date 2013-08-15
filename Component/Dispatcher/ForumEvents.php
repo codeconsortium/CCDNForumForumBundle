@@ -517,7 +517,7 @@ final class ForumEvents
 	 * The USER_POST_EDIT_INITIALISE event occurs when the post edit process is initalised.
 	 * 
 	 * This event allows you to modify the default values of the post entity object before binding the form.
-	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent instance.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent instance.
 	 */
 	const USER_POST_EDIT_INITIALISE = 'ccdn_forum.user.post.edit.initialise';
 
@@ -526,7 +526,7 @@ final class ForumEvents
 	 * The USER_POST_EDIT_SUCCESS event occurs when the post edit process is successful before persisting.
 	 * 
 	 * This event allows you to modify the values of the post entity object after form submission before persisting.
-	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent instance.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent instance.
 	 */
 	const USER_POST_EDIT_SUCCESS = 'ccdn_forum.user.post.edit.success';
 
@@ -535,7 +535,7 @@ final class ForumEvents
 	 * The USER_POST_EDIT_COMPLETE event occurs when the post edit process is completed successfully after persisting.
 	 * 
 	 * This event allows you to modify the values of the post entity after persisting.
-	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent instance.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent instance.
 	 */
 	const USER_POST_EDIT_COMPLETE = 'ccdn_forum.user.post.edit.complete';
 
@@ -544,7 +544,43 @@ final class ForumEvents
 	 * The USER_POST_EDIT_RESPONSE event occurs when the post edit process finishes and returns a HTTP response.
 	 * 
 	 * This event allows you to modify the default values of the response object returned from the controller action.
-	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicResponseEvent instance.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostResponseEvent instance.
 	 */
 	const USER_POST_EDIT_RESPONSE = 'ccdn_forum.user.post.edit.response';
+
+	/**
+	 * 
+	 * The USER_POST_DELETE_INITIALISE event occurs when the post delete process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the post entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent instance.
+	 */
+	const USER_POST_SOFT_DELETE_INITIALISE = 'ccdn_forum.user.post.soft_delete.initialise';
+
+	/**
+	 * 
+	 * The USER_POST_DELETE_SUCCESS event occurs when the post delete process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the post entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent instance.
+	 */
+	const USER_POST_SOFT_DELETE_SUCCESS = 'ccdn_forum.user.post.soft_delete.success';
+
+	/**
+	 * 
+	 * The USER_POST_DELETE_COMPLETE event occurs when the post delete process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the post entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent instance.
+	 */
+	const USER_POST_SOFT_DELETE_COMPLETE = 'ccdn_forum.user.post.soft_delete.complete';
+
+	/**
+	 * 
+	 * The USER_POST_DELETE_RESPONSE event occurs when the post delete process finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostResponseEvent instance.
+	 */
+	const USER_POST_SOFT_DELETE_RESPONSE = 'ccdn_forum.user.post.soft_delete.response';
 }

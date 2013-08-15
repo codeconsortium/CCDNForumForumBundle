@@ -17,7 +17,7 @@ ccdn_forum_user_post_delete:
     pattern: /{postId}/delete
     defaults: { _controller: CCDNForumForumBundle:UserPost:delete, _locale: en, forumName: default }
 
-ccdn_forum_user_post_delete_confirmed:
-    pattern: /{postId}/delete/confirm
-    defaults: { _controller: CCDNForumForumBundle:UserPost:deleteConfirmed, _locale: en, forumName: default }
+ccdn_forum_user_post_delete_process:
+    pattern: /{postId}/delete/process
+    defaults: { _controller: CCDNForumForumBundle:UserPost:deleteProcess, _locale: en, forumName: default }
 

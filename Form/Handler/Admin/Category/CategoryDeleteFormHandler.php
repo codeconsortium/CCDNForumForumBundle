@@ -197,13 +197,13 @@ class CategoryDeleteFormHandler
      */
     protected function onSuccess(Category $category)
     {
-		$this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_SUCCESS, new AdminCategoryEvent($this->request, $category));
-		
 		$confirmA = $this->form->get('confirm_delete')->getData();
 		$confirmB = $this->form->get('confirm_subordinates')->getData();
 		$confirm = array_merge($confirmA, $confirmB);
 		
 		if (in_array('delete_category', $confirm)) {
+			$this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_SUCCESS, new AdminCategoryEvent($this->request, $category));
+
 			if (! in_array('delete_subordinates', $confirm)) {
 				$boards = new ArrayCollection($category->getBoards()->toArray());
 				

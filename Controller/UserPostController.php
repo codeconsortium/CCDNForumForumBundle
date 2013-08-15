@@ -170,70 +170,96 @@ class UserPostController extends UserPostBaseController
     /**
      *
      * @access public
+     * @param  string                          $forumName
      * @param  int                             $postId
      * @return RedirectResponse|RenderResponse
      */
-    public function deleteAction($postId)
+    public function deleteAction($forumName, $postId)
     {
+		$forum = $this->getForumModel()->findOneForumByName($forumName);
+		$this->isFound($forum);
+		
         $this->isAuthorised('ROLE_USER');
 
         $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId);
         $this->isFound($post);
-        $this->isAuthorisedToViewPost($post);
-        $this->isAuthorisedToDeletePost($post);
+        //$this->isAuthorisedToViewPost($post);
+        //$this->isAuthorisedToDeletePost($post);
 
-        $topic = $post->getTopic();
-        $board = $topic->getBoard();
-        $category = $board->getCategory();
-
-        if ($post->getTopic()->getFirstPost()->getId() == $post->getId() && $post->getTopic()->getCachedReplyCount() == 0) {
-            // if post is the very first post of the topic then use a topic handler so user can change topic title
-            $confirmationMessage = 'ccdn_forum_forum.topic.delete_topic_question';
-            $crumbDelete = $this->trans('ccdn_forum_forum.crumbs.topic.delete');
-            $pageTitle = $this->trans('ccdn_forum_forum.title.topic.delete', array('%topic_title%' => $topic->getTitle()));
-        } else {
-            $confirmationMessage = 'ccdn_forum_forum.post.delete_post_question';
-            $crumbDelete = $this->trans('ccdn_forum_forum.crumbs.post.delete') . $post->getId();
-            $pageTitle = $this->trans('ccdn_forum_forum.title.post.delete', array('%post_id%' => $post->getId(), '%topic_title%' => $topic->getTitle()));
-        }
+		$formHandler = $this->getFormHandlerToDeletePost($post);
 
         // setup crumb trail.
-        $crumbs = $this->getCrumbs()
-            ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
-            ->add($category->getName(),	$this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
-            ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
-            ->add($topic->getTitle(), $this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId())))
-            ->add($crumbDelete, $this->path('ccdn_forum_user_topic_reply', array('topicId' => $topic->getId())));
+		$crumbs = $this->getCrumbs()->addUserPostDelete($forum, $post);
 
-        return $this->renderResponse('CCDNForumForumBundle:Post:delete_post.html.', array(
-            'page_title' => $pageTitle,
-            'confirmation_message' => $confirmationMessage,
-            'topic' => $topic,
-            'post' => $post,
-        //    'crumbs' => $crumbs,
-        ));
+        $response = $this->renderResponse('CCDNForumForumBundle:User:Post/delete_post.html.',
+			array(
+				'crumbs' => $crumbs,
+				'forum' => $forum,
+	            'post' => $post,
+	            'form' => $formHandler->getForm()->createView(),
+	        )
+		);
+		
+		$this->dispatch(ForumEvents::USER_POST_SOFT_DELETE_RESPONSE, new UserPostResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+		
+		return $response;
     }
 
     /**
      *
      * @access public
-     * @param  int              $postId
-     * @return RedirectResponse
+     * @param  string                          $forumName
+     * @param  int                             $postId
+     * @return RedirectResponse|RenderResponse
      */
-    public function deleteConfirmedAction($postId)
+    public function deleteProcessAction($forumName, $postId)
     {
+		$forum = $this->getForumModel()->findOneForumByName($forumName);
+		$this->isFound($forum);
+		
         $this->isAuthorised('ROLE_USER');
 
         $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId);
         $this->isFound($post);
-        $this->isAuthorisedToViewPost($post);
-        $this->isAuthorisedToDeletePost($post);
+        ////$this->isAuthorisedToViewPost($post);
+        ////$this->isAuthorisedToDeletePost($post);
+		
+		$formHandler = $this->getFormHandlerToDeletePost($post);
+		
+        if ($formHandler->process()) {
+            // get posts for determining the page of the edited post
+			$post = $formHandler->getForm()->getData();
+            $topic = $post->getTopic();
 
-        $this->getPostModel()->softDelete($post, $this->getUser())->flush();
+            //$page = $this->getModelManager()->getPageForPostOnTopic($topic, $post);
 
-        // set flash message
-        $this->setFlash('notice', $this->trans('flash.post.success.delete', array('%post_id%' => $postId)));
+			$this->dispatch(ForumEvents::USER_POST_SOFT_DELETE_COMPLETE, new UserPostEvent($this->getRequest(), $post));
 
-        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array('topicId' => $post->getTopic()->getId()) ));
+            $response = $this->redirectResponse(
+				$this->path('ccdn_forum_user_topic_show',
+					array(
+						'forumName' => $forumName,
+						'topicId' => $topic->getId(),
+						//'page' => $page,
+					)
+				) //. '#' . $post->getId()
+			);
+        } else {
+	        // Setup crumb trail.
+			$crumbs = $this->getCrumbs()->addUserPostShow($forum, $post);
+
+	        $response = $this->renderResponse('CCDNForumForumBundle:User:Post/delete_post.html.',
+				array(
+			        'crumbs' => $crumbs,
+					'forum' => $forum,
+		            'post' => $post,
+		            'form' => $formHandler->getForm()->createView(),
+		        )
+			);
+        }
+		
+		$this->dispatch(ForumEvents::USER_POST_SOFT_DELETE_RESPONSE, new UserPostResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+		
+		return $response;
     }
 }
