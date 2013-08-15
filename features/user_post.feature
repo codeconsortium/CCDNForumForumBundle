@@ -92,7 +92,7 @@ Feature: User Post Traversal
 		  And I follow "post_show[test_post_f1_c1_b1_t1_p1]"
 		  And I should see "test_post_f1_c1_b1_t1_p1"
 
-	Scenario: Edit post
+	Scenario: Edit 1st post with topic title
         Given I am on "/en/forum/test_forum_f1"
 		  And I follow "test_category_f1_c1"
 		  And I should see "test_category_f1_c1"
@@ -110,3 +110,25 @@ Feature: User Post Traversal
           And I press "submit[post]"
 		  And I should see "the_elephant_in_the_room"
 		  And I should see "Edited Test Topic"
+
+	Scenario: Edit nth post
+        Given I am on "/en/forum/test_forum_f1"
+		  And I follow "test_category_f1_c1"
+		  And I should see "test_category_f1_c1"
+          And I should see "test_board_f1_c1_b1"
+		  And I follow "test_board_f1_c1_b1"
+          And I should see "test_board_f1_c1_b1"
+		  And I should see "test_topic_f1_c1_b1_t1"
+		  And I follow "test_topic_f1_c1_b1_t1"
+		  And I should see "test_topic_f1_c1_b1_t1"
+		  And I should see "test_post_f1_c1_b1_t1_p1"
+          And I follow "Reply"
+		  And I should see "Reply to Topic"
+          And I fill in "Post[body]" with "test_post_f1_c1_b1_t1_p2"
+          And I press "submit[post]"
+		  And I should see "test_post_f1_c1_b1_t1_p2"
+		  And I follow "post_edit[test_post_f1_c1_b1_t1_p2]"
+		  And I should see "test_post_f1_c1_b1_t1_p2"
+          And I fill in "Post[body]" with "edited test post"
+          And I press "submit[post]"
+		  And I should see "edited test post"

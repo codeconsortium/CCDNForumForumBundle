@@ -90,6 +90,45 @@ class UserPostController extends UserPostBaseController
 
 		$formHandler = $this->getFormHandlerToEditPost($post);
 		
+        // Setup crumb trail.
+		$crumbs = $this->getCrumbs()->addUserPostShow($forum, $post);
+
+        $response = $this->renderResponse('CCDNForumForumBundle:User:Post/edit_post.html.',
+			array(
+		        'crumbs' => $crumbs,
+				'forum' => $forum,
+	            'post' => $post,
+	            'preview' => $formHandler->getForm()->getData(),
+	            'form' => $formHandler->getForm()->createView(),
+	        )
+		);
+		
+		$this->dispatch(ForumEvents::USER_POST_EDIT_RESPONSE, new UserPostResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+		
+		return $response;
+    }
+
+    /**
+     *
+     * @access public
+     * @param  string                          $forumName
+     * @param  int                             $postId
+     * @return RedirectResponse|RenderResponse
+     */
+    public function editProcessAction($forumName, $postId)
+    {
+		$forum = $this->getForumModel()->findOneForumByName($forumName);
+		$this->isFound($forum);
+		
+        $this->isAuthorised('ROLE_USER');
+
+        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
+        $this->isFound($post);
+        //$this->isAuthorisedToViewPost($post);
+        //$this->isAuthorisedToEditPost($post);
+
+		$formHandler = $this->getFormHandlerToEditPost($post);
+		
         if ($formHandler->process()) {
             // get posts for determining the page of the edited post
 			$post = $formHandler->getForm()->getData();

@@ -9,6 +9,10 @@ ccdn_forum_user_post_edit:
     pattern: /{postId}/edit
     defaults: { _controller: CCDNForumForumBundle:UserPost:edit, _locale: en, forumName: default }
 
+ccdn_forum_user_post_edit_process:
+    pattern: /{postId}/edit/process
+    defaults: { _controller: CCDNForumForumBundle:UserPost:editProcess, _locale: en, forumName: default }
+
 ccdn_forum_user_post_delete:
     pattern: /{postId}/delete
     defaults: { _controller: CCDNForumForumBundle:UserPost:delete, _locale: en, forumName: default }
