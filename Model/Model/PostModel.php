@@ -47,7 +47,27 @@ class PostModel extends BaseModel implements BaseModelInterface
         return $this->getRepository()->findOnePostByIdWithTopicAndBoard($postId, $canViewDeletedTopics);
     }
 
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function postTopicReply(Post $post)
+    {
+        return $this->getManager()->postTopicReply($post);
+    }
 
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function updatePost(Post $post)
+    {
+        return $this->getManager()->updatePost($post);
+    }
 
 
 
@@ -153,27 +173,7 @@ class PostModel extends BaseModel implements BaseModelInterface
         return $this->getRepository()->getPostCountForUserById($userId);
     }
 
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function postTopicReply(Post $post)
-    {
-        return $this->getManager()->postTopicReply($post);
-    }
 
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function updatePost(Post $post)
-    {
-        return $this->getManager()->updatePost($post);
-    }
 
     /**
      *

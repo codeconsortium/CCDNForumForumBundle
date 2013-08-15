@@ -61,7 +61,21 @@ class PostManager extends BaseManager implements BaseManagerInterface
         return $this;
     }
 
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function updatePost(Post $post)
+    {
+        // update a record
+        $this->persist($post)->flush();
 
+		$this->refresh($post);
+		
+        return $this;
+    }
 
 
 
@@ -341,19 +355,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
     }
 
 
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function updatePost(Post $post)
-    {
-        // update a record
-        $this->persist($post);
 
-        return $this;
-    }
 
     /**
      *

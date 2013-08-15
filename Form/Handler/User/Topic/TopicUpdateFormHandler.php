@@ -19,8 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
+
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
-//use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent;
 
 //use CCDNForum\ForumBundle\Model\BaseModelInterface;
 
@@ -223,6 +224,8 @@ class TopicUpdateFormHandler
 
             $topic = $this->post->getTopic();
 
+			$this->dispatcher->dispatch(ForumEvents::USER_POST_EDIT_INITIALISE, new UserPostEvent($this->request, $this->post));
+
             $this->form = $this->factory->create($this->formPostType, $this->post);
             $this->form->add($this->factory->create($this->formTopicType, $topic));
         }
@@ -245,8 +248,10 @@ class TopicUpdateFormHandler
         // if post is less than 15 minutes old, don't add that it was edited.
         if ($interval->format('%i') > 15) {
             $post->setEditedDate(new \DateTime());
-            $post->setEditedBy($this->postModel->getUser());
+            $post->setEditedBy($this->user);
         }
+
+		$this->dispatcher->dispatch(ForumEvents::USER_POST_EDIT_SUCCESS, new UserPostEvent($this->request, $this->post));
 
         return $this->postModel->updatePost($post)->flush();
     }

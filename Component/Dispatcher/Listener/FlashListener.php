@@ -23,6 +23,7 @@ use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent;
 
 /**
  *
@@ -74,6 +75,7 @@ class FlashListener implements EventSubscriberInterface
 			ForumEvents::USER_TOPIC_CREATE_FLOODED      => 'onTopicCreateFlooded',
 			ForumEvents::USER_TOPIC_REPLY_COMPLETE      => 'onTopicReplyComplete',
 			ForumEvents::USER_TOPIC_REPLY_FLOODED       => 'onTopicReplyFlooded',
+			ForumEvents::USER_POST_EDIT_COMPLETE        => 'onPostEditComplete',
 		);
 	}
 
@@ -250,5 +252,19 @@ class FlashListener implements EventSubscriberInterface
 	public function onTopicReplyFlooded(UserTopicFloodEvent $event)
 	{
 		$this->session->setFlash('warning', 'You have posted too much in a short time, take a break.');
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent $event
+	 */
+	public function onPostEditComplete(UserPostEvent $event)
+	{
+		if ($event->getPost()) {
+			if ($event->getPost()->getId()) {
+				$this->session->setFlash('success', 'Successfully edited the post "' . $event->getPost()->getId() .'"');
+			}
+		}
 	}
 }

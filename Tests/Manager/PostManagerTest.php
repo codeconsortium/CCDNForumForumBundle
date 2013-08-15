@@ -62,4 +62,35 @@ class PostManagerTest extends TestBase
 		$this->assertSame('NewTopicTest', $foundTopic->getTitle());
 		$this->assertSame(2, count($foundTopic->getPosts()));
 	}
+
+    public function testUpdatePost()
+    {
+		$topic = new Topic();
+		$topic->setTitle('NewTopicTest');
+        $topic->setCachedViewCount(0);
+        $topic->setCachedReplyCount(0);
+        $topic->setIsClosed(false);
+        $topic->setIsDeleted(false);
+        $topic->setIsSticky(false);
+		
+		$post = new Post();
+		$post->setTopic($topic);
+		$post->setBody('foobar');
+        $post->setCreatedDate(new \DateTime());
+        $post->setCreatedBy($this->users['tom']);
+        $post->setIsLocked(false);
+        $post->setIsDeleted(false);
+
+		$this->getTopicModel()->getManager()->saveNewTopic($post);
+
+		$this->em->refresh($post);
+
+		$post->setBody('edited post');
+		$this->getPostModel()->getManager()->updatePost($post);
+
+		$this->em->refresh($post);
+
+		$this->assertTrue(is_numeric($post->getId()));
+		$this->assertSame('edited post', $post->getBody());
+    }
 }

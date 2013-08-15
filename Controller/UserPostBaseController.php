@@ -78,20 +78,20 @@ class UserPostBaseController extends BaseController
         return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToRestorePost($post));
     }
 
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                         $post
-     * @return \CCDNForum\ForumBundle\Form\Handler\TopicUpdateFormHandler
-     */
-    public function getFormHandlerToEditTopic(Post $post)
-    {
-        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_update');
-
-        $formHandler->setPost($post);
-
-        return $formHandler;
-    }
+//    /**
+//     *
+//     * @access public
+//     * @param  \CCDNForum\ForumBundle\Entity\Post                         $post
+//     * @return \CCDNForum\ForumBundle\Form\Handler\TopicUpdateFormHandler
+//     */
+//    public function getFormHandlerToEditTopic(Post $post)
+//    {
+//        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_update');
+//
+//        $formHandler->setPost($post);
+//
+//        return $formHandler;
+//    }
 
     /**
      *
@@ -101,10 +101,17 @@ class UserPostBaseController extends BaseController
      */
     public function getFormHandlerToEditPost(Post $post)
     {
-        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_update');
+        // If post is the very first post of the topic then use a topic handler so user can change topic title.
+        if ($post->getTopic()->getFirstPost()->getId() == $post->getId()) {
+            $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_update');
+        } else {
+            $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_update');
+        }
 
         $formHandler->setPost($post);
-
+		$formHandler->setUser($this->getUser());
+		$formHandler->setRequest($this->getRequest());
+		
         return $formHandler;
     }
 }

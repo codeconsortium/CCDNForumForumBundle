@@ -409,7 +409,7 @@ class CrumbBuilder extends BaseCrumbBuilder
 	 */
 	public function addUserTopicCreate(Forum $forum, Board $board)
 	{
-        return $this->addUserBoardShow($forum, $topic->getBoard())
+        return $this->addUserBoardShow($forum, $board)
 			->add(
 				array(
 					'label' => 'crumbs.user.topic.create',

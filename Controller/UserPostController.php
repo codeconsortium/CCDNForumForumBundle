@@ -14,6 +14,11 @@
 namespace CCDNForum\ForumBundle\Controller;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\EventDispatcher\Event;
+
+use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostResponseEvent;
 
 /**
  *
@@ -50,17 +55,13 @@ class UserPostController extends UserPostBaseController
         $subscriberCount = $this->getSubscriptionModel()->countSubscriptionsForTopicById($post->getTopic()->getId());
 
         // Setup crumb trail.
-        $topic = $post->getTopic();
-        $board = $topic->getBoard();
-        $category = $board->getCategory();
-
 		$crumbs = $this->getCrumbs()->addUserPostShow($forum, $post);
 
         return $this->renderResponse('CCDNForumForumBundle:User:Post/show.html.',
 			array(
 	            'crumbs' => $crumbs,
 				'forum' => $forum,
-	            'topic' => $topic,
+	            'topic' => $post->getTopic(),
 	            'post' => $post,
 	            'subscription' => $subscription,
 	            'subscription_count' => $subscriberCount,
@@ -71,66 +72,60 @@ class UserPostController extends UserPostBaseController
     /**
      *
      * @access public
+     * @param  string                          $forumName
      * @param  int                             $postId
      * @return RedirectResponse|RenderResponse
      */
-    public function editAction($postId)
+    public function editAction($forumName, $postId)
     {
+		$forum = $this->getForumModel()->findOneForumByName($forumName);
+		$this->isFound($forum);
+		
         $this->isAuthorised('ROLE_USER');
 
-        $user = $this->getUser();
-
-        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
         $this->isFound($post);
-        $this->isAuthorisedToViewPost($post);
-        $this->isAuthorisedToEditPost($post);
+        //$this->isAuthorisedToViewPost($post);
+        //$this->isAuthorisedToEditPost($post);
 
-        // If post is the very first post of the topic then use a topic handler so user can change topic title.
-        if ($post->getTopic()->getFirstPost()->getId() == $post->getId()) {
-            $formHandler = $this->getFormHandlerToEditTopic($post);
-        } else {
-            $formHandler = $this->getFormHandlerToEditPost($post);
-        }
-
-        if ($formHandler->process($this->getRequest())) {
+		$formHandler = $this->getFormHandlerToEditPost($post);
+		
+        if ($formHandler->process()) {
             // get posts for determining the page of the edited post
+			$post = $formHandler->getForm()->getData();
             $topic = $post->getTopic();
 
-            $page = $this->getModelManager()->getPageForPostOnTopic($topic, $post);
+            //$page = $this->getModelManager()->getPageForPostOnTopic($topic, $post);
 
-            $this->setFlash('success', $this->trans('flash.post.edit.success', array('%post_id%' => $postId, '%topic_title%' => $post->getTopic()->getTitle())));
+			$this->dispatch(ForumEvents::USER_POST_EDIT_COMPLETE, new UserPostEvent($this->getRequest(), $post));
 
-            return $this->redirectResponse($this->path('ccdn_forum_user_topic_show_paginated_anchored', array('topicId' => $topic->getId(), 'page' => $page, 'postId' => $post->getId() ) ));
-        }
-
-        // Setup crumb trail.
-        $topic = $post->getTopic();
-        $board = $topic->getBoard();
-        $category = $board->getCategory();
-
-        //$crumbs = $this->getCrumbs()
-        //    ->add($this->trans('crumbs.category.index'), $this->path('ccdn_forum_user_category_index'))
-        //    ->add($category->getName(),	$this->path('ccdn_forum_user_category_show', array('categoryId' => $category->getId())))
-        //    ->add($board->getName(), $this->path('ccdn_forum_user_board_show', array('boardId' => $board->getId())))
-        //    ->add($topic->getTitle(), $this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId())))
-        //    ->add($this->trans('crumbs.post.edit') . $post->getId(), $this->path('ccdn_forum_user_topic_reply', array('topicId' => $topic->getId())));
-
-        if ($post->getTopic()->getFirstPost()->getId() == $post->getId()) {
-            // render edit_topic if first post
-            $template = 'CCDNForumForumBundle:Post:edit_topic.html.';
+            $response = $this->redirectResponse(
+				$this->path('ccdn_forum_user_topic_show',
+					array(
+						'forumName' => $forumName,
+						'topicId' => $topic->getId(),
+						//'page' => $page,
+					)
+				) //. '#' . $post->getId()
+			);
         } else {
-            // render edit_post if reply post
-            $template = 'CCDNForumForumBundle:Post:edit_post.html.';
-        }
+	        // Setup crumb trail.
+			$crumbs = $this->getCrumbs()->addUserPostShow($forum, $post);
 
-        return $this->renderResponse($template, array(
-            'board' => $board,
-            'topic' => $topic,
-            'post' => $post,
-        //    'crumbs' => $crumbs,
-            'preview' => $formHandler->getForm()->getData(),
-            'form' => $formHandler->getForm()->createView(),
-        ));
+	        $response = $this->renderResponse('CCDNForumForumBundle:User:Post/edit_post.html.',
+				array(
+			        'crumbs' => $crumbs,
+					'forum' => $forum,
+		            'post' => $post,
+		            'preview' => $formHandler->getForm()->getData(),
+		            'form' => $formHandler->getForm()->createView(),
+		        )
+			);
+        }
+		
+		$this->dispatch(ForumEvents::USER_POST_EDIT_RESPONSE, new UserPostResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+		
+		return $response;
     }
 
     /**

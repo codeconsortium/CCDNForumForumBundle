@@ -36,7 +36,7 @@
 
 		        {% if post.id %}
 		            <div class="btn-group">
-		                <a class="btn btn-mini btn-icon-only" id="show_post[{{- post.getBody |slice(0,24) -}}]"
+		                <a class="btn btn-mini btn-icon-only" id="post_show[{{- post.getBody |slice(0,24) -}}]"
 						 href="{{- path('ccdn_forum_user_post_show', {'forumName': forum.name, 'postId': post.getId }) -}}">
 							<i class="icon-fullscreen"></i>
 						</a>
@@ -64,7 +64,8 @@
 		                    <ul class="dropdown-menu pull-right content-left" style="z-index:15;">
 
 		                        <li>
-									<a rel="nofollow" href="{{- path('ccdn_forum_user_topic_reply', {'topicId': post.getTopic.getId }) -}}">
+									<a rel="nofollow" id="post_reply[{{- post.getBody |slice(0,24) -}}]"
+									 href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forum.name, 'topicId': post.getTopic.getId }) -}}">
 										<i class="icon-pencil"></i>
 										{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
 									</a>
@@ -80,14 +81,15 @@
 		                        {%- if post.getCreatedBy -%}
 		                            {%- if post.getCreatedBy.getId == app.user.getId and not is_granted('ROLE_MODERATOR') -%}
 		                                <li>
-											<a rel="nofollow" href="{{- path('ccdn_forum_user_post_edit', {'postId': post.getId }) -}}">
+											<a rel="nofollow" id="post_edit[{{- post.getBody |slice(0,24) -}}]"
+											 href="{{- path('ccdn_forum_user_post_edit', {'forumName': forum.name, 'postId': post.getId }) -}}">
 												<i class="icon-pencil"></i>
 												{{- 'link.post.edit' | trans({}, 'CCDNForumForumBundle') -}}
 											</a>
 										</li>
 		                                {%- if not post.getDeletedBy -%}
 		                                    <li>
-												<a rel="nofollow" href="{{- path('ccdn_forum_user_post_delete', {'postId': post.getId }) -}}">
+												<a rel="nofollow" href="{{- path('ccdn_forum_user_post_delete', {'forumName': forum.name, 'postId': post.getId }) -}}">
 													<i class="icon-trash"></i>
 													{{- 'link.post.delete' | trans({}, 'CCDNForumForumBundle') -}}
 												</a>
@@ -98,7 +100,7 @@
 
 		                        {%- if is_granted('ROLE_MODERATOR') -%}
 		                            <li>
-										<a rel="nofollow" href="{{- path('ccdn_forum_user_post_edit', {'postId': post.getId }) -}}">
+										<a rel="nofollow" href="{{- path('ccdn_forum_user_post_edit', {'forumName': forum.name, 'postId': post.getId }) -}}">
 											<i class="icon-pencil"></i>
 											{{- 'link.post.edit' | trans({}, 'CCDNForumForumBundle') -}}
 										</a>
@@ -106,14 +108,14 @@
 
 		                            {%- if post.isDeleted -%}
 		                                <li>
-		                                    <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_restore', {'postId': post.getId }) -}}">
+		                                    <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_restore', {'forumName': forum.name, 'postId': post.getId }) -}}">
 		                                        <i class="icon-trash"></i>
 												{{- 'link.post.restore' | trans({}, 'CCDNForumForumBundle') -}}
 		                                    </a>
 		                                </li>
 		                            {%- else -%}
 		                                <li>
-		                                    <a rel="nofollow" href="{{- path('ccdn_forum_user_post_delete', {'postId': post.getId }) -}}">
+		                                    <a rel="nofollow" href="{{- path('ccdn_forum_user_post_delete', {'forumName': forum.name, 'postId': post.getId }) -}}">
 		                                        <i class="icon-trash"></i>
 												{{- 'link.post.delete' | trans({}, 'CCDNForumForumBundle') -}}
 		                                    </a>
@@ -122,14 +124,14 @@
 
 		                            {%- if post.isLocked -%}
 		                                <li>
-		                                    <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_unlock', {'postId': post.getId }) -}}">
+		                                    <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_unlock', {'forumName': forum.name, 'postId': post.getId }) -}}">
 		                                        <i class="icon-lock"></i>
 												{{- 'link.post.unlock' | trans({}, 'CCDNForumForumBundle') -}}
 		                                    </a>
 		                                </li>
 		                            {%- else -%}
 		                                <li>
-		                                    <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_lock', {'postId': post.getId }) -}}">
+		                                    <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_lock', {'forumName': forum.name, 'postId': post.getId }) -}}">
 		                                        <i class="icon-lock"></i>
 												{{- 'link.post.lock' | trans({}, 'CCDNForumForumBundle') -}}
 		                                    </a>

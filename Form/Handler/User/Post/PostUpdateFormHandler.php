@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
-//use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent;
 
 //use CCDNForum\ForumBundle\Model\BaseModelInterface;
 use CCDNForum\ForumBundle\Entity\Post;
@@ -201,6 +201,8 @@ class PostUpdateFormHandler
                 throw new \Exception('Post must be specified to be update a Reply in PostUpdateFormHandler');
             }
 
+			$this->dispatcher->dispatch(ForumEvents::USER_POST_EDIT_INITIALISE, new UserPostEvent($this->request, $this->post));
+
             $this->form = $this->factory->create($this->formPostType, $this->post);
         }
 
@@ -210,7 +212,7 @@ class PostUpdateFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Post         $post
+     * @param  \CCDNForum\ForumBundle\Entity\Post     $post
      * @return \CCDNForum\ForumBundle\Model\PostModel
      */
     protected function onSuccess(Post $post)
@@ -222,8 +224,10 @@ class PostUpdateFormHandler
         // if post is less than 15 minutes old, don't add that it was edited.
         if ($interval->format('%i') > 15) {
             $post->setEditedDate(new \DateTime());
-            $post->setEditedBy($this->postModel->getUser());
+            $post->setEditedBy($this->user);
         }
+
+		$this->dispatcher->dispatch(ForumEvents::USER_POST_EDIT_SUCCESS, new UserPostEvent($this->request, $this->post));
 
         return $this->postModel->updatePost($post)->flush();
     }
