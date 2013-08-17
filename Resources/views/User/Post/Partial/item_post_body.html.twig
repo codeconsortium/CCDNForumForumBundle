@@ -1,6 +1,6 @@
 {%- spaceless -%}
 
-	{%- if post.getIsDeleted == false or is_granted('ROLE_MODERATOR') -%}
+	{%- if post.isDeleted == false or is_granted('ROLE_MODERATOR') -%}
 		{%- if post.getEditedDate -%}
 		    <div class="label forum-post-notice">
 				<i class="icon-white icon-pencil"></i>
@@ -17,7 +17,7 @@
 		{%- endif -%}
 	{%- endif -%}
 
-	{%- if post.getIsDeleted == true -%}
+	{%- if post.isDeleted == true -%}
 		<div class="label label-important forum-post-notice">
 			<div class="span8">
 		        <i class="icon-white icon-trash"></i>

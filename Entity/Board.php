@@ -361,7 +361,7 @@ class Board extends AbstractBoard
      *
      * @return bool
      */
-    public function isAuthorisedToTopicReply(SecurityContextInterface $securityContext)
+    public function isAuthorisedToReplyToTopic(SecurityContextInterface $securityContext)
     {
         if (0 == count($this->topicReplyAuthorisedRoles)) {
             return true;

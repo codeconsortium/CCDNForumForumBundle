@@ -52,7 +52,8 @@ class UserTopicController extends UserTopicBaseController
         // Get topic.
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true);
         $this->isFound($topic);
-        $this->isAuthorisedToViewTopic($topic);
+
+		$this->isAuthorised($this->getAuthorizer()->canShowTopic($topic, $forum));
 
         // Get posts for topic paginated.
 		$page = $this->getQuery('page', 1);
@@ -98,7 +99,8 @@ class UserTopicController extends UserTopicBaseController
 
         $board = $this->getBoardModel()->findOneBoardByIdWithCategory($boardId);
         $this->isFound($board);
-        //$this->isAuthorisedToCreateTopic($board);
+
+		$this->isAuthorised($this->getAuthorizer()->canCreateTopicOnBoard($board, $forum));
 
         $formHandler = $this->getFormHandlerToCreateTopic($forum, $board);
 
@@ -141,7 +143,8 @@ class UserTopicController extends UserTopicBaseController
 
         $board = $this->getBoardModel()->findOneBoardByIdWithCategory($boardId);
         $this->isFound($board);
-        //$this->isAuthorisedToCreateTopic($board);
+
+		$this->isAuthorised($this->getAuthorizer()->canCreateTopicOnBoard($board, $forum));
 
         $formHandler = $this->getFormHandlerToCreateTopic($forum, $board);
 
@@ -203,8 +206,8 @@ class UserTopicController extends UserTopicBaseController
 
         $topic = $this->getTopicModel()->findOneTopicByIdWithPosts($topicId);
         $this->isFound($topic);
-        //$this->isAuthorisedToViewTopic($topic);
-        //$this->isAuthorisedToReplyToTopic($topic);
+
+		$this->isAuthorised($this->getAuthorizer()->canReplyToTopic($topic, $forum));
 
         $formHandler = $this->getFormHandlerToReplyToTopic($topic);
 
@@ -247,8 +250,8 @@ class UserTopicController extends UserTopicBaseController
 
         $topic = $this->getTopicModel()->findOneTopicByIdWithPosts($topicId);
         $this->isFound($topic);
-        //$this->isAuthorisedToViewTopic($topic);
-        //$this->isAuthorisedToReplyToTopic($topic);
+
+		$this->isAuthorised($this->getAuthorizer()->canReplyToTopic($topic, $forum));
 
         $formHandler = $this->getFormHandlerToReplyToTopic($topic);
 

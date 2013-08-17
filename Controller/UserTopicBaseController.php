@@ -42,138 +42,6 @@ class UserTopicBaseController extends BaseController
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                              $topic
-     * @return bool
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function isAuthorisedToViewTopic(Topic $topic)
-    {
-        return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToViewTopic($topic));
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Board                              $board
-     * @return bool
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function isAuthorisedToCreateTopic(Board $board)
-    {
-        return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToCreateTopic($board));
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                              $topic
-     * @return bool
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function isAuthorisedToReplyToTopic(Topic $topic)
-    {
-        return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToReplyToTopic($topic));
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                              $topic
-     * @return bool
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function isAuthorisedToEditTopic(Topic $topic)
-    {
-        return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToEditTopic($topic));
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                              $topic
-     * @return bool
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function isAuthorisedToDeleteTopic(Topic $topic)
-    {
-        return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToDeleteTopic($topic));
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                              $topic
-     * @return bool
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function isAuthorisedToRestoreTopic(Topic $topic)
-    {
-        return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToRestoreTopic($topic));
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                              $topic
-     * @return bool
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function isAuthorisedToMoveTopic(Topic $topic)
-    {
-        return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToMoveTopic($topic));
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                              $topic
-     * @return bool
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function isAuthorisedToCloseTopic(Topic $topic)
-    {
-        return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToCloseTopic($topic));
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                              $topic
-     * @return bool
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function isAuthorisedToReOpenTopic(Topic $topic)
-    {
-        return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToReOpenTopic($topic));
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                              $topic
-     * @return bool
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function isAuthorisedToStickyTopic(Topic $topic)
-    {
-        return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToStickyTopic($topic));
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                              $topic
-     * @return bool
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function isAuthorisedToUnStickyTopic(Topic $topic)
-    {
-        return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToUnstickyTopic($topic));
-    }
-
-    /**
-     *
-     * @access public
      * @return \CCDNForum\ForumBundle\Component\FloodControl
      */
     public function getFloodControl()
@@ -190,7 +58,6 @@ class UserTopicBaseController extends BaseController
      * @access public
      * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
      * @param  \CCDNForum\ForumBundle\Entity\Board                        $board
-     * @param  int                                                        $draftId
      * @return \CCDNForum\ForumBundle\Form\Handler\TopicCreateFormHandler
      */
     public function getFormHandlerToCreateTopic(Forum $forum, Board $board)
@@ -202,9 +69,6 @@ class UserTopicBaseController extends BaseController
 		$formHandler->setUser($this->getUser());
 		$formHandler->setRequest($this->getRequest());
 		
-        //if ( ! empty($draftId)) {
-        //    $draft = $this->getDraftManager()->findOneById($draftId);
-        //}
         return $formHandler;
     }
 
@@ -221,16 +85,6 @@ class UserTopicBaseController extends BaseController
         $formHandler->setTopic($topic);
 		$formHandler->setUser($this->getUser());
 		$formHandler->setRequest($this->getRequest());
-
-        //if ( ! empty($draftId)) {
-        //    $draft = $this->getDraftManager()->findOneById($draftId);
-        //}
-
-        //if ( ! empty($quoteId)) {
-        //    $quote = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($quoteId);
-        //
-        //    $formHandler->setPostToQuote($quote);
-        //}
 
         return $formHandler;
     }

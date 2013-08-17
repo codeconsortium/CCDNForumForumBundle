@@ -246,7 +246,7 @@ abstract class Topic
 
         return $this;
     }
-	
+
     /**
      * 
      * Get subscriptions
@@ -282,7 +282,7 @@ abstract class Topic
 
         return $this;
     }
-	
+
     /**
      * 
      * @param Subscription $subscription

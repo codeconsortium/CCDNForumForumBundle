@@ -41,7 +41,8 @@ class UserBoardController extends UserBoardBaseController
         // check board exists.
         $board = $this->getBoardModel()->findOneBoardByIdWithCategory($boardId);
         $this->isFound($board);
-        $this->isAuthorisedToViewBoard($board);
+
+		$this->isAuthorised($this->getAuthorizer()->canShowBoard($board, $forum));
 
 		// Get topics.
 		$page = $this->getQuery('page', 1);

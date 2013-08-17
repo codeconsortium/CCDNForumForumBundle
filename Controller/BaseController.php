@@ -59,9 +59,21 @@ class BaseController extends ContainerAware
 
     /**
      *
+     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher;
+     */
+	protected $dispatcher;
+
+    /**
+     *
      * @var \Symfony\Component\Security\Core\SecurityContext $securityContext
      */
     private $securityContext;
+
+    /**
+     *
+     * @var \CCDNForum\ForumBundle\Component\Security\Authorizer $authorizer;
+     */
+    private $authorizer;
 
     /**
      *
@@ -110,18 +122,6 @@ class BaseController extends ContainerAware
      * @var \CCDNForum\ForumBundle\Model\Model\SubscriptionModel $subscriptionModel
      */
     private $subscriptionModel;
-
-    /**
-     *
-     * @var \CCDNForum\ForumBundle\Manager\PolicyManager $policyManager;
-     */
-    private $policyManager;
-
-    /**
-     *
-     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher;
-     */
-	protected $dispatcher;
 
     /**
      *
@@ -392,6 +392,20 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
+     * @return \CCDNForum\ForumBundle\Component\Security\Authorizer
+     */
+    protected function getAuthorizer()
+    {
+        if (null == $this->authorizer) {
+            $this->authorizer = $this->container->get('ccdn_forum_forum.component.security.authorizer');
+        }
+
+        return $this->authorizer;
+    }
+
+    /**
+     *
+     * @access protected
      * @return \CCDNForum\ForumBundle\Model\Model\ForumModel
      */
     protected function getForumModel()
@@ -499,20 +513,6 @@ class BaseController extends ContainerAware
         }
 
         return $this->subscriptionModel;
-    }
-
-    /**
-     *
-     * @access protected
-     * @return \CCDNForum\ForumBundle\Manager\PolicyModel
-     */
-    protected function getPolicyManager()
-    {
-        if (null == $this->policyManager) {
-            $this->policyManager = $this->container->get('ccdn_forum_forum.manager.policy');
-        }
-
-        return $this->policyManager;
     }
 
     /**

@@ -1,6 +1,7 @@
 parameters:
 
     # Service Parameters defined in app/config.
+    ccdn_forum_forum.component.twig_extension.authorizer.class: CCDNForum\ForumBundle\Component\TwigExtension\AuthorizerExtension
 
 services:
 
@@ -12,5 +13,12 @@ services:
         class: %ccdn_forum_forum.component.twig_extension.board_list.class%
         arguments:
             - @ccdn_forum_forum.model.category
+        tags:
+            - { name: twig.extension }
+
+    ccdn_forum_forum.component.twig_extension.authorizer:
+        class: %ccdn_forum_forum.component.twig_extension.authorizer.class%
+        arguments:
+            - @ccdn_forum_forum.component.security.authorizer
         tags:
             - { name: twig.extension }

@@ -39,6 +39,8 @@ class UserCategoryController extends BaseController
 		
         $categories = $this->getCategoryModel()->findAllCategoriesWithBoardsForForumByName($forumName);
 
+		$this->isAuthorised($this->getAuthorizer()->canShowForum($forum, $forum));
+
         $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 
 		$crumbs = $this->getCrumbs()->addUserCategoryIndex($forum);
@@ -67,6 +69,8 @@ class UserCategoryController extends BaseController
 		
         $category = $this->getCategoryModel()->findOneCategoryByIdWithBoards($categoryId);
         $this->isFound($category);
+
+		$this->isAuthorised($this->getAuthorizer()->canShowCategory($category, $forum));
 
         $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.show.topics_per_page');
 

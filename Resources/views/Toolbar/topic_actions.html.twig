@@ -1,44 +1,41 @@
 {%- spaceless -%}
+
 	{%- if topic is defined -%}
 
 		{%- if board is not defined -%}
 			{%- set board = topic.getBoard -%}
 		{%- endif -%}
 
-	    {% set authorised_to_reply = board.isAuthorisedToTopicReply(app.security) %}
 
-	    <a class="btn btn-danger{{ authorised_to_reply ? '': ' disabled' }}" rel="nofollow" href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
-			<i class="icon-white{{ authorised_to_reply ? ' icon-comment': ' icon-lock' }}"></i>
-			{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
-		</a>
-
-		{%- if is_granted('ROLE_USER') -%}
-			{%- if subscription is defined -%}
-				{%- if subscription is not null -%}
-					{%- if subscription.isSubscribed == true -%}
-						<a class="btn" href="{{- path('ccdn_forum_user_subscription_unsubscribe', {'topicId': topic.getId }) -}}">
-							<i class="icon-eye-close"></i>
-							{{- 'link.topic.unsubscribe' | trans({}, 'CCDNForumForumBundle') -}}
-						</a>
-					{%- else -%}
-						<a class="btn" href="{{- path('ccdn_forum_user_subscription_subscribe', {'topicId': topic.getId }) -}}">
-							<i class="icon-eye-open"></i>
-							{{- 'link.topic.subscribe' | trans({}, 'CCDNForumForumBundle') -}}
-						</a>
-					{%- endif -%}
-				{%- else -%}
-					<a class="btn" href="{{- path('ccdn_forum_user_subscription_subscribe', {'topicId': topic.getId }) -}}">
-						<i class="icon-eye-open"></i>
-						{{- 'link.topic.subscribe' | trans({}, 'CCDNForumForumBundle') -}}
-					</a>
-				{%- endif -%}
-			{%- else -%}
-				<a class="btn" href="{{- path('ccdn_forum_user_subscription_subscribe', {'topicId': topic.getId }) -}}">
-					<i class="icon-eye-open"></i>
-					{{- 'link.topic.subscribe' | trans({}, 'CCDNForumForumBundle') -}}
-				</a>
-			{%- endif -%}
+		{%- if canReplyToTopic(topic, forum) -%}
+		    <a class="btn btn-danger" rel="nofollow"
+			 href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
+				<i class="icon-white icon-comment"></i>
+				{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
+			</a>
+		{%- else -%}
+		    <a class="btn btn-danger disabled" rel="nofollow"
+			 href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
+				<i class="icon-white icon-lock"></i>
+				{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
+			</a>
 		{%- endif -%}
+
+
+		{%- if canSubscribeToTopic(topic, forum, (subscription is defined ? subscription : null)) -%}
+			<a class="btn" href="{{- path('ccdn_forum_user_subscription_subscribe', {'topicId': topic.getId }) -}}">
+				<i class="icon-eye-open"></i>
+				{{- 'link.topic.subscribe' | trans({}, 'CCDNForumForumBundle') -}}
+			</a>
+		{%- endif -%}
+		
+		{%- if canUnsubscribeFromTopic(topic, forum, (subscription is defined ? subscription : null)) -%}
+			<a class="btn" href="{{- path('ccdn_forum_user_subscription_unsubscribe', {'topicId': topic.getId }) -}}">
+				<i class="icon-eye-close"></i>
+				{{- 'link.topic.unsubscribe' | trans({}, 'CCDNForumForumBundle') -}}
+			</a>
+		{%- endif -%}
+
 
 		{%- if is_granted('ROLE_MODERATOR') -%}
 			<div class="btn-group">
@@ -48,57 +45,74 @@
 					<span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
-					<li>
-						{%- if topic.isSticky -%}
-							<a href="{{- path('ccdn_forum_moderator_topic_unsticky', {'topicId': topic.getId }) -}}">
-								<i class="icon-bullhorn"></i>
-								{{- 'link.topic.unsticky' |trans({}, 'CCDNForumForumBundle') -}}
-							</a>
-						{%- else -%}
+					
+					{%- if canStickyTopic(topic, forum) -%}
+						<li>
 							<a href="{{- path('ccdn_forum_moderator_topic_sticky', {'topicId': topic.getId }) -}}">
 								<i class="icon-bullhorn"></i>
 								{{- 'link.topic.sticky' |trans({}, 'CCDNForumForumBundle') -}}
 							</a>
-						{%- endif -%}
-					</li>
+						</li>
+					{%- endif -%}
+					
+					{%- if canUnstickyTopic(topic, forum) -%}
+						<li>
+							<a href="{{- path('ccdn_forum_moderator_topic_unsticky', {'topicId': topic.getId }) -}}">
+								<i class="icon-bullhorn"></i>
+								{{- 'link.topic.unsticky' |trans({}, 'CCDNForumForumBundle') -}}
+							</a>
+						</li>
+					{%- endif -%}
 
-					<li>
-						<a href="{{- path('ccdn_forum_user_topic_change_board', {'topicId': topic.getId }) -}}">
-							<i class="icon-move"></i>
-							{{- 'link.topic.change_board' | trans({}, 'CCDNForumForumBundle') -}}
-						</a>
-					</li>
-
-					<li>
-						{%- if topic.closedBy -%}
+					{%- if canCloseTopic(topic, forum) -%}
+						<li>
 							<a href="{{- path('ccdn_forum_moderator_topic_reopen', {'topicId': topic.getId }) -}}">
 								<i class="icon-lock"></i>
 								{{- 'link.topic.reopen' | trans({}, 'CCDNForumForumBundle') -}}
 							</a>
-						{%- else -%}
+						</li>
+					{%- endif -%}
+					
+					{%- if canReopenTopic(topic, forum) -%}
+						<li>
 							<a href="{{- path('ccdn_forum_moderator_topic_close', {'topicId': topic.getId }) -}}">
 								<i class="icon-lock"></i>
 								{{- 'link.topic.close' | trans({}, 'CCDNForumForumBundle') -}}
 							</a>
-						{%- endif -%}
-					</li>
+						</li>
+					{%- endif -%}
 
-					<li>
-						{%- if topic.deletedBy -%}
+					{%- if canDeleteTopic(topic, forum) -%}
+						<li>
 							<a href="{{- path('ccdn_forum_moderator_topic_restore', {'topicId': topic.getId }) -}}">
 								<i class="icon-trash"></i>
 								{{- 'link.topic.restore' |trans({}, 'CCDNForumForumBundle') -}}
 							</a>
-						{%- else -%}
+						</li>
+					{%- endif -%}
+					
+					{%- if canRestoreTopic(topic, forum) -%}
+						<li>
 							<a href="{{- path('ccdn_forum_moderator_topic_delete', {'topicId': topic.getId }) -}}">
 								<i class="icon-trash"></i>
 								{{- 'link.topic.delete' |trans({}, 'CCDNForumForumBundle') -}}
 							</a>
-						{%- endif -%}
-					</li>
+						</li>
+					{%- endif -%}
+					
+					{%- if canMoveTopic(topic, forum) -%}
+						<li>
+							<a href="{{- path('ccdn_forum_user_topic_change_board', {'topicId': topic.getId }) -}}">
+								<i class="icon-move"></i>
+								{{- 'link.topic.change_board' | trans({}, 'CCDNForumForumBundle') -}}
+							</a>
+						</li>
+					{%- endif -%}
+					
 				</ul>
 			</div>
 		{%- endif -%}
 
 	{%- endif -%}
+
 {%- endspaceless -%}

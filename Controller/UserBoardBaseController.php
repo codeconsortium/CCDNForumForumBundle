@@ -30,15 +30,5 @@ use CCDNForum\ForumBundle\Entity\Board;
  */
 class UserBoardBaseController extends BaseController
 {
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Board                              $board
-     * @return bool
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function isAuthorisedToViewBoard(Board $board)
-    {
-        return $this->isAuthorised($this->getPolicyManager()->isAuthorisedToViewBoard($board));
-    }
+
 }

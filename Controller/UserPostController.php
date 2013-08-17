@@ -48,7 +48,8 @@ class UserPostController extends UserPostBaseController
         // Get post by id.
         $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
         $this->isFound($post);
-        //$this->isAuthorisedToViewPost($post);
+
+		$this->isAuthorised($this->getAuthorizer()->canShowPost($post, $forum));
 
         // Get the topic subscriptions.
         $subscription = $this->getSubscriptionModel()->findSubscriptionForTopicById($post->getTopic()->getId());
@@ -85,8 +86,8 @@ class UserPostController extends UserPostBaseController
 
         $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
         $this->isFound($post);
-        //$this->isAuthorisedToViewPost($post);
-        //$this->isAuthorisedToEditPost($post);
+
+		$this->isAuthorised($this->getAuthorizer()->canEditPost($post, $forum));
 
 		$formHandler = $this->getFormHandlerToEditPost($post);
 		
@@ -124,8 +125,8 @@ class UserPostController extends UserPostBaseController
 
         $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
         $this->isFound($post);
-        //$this->isAuthorisedToViewPost($post);
-        //$this->isAuthorisedToEditPost($post);
+
+		$this->isAuthorised($this->getAuthorizer()->canEditPost($post, $forum));
 
 		$formHandler = $this->getFormHandlerToEditPost($post);
 		
@@ -183,8 +184,8 @@ class UserPostController extends UserPostBaseController
 
         $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId);
         $this->isFound($post);
-        //$this->isAuthorisedToViewPost($post);
-        //$this->isAuthorisedToDeletePost($post);
+
+		$this->isAuthorised($this->getAuthorizer()->canDeletePost($post, $forum));
 
 		$formHandler = $this->getFormHandlerToDeletePost($post);
 
@@ -221,8 +222,8 @@ class UserPostController extends UserPostBaseController
 
         $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId);
         $this->isFound($post);
-        ////$this->isAuthorisedToViewPost($post);
-        ////$this->isAuthorisedToDeletePost($post);
+
+		$this->isAuthorised($this->getAuthorizer()->canDeletePost($post, $forum));
 		
 		$formHandler = $this->getFormHandlerToDeletePost($post);
 		

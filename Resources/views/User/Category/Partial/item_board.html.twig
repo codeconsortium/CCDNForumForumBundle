@@ -1,19 +1,19 @@
 {%- spaceless -%}
 	<tr>
 	    <td class="center">
-	        {% if board.isAuthorisedToCreateTopic(app.security) %}
-	            {% if board.isAuthorisedToTopicReply(app.security) %}
+	        {%- if canCreateTopicOnBoard(board, forum) -%}
+	            {%- if canReplyToTopicOnBoard(board, forum) -%}
 	                <i class="icon-folder-close" style="margin-top:10px;"></i>
-	            {% else %}
+	            {%- else -%}
 	                <i class="icon-lock" style="margin-top:10px;"></i>
-	            {% endif %}
-	        {% else %}
-	            {% if board.isAuthorisedToTopicReply(app.security) %}
+	            {%- endif -%}
+	        {%- else -%}
+	            {%- if canReplyToTopicOnBoard(board, forum) -%}
 	                <i class="icon-eye-open" style="margin-top:10px;"></i>
-	            {% else %}
+	            {%- else -%}
 	                <i class="icon-lock" style="margin-top:10px;"></i>
-	            {% endif %}
-	        {% endif %}
+	            {%- endif -%}
+	        {%- endif -%}
 	    </td>
 
 	    <td class="left">

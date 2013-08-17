@@ -166,6 +166,29 @@ class Post extends AbstractPost
     }
 
     /**
+     * Get isDeleted
+     *
+     * @return boolean
+     */
+    public function isDeleted()
+    {
+        return $this->isDeleted;
+    }
+
+    /**
+     * Set is_deleted
+     *
+     * @param  boolean $isDeleted
+     * @return Post
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+
+        return $this;
+    }
+
+    /**
      * Get deletedDate
      *
      * @return \datetime
@@ -189,6 +212,29 @@ class Post extends AbstractPost
     }
 
     /**
+     * Get isLocked
+     *
+     * @return boolean
+     */
+    public function isLocked()
+    {
+        return $this->isLocked;
+    }
+
+    /**
+     * Set isLocked
+     *
+     * @param  boolean $isLocked
+     * @return Post
+     */
+    public function setIsLocked($isLocked)
+    {
+        $this->isLocked = $isLocked;
+
+        return $this;
+    }
+
+    /**
      * Get lockedDate
      *
      * @return \datetime
@@ -207,52 +253,6 @@ class Post extends AbstractPost
     public function setLockedDate($lockedDate)
     {
         $this->lockedDate = $lockedDate;
-
-        return $this;
-    }
-
-    /**
-     * Get isDeleted
-     *
-     * @return boolean
-     */
-    public function getIsDeleted()
-    {
-        return $this->isDeleted;
-    }
-
-    /**
-     * Set is_deleted
-     *
-     * @param  boolean $isDeleted
-     * @return Post
-     */
-    public function setIsDeleted($isDeleted)
-    {
-        $this->isDeleted = $isDeleted;
-
-        return $this;
-    }
-
-    /**
-     * Get isLocked
-     *
-     * @return boolean
-     */
-    public function getIsLocked()
-    {
-        return $this->isLocked;
-    }
-
-    /**
-     * Set isLocked
-     *
-     * @param  boolean $isLocked
-     * @return Post
-     */
-    public function setIsLocked($isLocked)
-    {
-        $this->isLocked = $isLocked;
 
         return $this;
     }

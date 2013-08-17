@@ -132,121 +132,6 @@ class Topic extends AbstractTopic
     }
 
     /**
-     * Get closedDate
-     *
-     * @return \datetime
-     */
-    public function getClosedDate()
-    {
-        return $this->closedDate;
-    }
-
-    /**
-     * Set closedDate
-     *
-     * @param  \datetime $closedDate
-     * @return Topic
-     */
-    public function setClosedDate($closedDate)
-    {
-        $this->closedDate = $closedDate;
-
-        return $this;
-    }
-
-    /**
-     * Get deletedDate
-     *
-     * @return \datetime
-     */
-    public function getDeletedDate()
-    {
-        return $this->deletedDate;
-    }
-
-    /**
-     * Set deletedDate
-     *
-     * @param  \datetime $deletedDate
-     * @return Topic
-     */
-    public function setDeletedDate($deletedDate)
-    {
-        $this->deletedDate = $deletedDate;
-
-        return $this;
-    }
-
-    /**
-     * Get isSticky
-     *
-     * @return boolean
-     */
-    public function getIsSticky()
-    {
-        return $this->isSticky;
-    }
-
-    /**
-     * Set isSticky
-     *
-     * @param  boolean $isSticky
-     * @return Topic
-     */
-    public function setIsSticky($isSticky)
-    {
-        $this->isSticky = $isSticky;
-
-        return $this;
-    }
-
-    /**
-     * Get isClosed
-     *
-     * @return boolean
-     */
-    public function getIsClosed()
-    {
-        return $this->isClosed;
-    }
-
-    /**
-     * Set isClosed
-     *
-     * @param  boolean $isClosed
-     * @return Topic
-     */
-    public function setIsClosed($isClosed)
-    {
-        $this->isClosed = $isClosed;
-
-        return $this;
-    }
-
-    /**
-     * Get isDeleted
-     *
-     * @return boolean
-     */
-    public function getIsDeleted()
-    {
-        return $this->isDeleted;
-    }
-
-    /**
-     * Set isDeleted
-     *
-     * @param  boolean $isDeleted
-     * @return Topic
-     */
-    public function setIsDeleted($isDeleted)
-    {
-        $this->isDeleted = $isDeleted;
-
-        return $this;
-    }
-
-    /**
      * Get cachedViewCount
      *
      * @return integer
@@ -288,6 +173,131 @@ class Topic extends AbstractTopic
     public function setCachedReplyCount($cachedReplyCount)
     {
         $this->cachedReplyCount = $cachedReplyCount;
+
+        return $this;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Get isClosed
+     *
+     * @return boolean
+     */
+    public function isClosed()
+    {
+        return $this->isClosed;
+    }
+
+    /**
+     * Set isClosed
+     *
+     * @param  boolean $isClosed
+     * @return Topic
+     */
+    public function setIsClosed($isClosed)
+    {
+        $this->isClosed = $isClosed;
+
+        return $this;
+    }
+
+    /**
+     * Get closedDate
+     *
+     * @return \datetime
+     */
+    public function getClosedDate()
+    {
+        return $this->closedDate;
+    }
+
+    /**
+     * Set closedDate
+     *
+     * @param  \datetime $closedDate
+     * @return Topic
+     */
+    public function setClosedDate($closedDate)
+    {
+        $this->closedDate = $closedDate;
+
+        return $this;
+    }
+
+    /**
+     * Get isDeleted
+     *
+     * @return boolean
+     */
+    public function isDeleted()
+    {
+        return $this->isDeleted;
+    }
+
+    /**
+     * Set isDeleted
+     *
+     * @param  boolean $isDeleted
+     * @return Topic
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedDate
+     *
+     * @return \datetime
+     */
+    public function getDeletedDate()
+    {
+        return $this->deletedDate;
+    }
+
+    /**
+     * Set deletedDate
+     *
+     * @param  \datetime $deletedDate
+     * @return Topic
+     */
+    public function setDeletedDate($deletedDate)
+    {
+        $this->deletedDate = $deletedDate;
+
+        return $this;
+    }
+
+    /**
+     * Get isSticky
+     *
+     * @return boolean
+     */
+    public function isSticky()
+    {
+        return $this->isSticky;
+    }
+
+    /**
+     * Set isSticky
+     *
+     * @param  boolean $isSticky
+     * @return Topic
+     */
+    public function setIsSticky($isSticky)
+    {
+        $this->isSticky = $isSticky;
 
         return $this;
     }
