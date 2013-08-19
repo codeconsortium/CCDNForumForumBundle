@@ -208,14 +208,4 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         return $this->utilBag->getPaginationUtil()->getPostsPerPageOnTopics();
     }
-
-    /**
-     *
-     * @access public
-     * @return int
-     */
-    public function getDraftsPerPageOnDrafts()
-    {
-        return $this->utilBag->getPaginationUtil()->getDraftsPerPageOnDrafts();
-    }
 }

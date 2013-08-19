@@ -57,7 +57,7 @@ class UserTopicController extends UserTopicBaseController
 
         // Get posts for topic paginated.
 		$page = $this->getQuery('page', 1);
-		$postsPager = $this->getPostModel()->findAllPaginatedByTopicId($topicId, $page);
+		$postsPager = $this->getPostModel()->findAllPostsPaginatedByTopicId($topicId, $page, true);
 
         // get the topic subscriptions.
         $subscription = $this->getSubscriptionModel()->findSubscriptionForTopicById($topicId);
@@ -204,7 +204,7 @@ class UserTopicController extends UserTopicBaseController
 		
         $this->isAuthorised('ROLE_USER');
 
-        $topic = $this->getTopicModel()->findOneTopicByIdWithPosts($topicId);
+        $topic = $this->getTopicModel()->findOneTopicByIdWithPosts($topicId, true);
         $this->isFound($topic);
 
 		$this->isAuthorised($this->getAuthorizer()->canReplyToTopic($topic, $forum));
@@ -248,7 +248,7 @@ class UserTopicController extends UserTopicBaseController
 		
         $this->isAuthorised('ROLE_USER');
 
-        $topic = $this->getTopicModel()->findOneTopicByIdWithPosts($topicId);
+        $topic = $this->getTopicModel()->findOneTopicByIdWithPosts($topicId, true);
         $this->isFound($topic);
 
 		$this->isAuthorised($this->getAuthorizer()->canReplyToTopic($topic, $forum));

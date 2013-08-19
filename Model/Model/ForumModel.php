@@ -36,36 +36,74 @@ use CCDNForum\ForumBundle\Entity\Forum;
  */
 class ForumModel extends BaseModel implements BaseModelInterface
 {
+    /**
+     *
+     * @access public
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
 	public function findAllForums()
 	{
 		return $this->getRepository()->findAllForums();
 	}
-	
+
+    /**
+     *
+     * @access public
+     * @param  string                              $forumName
+     * @return \CCDNForum\ForumBundle\Entity\Forum
+     */
 	public function findOneForumById($forumId)
 	{
 		return $this->getRepository()->findOneForumById($forumId);
 	}
-	
+
+    /**
+     *
+     * @access public
+     * @param  string                              $forumName
+     * @return \CCDNForum\ForumBundle\Entity\Forum
+     */
 	public function findOneForumByName($forumName)
 	{
 		return $this->getRepository()->findOneForumByName($forumName);
 	}
-	
+
+	/**
+	 * 
+	 * @access public
+	 * @param  \CCDNForum\ForumBundle\Entity\Forum $forum
+	 */
 	public function saveNewForum(Forum $forum)
 	{
 		return $this->getManager()->saveNewForum($forum);
 	}
-	
+
+	/**
+	 * 
+	 * @access public
+	 * @param  \CCDNForum\ForumBundle\Entity\Forum $forum
+	 */
 	public function updateForum(Forum $forum)
 	{
 		return $this->getManager()->updateForum($forum);
 	}
-	
+
+	/**
+	 * 
+	 * @access public
+	 * @param  \CCDNForum\ForumBundle\Entity\Forum $forum
+	 */
 	public function deleteForum(Forum $forum)
 	{
 		return $this->getManager()->deleteForum($forum);
 	}
-	
+
+	/**
+	 * 
+	 * @access public
+	 * @param  \Doctrine\Common\Collections\ArrayCollection $categories
+	 * @param  \CCDNForum\ForumBundle\Entity\Forum          $forum
+	 */
 	public function reassignCategoriesToForum(ArrayCollection $categories, Forum $forum = null)
 	{
 		return $this->getManager()->reassignCategoriesToForum($categories, $forum);

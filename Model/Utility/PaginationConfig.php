@@ -46,24 +46,16 @@ class PaginationConfig
 
     /**
      *
-     * @var int $draftsPerPageOnDrafts
-     */
-	protected $draftsPerPageOnDrafts;
-	
-    /**
-     *
      * @access public
      * @param int $topicsPerPageOnSubscriptions
      * @param int $topicsPerPageOnBoards
      * @param int $postsPerPageOnTopics
-     * @param int $draftsPerPageOnDrafts
      */
-    public function __construct($topicsPerPageOnSubscriptions, $topicsPerPageOnBoards, $postsPerPageOnTopics, $draftsPerPageOnDrafts)
+    public function __construct($topicsPerPageOnSubscriptions, $topicsPerPageOnBoards, $postsPerPageOnTopics)
     {
         $this->topicsPerPageOnSubscriptions = $topicsPerPageOnSubscriptions;
         $this->topicsPerPageOnBoards        = $topicsPerPageOnBoards;
         $this->postsPerPageOnTopics         = $postsPerPageOnTopics;
-        $this->draftsPerPageOnDrafts        = $draftsPerPageOnDrafts;
     }
 
     /**
@@ -94,15 +86,5 @@ class PaginationConfig
     public function getPostsPerPageOnTopics()
     {
         return $this->postsPerPageOnTopics;
-    }
-
-    /**
-     *
-     * @access public
-     * @return int
-     */
-    public function getDraftsPerPageOnDrafts()
-    {
-        return $this->draftsPerPageOnDrafts;
     }
 }

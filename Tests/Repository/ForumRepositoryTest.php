@@ -23,7 +23,7 @@ class ForumRepositoryTest extends TestBase
 		
 		$this->assertCount(3, $forums);
 	}
-	
+
 	public function testFindOneForumById()
 	{
 		$forum = $this->addNewForum('TestForumById');

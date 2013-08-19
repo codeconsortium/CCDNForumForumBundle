@@ -22,7 +22,7 @@ use CCDNForum\ForumBundle\Model\Repository\BaseRepository;
 use CCDNForum\ForumBundle\Model\Repository\BaseRepositoryInterface;
 
 /**
- * DraftRepository
+ * ForumRepository
  *
  * @category CCDNForum
  * @package  ForumBundle
@@ -49,7 +49,7 @@ class ForumRepository extends BaseRepository implements BaseRepositoryInterface
     /**
      *
      * @access public
-     * @param int $forumId
+     * @param int                                  $forumId
      * @return \CCDNForum\ForumBundle\Entity\Forum
      */
     public function findOneForumById($forumId)
@@ -68,7 +68,7 @@ class ForumRepository extends BaseRepository implements BaseRepositoryInterface
     /**
      *
      * @access public
-     * @param string $forumName
+     * @param  string                              $forumName
      * @return \CCDNForum\ForumBundle\Entity\Forum
      */
     public function findOneForumByName($forumName)

@@ -248,7 +248,13 @@ class TestBase extends WebTestCase
 		foreach ($topics as $topic) {
 			foreach ($postBodies as $index => $postBody) {
 				$posts[] = $this->addNewPost($postBody, $topic, $user);
+				
+				if ($index == 0) {
+					$topic->setFirstPost($posts[count($posts) - 1]);
+				}
 			}
+			
+			$topic->setLastPost($posts[count($posts) - 1]);
 		}
 		
 		return $posts;
@@ -283,12 +289,6 @@ class TestBase extends WebTestCase
      * @var \CCDNForum\ForumBundle\Model\Model\PostModel $postModel
      */
     private $postModel;
-
-    /**
-     *
-     * @var \CCDNForum\ForumBundle\Model\Model\DraftModel $draftModel
-     */
-    private $draftModel;
 
     /**
      *
@@ -370,20 +370,6 @@ class TestBase extends WebTestCase
         }
 
         return $this->postModel;
-    }
-
-    /**
-     *
-     * @access protected
-     * @return \CCDNForum\ForumBundle\Model\Model\DraftModel
-     */
-    protected function getDraftModel()
-    {
-        if (null == $this->draftModel) {
-            $this->draftModel = $this->container->get('ccdn_forum_forum.model.draft');
-        }
-
-        return $this->draftModel;
     }
 
     /**

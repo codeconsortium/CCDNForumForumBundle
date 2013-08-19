@@ -73,9 +73,7 @@ class Configuration implements ConfigurationInterface
             ->addTopicSection($rootNode)
             ->addPostSection($rootNode)
             ->addItemPostSection($rootNode)
-            ->addDraftSection($rootNode)
             ->addSubscriptionSection($rootNode)
-            ->addTranscriptSection($rootNode)
         ;
 
         return $treeBuilder;
@@ -131,13 +129,6 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Entity\Post')->end()
                             ->end()
                         ->end()
-                        ->arrayNode('draft')
-                            ->addDefaultsIfNotSet()
-                            ->canBeUnset()
-                            ->children()
-                                ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Entity\Draft')->end()
-                            ->end()
-                        ->end()
                         ->arrayNode('subscription')
                             ->addDefaultsIfNotSet()
                             ->canBeUnset()
@@ -175,13 +166,6 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->canBeUnset()
                     ->children()
-                        ->arrayNode('bag')
-                            ->addDefaultsIfNotSet()
-                            ->canBeUnset()
-                            ->children()
-                                ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Model\Gateway\Bag\GatewayBag')->end()
-                            ->end()
-                        ->end()
                         ->arrayNode('forum')
                             ->addDefaultsIfNotSet()
                             ->canBeUnset()
@@ -215,13 +199,6 @@ class Configuration implements ConfigurationInterface
                             ->canBeUnset()
                             ->children()
                                 ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Model\Gateway\PostGateway')->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('draft')
-                            ->addDefaultsIfNotSet()
-                            ->canBeUnset()
-                            ->children()
-                                ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Model\Gateway\DraftGateway')->end()
                             ->end()
                         ->end()
                         ->arrayNode('subscription')
@@ -296,13 +273,6 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Model\Repository\PostRepository')->end()
                             ->end()
                         ->end()
-                        ->arrayNode('draft')
-                            ->addDefaultsIfNotSet()
-                            ->canBeUnset()
-                            ->children()
-                                ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Model\Repository\DraftRepository')->end()
-                            ->end()
-                        ->end()
                         ->arrayNode('subscription')
                             ->addDefaultsIfNotSet()
                             ->canBeUnset()
@@ -340,13 +310,6 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->canBeUnset()
                     ->children()
-                        ->arrayNode('bag')
-                            ->addDefaultsIfNotSet()
-                            ->canBeUnset()
-                            ->children()
-                                ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Model\Manager\Bag\ManagerBag')->end()
-                            ->end()
-                        ->end()
                         ->arrayNode('forum')
                             ->addDefaultsIfNotSet()
                             ->canBeUnset()
@@ -380,13 +343,6 @@ class Configuration implements ConfigurationInterface
                             ->canBeUnset()
                             ->children()
                                 ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Model\Manager\PostManager')->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('draft')
-                            ->addDefaultsIfNotSet()
-                            ->canBeUnset()
-                            ->children()
-                                ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Model\Manager\DraftManager')->end()
                             ->end()
                         ->end()
                         ->arrayNode('subscription')
@@ -473,13 +429,6 @@ class Configuration implements ConfigurationInterface
                             ->canBeUnset()
                             ->children()
                                 ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Model\Model\PostModel')->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('draft')
-                            ->addDefaultsIfNotSet()
-                            ->canBeUnset()
-                            ->children()
-                                ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Model\Model\DraftModel')->end()
                             ->end()
                         ->end()
                         ->arrayNode('subscription')
@@ -807,8 +756,8 @@ class Configuration implements ConfigurationInterface
                             ->children()
                                 ->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
                                 ->scalarNode('posts_per_page')->defaultValue('20')->end()
-                                ->scalarNode('topic_closed_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-                                ->scalarNode('topic_deleted_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+                                ->scalarNode('closed_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+                                ->scalarNode('deleted_datetime_format')->defaultValue('d-m-Y - H:i')->end()
                             ->end()
                         ->end()
                         ->arrayNode('create')
@@ -859,8 +808,8 @@ class Configuration implements ConfigurationInterface
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
-                                ->scalarNode('topic_closed_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-                                ->scalarNode('topic_deleted_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+//                                ->scalarNode('closed_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+//                                ->scalarNode('deleted_datetime_format')->defaultValue('d-m-Y - H:i')->end()
                             ->end()
                         ->end()
                         ->arrayNode('edit_topic')
@@ -906,42 +855,10 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->canBeUnset()
                     ->children()
-                        ->scalarNode('post_created_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-                        ->scalarNode('post_edited_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-                        ->scalarNode('post_locked_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-                        ->scalarNode('post_deleted_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @access private
-     * @param  ArrayNodeDefinition                                      $node
-     * @return \CCDNForum\ForumBundle\DependencyInjection\Configuration
-     */
-    private function addDraftSection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->arrayNode('draft')
-                    ->addDefaultsIfNotSet()
-                    ->canBeUnset()
-                    ->children()
-                        ->arrayNode('list')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNComponentCommonBundle:Layout:layout_body_right.html.twig')->end()
-                                ->scalarNode('drafts_per_page')->defaultValue('40')->end()
-                                ->scalarNode('topic_title_truncate')->defaultValue('80')->end()
-                                ->scalarNode('creation_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-                            ->end()
-                        ->end()
+                        ->scalarNode('created_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+                        ->scalarNode('edited_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+                        ->scalarNode('locked_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+                        ->scalarNode('deleted_datetime_format')->defaultValue('d-m-Y - H:i')->end()
                     ->end()
                 ->end()
             ->end()
@@ -975,31 +892,6 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('last_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
                             ->end()
                         ->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @access private
-     * @param  ArrayNodeDefinition                                      $node
-     * @return \CCDNForum\ForumBundle\DependencyInjection\Configuration
-     */
-    private function addTranscriptSection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->arrayNode('transcript')
-                    ->addDefaultsIfNotSet()
-                    ->canBeUnset()
-                    ->children()
-                        ->scalarNode('post_creation_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-                        ->scalarNode('post_deleted_datetime_format')->defaultValue('d-m-Y - H:i')->end()
                     ->end()
                 ->end()
             ->end()

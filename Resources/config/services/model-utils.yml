@@ -11,7 +11,7 @@ services:
         class: %ccdn_forum_forum.model.utility_bag.class%
         arguments:
             - @ccdn_forum_forum.model.utility.pagination_config
-            - @ccdn_forum_forum.model.utility.policy
+#            - @ccdn_forum_forum.model.utility.policy
 
     ccdn_forum_forum.model.utility.pagination_config:
         class: %ccdn_forum_forum.model.utility.pagination_config.class%
@@ -19,17 +19,16 @@ services:
             - %ccdn_forum_forum.subscription.list.topics_per_page%
             - %ccdn_forum_forum.board.show.topics_per_page%
             - %ccdn_forum_forum.topic.show.posts_per_page%
-            - %ccdn_forum_forum.draft.list.drafts_per_page%
 
-    ccdn_forum_forum.model.utility.policy:
-        class: %ccdn_forum_forum.manager.policy.class%
-        arguments:
-            - @security.context
-            - @ccdn_forum_forum.model_bag
-
-    ccdn_forum_forum.manager.policy:
-        class: %ccdn_forum_forum.manager.policy.class%
-        arguments:
-            - @security.context
-            - @ccdn_forum_forum.model_bag
-
+#    ccdn_forum_forum.model.utility.policy:
+#        class: %ccdn_forum_forum.manager.policy.class%
+#        arguments:
+#            - @security.context
+#            - @ccdn_forum_forum.model_bag
+#
+#    ccdn_forum_forum.manager.policy:
+#        class: %ccdn_forum_forum.manager.policy.class%
+#        arguments:
+#            - @security.context
+#            - @ccdn_forum_forum.model_bag
+#

@@ -19,6 +19,21 @@ use CCDNForum\ForumBundle\Entity\Post;
 
 class PostRepositoryTest extends TestBase
 {
+	public function testFindAllPostsPaginatedByTopicId()
+	{
+		$forum = $this->addNewForum('testFindAllPostsPaginatedByTopicId');
+		$category = $this->addNewCategory('testFindAllPostsPaginatedByTopicId', 1, $forum);
+		$board = $this->addNewBoard('testFindAllPostsPaginatedByTopicId', 'testFindAllPostsPaginatedByTopicId', 1, $category);
+		$topic = $this->addNewTopic('testFindAllPostsPaginatedByTopicId', $board);
+		$posts = $this->addFixturesForPosts(array($topic), $this->users['tom']);
+	
+		$pager = $this->getPostModel()->getRepository()->findAllPostsPaginatedByTopicId($topic->getId(), 1, true);
+		
+		$posts = $pager->getItems();
+	
+		$this->assertSame(3, count($posts));
+	}
+
 	public function testFindOnePostByIdWithTopicAndBoard()
 	{
 		$board = $this->addNewBoard('testFindOneTopicByIdWithBoardAndCategory', 'testFindOneTopicByIdWithBoardAndCategory', 1);

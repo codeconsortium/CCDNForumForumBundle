@@ -42,8 +42,6 @@ title:
         show:               "Post #%post_id%"
         edit:               "Edit Post #%post_id%"
         delete:             "Delete Post #%post_id%"
-    draft:
-        index:              "Drafts"
     subscription:
         index:              "Subscriptions"
 
@@ -75,8 +73,6 @@ crumbs:
     post:
         edit:               "Edit Post: #"
         delete:             "Delete Post: #"
-    draft:
-        index:              "Drafts"
     subscription:
         index:              "Subscriptions"
 
@@ -108,10 +104,6 @@ link:
         restore:            "Restore"
         lock:               "Lock"
         unlock:             "Unlock"
-    draft:
-        index:              "Drafts"
-        delete:             "Delete"
-        publish:            "Edit"
     subscription:
         index:              "Subscriptions"
 
@@ -132,7 +124,6 @@ form:
         post:
             edit:           "Update"
             preview:        "Preview"
-            save_draft:     "Save Draft"
         cancel:             "Cancel"
         yes:                "Yes"
         no:                 "No"
@@ -164,8 +155,6 @@ post:
     has_been_deleted:       "This post has been deleted."
     user_post_count:        "{0} No Posts Yet|{1} %post_count% Post |[2, Inf] %post_count% Posts"
     delete_confirm:         "Are you sure you want to delete this post?"
-draft:
-    none:                   "There are no drafts."
 subscription:
     none:                   "You are not subscribed to any topics."
 
@@ -202,8 +191,6 @@ flash:
         post:
             edit:           "Successfully edited #%post_id% of topic: %topic_title%."
             delete:         "Successfully deleted post: #%post_id%."
-        draft:
-            save:           "Successfully saved draft."
     warning:
         topic:
             flood_control:  "Flood Control - You have posted too much at once, take a break before posting again."

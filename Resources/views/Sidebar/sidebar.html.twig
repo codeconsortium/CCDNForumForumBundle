@@ -73,23 +73,6 @@
 			</li>
 		{%- endif -%}
 
-		{#
-		{%- if route == 'ccdn_forum_user_draft_list' -%}
-			<li class="active">
-				<a rel="nofollow" href="{{- path('ccdn_forum_user_draft_list') -}}">
-					<i class="icon-white icon-pencil"></i>
-					{{- 'link.draft.index' | trans({}, 'CCDNForumForumBundle') -}}
-				</a>
-			</li>
-		{%- else -%}
-			<li>
-				<a rel="nofollow" href="{{- path('ccdn_forum_user_draft_list') -}}">
-					<i class="icon-pencil"></i>
-					{{- 'link.draft.index' | trans({}, 'CCDNForumForumBundle') -}}
-				</a>
-			</li>
-		{%- endif -%}
-		#}
 	{%- endif -%}
 
 	<li class="divider"></li>

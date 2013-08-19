@@ -72,12 +72,6 @@ forum:
         enable_bb_parser:     true
     item_signature:
         enable_bb_parser:     true
-    draft:
-        list:
-            layout_template:      CCDNComponentCommonBundle:Layout:layout_body_right.html.twig
-            drafts_per_page:      40
-            topic_title_truncate:  80
-            creation_datetime_format:  d-m-Y - H:i
     subscription:
         list:
             layout_template:      CCDNComponentCommonBundle:Layout:layout_body_right.html.twig

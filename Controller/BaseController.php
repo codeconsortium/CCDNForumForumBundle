@@ -107,12 +107,6 @@ class BaseController extends ContainerAware
 
     /**
      *
-     * @var \CCDNForum\ForumBundle\Model\Model\DraftModel $draftModel
-     */
-    private $draftModel;
-
-    /**
-     *
      * @var \CCDNForum\ForumBundle\Model\Model\RegistryModel $registryModel
      */
     private $registryModel;
@@ -471,20 +465,6 @@ class BaseController extends ContainerAware
         }
 
         return $this->postModel;
-    }
-
-    /**
-     *
-     * @access protected
-     * @return \CCDNForum\ForumBundle\Model\Model\DraftModel
-     */
-    protected function getDraftModel()
-    {
-        if (null == $this->draftModel) {
-            $this->draftModel = $this->container->get('ccdn_forum_forum.model.draft');
-        }
-
-        return $this->draftModel;
     }
 
     /**

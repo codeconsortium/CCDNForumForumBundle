@@ -11,7 +11,7 @@
 				&nbsp;&#183;
 
 				<abbr class="timestamper" title="{{- post.getEditedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-		            {{- post.getEditedDate |date(ccdn_forum_forum.item_post.post_edited_datetime_format) -}}
+		            {{- post.getEditedDate |date(ccdn_forum_forum.item_post.edited_datetime_format) -}}
 		        </abbr>
 		    </div>
 		{%- endif -%}
@@ -28,7 +28,7 @@
 				&nbsp;&#183;
 
 		        <abbr class="timestamper" title="{{- post.getDeletedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-		            {{- post.getDeletedDate |date(ccdn_forum_forum.item_post.post_deleted_datetime_format) -}}
+		            {{- post.getDeletedDate |date(ccdn_forum_forum.item_post.deleted_datetime_format) -}}
 		        </abbr>
 			</div>
 

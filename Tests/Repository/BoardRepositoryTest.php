@@ -25,7 +25,7 @@ class BoardRepositoryTest extends TestBase
 		// 9 Categories x 3 Boards each respectively is 27
 		$this->assertCount(27, $boards);
 	}
-	
+
 	public function testFindAllBoardsForCategoryById()
 	{
 		foreach ($this->categories as $category) {
@@ -34,7 +34,7 @@ class BoardRepositoryTest extends TestBase
 			$this->assertCount(3, $boards);
 		}
 	}
-	
+
 	public function testFindAllBoardsForForumById()
 	{
 		$forum = $this->addNewForum('testFindAllBoardsForForumById');
@@ -46,7 +46,7 @@ class BoardRepositoryTest extends TestBase
 	
 		$this->assertCount(9, $foundBoards);
 	}
-	
+
 	public function testFindOneBoardById()
 	{
 		$board = $this->addNewBoard('TestBoard', 'generic description', 1);
@@ -56,7 +56,7 @@ class BoardRepositoryTest extends TestBase
 		$this->assertNotNull($foundBoard);
 		$this->assertEquals($foundBoard->getId(), $board->getId());
 	}
-	
+
 	public function testFindOneBoardByIdWithCategory()
 	{
 		$category = $this->addNewCategory('TestCategory', 1);
@@ -72,5 +72,18 @@ class BoardRepositoryTest extends TestBase
 		$this->assertEquals($foundBoard->getId(), $board->getId());
 		$this->assertNotNull($foundBoard->getCategory()->getId());
 		$this->assertEquals($category->getId(), $foundBoard->getCategory()->getId());
+	}
+
+	public function testGetBoardCount()
+	{
+		$this->purge();
+		
+		$forum = $this->addNewForum('TestForum');
+		$categories = $this->addFixturesForCategories(array($forum));
+		$boards = $this->addFixturesForBoards($categories);
+		
+		$count = $this->getBoardModel()->getRepository()->getBoardCount();
+		
+		$this->assertSame(9, (int) $count);
 	}
 }

@@ -37,25 +37,6 @@ class SubscriptionRepository extends BaseRepository implements BaseRepositoryInt
     /**
      *
      * @access public
-     * @param  int $topicId
-     * @return int
-     */
-    public function countSubscriptionsForTopicById($topicId)
-    {
-        if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
-            throw new \Exception('Topic id "' . $topicId . '" is invalid!');
-        }
-
-        $qb = $this->createCountQuery();
-
-        $qb->where('s.topic = :topicId');
-
-        return $this->gateway->countSubscriptions($qb, array(':topicId' => $topicId));
-    }
-
-    /**
-     *
-     * @access public
      * @param  int                                        $topicId
      * @return \CCDNForum\ForumBundle\Entity\Subscription
      */
@@ -97,7 +78,8 @@ class SubscriptionRepository extends BaseRepository implements BaseRepositoryInt
                     $qb->expr()->eq('s.topic', ':topicId'),
                     $qb->expr()->eq('s.ownedBy', ':userId')
                 )
-            );
+            )
+		;
 
         return $this->gateway->findSubscription($qb, array(':topicId' => $topicId, ':userId' => $userId));
     }
@@ -124,8 +106,28 @@ class SubscriptionRepository extends BaseRepository implements BaseRepositoryInt
             ->leftJoin('b.category', 'c')
             ->where('s.ownedBy = :userId')
             ->setParameters($params)
-            ->orderBy('lp.createdDate', 'DESC');
+            ->orderBy('lp.createdDate', 'DESC')
+		;
 
         return $this->gateway->paginateQuery($qb, $this->getTopicsPerPageOnSubscriptions(), $page);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int $topicId
+     * @return int
+     */
+    public function countSubscriptionsForTopicById($topicId)
+    {
+        if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
+            throw new \Exception('Topic id "' . $topicId . '" is invalid!');
+        }
+
+        $qb = $this->createCountQuery();
+
+        $qb->where('s.topic = :topicId');
+
+        return $this->gateway->countSubscriptions($qb, array(':topicId' => $topicId));
     }
 }

@@ -118,10 +118,6 @@ CCDNForumForumBundle-User-Post:
     resource: "@CCDNForumForumBundle/Resources/config/routing/user-post.yml"
     prefix: /{_locale}/forum/post
 
-CCDNForumForumBundle-User-Draft:
-    resource: "@CCDNForumForumBundle/Resources/config/routing/user-draft.yml"
-    prefix: /{_locale}/forum/draft
-
 CCDNForumForumBundle-User-Subscription:
     resource: "@CCDNForumForumBundle/Resources/config/routing/user-subscription.yml"
     prefix: /{_locale}/forum/subscription

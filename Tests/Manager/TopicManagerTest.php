@@ -50,4 +50,33 @@ class TopicManagerTest extends TestBase
 		$this->assertSame('NewTopicTest', $foundTopic->getTitle());
 		$this->assertSame(1, count($foundTopic->getPosts()));
 	}
+
+    public function testIncrementViewCounter()
+	{
+		$topic = new Topic();
+		$topic->setTitle('NewTopicTest');
+        $topic->setCachedViewCount(0);
+        $topic->setCachedReplyCount(0);
+        $topic->setIsClosed(false);
+        $topic->setIsDeleted(false);
+        $topic->setIsSticky(false);
+		
+		$post = new Post();
+		$post->setTopic($topic);
+		$post->setBody('foobar');
+        $post->setCreatedDate(new \DateTime());
+        $post->setCreatedBy($this->users['tom']);
+        $post->setIsLocked(false);
+        $post->setIsDeleted(false);
+
+		$this->getTopicModel()->getManager()->saveNewTopic($post);
+		
+		$this->getTopicModel()->getManager()->incrementViewCounter($topic);
+		
+		$foundTopic = $this->getTopicModel()->getRepository()->findOneTopicByIdWithBoardAndCategory($topic->getId(), true);
+		
+		$this->assertTrue(is_numeric($foundTopic->getId()));
+		$this->assertTrue(is_numeric($foundTopic->getCachedViewCount()));
+		$this->assertSame(1, $foundTopic->getCachedViewCount());
+	}
 }

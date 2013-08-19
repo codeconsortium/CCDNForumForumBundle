@@ -73,13 +73,6 @@ interface ModelBagInterface
     /**
      *
      * @access public
-     * @return \CCDNForum\ForumBundle\Model\Model\DraftModel
-     */
-    public function getDraftModel();
-
-    /**
-     *
-     * @access public
      * @return \CCDNForum\ForumBundle\Model\Model\RegistryModel
      */
     public function getRegistryModel();

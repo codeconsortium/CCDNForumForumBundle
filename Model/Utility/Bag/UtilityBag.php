@@ -27,21 +27,14 @@ namespace CCDNForum\ForumBundle\Model\Utility\Bag;
 class UtilityBag
 {
 	protected $paginationUtil;
-	protected $policyManager;
-	
-	public function __construct($paginationUtil, $policyManager)
+
+	public function __construct($paginationUtil)
 	{
 		$this->paginationUtil = $paginationUtil;
-		$this->policyManager = $policyManager;
 	}
-	
+
 	public function getPaginationUtil()
 	{
 		return $this->paginationUtil;
-	}
-	
-	public function getPolicyManager()
-	{
-		return $this->policyManager;
 	}
 }

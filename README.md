@@ -39,7 +39,6 @@ ForumBundle Provides the following features:
 6. Topics and Posts can be soft-deleted for recovery by Admin or hard-delete.
 7. Topics can be closed and Posts locked from editing.
 8. Topics and Posts can be Previewed before posting.
-9. Topics and Posts can be saved as a Draft which can be later published.
 10. Topics can be subscribed to and followed in the Topic subscription page.
 11. Optional integration with [DashboardBundle](http://github.com/codeconsortium/CCDNComponentDashboardBundle) for easy site navigation.
 12. [AdminBundle](http://github.com/codeconsortium/CCDNForumAdminBundle) to allow full forum moderation and administration.

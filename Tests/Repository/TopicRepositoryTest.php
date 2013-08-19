@@ -19,6 +19,50 @@ use CCDNForum\ForumBundle\Entity\Post;
 
 class TopicRepositoryTest extends TestBase
 {
+	public function testFindAllTopicsPaginatedByBoardId()
+	{
+		$forum = $this->addNewForum('testFindAllTopicsPaginatedByBoardId');
+		$category = $this->addNewCategory('testFindAllTopicsPaginatedByBoardId', 1, $forum);
+		$board = $this->addNewBoard('testFindAllTopicsPaginatedByBoardId', 'testFindAllTopicsPaginatedByBoardId', 1, $category);
+		$topics = $this->addFixturesForTopics(array($board));
+		$posts = $this->addFixturesForPosts($topics, $this->users['tom']);
+
+//		$this->em->refresh($board);
+
+		$this->assertSame(3, count($topics));
+
+		$pager = $this->getTopicModel()->getRepository()->findAllTopicsPaginatedByBoardId($board->getId(), 1, true);
+	
+		$foundTopics = $pager->getItems();
+		
+		$this->assertSame(3, count($foundTopics));
+	}
+
+	public function testFindAllTopicsStickiedByBoardId()
+	{
+		$forum = $this->addNewForum('testFindAllPostsPaginatedByTopicId');
+		$category = $this->addNewCategory('testFindAllPostsPaginatedByTopicId', 1, $forum);
+		$board = $this->addNewBoard('testFindAllPostsPaginatedByTopicId', 'testFindAllPostsPaginatedByTopicId', 1, $category);
+		$topics = $this->addFixturesForTopics(array($board));
+		$posts = $this->addFixturesForPosts($topics, $this->users['tom']);
+
+//		$this->em->refresh($board);
+
+		$this->assertSame(3, count($topics));
+
+		foreach ($topics as $topic) {
+//			$this->em->refresh($topic);
+			$topic->setIsSticky(true);
+			$this->em->persist($topic);
+		}
+		
+		$this->em->flush();
+		
+		$foundTopics = $this->getTopicModel()->getRepository()->findAllTopicsStickiedByBoardId($board->getId(), true);
+		
+		$this->assertSame(3, count($foundTopics));
+	}
+
 	public function testFindOneTopicByIdWithBoardAndCategory()
 	{
 		$board = $this->addNewBoard('testFindOneTopicByIdWithBoardAndCategory', 'testFindOneTopicByIdWithBoardAndCategory', 1);
@@ -76,7 +120,7 @@ class TopicRepositoryTest extends TestBase
 		
 		$this->getPostModel()->getManager()->postTopicReply($post2);
 		
-		$foundTopic = $this->getTopicModel()->getRepository()->findOneTopicByIdWithPosts($post->getTopic()->getId());
+		$foundTopic = $this->getTopicModel()->getRepository()->findOneTopicByIdWithPosts($post->getTopic()->getId(), true);
 		
 		$this->assertNotNull($foundTopic);
 		$this->assertInstanceOf('CCDNForum\ForumBundle\Entity\Topic', $foundTopic);

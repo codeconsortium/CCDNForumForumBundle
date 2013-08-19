@@ -69,6 +69,45 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+	public function deleteCategory(Category $category)
+	{
+		// If we do not refresh the category, AND we have reassigned the boards to null, 
+		// then its lazy-loaded boards are dirty, as the boards in memory will still
+		// have the old category id set. Removing the category will cascade into deleting
+		// boards aswell, even though in the db the relation has been set to null.
+		$this->refresh($category);
+		
+		$this->remove($category)->flush();
+		
+		return $this;
+	}
+
+    /**
+     *
+     * @access public
+     * @param  \Doctrine\Common\Collections\ArrayCollection        $boards
+     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+	public function reassignBoardsToCategory(ArrayCollection $boards, Category $category = null)
+	{
+		foreach ($boards as $board) {
+			$board->setCategory($category);
+			
+			$this->persist($board);
+		}
+
+		$this->flush();
+		
+		return $this;
+	}
+
+    /**
+     *
+     * @access public
      * @param  Array                                               $categories
      * @param  \CCDNForum\ForumBundle\Entity\Category              $categoryShift
      * @param  int                                                 $direction
@@ -165,30 +204,4 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
 
         return $this;
     }
-	
-	public function deleteCategory(Category $category)
-	{
-		// If we do not refresh the category, AND we have reassigned the boards to null, 
-		// then its lazy-loaded boards are dirty, as the boards in memory will still
-		// have the old category id set. Removing the category will cascade into deleting
-		// boards aswell, even though in the db the relation has been set to null.
-		$this->refresh($category);
-		
-		$this->remove($category)->flush();
-		
-		return $this;
-	}
-
-	public function reassignBoardsToCategory(ArrayCollection $boards, Category $category = null)
-	{
-		foreach ($boards as $board) {
-			$board->setCategory($category);
-			
-			$this->persist($board);
-		}
-
-		$this->flush();
-		
-		return $this;
-	}
 }

@@ -34,6 +34,21 @@ class CategoryRepositoryTest extends TestBase
 		}
 	}
 
+	public function testFindAllCategoriesWithBoardsForForumByName()
+	{
+		$forum = $this->addNewForum('testFindAllCategoriesWithBoardsForForumByName1');
+		$categories = $this->addFixturesForCategories(array($forum));
+		$boards = $this->addFixturesForBoards($categories);
+		
+		$foundCategories = $this->getCategoryModel()->getRepository()->findAllCategoriesWithBoardsForForumByName($forum->getName());
+			
+		$this->assertNotNull($foundCategories);
+		$this->assertCount(3, $foundCategories);
+		$this->assertCount(3, $foundCategories[0]->getBoards());
+		$this->assertCount(3, $foundCategories[1]->getBoards());
+		$this->assertCount(3, $foundCategories[2]->getBoards());
+	}
+
 	public function testFindOneCategoryById()
 	{
 		$category = $this->addNewCategory('TestCategory', 1);
@@ -52,20 +67,5 @@ class CategoryRepositoryTest extends TestBase
 		
 		$this->assertNotNull($foundCategory);
 		$this->assertEquals($foundCategory->getId(), $category->getId());
-	}
-
-	public function testFindAllCategoriesWithBoardsForForumByName()
-	{
-		$forum = $this->addNewForum('testFindAllCategoriesWithBoardsForForumByName1');
-		$categories = $this->addFixturesForCategories(array($forum));
-		$boards = $this->addFixturesForBoards($categories);
-		
-		$foundCategories = $this->getCategoryModel()->getRepository()->findAllCategoriesWithBoardsForForumByName($forum->getName());
-			
-		$this->assertNotNull($foundCategories);
-		$this->assertCount(3, $foundCategories);
-		$this->assertCount(3, $foundCategories[0]->getBoards());
-		$this->assertCount(3, $foundCategories[1]->getBoards());
-		$this->assertCount(3, $foundCategories[2]->getBoards());
 	}
 }

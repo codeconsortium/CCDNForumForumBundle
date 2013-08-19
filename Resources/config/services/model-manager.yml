@@ -67,15 +67,6 @@ services:
             - @ccdn_forum_forum.model_bag
             - @ccdn_forum_forum.model.utility_bag
 
-    ccdn_forum_forum.manager.draft:
-        class: %ccdn_forum_forum.manager.draft.class%
-        arguments:
-            - @doctrine
-            - @security.context
-            - @ccdn_forum_forum.gateway.draft
-            - @ccdn_forum_forum.model_bag
-            - @ccdn_forum_forum.model.utility_bag
-
     ccdn_forum_forum.manager.subscription:
         class: %ccdn_forum_forum.manager.subscription.class%
         arguments:

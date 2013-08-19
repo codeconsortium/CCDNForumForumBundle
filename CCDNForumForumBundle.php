@@ -59,8 +59,8 @@ class CCDNForumForumBundle extends Bundle
 	            'topic' => array(
 	                'show' => array(
 	                    'layout_template' => $this->container->getParameter('ccdn_forum_forum.topic.show.layout_template'),
-	                    'topic_closed_datetime_format' => $this->container->getParameter('ccdn_forum_forum.topic.show.topic_closed_datetime_format'),
-	                    'topic_deleted_datetime_format' => $this->container->getParameter('ccdn_forum_forum.topic.show.topic_deleted_datetime_format'),
+	                    'closed_datetime_format' => $this->container->getParameter('ccdn_forum_forum.topic.show.closed_datetime_format'),
+	                    'deleted_datetime_format' => $this->container->getParameter('ccdn_forum_forum.topic.show.deleted_datetime_format'),
 	                    'posts_per_page' => $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page'),
 	                ),
 	                'create' => array(
@@ -93,21 +93,9 @@ class CCDNForumForumBundle extends Bundle
 	                ),
 	            ),
 	            'item_post' => array(
-	                'post_created_datetime_format' => $this->container->getParameter('ccdn_forum_forum.item_post.post_created_datetime_format'),
-	                'post_edited_datetime_format' => $this->container->getParameter('ccdn_forum_forum.item_post.post_edited_datetime_format'),
-	                'post_deleted_datetime_format' => $this->container->getParameter('ccdn_forum_forum.item_post.post_deleted_datetime_format'),
-	            ),
-	            'transcript' => array(
-	                'post_creation_datetime_format' => $this->container->getParameter('ccdn_forum_forum.transcript.post_creation_datetime_format'),
-	                'post_deleted_datetime_format' => $this->container->getParameter('ccdn_forum_forum.transcript.post_deleted_datetime_format'),
-	            ),
-	            'draft' => array(
-	                'list' => array(
-	                    'layout_template' => $this->container->getParameter('ccdn_forum_forum.draft.list.layout_template'),
-	                    'topic_title_truncate' => $this->container->getParameter('ccdn_forum_forum.draft.list.topic_title_truncate'),
-	                    'creation_datetime_format' => $this->container->getParameter('ccdn_forum_forum.draft.list.creation_datetime_format'),
-	                    'drafts_per_page' => $this->container->getParameter('ccdn_forum_forum.draft.list.drafts_per_page'),
-	                ),
+	                'created_datetime_format' => $this->container->getParameter('ccdn_forum_forum.item_post.created_datetime_format'),
+	                'edited_datetime_format' => $this->container->getParameter('ccdn_forum_forum.item_post.edited_datetime_format'),
+	                'deleted_datetime_format' => $this->container->getParameter('ccdn_forum_forum.item_post.deleted_datetime_format'),
 	            ),
 	            'subscription' => array(
 	                'list' => array(

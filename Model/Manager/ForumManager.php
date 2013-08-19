@@ -34,6 +34,11 @@ use CCDNForum\ForumBundle\Entity\Forum;
  */
 class ForumManager extends BaseManager implements BaseManagerInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @param  \CCDNForum\ForumBundle\Entity\Forum $forum
+	 */
 	public function saveNewForum(Forum $forum)
 	{
         // insert a new row
@@ -43,7 +48,12 @@ class ForumManager extends BaseManager implements BaseManagerInterface
 		
         return $this;
 	}
-	
+
+	/**
+	 * 
+	 * @access public
+	 * @param  \CCDNForum\ForumBundle\Entity\Forum $forum
+	 */
 	public function updateForum(Forum $forum)
 	{
         $this->persist($forum)->flush();
@@ -52,7 +62,12 @@ class ForumManager extends BaseManager implements BaseManagerInterface
 		
         return $this;
 	}
-	
+
+	/**
+	 * 
+	 * @access public
+	 * @param  \CCDNForum\ForumBundle\Entity\Forum $forum
+	 */
 	public function deleteForum(Forum $forum)
 	{
 		// If we do not refresh the forum, AND we have reassigned the categories to null, 
@@ -65,7 +80,13 @@ class ForumManager extends BaseManager implements BaseManagerInterface
 		
 		return $this;
 	}
-	
+
+	/**
+	 * 
+	 * @access public
+	 * @param  \Doctrine\Common\Collections\ArrayCollection $categories
+	 * @param  \CCDNForum\ForumBundle\Entity\Forum          $forum
+	 */
 	public function reassignCategoriesToForum(ArrayCollection $categories, Forum $forum = null)
 	{
 		foreach ($categories as $category) {

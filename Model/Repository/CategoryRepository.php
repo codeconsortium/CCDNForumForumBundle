@@ -53,6 +53,7 @@ class CategoryRepository extends BaseRepository implements BaseRepositoryInterfa
     /**
      *
      * @access public
+     * @param  int                                          $forumId
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function findAllCategoriesForForumById($forumId)
@@ -73,6 +74,12 @@ class CategoryRepository extends BaseRepository implements BaseRepositoryInterfa
         return $this->gateway->findCategories($qb, $params);
     }
 
+    /**
+     *
+     * @access public
+     * @param  string                                       $forumName
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
 	public function findAllCategoriesWithBoardsForForumByName($forumName)
 	{
 		$params = array();
@@ -149,136 +156,136 @@ class CategoryRepository extends BaseRepository implements BaseRepositoryInterfa
 
 
 
-    /**
-     *
-     * @access public
-     * @param  int                                    $categoryId
-     * @return \CCDNForum\ForumBundle\Entity\Category
-     */
-    public function findOneById($categoryId)
-    {
-        if (null == $categoryId || ! is_numeric($categoryId) || $categoryId == 0) {
-            throw new \Exception('Category id "' . $categoryId . '" is invalid!');
-        }
-
-        $qb = $this->createSelectQuery(array('c'));
-
-        $qb->where('c.id = :categoryId');
-
-        $category = $this->gateway->findCategory($qb, array(':categoryId' => $categoryId));
-
-        $categories = $this->filterViewableCategoriesAndBoards($category);
-
-        if (count($categories)) {
-            return $categories[0];
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     *
-     * @access public
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function findAllWithBoards()
-    {
-        $qb = $this->createSelectQuery(array('c', 'b', 'lp', 't', 'lp_author'));
-
-        $qb = $this->joinToQueryBoardsAndLastPost($qb);
-
-        $qb->addOrderBy('b.listOrderPriority', 'ASC');
-
-        $categories = $this->gateway->findCategories($qb);
-
-        return $this->filterViewableCategoriesAndBoards($categories);
-    }
-
-    /**
-     *
-     * @access public
-     * @return Array
-     */
-    public function findAllBoardsGroupedByCategory()
-    {
-        $qb = $this->createSelectQuery(array('c', 'b'));
-
-        $qb
-            ->leftJoin('c.boards', 'b')
-            ->addOrderBy('b.listOrderPriority', 'ASC');
-        ;
-
-        $categories = $this->gateway->findCategories($qb);
-
-        return $this->filterViewableCategoriesAndBoards($categories);
-    }
-
-    /**
-     *
-     * @access protected
-     * @param  \Doctrine\ORM\QueryBuilder $qb
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    protected function joinToQueryBoardsAndLastPost(QueryBuilder $qb)
-    {
-        $qb
-            ->leftjoin('c.boards', 'b')
-            ->leftJoin('b.lastPost', 'lp')
-            ->leftJoin('lp.topic', 't')
-            ->leftJoin('lp.createdBy', 'lp_author')
-        ;
-
-        return $qb;
-    }
-
-    /**
-     *
-     * @access public
-     * @param  Array $categories
-     * @return Array
-     */
-    public function filterViewableCategoriesAndBoards($categories)
-    {
-        if (! is_array($categories)) {
-            if (! is_object($categories) || ! $categories instanceof Category) {
-                throw new \Exception('$categories must be type of Array containing instances of \CCDNForum\ForumBundle\Entity\Category');
-            }
-
-            $categories = array($categories);
-        }
-
-        foreach ($categories as $categoryKey => $category) {
-            $boards = $category->getBoards();
-
-            foreach ($boards as $board) {
-                if (! $board->isAuthorisedToRead($this->securityContext)) {
-                    $categories[$categoryKey]->removeBoard($board);
-                }
-            }
-        }
-
-        return $categories;
-    }
-
-    /**
-     *
-     * @access public
-     * @return Array
-     */
-    public function getCategoryCount()
-    {
-        $qb = $this->createCountQuery();
-
-        $qb
-            ->select('COUNT(DISTINCT c.id) AS categoryCount')
-        ;
-
-        try {
-            return $qb->getQuery()->getSingleResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return array('categoryCount' => null);
-        } catch (\Exception $e) {
-            return array('categoryCount' => null);
-        }
-    }
+//    /**
+//     *
+//     * @access public
+//     * @param  int                                    $categoryId
+//     * @return \CCDNForum\ForumBundle\Entity\Category
+//     */
+//    public function findOneById($categoryId)
+//    {
+//        if (null == $categoryId || ! is_numeric($categoryId) || $categoryId == 0) {
+//            throw new \Exception('Category id "' . $categoryId . '" is invalid!');
+//        }
+//
+//        $qb = $this->createSelectQuery(array('c'));
+//
+//        $qb->where('c.id = :categoryId');
+//
+//        $category = $this->gateway->findCategory($qb, array(':categoryId' => $categoryId));
+//
+//        $categories = $this->filterViewableCategoriesAndBoards($category);
+//
+//        if (count($categories)) {
+//            return $categories[0];
+//        } else {
+//            return null;
+//        }
+//    }
+//
+//    /**
+//     *
+//     * @access public
+//     * @return \Doctrine\Common\Collections\ArrayCollection
+//     */
+//    public function findAllWithBoards()
+//    {
+//        $qb = $this->createSelectQuery(array('c', 'b', 'lp', 't', 'lp_author'));
+//
+//        $qb = $this->joinToQueryBoardsAndLastPost($qb);
+//
+//        $qb->addOrderBy('b.listOrderPriority', 'ASC');
+//
+//        $categories = $this->gateway->findCategories($qb);
+//
+//        return $this->filterViewableCategoriesAndBoards($categories);
+//    }
+//
+//    /**
+//     *
+//     * @access public
+//     * @return Array
+//     */
+//    public function findAllBoardsGroupedByCategory()
+//    {
+//        $qb = $this->createSelectQuery(array('c', 'b'));
+//
+//        $qb
+//            ->leftJoin('c.boards', 'b')
+//            ->addOrderBy('b.listOrderPriority', 'ASC');
+//        ;
+//
+//        $categories = $this->gateway->findCategories($qb);
+//
+//        return $this->filterViewableCategoriesAndBoards($categories);
+//    }
+//
+//    /**
+//     *
+//     * @access protected
+//     * @param  \Doctrine\ORM\QueryBuilder $qb
+//     * @return \Doctrine\ORM\QueryBuilder
+//     */
+//    protected function joinToQueryBoardsAndLastPost(QueryBuilder $qb)
+//    {
+//        $qb
+//            ->leftjoin('c.boards', 'b')
+//            ->leftJoin('b.lastPost', 'lp')
+//            ->leftJoin('lp.topic', 't')
+//            ->leftJoin('lp.createdBy', 'lp_author')
+//        ;
+//
+//        return $qb;
+//    }
+//
+//    /**
+//     *
+//     * @access public
+//     * @param  Array $categories
+//     * @return Array
+//     */
+//    public function filterViewableCategoriesAndBoards($categories)
+//    {
+//        if (! is_array($categories)) {
+//            if (! is_object($categories) || ! $categories instanceof Category) {
+//                throw new \Exception('$categories must be type of Array containing instances of \CCDNForum\ForumBundle\Entity\Category');
+//            }
+//
+//            $categories = array($categories);
+//        }
+//
+//        foreach ($categories as $categoryKey => $category) {
+//            $boards = $category->getBoards();
+//
+//            foreach ($boards as $board) {
+//                if (! $board->isAuthorisedToRead($this->securityContext)) {
+//                    $categories[$categoryKey]->removeBoard($board);
+//                }
+//            }
+//        }
+//
+//        return $categories;
+//    }
+//
+//    /**
+//     *
+//     * @access public
+//     * @return Array
+//     */
+//    public function getCategoryCount()
+//    {
+//        $qb = $this->createCountQuery();
+//
+//        $qb
+//            ->select('COUNT(DISTINCT c.id) AS categoryCount')
+//        ;
+//
+//        try {
+//            return $qb->getQuery()->getSingleResult();
+//        } catch (\Doctrine\ORM\NoResultException $e) {
+//            return array('categoryCount' => null);
+//        } catch (\Exception $e) {
+//            return array('categoryCount' => null);
+//        }
+//    }
 }

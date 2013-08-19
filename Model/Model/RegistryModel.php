@@ -39,23 +39,23 @@ class RegistryModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  int                                    $userId
-     * @return \CCDNForum\ForumBundle\Entity\Registry
-     */
-    public function findRegistryForUserById($userId)
-    {
-        return $this->getRepository()->findRegistryForUserById($userId);
-    }
-
-    /**
-     *
-     * @access public
      * @param  Array                                        $userIds
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function findRegistriesForTheseUsersById($registryUserIds = array())
     {
         return $this->getRepository()->findRegistriesForTheseUsersById($registryUserIds);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int                                    $userId
+     * @return \CCDNForum\ForumBundle\Entity\Registry
+     */
+    public function findRegistryForUserById($userId)
+    {
+        return $this->getRepository()->findRegistryForUserById($userId);
     }
 
     /**

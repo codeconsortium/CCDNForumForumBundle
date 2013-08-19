@@ -61,14 +61,6 @@ services:
             - @ccdn_forum_forum.model_bag
             - @ccdn_forum_forum.model.utility_bag
 
-    ccdn_forum_forum.model.draft:
-        class: %ccdn_forum_forum.model.draft.class%
-        arguments:
-            - @ccdn_forum_forum.repository.draft
-            - @ccdn_forum_forum.manager.draft
-            - @ccdn_forum_forum.model_bag
-            - @ccdn_forum_forum.model.utility_bag
-
     ccdn_forum_forum.model.subscription:
         class: %ccdn_forum_forum.model.subscription.class%
         arguments:

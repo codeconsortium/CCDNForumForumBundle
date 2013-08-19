@@ -32,7 +32,7 @@ class BoardManagerTest extends TestBase
 		$this->assertTrue(is_numeric($board->getId()));
 		$this->assertSame('NewBoardTest', $board->getName());
 	}
-	
+
 	public function testUpdateBoard()
 	{
 		$board = $this->addNewBoard('UpdateBoardTest', 'Generic Description', 1);
@@ -44,7 +44,7 @@ class BoardManagerTest extends TestBase
 		$this->assertTrue(is_numeric($board->getId()));
 		$this->assertEquals('BoardTestUpdated', $board->getName());
 	}
-	
+
 	public function testDeleteBoard()
 	{
 		$board = $this->addNewBoard('DeleteBoardTest', 'Generic Description', 1);
@@ -56,7 +56,7 @@ class BoardManagerTest extends TestBase
 		
 		$this->assertNull($foundBoard);
 	}
-	
+
 	public function testReassignTopicsToBoard()
 	{
 		$forum = $this->addNewForum('testReassignTopicsToBoard');
@@ -77,10 +77,10 @@ class BoardManagerTest extends TestBase
 		$this->em->refresh($board2);
 		$this->assertCount(6, $board2->getTopics());
 	}
-	
+
 	const REORDER_UP = 0;
 	const REORDER_DOWN = 1;
-	
+
 	public function testReorderBoards()
 	{
 		$forum = $this->addNewForum('testReorderBoards');

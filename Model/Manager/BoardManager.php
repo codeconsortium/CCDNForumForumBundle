@@ -43,7 +43,7 @@ class BoardManager extends BaseManager implements BaseManagerInterface
     {
         $boardCount = $this->model->getBoardCount();
 
-        $board->setListOrderPriority(++$boardCount['boardCount']);
+        $board->setListOrderPriority(++$boardCount);
 
         // insert a new row
         $this->persist($board)->flush();
@@ -73,44 +73,38 @@ class BoardManager extends BaseManager implements BaseManagerInterface
      * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function updateStats(Board $board)
-    {
-        $stats = $this->getTopicAndPostCountForBoardById($board->getId());
-
-        // set the board topic / post count
-        $board->setCachedTopicCount($stats['topicCount']);
-        $board->setCachedPostCount($stats['postCount']);
-
-        $lastTopic = $this->managerBag->getTopicManager()->findLastTopicForBoardByIdWithLastPost($board->getId());
-
-        // set last_post for board
-        if ($lastTopic) {
-            $board->setLastPost($lastTopic->getLastPost() ?: null);
-        } else {
-            $board->setLastPost(null);
-        }
-
-        $this->persist($board)->flush();
-
-        return $this;
-    }
+	public function deleteBoard(Board $board)
+	{
+		// If we do not refresh the board, AND we have reassigned the topics to null, 
+		// then its lazy-loaded topics are dirty, as the topics in memory will still
+		// have the old board id set. Removing the board will cascade into deleting
+		// topics aswell, even though in the db the relation has been set to null.
+		$this->refresh($board);
+		
+		$this->remove($board)->flush();
+		
+		return $this;
+	}
 
     /**
      *
      * @access public
-     * @param  Array                                               $boards
+     * @param  \Doctrine\Common\Collections\ArrayCollection        $topics
+     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function bulkUpdateStats($boards)
-    {
-        foreach ($boards as $board) {
-            $this->updateStats($board);
-        }
+	public function reassignTopicsToBoard(ArrayCollection $topics, Board $board = null)
+	{
+		foreach ($topics as $topic) {
+			$topic->setBoard($board);
+			
+			$this->persist($topic);
+		}
 
-        $this->flush();
-
-        return $this;
-    }
+		$this->flush();
+		
+		return $this;
+	}
 
     /**
      *
@@ -211,30 +205,60 @@ class BoardManager extends BaseManager implements BaseManagerInterface
 
         return $this;
     }
-	
-	public function reassignTopicsToBoard(ArrayCollection $topics, Board $board = null)
-	{
-		foreach ($topics as $topic) {
-			$topic->setBoard($board);
-			
-			$this->persist($topic);
-		}
 
-		$this->flush();
-		
-		return $this;
-	}
-	
-	public function deleteBoard(Board $board)
-	{
-		// If we do not refresh the board, AND we have reassigned the topics to null, 
-		// then its lazy-loaded topics are dirty, as the topics in memory will still
-		// have the old board id set. Removing the board will cascade into deleting
-		// topics aswell, even though in the db the relation has been set to null.
-		$this->refresh($board);
-		
-		$this->remove($board)->flush();
-		
-		return $this;
-	}
+
+
+
+
+
+
+
+
+
+
+
+//    /**
+//     *
+//     * @access public
+//     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
+//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+//     */
+//    public function updateStats(Board $board)
+//    {
+//        $stats = $this->getTopicAndPostCountForBoardById($board->getId());
+//
+//        // set the board topic / post count
+//        $board->setCachedTopicCount($stats['topicCount']);
+//        $board->setCachedPostCount($stats['postCount']);
+//
+//        $lastTopic = $this->managerBag->getTopicManager()->findLastTopicForBoardByIdWithLastPost($board->getId());
+//
+//        // set last_post for board
+//        if ($lastTopic) {
+//            $board->setLastPost($lastTopic->getLastPost() ?: null);
+//        } else {
+//            $board->setLastPost(null);
+//        }
+//
+//        $this->persist($board)->flush();
+//
+//        return $this;
+//    }
+//
+//    /**
+//     *
+//     * @access public
+//     * @param  Array                                               $boards
+//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+//     */
+//    public function bulkUpdateStats($boards)
+//    {
+//        foreach ($boards as $board) {
+//            $this->updateStats($board);
+//        }
+//
+//        $this->flush();
+//
+//        return $this;
+//    }
 }

@@ -46,8 +46,8 @@ class UserBoardController extends UserBoardBaseController
 
 		// Get topics.
 		$page = $this->getQuery('page', 1);
-        $stickyTopics = $this->getTopicModel()->findAllStickiedByBoardId($boardId);
-        $topicsPager = $this->getTopicModel()->findAllPaginatedByBoardId($boardId, $page);
+        $stickyTopics = $this->getTopicModel()->findAllTopicsStickiedByBoardId($boardId, true);
+        $topicsPager = $this->getTopicModel()->findAllTopicsPaginatedByBoardId($boardId, $page, true);
 
         // this is necessary for working out the last page for each topic.
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');

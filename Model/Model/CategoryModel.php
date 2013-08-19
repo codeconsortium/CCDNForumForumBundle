@@ -49,6 +49,7 @@ class CategoryModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
+     * @param  int                                          $forumId
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function findAllCategoriesForForumById($forumId)
@@ -56,6 +57,12 @@ class CategoryModel extends BaseModel implements BaseModelInterface
         return $this->getRepository()->findAllCategoriesForForumById($forumId);
     }
 
+    /**
+     *
+     * @access public
+     * @param  string                                       $forumName
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
 	public function findAllCategoriesWithBoardsForForumByName($forumName)
 	{
         return $this->getRepository()->findAllCategoriesWithBoardsForForumByName($forumName);
@@ -108,92 +115,106 @@ class CategoryModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+	public function deleteCategory(Category $category)
+	{
+		return $this->getManager()->deleteCategory($category);
+	}
+
+    /**
+     *
+     * @access public
+     * @param  \Doctrine\Common\Collections\ArrayCollection        $boards
+     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+	public function reassignBoardsToCategory(ArrayCollection $boards, Category $category = null)
+	{
+		return $this->getManager()->reassignBoardsToCategory($boards, $category);
+	}
+
+    /**
+     *
+     * @access public
      * @param  Array                                               $categories
      * @param  \CCDNForum\ForumBundle\Entity\Category              $categoryShift
      * @param  int                                                 $direction
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function reorderCategories($categories, Category $category, $direction)
+    public function reorderCategories($categories, Category $categoryShift, $direction)
     {
-        return $this->getManager()->reorderCategories($categories, $category, $direction);
-    }
-	
-	public function deleteCategory(Category $category)
-	{
-		return $this->getManager()->deleteCategory($category);
-	}
-	
-	public function reassignBoardsToCategory(ArrayCollection $boards, Category $category = null)
-	{
-		return $this->getManager()->reassignBoardsToCategory($boards, $category);
-	}
-	
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     *
-     * @access public
-     * @param  int                                    $categoryId
-     * @return \CCDNForum\ForumBundle\Entity\Category
-     */
-    public function findOneById($categoryId)
-    {
-        return $this->getRepository()->findOneById($categoryId);
+        return $this->getManager()->reorderCategories($categories, $categoryShift, $direction);
     }
 
 
-    /**
-     *
-     * @access public
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function findAllWithBoards()
-    {
-        return $this->getRepository()->findAllWithBoards();
-    }
-
-    /**
-     *
-     * @access public
-     * @return Array
-     */
-    public function findAllBoardsGroupedByCategory()
-    {
-        return $this->getRepository()->findallBoardsGroupedByCategory();
-    }
-
-    /**
-     *
-     * @access public
-     * @param  Array $categories
-     * @return Array
-     */
-    public function filterViewableCategoriesAndBoards($categories)
-    {
-        return $this->getRepository()->filterViewableCategoriesAndBoards($categories);
-    }
-
-    /**
-     *
-     * @access public
-     * @return Array
-     */
-    public function getCategoryCount()
-    {
-        return $this->getRepository()->getCategoryCount();
-    }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+//    /**
+//     *
+//     * @access public
+//     * @param  int                                    $categoryId
+//     * @return \CCDNForum\ForumBundle\Entity\Category
+//     */
+//    public function findOneById($categoryId)
+//    {
+//        return $this->getRepository()->findOneById($categoryId);
+//    }
+//
+//
+//    /**
+//     *
+//     * @access public
+//     * @return \Doctrine\Common\Collections\ArrayCollection
+//     */
+//    public function findAllWithBoards()
+//    {
+//        return $this->getRepository()->findAllWithBoards();
+//    }
+//
+//    /**
+//     *
+//     * @access public
+//     * @return Array
+//     */
+//    public function findAllBoardsGroupedByCategory()
+//    {
+//        return $this->getRepository()->findallBoardsGroupedByCategory();
+//    }
+//
+//    /**
+//     *
+//     * @access public
+//     * @param  Array $categories
+//     * @return Array
+//     */
+//    public function filterViewableCategoriesAndBoards($categories)
+//    {
+//        return $this->getRepository()->filterViewableCategoriesAndBoards($categories);
+//    }
+//
+//    /**
+//     *
+//     * @access public
+//     * @return Array
+//     */
+//    public function getCategoryCount()
+//    {
+//        return $this->getRepository()->getCategoryCount();
+//    }
+//
+//
 }

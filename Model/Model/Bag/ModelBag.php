@@ -68,13 +68,6 @@ class ModelBag implements ModelBagInterface
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\DraftModel $draftModel
-     */
-    protected $draftModel;
-
-    /**
-     *
-     * @access protected
      * @var \CCDNForum\ForumBundle\Model\Model\RegistryModel $registryModel
      */
     protected $registryModel;
@@ -171,20 +164,6 @@ class ModelBag implements ModelBagInterface
         }
 
         return $this->postModel;
-    }
-
-    /**
-     *
-     * @access public
-     * @return \CCDNForum\ForumBundle\Model\Model\DraftModel
-     */
-    public function getDraftModel()
-    {
-        if (null == $this->draftModel) {
-            $this->draftModel = $this->container->get('ccdn_forum_forum.model.draft');
-        }
-
-        return $this->draftModel;
     }
 
     /**

@@ -39,12 +39,12 @@ class SubscriptionModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  int $topicId
-     * @return int
+     * @param  int                    $page
+     * @return \Pagerfanta\Pagerfanta
      */
-    public function countSubscriptionsForTopicById($topicId)
+    public function findAllPaginated($page)
     {
-        return $this->getRepository()->countSubscriptionsForTopicById($topicId);
+        return $this->getRepository()->findAllPaginated($page);
     }
 
     /**
@@ -73,12 +73,12 @@ class SubscriptionModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  int                    $page
-     * @return \Pagerfanta\Pagerfanta
+     * @param  int $topicId
+     * @return int
      */
-    public function findAllPaginated($page)
+    public function countSubscriptionsForTopicById($topicId)
     {
-        return $this->getRepository()->findAllPaginated($page);
+        return $this->getRepository()->countSubscriptionsForTopicById($topicId);
     }
 
     /**
