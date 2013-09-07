@@ -29,6 +29,7 @@ use CCDNForum\ForumBundle\Entity\Category;
 use CCDNForum\ForumBundle\Entity\Board;
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
+use CCDNForum\ForumBundle\Entity\Subscription;
 
 //
 // Require 3rd-party libraries here:
@@ -73,6 +74,41 @@ class DataContext extends BehatContext implements KernelAwareInterface
     public function setKernel(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
+    }
+
+    /**
+     * 
+     * Get entity manager.
+     *
+     * @return EntityManager
+     */
+    public function getEntityManager()
+    {
+        return $this->getContainer()->get('doctrine')->getManager();
+    }
+
+    /**
+     * 
+     * Returns Container instance.
+     *
+     * @return ContainerInterface
+     */
+    protected function getContainer()
+    {
+        return $this->kernel->getContainer();
+    }
+
+    /**
+     * 
+     * Get service by id.
+     *
+     * @param string $id
+     *
+     * @return object
+     */
+    protected function getService($id)
+    {
+        return $this->getContainer()->get($id);
     }
 
 	protected $users = array();
@@ -238,76 +274,57 @@ class DataContext extends BehatContext implements KernelAwareInterface
 				isset($data['title']) ? $data['title'] : sha1(uniqid(mt_rand(), true)),
 				isset($data['body']) ? $data['body'] : sha1(uniqid(mt_rand(), true)),
 				isset($data['board']) ? $data['board'] : null,
-				isset($data['user']) ? $data['user'] : null
+				isset($data['user']) ? $data['user'] : null,
+				isset($data['subscribed']) ? $data['subscribed'] : false
             );
         }
     }
 
-    public function thereIsTopic($title, $body, $boardName, $userEmail)
+    public function thereIsTopic($title, $body, $boardName, $userEmail, $subscribed = false)
     {
-        $topic = new Topic();
-
-		$topic->setTitle($title);
+		$user = null;
 		
-		$post = new Post();
-		
-		$post->setTopic($topic);
-		$post->setBody($body);
-		$post->setCreatedDate(new \DateTime('now'));
-		
-		foreach ($this->users as $user) {
-			if ($user->getEmail() == $userEmail) {
-				$post->setCreatedBy($user);
+		foreach ($this->users as $userScan) {
+			if ($userScan->getEmail() == $userEmail) {
+				$user = $userScan;
 			}
 		}
+
+		$board = null;
+		
+		foreach ($this->boards as $boardScan) {
+			if ($boardScan->getName() == $boardName) {
+				$board = $boardScan;
+			}
+		}
+		
+        $topic = new Topic();
+		$topic->setTitle($title);
+		$topic->setBoard($board);
+		
+		$post = new Post();
+		$post->setBody($body);
+		$post->setCreatedDate(new \DateTime('now'));
+		$post->setCreatedBy($user);
+		$post->setTopic($topic);
 
 		$topic->setFirstPost($post);
 		$topic->setLastPost($post);
 		
-		foreach ($this->boards as $board) {
-			if ($board->getName() == $boardName) {
-				$topic->setBoard($board);
-			}
-		}
+		if ($subscribed) {
+			$subscription = new Subscription();
+			$subscription->setForum($board->getCategory()->getForum());
+			$subscription->setTopic($topic);
+			$subscription->setOwnedBy($user);
+			$subscription->setIsRead(false);
+			$subscription->setIsSubscribed(true);
 
+	        $this->getEntityManager()->persist($subscription);
+		}
+		
         $this->getEntityManager()->persist($topic);
         $this->getEntityManager()->flush();
 
         return $topic;
-    }
-
-    /**
-     * 
-     * Get entity manager.
-     *
-     * @return EntityManager
-     */
-    public function getEntityManager()
-    {
-        return $this->getContainer()->get('doctrine')->getManager();
-    }
-
-    /**
-     * 
-     * Returns Container instance.
-     *
-     * @return ContainerInterface
-     */
-    protected function getContainer()
-    {
-        return $this->kernel->getContainer();
-    }
-
-    /**
-     * 
-     * Get service by id.
-     *
-     * @param string $id
-     *
-     * @return object
-     */
-    protected function getService($id)
-    {
-        return $this->getContainer()->get($id);
     }
 }

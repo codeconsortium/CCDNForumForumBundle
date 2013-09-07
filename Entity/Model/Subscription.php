@@ -15,10 +15,14 @@ namespace CCDNForum\ForumBundle\Entity\Model;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use CCDNForum\ForumBundle\Entity\Forum as ConcreteForum;
 use CCDNForum\ForumBundle\Entity\Topic as ConcreteTopic;
 
 abstract class Subscription
 {
+    /** @var Topic $topic */
+    protected $forum = null;
+
     /** @var Topic $topic */
     protected $topic = null;
 
@@ -32,6 +36,29 @@ abstract class Subscription
     public function __construct()
     {
         // your own logic
+    }
+
+    /**
+     * Get topic
+     *
+     * @return Forum
+     */
+    public function getForum()
+    {
+        return $this->forum;
+    }
+
+    /**
+     * Set topic
+     *
+     * @param  Forum        $forum
+     * @return Subscription
+     */
+    public function setForum(ConcreteForum $forum = null)
+    {
+        $this->forum = $forum;
+
+        return $this;
     }
 
     /**

@@ -24,6 +24,7 @@ use CCDNForum\ForumBundle\Entity\Category;
 use CCDNForum\ForumBundle\Entity\Board;
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
+use CCDNForum\ForumBundle\Entity\Subscription;
 
 class TestBase extends WebTestCase
 {
@@ -38,14 +39,15 @@ class TestBase extends WebTestCase
 	 * @var $container
 	 */
 	private $container;
-	
-	protected $users = array();
-	protected $forums = array();
-	protected $categories = array();
-	protected $boards = array();
-	protected $topics = array();
-	protected $posts = array();
-	
+
+//	protected $users = array();
+//	protected $forums = array();
+//	protected $categories = array();
+//	protected $boards = array();
+//	protected $topics = array();
+//	protected $posts = array();
+//	protected $subscriptions = array();
+
 	/**
 	 *
 	 * @access public
@@ -62,21 +64,22 @@ class TestBase extends WebTestCase
 		
 		$this->purge();
 		
-		$this->users      = $this->addFixturesForUsers();
-		$this->forums     = $this->addFixturesForForums();
-		$this->categories = $this->addFixturesForCategories($this->forums);
-		$this->boards     = $this->addFixturesForBoards($this->categories);
-		$this->topics     = $this->addFixturesForTopics($this->boards);
-		$this->posts      = $this->addFixturesForPosts($this->topics, $this->users['harry']);
+//		$this->users         = $this->addFixturesForUsers();
+//		$this->forums        = $this->addFixturesForForums();
+//		$this->categories    = $this->addFixturesForCategories($this->forums);
+//		$this->boards        = $this->addFixturesForBoards($this->categories);
+//		$this->topics        = $this->addFixturesForTopics($this->boards);
+//		$this->posts         = $this->addFixturesForPosts($this->topics, $this->users['harry']);
+//		$this->subscriptions = $this->addFixturesForSubscriptions($this->topics, $this->users['harry'], true);
     }
-	
+
     protected function purge()
     {
         $purger = new ORMPurger($this->em);
         $executor = new ORMExecutor($this->em, $purger);
         $executor->purge();
 	}
-	
+
 	protected function addNewUser($username, $email, $password)
 	{
 		$user = new User();
@@ -92,7 +95,7 @@ class TestBase extends WebTestCase
 		
 		return $user;
 	}
-	
+
 	protected function addFixturesForUsers()
 	{
 		$userNames = array('admin', 'tom', 'dick', 'harry');
@@ -104,7 +107,7 @@ class TestBase extends WebTestCase
 	
 		return $users;
 	}
-	
+
 	protected function addNewForum($forumName)
 	{
 		$forum = new Forum();
@@ -118,7 +121,7 @@ class TestBase extends WebTestCase
 		
 		return $forum;
 	}
-	
+
 	protected function addFixturesForForums()
 	{
 		$forumNames = array('test_forum_1', 'test_forum_2', 'test_forum_3');
@@ -130,7 +133,7 @@ class TestBase extends WebTestCase
 		
 		return $forums;
 	}
-	
+
 	protected function addNewCategory($categoryName, $order, Forum $forum = null)
 	{
 		$category = new Category();
@@ -146,7 +149,7 @@ class TestBase extends WebTestCase
 		
 		return $category;
 	}
-	
+
 	protected function addFixturesForCategories($forums)
 	{
 		$categoryNames = array('test_category_1', 'test_category_2', 'test_category_3');
@@ -160,7 +163,7 @@ class TestBase extends WebTestCase
 		
 		return $categories;
 	}
-	
+
 	protected function addNewBoard($boardName, $boardDescription, $order, Category $category = null)
 	{
 		$board = new Board();
@@ -177,7 +180,7 @@ class TestBase extends WebTestCase
 		
 		return $board;
 	}
-	
+
 	protected function addFixturesForBoards($categories)
 	{
 		$boardNames = array('test_board_1', 'test_board_2', 'test_board_3');
@@ -191,7 +194,7 @@ class TestBase extends WebTestCase
 		
 		return $boards;
 	}
-	
+
 	protected function addNewTopic($title, Board $board = null)
 	{
 		$topic = new Topic();
@@ -206,7 +209,7 @@ class TestBase extends WebTestCase
 		
 		return $topic;
 	}
-	
+
 	protected function addFixturesForTopics($boards)
 	{
 		$topicTitles = array('test_topic_1', 'test_topic_2', 'test_topic_3');
@@ -258,6 +261,35 @@ class TestBase extends WebTestCase
 		}
 		
 		return $posts;
+	}
+
+	protected function addNewSubscription($forum, $topic, $user, $isRead = false)
+	{
+		$subscription = new Subscription();
+
+		$subscription->setTopic($topic);
+        $subscription->setOwnedBy($user);
+		$subscription->setForum($forum);
+        $subscription->setIsRead($isRead);
+        $subscription->setIsSubscribed(true);
+		
+		$this->em->persist($subscription);
+		$this->em->flush();
+		
+		$this->em->refresh($subscription);
+		
+		return $subscription;
+	}
+
+	protected function addFixturesForSubscriptions($forum, $topics, $user, $isRead = false)
+	{
+		$subscriptions = array();
+		
+		foreach ($topics as $topic) {
+			$subscriptions[] = $this->addNewSubscription($forum, $topic, $user, $isRead);
+		}
+		
+		return $subscriptions;
 	}
 
     /**

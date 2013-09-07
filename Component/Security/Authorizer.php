@@ -265,7 +265,7 @@ class Authorizer
 			}
 		}
 		
-		if ($post->isDeleted()) {
+		if ($post->isDeleted() && ! $this->securityContext->isGranted('ROLE_MODERATOR')) {
 			return false;
 		}
 		
@@ -389,9 +389,13 @@ class Authorizer
 		
 		if ($subscription) {
 			if ($subscription->getTopic()) {
-				if ($subscription->getTopic()->getId() == $topic->getId()) {
+				if ($subscription->getTopic()->getId() != $topic->getId()) {
 					return false;
 				}
+			}
+		
+			if ($subscription->isSubscribed()) {
+				return false;
 			}
 		}
 		
@@ -410,9 +414,13 @@ class Authorizer
 		
 		if ($subscription) {
 			if ($subscription->getTopic()) {
-				if (! $subscription->getTopic()->getId() == $topic->getId()) {
+				if ($subscription->getTopic()->getId() != $topic->getId()) {
 					return false;
 				}
+			}
+
+			if (! $subscription->isSubscribed()) {
+				return false;
 			}
 		}
 		

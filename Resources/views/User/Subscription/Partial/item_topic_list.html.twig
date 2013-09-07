@@ -1,0 +1,96 @@
+{%- spaceless -%}
+	{%- if topic.getBoard -%}
+		{%- if topic.getBoard.getCategory -%}
+			{%- if topic.getBoard.getCategory.getForum -%}
+				<tr>
+					<td class="center">
+						{%- if topic.isDeleted -%}
+							<i class="icon-trash"></i>
+						{%- else -%}
+							{%- if topic.isClosed -%}
+								<i class="icon-lock"></i>
+							{%- else -%}
+								{# else if not closed, then if new posts add special icon here #}
+								{%- if topic.cachedReplyCount > 100 -%}
+									<i class="icon-fire"></i>
+								{%- endif -%}
+							{%- endif -%}
+						{%- endif -%}
+					</td>
+					<td class="center">
+						{# use custom icons below, will be later specified in the create topic form #}
+						<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': topic.board.category.forum.name, 'topicId': topic.getId }) -}}">
+							{%- if topic.isSticky -%}
+								<i class="icon-bullhorn"></i>
+							{%- else -%}
+								<i class="icon-comment"></i>
+							{%- endif -%}
+						</a>
+					</td>
+					<td class="left">
+						{%- if topic.getClosedDate -%}
+							<span class="label label-important">{{- 'topic.badge.closed' |trans({}, 'CCDNForumForumBundle') -}}</span>&nbsp;
+						{%- endif -%}
+
+						<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': topic.board.category.forum.name, 'topicId': topic.getId }) -}}" title="{{- topic.getTitle -}}">
+							{{- truncDot(topic.getTitle, ccdn_forum_forum.board.show.topic_title_truncate) |title -}}
+						</a>
+
+						<br>
+
+						{%- if topic.getFirstPost -%}
+
+			                {% set topic_author = create_profile(topic.getFirstPost.getCreatedBy) %}
+
+							{{- 'generic.posted_by' | trans({'%name%': topic_author.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
+
+							&nbsp;&#183;
+			                <a href="{{- path('ccdn_forum_user_topic_show', {'forumName': topic.board.category.forum.name, 'topicId': topic.getId }) -}}">
+			                    <abbr class="timestamper" title="{{- topic.getFirstPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+			                        {{- topic.getFirstPost.getCreatedDate |date(ccdn_forum_forum.board.show.first_post_datetime_format) -}}
+			                    </abbr>
+			                </a>
+						{%- endif -%}
+					</td>
+					<td class="center prominent-figure">
+						<span class="label label-info lead" title="{{- topic.getCachedReplyCount -}}">
+							{{- abbr_number(topic.getCachedReplyCount) -}}
+						</span>
+					</td>
+					<td class="center prominent-figure">
+						<span class="label label-info lead" title="{{- topic.getCachedViewCount -}}">
+							{{- abbr_number(topic.getCachedViewCount) -}}
+						</span>
+					</td>
+					<td class="center">
+						{%- if topic.getLastPost -%}
+			                {% set last_author = create_profile(topic.getLastPost.getCreatedBy) %}
+
+			                {{- 'generic.posted_by' | trans({'%name%': last_author.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
+
+			                {%- set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) -%}
+				
+							<br>
+				
+							{%- if page < 2 -%}
+								<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': topic.board.category.forum.name, 'topicId': topic.getId } ) -}}#{{- topic.getLastPost.getId -}}">
+									<i class="icon-arrow-right"></i>
+									<abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+										{{- topic.getLastPost.getCreatedDate |date(ccdn_forum_forum.board.show.last_post_datetime_format) -}}
+									</abbr>
+								</a>
+							{%- else -%}
+								<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': topic.board.category.forum.name, 'topicId': topic.getId, 'page':page }) -}}#{{- topic.getLastPost.getId -}}">
+									<i class="icon-arrow-right"></i>
+									<abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+										{{- topic.getLastPost.getCreatedDate |date(ccdn_forum_forum.board.show.last_post_datetime_format) -}}
+									</abbr>
+								</a>
+							{%- endif -%}
+						{%- endif -%}
+					</td>
+				</tr>
+			{%- endif -%}
+		{%- endif -%}
+	{%- endif -%}
+{%- endspaceless -%}

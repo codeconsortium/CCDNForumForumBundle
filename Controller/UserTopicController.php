@@ -60,7 +60,16 @@ class UserTopicController extends UserTopicBaseController
 		$postsPager = $this->getPostModel()->findAllPostsPaginatedByTopicId($topicId, $page, true);
 
         // get the topic subscriptions.
-        $subscription = $this->getSubscriptionModel()->findSubscriptionForTopicById($topicId);
+		if ($this->isGranted('ROLE_USER')) {
+	        $subscription = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topicId, $this->getUser()->getId());
+			
+			if ($subscription) {
+				$this->getSubscriptionModel()->markAsRead($subscription);
+			}
+		} else {
+			$subscription = null;
+		}
+		
         $subscriberCount = $this->getSubscriptionModel()->countSubscriptionsForTopicById($topicId);
 
         // Incremenet view counter.

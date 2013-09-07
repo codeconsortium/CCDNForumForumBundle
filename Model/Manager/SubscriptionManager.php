@@ -13,6 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Model\Manager;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 use CCDNForum\ForumBundle\Model\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Model\Manager\BaseManager;
 
@@ -36,20 +38,21 @@ class SubscriptionManager extends BaseManager implements BaseManagerInterface
      *
      * @access public
      * @param  int                                                 $topicId
+     * @param  \Symfony\Component\Security\Core\User\UserInterface  $userId
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function subscribe(Topic $topic)
+    public function subscribe(Topic $topic, UserInterface $user)
     {
-        $subscription = $this->findSubscriptionForTopicById($topic->getId());
+        $subscription = $this->model->findOneSubscriptionForTopicByIdAndUserById($topic->getId(), $user->getId());
 
         if (! $subscription) {
             $subscription = new Subscription();
         }
 
-        if (! $subscription->getIsSubscribed()) {
+        if (! $subscription->isSubscribed()) {
             $subscription->setIsSubscribed(true);
 
-            $subscription->setOwnedBy($this->getUser());
+            $subscription->setOwnedBy($user);
             $subscription->setTopic($topic);
             $subscription->setIsRead(true);
 
@@ -63,11 +66,12 @@ class SubscriptionManager extends BaseManager implements BaseManagerInterface
      *
      * @access public
      * @param  int                                                 $topicId
+     * @param  int                                                 $userId
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function unsubscribe(Topic $topic)
+    public function unsubscribe(Topic $topic, $userId)
     {
-        $subscription = $this->findSubscriptionForTopicById($topic->getId());
+        $subscription = $this->model->findOneSubscriptionForTopicByIdAndUserById($topic->getId(), $userId);
 
         if (! $subscription) {
             return $this;
@@ -80,4 +84,34 @@ class SubscriptionManager extends BaseManager implements BaseManagerInterface
 
         return $this;
     }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Subscription          $subscription
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function markAsRead(Subscription $subscription)
+    {
+		$subscription->setIsRead(true);
+		
+		$this->persist($subscription)->flush();
+		
+		return $this;
+	}
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Subscription          $subscription
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function markAsUnread(Subscription $subscription)
+    {
+		$subscription->setIsRead(false);
+		
+		$this->persist($subscription)->flush();
+		
+		return $this;
+	}
 }

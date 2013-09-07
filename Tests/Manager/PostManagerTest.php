@@ -23,6 +23,9 @@ class PostManagerTest extends TestBase
 {
 	public function testPostTopicReply()
 	{
+		$this->purge();
+		$users = $this->addFixturesForUsers();
+		
 		$topic = new Topic();
 		$topic->setTitle('NewTopicTest');
         $topic->setCachedViewCount(0);
@@ -35,7 +38,7 @@ class PostManagerTest extends TestBase
 		$post->setTopic($topic);
 		$post->setBody('foobar');
         $post->setCreatedDate(new \DateTime());
-        $post->setCreatedBy($this->users['tom']);
+        $post->setCreatedBy($users['tom']);
         $post->setIsLocked(false);
         $post->setIsDeleted(false);
 
@@ -47,7 +50,7 @@ class PostManagerTest extends TestBase
 		$post2->setTopic($post->getTopic());
 		$post2->setBody('foobar');
         $post2->setCreatedDate(new \DateTime());
-        $post2->setCreatedBy($this->users['tom']);
+        $post2->setCreatedBy($users['tom']);
         $post2->setIsLocked(false);
         $post2->setIsDeleted(false);
 		
@@ -65,6 +68,9 @@ class PostManagerTest extends TestBase
 
     public function testUpdatePost()
     {
+		$this->purge();
+		$users = $this->addFixturesForUsers();
+		
 		$topic = new Topic();
 		$topic->setTitle('NewTopicTest');
         $topic->setCachedViewCount(0);
@@ -77,7 +83,7 @@ class PostManagerTest extends TestBase
 		$post->setTopic($topic);
 		$post->setBody('foobar');
         $post->setCreatedDate(new \DateTime());
-        $post->setCreatedBy($this->users['tom']);
+        $post->setCreatedBy($users['tom']);
         $post->setIsLocked(false);
         $post->setIsDeleted(false);
 

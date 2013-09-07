@@ -21,37 +21,40 @@ class TopicRepositoryTest extends TestBase
 {
 	public function testFindAllTopicsPaginatedByBoardId()
 	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		
 		$forum = $this->addNewForum('testFindAllTopicsPaginatedByBoardId');
 		$category = $this->addNewCategory('testFindAllTopicsPaginatedByBoardId', 1, $forum);
 		$board = $this->addNewBoard('testFindAllTopicsPaginatedByBoardId', 'testFindAllTopicsPaginatedByBoardId', 1, $category);
 		$topics = $this->addFixturesForTopics(array($board));
-		$posts = $this->addFixturesForPosts($topics, $this->users['tom']);
+		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 
-//		$this->em->refresh($board);
-
-		$this->assertSame(3, count($topics));
+		$this->assertCount(3, $topics);
 
 		$pager = $this->getTopicModel()->getRepository()->findAllTopicsPaginatedByBoardId($board->getId(), 1, true);
 	
 		$foundTopics = $pager->getItems();
 		
-		$this->assertSame(3, count($foundTopics));
+		$this->assertCount(3, $foundTopics);
 	}
 
 	public function testFindAllTopicsStickiedByBoardId()
 	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		
 		$forum = $this->addNewForum('testFindAllPostsPaginatedByTopicId');
 		$category = $this->addNewCategory('testFindAllPostsPaginatedByTopicId', 1, $forum);
 		$board = $this->addNewBoard('testFindAllPostsPaginatedByTopicId', 'testFindAllPostsPaginatedByTopicId', 1, $category);
 		$topics = $this->addFixturesForTopics(array($board));
-		$posts = $this->addFixturesForPosts($topics, $this->users['tom']);
+		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 
-//		$this->em->refresh($board);
-
-		$this->assertSame(3, count($topics));
+		$this->assertCount(3, $topics);
 
 		foreach ($topics as $topic) {
-//			$this->em->refresh($topic);
 			$topic->setIsSticky(true);
 			$this->em->persist($topic);
 		}
@@ -60,18 +63,22 @@ class TopicRepositoryTest extends TestBase
 		
 		$foundTopics = $this->getTopicModel()->getRepository()->findAllTopicsStickiedByBoardId($board->getId(), true);
 		
-		$this->assertSame(3, count($foundTopics));
+		$this->assertCount(3, $foundTopics);
 	}
 
 	public function testFindOneTopicByIdWithBoardAndCategory()
 	{
+		$this->purge();
+		
 		$board = $this->addNewBoard('testFindOneTopicByIdWithBoardAndCategory', 'testFindOneTopicByIdWithBoardAndCategory', 1);
 
 		// Can view deleted topics.
 		$topic1 = $this->addNewTopic('topic1', $board);
+		
 		$this->em->persist($topic1);
 		$this->em->flush($topic1);
 		$this->em->refresh($topic1);
+		
 		$foundTopic1 = $this->getTopicModel()->getRepository()->findOneTopicByIdWithBoardAndCategory($topic1->getId(), true);
 		
 		$this->assertNotNull($foundTopic1);
@@ -80,9 +87,11 @@ class TopicRepositoryTest extends TestBase
 		// Can NOT view deleted topics.
 		$topic2 = $this->addNewTopic('topic2', $board);
 		$topic2->setIsDeleted(true);
+		
 		$this->em->persist($topic2);
 		$this->em->flush();
 		$this->em->refresh($topic2);
+		
 		$foundTopic2 = $this->getTopicModel()->getRepository()->findOneTopicByIdWithBoardAndCategory($topic2->getId(), false);
         
 		$this->assertNull($foundTopic2);
@@ -90,6 +99,10 @@ class TopicRepositoryTest extends TestBase
 
 	public function testFindOneTopicByIdWithPosts()
 	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		
 		$topic = new Topic();
 		$topic->setTitle('NewTopicTest');
         $topic->setCachedViewCount(0);
@@ -102,7 +115,7 @@ class TopicRepositoryTest extends TestBase
 		$post->setTopic($topic);
 		$post->setBody('foobar');
         $post->setCreatedDate(new \DateTime());
-        $post->setCreatedBy($this->users['tom']);
+        $post->setCreatedBy($users['tom']);
         $post->setIsLocked(false);
         $post->setIsDeleted(false);
 
@@ -114,7 +127,7 @@ class TopicRepositoryTest extends TestBase
 		$post2->setTopic($post->getTopic());
 		$post2->setBody('foobar');
         $post2->setCreatedDate(new \DateTime());
-        $post2->setCreatedBy($this->users['tom']);
+        $post2->setCreatedBy($users['tom']);
         $post2->setIsLocked(false);
         $post2->setIsDeleted(false);
 		
@@ -127,6 +140,6 @@ class TopicRepositoryTest extends TestBase
 		
 		$this->assertTrue(is_numeric($foundTopic->getId()));
 		$this->assertSame('NewTopicTest', $foundTopic->getTitle());
-		$this->assertSame(2, count($foundTopic->getPosts()));
+		$this->assertCount(2, $foundTopic->getPosts());
 	}
 }

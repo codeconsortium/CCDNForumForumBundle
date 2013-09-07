@@ -22,6 +22,7 @@ use CCDNForum\ForumBundle\Model\Model\BaseModel;
 use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
 
 use CCDNForum\ForumBundle\Entity\Subscription;
+use CCDNForum\ForumBundle\Entity\Topic;
 
 /**
  *
@@ -36,38 +37,57 @@ use CCDNForum\ForumBundle\Entity\Subscription;
  */
 class SubscriptionModel extends BaseModel implements BaseModelInterface
 {
-    /**
-     *
-     * @access public
-     * @param  int                    $page
-     * @return \Pagerfanta\Pagerfanta
-     */
-    public function findAllPaginated($page)
-    {
-        return $this->getRepository()->findAllPaginated($page);
-    }
+	/**
+	 * 
+	 * @access public
+	 * @param  int                                                      $userId
+	 * @param  bool                                                     $canViewDeletedTopics
+	 * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
+	 */
+	public function findAllSubscriptionsForUserById($userId, $canViewDeletedTopics = false)
+	{
+		return $this->getRepository()->findAllSubscriptionsForUserById($userId, $canViewDeletedTopics);
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param  int                                                      $userId
+	 * @param  int                                                      $page
+	 * @param  string                                                   $filter
+	 * @param  bool                                                     $canViewDeletedTopics
+	 * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
+	 */
+	public function findAllSubscriptionsPaginatedForUserById($userId, $page, $filter, $canViewDeletedTopics = false)
+	{
+		return $this->getRepository()->findAllSubscriptionsPaginatedForUserById($userId, $page, $filter, $canViewDeletedTopics = false);
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param  int                                                      $forumId
+	 * @param  int                                                      $userId
+	 * @param  int                                                      $page
+	 * @param  string                                                   $filter
+	 * @param  bool                                                     $canViewDeletedTopics
+	 * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
+	 */
+	public function findAllSubscriptionsPaginatedForUserByIdAndForumById($forumId, $userId, $page, $filter, $canViewDeletedTopics = false)
+	{
+		return $this->getRepository()->findAllSubscriptionsPaginatedForUserByIdAndForumById($forumId, $userId, $page, $filter, $canViewDeletedTopics = false);
+	}
 
     /**
      *
      * @access public
      * @param  int                                        $topicId
+     * @param  int                                        $userId
      * @return \CCDNForum\ForumBundle\Entity\Subscription
      */
-    public function findSubscriptionForTopicById($topicId)
+    public function findOneSubscriptionForTopicByIdAndUserById($topicId, $userId)
     {
-        return $this->getRepository()->findSubscriptionForTopicById($topicId);
-    }
-
-    /**
-     *
-     * @access public
-     * @param  int                                        $topicId
-     * @param  int                                        $userId  = null
-     * @return \CCDNForum\ForumBundle\Entity\Subscription
-     */
-    public function findSubscriptionForTopicByIdAndUserId($topicId, $userId = null)
-    {
-       return $this->getRepository()->findSubscriptionFortopicByIdAndUserId($topicId, $userId);
+        return $this->getRepository()->findOneSubscriptionForTopicByIdAndUserById($topicId, $userId);
     }
 
     /**
@@ -85,21 +105,70 @@ class SubscriptionModel extends BaseModel implements BaseModelInterface
      *
      * @access public
      * @param  int                                                 $topicId
+     * @param  \Symfony\Component\Security\Core\User\UserInterface  $userId
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function subscribe(Topic $topic)
+    public function subscribe(Topic $topic, UserInterface $user)
     {
-        return $this->getManager()->subscribe($topic);
+        return $this->getManager()->subscribe($topic, $user);
     }
 
     /**
      *
      * @access public
      * @param  int                                                 $topicId
+     * @param  int                                                 $userId
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-    public function unsubscribe(Topic $topic)
+    public function unsubscribe(Topic $topic, $userId)
     {
-        return $this->getManager()->unsubscribe($topic);
+        return $this->getManager()->unsubscribe($topic, $userId);
     }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Subscription          $subscription
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function markAsRead(Subscription $subscription)
+	{
+		return $this->getManager()->markAsRead($subscription);
+	}
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Subscription          $subscription
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function markAsUnread(Subscription $subscription)
+	{
+		return $this->getManager()->markAsUnread($subscription);
+	}
+
+//    /**
+//     *
+//     * @access public
+//     * @param  int                    $page
+//     * @return \Pagerfanta\Pagerfanta
+//     */
+//    public function findAllPaginated($page)
+//    {
+//        return $this->getRepository()->findAllPaginated($page);
+//    }
+//
+
+//
+//    /**
+//     *
+//     * @access public
+//     * @param  int                                        $topicId
+//     * @param  int                                        $userId  = null
+//     * @return \CCDNForum\ForumBundle\Entity\Subscription
+//     */
+//    public function findSubscriptionForTopicByIdAndUserId($topicId, $userId = null)
+//    {
+//       return $this->getRepository()->findSubscriptionFortopicByIdAndUserId($topicId, $userId);
+//    }
 }

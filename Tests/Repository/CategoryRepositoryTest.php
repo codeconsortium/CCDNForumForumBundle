@@ -19,24 +19,36 @@ class CategoryRepositoryTest extends TestBase
 {
 	public function testFindAllCategories()
 	{
-		$categories = $this->getCategoryModel()->getRepository()->findAllCategories();
+		$this->purge();
+		
+		$forum = $this->addFixturesForForums();
+		$category = $this->addFixturesForCategories($forum);
+		
+		$categoriesFound = $this->getCategoryModel()->getRepository()->findAllCategories();
 		
 		// 3 Forums, with 3 categories each respectively, 3x3 = 9 Categories total.
-		$this->assertCount(9, $categories);
+		$this->assertCount(9, $categoriesFound);
 	}
 
 	public function testFindAllCategoriesForForumById()
 	{
-		foreach ($this->forums as $forum) {
-			$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForumById($forum->getId());
+		$this->purge();
+
+		$forums = $this->addFixturesForForums();
+		$category = $this->addFixturesForCategories($forums);
+		
+		foreach ($forums as $forum) {
+			$categoriesFound = $this->getCategoryModel()->getRepository()->findAllCategoriesForForumById($forum->getId());
 	
-			$this->assertCount(3, $categories);
+			$this->assertCount(3, $categoriesFound);
 		}
 	}
 
 	public function testFindAllCategoriesWithBoardsForForumByName()
 	{
-		$forum = $this->addNewForum('testFindAllCategoriesWithBoardsForForumByName1');
+		$this->purge();
+		
+		$forum = $this->addNewForum('testFindAllCategoriesWithBoardsForForumByName');
 		$categories = $this->addFixturesForCategories(array($forum));
 		$boards = $this->addFixturesForBoards($categories);
 		
@@ -51,7 +63,10 @@ class CategoryRepositoryTest extends TestBase
 
 	public function testFindOneCategoryById()
 	{
-		$category = $this->addNewCategory('TestCategory', 1);
+		$this->purge();
+		
+		$forum = $this->addNewForum('testFindOneCategoryById');
+		$category = $this->addNewCategory('testFindOneCategoryById', 1, $forum);
 		
 		$foundCategory = $this->getCategoryModel()->getRepository()->findOneCategoryById($category->getId());
 		
@@ -61,7 +76,10 @@ class CategoryRepositoryTest extends TestBase
 
 	public function testFindOneCategoryByIdWithBoards()
 	{
-		$category = $this->addNewCategory('testFindOneCategoryByIdWithBoards', 1);
+		$this->purge();
+		
+		$forum = $this->addNewForum('testFindOneCategoryByIdWithBoards');
+		$category = $this->addNewCategory('testFindOneCategoryByIdWithBoards', 1, $forum);
 		
 		$foundCategory = $this->getCategoryModel()->getRepository()->findOneCategoryByIdWithBoards($category->getId());
 		

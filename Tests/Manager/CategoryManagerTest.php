@@ -22,6 +22,8 @@ class CategoryManagerTest extends TestBase
 {
 	public function testSaveNewCategory()
 	{
+		$this->purge();
+		
 		$category = new Category();
 		$category->setName('NewCategoryTest');
 		$category->setListOrderPriority(1);
@@ -34,6 +36,8 @@ class CategoryManagerTest extends TestBase
 	
 	public function testUpdateCategory()
 	{
+		$this->purge();
+		
 		$category = $this->addNewCategory('UpdateCategoryTest', 1);
 		
 		$category->setName('CategoryTestUpdated');
@@ -46,6 +50,8 @@ class CategoryManagerTest extends TestBase
 	
 	public function testDeleteCategory()
 	{
+		$this->purge();
+		
 		$category = $this->addNewCategory('DeleteCategoryTest', 1);
 		
 		$categoryId = $category->getId();
@@ -58,7 +64,8 @@ class CategoryManagerTest extends TestBase
 	
 	public function testReassignBoardsToCategory()
 	{
-		//$forums = $this->addFixturesForForums();
+		$this->purge();
+		
 		$forum = $this->addNewForum('testReassignBoardsToCategory');
 		$categories = $this->addFixturesForCategories(array($forum));
 		$boards = $this->addFixturesForBoards($categories);
@@ -82,7 +89,8 @@ class CategoryManagerTest extends TestBase
 	
 	public function testReorderCategories()
 	{
-		//$forums = $this->addFixturesForForums();
+		$this->purge();
+
 		$forum = $this->addNewForum('testReorderCategories');
 		$this->addFixturesForCategories(array($forum));
 		

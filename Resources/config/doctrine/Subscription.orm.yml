@@ -16,6 +16,14 @@ CCDNForum\ForumBundle\Entity\Subscription:
             column: is_subscribed
             nullable: false
     manyToOne:
+        forum:
+            targetEntity: CCDNForum\ForumBundle\Entity\Forum
+            cascade: []
+            nullable: true
+            joinColumn:
+                name: fk_forum_id
+                referencedColumnName: id
+                onDelete: SET NULL
         topic:
             targetEntity: CCDNForum\ForumBundle\Entity\Topic
             cascade: ["persist"]

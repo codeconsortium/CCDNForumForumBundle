@@ -1,7 +1,7 @@
 
-ccdn_forum_user_subscription_list:
+ccdn_forum_user_subscription_index:
     pattern: /
-    defaults: { _controller: CCDNForumForumBundle:UserSubscription:show, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:UserSubscription:index, _locale: en }
 
 ccdn_forum_user_subscription_subscribe:
     pattern: /topic/{topicId}/subscribe

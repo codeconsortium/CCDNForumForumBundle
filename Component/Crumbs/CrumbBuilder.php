@@ -339,6 +339,7 @@ class CrumbBuilder extends BaseCrumbBuilder
 				array(
 					'route' => 'ccdn_forum_user_category_show',
 					'params' => array(
+						'forumName' => $forum->getName(),
 						'categoryId' => $category->getId()
 					)
 				)
@@ -366,6 +367,7 @@ class CrumbBuilder extends BaseCrumbBuilder
 				array(
 					'route' => 'ccdn_forum_user_board_show',
 					'params' => array(
+						'forumName' => $forum->getName(),
 						'boardId' => $board->getId()
 					)
 				)
@@ -393,6 +395,7 @@ class CrumbBuilder extends BaseCrumbBuilder
 				array(
 					'route' => 'ccdn_forum_user_topic_show',
 					'params' => array(
+						'forumName' => $forum->getName(),
 						'topicId' => $topic->getId()
 					)
 				)
@@ -417,6 +420,7 @@ class CrumbBuilder extends BaseCrumbBuilder
 				array(
 					'route' => 'ccdn_forum_user_topic_create',
 					'params' => array(
+						'forumName' => $forum->getName(),
 						'boardId' => $board->getId()
 					)
 				)
@@ -441,6 +445,7 @@ class CrumbBuilder extends BaseCrumbBuilder
 				array(
 					'route' => 'ccdn_forum_user_topic_reply',
 					'params' => array(
+						'forumName' => $forum->getName(),
 						'topicId' => $topic->getId()
 					)
 				)
@@ -490,7 +495,31 @@ class CrumbBuilder extends BaseCrumbBuilder
 				array(
 					'route' => 'ccdn_forum_user_post_delete',
 					'params' => array(
+						'forumName' => $forum->getName(),
 						'postId' => $post->getId()
+					)
+				)
+			)
+		;
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
+	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+	 */
+	public function addUserSubscriptionIndex(Forum $forum)
+	{
+        return $this->addUserCategoryIndex($forum)
+			->add(
+				array(
+					'label' => 'crumbs.user.subscription.index',
+				),
+				array(
+					'route' => 'ccdn_forum_user_subscription_index',
+					'params' => array(
+						'forumName' => $forum->getName()
 					)
 				)
 			)

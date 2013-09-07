@@ -22,6 +22,8 @@ class BoardManagerTest extends TestBase
 {
 	public function testSaveNewBoard()
 	{
+		$this->purge();
+		
 		$board = new Board();
 		$board->setName('NewBoardTest');
 		$board->setDescription('Generic description');
@@ -35,6 +37,8 @@ class BoardManagerTest extends TestBase
 
 	public function testUpdateBoard()
 	{
+		$this->purge();
+		
 		$board = $this->addNewBoard('UpdateBoardTest', 'Generic Description', 1);
 		
 		$board->setName('BoardTestUpdated');
@@ -47,6 +51,8 @@ class BoardManagerTest extends TestBase
 
 	public function testDeleteBoard()
 	{
+		$this->purge();
+		
 		$board = $this->addNewBoard('DeleteBoardTest', 'Generic Description', 1);
 		
 		$boardId = $board->getId();
@@ -59,6 +65,8 @@ class BoardManagerTest extends TestBase
 
 	public function testReassignTopicsToBoard()
 	{
+		$this->purge();
+		
 		$forum = $this->addNewForum('testReassignTopicsToBoard');
 		$categories = $this->addFixturesForCategories(array($forum));
 		$boards = $this->addFixturesForBoards($categories);
@@ -83,6 +91,8 @@ class BoardManagerTest extends TestBase
 
 	public function testReorderBoards()
 	{
+		$this->purge();
+		
 		$forum = $this->addNewForum('testReorderBoards');
 		$categories = $this->addFixturesForCategories(array($forum));
 		$this->addFixturesForBoards($categories);

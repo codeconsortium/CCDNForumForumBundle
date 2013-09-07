@@ -21,11 +21,15 @@ class PostRepositoryTest extends TestBase
 {
 	public function testFindAllPostsPaginatedByTopicId()
 	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		
 		$forum = $this->addNewForum('testFindAllPostsPaginatedByTopicId');
 		$category = $this->addNewCategory('testFindAllPostsPaginatedByTopicId', 1, $forum);
 		$board = $this->addNewBoard('testFindAllPostsPaginatedByTopicId', 'testFindAllPostsPaginatedByTopicId', 1, $category);
 		$topic = $this->addNewTopic('testFindAllPostsPaginatedByTopicId', $board);
-		$posts = $this->addFixturesForPosts(array($topic), $this->users['tom']);
+		$posts = $this->addFixturesForPosts(array($topic), $users['tom']);
 	
 		$pager = $this->getPostModel()->getRepository()->findAllPostsPaginatedByTopicId($topic->getId(), 1, true);
 		
@@ -36,11 +40,15 @@ class PostRepositoryTest extends TestBase
 
 	public function testFindOnePostByIdWithTopicAndBoard()
 	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		
 		$board = $this->addNewBoard('testFindOneTopicByIdWithBoardAndCategory', 'testFindOneTopicByIdWithBoardAndCategory', 1);
 
 		// Can view deleted topics.
 		$topic1 = $this->addNewTopic('topic1', $board);
-		$posts = $this->addFixturesForPosts(array($topic1), $this->users['harry']);
+		$posts = $this->addFixturesForPosts(array($topic1), $users['harry']);
 		
 		foreach ($posts as $post) {
 			$this->em->refresh($post);
@@ -53,7 +61,7 @@ class PostRepositoryTest extends TestBase
 		
 		// Can NOT view deleted topics.
 		$topic2 = $this->addNewTopic('topic2', $board);
-		$posts = $this->addFixturesForPosts(array($topic2), $this->users['harry']);
+		$posts = $this->addFixturesForPosts(array($topic2), $users['harry']);
 		
 		$topic2->setIsDeleted(true);
 		$this->em->persist($topic2);

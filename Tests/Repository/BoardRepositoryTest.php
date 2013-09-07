@@ -19,16 +19,28 @@ class BoardRepositoryTest extends TestBase
 {
 	public function testFindAllBoards()
 	{
-		$boards = $this->getBoardModel()->getRepository()->findAllBoards();
+		$this->purge();
+		
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$boards = $this->addFixturesForBoards($categories);
+		
+		$boardsFound = $this->getBoardModel()->getRepository()->findAllBoards();
 		
 		// 3 Forums, with 3 categories each respectively, 3x3 = 9 Categories total.
 		// 9 Categories x 3 Boards each respectively is 27
-		$this->assertCount(27, $boards);
+		$this->assertCount(27, $boardsFound);
 	}
 
 	public function testFindAllBoardsForCategoryById()
 	{
-		foreach ($this->categories as $category) {
+		$this->purge();
+		
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$boards = $this->addFixturesForBoards($categories);
+		
+		foreach ($categories as $category) {
 			$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
 	
 			$this->assertCount(3, $boards);
@@ -37,8 +49,9 @@ class BoardRepositoryTest extends TestBase
 
 	public function testFindAllBoardsForForumById()
 	{
-		$forum = $this->addNewForum('testFindAllBoardsForForumById');
+		$this->purge();
 		
+		$forum = $this->addNewForum('testFindAllBoardsForForumById');
 		$categories = $this->addFixturesForCategories(array($forum));
 		$boards = $this->addFixturesForBoards($categories);
 		
@@ -49,6 +62,8 @@ class BoardRepositoryTest extends TestBase
 
 	public function testFindOneBoardById()
 	{
+		$this->purge();
+		
 		$board = $this->addNewBoard('TestBoard', 'generic description', 1);
 		
 		$foundBoard = $this->getBoardModel()->getRepository()->findOneBoardById($board->getId());
@@ -59,6 +74,8 @@ class BoardRepositoryTest extends TestBase
 
 	public function testFindOneBoardByIdWithCategory()
 	{
+		$this->purge();
+		
 		$category = $this->addNewCategory('TestCategory', 1);
 		$board = $this->addNewBoard('TestBoard', 'generic description', 1);
 		

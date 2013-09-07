@@ -34,49 +34,77 @@
 	{%- if is_granted('ROLE_ADMIN') -%}
 		<li>
 			<a href="{{- path('ccdn_forum_admin_index') -}}">
-				<i class="icon-home"></i>
+				<i class="icon-cog"></i>
 				{{- 'link.admin.index' |trans({}, 'CCDNForumForumBundle') -}}
-			</a>
-		</li>
-	{%- endif -%}	
-	
-	{%- if route == 'ccdn_homepage' or route == 'ccdn_forum_user_category_index' or route == 'ccdn_forum_user_category_index' -%}
-		<li class="active">
-			<a href="{{- path('ccdn_forum_user_category_index') -}}">
-				<i class="icon-white icon-home"></i>
-				{{- 'link.category.index' |trans({}, 'CCDNForumForumBundle') -}}
-			</a>
-		</li>
-	{%- else -%}
-		<li>
-			<a href="{{- path('ccdn_forum_user_category_index') -}}">
-				<i class="icon-home"></i>
-				{{- 'link.category.index' |trans({}, 'CCDNForumForumBundle') -}}
 			</a>
 		</li>
 	{%- endif -%}
 
 	{%- if is_granted('ROLE_USER') -%}
-		{%- if route == 'ccdn_forum_user_subscription_list' -%}
-			<li class="active">
-				<a rel="nofollow" href="{{- path('ccdn_forum_user_subscription_list') -}}">
-					<i class="icon-white icon-heart"></i>
-					{{- 'link.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}
-				</a>
-			</li>
-		{%- else -%}
+		{%- if forum is not null -%}
 			<li>
-				<a rel="nofollow" href="{{- path('ccdn_forum_user_subscription_list') -}}">
+				<a rel="nofollow" href="{{- path('ccdn_forum_user_subscription_index', {'forumName': forum.name}) -}}">
 					<i class="icon-heart"></i>
-					{{- 'link.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}
-				</a>
+		{%- else -%}
+			<li class="active">
+				<a rel="nofollow" href="{{- path('ccdn_forum_user_subscription_index', {'forumName': '~'}) -}}">
+					<i class="icon-heart icon-white"></i>
+		{%- endif -%}
+				{{- 'link.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}
+			</a>
+		</li>
+		
+		{%- if route == 'ccdn_forum_user_subscription_index' -%}
+			<li>
+				<ul class="nav nav-pills nav-stacked">
+					{% for subscribed_forum in subscribed_forums %}
+						{%- if forum is not null -%}
+							{%- if forum.name == subscribed_forum['forum'].name -%}
+								<li class="active">
+									<a href="{{- path('ccdn_forum_user_subscription_index', {'forumName': subscribed_forum['forum'].name}) -}}">
+										<i class="icon-folder-open icon-white"></i>
+							{%- else -%}
+								<li>
+									<a href="{{- path('ccdn_forum_user_subscription_index', {'forumName': subscribed_forum['forum'].name}) -}}">
+										<i class="icon-folder-close"></i>
+							{%- endif -%}
+						{%- else -%}
+							<li>
+								<a href="{{- path('ccdn_forum_user_subscription_index', {'forumName': subscribed_forum['forum'].name}) -}}">
+									<i class="icon-folder-close"></i>
+						{%- endif -%}
+								{{- subscribed_forum['forum'].name -}}
+								
+								<span class="pull-right label">
+									{{- subscribed_forum['count_unread'] -}}
+									&nbsp;/&nbsp;
+									{{- subscribed_forum['count_total'] -}}
+								</span>
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
 			</li>
 		{%- endif -%}
-
 	{%- endif -%}
 
 	<li class="divider"></li>
 
-	{%- include 'CCDNForumForumBundle:Sidebar:board_list.html.twig' -%}
+	{%- if forum is defined and route != 'ccdn_forum_user_subscription_index' -%}
+		{%- if route == 'ccdn_homepage' or route == 'ccdn_forum_user_category_index' or route == 'ccdn_forum_user_category_index' -%}
+			<li class="active">
+				<a href="{{- path('ccdn_forum_user_category_index', {'forumName': forum.name}) -}}">
+					<i class="icon-white icon-home"></i>
+		{%- else -%}
+			<li>
+				<a href="{{- path('ccdn_forum_user_category_index', {'forumName': forum.name}) -}}">
+					<i class="icon-home"></i>
+		{%- endif -%}
+					{{- 'link.category.index' |trans({}, 'CCDNForumForumBundle') -}}
+				</a>
+			</li>
+
+		{%- include 'CCDNForumForumBundle:Sidebar:board_list.html.twig' -%}
+	{%- endif -%}
 
 {%- endspaceless -%}

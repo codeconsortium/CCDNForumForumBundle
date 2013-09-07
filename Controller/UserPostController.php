@@ -51,8 +51,13 @@ class UserPostController extends UserPostBaseController
 
 		$this->isAuthorised($this->getAuthorizer()->canShowPost($post, $forum));
 
-        // Get the topic subscriptions.
-        $subscription = $this->getSubscriptionModel()->findSubscriptionForTopicById($post->getTopic()->getId());
+        // get the topic subscriptions.
+		if ($this->isGranted('ROLE_USER')) {
+	        $subscription = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($post->getTopic()->getId(), $this->getUser()->getId());
+		} else {
+			$subscription = null;
+		}
+		
         $subscriberCount = $this->getSubscriptionModel()->countSubscriptionsForTopicById($post->getTopic()->getId());
 
         // Setup crumb trail.

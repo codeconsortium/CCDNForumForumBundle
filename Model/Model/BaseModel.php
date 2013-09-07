@@ -35,11 +35,11 @@ use CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface;
 abstract class BaseModel
 {
 	protected $repository;
-	
+
 	protected $manager;
-	
+
 	protected $modelBag;
-	
+
 	public function __construct($repository, $manager, ModelBagInterface $modelBag)
 	{
 		$repository->setModel($this);
@@ -50,18 +50,17 @@ abstract class BaseModel
 		
 		$this->modelBag = $modelBag;
 	}
-	
+
 	public function getRepository()
 	{
 		return $this->repository;
 	}
-	
+
 	public function getManager()
 	{
 		return $this->manager;
 	}
-	
-	
+
 	/**
 	 * 
 	 * @access public

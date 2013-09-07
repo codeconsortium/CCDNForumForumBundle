@@ -51,7 +51,7 @@ class DashboardIntegrator
                     ->end()
                     ->addLink('forum_subscriptions')
                         ->setAuthRole('ROLE_USER')
-                        ->setRoute('ccdn_forum_user_subscription_list')
+                        ->setRoute('ccdn_forum_user_subscription_index')
                         ->setIcon('/bundles/ccdncomponentcommon/images/icons/Black/32x32/32x32_bookmark.png')
                         ->setLabel('title.subscriptions.show', array(), 'CCDNForumForumBundle')
                     ->end()

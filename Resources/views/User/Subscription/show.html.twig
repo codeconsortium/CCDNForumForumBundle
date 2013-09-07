@@ -1,0 +1,101 @@
+{% extends 'CCDNForumForumBundle::base.html.twig' %}
+
+{% set LayoutTemplate = ccdn_forum_forum.subscription.list.layout_template %}
+
+{% block title %}{{- truncDot('title.subscription.index' | trans({}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
+
+{%- block sub_title -%}{{- truncDot('title.subscription.index' | trans({}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{%- endblock sub_title -%}
+
+
+{%- macro subscription_tab(label, forum_name, filter_key, filter_value, count_read, count_unread, count_total) -%}
+	{% if filter_key == filter_value -%}
+		<li class="active">
+	{%- else -%}
+		<li>
+	{%- endif -%}
+		<a href="{{- path('ccdn_forum_user_subscription_index', {'forumName': forum_name, 'filter': filter_key}) -}}">
+			{{- label -}}
+		
+			&nbsp;
+			
+			<span class="label">
+				{%- if count_unread is not null and count_total is not null -%}
+					{{- count_unread -}}
+					&nbsp;/&nbsp;
+					{{- count_total -}}
+				{%- else -%}
+					{%- if count_unread is not null -%}
+						{{- count_unread -}}
+					{%- endif -%}
+					
+					{%- if count_read is not null -%}
+						{{- count_read -}}
+					{%- endif -%}
+				{%- endif -%}
+			</span>
+		</a>
+	</li>
+{%- endmacro -%}
+
+
+{% block body_content %}
+
+	{%- spaceless -%}
+
+	<section>
+
+		<ul class="nav nav-tabs">
+			{%- import _self as tabs -%}
+			{%- if forum is not null -%}
+				{{- tabs.subscription_tab('all', forum.name, 'all', filter, total_subscribed_forums['count_read'], total_subscribed_forums['count_unread'], total_subscribed_forums['count_total']) -}}
+				{{- tabs.subscription_tab('unread', forum.name, 'unread', filter, null, total_subscribed_forums['count_unread'], null) -}}
+				{{- tabs.subscription_tab('read', forum.name, 'read', filter, total_subscribed_forums['count_read'], null, null) -}}
+			{%- else -%}
+				{{- tabs.subscription_tab('all', '~', 'all', filter, total_subscribed_forums['count_read'], total_subscribed_forums['count_unread'], total_subscribed_forums['count_total']) -}}
+				{{- tabs.subscription_tab('unread', '~', 'unread', filter, null, total_subscribed_forums['count_unread'], null) -}}
+				{{- tabs.subscription_tab('read', '~', 'read', filter, total_subscribed_forums['count_read'], null, null) -}}
+			{%- endif -%}
+		</ul>
+		
+		<div class="btn-toolbar">
+			<nav class="span12 btn-right paginate">
+				{{- knp_pagination_render(pager) -}}
+			</nav>
+		</div>
+		
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th class="center" style="width:18px;"></th>
+					<th class="center" style="width:18px;"></th>
+					<th class="left">{{- 'generic.thead.topic' | trans({}, 'CCDNForumForumBundle') -}}</th>
+					<th class="center" style="width: 100px;">{{- 'generic.thead.replies' | trans({}, 'CCDNForumForumBundle') -}}</th>
+					<th class="center" style="width: 100px;">{{- 'generic.thead.views' | trans({}, 'CCDNForumForumBundle') -}}</th>
+					<th class="center" style="width: 170px;">{{- 'generic.last_post' | trans({}, 'CCDNForumForumBundle') -}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{%- for row, subscription in pager.getItems() -%}
+					{%- set topic = subscription.getTopic -%}
+
+					{%- include 'CCDNForumForumBundle:User:Subscription/Partial/item_topic_list.html.twig' -%}
+				{%- else -%}
+					<tr>
+						<td class="center" colspan="6">
+							{{- 'subscription.none' | trans({}, 'CCDNForumForumBundle') -}}
+						</td>
+					</tr>
+				{%- endfor -%}
+			</tbody>
+		</table>
+
+		<div class="btn-toolbar">
+			<nav class="span12 btn-right paginate">
+				{{- knp_pagination_render(pager) -}}
+			</nav>
+		</div>
+	</section>
+
+	{%- endspaceless -%}
+
+{% endblock body_content %}

@@ -23,6 +23,9 @@ class TopicManagerTest extends TestBase
 {
 	public function testSaveNewTopic()
 	{
+		$this->purge();
+		$users = $this->addFixturesForUsers();
+		
 		$topic = new Topic();
 		$topic->setTitle('NewTopicTest');
         $topic->setCachedViewCount(0);
@@ -35,7 +38,7 @@ class TopicManagerTest extends TestBase
 		$post->setTopic($topic);
 		$post->setBody('foobar');
         $post->setCreatedDate(new \DateTime());
-        $post->setCreatedBy($this->users['tom']);
+        $post->setCreatedBy($users['tom']);
         $post->setIsLocked(false);
         $post->setIsDeleted(false);
 
@@ -53,6 +56,9 @@ class TopicManagerTest extends TestBase
 
     public function testIncrementViewCounter()
 	{
+		$this->purge();
+		$users = $this->addFixturesForUsers();
+		
 		$topic = new Topic();
 		$topic->setTitle('NewTopicTest');
         $topic->setCachedViewCount(0);
@@ -65,7 +71,7 @@ class TopicManagerTest extends TestBase
 		$post->setTopic($topic);
 		$post->setBody('foobar');
         $post->setCreatedDate(new \DateTime());
-        $post->setCreatedBy($this->users['tom']);
+        $post->setCreatedBy($users['tom']);
         $post->setIsLocked(false);
         $post->setIsDeleted(false);
 

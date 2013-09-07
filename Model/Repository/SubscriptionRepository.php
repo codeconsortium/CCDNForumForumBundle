@@ -34,45 +34,233 @@ use CCDNForum\ForumBundle\Model\Repository\BaseRepositoryInterface;
  */
 class SubscriptionRepository extends BaseRepository implements BaseRepositoryInterface
 {
-    /**
-     *
-     * @access public
-     * @param  int                                        $topicId
-     * @return \CCDNForum\ForumBundle\Entity\Subscription
-     */
-    public function findSubscriptionForTopicById($topicId)
-    {
-        if (! $this->isGranted('ROLE_USER')) {
-            return null;
+	/**
+	 * 
+	 * @access public
+	 * @param  int                                         $forumId
+	 * @param  int                                         $userId
+	 * @param  int                                         $page
+	 * @param  bool                                        $canViewDeletedTopics
+	 * @return \Doctrine\Common\Collection\ArrayCollection
+	 */
+	public function findAllSubscriptionsForUserById($userId, $canViewDeletedTopics = false)
+	{
+        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+            throw new \Exception('User id "' . $userId . '" is invalid!');
         }
 
-        return $this->findSubscriptionForTopicByIdAndUserId($topicId, $this->getUser()->getId());
-    }
+        $params = array(':userId' => $userId);
+
+        $qb = $this->createSelectQuery(array('s', 't', 'b', 'c', 'f', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
+
+        $qb
+			->innerJoin('s.topic', 't')
+			->innerJoin('s.forum', 'f')
+            ->innerJoin('t.firstPost', 'fp')
+                ->leftJoin('fp.createdBy', 'fp_author')
+            ->innerJoin('t.lastPost', 'lp')
+                ->leftJoin('lp.createdBy', 'lp_author')
+            ->leftJoin('t.closedBy', 't_closedBy')
+            ->leftJoin('t.deletedBy', 't_deletedBy')
+            ->leftJoin('t.stickiedBy', 't_stickiedBy')
+            ->leftJoin('t.board', 'b')
+            ->leftJoin('b.category', 'c')
+            ->where(
+				call_user_func_array(function($canViewDeletedTopics, $qb) {
+			        if ($canViewDeletedTopics) {
+						$expr = $qb->expr()->eq('s.ownedBy', ':userId');
+			        } else {
+			            $expr = $qb->expr()->andX(
+							$qb->expr()->eq('s.ownedBy', ':userId'),
+			                $qb->expr()->eq('t.isDeleted', 'FALSE')
+			            );
+			        }
+
+					return $expr;
+				}, array($canViewDeletedTopics, $qb))
+            )
+            ->setParameters($params)
+            ->orderBy('lp.createdDate', 'DESC')
+		;
+
+        return $this->gateway->findSubscriptions($qb, $params);
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param  int                                                      $forumId
+	 * @param  int                                                      $userId
+	 * @param  int                                                      $page
+	 * @param  string                                                   $filter
+	 * @param  bool                                                     $canViewDeletedTopics
+	 * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
+	 */
+	public function findAllSubscriptionsPaginatedForUserById($userId, $page, $filter, $canViewDeletedTopics = false)
+	{
+        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+            throw new \Exception('User id "' . $userId . '" is invalid!');
+        }
+
+        $params = array(':userId' => $userId);
+
+        $qb = $this->createSelectQuery(array('s', 't', 'b', 'c', 'f', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
+
+        $qb
+			->innerJoin('s.topic', 't')
+            ->innerJoin('t.firstPost', 'fp')
+                ->leftJoin('fp.createdBy', 'fp_author')
+            ->leftJoin('t.lastPost', 'lp')
+                ->leftJoin('lp.createdBy', 'lp_author')
+            ->leftJoin('t.closedBy', 't_closedBy')
+            ->leftJoin('t.deletedBy', 't_deletedBy')
+            ->leftJoin('t.stickiedBy', 't_stickiedBy')
+            ->leftJoin('t.board', 'b')
+            ->leftJoin('b.category', 'c')
+			->leftJoin('c.forum', 'f')
+            ->where(
+				call_user_func_array(function($qb, $canViewDeletedTopics, $filter) {
+					$expr = $qb->expr()->andX(
+						$qb->expr()->eq('s.ownedBy', ':userId'),
+						$qb->expr()->eq('s.isSubscribed', 'TRUE')
+					);
+					
+			        if (! $canViewDeletedTopics) {
+						$expr = $qb->expr()->andX(
+							$expr,
+			                $qb->expr()->eq('t.isDeleted', 'FALSE')
+			            );
+			        }
+
+					if ($filter) {
+						if ($filter == 'read') {
+							$expr = $qb->expr()->andX(
+								$expr,
+								$qb->expr()->eq('s.isRead', 'TRUE')
+				            );
+						} else {
+							if ($filter == 'unread') {
+								$expr = $qb->expr()->andX(
+									$expr,
+									$qb->expr()->eq('s.isRead', 'FALSE')
+					            );
+							}
+						}
+					}
+					
+					return $expr;
+				}, array($qb, $canViewDeletedTopics, $filter))
+            )
+            ->setParameters($params)
+            ->orderBy('lp.createdDate', 'DESC')
+		;
+
+        return $this->gateway->paginateQuery($qb, $this->getTopicsPerPageOnSubscriptions(), $page);
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param  int                                                      $forumId
+	 * @param  int                                                      $userId
+	 * @param  int                                                      $page
+	 * @param  string                                                   $filter
+	 * @param  bool                                                     $canViewDeletedTopics
+	 * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
+	 */
+	public function findAllSubscriptionsPaginatedForUserByIdAndForumById($forumId, $userId, $page, $filter, $canViewDeletedTopics = false)
+	{
+        if (null == $forumId || ! is_numeric($forumId) || $forumId == 0) {
+            throw new \Exception('Forum id "' . $forumId . '" is invalid!');
+        }
+
+        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+            throw new \Exception('User id "' . $userId . '" is invalid!');
+        }
+		
+        $params = array(':forumId' => $forumId, ':userId' => $userId);
+
+        $qb = $this->createSelectQuery(array('s', 't', 'b', 'c', 'f', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
+
+        $qb
+			->innerJoin('s.topic', 't')
+            ->innerJoin('t.firstPost', 'fp')
+                ->leftJoin('fp.createdBy', 'fp_author')
+            ->leftJoin('t.lastPost', 'lp')
+                ->leftJoin('lp.createdBy', 'lp_author')
+            ->leftJoin('t.closedBy', 't_closedBy')
+            ->leftJoin('t.deletedBy', 't_deletedBy')
+            ->leftJoin('t.stickiedBy', 't_stickiedBy')
+            ->leftJoin('t.board', 'b')
+            ->leftJoin('b.category', 'c')
+			->leftJoin('c.forum', 'f')
+            ->where(
+				call_user_func_array(function($qb, $canViewDeletedTopics, $filter) {
+			        if ($canViewDeletedTopics) {
+			            $expr = $qb->expr()->eq('f.id', ':forumId');
+			        } else {
+			            $expr = $qb->expr()->andX(
+			                $qb->expr()->eq('f.id', ':forumId'),
+			                $qb->expr()->eq('t.isDeleted', 'FALSE')
+			            );
+			        }
+					
+					$expr = $qb->expr()->andX(
+						$expr,
+						$qb->expr()->andX(
+							$qb->expr()->eq('s.ownedBy', ':userId'),
+							$qb->expr()->eq('s.isSubscribed', 'TRUE')
+						)
+					);
+
+					if ($filter) {
+						if ($filter == 'read') {
+							$expr = $qb->expr()->andX(
+								$expr,
+								$qb->expr()->eq('s.isRead', 'TRUE')
+				            );
+						} else {
+							if ($filter == 'unread') {
+								$expr = $qb->expr()->andX(
+									$expr,
+									$qb->expr()->eq('s.isRead', 'FALSE')
+					            );
+							}
+						}
+					}
+
+					return $expr;
+				}, array($qb, $canViewDeletedTopics, $filter))
+            )
+            ->setParameters($params)
+            ->orderBy('lp.createdDate', 'DESC')
+		;
+
+        return $this->gateway->paginateQuery($qb, $this->getTopicsPerPageOnSubscriptions(), $page);
+	}
 
     /**
      *
      * @access public
      * @param  int                                        $topicId
-     * @param  int                                        $userId  = null
+     * @param  int                                        $userId
      * @return \CCDNForum\ForumBundle\Entity\Subscription
      */
-    public function findSubscriptionForTopicByIdAndUserId($topicId, $userId = null)
+    public function findOneSubscriptionForTopicByIdAndUserById($topicId, $userId)
     {
         if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
             throw new \Exception('Topic id "' . $topicId . '" is invalid!');
         }
 
         if (null == $userId || ! is_numeric($userId) || $userId == 0) {
-            if ($this->isGranted('ROLE_USER')) {
-                $userId = $this->getUser()->getId();
-            } else {
-                throw new \Exception('User id "' . $userId . '" is invalid!');
-            }
+            throw new \Exception('User id "' . $userId . '" is invalid!');
         }
 
-        $qb = $this->createSelectQuery(array('s'));
+        $qb = $this->createSelectQuery(array('s', 't', 'u'));
 
         $qb
+			->leftJoin('s.topic', 't')
+			->leftJoin('s.ownedBy', 'u')
             ->where(
                 $qb->expr()->andX(
                     $qb->expr()->eq('s.topic', ':topicId'),
@@ -82,34 +270,6 @@ class SubscriptionRepository extends BaseRepository implements BaseRepositoryInt
 		;
 
         return $this->gateway->findSubscription($qb, array(':topicId' => $topicId, ':userId' => $userId));
-    }
-
-    /**
-     *
-     * @access public
-     * @param  int                    $page
-     * @return \Pagerfanta\Pagerfanta
-     */
-    public function findAllPaginated($page)
-    {
-        $qb = $this->createSelectQuery(array('s', 't', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author'));
-
-        $params = array(':userId' => $this->getUser()->getId());
-
-        $qb
-            ->innerJoin('s.topic', 't')
-            ->innerJoin('t.firstPost', 'fp')
-            ->leftJoin('t.lastPost', 'lp')
-            ->leftJoin('fp.createdBy', 'fp_author')
-            ->leftJoin('lp.createdBy', 'lp_author')
-            ->leftJoin('t.board', 'b')
-            ->leftJoin('b.category', 'c')
-            ->where('s.ownedBy = :userId')
-            ->setParameters($params)
-            ->orderBy('lp.createdDate', 'DESC')
-		;
-
-        return $this->gateway->paginateQuery($qb, $this->getTopicsPerPageOnSubscriptions(), $page);
     }
 
     /**
@@ -130,4 +290,34 @@ class SubscriptionRepository extends BaseRepository implements BaseRepositoryInt
 
         return $this->gateway->countSubscriptions($qb, array(':topicId' => $topicId));
     }
+
+//
+//    /**
+//     *
+//     * @access public
+//     * @param  int                    $page
+//     * @return \Pagerfanta\Pagerfanta
+//     */
+//    public function findAllPaginated($page)
+//    {
+//        $qb = $this->createSelectQuery(array('s', 't', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author'));
+//
+//        $params = array(':userId' => $this->getUser()->getId());
+//
+//        $qb
+//            ->innerJoin('s.topic', 't')
+//            ->innerJoin('t.firstPost', 'fp')
+//            ->leftJoin('t.lastPost', 'lp')
+//            ->leftJoin('fp.createdBy', 'fp_author')
+//            ->leftJoin('lp.createdBy', 'lp_author')
+//            ->leftJoin('t.board', 'b')
+//            ->leftJoin('b.category', 'c')
+//            ->where('s.ownedBy = :userId')
+//            ->setParameters($params)
+//            ->orderBy('lp.createdDate', 'DESC')
+//		;
+//
+//        return $this->gateway->paginateQuery($qb, $this->getTopicsPerPageOnSubscriptions(), $page);
+//    }
+//
 }

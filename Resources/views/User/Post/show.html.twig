@@ -33,60 +33,68 @@
 		</div>
 	</header>
 
-	<section>
-	    {%- if topic.isDeleted -%}
-	        <div class="alert alert-error block-alert">
-	            <i class="icon-trash"></i>
-	            {% set topic_deleter = create_profile(topic.getDeletedBy) %}
+	{%- if topic.isDeleted or topic.isClosed or topic.isSticky -%}
+		<section>
+		    {%- if topic.isDeleted -%}
+		        <div class="alert alert-error block-alert">
+		            <i class="icon-trash"></i>
+		            {% set topic_deleter = create_profile(topic.getDeletedBy) %}
 
-	            {{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}
-	            {{ topic_deleter.getProfilePath|raw }}
+		            {{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}
+		            {{ topic_deleter.getProfilePath|raw }}
 
-				&nbsp;&#183;
+					&nbsp;&#183;
 
-	            {{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.deleted_datetime_format) -}}
-	        </div>
-	    {%- endif -%}
+		            {{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.deleted_datetime_format) -}}
+		        </div>
+		    {%- endif -%}
 
-	    {%- if topic.isClosed -%}
-	        <div class="alert alert-error block-alert">
-	            <i class="icon-lock"></i>
-	            {% set topic_closer = create_profile(topic.getClosedBy) %}
+		    {%- if topic.isClosed -%}
+		        <div class="alert alert-error block-alert">
+		            <i class="icon-lock"></i>
+		            {% set topic_closer = create_profile(topic.getClosedBy) %}
 
-	            {{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}
-	            {{ topic_closer.getProfilePath|raw }}
+		            {{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}
+		            {{ topic_closer.getProfilePath|raw }}
 
-				&nbsp;&#183;
+					&nbsp;&#183;
 
-	            {{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.closed_datetime_format) -}}
-	        </div>
-	    {%- endif -%}
+		            {{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.closed_datetime_format) -}}
+		        </div>
+		    {%- endif -%}
 
-	    {%- if topic.isSticky -%}
-	        <div class="alert alert-inverse block-alert">
-		        <i class="icon-bullhorn"></i>
-	            {% set topic_stickier = create_profile(topic.stickiedBy) %}
+		    {%- if topic.isSticky -%}
+		        <div class="alert alert-inverse block-alert">
+			        <i class="icon-bullhorn"></i>
+		            {% set topic_stickier = create_profile(topic.stickiedBy) %}
 
-	            {{- 'ccdn_forum_forum.topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}
-	            {{ topic_stickier.getProfilePath|raw }}
+		            {{- 'ccdn_forum_forum.topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}
+		            {{ topic_stickier.getProfilePath|raw }}
 
-				&nbsp;&#183;
+					&nbsp;&#183;
 
-	            {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.deleted_datetime_format) -}}
-	        </div>
-	    {%- endif -%}
+		            {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.deleted_datetime_format) -}}
+		        </div>
+		    {%- endif -%}
+		</section>
+	{% endif %}
 
-	    <div class="btn-toolbar">
-	        <div class="span12">
-	            {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
+	<section class="row-fluid">
+	    <div class="span12 btn-toolbar">
+	        <div class="span6">
+	            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
 	        </div>
 	    </div>
-
+	</section>
+	
+	<section>
 		{%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig" -%}
+	</section>
 
-	    <div class="btn-toolbar">
-	        <div class="span12">
-	            {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
+	<section class="row-fluid">
+	    <div class="span12 btn-toolbar">
+	        <div class="span6">
+	            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
 	        </div>
 	    </div>
 	</section>

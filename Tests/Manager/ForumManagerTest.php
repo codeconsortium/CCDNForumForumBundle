@@ -22,6 +22,8 @@ class ForumManagerTest extends TestBase
 {
 	public function testSaveNewForum()
 	{
+		$this->purge();
+		
 		$forum = new Forum();
 		$forum->setName('NewForumTest');
 		
@@ -33,6 +35,8 @@ class ForumManagerTest extends TestBase
 	
 	public function testUpdateForum()
 	{
+		$this->purge();
+		
 		$forum = $this->addNewForum('TestUpdateForum');
 		
 		$forum->setName('TestForumUpdated');
@@ -45,6 +49,8 @@ class ForumManagerTest extends TestBase
 	
 	public function testDeleteForum()
 	{
+		$this->purge();
+		
 		$forum = $this->addNewForum('FooBar');
 		
 		$forumId = $forum->getId();
@@ -57,6 +63,8 @@ class ForumManagerTest extends TestBase
 	
 	public function testReassignCategoriesToForum()
 	{
+		$this->purge();
+		
 		$forums = array();
 		$forums[0] = $this->addNewForum('testReassignCategoriesToForum0');
 		$forums[1] = $this->addNewForum('testReassignCategoriesToForum1');

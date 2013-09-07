@@ -32,7 +32,6 @@
 		</div>
 	</header>
 
-
 	{%- if topic.isDeleted or topic.isClosed or topic.isSticky -%}
 		<section class="row-fluid">
 			<div class="span12">
@@ -82,7 +81,7 @@
 	<section class="row-fluid">
 	    <div class="span12 btn-toolbar">
 	        <div class="span6">
-	            {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
+	            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
 	        </div>
 
 			<nav class="span6 btn-right paginate">
@@ -100,7 +99,7 @@
 	<section class="row-fluid">
 	    <div class="span12 btn-toolbar">
 	        <div class="span6">
-	            {%- include 'CCDNForumForumBundle:Toolbar:topic_actions.html.twig' -%}
+	            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
 	        </div>
 
 			<nav class="span6 btn-right paginate">

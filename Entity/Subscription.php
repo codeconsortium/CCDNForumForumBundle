@@ -71,7 +71,7 @@ class Subscription extends AbstractSubscription
      *
      * @return boolean
      */
-    public function getIsRead()
+    public function isRead()
     {
         return $this->isRead;
     }
@@ -94,7 +94,7 @@ class Subscription extends AbstractSubscription
      *
      * @return boolean
      */
-    public function getIsSubscribed()
+    public function isSubscribed()
     {
         return $this->isSubscribed;
     }

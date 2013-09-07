@@ -52,4 +52,4 @@ CCDNForumForumBundle-User-Post:
 
 CCDNForumForumBundle-User-Subscription:
     resource: "@CCDNForumForumBundle/Resources/config/routing/user-subscription.yml"
-    prefix: /{_locale}/forum/subscription
+    prefix: /{_locale}/forum/{forumName}/subscription
