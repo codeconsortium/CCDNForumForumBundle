@@ -165,7 +165,9 @@ class UserSubscriptionController extends BaseController
 
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-        $this->isAuthorised($this->getAuthorizer()->canUnsubscribeFromTopic($topic, $forum));
+		
+        $subscription = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topicId, $this->getUser()->getId());
+        $this->isAuthorised($this->getAuthorizer()->canUnsubscribeFromTopic($topic, $forum, $subscription));
 
         $this->getSubscriptionModel()->unsubscribe($topic, $this->getUser()->getId())->flush();
 

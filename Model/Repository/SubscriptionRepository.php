@@ -37,9 +37,7 @@ class SubscriptionRepository extends BaseRepository implements BaseRepositoryInt
 	/**
 	 * 
 	 * @access public
-	 * @param  int                                         $forumId
 	 * @param  int                                         $userId
-	 * @param  int                                         $page
 	 * @param  bool                                        $canViewDeletedTopics
 	 * @return \Doctrine\Common\Collection\ArrayCollection
 	 */
@@ -78,6 +76,47 @@ class SubscriptionRepository extends BaseRepository implements BaseRepositoryInt
 
 					return $expr;
 				}, array($canViewDeletedTopics, $qb))
+            )
+            ->setParameters($params)
+            ->orderBy('lp.createdDate', 'DESC')
+		;
+
+        return $this->gateway->findSubscriptions($qb, $params);
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param  int                                         $topicId
+	 * @return \Doctrine\Common\Collection\ArrayCollection
+	 */
+	public function findAllSubscriptionsForTopicById($topicId)
+	{
+        if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
+            throw new \Exception('Topic id "' . $topicId . '" is invalid!');
+        }
+
+        $params = array(':topicId' => $topicId);
+
+        $qb = $this->createSelectQuery(array('s', 't', 'b', 'c', 'f', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
+
+        $qb
+			->innerJoin('s.topic', 't')
+			->innerJoin('s.forum', 'f')
+            ->innerJoin('t.firstPost', 'fp')
+                ->leftJoin('fp.createdBy', 'fp_author')
+            ->innerJoin('t.lastPost', 'lp')
+                ->leftJoin('lp.createdBy', 'lp_author')
+            ->leftJoin('t.closedBy', 't_closedBy')
+            ->leftJoin('t.deletedBy', 't_deletedBy')
+            ->leftJoin('t.stickiedBy', 't_stickiedBy')
+            ->leftJoin('t.board', 'b')
+            ->leftJoin('b.category', 'c')
+            ->where(
+	            $expr = $qb->expr()->andX(
+					$qb->expr()->eq('s.topic', ':topicId'),
+	                $qb->expr()->eq('t.isDeleted', 'FALSE')
+				)
             )
             ->setParameters($params)
             ->orderBy('lp.createdDate', 'DESC')
@@ -290,34 +329,4 @@ class SubscriptionRepository extends BaseRepository implements BaseRepositoryInt
 
         return $this->gateway->countSubscriptions($qb, array(':topicId' => $topicId));
     }
-
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  int                    $page
-//     * @return \Pagerfanta\Pagerfanta
-//     */
-//    public function findAllPaginated($page)
-//    {
-//        $qb = $this->createSelectQuery(array('s', 't', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author'));
-//
-//        $params = array(':userId' => $this->getUser()->getId());
-//
-//        $qb
-//            ->innerJoin('s.topic', 't')
-//            ->innerJoin('t.firstPost', 'fp')
-//            ->leftJoin('t.lastPost', 'lp')
-//            ->leftJoin('fp.createdBy', 'fp_author')
-//            ->leftJoin('lp.createdBy', 'lp_author')
-//            ->leftJoin('t.board', 'b')
-//            ->leftJoin('b.category', 'c')
-//            ->where('s.ownedBy = :userId')
-//            ->setParameters($params)
-//            ->orderBy('lp.createdDate', 'DESC')
-//		;
-//
-//        return $this->gateway->paginateQuery($qb, $this->getTopicsPerPageOnSubscriptions(), $page);
-//    }
-//
 }

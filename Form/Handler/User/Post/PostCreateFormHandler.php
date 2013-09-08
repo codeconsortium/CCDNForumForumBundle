@@ -20,7 +20,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
-//use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent;
 
 //use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
 
@@ -246,6 +246,8 @@ class PostCreateFormHandler
             $post->setTopic($this->topic);
             $post->setBody($this->getQuote());
 
+			$this->dispatcher->dispatch(ForumEvents::USER_TOPIC_REPLY_INITIALISE, new UserTopicEvent($this->request, $post->getTopic()));
+
             $this->form = $this->factory->create($this->formPostType, $post);
         }
 
@@ -266,6 +268,18 @@ class PostCreateFormHandler
         $post->setIsLocked(false);
         $post->setIsDeleted(false);
 
+		$this->dispatcher->dispatch(ForumEvents::USER_TOPIC_REPLY_SUCCESS, new UserTopicEvent($this->request, $post->getTopic()));
+
         return $this->postModel->postTopicReply($post)->flush();
     }
+
+	/**
+	 * 
+	 * @access public
+	 * @return bool
+	 */
+	public function didAuthorSubscribe()
+	{
+		return $this->form->get('subscribe')->getData();
+	}
 }

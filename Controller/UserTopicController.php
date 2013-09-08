@@ -164,7 +164,7 @@ class UserTopicController extends UserTopicBaseController
 
 				$topic = $formHandler->getForm()->getData()->getTopic();
 				
-				$this->dispatch(ForumEvents::USER_TOPIC_CREATE_COMPLETE, new UserTopicEvent($this->getRequest(), $topic));
+				$this->dispatch(ForumEvents::USER_TOPIC_CREATE_COMPLETE, new UserTopicEvent($this->getRequest(), $topic, $formHandler->didAuthorSubscribe()));
 
                 $response = $this->redirectResponse(
 					$this->path('ccdn_forum_user_topic_show',
@@ -272,7 +272,7 @@ class UserTopicController extends UserTopicBaseController
                 // Page of the last post.
                 //$page = $this->getTopicModel()->getPageForPostOnTopic($topic, $topic->getLastPost());
 
-				$this->dispatch(ForumEvents::USER_TOPIC_REPLY_COMPLETE, new UserTopicEvent($this->getRequest(), $topic));
+				$this->dispatch(ForumEvents::USER_TOPIC_REPLY_COMPLETE, new UserTopicEvent($this->getRequest(), $topic, $formHandler->didAuthorSubscribe()));
 
                 $response = $this->redirectResponse(
 					$this->path('ccdn_forum_user_topic_show',

@@ -5,7 +5,9 @@ parameters:
 
     ccdn_forum_forum.component.security.authorizer.class: CCDNForum\ForumBundle\Component\Security\Authorizer
 
-    ccdn_forum_admin.component.event.flash_notices.class: CCDNForum\ForumBundle\Component\Dispatcher\Listener\FlashListener
+    ccdn_forum_forum.component.event_listener.flash.class:      CCDNForum\ForumBundle\Component\Dispatcher\Listener\FlashListener
+    ccdn_forum_forum.component.event_listener.subscriber.class: CCDNForum\ForumBundle\Component\Dispatcher\Listener\SubscriberListener
+
     ccdn_forum_forum.component.crumb_factory.class:          CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbFactory
     ccdn_forum_forum.component.crumb_builder.class:          CCDNForum\ForumBundle\Component\Crumbs\CrumbBuilder
 
@@ -38,9 +40,17 @@ services:
     #
     # Event Subscribers.
     #
-    ccdn_forum_admin.component.event.flash_notices:
-        class: %ccdn_forum_admin.component.event.flash_notices.class%
+    ccdn_forum_forum.component.event_listener.flash:
+        class: %ccdn_forum_forum.component.event_listener.flash.class%
         arguments: [@session]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ccdn_forum_forum.component.event_listener.subscriber:
+        class: %ccdn_forum_forum.component.event_listener.subscriber.class%
+        arguments:
+            - @ccdn_forum_forum.model.subscription
+            - @security.context
         tags:
             - { name: kernel.event_subscriber }
 

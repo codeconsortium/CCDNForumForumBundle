@@ -47,14 +47,23 @@ class UserTopicEvent extends Event
 
 	/**
 	 * 
+	 * @access protected
+	 * @var bool $subscribe
+	 */
+	protected $subscribe;
+
+	/**
+	 * 
 	 * @access public
 	 * @param \Symfony\Component\HttpFoundation\Request $request
 	 * @param \CCDNForum\ForumBundle\Entity\Topic       $topic
+	 * @param bool                                      $subscribe
 	 */
-	public function __construct(Request $request, Topic $topic = null)
+	public function __construct(Request $request, Topic $topic = null, $subscribe = false)
 	{
 		$this->request = $request;
 		$this->topic = $topic;
+		$this->subscribe = $subscribe;
 	}
 
 	/**
@@ -75,5 +84,15 @@ class UserTopicEvent extends Event
 	public function getTopic()
 	{
 		return $this->topic;
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @return bool
+	 */
+	public function authorWantsToSubscribe()
+	{
+		return $this->subscribe;
 	}
 }

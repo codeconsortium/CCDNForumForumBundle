@@ -37,6 +37,24 @@ class SubscriptionRepositoryTest extends TestBase
 		$this->assertCount(3, $subscriptionsFound);
 	}
 
+	public function testFindAllSubscriptionsForTopicById()
+	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		$forum = $this->addNewForum('testFindAllSubscriptionsForUserById');
+		$category = $this->addNewCategory('testFindAllSubscriptionsForUserById', 1, $forum);
+		$board = $this->addNewBoard('testFindAllSubscriptionsForUserById', 'testFindAllSubscriptionsForUserById', 1, $category);
+		$topics = $this->addFixturesForTopics(array($board));
+		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$subscriptions = $this->addFixturesForSubscriptions($forum, $topics, $users['tom'], false);
+		
+		$subscriptionsFound = $this->getSubscriptionModel()->getRepository()->findAllSubscriptionsForTopicById($topics[0]->getId(), true);
+		
+		$this->assertNotNull($subscriptionsFound);
+		$this->assertCount(1, $subscriptionsFound);
+	}
+
 	public function testFindAllSubscriptionsPaginatedForUserById()
 	{
 		$this->purge();

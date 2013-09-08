@@ -383,7 +383,7 @@ class Authorizer
 			return false;
 		}
 		
-		if (! $this->canShowTopic($topic, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
+		if (! $this->canShowTopic($topic, $forum)) {
 			return false;
 		}
 		
@@ -408,7 +408,7 @@ class Authorizer
 			return false;
 		}
 		
-		if (! $this->canShowTopic($topic, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
+		if (! $this->canShowTopic($topic, $forum)) {
 			return false;
 		}
 		
@@ -422,6 +422,8 @@ class Authorizer
 			if (! $subscription->isSubscribed()) {
 				return false;
 			}
+		} else {
+			return false;
 		}
 		
 		return true;

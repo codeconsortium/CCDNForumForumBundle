@@ -62,6 +62,31 @@ class PostCreateFormType extends AbstractType
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
+//			->add('subscribe', 'choice',
+//				array(
+//					'choices' => array(
+//						'confirm' => 'Subscribe to this topic.',
+//					),
+//					'multiple' => true,
+//					'expanded' => true,
+//					'mapped'   => false,
+//					'required' => false,
+//					'attr'     => array(
+//						'checked' => 'checked'
+//					)
+//				)
+//			)
+			->add('subscribe', 'checkbox',
+				array(
+					'mapped'   => false,
+					'required' => false,
+					'label'    => 'Subscribe to this topic.',
+					'translation_domain' => 'CCDNForumForumBundle',
+					'attr'     => array(
+						'checked' => 'checked'
+					)
+				)
+			)
         ;
     }
 

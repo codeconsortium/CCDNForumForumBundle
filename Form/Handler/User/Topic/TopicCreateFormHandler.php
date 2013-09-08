@@ -288,4 +288,14 @@ class TopicCreateFormHandler
 
         return $this->topicModel->saveNewTopic($post)->flush();
     }
+
+	/**
+	 * 
+	 * @access public
+	 * @return bool
+	 */
+	public function didAuthorSubscribe()
+	{
+		return $this->form->get('subscribe')->getData();
+	}
 }

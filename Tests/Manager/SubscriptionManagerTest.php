@@ -118,4 +118,42 @@ class SubscriptionManagerTest extends TestBase
 			}
 		}
 	}
+	
+    public function testMarkTheseAsUnread()
+	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$boards = $this->addFixturesForBoards($categories);
+		$topics = $this->addFixturesForTopics($boards);
+		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		
+		$this->getSubscriptionModel()->getManager()->subscribe($topics[0], $users['tom']);
+		$this->getSubscriptionModel()->getManager()->subscribe($topics[0], $users['dick']);
+		$this->getSubscriptionModel()->getManager()->subscribe($topics[0], $users['harry']);
+
+		$subscriptions = array();
+	    $subscriptions[0] = $this->getSubscriptionModel()->getRepository()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
+	    $subscriptions[1] = $this->getSubscriptionModel()->getRepository()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['dick']->getId());
+	    $subscriptions[2] = $this->getSubscriptionModel()->getRepository()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['harry']->getId());
+		
+		$this->getSubscriptionModel()->getManager()->markTheseAsUnread($subscriptions, $users['dick']);
+	
+		$subscriptionsFound = $this->getSubscriptionModel()->getRepository()->findAllSubscriptionsForTopicById($topics[0]->getId(), true);
+		
+		foreach ($subscriptionsFound as $subscription) {
+			if ($subscription->getTopic()->getId() == $topics[0]->getId()) {
+				$this->assertTrue($subscription->isSubscribed());
+				$this->assertInternalType('integer', $subscription->getId());
+				
+				if ($subscription->getOwnedBy()->getId() == $users['dick']->getId()) {
+					$this->assertTrue($subscription->isRead());
+				} else {
+					$this->assertFalse($subscription->isRead());
+				}
+			}
+		}
+	}
 }

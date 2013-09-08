@@ -40,13 +40,24 @@ class SubscriptionModel extends BaseModel implements BaseModelInterface
 	/**
 	 * 
 	 * @access public
-	 * @param  int                                                      $userId
-	 * @param  bool                                                     $canViewDeletedTopics
-	 * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
+	 * @param  int                                          $userId
+	 * @param  bool                                         $canViewDeletedTopics
+	 * @return \Doctrine\Common\Collections\ArrayCollection
 	 */
 	public function findAllSubscriptionsForUserById($userId, $canViewDeletedTopics = false)
 	{
 		return $this->getRepository()->findAllSubscriptionsForUserById($userId, $canViewDeletedTopics);
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param  int                                          $topicId
+	 * @return \Doctrine\Common\Collections\ArrayCollection
+	 */
+	public function findAllSubscriptionsForTopicById($topicId)
+	{
+		return $this->getRepository()->findAllSubscriptionsForTopicById($topicId);
 	}
 
 	/**
@@ -147,28 +158,15 @@ class SubscriptionModel extends BaseModel implements BaseModelInterface
 		return $this->getManager()->markAsUnread($subscription);
 	}
 
-//    /**
-//     *
-//     * @access public
-//     * @param  int                    $page
-//     * @return \Pagerfanta\Pagerfanta
-//     */
-//    public function findAllPaginated($page)
-//    {
-//        return $this->getRepository()->findAllPaginated($page);
-//    }
-//
-
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  int                                        $topicId
-//     * @param  int                                        $userId  = null
-//     * @return \CCDNForum\ForumBundle\Entity\Subscription
-//     */
-//    public function findSubscriptionForTopicByIdAndUserId($topicId, $userId = null)
-//    {
-//       return $this->getRepository()->findSubscriptionFortopicByIdAndUserId($topicId, $userId);
-//    }
+    /**
+     *
+     * @access public
+     * @param  \Doctrine\Common\Collections\ArrayCollection        $subscriptions
+	 * @param  \Symfony\Component\Security\Core\User\UserInterface $exceptUser
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function markTheseAsUnread($subscriptions, UserInterface $exceptUser)
+	{
+		return $this->getManager()->markTheseAsUnread($subscriptions, $exceptUser);
+	}
 }
