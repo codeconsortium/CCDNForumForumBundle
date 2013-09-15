@@ -525,4 +525,29 @@ class CrumbBuilder extends BaseCrumbBuilder
 			)
 		;
 	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
+	 * @param \CCDNForum\ForumBundle\Entity\Topic                         $topic
+	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+	 */
+	public function addModeratorTopicDelete(Forum $forum, Topic $topic)
+	{
+        return $this->addUserTopicShow($forum, $topic)
+			->add(
+				array(
+					'label' => 'crumbs.moderator.topic.delete',
+				),
+				array(
+					'route' => 'ccdn_forum_moderator_topic_delete',
+					'params' => array(
+						'forumName' => $forum->getName(),
+						'topicId'   => $topic->getId()
+					)
+				)
+			)
+		;
+	}
 }

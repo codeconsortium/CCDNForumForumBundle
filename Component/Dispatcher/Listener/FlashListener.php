@@ -24,6 +24,7 @@ use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent;
 
 /**
  *
@@ -62,20 +63,21 @@ class FlashListener implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-			ForumEvents::ADMIN_FORUM_CREATE_COMPLETE    => 'onForumCreateComplete',
-			ForumEvents::ADMIN_FORUM_EDIT_COMPLETE      => 'onForumEditComplete',
-			ForumEvents::ADMIN_FORUM_DELETE_COMPLETE    => 'onForumDeleteComplete',
-			ForumEvents::ADMIN_CATEGORY_CREATE_COMPLETE => 'onCategoryCreateComplete',
-			ForumEvents::ADMIN_CATEGORY_EDIT_COMPLETE   => 'onCategoryEditComplete',
-			ForumEvents::ADMIN_CATEGORY_DELETE_COMPLETE => 'onCategoryDeleteComplete',
-			ForumEvents::ADMIN_BOARD_CREATE_COMPLETE    => 'onBoardCreateComplete',
-			ForumEvents::ADMIN_BOARD_EDIT_COMPLETE      => 'onBoardEditComplete',
-			ForumEvents::ADMIN_BOARD_DELETE_COMPLETE    => 'onBoardDeleteComplete',
-			ForumEvents::USER_TOPIC_CREATE_COMPLETE     => 'onTopicCreateComplete',
-			ForumEvents::USER_TOPIC_CREATE_FLOODED      => 'onTopicCreateFlooded',
-			ForumEvents::USER_TOPIC_REPLY_COMPLETE      => 'onTopicReplyComplete',
-			ForumEvents::USER_TOPIC_REPLY_FLOODED       => 'onTopicReplyFlooded',
-			ForumEvents::USER_POST_EDIT_COMPLETE        => 'onPostEditComplete',
+			ForumEvents::ADMIN_FORUM_CREATE_COMPLETE          => 'onForumCreateComplete',
+			ForumEvents::ADMIN_FORUM_EDIT_COMPLETE            => 'onForumEditComplete',
+			ForumEvents::ADMIN_FORUM_DELETE_COMPLETE          => 'onForumDeleteComplete',
+			ForumEvents::ADMIN_CATEGORY_CREATE_COMPLETE       => 'onCategoryCreateComplete',
+			ForumEvents::ADMIN_CATEGORY_EDIT_COMPLETE         => 'onCategoryEditComplete',
+			ForumEvents::ADMIN_CATEGORY_DELETE_COMPLETE       => 'onCategoryDeleteComplete',
+			ForumEvents::ADMIN_BOARD_CREATE_COMPLETE          => 'onBoardCreateComplete',
+			ForumEvents::ADMIN_BOARD_EDIT_COMPLETE            => 'onBoardEditComplete',
+			ForumEvents::ADMIN_BOARD_DELETE_COMPLETE          => 'onBoardDeleteComplete',
+			ForumEvents::USER_TOPIC_CREATE_COMPLETE           => 'onTopicCreateComplete',
+			ForumEvents::USER_TOPIC_CREATE_FLOODED            => 'onTopicCreateFlooded',
+			ForumEvents::USER_TOPIC_REPLY_COMPLETE            => 'onTopicReplyComplete',
+			ForumEvents::USER_TOPIC_REPLY_FLOODED             => 'onTopicReplyFlooded',
+			ForumEvents::USER_POST_EDIT_COMPLETE              => 'onPostEditComplete',
+			ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_COMPLETE => 'onTopicDeleteComplete',
 		);
 	}
 
@@ -264,6 +266,21 @@ class FlashListener implements EventSubscriberInterface
 		if ($event->getPost()) {
 			if ($event->getPost()->getId()) {
 				$this->session->setFlash('success', 'Successfully edited the post "' . $event->getPost()->getId() .'"');
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
+	 */
+	public function onTopicDeleteComplete(ModeratorTopicEvent $event)
+	{
+		if ($event->getTopic()) {
+			if ($event->getTopic()->getId()) {
+				$this->session->setFlash('success', 'Successfully deleted the topic "' . $event->getTopic()->getId() . '"');
+	//        $this->setFlash('warning', $this->trans('flash.topic.delete.success', array('%topic_title%' => $topic->getTitle())));
 			}
 		}
 	}

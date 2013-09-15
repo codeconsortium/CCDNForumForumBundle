@@ -82,7 +82,7 @@
 						</li>
 					{%- endif -%}
 
-					{%- if canDeleteTopic(topic, forum) -%}
+					{%- if canRestoreTopic(topic, forum) -%}
 						<li>
 							<a href="{{- path('ccdn_forum_moderator_topic_restore', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
 								<i class="icon-trash"></i>
@@ -91,7 +91,7 @@
 						</li>
 					{%- endif -%}
 					
-					{%- if canRestoreTopic(topic, forum) -%}
+					{%- if canDeleteTopic(topic, forum) -%}
 						<li>
 							<a href="{{- path('ccdn_forum_moderator_topic_delete', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
 								<i class="icon-trash"></i>

@@ -131,7 +131,9 @@ class Authorizer
 		}
 		
 		if ($topic->isDeleted()) {
-			return false;
+			if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+				return false;
+			}
 		}
 		
 		return true;

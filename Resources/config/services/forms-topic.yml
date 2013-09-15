@@ -1,6 +1,8 @@
 parameters:
 
     # Service Parameters defined in app/config.
+    ccdn_forum_forum.form.handler.topic_delete.class: CCDNForum\ForumBundle\Form\Handler\Moderator\Topic\TopicDeleteFormHandler
+    ccdn_forum_forum.form.type.topic_delete.class:    CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicDeleteFormType
 
 services:
 
@@ -50,3 +52,16 @@ services:
             - @ccdn_forum_forum.form.type.change_topics_board
             - @ccdn_forum_forum.model.topic
             - @ccdn_forum_forum.model.board
+
+    ccdn_forum_forum.form.type.topic_delete:
+        class: %ccdn_forum_forum.form.type.topic_delete.class%
+        arguments:
+            - %ccdn_forum_forum.entity.topic.class%
+
+    ccdn_forum_forum.form.handler.topic_delete:
+        class: %ccdn_forum_forum.form.handler.topic_delete.class%
+        arguments:
+            - @event_dispatcher
+            - @form.factory
+            - @ccdn_forum_forum.form.type.topic_delete
+            - @ccdn_forum_forum.model.topic

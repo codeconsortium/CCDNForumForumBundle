@@ -583,4 +583,40 @@ final class ForumEvents
 	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostResponseEvent instance.
 	 */
 	const USER_POST_SOFT_DELETE_RESPONSE = 'ccdn_forum.user.post.soft_delete.response';
+
+	/**
+	 * 
+	 * The MODERATOR_TOPIC_SOFT_DELETE_INITIALISE event occurs when the topic soft-delete process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the topic entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+	 */
+	const MODERATOR_TOPIC_SOFT_DELETE_INITIALISE = 'ccdn_forum.moderator.topic.soft_delete.initialise';
+
+	/**
+	 * 
+	 * The MODERATOR_TOPIC_SOFT_DELETE_SUCCESS event occurs when the topic soft-delete process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the topic entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+	 */
+	const MODERATOR_TOPIC_SOFT_DELETE_SUCCESS = 'ccdn_forum.moderator.topic.soft_delete.success';
+
+	/**
+	 * 
+	 * The MODERATOR_TOPIC_SOFT_DELETE_COMPLETE event occurs when the topic soft-delete process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the topic entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+	 */
+	const MODERATOR_TOPIC_SOFT_DELETE_COMPLETE = 'ccdn_forum.moderator.topic.soft_delete.complete';
+
+	/**
+	 * 
+	 * The MODERATOR_TOPIC_SOFT_DELETE_RESPONSE event occurs when the topic soft-delete process finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicResponseEvent instance.
+	 */
+	const MODERATOR_TOPIC_SOFT_DELETE_RESPONSE = 'ccdn_forum.moderator.topic.soft_delete.response';
 }

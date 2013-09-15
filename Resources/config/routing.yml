@@ -26,11 +26,11 @@ CCDNForumForumBundle-Admin-Post:
 
 CCDNForumForumBundle-Moderator-Topic:
     resource: "@CCDNForumForumBundle/Resources/config/routing/moderator-topic.yml"
-    prefix: /{_locale}/forum/moderator/manage-topics
+    prefix: /{_locale}/forum/{forumName}/moderator/manage-topics
 
 CCDNForumForumBundle-Moderator-Post:
     resource: "@CCDNForumForumBundle/Resources/config/routing/moderator-post.yml"
-    prefix: /{_locale}/forum/moderator/manage-posts
+    prefix: /{_locale}/forum/{forumName}/moderator/manage-posts
 
 
 

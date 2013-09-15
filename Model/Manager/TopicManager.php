@@ -94,9 +94,55 @@ class TopicManager extends BaseManager implements BaseManagerInterface
         return $this;
     }
 
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function softDelete(Topic $topic, UserInterface $user)
+    {
+        // Don't overwite previous users accountability.
+        if (! $topic->getDeletedBy() && ! $topic->getDeletedDate()) {
+            $topic->setIsDeleted(true);
+            $topic->setDeletedBy($user);
+            $topic->setDeletedDate(new \DateTime());
 
+            // Close the topic as a precaution.
+            $topic->setIsClosed(true);
+            $topic->setClosedBy($user);
+            $topic->setClosedDate(new \DateTime());
 
+            // update the record before doing record counts
+            $this->persist($topic)->flush();
 
+            // Update affected Topic stats.
+        //    $this->updateStats($topic);
+        }
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function restore(Topic $topic)
+    {
+        $topic->setIsDeleted(false);
+        $topic->setDeletedBy(null);
+        $topic->setDeletedDate(null);
+
+        $this->persist($topic)->flush();
+
+        // Update affected Topic stats.
+//        $this->updateStats($topic);
+
+        return $this;
+    }
 
 
 
@@ -307,25 +353,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 //        return $this;
 //    }
 //
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function restore(Topic $topic)
-//    {
-//        $topic->setIsDeleted(false);
-//        $topic->setDeletedBy(null);
-//        $topic->setDeletedDate(null);
-//
-//        $this->persist($topic)->flush();
-//
-//        // Update affected Topic stats.
-//        $this->updateStats($topic);
-//
-//        return $this;
-//    }
+
 //
 //    /**
 //     *
@@ -363,35 +391,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 //        return $this;
 //    }
 //
-//    /**
-//     *
-//     * @access public
-//     * @param \CCDNForum\ForumBundle\Entity\Topic $topic
-//     * @param $user
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function softDelete(Topic $topic, UserInterface $user)
-//    {
-//        // Don't overwite previous users accountability.
-//        if (! $topic->getDeletedBy() && ! $topic->getDeletedDate()) {
-//            $topic->setIsDeleted(true);
-//            $topic->setDeletedBy($user);
-//            $topic->setDeletedDate(new \DateTime());
-//
-//            // Close the topic as a precaution.
-//            $topic->setIsClosed(true);
-//            $topic->setClosedBy($user);
-//            $topic->setClosedDate(new \DateTime());
-//
-//            // update the record before doing record counts
-//            $this->persist($topic)->flush();
-//
-//            // Update affected Topic stats.
-//            $this->updateStats($topic);
-//        }
-//
-//        return $this;
-//    }
+
 //
 //    /**
 //     *

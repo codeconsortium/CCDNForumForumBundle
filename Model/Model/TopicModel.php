@@ -110,6 +110,29 @@ class TopicModel extends BaseModel implements BaseModelInterface
         return $this->getManager()->incrementViewCounter($topic);
     }
 
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function restore(Topic $topic)
+    {
+        return $this->getManager()->restore($topic);
+    }
+
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Entity\Topic $topic
+     * @param $user
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function softDelete(Topic $topic, UserInterface $user)
+    {
+        return $this->getManager()->softDelete($topic, $user);
+    }
+
 
 
 
@@ -306,18 +329,7 @@ class TopicModel extends BaseModel implements BaseModelInterface
 //    {
 //        return $this->getManager()->bulkReopen($topics);
 //    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function restore(Topic $topic)
-//    {
-//        return $this->getManager()->restore($topic);
-//    }
-//
+
 //    /**
 //     *
 //     * @access public
@@ -329,17 +341,7 @@ class TopicModel extends BaseModel implements BaseModelInterface
 //        return $this->getManager()->bulkRestore($topics);
 //    }
 //
-//    /**
-//     *
-//     * @access public
-//     * @param \CCDNForum\ForumBundle\Entity\Topic $topic
-//     * @param $user
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function softDelete(Topic $topic, UserInterface $user)
-//    {
-//        return $this->getManager()->softDelete($topic, $user);
-//    }
+
 //
 //    /**
 //     *
