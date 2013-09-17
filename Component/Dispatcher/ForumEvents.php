@@ -619,4 +619,13 @@ final class ForumEvents
 	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicResponseEvent instance.
 	 */
 	const MODERATOR_TOPIC_SOFT_DELETE_RESPONSE = 'ccdn_forum.moderator.topic.soft_delete.response';
+
+	/**
+	 * 
+	 * The MODERATOR_POST_RESTORE_COMPLETE event occurs when the post restore process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the topic entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent instance.
+	 */
+	const MODERATOR_POST_RESTORE_COMPLETE = 'ccdn_forum.moderator.post.restore.complete';
 }

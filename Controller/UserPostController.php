@@ -187,7 +187,7 @@ class UserPostController extends UserPostBaseController
 		
         $this->isAuthorised('ROLE_USER');
 
-        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
         $this->isFound($post);
 
 		$this->isAuthorised($this->getAuthorizer()->canDeletePost($post, $forum));
@@ -225,7 +225,7 @@ class UserPostController extends UserPostBaseController
 		
         $this->isAuthorised('ROLE_USER');
 
-        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId);
+        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
         $this->isFound($post);
 
 		$this->isAuthorised($this->getAuthorizer()->canDeletePost($post, $forum));

@@ -197,21 +197,15 @@ class ForumDeleteFormHandler
      */
     protected function onSuccess(Forum $forum)
     {
-		$confirmA = $this->form->get('confirm_delete')->getData();
-		$confirmB = $this->form->get('confirm_subordinates')->getData();
-		$confirm = array_merge($confirmA, $confirmB);
-		
-		if (in_array('delete_forum', $confirm)) {
-			$this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_DELETE_SUCCESS, new AdminForumEvent($this->request, $forum));
+		$this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_DELETE_SUCCESS, new AdminForumEvent($this->request, $forum));
 
-			if (! in_array('delete_subordinates', $confirm)) {
-				$categories = new ArrayCollection($forum->getCategories()->toArray());
-				
-				$this->forumModel->reassignCategoriesToForum($categories, null)->flush();
-			}
-
-	        $this->forumModel->deleteForum($forum)->flush();
+		if (! $this->form->get('confirm_subordinates')->getData()) {
+			$categories = new ArrayCollection($forum->getCategories()->toArray());
+			
+			$this->forumModel->reassignCategoriesToForum($categories, null)->flush();
 		}
+
+        $this->forumModel->deleteForum($forum)->flush();
 		
 		return $this->forumModel;
     }

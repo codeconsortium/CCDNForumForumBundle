@@ -25,6 +25,7 @@ use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent;
 
 /**
  *
@@ -77,7 +78,9 @@ class FlashListener implements EventSubscriberInterface
 			ForumEvents::USER_TOPIC_REPLY_COMPLETE            => 'onTopicReplyComplete',
 			ForumEvents::USER_TOPIC_REPLY_FLOODED             => 'onTopicReplyFlooded',
 			ForumEvents::USER_POST_EDIT_COMPLETE              => 'onPostEditComplete',
+			ForumEvents::USER_POST_SOFT_DELETE_COMPLETE       => 'onPostSoftDeleteComplete',
 			ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_COMPLETE => 'onTopicDeleteComplete',
+			ForumEvents::MODERATOR_POST_RESTORE_COMPLETE      => 'onPostRestoreComplete',
 		);
 	}
 
@@ -273,7 +276,21 @@ class FlashListener implements EventSubscriberInterface
 	/**
 	 * 
 	 * @access public
-	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent $event
+	 */
+	public function onPostSoftDeleteComplete(UserPostEvent $event)
+	{
+		if ($event->getPost()) {
+			if ($event->getPost()->getId()) {
+				$this->session->setFlash('success', 'Successfully deleted the post "' . $event->getPost()->getId() .'"');
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent $event
 	 */
 	public function onTopicDeleteComplete(ModeratorTopicEvent $event)
 	{
@@ -281,6 +298,20 @@ class FlashListener implements EventSubscriberInterface
 			if ($event->getTopic()->getId()) {
 				$this->session->setFlash('success', 'Successfully deleted the topic "' . $event->getTopic()->getId() . '"');
 	//        $this->setFlash('warning', $this->trans('flash.topic.delete.success', array('%topic_title%' => $topic->getTitle())));
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent $event
+	 */
+	public function onPostRestoreComplete(ModeratorPostEvent $event)
+	{
+		if ($event->getPost()) {
+			if ($event->getPost()->getId()) {
+				$this->session->setFlash('success', 'Successfully restored the post "' . $event->getPost()->getId() .'"');
 			}
 		}
 	}

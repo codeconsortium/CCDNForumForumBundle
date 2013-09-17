@@ -99,4 +99,44 @@ class PostManagerTest extends TestBase
 		$this->assertTrue(is_numeric($post->getId()));
 		$this->assertSame('edited post', $post->getBody());
     }
+	
+	public function testSoftDeletePost()
+	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$boards = $this->addFixturesForBoards($categories);
+		$topics = $this->addFixturesForTopics($boards);
+		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		
+		$this->getPostModel()->getManager()->softDelete($posts[0], $users['tom']);
+	
+		$this->em->refresh($posts[0]);
+		
+		$this->assertTrue($posts[0]->isDeleted());
+	}
+
+	public function testRestorePost()
+	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$boards = $this->addFixturesForBoards($categories);
+		$topics = $this->addFixturesForTopics($boards);
+		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		
+		$this->getPostModel()->getManager()->softDelete($posts[0], $users['tom']);
+		
+		$this->em->refresh($posts[0]);
+		
+		$this->getPostModel()->getManager()->restore($posts[0]);
+		
+		$this->em->refresh($posts[0]);
+		
+		$this->assertFalse($posts[0]->isDeleted());
+	}
 }

@@ -83,7 +83,28 @@ class PostModel extends BaseModel implements BaseModelInterface
         return $this->getManager()->updatePost($post);
     }
 
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function restore(Post $post)
+    {
+        return $this->getManager()->restore($post);
+    }
 
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function softDelete(Post $post, UserInterface $user)
+    {
+        return $this->getManager()->softDelete($post, $user);
+    }
 
 
 
@@ -224,28 +245,6 @@ class PostModel extends BaseModel implements BaseModelInterface
 //        return $this->getManager()->bulkUnlock($posts);
 //    }
 //
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function restore(Post $post)
-//    {
-//        return $this->getManager()->restore($post);
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-//     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function softDelete(Post $post, UserInterface $user)
-//    {
-//        return $this->getManager()->softDelete($post, $user);
-//    }
 //
 //    /**
 //     *

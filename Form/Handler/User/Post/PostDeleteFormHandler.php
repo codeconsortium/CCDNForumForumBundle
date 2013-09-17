@@ -217,17 +217,13 @@ class PostDeleteFormHandler
      */
     protected function onSuccess(Post $post)
     {
-		$confirm = $this->form->get('confirm_delete')->getData();
+//        $post->setDeletedDate(new \DateTime());
+//        $post->setDeletedBy($this->user);
+//		$post->setIsDeleted(true);
 
-		if (in_array('delete_post', $confirm)) {
-	        $post->setDeletedDate(new \DateTime());
-	        $post->setDeletedBy($this->user);
-			$post->setIsDeleted(true);
+        $this->postModel->softDelete($post, $this->user);
 
-	        $this->postModel->updatePost($post)->flush();
-
-			$this->dispatcher->dispatch(ForumEvents::USER_POST_SOFT_DELETE_SUCCESS, new UserPostEvent($this->request, $this->post));
-		}
+		$this->dispatcher->dispatch(ForumEvents::USER_POST_SOFT_DELETE_SUCCESS, new UserPostEvent($this->request, $this->post));
 		
         return $this->postModel;
     }

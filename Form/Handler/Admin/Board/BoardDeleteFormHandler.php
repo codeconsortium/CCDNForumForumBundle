@@ -197,21 +197,15 @@ class BoardDeleteFormHandler
      */
     protected function onSuccess(Board $board)
     {
-		$confirmA = $this->form->get('confirm_delete')->getData();
-		$confirmB = $this->form->get('confirm_subordinates')->getData();
-		$confirm = array_merge($confirmA, $confirmB);
-		
-		if (in_array('delete_board', $confirm)) {
-			$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_DELETE_SUCCESS, new AdminBoardEvent($this->request, $board));
+		$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_DELETE_SUCCESS, new AdminBoardEvent($this->request, $board));
 
-			if (! in_array('delete_subordinates', $confirm)) {
-				$topics = new ArrayCollection($board->getTopics()->toArray());
-				
-				$this->boardModel->reassignTopicsToBoard($topics, null)->flush();
-			}
-
-	        $this->boardModel->deleteBoard($board)->flush();
+		if (! $this->form->get('confirm_subordinates')->getData()) {
+			$topics = new ArrayCollection($board->getTopics()->toArray());
+			
+			$this->boardModel->reassignTopicsToBoard($topics, null)->flush();
 		}
+
+        $this->boardModel->deleteBoard($board)->flush();
 		
 		return $this->boardModel;
     }

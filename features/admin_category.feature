@@ -160,7 +160,7 @@ Feature: Category Management
 		  And I follow "delete_category[test_category_fn_c3]"
 		  And I should see "Delete Category"
 		  And I should see "test_category_fn_c3"
-		  And I check "Forum_CategoryDelete[confirm_delete][]"
+		  And I check "Forum_CategoryDelete[confirm_delete]"
           And I press "submit[post]"
 		  And I should not see "Delete Category"
           And I should not see "test_category_fn_c3" for the query "table#admin-categories-list tr td:nth-child(2)"

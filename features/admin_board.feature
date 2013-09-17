@@ -256,7 +256,7 @@ Feature: Board Management
 		  And I follow "delete_board[test_board_f1_c3_b1]"
 		  And I should see "Delete Board"
 		  And I should see "test_board_f1_c3_b1"
-		  And I check "Forum_BoardDelete[confirm_delete][]"
+		  And I check "Forum_BoardDelete[confirm_delete]"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-boards/"
 		  And I should see "test_forum_f1"

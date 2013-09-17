@@ -13,8 +13,13 @@
 
 namespace CCDNForum\ForumBundle\Form\Type\Admin\Category;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Validator\Constraints\True;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  *
@@ -53,27 +58,42 @@ class CategoryDeleteFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+		$trueValidator = function(FormEvent $event) {
+			$form = $event->getForm();
+			
+			$confirm = $form->get('confirm_delete')->getData();
+
+			if (empty($confirm) || $confirm == false) {
+				$form['confirm_delete']->addError(new FormError("You must confirm this action."));
+            }
+		};
+		
         $builder
-			->add('confirm_delete', 'choice',
+			->add('confirm_delete', 'checkbox',
 				array(
-					'choices' => array(
-						'delete_category' => 'Yes, I want to delete this category.',
+					'mapped'             => false,
+					'required'           => true,
+					'label'              => 'I confirm I want to delete this Category.',
+					'translation_domain' => 'CCDNForumForumBundle',
+                    'constraints'        => array(
+                        new True(),
+						new NotBlank()
 					),
-					'multiple' => true,
-					'expanded' => true,
-					'mapped' => false
 				)
 			)
-			->add('confirm_subordinates', 'choice',
+			->add('confirm_subordinates', 'checkbox',
 				array(
-					'choices' => array(
-						'delete_subordinates' => 'Also delete boards and topics.'
+					'mapped'             => false,
+					'required'           => true,
+					'label'              => 'Also delete boards and topics.',
+					'translation_domain' => 'CCDNForumForumBundle',
+                    'constraints'        => array(
+                        new True(),
+						new NotBlank()
 					),
-					'multiple' => true,
-					'expanded' => true,
-					'mapped' => false
 				)
 			)
+			->addEventListener(FormEvents::POST_BIND, $trueValidator)
         ;
     }
 

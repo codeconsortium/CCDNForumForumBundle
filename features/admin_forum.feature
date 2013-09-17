@@ -60,7 +60,7 @@ Feature: Forum Management
 		  And I follow "delete_forum[test_forum_f3]"
 		  And I should see "Delete Forum"
 		  And I should see "test_forum_f3"
-		  And I check "Forum_ForumDelete[confirm_delete][]"
+		  And I check "Forum_ForumDelete[confirm_delete]"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-forums/"
           And I should not see "test_forum_f3" for the query "table#admin-forums-list tr td:nth-child(2)"

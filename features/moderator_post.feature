@@ -1,14 +1,15 @@
-Feature: User Post Traversal
-	In order to view, edit and delete posts.
-	As an User
-	I want to be able to view posts and edit or delete them.
+Feature: Moderator Post Traversal
+	In order to manage posts.
+	As a Moderator
+	I want to be able to delete/restore, lock/unlock posts etc.
 
     Background:
-        Given I am logged in as "user"
+        Given I am logged in as "moderator"
         And there are following users defined:
-          | email          | password | enabled  | role                |
-          | admin@foo.com  | root     | 1        | ROLE_SUPER_ADMIN    |
-          | user@foo.com   | root     | 1        | ROLE_USER           |
+          | email             | password | enabled  | role             |
+          | admin@foo.com     | root     | 1        | ROLE_SUPER_ADMIN |
+          | user@foo.com      | root     | 1        | ROLE_USER        |
+		  | moderator@foo.com | root     | 1        | ROLE_MODERATOR   |
         And there are following forums defined:
           | name                      | order    |
 		  | test_forum_f1             | 1        |
@@ -78,61 +79,6 @@ Feature: User Post Traversal
           | test_topic_f1_c1_b2_t5    | test_post_f1_c1_b2_t5_p1       | test_board_f1_c1_b2   | user@foo.com  |
 		  | test_topic_f1_c1_b2_t6    | test_post_f1_c1_b2_t6_p1       | test_board_f1_c1_b2   | user@foo.com  |
 
-	Scenario: Show existing post
-        Given I am on "/en/forum/test_forum_f1"
-		  And I follow "test_category_f1_c1"
-		  And I should see "test_category_f1_c1"
-          And I should see "test_board_f1_c1_b1"
-		  And I follow "test_board_f1_c1_b1"
-          And I should see "test_board_f1_c1_b1"
-		  And I should see "test_topic_f1_c1_b1_t1"
-		  And I follow "test_topic_f1_c1_b1_t1"
-		  And I should see "test_topic_f1_c1_b1_t1"
-		  And I should see "test_post_f1_c1_b1_t1_p1"
-		  And I follow "post_show[test_post_f1_c1_b1_t1_p1]"
-		  And I should see "test_post_f1_c1_b1_t1_p1"
-
-	Scenario: Edit 1st post with topic title
-        Given I am on "/en/forum/test_forum_f1"
-		  And I follow "test_category_f1_c1"
-		  And I should see "test_category_f1_c1"
-          And I should see "test_board_f1_c1_b1"
-		  And I follow "test_board_f1_c1_b1"
-          And I should see "test_board_f1_c1_b1"
-		  And I should see "test_topic_f1_c1_b1_t1"
-		  And I follow "test_topic_f1_c1_b1_t1"
-		  And I should see "test_topic_f1_c1_b1_t1"
-		  And I should see "test_post_f1_c1_b1_t1_p1"
-		  And I follow "post_edit[test_post_f1_c1_b1_t1_p1]"
-		  And I should see "test_post_f1_c1_b1_t1_p1"
-          And I fill in "Post[Topic][title]" with "Edited Test Topic"
-          And I fill in "Post[body]" with "the_elephant_in_the_room"
-          And I press "submit[post]"
-		  And I should see "the_elephant_in_the_room"
-		  And I should see "Edited Test Topic"
-
-	Scenario: Edit (n)th post
-        Given I am on "/en/forum/test_forum_f1"
-		  And I follow "test_category_f1_c1"
-		  And I should see "test_category_f1_c1"
-          And I should see "test_board_f1_c1_b1"
-		  And I follow "test_board_f1_c1_b1"
-          And I should see "test_board_f1_c1_b1"
-		  And I should see "test_topic_f1_c1_b1_t1"
-		  And I follow "test_topic_f1_c1_b1_t1"
-		  And I should see "test_topic_f1_c1_b1_t1"
-		  And I should see "test_post_f1_c1_b1_t1_p1"
-          And I follow "Reply"
-		  And I should see "Reply to Topic"
-          And I fill in "Post[body]" with "test_post_f1_c1_b1_t1_p2"
-          And I press "submit[post]"
-		  And I should see "test_post_f1_c1_b1_t1_p2"
-		  And I follow "post_edit[test_post_f1_c1_b1_t1_p2]"
-		  And I should see "test_post_f1_c1_b1_t1_p2"
-          And I fill in "Post[body]" with "edited test post"
-          And I press "submit[post]"
-		  And I should see "edited test post"
-
 	Scenario: Delete (n)th post
         Given I am on "/en/forum/test_forum_f1"
 		  And I follow "test_category_f1_c1"
@@ -152,4 +98,28 @@ Feature: User Post Traversal
 		  And I follow "post_delete[test_post_f1_c1_b1_t1_p2]"
 		  And I check "Post[confirm_delete]"
           And I press "submit[post]"
-		  And I should not see "test_post_f1_c1_b1_t1_p2"
+		  And I should see "deleted by"
+
+	Scenario: Restore deleted post
+        Given I am on "/en/forum/test_forum_f1"
+		  And I follow "test_category_f1_c1"
+		  And I should see "test_category_f1_c1"
+          And I should see "test_board_f1_c1_b1"
+		  And I follow "test_board_f1_c1_b1"
+          And I should see "test_board_f1_c1_b1"
+		  And I should see "test_topic_f1_c1_b1_t1"
+		  And I follow "test_topic_f1_c1_b1_t1"
+		  And I should see "test_topic_f1_c1_b1_t1"
+		  And I should see "test_post_f1_c1_b1_t1_p1"
+          And I follow "Reply"
+		  And I should see "Reply to Topic"
+          And I fill in "Post[body]" with "test_post_f1_c1_b1_t1_p2"
+          And I press "submit[post]"
+		  And I should see "test_post_f1_c1_b1_t1_p2"
+		  And I follow "post_delete[test_post_f1_c1_b1_t1_p2]"
+		  And I check "Post[confirm_delete]"
+          And I press "submit[post]"
+		  And I should see "deleted by"
+          And I should see "restore"
+		  And I follow "Restore"
+		  And I should not see "deleted by"

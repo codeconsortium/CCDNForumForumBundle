@@ -13,10 +13,13 @@
 
 namespace CCDNForum\ForumBundle\Form\Type\User\Post;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-
-use CCDNForum\ForumBundle\Entity\Post;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Validator\Constraints\True;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  *
@@ -55,17 +58,30 @@ class PostDeleteFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+		$trueValidator = function(FormEvent $event) {
+			$form = $event->getForm();
+
+			$confirm = $form->get('confirm_delete')->getData();
+
+			if (empty($confirm) || $confirm == false) {
+				$form['confirm_delete']->addError(new FormError("You must confirm this action."));
+            }
+		};
+
         $builder
-			->add('confirm_delete', 'choice',
+			->add('confirm_delete', 'checkbox',
 				array(
-					'choices' => array(
-						'delete_post' => 'Yes, I want to delete this post.',
+					'mapped'             => false,
+					'required'           => true,
+					'label'              => 'I confirm I want to delete this Post.',
+					'translation_domain' => 'CCDNForumForumBundle',
+                    'constraints'        => array(
+                        new True(),
+						new NotBlank()
 					),
-					'multiple' => true,
-					'expanded' => true,
-					'mapped' => false
 				)
 			)
+			->addEventListener(FormEvents::POST_BIND, $trueValidator)
         ;
     }
 
