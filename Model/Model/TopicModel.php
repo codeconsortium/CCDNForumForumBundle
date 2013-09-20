@@ -105,6 +105,17 @@ class TopicModel extends BaseModel implements BaseModelInterface
      * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
+    public function updateTopic(Topic $topic)
+    {
+        return $this->getManager()->updateTopic($topic);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
     public function incrementViewCounter(Topic $topic)
     {
         return $this->getManager()->incrementViewCounter($topic);
@@ -270,16 +281,6 @@ class TopicModel extends BaseModel implements BaseModelInterface
 //
 //
 //
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function updateTopic(Topic $topic)
-//    {
-//        return $this->getManager()->updateTopic($topic);
-//    }
 //
 //    /**
 //     *

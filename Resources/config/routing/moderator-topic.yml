@@ -27,6 +27,10 @@ ccdn_forum_moderator_topic_restore:
     pattern: /{topicId}/restore
     defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:restore, _locale: en, forumName: default }
 
-ccdn_forum_user_topic_change_board:
+ccdn_forum_moderator_topic_change_board:
     pattern: /{topicId}/change-board
-    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:move, _locale: en, forumName: default }
+    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:changeBoard, _locale: en, forumName: default }
+
+ccdn_forum_moderator_topic_change_board_process:
+    pattern: /{topicId}/change-board/process
+    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:changeBoardProcess, _locale: en, forumName: default }

@@ -11,7 +11,7 @@
 
 	<section>
 		{%- form_theme form ccdn_forum_forum.topic.change_board.form_theme -%}
-		<form action="{{- path('ccdn_forum_user_topic_change_board', { 'topicId': topic.getId} ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+		<form action="{{- path('ccdn_forum_moderator_topic_change_board_process', {'forumName': forum.name, 'topicId': topic.getId} ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 			<fieldset>
 
 				<div class="control-group form-title">
@@ -19,6 +19,8 @@
 						<h3>{{- 'title.topic.change_board' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}</h3>
 					</div>
 				</div>
+
+				{{- form_errors(form) -}}
 
 				<div class="control-group">
 					<label class="control-label">
@@ -31,12 +33,10 @@
 					</div>
 				</div>
 
-				{{- form_errors(form) -}}
-
 				{{- form_widget(form) -}}
 
 				<div class="form-actions">
-					<input type="submit" class="btn btn-danger" value="{{- 'form.button.topic.move' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]">
+					<input type="submit" class="btn btn-danger" value="{{- 'form.button.topic.move' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]" id="submit[post]">
 
 					<a class="btn" href="{{- path('ccdn_forum_user_topic_show', {'topicId': topic.id}) -}}">
 						{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}

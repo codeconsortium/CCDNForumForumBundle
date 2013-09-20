@@ -69,7 +69,7 @@ class AuthorizerExtension extends \Twig_Extension
 			'canRestoreTopic'         => new \Twig_Function_Method($this, 'canRestoreTopic'),
 			'canCloseTopic'           => new \Twig_Function_Method($this, 'canCloseTopic'),
 			'canReopenTopic'          => new \Twig_Function_Method($this, 'canReopenTopic'),
-			'canMoveTopic'            => new \Twig_Function_Method($this, 'canMoveTopic'),
+			'canTopicChangeBoard'     => new \Twig_Function_Method($this, 'canTopicChangeBoard'),
 			'canStickyTopic'          => new \Twig_Function_Method($this, 'canStickyTopic'),
 			'canUnstickyTopic'        => new \Twig_Function_Method($this, 'canUnstickyTopic'),
 			'canShowPost'             => new \Twig_Function_Method($this, 'canShowPost'),
@@ -138,9 +138,9 @@ class AuthorizerExtension extends \Twig_Extension
 		return $this->authorizer->canReopenTopic($topic, $forum);
 	}
 
-	public function canMoveTopic(Topic $topic, Forum $forum = null)
+	public function canTopicChangeBoard(Topic $topic, Forum $forum = null)
 	{
-		return $this->authorizer->canMoveTopic($topic, $forum);
+		return $this->authorizer->canTopicChangeBoard($topic, $forum);
 	}
 
 	public function canStickyTopic(Topic $topic, Forum $forum = null)

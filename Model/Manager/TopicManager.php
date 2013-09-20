@@ -84,6 +84,20 @@ class TopicManager extends BaseManager implements BaseManagerInterface
      * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
+    public function updateTopic(Topic $topic)
+    {
+        // update the record
+        $this->persist($topic)->flush();
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
     public function incrementViewCounter(Topic $topic)
     {
         // set the new counters
@@ -225,7 +239,6 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 
 
 
-
 //    /**
 //     *
 //     * @access public
@@ -248,19 +261,6 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 //        return $page;
 //    }
 //
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function updateTopic(Topic $topic)
-//    {
-//        // update the record
-//        $this->persist($topic);
-//
-//        return $this;
-//    }
 //
 //    /**
 //     *

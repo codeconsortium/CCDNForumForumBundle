@@ -88,19 +88,4 @@ class UserTopicBaseController extends BaseController
 
         return $formHandler;
     }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                             $topic
-     * @return \CCDNForum\ForumBundle\Form\Handler\TopicChangeBoardFormHandler
-     */
-    public function getFormHandlerToChangeBoardOnTopic(Topic $topic)
-    {
-        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.change_topics_board');
-
-        $formHandler->setTopic($topic);
-
-        return $formHandler;
-    }
 }

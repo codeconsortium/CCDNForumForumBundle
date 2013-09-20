@@ -43,6 +43,7 @@ services:
         class: %ccdn_forum_forum.form.type.change_topics_board.class%
         arguments:
             - %ccdn_forum_forum.entity.topic.class%
+            - %ccdn_forum_forum.entity.board.class%
 
     ccdn_forum_forum.form.handler.change_topics_board:
         class: %ccdn_forum_forum.form.handler.change_topics_board.class%

@@ -22,6 +22,7 @@ use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 //use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
 
 //use CCDNForum\ForumBundle\Model\BaseModelInterface;
+use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Board;
 use CCDNForum\ForumBundle\Entity\Topic;
 
@@ -94,6 +95,13 @@ class TopicChangeBoardFormHandler
 	 */
 	protected $request;
 
+	/**
+	 * 
+	 * @access protected
+     * @var \CCDNForum\ForumBundle\Entity\Forum $forum
+	 */
+	protected $forum;
+
     /**
      *
      * @access public
@@ -110,6 +118,19 @@ class TopicChangeBoardFormHandler
         $this->formTopicChangeBoardType = $formTopicChangeBoardType;
         $this->topicModel = $topicModel;
         $this->boardModel = $boardModel;
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                             $forum
+     * @return \CCDNForum\ForumBundle\Form\Handler\TopicChangeBoardFormHandler
+     */
+    public function setForum(Forum $forum)
+    {
+        $this->forum = $forum;
+
+        return $this;
     }
 
     /**
@@ -192,7 +213,8 @@ class TopicChangeBoardFormHandler
 
             // Boards are pre-filtered for proper rights managements, moderators may move Topics,
             // but some boards may only be accessible by admins, so moderators should not see them.
-            $filteredBoards = $this->boardModel->findAllForFormDropDown();
+            $filteredBoards = $this->boardModel->findAllBoardsForForumById($this->forum->getId());
+			
             $options = array('boards' => $filteredBoards);
 
             $this->form = $this->factory->create($this->formTopicChangeBoardType, $this->topic, $options);
@@ -209,16 +231,16 @@ class TopicChangeBoardFormHandler
      */
     protected function onSuccess(Topic $topic)
     {
-        $this->topicModel->updateTopic($topic)->flush();
+        $this->topicModel->updateTopic($topic);
 
         // Update stats of the topics old board.
         if ($this->oldBoard) {
-            $this->boardModel->updateStats($this->oldBoard)->flush();
+        //    $this->boardModel->updateStats($this->oldBoard)->flush();
         }
 
         // Setup stats on the topics new board.
         if ($topic->getBoard()) {
-            $this->boardModel->updateStats($topic->getBoard())->flush();
+        //    $this->boardModel->updateStats($topic->getBoard())->flush();
         }
 
         return $this->topicModel;

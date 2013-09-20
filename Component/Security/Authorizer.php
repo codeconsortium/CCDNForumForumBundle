@@ -233,7 +233,7 @@ class Authorizer
 		return true;
 	}
 
-	public function canMoveTopic(Topic $topic, Forum $forum = null)
+	public function canTopicChangeBoard(Topic $topic, Forum $forum = null)
 	{
 		if (! $this->canShowTopic($topic, $forum)) {
 			if (! $this->securityContext->isGranted('ROLE_ADMIN')) {

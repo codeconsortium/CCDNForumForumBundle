@@ -100,9 +100,9 @@
 						</li>
 					{%- endif -%}
 					
-					{%- if canMoveTopic(topic, forum) -%}
+					{%- if canTopicChangeBoard(topic, forum) -%}
 						<li>
-							<a href="{{- path('ccdn_forum_user_topic_change_board', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
+							<a href="{{- path('ccdn_forum_moderator_topic_change_board', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
 								<i class="icon-move"></i>
 								{{- 'link.topic.change_board' | trans({}, 'CCDNForumForumBundle') -}}
 							</a>

@@ -664,4 +664,41 @@ final class ForumEvents
 	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
 	 */
 	const MODERATOR_TOPIC_REOPEN_COMPLETE = 'ccdn_forum.moderator.topic.reopen.complete';
+
+	/**
+	 * 
+	 * The MODERATOR_TOPIC_CHANGE_BOARD_INITIALISE event occurs when the topic move process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the topic entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+	 */
+	const MODERATOR_TOPIC_CHANGE_BOARD_INITIALISE = 'ccdn_forum.moderator.topic.change_board.initialise';
+
+	/**
+	 * 
+	 * The MODERATOR_TOPIC_CHANGE_BOARD_SUCCESS event occurs when the topic move process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the topic entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+	 */
+	const MODERATOR_TOPIC_CHANGE_BOARD_SUCCESS = 'ccdn_forum.moderator.topic.change_board.success';
+
+	/**
+	 * 
+	 * The MODERATOR_TOPIC_CHANGE_BOARD_COMPLETE event occurs when the topic move process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the topic entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+	 */
+	const MODERATOR_TOPIC_CHANGE_BOARD_COMPLETE = 'ccdn_forum.moderator.topic.change_board.complete';
+
+	/**
+	 * 
+	 * The MODERATOR_TOPIC_CHANGE_BOARD_RESPONSE event occurs when the topic move process finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicResponseEvent instance.
+	 */
+	const MODERATOR_TOPIC_CHANGE_BOARD_RESPONSE = 'ccdn_forum.moderator.topic.change_board.response';
+
 }

@@ -54,6 +54,24 @@ class TopicManagerTest extends TestBase
 		$this->assertSame(1, count($foundTopic->getPosts()));
 	}
 
+	public function testUpdateTopic()
+	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$boards = $this->addFixturesForBoards($categories);
+		$topics = $this->addFixturesForTopics($boards);
+		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+
+		$topics[0]->setTitle('the_new_title');
+        $this->getTopicModel()->getManager()->updateTopic($topics[0]);
+		
+		$this->em->refresh($topics[0]);
+		$this->assertSame('the_new_title', $topics[0]->getTitle());
+	}
+
     public function testIncrementViewCounter()
 	{
 		$this->purge();

@@ -303,12 +303,7 @@ class CrumbBuilder extends BaseCrumbBuilder
 	{
         return $this->createCrumbTrail()
 			->add(
-				array(
-					'label' => 'crumbs.user.category.index',
-					'params' => array(
-						'%forum_name%' => $forum->getName()
-					)
-				),
+				$forum->getName() == 'default' ?  'Index' : $forum->getName() . ' Index',
 				array(
 					'route' => 'ccdn_forum_user_category_index',
 					'params' => array(
@@ -330,12 +325,7 @@ class CrumbBuilder extends BaseCrumbBuilder
 	{
         return $this->addUserCategoryIndex($forum)
 			->add(
-				array(
-					'label' => 'crumbs.user.category.show',
-					'params' => array(
-						'%category_name%' => $category->getName()
-					)
-				),
+				$category->getName(),
 				array(
 					'route' => 'ccdn_forum_user_category_show',
 					'params' => array(
@@ -358,12 +348,7 @@ class CrumbBuilder extends BaseCrumbBuilder
 	{
         return $this->addUserCategoryShow($forum, $board->getCategory())
 			->add(
-				array(
-					'label' => 'crumbs.user.board.show',
-					'params' => array(
-						'%board_name%' => $board->getName()
-					)
-				),
+				$board->getName(),
 				array(
 					'route' => 'ccdn_forum_user_board_show',
 					'params' => array(
@@ -542,6 +527,31 @@ class CrumbBuilder extends BaseCrumbBuilder
 				),
 				array(
 					'route' => 'ccdn_forum_moderator_topic_delete',
+					'params' => array(
+						'forumName' => $forum->getName(),
+						'topicId'   => $topic->getId()
+					)
+				)
+			)
+		;
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
+	 * @param \CCDNForum\ForumBundle\Entity\Topic                         $topic
+	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+	 */
+	public function addModeratorTopicChangeBoard(Forum $forum, Topic $topic)
+	{
+        return $this->addUserTopicShow($forum, $topic)
+			->add(
+				array(
+					'label' => 'crumbs.moderator.topic.move',
+				),
+				array(
+					'route' => 'ccdn_forum_moderator_topic_change_board',
 					'params' => array(
 						'forumName' => $forum->getName(),
 						'topicId'   => $topic->getId()

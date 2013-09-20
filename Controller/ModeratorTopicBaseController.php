@@ -53,4 +53,22 @@ class ModeratorTopicBaseController extends BaseController
 		
         return $formHandler;
     }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                             $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                             $topic
+     * @return \CCDNForum\ForumBundle\Form\Handler\TopicChangeBoardFormHandler
+     */
+    public function getFormHandlerToChangeBoardOnTopic(Forum $forum, Topic $topic)
+    {
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.change_topics_board');
+
+		$formHandler->setForum($forum);
+        $formHandler->setTopic($topic);
+		$formHandler->setRequest($this->getRequest());
+
+        return $formHandler;
+    }
 }
