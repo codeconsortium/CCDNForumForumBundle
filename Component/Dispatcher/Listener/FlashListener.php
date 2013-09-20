@@ -81,6 +81,8 @@ class FlashListener implements EventSubscriberInterface
 			ForumEvents::USER_POST_SOFT_DELETE_COMPLETE       => 'onPostSoftDeleteComplete',
 			ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_COMPLETE => 'onTopicDeleteComplete',
 			ForumEvents::MODERATOR_POST_RESTORE_COMPLETE      => 'onPostRestoreComplete',
+			ForumEvents::MODERATOR_TOPIC_STICKY_COMPLETE      => 'onTopicStickyComplete',
+			ForumEvents::MODERATOR_TOPIC_UNSTICKY_COMPLETE    => 'onTopicUnstickyComplete',
 		);
 	}
 
@@ -93,7 +95,7 @@ class FlashListener implements EventSubscriberInterface
 	{
 		if ($event->getForum()) {
 			if ($event->getForum()->getId()) {
-				$this->session->setFlash('success', 'Successfully created new forum "' . $event->getForum()->getName() .'"');
+				$this->session->setFlash('success', 'Successfully created new forum "' . $event->getForum()->getName() . '"');
 			}
 		}
 	}
@@ -107,7 +109,7 @@ class FlashListener implements EventSubscriberInterface
 	{
 		if ($event->getForum()) {
 			if ($event->getForum()->getId()) {
-				$this->session->setFlash('success', 'Successfully edited the forum "' . $event->getForum()->getName() .'"');
+				$this->session->setFlash('success', 'Successfully edited the forum "' . $event->getForum()->getName() . '"');
 			}
 		}
 	}
@@ -121,7 +123,7 @@ class FlashListener implements EventSubscriberInterface
 	{
 		if ($event->getForum()) {
 			if (! $event->getForum()->getId()) {
-				$this->session->setFlash('success', 'Successfully deleted the forum "' . $event->getForum()->getName() .'"');
+				$this->session->setFlash('success', 'Successfully deleted the forum "' . $event->getForum()->getName() . '"');
 			}
 		}
 	}
@@ -135,7 +137,7 @@ class FlashListener implements EventSubscriberInterface
 	{
 		if ($event->getCategory()) {
 			if ($event->getCategory()->getId()) {
-				$this->session->setFlash('success', 'Successfully created new category "' . $event->getCategory()->getName() .'"');
+				$this->session->setFlash('success', 'Successfully created new category "' . $event->getCategory()->getName() . '"');
 			}
 		}
 	}
@@ -149,7 +151,7 @@ class FlashListener implements EventSubscriberInterface
 	{
 		if ($event->getCategory()) {
 			if ($event->getCategory()->getId()) {
-				$this->session->setFlash('success', 'Successfully edited the category "' . $event->getCategory()->getName() .'"');
+				$this->session->setFlash('success', 'Successfully edited the category "' . $event->getCategory()->getName() . '"');
 			}
 		}
 	}
@@ -163,7 +165,7 @@ class FlashListener implements EventSubscriberInterface
 	{
 		if ($event->getCategory()) {
 			if (! $event->getCategory()->getId()) {
-				$this->session->setFlash('success', 'Successfully deleted the category "' . $event->getCategory()->getName() .'"');
+				$this->session->setFlash('success', 'Successfully deleted the category "' . $event->getCategory()->getName() . '"');
 			}
 		}
 	}
@@ -177,7 +179,7 @@ class FlashListener implements EventSubscriberInterface
 	{
 		if ($event->getBoard()) {
 			if ($event->getBoard()->getId()) {
-				$this->session->setFlash('success', 'Successfully created new board "' . $event->getBoard()->getName() .'"');
+				$this->session->setFlash('success', 'Successfully created new board "' . $event->getBoard()->getName() . '"');
 			}
 		}
 	}
@@ -191,7 +193,7 @@ class FlashListener implements EventSubscriberInterface
 	{
 		if ($event->getBoard()) {
 			if ($event->getBoard()->getId()) {
-				$this->session->setFlash('success', 'Successfully edited the board "' . $event->getBoard()->getName() .'"');
+				$this->session->setFlash('success', 'Successfully edited the board "' . $event->getBoard()->getName() . '"');
 			}
 		}
 	}
@@ -205,7 +207,7 @@ class FlashListener implements EventSubscriberInterface
 	{
 		if ($event->getBoard()) {
 			if (! $event->getBoard()->getId()) {
-				$this->session->setFlash('success', 'Successfully deleted the board "' . $event->getBoard()->getName() .'"');
+				$this->session->setFlash('success', 'Successfully deleted the board "' . $event->getBoard()->getName() . '"');
 			}
 		}
 	}
@@ -219,7 +221,7 @@ class FlashListener implements EventSubscriberInterface
 	{
 		if ($event->getTopic()) {
 			if ($event->getTopic()->getId()) {
-				$this->session->setFlash('success', 'Successfully posted the topic "' . $event->getTopic()->getTitle() .'"');
+				$this->session->setFlash('success', 'Successfully posted the topic "' . $event->getTopic()->getTitle() . '"');
 			}
 		}
 	}
@@ -244,7 +246,7 @@ class FlashListener implements EventSubscriberInterface
 	{
 		if ($event->getTopic()) {
 			if ($event->getTopic()->getId()) {
-				$this->session->setFlash('success', 'Successfully replied to the topic "' . $event->getTopic()->getTitle() .'"');
+				$this->session->setFlash('success', 'Successfully replied to the topic "' . $event->getTopic()->getTitle() . '"');
 			}
 		}
 	}
@@ -268,7 +270,7 @@ class FlashListener implements EventSubscriberInterface
 	{
 		if ($event->getPost()) {
 			if ($event->getPost()->getId()) {
-				$this->session->setFlash('success', 'Successfully edited the post "' . $event->getPost()->getId() .'"');
+				$this->session->setFlash('success', 'Successfully edited the post "' . $event->getPost()->getId() . '"');
 			}
 		}
 	}
@@ -282,7 +284,7 @@ class FlashListener implements EventSubscriberInterface
 	{
 		if ($event->getPost()) {
 			if ($event->getPost()->getId()) {
-				$this->session->setFlash('success', 'Successfully deleted the post "' . $event->getPost()->getId() .'"');
+				$this->session->setFlash('success', 'Successfully deleted the post "' . $event->getPost()->getId() . '"');
 			}
 		}
 	}
@@ -311,7 +313,38 @@ class FlashListener implements EventSubscriberInterface
 	{
 		if ($event->getPost()) {
 			if ($event->getPost()->getId()) {
-				$this->session->setFlash('success', 'Successfully restored the post "' . $event->getPost()->getId() .'"');
+				$this->session->setFlash('success', 'Successfully restored the post "' . $event->getPost()->getId() . '"');
+			}
+		}
+	}
+	
+	
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent $event
+	 */
+	public function onTopicStickyComplete(ModeratorTopicEvent $event)
+	{
+		if ($event->getTopic()) {
+			if ($event->getTopic()->getId()) {
+				$this->session->setFlash('success', 'Successfully stickied topic "' . $event->getTopic()->getId() . '"');
+				//$this->setFlash('success', $this->trans('flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent $event
+	 */
+	public function onTopicUnstickyComplete(ModeratorTopicEvent $event)
+	{
+		if ($event->getTopic()) {
+			if ($event->getTopic()->getId()) {
+				$this->session->setFlash('success', 'Successfully unstickied topic "' . $event->getTopic()->getId() . '"');
+				//$this->setFlash('success', $this->trans('flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
 			}
 		}
 	}

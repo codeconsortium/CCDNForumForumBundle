@@ -144,7 +144,39 @@ class TopicManager extends BaseManager implements BaseManagerInterface
         return $this;
     }
 
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function sticky(Topic $topic, UserInterface $user)
+    {
+        $topic->setIsSticky(true);
+        $topic->setStickiedBy($user);
+        $topic->setStickiedDate(new \DateTime());
 
+        $this->persist($topic)->flush();
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function unsticky(Topic $topic)
+    {
+        $topic->setIsSticky(false);
+        $topic->setStickiedBy(null);
+        $topic->setStickiedDate(null);
+
+        $this->persist($topic)->flush();
+
+        return $this;
+    }
 
 
 
@@ -233,39 +265,6 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 //        return $this;
 //    }
 //
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function sticky(Topic $topic, UserInterface $user)
-//    {
-//        $topic->setIsSticky(true);
-//        $topic->setStickiedBy($user);
-//        $topic->setStickiedDate(new \DateTime());
-//
-//        $this->persist($topic);
-//
-//        return $this;
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function unsticky(Topic $topic)
-//    {
-//        $topic->setIsSticky(false);
-//        $topic->setStickiedBy(null);
-//        $topic->setStickiedDate(null);
-//
-//        $this->persist($topic);
-//
-//        return $this;
-//    }
 //
 //    /**
 //     *

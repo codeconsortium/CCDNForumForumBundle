@@ -51,7 +51,7 @@ class UserTopicController extends UserTopicBaseController
 		
         // Get topic.
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true);
-        $this->isFound($topic);
+		$this->isFound($topic);
 
 		$this->isAuthorised($this->getAuthorizer()->canShowTopic($topic, $forum));
 

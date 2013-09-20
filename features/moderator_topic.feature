@@ -79,6 +79,38 @@ Feature: Moderator Topic Traversal
           | test_topic_f1_c1_b2_t5    | test_post_f1_c1_b2_t5_p1       | test_board_f1_c1_b2   | user@foo.com  |
 		  | test_topic_f1_c1_b2_t6    | test_post_f1_c1_b2_t6_p1       | test_board_f1_c1_b2   | user@foo.com  |
 
+	Scenario: Sticky topic
+        Given I am on "/en/forum/test_forum_f1"
+		  And I follow "test_category_f1_c1"
+		  And I should see "test_category_f1_c1"
+          And I should see "test_board_f1_c1_b1"
+		  And I follow "test_board_f1_c1_b1"
+          And I should see "test_board_f1_c1_b1"
+		  And I should see "test_topic_f1_c1_b1_t1"
+		  And I follow "test_topic_f1_c1_b1_t1"
+		  And I should see "test_topic_f1_c1_b1_t1"
+		  And I should see "test_post_f1_c1_b1_t1_p1"
+		  And I should see "Sticky Topic"
+		  And I follow "Sticky Topic"
+		  And I should see "Stickied by"
+
+	Scenario: Unsticky topic
+        Given I am on "/en/forum/test_forum_f1"
+		  And I follow "test_category_f1_c1"
+		  And I should see "test_category_f1_c1"
+          And I should see "test_board_f1_c1_b1"
+		  And I follow "test_board_f1_c1_b1"
+          And I should see "test_board_f1_c1_b1"
+		  And I should see "test_topic_f1_c1_b1_t1"
+		  And I follow "test_topic_f1_c1_b1_t1"
+		  And I should see "test_topic_f1_c1_b1_t1"
+		  And I should see "test_post_f1_c1_b1_t1_p1"
+		  And I should see "Sticky Topic"
+		  And I follow "Sticky Topic"
+		  And I should see "Stickied by"
+		  And I follow "Unsticky Topic"
+		  And I should not see "stickied by"
+
 	Scenario: Delete topic
         Given I am on "/en/forum/test_forum_f1"
 		  And I follow "test_category_f1_c1"

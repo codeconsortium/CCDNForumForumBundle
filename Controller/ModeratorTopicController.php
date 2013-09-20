@@ -38,45 +38,63 @@ class ModeratorTopicController extends ModeratorTopicBaseController
     /**
      *
      * @access public
+     * @param  string           $forumName
      * @param  int              $topicId
      * @return RedirectResponse
      */
-    public function stickyAction($topicId)
+    public function stickyAction($forumName, $topicId)
     {
+		$forum = $this->getForumModel()->findOneForumByName($forumName);
+		$this->isFound($forum);
+		
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true);
         $this->isFound($topic);
-        $this->isAuthorisedToViewTopic($topic);
-        $this->isAuthorisedToStickyTopic($topic);
 
-        $this->getTopicModel()->sticky($topic, $this->getUser())->flush();
+		$this->isAuthorised($this->getAuthorizer()->canStickyTopic($topic, $forum));
 
-        $this->setFlash('success', $this->trans('flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
+        $this->getTopicModel()->sticky($topic, $this->getUser());
 
-        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId()) ));
+		$this->dispatch(ForumEvents::MODERATOR_TOPIC_UNSTICKY_COMPLETE, new ModeratorTopicEvent($this->getRequest(), $topic));
+
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
+			array(
+				'forumName' => $forumName,
+				'topicId' => $topic->getId()
+			)
+		));
     }
 
     /**
      *
      * @access public
+     * @param  string           $forumName
      * @param  int              $topicId
      * @return RedirectResponse
      */
-    public function unstickyAction($topicId)
+    public function unstickyAction($forumName, $topicId)
     {
+		$forum = $this->getForumModel()->findOneForumByName($forumName);
+		$this->isFound($forum);
+		
         $this->isAuthorised('ROLE_MODERATOR');
 
-        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
+        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true);
         $this->isFound($topic);
-        $this->isAuthorisedToViewTopic($topic);
-        $this->isAuthorisedToUnStickyTopic($topic);
 
-        $this->getTopicModel()->unsticky($topic)->flush();
+		$this->isAuthorised($this->getAuthorizer()->canUnstickyTopic($topic, $forum));
 
-        $this->setFlash('notice', $this->trans('flash.topic.unsticky.success', array('%topic_title%' => $topic->getTitle())));
+        $this->getTopicModel()->unsticky($topic);
 
-        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId()) ));
+		$this->dispatch(ForumEvents::MODERATOR_TOPIC_UNSTICKY_COMPLETE, new ModeratorTopicEvent($this->getRequest(), $topic));
+
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
+			array(
+				'forumName' => $forumName,
+				'topicId' => $topic->getId()
+			)
+		));
     }
 
     /**
@@ -100,7 +118,12 @@ class ModeratorTopicController extends ModeratorTopicBaseController
 
         $this->setFlash('warning', $this->trans('flash.topic.close.success', array('%topic_title%' => $topic->getTitle())));
 
-        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId()) ));
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
+			array(
+				'forumName' => $forumName,
+				'topicId' => $topic->getId()
+			)
+		));
     }
 
     /**
@@ -122,7 +145,12 @@ class ModeratorTopicController extends ModeratorTopicBaseController
 
         $this->setFlash('warning', $this->trans('flash.topic.reopen.success', array('%topic_title%' => $topic->getTitle())));
 
-        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array('topicId' => $topic->getId()) ));
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
+			array(
+				'forumName' => $forumName,
+				'topicId' => $topic->getId()
+			)
+		));
     }
 
     /**
@@ -246,10 +274,21 @@ class ModeratorTopicController extends ModeratorTopicBaseController
         return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
 			array(
 				'forumName' => $forumName,
-				'topicId' => $topic->getId())
+				'topicId' => $topic->getId()
 			)
-		);
+		));
     }
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      *

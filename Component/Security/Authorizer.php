@@ -235,11 +235,17 @@ class Authorizer
 
 	public function canStickyTopic(Topic $topic, Forum $forum = null)
 	{
-		if (! $this->canShowTopic($topic, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
-			return false;
+		if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
+			if (! $this->canShowTopic($topic, $forum)) {
+				return false;
+			}
 		}
 		
 		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+			return false;
+		}
+		
+		if ($topic->isSticky()) {
 			return false;
 		}
 		
@@ -248,11 +254,17 @@ class Authorizer
 
 	public function canUnstickyTopic(Topic $topic, Forum $forum = null)
 	{
-		if (! $this->canShowTopic($topic, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
-			return false;
+		if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
+			if (! $this->canShowTopic($topic, $forum)) {
+				return false;
+			}
 		}
 		
 		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+			return false;
+		}
+
+		if (! $topic->isSticky()) {
 			return false;
 		}
 		

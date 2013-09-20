@@ -95,8 +95,8 @@ link:
         delete:             "Delete Topic"
         restore:            "Restore Topic"
         change_board:       "Change Board"
-        sticky:             "Sticky"
-        unsticky:           "Unsticky"
+        sticky:             "Sticky Topic"
+        unsticky:           "Unsticky Topic"
     post:
         edit:               "Edit"
         quote:              "Quote"

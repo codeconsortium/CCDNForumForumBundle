@@ -45,7 +45,7 @@ class WebUser extends MinkContext implements KernelAwareInterface
      * @var KernelInterface
      */
     protected $kernel;
-	
+
     /**
      * 
      * Constructor.

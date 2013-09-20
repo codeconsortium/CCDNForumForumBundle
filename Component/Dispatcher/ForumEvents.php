@@ -628,4 +628,22 @@ final class ForumEvents
 	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent instance.
 	 */
 	const MODERATOR_POST_RESTORE_COMPLETE = 'ccdn_forum.moderator.post.restore.complete';
+
+	/**
+	 * 
+	 * The MODERATOR_TOPIC_STICKY_COMPLETE event occurs when the topic sticky process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the topic entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+	 */
+	const MODERATOR_TOPIC_STICKY_COMPLETE = 'ccdn_forum.moderator.topic.sticky.complete';
+
+	/**
+	 * 
+	 * The MODERATOR_TOPIC_UNSTICKY_COMPLETE event occurs when the topic unsticky process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the topic entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+	 */
+	const MODERATOR_TOPIC_UNSTICKY_COMPLETE = 'ccdn_forum.moderator.topic.unsticky.complete';
 }

@@ -133,7 +133,27 @@ class TopicModel extends BaseModel implements BaseModelInterface
         return $this->getManager()->softDelete($topic, $user);
     }
 
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function sticky(Topic $topic, UserInterface $user)
+    {
+        return $this->getManager()->sticky($topic, $user);
+    }
 
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function unsticky(Topic $topic)
+    {
+        return $this->getManager()->unsticky($topic);
+    }
 
 
 
@@ -262,27 +282,6 @@ class TopicModel extends BaseModel implements BaseModelInterface
 //        return $this->getManager()->bulkUpdateStats($topics);
 //    }
 //
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function sticky(Topic $topic, UserInterface $user)
-//    {
-//        return $this->getManager()->sticky($topic, $user);
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function unsticky(Topic $topic)
-//    {
-//        return $this->getManager()->unsticky($topic);
-//    }
 //
 //    /**
 //     *
