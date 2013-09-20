@@ -155,7 +155,28 @@ class TopicModel extends BaseModel implements BaseModelInterface
         return $this->getManager()->unsticky($topic);
     }
 
+    /**
+     *
+     * @access public
+     * @param Topic $topic
+     * @param $user
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function close(Topic $topic, UserInterface $user)
+    {
+        return $this->getManager()->close($topic, $user);
+    }
 
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function reopen(Topic $topic)
+    {
+        return $this->getManager()->reopen($topic);
+    }
 
 
 
@@ -282,19 +303,6 @@ class TopicModel extends BaseModel implements BaseModelInterface
 //        return $this->getManager()->bulkUpdateStats($topics);
 //    }
 //
-//
-//    /**
-//     *
-//     * @access public
-//     * @param Topic $topic
-//     * @param $user
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function close(Topic $topic, UserInterface $user)
-//    {
-//        return $this->getManager()->close($topic, $user);
-//    }
-//
 //    /**
 //     *
 //     * @access public
@@ -307,16 +315,7 @@ class TopicModel extends BaseModel implements BaseModelInterface
 //        return $this->getManager()->bulkClose($topics, $user);
 //    }
 //
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function reopen(Topic $topic)
-//    {
-//        return $this->getManager()->reopen($topic);
-//    }
+
 //
 //    /**
 //     *

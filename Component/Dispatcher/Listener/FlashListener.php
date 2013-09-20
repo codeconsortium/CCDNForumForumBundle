@@ -83,6 +83,8 @@ class FlashListener implements EventSubscriberInterface
 			ForumEvents::MODERATOR_POST_RESTORE_COMPLETE      => 'onPostRestoreComplete',
 			ForumEvents::MODERATOR_TOPIC_STICKY_COMPLETE      => 'onTopicStickyComplete',
 			ForumEvents::MODERATOR_TOPIC_UNSTICKY_COMPLETE    => 'onTopicUnstickyComplete',
+			ForumEvents::MODERATOR_TOPIC_CLOSE_COMPLETE       => 'onTopicCloseComplete',
+			ForumEvents::MODERATOR_TOPIC_REOPEN_COMPLETE      => 'onTopicReopenComplete',
 		);
 	}
 
@@ -317,8 +319,7 @@ class FlashListener implements EventSubscriberInterface
 			}
 		}
 	}
-	
-	
+
 	/**
 	 * 
 	 * @access public
@@ -344,6 +345,36 @@ class FlashListener implements EventSubscriberInterface
 		if ($event->getTopic()) {
 			if ($event->getTopic()->getId()) {
 				$this->session->setFlash('success', 'Successfully unstickied topic "' . $event->getTopic()->getId() . '"');
+				//$this->setFlash('success', $this->trans('flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent $event
+	 */
+	public function onTopicCloseComplete(ModeratorTopicEvent $event)
+	{
+		if ($event->getTopic()) {
+			if ($event->getTopic()->getId()) {
+				$this->session->setFlash('success', 'Successfully closed topic "' . $event->getTopic()->getId() . '"');
+				//$this->setFlash('success', $this->trans('flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent $event
+	 */
+	public function onTopicReopenComplete(ModeratorTopicEvent $event)
+	{
+		if ($event->getTopic()) {
+			if ($event->getTopic()->getId()) {
+				$this->session->setFlash('success', 'Successfully reopened topic "' . $event->getTopic()->getId() . '"');
 				//$this->setFlash('success', $this->trans('flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
 			}
 		}

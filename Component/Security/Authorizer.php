@@ -141,15 +141,15 @@ class Authorizer
 
 	public function canReplyToTopic(Topic $topic, Forum $forum = null)
 	{
-		if (! $this->canShowTopic($topic, $forum)) {
-			return false;
-		}
-
 		if ($topic->isClosed()) {
 			return false;
 		}
 		
 		if (! $topic->getBoard()) {
+			return false;
+		}
+
+		if (! $this->canShowTopic($topic, $forum)) {
 			return false;
 		}
 		
@@ -162,15 +162,15 @@ class Authorizer
 
 	public function canDeleteTopic(Topic $topic, Forum $forum = null)
 	{
+		if ($topic->isDeleted()) {
+			return false;
+		}
+		
 		if (! $this->canShowTopic($topic, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
 			return false;
 		}
 		
 		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-			return false;
-		}
-
-		if ($topic->isDeleted()) {
 			return false;
 		}
 		
@@ -179,6 +179,10 @@ class Authorizer
 
 	public function canRestoreTopic(Topic $topic, Forum $forum = null)
 	{
+		if (! $topic->isDeleted()) {
+			return false;
+		}
+		
 		if (! $this->canShowTopic($topic, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
 			return false;
 		}
@@ -187,17 +191,20 @@ class Authorizer
 			return false;
 		}
 
-		if (! $topic->isDeleted()) {
-			return false;
-		}
 
 		return true;
 	}
 
 	public function canCloseTopic(Topic $topic, Forum $forum = null)
 	{
-		if (! $this->canShowTopic($topic, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
+		if ($topic->isClosed()) {
 			return false;
+		}
+
+		if (! $this->canShowTopic($topic, $forum)) {
+			if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
+				return false;
+			}
 		}
 		
 		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
@@ -209,8 +216,14 @@ class Authorizer
 
 	public function canReopenTopic(Topic $topic, Forum $forum = null)
 	{
-		if (! $this->canShowTopic($topic, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
+		if (! $topic->isClosed()) {
 			return false;
+		}
+		
+		if (! $this->canShowTopic($topic, $forum)) {
+			if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
+				return false;
+			}
 		}
 		
 		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
@@ -222,8 +235,10 @@ class Authorizer
 
 	public function canMoveTopic(Topic $topic, Forum $forum = null)
 	{
-		if (! $this->canShowTopic($topic, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
-			return false;
+		if (! $this->canShowTopic($topic, $forum)) {
+			if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
+				return false;
+			}
 		}
 		
 		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {

@@ -111,6 +111,38 @@ Feature: Moderator Topic Traversal
 		  And I follow "Unsticky Topic"
 		  And I should not see "stickied by"
 
+	Scenario: Close topic
+        Given I am on "/en/forum/test_forum_f1"
+		  And I follow "test_category_f1_c1"
+		  And I should see "test_category_f1_c1"
+          And I should see "test_board_f1_c1_b1"
+		  And I follow "test_board_f1_c1_b1"
+          And I should see "test_board_f1_c1_b1"
+		  And I should see "test_topic_f1_c1_b1_t1"
+		  And I follow "test_topic_f1_c1_b1_t1"
+		  And I should see "test_topic_f1_c1_b1_t1"
+		  And I should see "test_post_f1_c1_b1_t1_p1"
+		  And I should see "Close Topic"
+		  And I follow "Close Topic"
+		  And I should see "Closed by"
+
+	Scenario: Reopen topic
+        Given I am on "/en/forum/test_forum_f1"
+		  And I follow "test_category_f1_c1"
+		  And I should see "test_category_f1_c1"
+          And I should see "test_board_f1_c1_b1"
+		  And I follow "test_board_f1_c1_b1"
+          And I should see "test_board_f1_c1_b1"
+		  And I should see "test_topic_f1_c1_b1_t1"
+		  And I follow "test_topic_f1_c1_b1_t1"
+		  And I should see "test_topic_f1_c1_b1_t1"
+		  And I should see "test_post_f1_c1_b1_t1_p1"
+		  And I should see "Close Topic"
+		  And I follow "Close Topic"
+		  And I should see "Closed by"
+		  And I follow "Reopen Topic"
+		  And I should not see "Closed by"
+
 	Scenario: Delete topic
         Given I am on "/en/forum/test_forum_f1"
 		  And I follow "test_category_f1_c1"

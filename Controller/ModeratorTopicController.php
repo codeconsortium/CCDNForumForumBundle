@@ -102,21 +102,25 @@ class ModeratorTopicController extends ModeratorTopicBaseController
      * Once a topic is locked, no posts can be added, deleted or edited!
      *
      * @access public
+     * @param  string           $forumName
      * @param  int              $topicId
      * @return RedirectResponse
      */
-    public function closeAction($topicId)
+    public function closeAction($forumName, $topicId)
     {
+		$forum = $this->getForumModel()->findOneForumByName($forumName);
+		$this->isFound($forum);
+
         $this->isAuthorised('ROLE_MODERATOR');
 
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-        $this->isAuthorisedToViewTopic($topic);
-        $this->isAuthorisedToCloseTopic($topic);
+
+		$this->isAuthorised($this->getAuthorizer()->canCloseTopic($topic, $forum));
 
         $this->getTopicModel()->close($topic, $this->getUser())->flush();
 
-        $this->setFlash('warning', $this->trans('flash.topic.close.success', array('%topic_title%' => $topic->getTitle())));
+		$this->dispatch(ForumEvents::MODERATOR_TOPIC_CLOSE_COMPLETE, new ModeratorTopicEvent($this->getRequest(), $topic));
 
         return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
 			array(
@@ -129,21 +133,25 @@ class ModeratorTopicController extends ModeratorTopicBaseController
     /**
      *
      * @access public
+     * @param  string           $forumName
      * @param  int              $topicId
      * @return RedirectResponse
      */
-    public function reopenAction($topicId)
+    public function reopenAction($forumName, $topicId)
     {
+		$forum = $this->getForumModel()->findOneForumByName($forumName);
+		$this->isFound($forum);
+		
         $this->isAuthorised('ROLE_MODERATOR');
 
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-        $this->isAuthorisedToViewTopic($topic);
-        $this->isAuthorisedToReOpenTopic($topic);
+
+		$this->isAuthorised($this->getAuthorizer()->canReopenTopic($topic, $forum));
 
         $this->getTopicModel()->reopen($topic)->flush();
 
-        $this->setFlash('warning', $this->trans('flash.topic.reopen.success', array('%topic_title%' => $topic->getTitle())));
+		$this->dispatch(ForumEvents::MODERATOR_TOPIC_REOPEN_COMPLETE, new ModeratorTopicEvent($this->getRequest(), $topic));
 
         return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
 			array(

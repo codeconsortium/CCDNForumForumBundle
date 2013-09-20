@@ -646,4 +646,22 @@ final class ForumEvents
 	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
 	 */
 	const MODERATOR_TOPIC_UNSTICKY_COMPLETE = 'ccdn_forum.moderator.topic.unsticky.complete';
+
+	/**
+	 * 
+	 * The MODERATOR_TOPIC_CLOSE_COMPLETE event occurs when the topic close process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the topic entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+	 */
+	const MODERATOR_TOPIC_CLOSE_COMPLETE = 'ccdn_forum.moderator.topic.close.complete';
+
+	/**
+	 * 
+	 * The MODERATOR_TOPIC_REOPEN_COMPLETE event occurs when the topic reopen process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the topic entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+	 */
+	const MODERATOR_TOPIC_REOPEN_COMPLETE = 'ccdn_forum.moderator.topic.reopen.complete';
 }

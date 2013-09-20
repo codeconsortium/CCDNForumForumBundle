@@ -66,18 +66,18 @@
 
 					{%- if canCloseTopic(topic, forum) -%}
 						<li>
-							<a href="{{- path('ccdn_forum_moderator_topic_reopen', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
+							<a href="{{- path('ccdn_forum_moderator_topic_close', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
 								<i class="icon-lock"></i>
-								{{- 'link.topic.reopen' | trans({}, 'CCDNForumForumBundle') -}}
+								{{- 'link.topic.close' | trans({}, 'CCDNForumForumBundle') -}}
 							</a>
 						</li>
 					{%- endif -%}
 					
 					{%- if canReopenTopic(topic, forum) -%}
 						<li>
-							<a href="{{- path('ccdn_forum_moderator_topic_close', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
+							<a href="{{- path('ccdn_forum_moderator_topic_reopen', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
 								<i class="icon-lock"></i>
-								{{- 'link.topic.close' | trans({}, 'CCDNForumForumBundle') -}}
+								{{- 'link.topic.reopen' | trans({}, 'CCDNForumForumBundle') -}}
 							</a>
 						</li>
 					{%- endif -%}

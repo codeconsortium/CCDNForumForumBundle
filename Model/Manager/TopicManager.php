@@ -178,7 +178,49 @@ class TopicManager extends BaseManager implements BaseManagerInterface
         return $this;
     }
 
+    /**
+     *
+     * @access public
+     * @param Topic $topic
+     * @param $user
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function close(Topic $topic, UserInterface $user)
+    {
+        // Don't overwite previous users accountability.
+        if (! $topic->getClosedBy() && ! $topic->getClosedDate()) {
+            $topic->setIsClosed(true);
+            $topic->setClosedBy($user);
+            $topic->setClosedDate(new \DateTime());
 
+            $this->persist($topic)->flush();
+        }
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function reopen(Topic $topic)
+    {
+        $topic->setIsClosed(false);
+        $topic->setClosedBy(null);
+        $topic->setClosedDate(null);
+
+        if ($topic->isDeleted()) {
+            $topic->setIsDeleted(false);
+            $topic->setDeletedBy(null);
+            $topic->setDeletedDate(null);
+        }
+
+        $this->persist($topic)->flush();
+
+        return $this;
+    }
 
 
 
@@ -265,28 +307,6 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 //        return $this;
 //    }
 //
-//
-//    /**
-//     *
-//     * @access public
-//     * @param Topic $topic
-//     * @param $user
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function close(Topic $topic, UserInterface $user)
-//    {
-//        // Don't overwite previous users accountability.
-//        if (! $topic->getClosedBy() && ! $topic->getClosedDate()) {
-//            $topic->setIsClosed(true);
-//            $topic->setClosedBy($user);
-//            $topic->setClosedDate(new \DateTime());
-//
-//            $this->persist($topic);
-//        }
-//
-//        return $this;
-//    }
-//
 //    /**
 //     *
 //     * @access public
@@ -309,29 +329,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 //
 //        return $this;
 //    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function reopen(Topic $topic)
-//    {
-//        $topic->setIsClosed(false);
-//        $topic->setClosedBy(null);
-//        $topic->setClosedDate(null);
-//
-//        if ($topic->getIsDeleted()) {
-//            $topic->setIsDeleted(false);
-//            $topic->setDeletedBy(null);
-//            $topic->setDeletedDate(null);
-//        }
-//
-//        $this->persist($topic);
-//
-//        return $this;
-//    }
+
 //
 //    /**
 //     *

@@ -158,4 +158,38 @@ class TopicManagerTest extends TestBase
 		$this->em->refresh($topics[0]);
 		$this->assertFalse($topics[0]->isSticky());
 	}
+
+	public function testClose()
+	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$boards = $this->addFixturesForBoards($categories);
+		$topics = $this->addFixturesForTopics($boards);
+		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+
+        $this->getTopicModel()->getManager()->close($topics[0], $users['tom']);
+		
+		$this->em->refresh($topics[0]);
+		$this->assertTrue($topics[0]->isClosed());
+	}
+
+	public function testReopen()
+	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$boards = $this->addFixturesForBoards($categories);
+		$topics = $this->addFixturesForTopics($boards);
+		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+
+        $this->getTopicModel()->getManager()->reopen($topics[0]);
+		
+		$this->em->refresh($topics[0]);
+		$this->assertFalse($topics[0]->isClosed());
+	}
 }
