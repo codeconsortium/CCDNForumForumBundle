@@ -60,15 +60,6 @@ Feature: Board Management
           | test_board_f2_c3_b1       | testing board 1      | 1       | test_category_f2_c3   |
           | test_board_f2_c3_b2       | testing board 2      | 2       | test_category_f2_c3   |
           | test_board_f2_c3_b3       | testing board 3      | 3       | test_category_f2_c3   |
-          | test_board_f3_c1_b1       | testing board 1      | 1       | test_category_f3_c1   |
-          | test_board_f3_c1_b2       | testing board 2      | 2       | test_category_f3_c1   |
-          | test_board_f3_c1_b3       | testing board 3      | 3       | test_category_f3_c1   |
-          | test_board_f3_c2_b1       | testing board 1      | 1       | test_category_f3_c1   |
-          | test_board_f3_c2_b2       | testing board 2      | 2       | test_category_f3_c1   |
-          | test_board_f3_c2_b3       | testing board 3      | 3       | test_category_f3_c1   |
-          | test_board_f3_c3_b1       | testing board 1      | 1       | test_category_f3_c1   |
-          | test_board_f3_c3_b2       | testing board 2      | 2       | test_category_f3_c1   |
-          | test_board_f3_c3_b3       | testing board 3      | 3       | test_category_f3_c1   |
 
 	Scenario: See Board list
         Given I am on "/en/forum/admin/manage-boards/" 

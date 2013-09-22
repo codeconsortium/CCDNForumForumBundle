@@ -25,9 +25,6 @@ Feature: Category Management
           | test_category_f2_c1       | 1        | test_forum_f2       |
 		  | test_category_f2_c2       | 2        | test_forum_f2       |
 		  | test_category_f2_c3       | 3        | test_forum_f2       |
-          | test_category_f3_c1       | 1        | test_forum_f3       |
-		  | test_category_f3_c2       | 2        | test_forum_f3       |
-		  | test_category_f3_c3       | 3        | test_forum_f3       |
 
 	Scenario: See Category list
         Given I am on "/en/forum/admin/manage-categories/" 

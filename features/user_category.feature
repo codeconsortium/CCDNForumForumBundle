@@ -30,9 +30,6 @@ Feature: User Category Traversal
 		  | test_category_f3_c3       | 3        | test_forum_f3       |
         And there are following boards defined:
           | name                      | description          | order   | category              |
-          | test_board_fn_cn_b1       | testing board 1      | 1       |                       |
-          | test_board_fn_cn_b2       | testing board 2      | 2       |                       |
-          | test_board_fn_cn_b3       | testing board 3      | 3       |                       |
           | test_board_fn_c1_b1       | testing board 1      | 1       | test_category_fn_c1   |
           | test_board_fn_c1_b2       | testing board 2      | 2       | test_category_fn_c1   |
           | test_board_fn_c1_b3       | testing board 3      | 3       | test_category_fn_c1   |
