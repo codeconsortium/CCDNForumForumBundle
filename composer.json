@@ -20,9 +20,11 @@
 		"knplabs/knp-paginator-bundle": "dev-master"
     },
 	"suggest": {
-		"codeconsortium/ccdn-component-bb-code-bundle": "2.0.*@dev",
 		"reecefowell/jquery-timestamper": "dev-master",
-		"reecefowell/jquery-checkboxes": "dev-master"
+		"reecefowell/jquery-checkboxes": "dev-master",
+        "incenteev/composer-parameter-handler": "v2.0.0",
+        "doctrine/data-fixtures": "1.0.*@dev",
+        "doctrine/doctrine-fixtures-bundle": "dev-master"
 	},
     "autoload": {
         "psr-0": { "CCDNForum\\ForumBundle": "" }

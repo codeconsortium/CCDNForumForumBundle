@@ -1,0 +1,19 @@
+language: php
+
+php:
+    - 5.3
+    - 5.4
+    - 5.5
+
+matrix:
+  allow_failures:
+    - php: 5.5
+
+env:
+    - SYMFONY_VERSION="2.0.*" DB=mysql
+
+before_script: composer install --dev --prefer-source
+
+notifications:
+    email: status@codeconsortium.com
+
