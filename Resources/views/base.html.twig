@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="{{- app.request.locale -}}">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+        <title>{%- block title -%}{%- endblock -%}</title>
+				
+		{%- block stylesheets -%}
+			{%- stylesheets '@bootstrap_less' '@common_less' '@crumbs_less' '@highlight_less' combine=true -%}
+				<link href="{{- asset_url -}}" type="text/css" rel="stylesheet">
+			{%- endstylesheets -%}			
+		{%- endblock -%}
+				
+    </head>
+    <body>
+
+		{%- spaceless -%}
+			
+		<div id="page-wrap">
+			<div id="page-main">
+				
+				{%- block navbar -%}
+					<header class="navbar-fixed-top">
+					</header>
+
+					{%- block tool_bar -%}
+					{%- endblock tool_bar -%}
+				{%- endblock navbar -%}
+				
+				<div class="container-fluid clear-top">
+					<div class="row-fluid">
+				        <aside class="span2 page-sidebar-left">
+							<ul class="nav nav-pills nav-stacked">
+								{%- block sidebar -%}
+					            {%- endblock sidebar -%}
+							</ul>
+						</aside>
+
+				        <div class="span10 page-body-right">
+							<div>
+								<div id="top"></div>
+					            {%- block body -%}
+								{%- endblock body -%}
+							</div>
+				        </div>
+			        </div>
+				</div>
+			</div>
+		</div>
+
+		<footer class="footer site-footer">
+
+			<div class="container-fluid clearfix">
+				<span class="muted pull-right content-right">
+					Copyright <a target="_blank" href="http://www.codeconsortium.com/">Code Consortium</a> 2011 - {{ 'now'|date("Y") }}.
+				</span>
+			</div>
+		
+			<br>
+		
+			<div class="navbar navbar-inverse clearfix" style="bottom:0px;margin-bottom:0px;">
+				<div class="navbar-inner">
+					<nav class="container-fluid">
+					    <ul class="nav">
+							<li>
+								<a href="http://www.codeconsortium.com">
+									Code Consortium
+								</a>
+							</li>
+						
+							<li>
+								<a rel="friend" target="_blank" href="http://github.com/codeconsortium">Contribute</a>
+							</li>
+					    </ul>
+					</nav>
+				</div>
+			</div>
+		
+		</footer>
+		
+		{%- block javascripts -%}
+			{% javascripts '@jquery_js' '@bootstrap_js' '@moment_js' '@timestamper_js' '@checkboxes_js' filter='?yui_js' combine=false %}
+				<script src="{{- asset_url -}}"></script>
+			{%- endjavascripts -%}
+		{%- endblock -%}
+
+		<script type='text/javascript'>
+		<!--
+			$(document).ready(function() {
+				// make visible js compat toolbars site wide
+				$("[data-js-non-compat]").each(function(i, el) {
+					$(el).addClass('collapse').addClass('hidden');
+				});
+		
+				$("[data-js-compat]").each(function(i, el) {
+					$(el).removeClass('collapse').removeClass('hidden');
+				});
+		
+				$('[data-tip]').each(function() {
+					$(this).tooltip({
+						html: true,
+						placement: $(this).data('tip')
+					});
+				});	
+		
+				$('[data-toggle="dropdown"]').dropdown();
+			});
+		//-->
+		</script>
+		
+		{%- endspaceless -%}
+    </body>
+</html>
