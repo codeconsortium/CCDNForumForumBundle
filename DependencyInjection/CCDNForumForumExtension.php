@@ -53,7 +53,6 @@ class CCDNForumForumExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-
         $processor = new Processor();
         $configuration = new Configuration();
 
@@ -181,7 +180,6 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.manager.post.class', $config['manager']['post']['class']);
         $container->setParameter('ccdn_forum_forum.manager.subscription.class', $config['manager']['subscription']['class']);
         $container->setParameter('ccdn_forum_forum.manager.registry.class', $config['manager']['registry']['class']);
-        $container->setParameter('ccdn_forum_forum.manager.policy.class', $config['manager']['policy']['class']);
 
         return $this;
     }
@@ -196,6 +194,8 @@ class CCDNForumForumExtension extends Extension
     private function getModelSection(array $config, ContainerBuilder $container)
     {
         $container->setParameter('ccdn_forum_forum.model_bag.class', $config['model']['bag']['class']);
+        $container->setParameter('ccdn_forum_forum.model.utility_bag.class', $config['model']['utility_bag']['class']);
+        $container->setParameter('ccdn_forum_forum.model.utility.pagination_config.class', $config['model']['utility']['pagination_config']['class']);
 
         $container->setParameter('ccdn_forum_forum.model.forum.class', $config['model']['forum']['class']);
         $container->setParameter('ccdn_forum_forum.model.category.class', $config['model']['category']['class']);
@@ -217,17 +217,53 @@ class CCDNForumForumExtension extends Extension
      */
     private function getFormSection(array $config, ContainerBuilder $container)
     {
+        // Types
+        $container->setParameter('ccdn_forum_forum.form.type.forum_create.class', $config['form']['type']['forum_create']['class']);
+        $container->setParameter('ccdn_forum_forum.form.type.forum_update.class', $config['form']['type']['forum_update']['class']);
+        $container->setParameter('ccdn_forum_forum.form.type.forum_delete.class', $config['form']['type']['forum_delete']['class']);
+
+        $container->setParameter('ccdn_forum_forum.form.type.category_create.class', $config['form']['type']['category_create']['class']);
+        $container->setParameter('ccdn_forum_forum.form.type.category_update.class', $config['form']['type']['category_update']['class']);
+        $container->setParameter('ccdn_forum_forum.form.type.category_delete.class', $config['form']['type']['category_delete']['class']);
+
+        $container->setParameter('ccdn_forum_forum.form.type.board_create.class', $config['form']['type']['board_create']['class']);
+        $container->setParameter('ccdn_forum_forum.form.type.board_update.class', $config['form']['type']['board_update']['class']);
+        $container->setParameter('ccdn_forum_forum.form.type.board_delete.class', $config['form']['type']['board_delete']['class']);
+
         $container->setParameter('ccdn_forum_forum.form.type.topic_create.class', $config['form']['type']['topic_create']['class']);
         $container->setParameter('ccdn_forum_forum.form.type.topic_update.class', $config['form']['type']['topic_update']['class']);
+        $container->setParameter('ccdn_forum_forum.form.type.topic_delete.class', $config['form']['type']['topic_delete']['class']);
+
+        $container->setParameter('ccdn_forum_forum.form.type.change_topics_board.class', $config['form']['type']['change_topics_board']['class']);
+
         $container->setParameter('ccdn_forum_forum.form.type.post_create.class', $config['form']['type']['post_create']['class']);
         $container->setParameter('ccdn_forum_forum.form.type.post_update.class', $config['form']['type']['post_update']['class']);
-        $container->setParameter('ccdn_forum_forum.form.type.change_topics_board.class', $config['form']['type']['change_topics_board']['class']);
+        $container->setParameter('ccdn_forum_forum.form.type.post_delete.class', $config['form']['type']['post_delete']['class']);
+        $container->setParameter('ccdn_forum_forum.form.type.post_unlock.class', $config['form']['type']['post_unlock']['class']);
+
+        // Handlers
+        $container->setParameter('ccdn_forum_forum.form.handler.forum_create.class', $config['form']['handler']['forum_create']['class']);
+        $container->setParameter('ccdn_forum_forum.form.handler.forum_update.class', $config['form']['handler']['forum_update']['class']);
+        $container->setParameter('ccdn_forum_forum.form.handler.forum_delete.class', $config['form']['handler']['forum_delete']['class']);
+
+        $container->setParameter('ccdn_forum_forum.form.handler.category_create.class', $config['form']['handler']['category_create']['class']);
+        $container->setParameter('ccdn_forum_forum.form.handler.category_update.class', $config['form']['handler']['category_update']['class']);
+        $container->setParameter('ccdn_forum_forum.form.handler.category_delete.class', $config['form']['handler']['category_delete']['class']);
+
+        $container->setParameter('ccdn_forum_forum.form.handler.board_create.class', $config['form']['handler']['board_create']['class']);
+        $container->setParameter('ccdn_forum_forum.form.handler.board_update.class', $config['form']['handler']['board_update']['class']);
+        $container->setParameter('ccdn_forum_forum.form.handler.board_delete.class', $config['form']['handler']['board_delete']['class']);
 
         $container->setParameter('ccdn_forum_forum.form.handler.topic_create.class', $config['form']['handler']['topic_create']['class']);
         $container->setParameter('ccdn_forum_forum.form.handler.topic_update.class', $config['form']['handler']['topic_update']['class']);
+        $container->setParameter('ccdn_forum_forum.form.handler.topic_delete.class', $config['form']['handler']['topic_delete']['class']);
+
+        $container->setParameter('ccdn_forum_forum.form.handler.change_topics_board.class', $config['form']['handler']['change_topics_board']['class']);
+
         $container->setParameter('ccdn_forum_forum.form.handler.post_create.class', $config['form']['handler']['post_create']['class']);
         $container->setParameter('ccdn_forum_forum.form.handler.post_update.class', $config['form']['handler']['post_update']['class']);
-        $container->setParameter('ccdn_forum_forum.form.handler.change_topics_board.class', $config['form']['handler']['change_topics_board']['class']);
+        $container->setParameter('ccdn_forum_forum.form.handler.post_delete.class', $config['form']['handler']['post_delete']['class']);
+        $container->setParameter('ccdn_forum_forum.form.handler.post_unlock.class', $config['form']['handler']['post_unlock']['class']);
 
         return $this;
     }
@@ -242,10 +278,15 @@ class CCDNForumForumExtension extends Extension
     private function getComponentSection(array $config, ContainerBuilder $container)
     {
         $container->setParameter('ccdn_forum_forum.component.dashboard.integrator.class', $config['component']['dashboard']['integrator']['class']);
-
-        $container->setParameter('ccdn_forum_forum.component.twig_extension.board_list.class', $config['component']['twig_extension']['board_list']['class']);
-
+        $container->setParameter('ccdn_forum_forum.component.crumb_factory.class', $config['component']['crumb_factory']['class']);
+        $container->setParameter('ccdn_forum_forum.component.crumb_builder.class', $config['component']['crumb_builder']['class']);
+        $container->setParameter('ccdn_forum_forum.component.security.authorizer.class', $config['component']['security']['authorizer']['class']);
+        $container->setParameter('ccdn_forum_forum.component.role_helper.class', $config['component']['role_helper']['class']);
         $container->setParameter('ccdn_forum_forum.component.flood_control.class', $config['component']['flood_control']['class']);
+        $container->setParameter('ccdn_forum_forum.component.twig_extension.board_list.class', $config['component']['twig_extension']['board_list']['class']);
+        $container->setParameter('ccdn_forum_forum.component.twig_extension.authorizer.class', $config['component']['twig_extension']['authorizer']['class']);
+        $container->setParameter('ccdn_forum_forum.component.event_listener.flash.class', $config['component']['event_listener']['flash']['class']);
+        $container->setParameter('ccdn_forum_forum.component.event_listener.subscriber.class', $config['component']['event_listener']['subscriber']['class']);
 
         return $this;
     }

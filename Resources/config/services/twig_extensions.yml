@@ -1,7 +1,6 @@
 parameters:
 
     # Service Parameters defined in app/config.
-    ccdn_forum_forum.component.twig_extension.authorizer.class: CCDNForum\ForumBundle\Component\TwigExtension\AuthorizerExtension
 
 services:
 

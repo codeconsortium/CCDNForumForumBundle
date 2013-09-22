@@ -1,7 +1,5 @@
 parameters:
 
     # Service Parameters defined in app/config
-    ccdn_forum_forum.model.utility.pagination_config.class: CCDNForum\ForumBundle\Model\Utility\PaginationConfig
-    ccdn_forum_forum.model.utility_bag.class: CCDNForum\ForumBundle\Model\Utility\Bag\UtilityBag
 
 services:

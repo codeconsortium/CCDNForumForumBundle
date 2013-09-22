@@ -1,15 +1,6 @@
 parameters:
 
     # Service Parameters defined in app/config.
-    ccdn_forum_forum.component.role_helper.class: CCDNForum\ForumBundle\Component\Helper\RoleHelper
-
-    ccdn_forum_forum.component.security.authorizer.class: CCDNForum\ForumBundle\Component\Security\Authorizer
-
-    ccdn_forum_forum.component.event_listener.flash.class:      CCDNForum\ForumBundle\Component\Dispatcher\Listener\FlashListener
-    ccdn_forum_forum.component.event_listener.subscriber.class: CCDNForum\ForumBundle\Component\Dispatcher\Listener\SubscriberListener
-
-    ccdn_forum_forum.component.crumb_factory.class:          CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbFactory
-    ccdn_forum_forum.component.crumb_builder.class:          CCDNForum\ForumBundle\Component\Crumbs\CrumbBuilder
 
 services:
 

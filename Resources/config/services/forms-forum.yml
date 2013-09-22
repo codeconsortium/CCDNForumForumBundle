@@ -1,15 +1,6 @@
 parameters:
 
     # Service Parameters defined in app/config.
-    ccdn_forum_forum.form.handler.forum_create.class: CCDNForum\ForumBundle\Form\Handler\Admin\Forum\ForumCreateFormHandler
-    ccdn_forum_forum.form.handler.forum_update.class: CCDNForum\ForumBundle\Form\Handler\Admin\Forum\ForumUpdateFormHandler
-    ccdn_forum_forum.form.handler.forum_delete.class: CCDNForum\ForumBundle\Form\Handler\Admin\Forum\ForumDeleteFormHandler
-
-    ccdn_forum_forum.form.type.forum_create.class:    CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumCreateFormType
-    ccdn_forum_forum.form.type.forum_update.class:    CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumUpdateFormType
-    ccdn_forum_forum.form.type.forum_delete.class:    CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumDeleteFormType
-
-    ccdn_forum_forum.entity.forum.class:              CCDNForum\ForumBundle\Entity\Forum
 
 services:
 

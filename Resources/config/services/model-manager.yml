@@ -1,7 +1,6 @@
 parameters:
 
     # Service Parameters defined in app/config.
-    ccdn_forum_forum.manager.forum.class: CCDNForum\ForumBundle\Model\Manager\ForumManager
 
 services:
 

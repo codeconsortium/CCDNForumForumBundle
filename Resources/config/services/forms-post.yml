@@ -1,11 +1,6 @@
 parameters:
 
     # Service Parameters defined in app/config.
-    ccdn_forum_forum.form.type.post_delete.class:    CCDNForum\ForumBundle\Form\Type\User\Post\PostDeleteFormType
-    ccdn_forum_forum.form.handler.post_delete.class: CCDNForum\ForumBundle\Form\Handler\User\Post\PostDeleteFormHandler
-
-    ccdn_forum_forum.form.type.post_unlock.class:    CCDNForum\ForumBundle\Form\Type\Moderator\Post\PostUnlockFormType
-    ccdn_forum_forum.form.handler.post_unlock.class: CCDNForum\ForumBundle\Form\Handler\Moderator\Post\PostUnlockFormHandler
 
 services:
 

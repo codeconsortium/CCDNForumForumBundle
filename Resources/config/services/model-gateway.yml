@@ -1,8 +1,6 @@
 parameters:
 
     # Service Parameters defined in app/config.
-    ccdn_forum_forum.entity.forum.class: CCDNForum\ForumBundle\Entity\Forum
-    ccdn_forum_forum.gateway.forum.class: CCDNForum\ForumBundle\Model\Gateway\ForumGateway
 
 services:
 

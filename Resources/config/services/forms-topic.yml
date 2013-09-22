@@ -1,8 +1,6 @@
 parameters:
 
     # Service Parameters defined in app/config.
-    ccdn_forum_forum.form.handler.topic_delete.class: CCDNForum\ForumBundle\Form\Handler\Moderator\Topic\TopicDeleteFormHandler
-    ccdn_forum_forum.form.type.topic_delete.class:    CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicDeleteFormType
 
 services:
 
