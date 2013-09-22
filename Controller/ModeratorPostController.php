@@ -188,6 +188,11 @@ class ModeratorPostController extends ModeratorPostBaseController
         $this->dispatch(ForumEvents::MODERATOR_POST_RESTORE_COMPLETE, new ModeratorPostEvent($this->getRequest(), $post));
 
         // forward user
-        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array('topicId' => $post->getTopic()->getId()) ));
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
+            array(
+                'forumName' => $forumName,
+                'topicId' => $post->getTopic()->getId()
+            )
+        ));
     }
 }

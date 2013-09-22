@@ -275,8 +275,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
 
         $this->getTopicModel()->restore($topic)->flush();
 
-        // set flash message
-        //$this->setFlash('notice', $this->trans('flash.topic.restore.success', array('%topic_title%' => $topic->getTitle())));
+        $this->dispatch(ForumEvents::MODERATOR_TOPIC_RESTORE_COMPLETE, new ModeratorTopicEvent($this->getRequest(), $topic));
 
         // forward user
         return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',

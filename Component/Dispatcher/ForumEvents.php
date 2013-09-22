@@ -424,6 +424,177 @@ final class ForumEvents
 
     /**
      *
+     * The MODERATOR_TOPIC_SOFT_DELETE_INITIALISE event occurs when the topic soft-delete process is initalised.
+     *
+     * This event allows you to modify the default values of the topic entity object before binding the form.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+     */
+    const MODERATOR_TOPIC_SOFT_DELETE_INITIALISE = 'ccdn_forum.moderator.topic.soft_delete.initialise';
+
+    /**
+     *
+     * The MODERATOR_TOPIC_SOFT_DELETE_SUCCESS event occurs when the topic soft-delete process is successful before persisting.
+     *
+     * This event allows you to modify the values of the topic entity object after form submission before persisting.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+     */
+    const MODERATOR_TOPIC_SOFT_DELETE_SUCCESS = 'ccdn_forum.moderator.topic.soft_delete.success';
+
+    /**
+     *
+     * The MODERATOR_TOPIC_SOFT_DELETE_COMPLETE event occurs when the topic soft-delete process is completed successfully after persisting.
+     *
+     * This event allows you to modify the values of the topic entity after persisting.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+     */
+    const MODERATOR_TOPIC_SOFT_DELETE_COMPLETE = 'ccdn_forum.moderator.topic.soft_delete.complete';
+
+    /**
+     *
+     * The MODERATOR_TOPIC_SOFT_DELETE_RESPONSE event occurs when the topic soft-delete process finishes and returns a HTTP response.
+     *
+     * This event allows you to modify the default values of the response object returned from the controller action.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicResponseEvent instance.
+     */
+    const MODERATOR_TOPIC_SOFT_DELETE_RESPONSE = 'ccdn_forum.moderator.topic.soft_delete.response';
+
+    /**
+     *
+     * The MODERATOR_TOPIC_RESTORE_COMPLETE event occurs when the topic restore process is completed successfully after persisting.
+     *
+     * This event allows you to modify the values of the topic entity after persisting.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+     */
+    const MODERATOR_TOPIC_RESTORE_COMPLETE = 'ccdn_forum.moderator.topic.restore.complete';
+
+    /**
+     *
+     * The MODERATOR_TOPIC_STICKY_COMPLETE event occurs when the topic sticky process is completed successfully after persisting.
+     *
+     * This event allows you to modify the values of the topic entity after persisting.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+     */
+    const MODERATOR_TOPIC_STICKY_COMPLETE = 'ccdn_forum.moderator.topic.sticky.complete';
+
+    /**
+     *
+     * The MODERATOR_TOPIC_UNSTICKY_COMPLETE event occurs when the topic unsticky process is completed successfully after persisting.
+     *
+     * This event allows you to modify the values of the topic entity after persisting.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+     */
+    const MODERATOR_TOPIC_UNSTICKY_COMPLETE = 'ccdn_forum.moderator.topic.unsticky.complete';
+
+    /**
+     *
+     * The MODERATOR_TOPIC_CLOSE_COMPLETE event occurs when the topic close process is completed successfully after persisting.
+     *
+     * This event allows you to modify the values of the topic entity after persisting.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+     */
+    const MODERATOR_TOPIC_CLOSE_COMPLETE = 'ccdn_forum.moderator.topic.close.complete';
+
+    /**
+     *
+     * The MODERATOR_TOPIC_REOPEN_COMPLETE event occurs when the topic reopen process is completed successfully after persisting.
+     *
+     * This event allows you to modify the values of the topic entity after persisting.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+     */
+    const MODERATOR_TOPIC_REOPEN_COMPLETE = 'ccdn_forum.moderator.topic.reopen.complete';
+
+    /**
+     *
+     * The MODERATOR_TOPIC_CHANGE_BOARD_INITIALISE event occurs when the topic move process is initalised.
+     *
+     * This event allows you to modify the default values of the topic entity object before binding the form.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+     */
+    const MODERATOR_TOPIC_CHANGE_BOARD_INITIALISE = 'ccdn_forum.moderator.topic.change_board.initialise';
+
+    /**
+     *
+     * The MODERATOR_TOPIC_CHANGE_BOARD_SUCCESS event occurs when the topic move process is successful before persisting.
+     *
+     * This event allows you to modify the values of the topic entity object after form submission before persisting.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+     */
+    const MODERATOR_TOPIC_CHANGE_BOARD_SUCCESS = 'ccdn_forum.moderator.topic.change_board.success';
+
+    /**
+     *
+     * The MODERATOR_TOPIC_CHANGE_BOARD_COMPLETE event occurs when the topic move process is completed successfully after persisting.
+     *
+     * This event allows you to modify the values of the topic entity after persisting.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+     */
+    const MODERATOR_TOPIC_CHANGE_BOARD_COMPLETE = 'ccdn_forum.moderator.topic.change_board.complete';
+
+    /**
+     *
+     * The MODERATOR_TOPIC_CHANGE_BOARD_RESPONSE event occurs when the topic move process finishes and returns a HTTP response.
+     *
+     * This event allows you to modify the default values of the response object returned from the controller action.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicResponseEvent instance.
+     */
+    const MODERATOR_TOPIC_CHANGE_BOARD_RESPONSE = 'ccdn_forum.moderator.topic.change_board.response';
+
+    /**
+     *
+     * The MODERATOR_POST_RESTORE_COMPLETE event occurs when the post restore process is completed successfully after persisting.
+     *
+     * This event allows you to modify the values of the topic entity after persisting.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent instance.
+     */
+    const MODERATOR_POST_RESTORE_COMPLETE = 'ccdn_forum.moderator.post.restore.complete';
+
+    /**
+     *
+     * The MODERATOR_POST_UNLOCK_INITIALISE event occurs when the post unlock process is initalised.
+     *
+     * This event allows you to modify the default values of the post entity object before binding the form.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent instance.
+     */
+    const MODERATOR_POST_UNLOCK_INITIALISE = 'ccdn_forum.moderator.post.unlock.initialise';
+
+    /**
+     *
+     * The MODERATOR_POST_UNLOCK_SUCCESS event occurs when the post unlock process is successful before persisting.
+     *
+     * This event allows you to modify the values of the post entity object after form submission before persisting.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent instance.
+     */
+    const MODERATOR_POST_UNLOCK_SUCCESS = 'ccdn_forum.moderator.post.unlock.success';
+
+    /**
+     *
+     * The MODERATOR_POST_UNLOCK_COMPLETE event occurs when the post unlock process is completed successfully after persisting.
+     *
+     * This event allows you to modify the values of the post entity after persisting.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent instance.
+     */
+    const MODERATOR_POST_UNLOCK_COMPLETE = 'ccdn_forum.moderator.post.unlock.complete';
+
+    /**
+     *
+     * The MODERATOR_POST_UNLOCK_RESPONSE event occurs when the post unlock process finishes and returns a HTTP response.
+     *
+     * This event allows you to modify the default values of the response object returned from the controller action.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostResponseEvent instance.
+     */
+    const MODERATOR_POST_UNLOCK_RESPONSE = 'ccdn_forum.moderator.post.unlock.response';
+
+    /**
+     *
+     * The MODERATOR_POST_LOCK_COMPLETE event occurs when the post lock process is completed successfully after persisting.
+     *
+     * This event allows you to modify the values of the post entity after persisting.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent instance.
+     */
+    const MODERATOR_POST_LOCK_COMPLETE = 'ccdn_forum.moderator.post.lock.complete';
+
+    /**
+     *
      * The USER_TOPIC_CREATE_INITIALISE event occurs when the topic create process is initalised.
      *
      * This event allows you to modify the default values of the topic entity object before binding the form.
@@ -514,6 +685,24 @@ final class ForumEvents
 
     /**
      *
+     * The USER_TOPIC_SUBSCRIBE_COMPLETE event occurs when the topic subscribe process is completed successfully after persisting.
+     *
+     * This event allows you to modify the values of the topic entity after persisting.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent instance.
+     */
+    const USER_TOPIC_SUBSCRIBE_COMPLETE = 'ccdn_forum.user.topic.subscribe.complete';
+
+    /**
+     *
+     * The USER_TOPIC_UNSUBSCRIBE_COMPLETE event occurs when the topic unsubscribe process is completed successfully after persisting.
+     *
+     * This event allows you to modify the values of the topic entity after persisting.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent instance.
+     */
+    const USER_TOPIC_UNSUBSCRIBE_COMPLETE = 'ccdn_forum.user.topic.unsubscribe.complete';
+
+    /**
+     *
      * The USER_POST_EDIT_INITIALISE event occurs when the post edit process is initalised.
      *
      * This event allows you to modify the default values of the post entity object before binding the form.
@@ -583,166 +772,4 @@ final class ForumEvents
      * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostResponseEvent instance.
      */
     const USER_POST_SOFT_DELETE_RESPONSE = 'ccdn_forum.user.post.soft_delete.response';
-
-    /**
-     *
-     * The MODERATOR_TOPIC_SOFT_DELETE_INITIALISE event occurs when the topic soft-delete process is initalised.
-     *
-     * This event allows you to modify the default values of the topic entity object before binding the form.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
-     */
-    const MODERATOR_TOPIC_SOFT_DELETE_INITIALISE = 'ccdn_forum.moderator.topic.soft_delete.initialise';
-
-    /**
-     *
-     * The MODERATOR_TOPIC_SOFT_DELETE_SUCCESS event occurs when the topic soft-delete process is successful before persisting.
-     *
-     * This event allows you to modify the values of the topic entity object after form submission before persisting.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
-     */
-    const MODERATOR_TOPIC_SOFT_DELETE_SUCCESS = 'ccdn_forum.moderator.topic.soft_delete.success';
-
-    /**
-     *
-     * The MODERATOR_TOPIC_SOFT_DELETE_COMPLETE event occurs when the topic soft-delete process is completed successfully after persisting.
-     *
-     * This event allows you to modify the values of the topic entity after persisting.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
-     */
-    const MODERATOR_TOPIC_SOFT_DELETE_COMPLETE = 'ccdn_forum.moderator.topic.soft_delete.complete';
-
-    /**
-     *
-     * The MODERATOR_TOPIC_SOFT_DELETE_RESPONSE event occurs when the topic soft-delete process finishes and returns a HTTP response.
-     *
-     * This event allows you to modify the default values of the response object returned from the controller action.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicResponseEvent instance.
-     */
-    const MODERATOR_TOPIC_SOFT_DELETE_RESPONSE = 'ccdn_forum.moderator.topic.soft_delete.response';
-
-    /**
-     *
-     * The MODERATOR_POST_RESTORE_COMPLETE event occurs when the post restore process is completed successfully after persisting.
-     *
-     * This event allows you to modify the values of the topic entity after persisting.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent instance.
-     */
-    const MODERATOR_POST_RESTORE_COMPLETE = 'ccdn_forum.moderator.post.restore.complete';
-
-    /**
-     *
-     * The MODERATOR_TOPIC_STICKY_COMPLETE event occurs when the topic sticky process is completed successfully after persisting.
-     *
-     * This event allows you to modify the values of the topic entity after persisting.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
-     */
-    const MODERATOR_TOPIC_STICKY_COMPLETE = 'ccdn_forum.moderator.topic.sticky.complete';
-
-    /**
-     *
-     * The MODERATOR_TOPIC_UNSTICKY_COMPLETE event occurs when the topic unsticky process is completed successfully after persisting.
-     *
-     * This event allows you to modify the values of the topic entity after persisting.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
-     */
-    const MODERATOR_TOPIC_UNSTICKY_COMPLETE = 'ccdn_forum.moderator.topic.unsticky.complete';
-
-    /**
-     *
-     * The MODERATOR_TOPIC_CLOSE_COMPLETE event occurs when the topic close process is completed successfully after persisting.
-     *
-     * This event allows you to modify the values of the topic entity after persisting.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
-     */
-    const MODERATOR_TOPIC_CLOSE_COMPLETE = 'ccdn_forum.moderator.topic.close.complete';
-
-    /**
-     *
-     * The MODERATOR_TOPIC_REOPEN_COMPLETE event occurs when the topic reopen process is completed successfully after persisting.
-     *
-     * This event allows you to modify the values of the topic entity after persisting.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
-     */
-    const MODERATOR_TOPIC_REOPEN_COMPLETE = 'ccdn_forum.moderator.topic.reopen.complete';
-
-    /**
-     *
-     * The MODERATOR_TOPIC_CHANGE_BOARD_INITIALISE event occurs when the topic move process is initalised.
-     *
-     * This event allows you to modify the default values of the topic entity object before binding the form.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
-     */
-    const MODERATOR_TOPIC_CHANGE_BOARD_INITIALISE = 'ccdn_forum.moderator.topic.change_board.initialise';
-
-    /**
-     *
-     * The MODERATOR_TOPIC_CHANGE_BOARD_SUCCESS event occurs when the topic move process is successful before persisting.
-     *
-     * This event allows you to modify the values of the topic entity object after form submission before persisting.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
-     */
-    const MODERATOR_TOPIC_CHANGE_BOARD_SUCCESS = 'ccdn_forum.moderator.topic.change_board.success';
-
-    /**
-     *
-     * The MODERATOR_TOPIC_CHANGE_BOARD_COMPLETE event occurs when the topic move process is completed successfully after persisting.
-     *
-     * This event allows you to modify the values of the topic entity after persisting.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
-     */
-    const MODERATOR_TOPIC_CHANGE_BOARD_COMPLETE = 'ccdn_forum.moderator.topic.change_board.complete';
-
-    /**
-     *
-     * The MODERATOR_TOPIC_CHANGE_BOARD_RESPONSE event occurs when the topic move process finishes and returns a HTTP response.
-     *
-     * This event allows you to modify the default values of the response object returned from the controller action.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicResponseEvent instance.
-     */
-    const MODERATOR_TOPIC_CHANGE_BOARD_RESPONSE = 'ccdn_forum.moderator.topic.change_board.response';
-
-    /**
-     *
-     * The MODERATOR_POST_UNLOCK_INITIALISE event occurs when the post unlock process is initalised.
-     *
-     * This event allows you to modify the default values of the post entity object before binding the form.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent instance.
-     */
-    const MODERATOR_POST_UNLOCK_INITIALISE = 'ccdn_forum.moderator.post.unlock.initialise';
-
-    /**
-     *
-     * The MODERATOR_POST_UNLOCK_SUCCESS event occurs when the post unlock process is successful before persisting.
-     *
-     * This event allows you to modify the values of the post entity object after form submission before persisting.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent instance.
-     */
-    const MODERATOR_POST_UNLOCK_SUCCESS = 'ccdn_forum.moderator.post.unlock.success';
-
-    /**
-     *
-     * The MODERATOR_POST_UNLOCK_COMPLETE event occurs when the post unlock process is completed successfully after persisting.
-     *
-     * This event allows you to modify the values of the post entity after persisting.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent instance.
-     */
-    const MODERATOR_POST_UNLOCK_COMPLETE = 'ccdn_forum.moderator.post.unlock.complete';
-
-    /**
-     *
-     * The MODERATOR_POST_UNLOCK_RESPONSE event occurs when the post unlock process finishes and returns a HTTP response.
-     *
-     * This event allows you to modify the default values of the response object returned from the controller action.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostResponseEvent instance.
-     */
-    const MODERATOR_POST_UNLOCK_RESPONSE = 'ccdn_forum.moderator.post.unlock.response';
-
-    /**
-     *
-     * The MODERATOR_POST_LOCK_COMPLETE event occurs when the post lock process is completed successfully after persisting.
-     *
-     * This event allows you to modify the values of the post entity after persisting.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent instance.
-     */
-    const MODERATOR_POST_LOCK_COMPLETE = 'ccdn_forum.moderator.post.lock.complete';
 }

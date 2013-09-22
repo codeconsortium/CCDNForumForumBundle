@@ -101,10 +101,10 @@ class UserTopicController extends UserTopicBaseController
      */
     public function createAction($forumName, $boardId)
     {
+        $this->isAuthorised('ROLE_USER');
+
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
-        $this->isAuthorised('ROLE_USER');
 
         $board = $this->getBoardModel()->findOneBoardByIdWithCategory($boardId);
         $this->isFound($board);
@@ -145,10 +145,10 @@ class UserTopicController extends UserTopicBaseController
      */
     public function createProcessAction($forumName, $boardId)
     {
+        $this->isAuthorised('ROLE_USER');
+
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
-        $this->isAuthorised('ROLE_USER');
 
         $board = $this->getBoardModel()->findOneBoardByIdWithCategory($boardId);
         $this->isFound($board);
@@ -208,10 +208,10 @@ class UserTopicController extends UserTopicBaseController
      */
     public function replyAction($forumName, $topicId)
     {
+        $this->isAuthorised('ROLE_USER');
+
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
-        $this->isAuthorised('ROLE_USER');
 
         $topic = $this->getTopicModel()->findOneTopicByIdWithPosts($topicId, true);
         $this->isFound($topic);
@@ -252,10 +252,10 @@ class UserTopicController extends UserTopicBaseController
      */
     public function replyProcessAction($forumName, $topicId)
     {
+        $this->isAuthorised('ROLE_USER');
+
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
-        $this->isAuthorised('ROLE_USER');
 
         $topic = $this->getTopicModel()->findOneTopicByIdWithPosts($topicId, true);
         $this->isFound($topic);

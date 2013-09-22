@@ -147,17 +147,6 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @param  string $action, string $value
-     * @return string
-     */
-    protected function setFlash($action, $value)
-    {
-        $this->container->get('session')->setFlash($action, $value);
-    }
-
-    /**
-     *
-     * @access protected
      * @return \Symfony\Bundle\FrameworkBundle\Routing\Router
      */
     protected function getRouter()

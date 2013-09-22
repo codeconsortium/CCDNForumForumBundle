@@ -73,20 +73,21 @@ class FlashListener implements EventSubscriberInterface
             ForumEvents::ADMIN_BOARD_CREATE_COMPLETE          => 'onBoardCreateComplete',
             ForumEvents::ADMIN_BOARD_EDIT_COMPLETE            => 'onBoardEditComplete',
             ForumEvents::ADMIN_BOARD_DELETE_COMPLETE          => 'onBoardDeleteComplete',
+            ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_COMPLETE => 'onTopicDeleteComplete',
+            ForumEvents::MODERATOR_TOPIC_RESTORE_COMPLETE     => 'onTopicRestoreComplete',
+            ForumEvents::MODERATOR_TOPIC_STICKY_COMPLETE      => 'onTopicStickyComplete',
+            ForumEvents::MODERATOR_TOPIC_UNSTICKY_COMPLETE    => 'onTopicUnstickyComplete',
+            ForumEvents::MODERATOR_TOPIC_CLOSE_COMPLETE       => 'onTopicCloseComplete',
+            ForumEvents::MODERATOR_TOPIC_REOPEN_COMPLETE      => 'onTopicReopenComplete',
+            ForumEvents::MODERATOR_POST_RESTORE_COMPLETE      => 'onPostRestoreComplete',
+            ForumEvents::MODERATOR_POST_UNLOCK_COMPLETE       => 'onPostUnlockComplete',
+            ForumEvents::MODERATOR_POST_LOCK_COMPLETE         => 'onPostLockComplete',
             ForumEvents::USER_TOPIC_CREATE_COMPLETE           => 'onTopicCreateComplete',
             ForumEvents::USER_TOPIC_CREATE_FLOODED            => 'onTopicCreateFlooded',
             ForumEvents::USER_TOPIC_REPLY_COMPLETE            => 'onTopicReplyComplete',
             ForumEvents::USER_TOPIC_REPLY_FLOODED             => 'onTopicReplyFlooded',
             ForumEvents::USER_POST_EDIT_COMPLETE              => 'onPostEditComplete',
             ForumEvents::USER_POST_SOFT_DELETE_COMPLETE       => 'onPostSoftDeleteComplete',
-            ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_COMPLETE => 'onTopicDeleteComplete',
-            ForumEvents::MODERATOR_POST_RESTORE_COMPLETE      => 'onPostRestoreComplete',
-            ForumEvents::MODERATOR_POST_UNLOCK_COMPLETE       => 'onPostUnlockComplete',
-            ForumEvents::MODERATOR_POST_LOCK_COMPLETE         => 'onPostLockComplete',
-            ForumEvents::MODERATOR_TOPIC_STICKY_COMPLETE      => 'onTopicStickyComplete',
-            ForumEvents::MODERATOR_TOPIC_UNSTICKY_COMPLETE    => 'onTopicUnstickyComplete',
-            ForumEvents::MODERATOR_TOPIC_CLOSE_COMPLETE       => 'onTopicCloseComplete',
-            ForumEvents::MODERATOR_TOPIC_REOPEN_COMPLETE      => 'onTopicReopenComplete',
         );
     }
 
@@ -219,83 +220,6 @@ class FlashListener implements EventSubscriberInterface
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
-     */
-    public function onTopicCreateComplete(UserTopicEvent $event)
-    {
-        if ($event->getTopic()) {
-            if ($event->getTopic()->getId()) {
-                $this->session->setFlash('success', 'Successfully posted the topic "' . $event->getTopic()->getTitle() . '"');
-            }
-        }
-    }
-
-    /**
-     *
-     * @access public
-     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent $event
-     */
-    public function onTopicCreateFlooded(UserTopicFloodEvent $event)
-    {
-        $this->session->setFlash('warning', 'You have posted too much in a short time, take a break.');
-        //$this->setFlash('warning', $this->trans('flash.topic.flood_control'));
-    }
-
-    /**
-     *
-     * @access public
-     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
-     */
-    public function onTopicReplyComplete(UserTopicEvent $event)
-    {
-        if ($event->getTopic()) {
-            if ($event->getTopic()->getId()) {
-                $this->session->setFlash('success', 'Successfully replied to the topic "' . $event->getTopic()->getTitle() . '"');
-            }
-        }
-    }
-
-    /**
-     *
-     * @access public
-     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent $event
-     */
-    public function onTopicReplyFlooded(UserTopicFloodEvent $event)
-    {
-        $this->session->setFlash('warning', 'You have posted too much in a short time, take a break.');
-    }
-
-    /**
-     *
-     * @access public
-     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent $event
-     */
-    public function onPostEditComplete(UserPostEvent $event)
-    {
-        if ($event->getPost()) {
-            if ($event->getPost()->getId()) {
-                $this->session->setFlash('success', 'Successfully edited the post "' . $event->getPost()->getId() . '"');
-            }
-        }
-    }
-
-    /**
-     *
-     * @access public
-     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent $event
-     */
-    public function onPostSoftDeleteComplete(UserPostEvent $event)
-    {
-        if ($event->getPost()) {
-            if ($event->getPost()->getId()) {
-                $this->session->setFlash('success', 'Successfully deleted the post "' . $event->getPost()->getId() . '"');
-            }
-        }
-    }
-
-    /**
-     *
-     * @access public
      * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent $event
      */
     public function onTopicDeleteComplete(ModeratorTopicEvent $event)
@@ -311,13 +235,13 @@ class FlashListener implements EventSubscriberInterface
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent $event
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent $event
      */
-    public function onPostRestoreComplete(ModeratorPostEvent $event)
+    public function onTopicRestoreComplete(ModeratorTopicEvent $event)
     {
-        if ($event->getPost()) {
-            if ($event->getPost()->getId()) {
-                $this->session->setFlash('success', 'Successfully restored the post "' . $event->getPost()->getId() . '"');
+        if ($event->getTopic()) {
+            if ($event->getTopic()->getId()) {
+                $this->session->setFlash('success', 'Successfully restored the topic "' . $event->getTopic()->getId() . '"');
             }
         }
     }
@@ -401,11 +325,102 @@ class FlashListener implements EventSubscriberInterface
      * @access public
      * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent $event
      */
+    public function onPostRestoreComplete(ModeratorPostEvent $event)
+    {
+        if ($event->getPost()) {
+            if ($event->getPost()->getId()) {
+                $this->session->setFlash('success', 'Successfully restored the post "' . $event->getPost()->getId() . '"');
+            }
+        }
+    }
+
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent $event
+     */
     public function onPostLockComplete(ModeratorPostEvent $event)
     {
         if ($event->getPost()) {
             if ($event->getPost()->getId()) {
                 $this->session->setFlash('success', 'Successfully locked post "' . $event->getPost()->getId() . '"');
+            }
+        }
+    }
+
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
+     */
+    public function onTopicCreateComplete(UserTopicEvent $event)
+    {
+        if ($event->getTopic()) {
+            if ($event->getTopic()->getId()) {
+                $this->session->setFlash('success', 'Successfully posted the topic "' . $event->getTopic()->getTitle() . '"');
+            }
+        }
+    }
+
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent $event
+     */
+    public function onTopicCreateFlooded(UserTopicFloodEvent $event)
+    {
+        $this->session->setFlash('warning', 'You have posted too much in a short time, take a break.');
+        //$this->setFlash('warning', $this->trans('flash.topic.flood_control'));
+    }
+
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
+     */
+    public function onTopicReplyComplete(UserTopicEvent $event)
+    {
+        if ($event->getTopic()) {
+            if ($event->getTopic()->getId()) {
+                $this->session->setFlash('success', 'Successfully replied to the topic "' . $event->getTopic()->getTitle() . '"');
+            }
+        }
+    }
+
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent $event
+     */
+    public function onTopicReplyFlooded(UserTopicFloodEvent $event)
+    {
+        $this->session->setFlash('warning', 'You have posted too much in a short time, take a break.');
+    }
+
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent $event
+     */
+    public function onPostEditComplete(UserPostEvent $event)
+    {
+        if ($event->getPost()) {
+            if ($event->getPost()->getId()) {
+                $this->session->setFlash('success', 'Successfully edited the post "' . $event->getPost()->getId() . '"');
+            }
+        }
+    }
+
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent $event
+     */
+    public function onPostSoftDeleteComplete(UserPostEvent $event)
+    {
+        if ($event->getPost()) {
+            if ($event->getPost()->getId()) {
+                $this->session->setFlash('success', 'Successfully deleted the post "' . $event->getPost()->getId() . '"');
             }
         }
     }

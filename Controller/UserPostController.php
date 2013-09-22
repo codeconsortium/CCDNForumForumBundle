@@ -84,10 +84,10 @@ class UserPostController extends UserPostBaseController
      */
     public function editAction($forumName, $postId)
     {
+        $this->isAuthorised('ROLE_USER');
+
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
-        $this->isAuthorised('ROLE_USER');
 
         $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
         $this->isFound($post);
@@ -123,10 +123,10 @@ class UserPostController extends UserPostBaseController
      */
     public function editProcessAction($forumName, $postId)
     {
+        $this->isAuthorised('ROLE_USER');
+
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
-        $this->isAuthorised('ROLE_USER');
 
         $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
         $this->isFound($post);
@@ -182,10 +182,10 @@ class UserPostController extends UserPostBaseController
      */
     public function deleteAction($forumName, $postId)
     {
+        $this->isAuthorised('ROLE_USER');
+
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
-        $this->isAuthorised('ROLE_USER');
 
         $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
         $this->isFound($post);
@@ -220,10 +220,10 @@ class UserPostController extends UserPostBaseController
      */
     public function deleteProcessAction($forumName, $postId)
     {
+        $this->isAuthorised('ROLE_USER');
+
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
-        $this->isAuthorised('ROLE_USER');
 
         $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
         $this->isFound($post);

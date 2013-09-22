@@ -14,6 +14,10 @@
 namespace CCDNForum\ForumBundle\Controller;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\EventDispatcher\Event;
+
+use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent;
 
 /**
  *
@@ -140,9 +144,14 @@ class UserSubscriptionController extends BaseController
 
         $this->getSubscriptionModel()->subscribe($topic, $this->getUser())->flush();
 
-        $this->setFlash('notice', $this->trans('flash.subscription.topic.subscribed', array('%topic_title%' => $topic->getTitle() )));
+        $this->dispatch(ForumEvents::USER_TOPIC_SUBSCRIBE_COMPLETE, new UserTopicEvent($this->getRequest(), $topic, true));
 
-        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array('topicId' => $topicId)) );
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
+            array(
+                'forumName' => $forumName,
+                'topicId' => $topicId
+            )
+        ));
     }
 
     /**
@@ -171,8 +180,13 @@ class UserSubscriptionController extends BaseController
 
         $this->getSubscriptionModel()->unsubscribe($topic, $this->getUser()->getId())->flush();
 
-        $this->setFlash('notice', $this->trans('flash.subscription.topic.unsubscribed', array('%topic_title%' => $topic->getTitle() )));
+        $this->dispatch(ForumEvents::USER_TOPIC_UNSUBSCRIBE_COMPLETE, new UserTopicEvent($this->getRequest(), $topic, false));
 
-        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array('topicId' => $topicId)) );
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
+            array(
+                'forumName' => $forumName,
+                'topicId' => $topicId
+            )
+        ));
     }
 }

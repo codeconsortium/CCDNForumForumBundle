@@ -13,8 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
-use Symfony\Component\EventDispatcher\Event;
-
 use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Topic;
 
