@@ -32,34 +32,34 @@ use CCDNForum\ForumBundle\Entity\Post;
  */
 class UserPostResponseEvent extends UserPostEvent
 {
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Response $response
-	 */
-	protected $response;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Response $response
+     */
+    protected $response;
 
-	/**
-	 * 
-	 * @access public
-	 * @param \Symfony\Component\HttpFoundation\Request  $request
-	 * @param \CCDNForum\ForumBundle\Entity\Post         $post
-	 * @param \Symfony\Component\HttpFoundation\Response $response
-	 */
-	public function __construct(Request $request, Post $post = null, Response $response)
-	{
-		$this->request = $request;
-		$this->post = $post;
-		$this->response = $response;
-	}
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\HttpFoundation\Request  $request
+     * @param \CCDNForum\ForumBundle\Entity\Post         $post
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     */
+    public function __construct(Request $request, Post $post = null, Response $response)
+    {
+        $this->request = $request;
+        $this->post = $post;
+        $this->response = $response;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \Symfony\Component\HttpFoundation\Response
-	 */
-	public function getResponse()
-	{
-		return $this->response;
-	}
+    /**
+     *
+     * @access public
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function getResponse()
+    {
+        return $this->response;
+    }
 }

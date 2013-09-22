@@ -55,14 +55,14 @@ class BoardUpdateFormType extends AbstractType
      *
      * @access public
      * @var string $boardClass
-	 * @var string $categoryClass
-	 * @var Object $roleHelper
+     * @var string $categoryClass
+     * @var Object $roleHelper
      */
     public function __construct($boardClass, $categoryClass, $roleHelper)
     {
         $this->boardClass = $boardClass;
-		$this->categoryClass = $categoryClass;
-		$this->roleHelper = $roleHelper;
+        $this->categoryClass = $categoryClass;
+        $this->roleHelper = $roleHelper;
     }
 
     /**
@@ -75,18 +75,18 @@ class BoardUpdateFormType extends AbstractType
         $builder
             ->add('category', 'entity',
                 array(
-					'property'           => 'name',
-					'class'              => $this->categoryClass,
-					'group_by'           => 'category.forum.name',
-					'query_builder'      =>
-						function(EntityRepository $er) {
-							return $er
-								->createQueryBuilder('c')
-					        	->leftJoin('c.forum', 'f')
-								//->groupBy('c.forum')
-							;
-						},
-					'required'           => false,
+                    'property'           => 'name',
+                    'class'              => $this->categoryClass,
+                    'group_by'           => 'category.forum.name',
+                    'query_builder'      =>
+                        function(EntityRepository $er) {
+                            return $er
+                                ->createQueryBuilder('c')
+                                ->leftJoin('c.forum', 'f')
+                                //->groupBy('c.forum')
+                            ;
+                        },
+                    'required'           => false,
                     'label'              => 'form.label.category',
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
@@ -101,8 +101,8 @@ class BoardUpdateFormType extends AbstractType
                 array(
                     'label'              => 'form.label.board.description',
                     'translation_domain' => 'CCDNForumForumBundle',
-				)
-			)
+                )
+            )
             ->add('readAuthorisedRoles', 'choice',
                 array(
                     'required'           => false,
@@ -152,7 +152,7 @@ class BoardUpdateFormType extends AbstractType
             'intention'           => 'forum_board_update_item',
             'validation_groups'   => array('forum_board_update'),
             'cascade_validation'  => true,
-			'available_roles'     => $this->roleHelper->getRoleHierarchy(),
+            'available_roles'     => $this->roleHelper->getRoleHierarchy(),
         );
     }
 

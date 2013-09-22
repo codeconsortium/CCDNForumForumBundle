@@ -22,7 +22,7 @@ abstract class Category
 {
     /** @var Forum $forum */
     protected $forum;
-	
+
     /** @var ArrayCollection $boards */
     protected $boards;
 
@@ -37,7 +37,7 @@ abstract class Category
     }
 
     /**
-     * 
+     *
      * Get Forum
      *
      * @return Forum
@@ -48,35 +48,35 @@ abstract class Category
     }
 
     /**
-     * 
+     *
      * Set Forum
      *
-     * @param  Forum $forum
+     * @param  Forum    $forum
      * @return Category
      */
     public function setForum(ConcreteForum $forum = null)
     {
-		if ($this->forum) {
-			if ($forum) {
-				if ($this->forum->getId() != $forum->getId()) {
-					$this->setListOrderPriority(count($forum->getCategories()) + 1);
-				}
-			} else {
-				$this->setListOrderPriority(0);
-			}
-		} else {
-			if ($forum) {
-				$this->setListOrderPriority(count($forum->getCategories()) + 1);
-			} else {
-				$this->setListOrderPriority(0);
-			}
-		}
-		
+        if ($this->forum) {
+            if ($forum) {
+                if ($this->forum->getId() != $forum->getId()) {
+                    $this->setListOrderPriority(count($forum->getCategories()) + 1);
+                }
+            } else {
+                $this->setListOrderPriority(0);
+            }
+        } else {
+            if ($forum) {
+                $this->setListOrderPriority(count($forum->getCategories()) + 1);
+            } else {
+                $this->setListOrderPriority(0);
+            }
+        }
+
         $this->forum = $forum;
 
         return $this;
     }
-	
+
     /**
      * Get boards
      *
@@ -88,7 +88,7 @@ abstract class Category
     }
 
     /**
-     * 
+     *
      * Set boards
      *
      * @param  ArrayCollection $boards
@@ -102,7 +102,7 @@ abstract class Category
     }
 
     /**
-     * 
+     *
      * Add board
      *
      * @param  Board    $board
@@ -116,10 +116,10 @@ abstract class Category
     }
 
     /**
-     * 
+     *
      * Remove Board
-     * 
-     * @param Board $board
+     *
+     * @param  Board    $board
      * @return Category
      */
     public function removeBoard(ConcreteBoard $board)

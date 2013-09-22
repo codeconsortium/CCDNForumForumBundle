@@ -29,11 +29,11 @@ abstract class Forum
     public function __construct()
     {
         // your own logic
-		$this->categories = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     /**
-     * 
+     *
      * Get categories
      *
      * @return Categories
@@ -42,40 +42,39 @@ abstract class Forum
     {
         return $this->categories;
     }
-	
+
     /**
-     * 
+     *
      * Set categories
      *
      * @return Forum
      */
     public function setCategories(ArrayCollection $categories = null)
     {
-		$this->categories = $categories;
-		
+        $this->categories = $categories;
+
         return $this;
     }
-	
+
     /**
-     * 
+     *
      * Add category
-     * 
-     * @param Category $category
+     *
+     * @param  Category $category
      * @return Forum
      */
     public function addCategory(ConcreteCategory $category)
     {
-		$this->categories->add($category);
-		
+        $this->categories->add($category);
+
         return $this;
     }
-	
 
     /**
-     * 
+     *
      * Remove Category
-     * 
-     * @param Category $category
+     *
+     * @param  Category $category
      * @return Forum
      */
     public function removeCategory(ConcreteCategory $category)

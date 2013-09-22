@@ -61,8 +61,8 @@ class CategoryCreateFormType extends AbstractType
     public function __construct($categoryClass, $forumClass, $roleHelper)
     {
         $this->categoryClass = $categoryClass;
-		$this->forumClass = $forumClass;
-		$this->roleHelper = $roleHelper;
+        $this->forumClass = $forumClass;
+        $this->roleHelper = $roleHelper;
     }
 
     /**
@@ -75,16 +75,16 @@ class CategoryCreateFormType extends AbstractType
         $builder
             ->add('forum', 'entity',
                 array(
-					'property'           => 'name',
-					'class'              => $this->forumClass,
-					'query_builder'      =>
-						function(EntityRepository $er) {
-							return $er
-								->createQueryBuilder('f')
-							;
-						},
-					'data'               => $options['default_forum'],
-					'required'           => false,
+                    'property'           => 'name',
+                    'class'              => $this->forumClass,
+                    'query_builder'      =>
+                        function(EntityRepository $er) {
+                            return $er
+                                ->createQueryBuilder('f')
+                            ;
+                        },
+                    'data'               => $options['default_forum'],
+                    'required'           => false,
                     'label'              => 'form.label.forum',
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
@@ -124,8 +124,8 @@ class CategoryCreateFormType extends AbstractType
             'intention'           => 'forum_category_create_item',
             'validation_groups'   => array('forum_category_create'),
             'cascade_validation'  => true,
-			'available_roles'     => $this->roleHelper->getRoleHierarchy(),
-			'default_forum'       => null
+            'available_roles'     => $this->roleHelper->getRoleHierarchy(),
+            'default_forum'       => null
         );
     }
 

@@ -13,10 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Model\Model;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Model\Model\BaseModel;
 use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
@@ -41,10 +38,10 @@ class ForumModel extends BaseModel implements BaseModelInterface
      * @access public
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-	public function findAllForums()
-	{
-		return $this->getRepository()->findAllForums();
-	}
+    public function findAllForums()
+    {
+        return $this->getRepository()->findAllForums();
+    }
 
     /**
      *
@@ -52,10 +49,10 @@ class ForumModel extends BaseModel implements BaseModelInterface
      * @param  string                              $forumName
      * @return \CCDNForum\ForumBundle\Entity\Forum
      */
-	public function findOneForumById($forumId)
-	{
-		return $this->getRepository()->findOneForumById($forumId);
-	}
+    public function findOneForumById($forumId)
+    {
+        return $this->getRepository()->findOneForumById($forumId);
+    }
 
     /**
      *
@@ -63,49 +60,49 @@ class ForumModel extends BaseModel implements BaseModelInterface
      * @param  string                              $forumName
      * @return \CCDNForum\ForumBundle\Entity\Forum
      */
-	public function findOneForumByName($forumName)
-	{
-		return $this->getRepository()->findOneForumByName($forumName);
-	}
+    public function findOneForumByName($forumName)
+    {
+        return $this->getRepository()->findOneForumByName($forumName);
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  \CCDNForum\ForumBundle\Entity\Forum $forum
-	 */
-	public function saveNewForum(Forum $forum)
-	{
-		return $this->getManager()->saveNewForum($forum);
-	}
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Entity\Forum $forum
+     */
+    public function saveNewForum(Forum $forum)
+    {
+        return $this->getManager()->saveNewForum($forum);
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  \CCDNForum\ForumBundle\Entity\Forum $forum
-	 */
-	public function updateForum(Forum $forum)
-	{
-		return $this->getManager()->updateForum($forum);
-	}
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Entity\Forum $forum
+     */
+    public function updateForum(Forum $forum)
+    {
+        return $this->getManager()->updateForum($forum);
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  \CCDNForum\ForumBundle\Entity\Forum $forum
-	 */
-	public function deleteForum(Forum $forum)
-	{
-		return $this->getManager()->deleteForum($forum);
-	}
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Entity\Forum $forum
+     */
+    public function deleteForum(Forum $forum)
+    {
+        return $this->getManager()->deleteForum($forum);
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  \Doctrine\Common\Collections\ArrayCollection $categories
-	 * @param  \CCDNForum\ForumBundle\Entity\Forum          $forum
-	 */
-	public function reassignCategoriesToForum(ArrayCollection $categories, Forum $forum = null)
-	{
-		return $this->getManager()->reassignCategoriesToForum($categories, $forum);
-	}
+    /**
+     *
+     * @access public
+     * @param \Doctrine\Common\Collections\ArrayCollection $categories
+     * @param \CCDNForum\ForumBundle\Entity\Forum          $forum
+     */
+    public function reassignCategoriesToForum(ArrayCollection $categories, Forum $forum = null)
+    {
+        return $this->getManager()->reassignCategoriesToForum($categories, $forum);
+    }
 }

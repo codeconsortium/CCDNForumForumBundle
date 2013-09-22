@@ -197,7 +197,7 @@ abstract class Topic
     }
 
     /**
-     * 
+     *
      * Get posts
      *
      * @return ArrayCollection
@@ -208,7 +208,7 @@ abstract class Topic
     }
 
     /**
-     * 
+     *
      * Set posts
      *
      * @param  ArrayCollection $posts
@@ -222,7 +222,7 @@ abstract class Topic
     }
 
     /**
-     * 
+     *
      * Add post
      *
      * @param  Post  $post
@@ -236,8 +236,8 @@ abstract class Topic
     }
 
     /**
-     * 
-     * @param Post $post
+     *
+     * @param  Post  $post
      * @return Topic
      */
     public function removePost(ConcretePost $post)
@@ -248,7 +248,7 @@ abstract class Topic
     }
 
     /**
-     * 
+     *
      * Get subscriptions
      *
      * @return ArrayCollection
@@ -259,7 +259,7 @@ abstract class Topic
     }
 
     /**
-     * 
+     *
      * @param  ArrayCollection $subscriptions
      * @return Topic
      */
@@ -284,7 +284,7 @@ abstract class Topic
     }
 
     /**
-     * 
+     *
      * @param Subscription $subscription
      * @return $this
      */

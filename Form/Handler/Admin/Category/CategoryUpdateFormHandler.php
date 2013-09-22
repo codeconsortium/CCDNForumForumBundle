@@ -71,19 +71,19 @@ class CategoryUpdateFormHandler
      */
     protected $category;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-	 */
-	protected $dispatcher;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     */
+    protected $dispatcher;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
     /**
      *
@@ -98,31 +98,31 @@ class CategoryUpdateFormHandler
         $this->factory = $factory;
         $this->categoryUpdateFormType = $categoryUpdateFormType;
         $this->categoryModel = $categoryModel;
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
     }
-
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Category $category
-	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryUpdateFormHandler
-	 */
-	public function setCategory(Category $category)
-	{
-		$this->category = $category;
-		
-		return $this;
-	}
 
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @param  \CCDNForum\ForumBundle\Entity\Category                                       $category
+     * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryUpdateFormHandler
      */
-	public function setRequest(Request $request)
-	{
-		$this->request = $request;
-	}
+    public function setCategory(Category $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      *
@@ -175,12 +175,12 @@ class CategoryUpdateFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-			if (!is_object($this->category) && !$this->category instanceof Category) {
-				throw new \Exception('Category object must be specified to edit.');
-			}
-			
-			$this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_INITIALISE, new AdminCategoryEvent($this->request, $this->category));
-			
+            if (!is_object($this->category) && !$this->category instanceof Category) {
+                throw new \Exception('Category object must be specified to edit.');
+            }
+
+            $this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_INITIALISE, new AdminCategoryEvent($this->request, $this->category));
+
             $this->form = $this->factory->create($this->categoryUpdateFormType, $this->category);
         }
 
@@ -195,8 +195,8 @@ class CategoryUpdateFormHandler
      */
     protected function onSuccess(Category $category)
     {
-		$this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_SUCCESS, new AdminCategoryEvent($this->request, $category));
-		
+        $this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_SUCCESS, new AdminCategoryEvent($this->request, $category));
+
         return $this->categoryModel->updateCategory($category)->flush();
     }
 }

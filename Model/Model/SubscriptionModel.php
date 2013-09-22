@@ -16,7 +16,6 @@ namespace CCDNForum\ForumBundle\Model\Model;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Model\Model\BaseModel;
 use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
@@ -37,57 +36,57 @@ use CCDNForum\ForumBundle\Entity\Topic;
  */
 class SubscriptionModel extends BaseModel implements BaseModelInterface
 {
-	/**
-	 * 
-	 * @access public
-	 * @param  int                                          $userId
-	 * @param  bool                                         $canViewDeletedTopics
-	 * @return \Doctrine\Common\Collections\ArrayCollection
-	 */
-	public function findAllSubscriptionsForUserById($userId, $canViewDeletedTopics = false)
-	{
-		return $this->getRepository()->findAllSubscriptionsForUserById($userId, $canViewDeletedTopics);
-	}
+    /**
+     *
+     * @access public
+     * @param  int                                          $userId
+     * @param  bool                                         $canViewDeletedTopics
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function findAllSubscriptionsForUserById($userId, $canViewDeletedTopics = false)
+    {
+        return $this->getRepository()->findAllSubscriptionsForUserById($userId, $canViewDeletedTopics);
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  int                                          $topicId
-	 * @return \Doctrine\Common\Collections\ArrayCollection
-	 */
-	public function findAllSubscriptionsForTopicById($topicId)
-	{
-		return $this->getRepository()->findAllSubscriptionsForTopicById($topicId);
-	}
+    /**
+     *
+     * @access public
+     * @param  int                                          $topicId
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function findAllSubscriptionsForTopicById($topicId)
+    {
+        return $this->getRepository()->findAllSubscriptionsForTopicById($topicId);
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  int                                                      $userId
-	 * @param  int                                                      $page
-	 * @param  string                                                   $filter
-	 * @param  bool                                                     $canViewDeletedTopics
-	 * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
-	 */
-	public function findAllSubscriptionsPaginatedForUserById($userId, $page, $filter, $canViewDeletedTopics = false)
-	{
-		return $this->getRepository()->findAllSubscriptionsPaginatedForUserById($userId, $page, $filter, $canViewDeletedTopics = false);
-	}
+    /**
+     *
+     * @access public
+     * @param  int                                                      $userId
+     * @param  int                                                      $page
+     * @param  string                                                   $filter
+     * @param  bool                                                     $canViewDeletedTopics
+     * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
+     */
+    public function findAllSubscriptionsPaginatedForUserById($userId, $page, $filter, $canViewDeletedTopics = false)
+    {
+        return $this->getRepository()->findAllSubscriptionsPaginatedForUserById($userId, $page, $filter, $canViewDeletedTopics = false);
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  int                                                      $forumId
-	 * @param  int                                                      $userId
-	 * @param  int                                                      $page
-	 * @param  string                                                   $filter
-	 * @param  bool                                                     $canViewDeletedTopics
-	 * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
-	 */
-	public function findAllSubscriptionsPaginatedForUserByIdAndForumById($forumId, $userId, $page, $filter, $canViewDeletedTopics = false)
-	{
-		return $this->getRepository()->findAllSubscriptionsPaginatedForUserByIdAndForumById($forumId, $userId, $page, $filter, $canViewDeletedTopics = false);
-	}
+    /**
+     *
+     * @access public
+     * @param  int                                                      $forumId
+     * @param  int                                                      $userId
+     * @param  int                                                      $page
+     * @param  string                                                   $filter
+     * @param  bool                                                     $canViewDeletedTopics
+     * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
+     */
+    public function findAllSubscriptionsPaginatedForUserByIdAndForumById($forumId, $userId, $page, $filter, $canViewDeletedTopics = false)
+    {
+        return $this->getRepository()->findAllSubscriptionsPaginatedForUserByIdAndForumById($forumId, $userId, $page, $filter, $canViewDeletedTopics = false);
+    }
 
     /**
      *
@@ -116,7 +115,7 @@ class SubscriptionModel extends BaseModel implements BaseModelInterface
      *
      * @access public
      * @param  int                                                 $topicId
-     * @param  \Symfony\Component\Security\Core\User\UserInterface  $userId
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $userId
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function subscribe(Topic $topic, UserInterface $user)
@@ -143,9 +142,9 @@ class SubscriptionModel extends BaseModel implements BaseModelInterface
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function markAsRead(Subscription $subscription)
-	{
-		return $this->getManager()->markAsRead($subscription);
-	}
+    {
+        return $this->getManager()->markAsRead($subscription);
+    }
 
     /**
      *
@@ -154,19 +153,19 @@ class SubscriptionModel extends BaseModel implements BaseModelInterface
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function markAsUnread(Subscription $subscription)
-	{
-		return $this->getManager()->markAsUnread($subscription);
-	}
+    {
+        return $this->getManager()->markAsUnread($subscription);
+    }
 
     /**
      *
      * @access public
      * @param  \Doctrine\Common\Collections\ArrayCollection        $subscriptions
-	 * @param  \Symfony\Component\Security\Core\User\UserInterface $exceptUser
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $exceptUser
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function markTheseAsUnread($subscriptions, UserInterface $exceptUser)
-	{
-		return $this->getManager()->markTheseAsUnread($subscriptions, $exceptUser);
-	}
+    {
+        return $this->getManager()->markTheseAsUnread($subscriptions, $exceptUser);
+    }
 }

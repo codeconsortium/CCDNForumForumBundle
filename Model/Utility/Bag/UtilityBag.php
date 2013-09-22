@@ -26,15 +26,15 @@ namespace CCDNForum\ForumBundle\Model\Utility\Bag;
  */
 class UtilityBag
 {
-	protected $paginationUtil;
+    protected $paginationUtil;
 
-	public function __construct($paginationUtil)
-	{
-		$this->paginationUtil = $paginationUtil;
-	}
+    public function __construct($paginationUtil)
+    {
+        $this->paginationUtil = $paginationUtil;
+    }
 
-	public function getPaginationUtil()
-	{
-		return $this->paginationUtil;
-	}
+    public function getPaginationUtil()
+    {
+        return $this->paginationUtil;
+    }
 }

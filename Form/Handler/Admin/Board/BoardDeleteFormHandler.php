@@ -73,19 +73,19 @@ class BoardDeleteFormHandler
      */
     protected $board;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-	 */
-	protected $dispatcher;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     */
+    protected $dispatcher;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
     /**
      *
@@ -100,31 +100,31 @@ class BoardDeleteFormHandler
         $this->factory = $factory;
         $this->boardDeleteFormType = $boardDeleteFormType;
         $this->boardModel = $boardModel;
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
     }
-
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Board $board
-	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Board\BoardDeleteFormHandler
-	 */
-	public function setBoard(Board $board)
-	{
-		$this->board = $board;
-		
-		return $this;
-	}
 
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @param  \CCDNForum\ForumBundle\Entity\Board                                    $board
+     * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Board\BoardDeleteFormHandler
      */
-	public function setRequest(Request $request)
-	{
-		$this->request = $request;
-	}
+    public function setBoard(Board $board)
+    {
+        $this->board = $board;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      *
@@ -177,12 +177,12 @@ class BoardDeleteFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-			if (!is_object($this->board) && !$this->board instanceof Board) {
-				throw new \Exception('Board object must be specified to delete.');
-			}
-			
-			$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_DELETE_INITIALISE, new AdminBoardEvent($this->request, $this->board));
-			
+            if (!is_object($this->board) && !$this->board instanceof Board) {
+                throw new \Exception('Board object must be specified to delete.');
+            }
+
+            $this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_DELETE_INITIALISE, new AdminBoardEvent($this->request, $this->board));
+
             $this->form = $this->factory->create($this->boardDeleteFormType, $this->board);
         }
 
@@ -197,16 +197,16 @@ class BoardDeleteFormHandler
      */
     protected function onSuccess(Board $board)
     {
-		$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_DELETE_SUCCESS, new AdminBoardEvent($this->request, $board));
+        $this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_DELETE_SUCCESS, new AdminBoardEvent($this->request, $board));
 
-		if (! $this->form->get('confirm_subordinates')->getData()) {
-			$topics = new ArrayCollection($board->getTopics()->toArray());
-			
-			$this->boardModel->reassignTopicsToBoard($topics, null)->flush();
-		}
+        if (! $this->form->get('confirm_subordinates')->getData()) {
+            $topics = new ArrayCollection($board->getTopics()->toArray());
+
+            $this->boardModel->reassignTopicsToBoard($topics, null)->flush();
+        }
 
         $this->boardModel->deleteBoard($board)->flush();
-		
-		return $this->boardModel;
+
+        return $this->boardModel;
     }
 }

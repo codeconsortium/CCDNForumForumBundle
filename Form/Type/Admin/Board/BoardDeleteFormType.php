@@ -58,42 +58,42 @@ class BoardDeleteFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-		$trueValidator = function(FormEvent $event) {
-			$form = $event->getForm();
-			
-			$confirm = $form->get('confirm_delete')->getData();
+        $trueValidator = function(FormEvent $event) {
+            $form = $event->getForm();
 
-			if (empty($confirm) || $confirm == false) {
-				$form['confirm_delete']->addError(new FormError("You must confirm this action."));
+            $confirm = $form->get('confirm_delete')->getData();
+
+            if (empty($confirm) || $confirm == false) {
+                $form['confirm_delete']->addError(new FormError("You must confirm this action."));
             }
-		};
-		
+        };
+
         $builder
-			->add('confirm_delete', 'checkbox',
-				array(
-					'mapped'             => false,
-					'required'           => true,
-					'label'              => 'I confirm I want to delete this Board.',
-					'translation_domain' => 'CCDNForumForumBundle',
+            ->add('confirm_delete', 'checkbox',
+                array(
+                    'mapped'             => false,
+                    'required'           => true,
+                    'label'              => 'I confirm I want to delete this Board.',
+                    'translation_domain' => 'CCDNForumForumBundle',
                     'constraints'        => array(
                         new True(),
-						new NotBlank()
-					),
-				)
-			)
-			->add('confirm_subordinates', 'checkbox',
-				array(
-					'mapped'             => false,
-					'required'           => true,
-					'label'              => 'Also delete topics.',
-					'translation_domain' => 'CCDNForumForumBundle',
+                        new NotBlank()
+                    ),
+                )
+            )
+            ->add('confirm_subordinates', 'checkbox',
+                array(
+                    'mapped'             => false,
+                    'required'           => true,
+                    'label'              => 'Also delete topics.',
+                    'translation_domain' => 'CCDNForumForumBundle',
                     'constraints'        => array(
                         new True(),
-						new NotBlank()
-					),
-				)
-			)
-			->addEventListener(FormEvents::POST_BIND, $trueValidator)
+                        new NotBlank()
+                    ),
+                )
+            )
+            ->addEventListener(FormEvents::POST_BIND, $trueValidator)
         ;
     }
 

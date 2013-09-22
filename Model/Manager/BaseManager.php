@@ -71,8 +71,8 @@ abstract class BaseManager implements BaseManagerInterface
      */
     protected $modelBag;
 
-	protected $model;
-	
+    protected $model;
+
     /**
      *
      * @access public
@@ -93,22 +93,22 @@ abstract class BaseManager implements BaseManagerInterface
 
         $this->modelBag = $modelBag;
     }
-	
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
-	 */
-	public function getModelBag()
-	{
-		return $this->modelBag;
-	}
-	
-	public function setModel($model)
-	{
-		$this->model = $model;
-	}
-	
+
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
+     */
+    public function getModelBag()
+    {
+        return $this->modelBag;
+    }
+
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
+
     /**
      *
      * @access public

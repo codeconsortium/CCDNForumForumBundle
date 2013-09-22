@@ -16,7 +16,6 @@ namespace CCDNForum\ForumBundle\Model\Model;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Model\Model\BaseModel;
 use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
@@ -41,7 +40,7 @@ class PostModel extends BaseModel implements BaseModelInterface
      * @access public
      * @param  int                                                      $topicId
      * @param  int                                                      $page
-	 * @param  bool                                                     $canViewDeletedTopics
+     * @param  bool                                                     $canViewDeletedTopics
      * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
     public function findAllPostsPaginatedByTopicId($topicId, $page, $canViewDeletedTopics = false)
@@ -91,7 +90,7 @@ class PostModel extends BaseModel implements BaseModelInterface
      */
     public function lock(Post $post)
     {
-		return $this->getManager()->lock($post);
+        return $this->getManager()->lock($post);
     }
 
     /**
@@ -116,18 +115,6 @@ class PostModel extends BaseModel implements BaseModelInterface
     {
         return $this->getManager()->softDelete($post, $user);
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 //    /**
 //     *

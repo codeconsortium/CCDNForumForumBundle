@@ -43,20 +43,20 @@ class CrumbFactory
      */
     private $router;
 
-	/**
-	 * 
-	 * @access public
-	 * @param \Symfony\Bundle\FrameworkBundle\Translation\Translator $translator
-	 * @param \Symfony\Bundle\FrameworkBundle\Routing\Router         $router
-	 */
-	public function __construct(Translator $translator, Router $router)
-	{
-		$this->translator = $translator;
-		$this->router = $router;
-	}
+    /**
+     *
+     * @access public
+     * @param \Symfony\Bundle\FrameworkBundle\Translation\Translator $translator
+     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router         $router
+     */
+    public function __construct(Translator $translator, Router $router)
+    {
+        $this->translator = $translator;
+        $this->router = $router;
+    }
 
-	public function createNewCrumbTrail()
-	{
-		return new CrumbTrail($this->translator, $this->router);
-	}
+    public function createNewCrumbTrail()
+    {
+        return new CrumbTrail($this->translator, $this->router);
+    }
 }

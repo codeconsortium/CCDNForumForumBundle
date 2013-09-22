@@ -46,50 +46,50 @@ class UserTopicController extends UserTopicBaseController
      */
     public function showAction($forumName, $topicId)
     {
-		$forum = $this->getForumModel()->findOneForumByName($forumName);
-		$this->isFound($forum);
-		
+        $forum = $this->getForumModel()->findOneForumByName($forumName);
+        $this->isFound($forum);
+
         // Get topic.
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true);
-		$this->isFound($topic);
+        $this->isFound($topic);
 
-		$this->isAuthorised($this->getAuthorizer()->canShowTopic($topic, $forum));
+        $this->isAuthorised($this->getAuthorizer()->canShowTopic($topic, $forum));
 
         // Get posts for topic paginated.
-		$page = $this->getQuery('page', 1);
-		$postsPager = $this->getPostModel()->findAllPostsPaginatedByTopicId($topicId, $page, true);
+        $page = $this->getQuery('page', 1);
+        $postsPager = $this->getPostModel()->findAllPostsPaginatedByTopicId($topicId, $page, true);
 
         // get the topic subscriptions.
-		if ($this->isGranted('ROLE_USER')) {
-	        $subscription = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topicId, $this->getUser()->getId());
-			
-			if ($subscription) {
-				$this->getSubscriptionModel()->markAsRead($subscription);
-			}
-		} else {
-			$subscription = null;
-		}
-		
+        if ($this->isGranted('ROLE_USER')) {
+            $subscription = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topicId, $this->getUser()->getId());
+
+            if ($subscription) {
+                $this->getSubscriptionModel()->markAsRead($subscription);
+            }
+        } else {
+            $subscription = null;
+        }
+
         $subscriberCount = $this->getSubscriptionModel()->countSubscriptionsForTopicById($topicId);
 
         // Incremenet view counter.
         $this->getTopicModel()->incrementViewCounter($topic);
 
         // setup crumb trail.
-		$crumbs = $this->getCrumbs()->addUserTopicShow($forum, $topic);
+        $crumbs = $this->getCrumbs()->addUserTopicShow($forum, $topic);
 
         $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/show.html.',
-			array(
-	            'crumbs' => $crumbs,
-				'forum' => $forum,
-	            'topic' => $topic,
-	            'pager' => $postsPager,
-	            'subscription' => $subscription,
-	            'subscription_count' => $subscriberCount,
-	        )
-		);
-		
-		return $response;
+            array(
+                'crumbs' => $crumbs,
+                'forum' => $forum,
+                'topic' => $topic,
+                'pager' => $postsPager,
+                'subscription' => $subscription,
+                'subscription_count' => $subscriberCount,
+            )
+        );
+
+        return $response;
     }
 
     /**
@@ -101,39 +101,39 @@ class UserTopicController extends UserTopicBaseController
      */
     public function createAction($forumName, $boardId)
     {
-		$forum = $this->getForumModel()->findOneForumByName($forumName);
-		$this->isFound($forum);
-		
+        $forum = $this->getForumModel()->findOneForumByName($forumName);
+        $this->isFound($forum);
+
         $this->isAuthorised('ROLE_USER');
 
         $board = $this->getBoardModel()->findOneBoardByIdWithCategory($boardId);
         $this->isFound($board);
 
-		$this->isAuthorised($this->getAuthorizer()->canCreateTopicOnBoard($board, $forum));
+        $this->isAuthorised($this->getAuthorizer()->canCreateTopicOnBoard($board, $forum));
 
         $formHandler = $this->getFormHandlerToCreateTopic($forum, $board);
 
         // Flood Control.
         if ($this->getFloodControl()->isFlooded()) {
-			$this->dispatch(ForumEvents::USER_TOPIC_CREATE_FLOODED, new UserTopicFloodEvent($this->getRequest()));
-		}
-		
+            $this->dispatch(ForumEvents::USER_TOPIC_CREATE_FLOODED, new UserTopicFloodEvent($this->getRequest()));
+        }
+
         // setup crumb trail.
-		$crumbs = $this->getCrumbs()->addUserTopicCreate($forum, $board);
+        $crumbs = $this->getCrumbs()->addUserTopicCreate($forum, $board);
 
         $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/create.html.',
-			array(
-	            'crumbs' => $crumbs,
-				'forum' => $forum,
-	            'board' => $board,
-	            'preview' => $formHandler->getForm()->getData(),
-	            'form' => $formHandler->getForm()->createView(),
-	        )
-		);
-		
-		$this->dispatch(ForumEvents::USER_TOPIC_CREATE_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData()->getTopic(), $response));
-		
-		return $response;
+            array(
+                'crumbs' => $crumbs,
+                'forum' => $forum,
+                'board' => $board,
+                'preview' => $formHandler->getForm()->getData(),
+                'form' => $formHandler->getForm()->createView(),
+            )
+        );
+
+        $this->dispatch(ForumEvents::USER_TOPIC_CREATE_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData()->getTopic(), $response));
+
+        return $response;
     }
 
     /**
@@ -145,15 +145,15 @@ class UserTopicController extends UserTopicBaseController
      */
     public function createProcessAction($forumName, $boardId)
     {
-		$forum = $this->getForumModel()->findOneForumByName($forumName);
-		$this->isFound($forum);
-		
+        $forum = $this->getForumModel()->findOneForumByName($forumName);
+        $this->isFound($forum);
+
         $this->isAuthorised('ROLE_USER');
 
         $board = $this->getBoardModel()->findOneBoardByIdWithCategory($boardId);
         $this->isFound($board);
 
-		$this->isAuthorised($this->getAuthorizer()->canCreateTopicOnBoard($board, $forum));
+        $this->isAuthorised($this->getAuthorizer()->canCreateTopicOnBoard($board, $forum));
 
         $formHandler = $this->getFormHandlerToCreateTopic($forum, $board);
 
@@ -162,41 +162,41 @@ class UserTopicController extends UserTopicBaseController
             if ($formHandler->process()) {
                 $this->getFloodControl()->incrementCounter();
 
-				$topic = $formHandler->getForm()->getData()->getTopic();
-				
-				$this->dispatch(ForumEvents::USER_TOPIC_CREATE_COMPLETE, new UserTopicEvent($this->getRequest(), $topic, $formHandler->didAuthorSubscribe()));
+                $topic = $formHandler->getForm()->getData()->getTopic();
+
+                $this->dispatch(ForumEvents::USER_TOPIC_CREATE_COMPLETE, new UserTopicEvent($this->getRequest(), $topic, $formHandler->didAuthorSubscribe()));
 
                 $response = $this->redirectResponse(
-					$this->path('ccdn_forum_user_topic_show',
-						array(
-							'forumName' => $forum->getName(),
-							'topicId' => $topic->getId() 
-						)
-					)
-				);
+                    $this->path('ccdn_forum_user_topic_show',
+                        array(
+                            'forumName' => $forum->getName(),
+                            'topicId' => $topic->getId()
+                        )
+                    )
+                );
             }
         } else {
-			$this->dispatch(ForumEvents::USER_TOPIC_CREATE_FLOODED, new UserTopicFloodEvent($this->getRequest()));
-		}
-		
-		if (! isset($response)) {
-	        // setup crumb trail.
-			$crumbs = $this->getCrumbs()->addUserTopicCreate($forum, $board);
+            $this->dispatch(ForumEvents::USER_TOPIC_CREATE_FLOODED, new UserTopicFloodEvent($this->getRequest()));
+        }
 
-	        $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/create.html.',
-				array(
-		            'crumbs' => $crumbs,
-					'forum' => $forum,
-		            'board' => $board,
-		            'preview' => $formHandler->getForm()->getData(),
-		            'form' => $formHandler->getForm()->createView(),
-		        )
-			);
-		}
-		
-		$this->dispatch(ForumEvents::USER_TOPIC_CREATE_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData()->getTopic(), $response));
-		
-		return $response;
+        if (! isset($response)) {
+            // setup crumb trail.
+            $crumbs = $this->getCrumbs()->addUserTopicCreate($forum, $board);
+
+            $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/create.html.',
+                array(
+                    'crumbs' => $crumbs,
+                    'forum' => $forum,
+                    'board' => $board,
+                    'preview' => $formHandler->getForm()->getData(),
+                    'form' => $formHandler->getForm()->createView(),
+                )
+            );
+        }
+
+        $this->dispatch(ForumEvents::USER_TOPIC_CREATE_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData()->getTopic(), $response));
+
+        return $response;
     }
 
     /**
@@ -208,41 +208,41 @@ class UserTopicController extends UserTopicBaseController
      */
     public function replyAction($forumName, $topicId)
     {
-		$forum = $this->getForumModel()->findOneForumByName($forumName);
-		$this->isFound($forum);
-		
+        $forum = $this->getForumModel()->findOneForumByName($forumName);
+        $this->isFound($forum);
+
         $this->isAuthorised('ROLE_USER');
 
         $topic = $this->getTopicModel()->findOneTopicByIdWithPosts($topicId, true);
         $this->isFound($topic);
 
-		$this->isAuthorised($this->getAuthorizer()->canReplyToTopic($topic, $forum));
+        $this->isAuthorised($this->getAuthorizer()->canReplyToTopic($topic, $forum));
 
         $formHandler = $this->getFormHandlerToReplyToTopic($topic);
 
         // Flood Control.
         if ($this->getFloodControl()->isFlooded()) {
-			$this->dispatch(ForumEvents::USER_TOPIC_REPLY_FLOODED, new UserTopicFloodEvent($this->getRequest()));
+            $this->dispatch(ForumEvents::USER_TOPIC_REPLY_FLOODED, new UserTopicFloodEvent($this->getRequest()));
         }
 
         // setup crumb trail.
-		$crumbs = $this->getCrumbs()->addUserTopicReply($forum, $topic);
+        $crumbs = $this->getCrumbs()->addUserTopicReply($forum, $topic);
 
         $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/reply.html.',
-			array(
-	            'crumbs' => $crumbs,
-				'forum' => $forum,
-	            'topic' => $topic,
-	            'preview' => $formHandler->getForm()->getData(),
-	            'form' => $formHandler->getForm()->createView(),
-	        )
-		);
-		
-		$this->dispatch(ForumEvents::USER_TOPIC_REPLY_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData()->getTopic(), $response));
-		
-		return $response;
+            array(
+                'crumbs' => $crumbs,
+                'forum' => $forum,
+                'topic' => $topic,
+                'preview' => $formHandler->getForm()->getData(),
+                'form' => $formHandler->getForm()->createView(),
+            )
+        );
+
+        $this->dispatch(ForumEvents::USER_TOPIC_REPLY_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData()->getTopic(), $response));
+
+        return $response;
     }
-	
+
     /**
      *
      * @access public
@@ -252,15 +252,15 @@ class UserTopicController extends UserTopicBaseController
      */
     public function replyProcessAction($forumName, $topicId)
     {
-		$forum = $this->getForumModel()->findOneForumByName($forumName);
-		$this->isFound($forum);
-		
+        $forum = $this->getForumModel()->findOneForumByName($forumName);
+        $this->isFound($forum);
+
         $this->isAuthorised('ROLE_USER');
 
         $topic = $this->getTopicModel()->findOneTopicByIdWithPosts($topicId, true);
         $this->isFound($topic);
 
-		$this->isAuthorised($this->getAuthorizer()->canReplyToTopic($topic, $forum));
+        $this->isAuthorised($this->getAuthorizer()->canReplyToTopic($topic, $forum));
 
         $formHandler = $this->getFormHandlerToReplyToTopic($topic);
 
@@ -272,39 +272,39 @@ class UserTopicController extends UserTopicBaseController
                 // Page of the last post.
                 //$page = $this->getTopicModel()->getPageForPostOnTopic($topic, $topic->getLastPost());
 
-				$this->dispatch(ForumEvents::USER_TOPIC_REPLY_COMPLETE, new UserTopicEvent($this->getRequest(), $topic, $formHandler->didAuthorSubscribe()));
+                $this->dispatch(ForumEvents::USER_TOPIC_REPLY_COMPLETE, new UserTopicEvent($this->getRequest(), $topic, $formHandler->didAuthorSubscribe()));
 
                 $response = $this->redirectResponse(
-					$this->path('ccdn_forum_user_topic_show',
-						array(
-							'forumName' => $forum->getName(),
-							'topicId' => $topicId,
-							//'page' => $page
-						)
-					) // . '#' . $topic->getLastPost()->getId()
-				);
+                    $this->path('ccdn_forum_user_topic_show',
+                        array(
+                            'forumName' => $forum->getName(),
+                            'topicId' => $topicId,
+                            //'page' => $page
+                        )
+                    ) // . '#' . $topic->getLastPost()->getId()
+                );
             }
         } else {
-			$this->dispatch(ForumEvents::USER_TOPIC_REPLY_FLOODED, new UserTopicFloodEvent($this->getRequest()));
+            $this->dispatch(ForumEvents::USER_TOPIC_REPLY_FLOODED, new UserTopicFloodEvent($this->getRequest()));
         }
 
-		if (! isset($response)) {
-	        // setup crumb trail.
-			$crumbs = $this->getCrumbs()->addUserTopicReply($forum, $topic);
+        if (! isset($response)) {
+            // setup crumb trail.
+            $crumbs = $this->getCrumbs()->addUserTopicReply($forum, $topic);
 
-	        $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/reply.html.',
-				array(
-		            'crumbs' => $crumbs,
-					'forum' => $forum,
-		            'topic' => $topic,
-		            'preview' => $formHandler->getForm()->getData(),
-		            'form' => $formHandler->getForm()->createView(),
-		        )
-			);
-		}
-		
-		$this->dispatch(ForumEvents::USER_TOPIC_REPLY_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData()->getTopic(), $response));
-		
-		return $response;
+            $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/reply.html.',
+                array(
+                    'crumbs' => $crumbs,
+                    'forum' => $forum,
+                    'topic' => $topic,
+                    'preview' => $formHandler->getForm()->getData(),
+                    'form' => $formHandler->getForm()->createView(),
+                )
+            );
+        }
+
+        $this->dispatch(ForumEvents::USER_TOPIC_REPLY_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData()->getTopic(), $response));
+
+        return $response;
     }
 }

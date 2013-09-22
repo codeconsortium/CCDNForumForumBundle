@@ -177,16 +177,6 @@ class Topic extends AbstractTopic
         return $this;
     }
 
-
-
-
-
-
-
-
-
-
-
     /**
      * Get isClosed
      *

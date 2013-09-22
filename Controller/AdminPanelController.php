@@ -35,10 +35,10 @@ class AdminPanelController extends BaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-        return $this->renderResponse('CCDNForumForumBundle:Admin:/Panel/index.html.', 
-			array(
+        return $this->renderResponse('CCDNForumForumBundle:Admin:/Panel/index.html.',
+            array(
 
-	        )
-		);
+            )
+        );
     }
 }

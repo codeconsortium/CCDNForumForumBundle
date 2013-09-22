@@ -26,5 +26,5 @@ namespace CCDNForum\ForumBundle\Controller;
  */
 class AdminPostController extends BaseController
 {
-	
+
 }

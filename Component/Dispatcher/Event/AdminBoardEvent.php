@@ -31,49 +31,49 @@ use CCDNForum\ForumBundle\Entity\Board;
  */
 class AdminBoardEvent extends Event
 {
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \CCDNForum\ForumBundle\Entity\Board $board
-	 */
-	protected $board;
+    /**
+     *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Entity\Board $board
+     */
+    protected $board;
 
-	/**
-	 * 
-	 * @access public
-	 * @param \Symfony\Component\HttpFoundation\Request $request
-	 * @param \CCDNForum\ForumBundle\Entity\Board       $board
-	 */
-	public function __construct(Request $request, Board $board = null)
-	{
-		$this->request = $request;
-		$this->board = $board;
-	}
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \CCDNForum\ForumBundle\Entity\Board       $board
+     */
+    public function __construct(Request $request, Board $board = null)
+    {
+        $this->request = $request;
+        $this->board = $board;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \Symfony\Component\HttpFoundation\Request
-	 */
-	public function getRequest()
-	{
-		return $this->request;
-	}
+    /**
+     *
+     * @access public
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Board
-	 */
-	public function getBoard()
-	{
-		return $this->board;
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Board
+     */
+    public function getBoard()
+    {
+        return $this->board;
+    }
 }

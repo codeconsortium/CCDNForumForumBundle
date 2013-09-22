@@ -18,7 +18,6 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
-use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 //use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
 
 //use CCDNForum\ForumBundle\Model\BaseModelInterface;
@@ -81,39 +80,39 @@ class TopicChangeBoardFormHandler
      */
     protected $oldBoard;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-	 */
-	protected $dispatcher;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     */
+    protected $dispatcher;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
-	/**
-	 * 
-	 * @access protected
+    /**
+     *
+     * @access protected
      * @var \CCDNForum\ForumBundle\Entity\Forum $forum
-	 */
-	protected $forum;
+     */
+    protected $forum;
 
     /**
      *
      * @access public
      * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                   $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\TopicChangeBoardType $formTopicChangeBoardType
-     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface   $topicModel
-     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface   $boardModel
+     * @param \Symfony\Component\Form\FormFactory                                        $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\TopicChangeBoardType                      $formTopicChangeBoardType
+     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface                            $topicModel
+     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface                            $boardModel
      */
     public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formTopicChangeBoardType, $topicModel, $boardModel)
     {
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->formTopicChangeBoardType = $formTopicChangeBoardType;
         $this->topicModel = $topicModel;
@@ -149,12 +148,12 @@ class TopicChangeBoardFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
-	public function setRequest(Request $request)
-	{
-		$this->request = $request;
-	}
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      *
@@ -214,7 +213,7 @@ class TopicChangeBoardFormHandler
             // Boards are pre-filtered for proper rights managements, moderators may move Topics,
             // but some boards may only be accessible by admins, so moderators should not see them.
             $filteredBoards = $this->boardModel->findAllBoardsForForumById($this->forum->getId());
-			
+
             $options = array('boards' => $filteredBoards);
 
             $this->form = $this->factory->create($this->formTopicChangeBoardType, $this->topic, $options);

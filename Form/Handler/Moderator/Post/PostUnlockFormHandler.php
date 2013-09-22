@@ -73,26 +73,26 @@ class PostUnlockFormHandler
      */
     protected $post;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-	 */
-	protected $dispatcher;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     */
+    protected $dispatcher;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\Security\Core\User\UserInterface
-	 */
-	protected $user;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\Security\Core\User\UserInterface
+     */
+    protected $user;
 
     /**
      *
@@ -104,7 +104,7 @@ class PostUnlockFormHandler
      */
     public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formPostType, $postModel)
     {
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->formPostType = $formPostType;
         $this->postModel = $postModel;
@@ -116,12 +116,12 @@ class PostUnlockFormHandler
      * @param  \Symfony\Component\Security\Core\User\UserInterface                  $user
      * @return \CCDNForum\ForumBundle\Form\Handler\Moderator\TopicDeleteFormHandler
      */
-	public function setUser(UserInterface $user)
-	{
-		$this->user = $user;
-		
-		return $this;
-	}
+    public function setUser(UserInterface $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
 
     /**
      *
@@ -139,12 +139,12 @@ class PostUnlockFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
-	public function setRequest(Request $request)
-	{
-		$this->request = $request;
-	}
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      *
@@ -201,7 +201,7 @@ class PostUnlockFormHandler
                 throw new \Exception('Post must be specified to unlock in PostUnlockFormHandler');
             }
 
-			$this->dispatcher->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_INITIALISE, new ModeratorPostEvent($this->request, $this->post));
+            $this->dispatcher->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_INITIALISE, new ModeratorPostEvent($this->request, $this->post));
 
             $this->form = $this->factory->create($this->formPostType, $this->post);
         }
@@ -217,12 +217,12 @@ class PostUnlockFormHandler
      */
     protected function onSuccess(Post $post)
     {
-		$post->setUnlockedDate(new \Datetime('now'));
-		$post->setUnlockedBy($this->user);
+        $post->setUnlockedDate(new \Datetime('now'));
+        $post->setUnlockedBy($this->user);
         $this->postModel->updatePost($post);
 
-		$this->dispatcher->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_SUCCESS, new ModeratorPostEvent($this->request, $this->post));
-		
+        $this->dispatcher->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_SUCCESS, new ModeratorPostEvent($this->request, $this->post));
+
         return $this->postModel;
     }
 }

@@ -109,7 +109,7 @@ class ModelBag implements ModelBagInterface
 
         return $this->forumModel;
     }
-	
+
     /**
      *
      * @access public

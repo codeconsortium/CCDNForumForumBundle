@@ -13,12 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Model\Repository;
 
-use Symfony\Component\Security\Core\SecurityContext;
-use Doctrine\Bundle\DoctrineBundle\Registry;
-use Doctrine\ORM\QueryBuilder;
-
-use CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface;
-
 /**
  *
  * @category CCDNForum

@@ -28,7 +28,7 @@
 				{{- 'link.topic.subscribe' | trans({}, 'CCDNForumForumBundle') -}}
 			</a>
 		{%- endif -%}
-		
+
 		{%- if canUnsubscribeFromTopic(topic, forum, (subscription is defined ? subscription : null)) -%}
 			<a class="btn" href="{{- path('ccdn_forum_user_subscription_unsubscribe', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
 				<i class="icon-eye-close"></i>
@@ -45,7 +45,7 @@
 					<span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
-					
+
 					{%- if canStickyTopic(topic, forum) -%}
 						<li>
 							<a href="{{- path('ccdn_forum_moderator_topic_sticky', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
@@ -54,7 +54,7 @@
 							</a>
 						</li>
 					{%- endif -%}
-					
+
 					{%- if canUnstickyTopic(topic, forum) -%}
 						<li>
 							<a href="{{- path('ccdn_forum_moderator_topic_unsticky', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
@@ -72,7 +72,7 @@
 							</a>
 						</li>
 					{%- endif -%}
-					
+
 					{%- if canReopenTopic(topic, forum) -%}
 						<li>
 							<a href="{{- path('ccdn_forum_moderator_topic_reopen', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
@@ -90,7 +90,7 @@
 							</a>
 						</li>
 					{%- endif -%}
-					
+
 					{%- if canDeleteTopic(topic, forum) -%}
 						<li>
 							<a href="{{- path('ccdn_forum_moderator_topic_delete', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
@@ -99,7 +99,7 @@
 							</a>
 						</li>
 					{%- endif -%}
-					
+
 					{%- if canTopicChangeBoard(topic, forum) -%}
 						<li>
 							<a href="{{- path('ccdn_forum_moderator_topic_change_board', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
@@ -108,7 +108,7 @@
 							</a>
 						</li>
 					{%- endif -%}
-					
+
 				</ul>
 			</div>
 		{%- endif -%}

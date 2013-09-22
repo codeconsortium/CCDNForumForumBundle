@@ -13,12 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\EventDispatcher\Event;
-
-use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
-use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent;
-use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicResponseEvent;
 
 use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Post;
@@ -39,8 +34,8 @@ class ModeratorPostBaseController extends BaseController
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
-     * @param  \CCDNForum\ForumBundle\Entity\Post                         $post
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                                      $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Post                                       $post
      * @return \CCDNForum\ForumBundle\Form\Handler\Moderator\Post\PostUnlockFormHandler
      */
     public function getFormHandlerToUnlockPost(Forum $forum, Post $post)
@@ -48,9 +43,9 @@ class ModeratorPostBaseController extends BaseController
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_unlock');
 
         $formHandler->setPost($post);
-		$formHandler->setUser($this->getUser());
-		$formHandler->setRequest($this->getRequest());
-		
+        $formHandler->setUser($this->getUser());
+        $formHandler->setRequest($this->getRequest());
+
         return $formHandler;
     }
 }

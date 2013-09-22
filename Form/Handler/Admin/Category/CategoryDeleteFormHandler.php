@@ -73,19 +73,19 @@ class CategoryDeleteFormHandler
      */
     protected $category;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-	 */
-	protected $dispatcher;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     */
+    protected $dispatcher;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
     /**
      *
@@ -100,31 +100,31 @@ class CategoryDeleteFormHandler
         $this->factory = $factory;
         $this->categoryDeleteFormType = $categoryDeleteFormType;
         $this->categoryModel = $categoryModel;
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
     }
-
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Category $category
-	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryDeleteFormHandler
-	 */
-	public function setCategory(Category $category)
-	{
-		$this->category = $category;
-		
-		return $this;
-	}
 
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @param  \CCDNForum\ForumBundle\Entity\Category                                       $category
+     * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryDeleteFormHandler
      */
-	public function setRequest(Request $request)
-	{
-		$this->request = $request;
-	}
+    public function setCategory(Category $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      *
@@ -177,12 +177,12 @@ class CategoryDeleteFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-			if (!is_object($this->category) && !$this->category instanceof Category) {
-				throw new \Exception('Category object must be specified to delete.');
-			}
-			
-			$this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_INITIALISE, new AdminCategoryEvent($this->request, $this->category));
-			
+            if (!is_object($this->category) && !$this->category instanceof Category) {
+                throw new \Exception('Category object must be specified to delete.');
+            }
+
+            $this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_INITIALISE, new AdminCategoryEvent($this->request, $this->category));
+
             $this->form = $this->factory->create($this->categoryDeleteFormType, $this->category);
         }
 
@@ -197,16 +197,16 @@ class CategoryDeleteFormHandler
      */
     protected function onSuccess(Category $category)
     {
-		$this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_SUCCESS, new AdminCategoryEvent($this->request, $category));
+        $this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_SUCCESS, new AdminCategoryEvent($this->request, $category));
 
-		if (! $this->form->get('confirm_subordinates')->getData()) {
-			$boards = new ArrayCollection($category->getBoards()->toArray());
-			
-			$this->categoryModel->reassignBoardsToCategory($boards, null)->flush();
-		}
+        if (! $this->form->get('confirm_subordinates')->getData()) {
+            $boards = new ArrayCollection($category->getBoards()->toArray());
+
+            $this->categoryModel->reassignBoardsToCategory($boards, null)->flush();
+        }
 
         $this->categoryModel->deleteCategory($category)->flush();
-		
-		return $this->categoryModel;
+
+        return $this->categoryModel;
     }
 }

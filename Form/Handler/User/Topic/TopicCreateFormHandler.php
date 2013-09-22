@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
-
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent;
 
@@ -99,40 +98,40 @@ class TopicCreateFormHandler
      */
     protected $forum;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-	 */
-	protected $dispatcher;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     */
+    protected $dispatcher;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\Security\Core\User\UserInterface
-	 */
-	protected $user;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\Security\Core\User\UserInterface
+     */
+    protected $user;
 
     /**
      *
      * @access public
      * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                 $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\TopicType          $formTopicType
-     * @param \CCDNForum\ForumBundle\Form\Type\PostType           $formPostType
-     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface $topicModel
-     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface $boardModel
+     * @param \Symfony\Component\Form\FormFactory                                        $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\TopicType                                 $formTopicType
+     * @param \CCDNForum\ForumBundle\Form\Type\PostType                                  $formPostType
+     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface                            $topicModel
+     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface                            $boardModel
      */
     public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formTopicType, $formPostType, $topicModel, $boardModel)
     {
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->formTopicType = $formTopicType;
         $this->formPostType = $formPostType;
@@ -146,12 +145,12 @@ class TopicCreateFormHandler
      * @param  \Symfony\Component\Security\Core\User\UserInterface       $user
      * @return \CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
      */
-	public function setUser(UserInterface $user)
-	{
-		$this->user = $user;
-		
-		return $this;
-	}
+    public function setUser(UserInterface $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
 
     /**
      *
@@ -182,12 +181,12 @@ class TopicCreateFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
-	public function setRequest(Request $request)
-	{
-		$this->request = $request;
-	}
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      *
@@ -256,7 +255,7 @@ class TopicCreateFormHandler
             $post->setTopic($topic);
             $post->setCreatedBy($this->user);
 
-			$this->dispatcher->dispatch(ForumEvents::USER_TOPIC_CREATE_INITIALISE, new UserTopicEvent($this->request, $post->getTopic()));
+            $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_CREATE_INITIALISE, new UserTopicEvent($this->request, $post->getTopic()));
 
             $this->form = $this->factory->create($this->formPostType, $post);
             $this->form->add($this->factory->create($this->formTopicType, $topic, $topicOptions));
@@ -283,18 +282,18 @@ class TopicCreateFormHandler
         $post->getTopic()->setIsDeleted(false);
         $post->getTopic()->setIsSticky(false);
 
-		$this->dispatcher->dispatch(ForumEvents::USER_TOPIC_CREATE_SUCCESS, new UserTopicEvent($this->request, $post->getTopic()));
+        $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_CREATE_SUCCESS, new UserTopicEvent($this->request, $post->getTopic()));
 
         return $this->topicModel->saveNewTopic($post)->flush();
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @return bool
-	 */
-	public function didAuthorSubscribe()
-	{
-		return $this->form->get('subscribe')->getData();
-	}
+    /**
+     *
+     * @access public
+     * @return bool
+     */
+    public function didAuthorSubscribe()
+    {
+        return $this->form->get('subscribe')->getData();
+    }
 }

@@ -71,19 +71,19 @@ class BoardUpdateFormHandler
      */
     protected $board;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-	 */
-	protected $dispatcher;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     */
+    protected $dispatcher;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
     /**
      *
@@ -98,31 +98,31 @@ class BoardUpdateFormHandler
         $this->factory = $factory;
         $this->boardUpdateFormType = $boardUpdateFormType;
         $this->boardModel = $boardModel;
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
     }
-
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Board $board
-	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Board\BoardUpdateFormHandler
-	 */
-	public function setBoard(Board $board)
-	{
-		$this->board = $board;
-		
-		return $this;
-	}
 
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @param  \CCDNForum\ForumBundle\Entity\Board                                    $board
+     * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Board\BoardUpdateFormHandler
      */
-	public function setRequest(Request $request)
-	{
-		$this->request = $request;
-	}
+    public function setBoard(Board $board)
+    {
+        $this->board = $board;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      *
@@ -175,12 +175,12 @@ class BoardUpdateFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-			if (!is_object($this->board) && !$this->board instanceof Board) {
-				throw new \Exception('Board object must be specified to edit.');
-			}
-			
-			$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_EDIT_INITIALISE, new AdminBoardEvent($this->request, $this->board));
-			
+            if (!is_object($this->board) && !$this->board instanceof Board) {
+                throw new \Exception('Board object must be specified to edit.');
+            }
+
+            $this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_EDIT_INITIALISE, new AdminBoardEvent($this->request, $this->board));
+
             $this->form = $this->factory->create($this->boardUpdateFormType, $this->board);
         }
 
@@ -195,8 +195,8 @@ class BoardUpdateFormHandler
      */
     protected function onSuccess(Board $board)
     {
-		$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_EDIT_SUCCESS, new AdminBoardEvent($this->request, $board));
-		
+        $this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_EDIT_SUCCESS, new AdminBoardEvent($this->request, $board));
+
         return $this->boardModel->updateBoard($board)->flush();
     }
 }

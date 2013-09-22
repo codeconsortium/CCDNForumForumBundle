@@ -64,19 +64,19 @@ class ForumCreateFormHandler
      */
     protected $form;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-	 */
-	protected $dispatcher;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     */
+    protected $dispatcher;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
     /**
      *
@@ -91,18 +91,18 @@ class ForumCreateFormHandler
         $this->factory = $factory;
         $this->forumCreateFormType = $forumCreateFormType;
         $this->forumModel = $forumModel;
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
-	public function setRequest(Request $request)
-	{
-		$this->request = $request;
-	}
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      *
@@ -155,10 +155,10 @@ class ForumCreateFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-			$forum = new Forum();
-			
-			$this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_CREATE_INITIALISE, new AdminForumEvent($this->request, $forum));
-			
+            $forum = new Forum();
+
+            $this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_CREATE_INITIALISE, new AdminForumEvent($this->request, $forum));
+
             $this->form = $this->factory->create($this->forumCreateFormType, $forum);
         }
 
@@ -173,8 +173,8 @@ class ForumCreateFormHandler
      */
     protected function onSuccess(Forum $forum)
     {
-		$this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_CREATE_SUCCESS, new AdminForumEvent($this->request, $forum));
-		
+        $this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_CREATE_SUCCESS, new AdminForumEvent($this->request, $forum));
+
         return $this->forumModel->saveNewForum($forum)->flush();
     }
 }

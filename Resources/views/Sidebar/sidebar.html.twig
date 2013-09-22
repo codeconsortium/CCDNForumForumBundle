@@ -1,6 +1,6 @@
 {%- spaceless -%}
 	{%- set route = app.request.attributes.get('_route') -%}
-	
+
 	{%- if topic is not defined -%}
 		{%- if post is defined -%}
 			{%- set topic = post.getTopic -%}
@@ -53,7 +53,7 @@
 				{{- 'link.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}
 			</a>
 		</li>
-		
+
 		{%- if route == 'ccdn_forum_user_subscription_index' -%}
 			<li>
 				<ul class="nav nav-pills nav-stacked">
@@ -74,7 +74,7 @@
 									<i class="icon-folder-close"></i>
 						{%- endif -%}
 								{{- subscribed_forum['forum'].name -}}
-								
+
 								<span class="pull-right label">
 									{{- subscribed_forum['count_unread'] -}}
 									&nbsp;/&nbsp;

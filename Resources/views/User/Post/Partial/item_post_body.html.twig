@@ -40,7 +40,7 @@
 				</div>
 			{%- endif -%}
 		</div>
-		
+
 		{%- if is_granted('ROLE_MODERATOR') -%}
 			<section class="accordion-body collapse" id="post_{{- post.getId() -}}_body">
 			    {{- post.getBody -}}

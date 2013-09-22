@@ -13,8 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
 use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Board;
 use CCDNForum\ForumBundle\Entity\Topic;
@@ -64,11 +62,11 @@ class UserTopicBaseController extends BaseController
     {
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_create');
 
-		$formHandler->setForum($forum);
+        $formHandler->setForum($forum);
         $formHandler->setBoard($board);
-		$formHandler->setUser($this->getUser());
-		$formHandler->setRequest($this->getRequest());
-		
+        $formHandler->setUser($this->getUser());
+        $formHandler->setRequest($this->getRequest());
+
         return $formHandler;
     }
 
@@ -83,8 +81,8 @@ class UserTopicBaseController extends BaseController
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_create');
 
         $formHandler->setTopic($topic);
-		$formHandler->setUser($this->getUser());
-		$formHandler->setRequest($this->getRequest());
+        $formHandler->setUser($this->getUser());
+        $formHandler->setRequest($this->getRequest());
 
         return $formHandler;
     }

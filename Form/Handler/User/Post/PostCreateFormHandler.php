@@ -82,38 +82,38 @@ class PostCreateFormHandler
      */
     protected $postToQuote;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-	 */
-	protected $dispatcher;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     */
+    protected $dispatcher;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\Security\Core\User\UserInterface
-	 */
-	protected $user;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\Security\Core\User\UserInterface
+     */
+    protected $user;
 
     /**
      *
      * @access public
      * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                 $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\PostType           $formPostType
-     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface     $postModel
+     * @param \Symfony\Component\Form\FormFactory                                        $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\PostType                                  $formPostType
+     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface                            $postModel
      */
     public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formPostType, $postModel)
     {
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->formPostType = $formPostType;
         $this->postModel = $postModel;
@@ -125,12 +125,12 @@ class PostCreateFormHandler
      * @param  \Symfony\Component\Security\Core\User\UserInterface       $user
      * @return \CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
      */
-	public function setUser(UserInterface $user)
-	{
-		$this->user = $user;
-		
-		return $this;
-	}
+    public function setUser(UserInterface $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
 
     /**
      *
@@ -161,12 +161,12 @@ class PostCreateFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
-	public function setRequest(Request $request)
-	{
-		$this->request = $request;
-	}
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      *
@@ -246,7 +246,7 @@ class PostCreateFormHandler
             $post->setTopic($this->topic);
             $post->setBody($this->getQuote());
 
-			$this->dispatcher->dispatch(ForumEvents::USER_TOPIC_REPLY_INITIALISE, new UserTopicEvent($this->request, $post->getTopic()));
+            $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_REPLY_INITIALISE, new UserTopicEvent($this->request, $post->getTopic()));
 
             $this->form = $this->factory->create($this->formPostType, $post);
         }
@@ -267,18 +267,18 @@ class PostCreateFormHandler
         $post->setTopic($this->topic);
         $post->setIsDeleted(false);
 
-		$this->dispatcher->dispatch(ForumEvents::USER_TOPIC_REPLY_SUCCESS, new UserTopicEvent($this->request, $post->getTopic()));
+        $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_REPLY_SUCCESS, new UserTopicEvent($this->request, $post->getTopic()));
 
         return $this->postModel->postTopicReply($post)->flush();
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @return bool
-	 */
-	public function didAuthorSubscribe()
-	{
-		return $this->form->get('subscribe')->getData();
-	}
+    /**
+     *
+     * @access public
+     * @return bool
+     */
+    public function didAuthorSubscribe()
+    {
+        return $this->form->get('subscribe')->getData();
+    }
 }

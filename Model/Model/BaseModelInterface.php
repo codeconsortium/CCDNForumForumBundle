@@ -13,9 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Model\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
-
 /**
  *
  * @category CCDNForum
@@ -29,5 +26,5 @@ use Doctrine\ORM\QueryBuilder;
  */
 interface BaseModelInterface
 {
-	
+
 }

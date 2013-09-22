@@ -56,13 +56,13 @@ class CategoryUpdateFormType extends AbstractType
      * @access public
      * @var string $categoryClass
      * @var string $forumClass
-	 * @var Object $roleHelper
+     * @var Object $roleHelper
      */
     public function __construct($categoryClass, $forumClass, $roleHelper)
     {
         $this->categoryClass = $categoryClass;
-		$this->forumClass = $forumClass;
-		$this->roleHelper = $roleHelper;
+        $this->forumClass = $forumClass;
+        $this->roleHelper = $roleHelper;
     }
 
     /**
@@ -75,15 +75,15 @@ class CategoryUpdateFormType extends AbstractType
         $builder
             ->add('forum', 'entity',
                 array(
-					'property'           => 'name',
-					'class'              => $this->forumClass,
-					'query_builder'      =>
-						function(EntityRepository $er) {
-							return $er
-								->createQueryBuilder('f')
-							;
-						},
-					'required'           => false,
+                    'property'           => 'name',
+                    'class'              => $this->forumClass,
+                    'query_builder'      =>
+                        function(EntityRepository $er) {
+                            return $er
+                                ->createQueryBuilder('f')
+                            ;
+                        },
+                    'required'           => false,
                     'label'              => 'form.label.forum',
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
@@ -123,7 +123,7 @@ class CategoryUpdateFormType extends AbstractType
             'intention'           => 'forum_category_update_item',
             'validation_groups'   => array('forum_category_update'),
             'cascade_validation'  => true,
-			'available_roles'     => $this->roleHelper->getRoleHierarchy(),
+            'available_roles'     => $this->roleHelper->getRoleHierarchy(),
         );
     }
 

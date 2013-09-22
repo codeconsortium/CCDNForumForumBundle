@@ -13,8 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Model\Repository;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
 
@@ -58,17 +56,17 @@ class CategoryRepository extends BaseRepository implements BaseRepositoryInterfa
      */
     public function findAllCategoriesForForumById($forumId)
     {
-		$params = array();
+        $params = array();
 
         $qb = $this->createSelectQuery(array('c'));
 
-		if ($forumId == null) {
-	        $qb->where('c.forum IS NULL');
-		} else {
-			$params[':forumId'] = $forumId;
-	        $qb->where('c.forum = :forumId');
-		}
-		
+        if ($forumId == null) {
+            $qb->where('c.forum IS NULL');
+        } else {
+            $params[':forumId'] = $forumId;
+            $qb->where('c.forum = :forumId');
+        }
+
         $qb->addOrderBy('c.listOrderPriority', 'ASC');
 
         return $this->gateway->findCategories($qb, $params);
@@ -80,26 +78,26 @@ class CategoryRepository extends BaseRepository implements BaseRepositoryInterfa
      * @param  string                                       $forumName
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-	public function findAllCategoriesWithBoardsForForumByName($forumName)
-	{
-		$params = array();
+    public function findAllCategoriesWithBoardsForForumByName($forumName)
+    {
+        $params = array();
 
         $qb = $this->createSelectQuery(array('c', 'f', 'b', 't', 'lp', 'lp_author'));
 
-		$params[':forumName'] = $forumName;
-		
+        $params[':forumName'] = $forumName;
+
         $qb
-			->leftJoin('c.forum', 'f')
-			->leftJoin('c.boards', 'b')
+            ->leftJoin('c.forum', 'f')
+            ->leftJoin('c.boards', 'b')
             ->leftJoin('b.lastPost', 'lp')
             ->leftJoin('lp.topic', 't')
             ->leftJoin('lp.createdBy', 'lp_author')
-			->where('f.name = :forumName')
-	        ->addOrderBy('c.listOrderPriority', 'ASC')
-		;
+            ->where('f.name = :forumName')
+            ->addOrderBy('c.listOrderPriority', 'ASC')
+        ;
 
         return $this->gateway->findCategories($qb, $params);
-	}
+    }
 
     /**
      *
@@ -145,16 +143,6 @@ class CategoryRepository extends BaseRepository implements BaseRepositoryInterfa
 
         return $this->gateway->findCategory($qb, array(':categoryId' => $categoryId));
     }
-
-
-
-
-
-
-
-
-
-
 
 //    /**
 //     *

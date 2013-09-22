@@ -66,9 +66,9 @@
                 {{- 'generic.posted_by' | trans({'%name%': last_author.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
 
                 {%- set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) -%}
-				
+
 				<br>
-				
+
 				{%- if page < 2 -%}
 					<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forum.name, 'topicId': topic.getId } ) -}}#{{- topic.getLastPost.getId -}}">
 						<i class="icon-arrow-right"></i>

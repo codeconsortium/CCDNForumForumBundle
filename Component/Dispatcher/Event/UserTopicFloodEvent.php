@@ -15,9 +15,6 @@ namespace CCDNForum\ForumBundle\Component\Dispatcher\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-
-use CCDNForum\ForumBundle\Entity\Topic;
 
 /**
  *
@@ -32,13 +29,13 @@ use CCDNForum\ForumBundle\Entity\Topic;
  */
 class UserTopicFloodEvent extends UserTopicEvent
 {
-	/**
-	 * 
-	 * @access public
-	 * @param \Symfony\Component\HttpFoundation\Request  $request
-	 */
-	public function __construct(Request $request)
-	{
-		$this->request = $request;
-	}
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
 }

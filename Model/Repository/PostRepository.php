@@ -13,8 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Model\Repository;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
 
@@ -39,7 +37,7 @@ class PostRepository extends BaseRepository implements BaseRepositoryInterface
      * @access public
      * @param  int                                                      $topicId
      * @param  int                                                      $page
-	 * @param  bool                                                     $canViewDeletedTopics
+     * @param  bool                                                     $canViewDeletedTopics
      * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
     public function findAllPostsPaginatedByTopicId($topicId, $page, $canViewDeletedTopics = false)
@@ -63,22 +61,22 @@ class PostRepository extends BaseRepository implements BaseRepositoryInterface
             ->leftJoin('p.deletedBy', 'p_deletedBy')
             ->leftJoin('t.board', 'b')
             ->where(
-				call_user_func_array(function($canViewDeletedTopics, $qb) {
-			        if ($canViewDeletedTopics) {
-			            $expr = $qb->expr()->eq('p.topic', ':topicId');
-			        } else {
-			            $expr = $qb->expr()->andX(
-			                $qb->expr()->eq('p.topic', ':topicId'),
-			                $qb->expr()->eq('t.isDeleted', 'FALSE')
-			            );
-			        }
-	
-					return $expr;
-				}, array($canViewDeletedTopics, $qb))
-			)
+                call_user_func_array(function($canViewDeletedTopics, $qb) {
+                    if ($canViewDeletedTopics) {
+                        $expr = $qb->expr()->eq('p.topic', ':topicId');
+                    } else {
+                        $expr = $qb->expr()->andX(
+                            $qb->expr()->eq('p.topic', ':topicId'),
+                            $qb->expr()->eq('t.isDeleted', 'FALSE')
+                        );
+                    }
+
+                    return $expr;
+                }, array($canViewDeletedTopics, $qb))
+            )
             ->setParameters($params)
             ->orderBy('p.createdDate', 'ASC')
-		;
+        ;
 
         return $this->gateway->paginateQuery($qb, $this->getPostsPerPageOnTopics(), $page);
     }
@@ -112,39 +110,23 @@ class PostRepository extends BaseRepository implements BaseRepositoryInterface
             ->leftJoin('t.board', 'b')
             ->leftJoin('b.category', 'c')
             ->where(
-				call_user_func_array(function($canViewDeletedTopics, $qb) {
-			        if ($canViewDeletedTopics) {
-			            $expr = $qb->expr()->eq('p.id', ':postId');
-			        } else {
-			            $expr = $qb->expr()->andX(
-			                $qb->expr()->eq('p.id', ':postId'),
-			                $qb->expr()->eq('t.isDeleted', 'FALSE')
-			            );
-			        }
-			
-					return $expr;
-				}, array($canViewDeletedTopics, $qb))
+                call_user_func_array(function($canViewDeletedTopics, $qb) {
+                    if ($canViewDeletedTopics) {
+                        $expr = $qb->expr()->eq('p.id', ':postId');
+                    } else {
+                        $expr = $qb->expr()->andX(
+                            $qb->expr()->eq('p.id', ':postId'),
+                            $qb->expr()->eq('t.isDeleted', 'FALSE')
+                        );
+                    }
+
+                    return $expr;
+                }, array($canViewDeletedTopics, $qb))
             )
-		;
+        ;
 
         return $this->gateway->findPost($qb, $params);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //    /**
 //     *

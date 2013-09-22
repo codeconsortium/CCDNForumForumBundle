@@ -13,8 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Model\Repository;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
 
@@ -63,27 +61,27 @@ class TopicRepository extends BaseRepository implements BaseRepositoryInterface
             ->leftJoin('t.board', 'b')
             ->leftJoin('b.category', 'c')
             ->where(
-				call_user_func_array(function($canViewDeletedTopics, $qb) {
-			        if ($canViewDeletedTopics) {
-			            $expr = $qb->expr()->eq('b.id', ':boardId');
-			        } else {
-			            $expr = $qb->expr()->andX(
-			                $qb->expr()->eq('b.id', ':boardId'),
-			                $qb->expr()->eq('t.isDeleted', 'FALSE')
-			            );
-			        }
+                call_user_func_array(function($canViewDeletedTopics, $qb) {
+                    if ($canViewDeletedTopics) {
+                        $expr = $qb->expr()->eq('b.id', ':boardId');
+                    } else {
+                        $expr = $qb->expr()->andX(
+                            $qb->expr()->eq('b.id', ':boardId'),
+                            $qb->expr()->eq('t.isDeleted', 'FALSE')
+                        );
+                    }
 
-					$expr = $qb->expr()->andX(
-						$expr,
-						$qb->expr()->eq('t.isSticky', ':isSticky')
-					);
-					
-					return $expr;
-				}, array($canViewDeletedTopics, $qb))
+                    $expr = $qb->expr()->andX(
+                        $expr,
+                        $qb->expr()->eq('t.isSticky', ':isSticky')
+                    );
+
+                    return $expr;
+                }, array($canViewDeletedTopics, $qb))
             )
             ->setParameters($params)
             ->orderBy('lp.createdDate', 'DESC')
-		;
+        ;
 
         return $this->gateway->paginateQuery($qb, $this->getTopicsPerPageOnBoards(), $page);
     }
@@ -100,11 +98,11 @@ class TopicRepository extends BaseRepository implements BaseRepositoryInterface
         if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
             throw new \Exception('Board id "' . $boardId . '" is invalid!');
         }
-        
+
         $params = array(':boardId' => $boardId, ':isSticky' => true);
-    
+
         $qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
-    
+
         $qb
             ->innerJoin('t.firstPost', 'fp')
                 ->leftJoin('fp.createdBy', 'fp_author')
@@ -116,27 +114,27 @@ class TopicRepository extends BaseRepository implements BaseRepositoryInterface
             ->leftJoin('t.board', 'b')
             ->leftJoin('b.category', 'c')
             ->where(
-				call_user_func_array(function($canViewDeletedTopics, $qb) {
-			        if ($canViewDeletedTopics) {
-			            $expr = $qb->expr()->eq('b.id', ':boardId');
-			        } else {
-			            $expr = $qb->expr()->andX(
-			                $qb->expr()->eq('b.id', ':boardId'),
-			                $qb->expr()->eq('t.isDeleted', 'FALSE')
-			            );
-			        }
+                call_user_func_array(function($canViewDeletedTopics, $qb) {
+                    if ($canViewDeletedTopics) {
+                        $expr = $qb->expr()->eq('b.id', ':boardId');
+                    } else {
+                        $expr = $qb->expr()->andX(
+                            $qb->expr()->eq('b.id', ':boardId'),
+                            $qb->expr()->eq('t.isDeleted', 'FALSE')
+                        );
+                    }
 
-					$expr = $qb->expr()->andX(
-						$expr,
-						$qb->expr()->eq('t.isSticky', ':isSticky')
-					);
-				
-					return $expr;
-				}, array($canViewDeletedTopics, $qb))
+                    $expr = $qb->expr()->andX(
+                        $expr,
+                        $qb->expr()->eq('t.isSticky', ':isSticky')
+                    );
+
+                    return $expr;
+                }, array($canViewDeletedTopics, $qb))
             )
             ->orderBy('lp.createdDate', 'DESC')
-		;
-    
+        ;
+
         return $this->gateway->findTopics($qb, $params);
     }
 
@@ -168,20 +166,20 @@ class TopicRepository extends BaseRepository implements BaseRepositoryInterface
             ->leftJoin('t.board', 'b')
             ->leftJoin('b.category', 'c')
             ->where(
-				call_user_func_array(function($canViewDeletedTopics, $qb) {
-			        if ($canViewDeletedTopics) {
-			            $expr = $qb->expr()->eq('t.id', ':topicId');
-			        } else {
-			            $expr = $qb->expr()->andX(
-			                $qb->expr()->eq('t.id', ':topicId'),
-			                $qb->expr()->eq('t.isDeleted', 'FALSE')
-			            );
-			        }
-					
-					return $expr;
-				}, array($canViewDeletedTopics, $qb))
+                call_user_func_array(function($canViewDeletedTopics, $qb) {
+                    if ($canViewDeletedTopics) {
+                        $expr = $qb->expr()->eq('t.id', ':topicId');
+                    } else {
+                        $expr = $qb->expr()->andX(
+                            $qb->expr()->eq('t.id', ':topicId'),
+                            $qb->expr()->eq('t.isDeleted', 'FALSE')
+                        );
+                    }
+
+                    return $expr;
+                }, array($canViewDeletedTopics, $qb))
             )
-		;
+        ;
 
         return $this->gateway->findTopic($qb, $params);
     }
@@ -215,31 +213,23 @@ class TopicRepository extends BaseRepository implements BaseRepositoryInterface
             ->leftJoin('t.board', 'b')
             ->leftJoin('b.category', 'c')
             ->where(
-				call_user_func_array(function($canViewDeletedTopics, $qb) {
-			        if ($canViewDeletedTopics) {
-			            $expr = $qb->expr()->eq('t.id', ':topicId');
-			        } else {
-			            $expr = $qb->expr()->andX(
-			                $qb->expr()->eq('t.id', ':topicId'),
-			                $qb->expr()->eq('t.isDeleted', 'FALSE')
-			            );
-			        }
-			
-					return $expr;
-				}, array($canViewDeletedTopics, $qb))
+                call_user_func_array(function($canViewDeletedTopics, $qb) {
+                    if ($canViewDeletedTopics) {
+                        $expr = $qb->expr()->eq('t.id', ':topicId');
+                    } else {
+                        $expr = $qb->expr()->andX(
+                            $qb->expr()->eq('t.id', ':topicId'),
+                            $qb->expr()->eq('t.isDeleted', 'FALSE')
+                        );
+                    }
+
+                    return $expr;
+                }, array($canViewDeletedTopics, $qb))
             )
-		;
+        ;
 
         return $this->gateway->findTopic($qb, $params);
     }
-
-
-
-
-
-
-
-
 
 //    /**
 //     *

@@ -28,72 +28,72 @@ use CCDNForum\ForumBundle\Entity\Board;
  */
 class AdminBoardBaseController extends BaseController
 {
-	/**
-	 *
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Form\Handler\BoardCreateFormHandler
-	 */
-	protected function getFormHandlerToCreateBoard($categoryFilter = null)
-	{
-	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.board_create');
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Form\Handler\BoardCreateFormHandler
+     */
+    protected function getFormHandlerToCreateBoard($categoryFilter = null)
+    {
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.board_create');
 
-		$formHandler->setRequest($this->getRequest());
-		
-		if ($categoryFilter) {
-			$category = $this->getCategoryModel()->findOneCategoryById($categoryFilter);
-		
-			if ($category) {
-				$formHandler->setDefaultCategory($category);
-			}
-		}
-		
-	    return $formHandler;
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Form\Handler\BoardUpdateFormHandler
-	 */
-	protected function getFormHandlerToUpdateBoard(Board $board)
-	{
-	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.board_update');
+        $formHandler->setRequest($this->getRequest());
 
-		$formHandler->setRequest($this->getRequest());
-		
-		$formHandler->setBoard($board);
-		
-	    return $formHandler;
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Form\Handler\BoardDeleteFormHandler
-	 */
-	protected function getFormHandlerToDeleteBoard(Board $board)
-	{
-	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.board_delete');
+        if ($categoryFilter) {
+            $category = $this->getCategoryModel()->findOneCategoryById($categoryFilter);
 
-		$formHandler->setRequest($this->getRequest());
-		
-		$formHandler->setBoard($board);
-		
-	    return $formHandler;
-	}
-	
-	protected function getFilterQueryStrings(Board $board)
-	{
-		$params = array();
-		
-		if ($board->getCategory()) {
-			$params['category_filter'] = $board->getCategory()->getId();
+            if ($category) {
+                $formHandler->setDefaultCategory($category);
+            }
+        }
 
-			if ($board->getCategory()->getForum()) {
-				$params['forum_filter'] = $board->getCategory()->getForum()->getId();
-			}
-		}
+        return $formHandler;
+    }
 
-		return $params;
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Form\Handler\BoardUpdateFormHandler
+     */
+    protected function getFormHandlerToUpdateBoard(Board $board)
+    {
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.board_update');
+
+        $formHandler->setRequest($this->getRequest());
+
+        $formHandler->setBoard($board);
+
+        return $formHandler;
+    }
+
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Form\Handler\BoardDeleteFormHandler
+     */
+    protected function getFormHandlerToDeleteBoard(Board $board)
+    {
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.board_delete');
+
+        $formHandler->setRequest($this->getRequest());
+
+        $formHandler->setBoard($board);
+
+        return $formHandler;
+    }
+
+    protected function getFilterQueryStrings(Board $board)
+    {
+        $params = array();
+
+        if ($board->getCategory()) {
+            $params['category_filter'] = $board->getCategory()->getId();
+
+            if ($board->getCategory()->getForum()) {
+                $params['forum_filter'] = $board->getCategory()->getForum()->getId();
+            }
+        }
+
+        return $params;
+    }
 }

@@ -33,79 +33,79 @@ use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent;
  */
 class SubscriberListener implements EventSubscriberInterface
 {
-	/**
-	 * 
-	 * @access private
-	 * @var \CCDNForum\ForumBundle\Model\Model\SubscriptionModel $subscriptionModel
-	 */
-	protected $subscriptionModel;
+    /**
+     *
+     * @access private
+     * @var \CCDNForum\ForumBundle\Model\Model\SubscriptionModel $subscriptionModel
+     */
+    protected $subscriptionModel;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\Security\Core\SecurityContext $securityContext
-	 */
-	protected $securityContext;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\Security\Core\SecurityContext $securityContext
+     */
+    protected $securityContext;
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Model\Model\SubscriptionModel $subscriptionModel
-	 * @param \Symfony\Component\Security\Core\SecurityContext     $securityContext
-	 */
-	public function __construct($subscriptionModel, SecurityContext $securityContext)
-	{
-		$this->subscriptionModel = $subscriptionModel;
-		$this->securityContext = $securityContext;
-	}
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Model\Model\SubscriptionModel $subscriptionModel
+     * @param \Symfony\Component\Security\Core\SecurityContext     $securityContext
+     */
+    public function __construct($subscriptionModel, SecurityContext $securityContext)
+    {
+        $this->subscriptionModel = $subscriptionModel;
+        $this->securityContext = $securityContext;
+    }
 
-	/**
-	 * 
-	 * {@inheritDoc}
-	 */
-	public static function getSubscribedEvents()
-	{
-		return array(
-			ForumEvents::USER_TOPIC_CREATE_COMPLETE      => 'onTopicCreateComplete',
-			ForumEvents::USER_TOPIC_REPLY_COMPLETE       => 'onTopicReplyComplete'
-		);
-	}
+    /**
+     *
+     * {@inheritDoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return array(
+            ForumEvents::USER_TOPIC_CREATE_COMPLETE      => 'onTopicCreateComplete',
+            ForumEvents::USER_TOPIC_REPLY_COMPLETE       => 'onTopicReplyComplete'
+        );
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
-	 */
-	public function onTopicCreateComplete(UserTopicEvent $event)
-	{
-		if ($event->getTopic()) {
-			if ($event->getTopic()->getId() && $event->authorWantsToSubscribe()) {
-				$user = $this->securityContext->getToken()->getUser();
-				
-				$this->subscriptionModel->subscribe($event->getTopic(), $user);
-			}
-		}
-	}
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
+     */
+    public function onTopicCreateComplete(UserTopicEvent $event)
+    {
+        if ($event->getTopic()) {
+            if ($event->getTopic()->getId() && $event->authorWantsToSubscribe()) {
+                $user = $this->securityContext->getToken()->getUser();
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
-	 */
-	public function onTopicReplyComplete(UserTopicEvent $event)
-	{
-		if ($event->getTopic()) {
-			if ($event->getTopic()->getId()) {
-				$user = $this->securityContext->getToken()->getUser();
-				
-				if ($event->authorWantsToSubscribe()) {
-					$this->subscriptionModel->subscribe($event->getTopic(), $user);
-				}
+                $this->subscriptionModel->subscribe($event->getTopic(), $user);
+            }
+        }
+    }
 
-				$subscriptions = $this->subscriptionModel->findAllSubscriptionsForTopicById($event->getTopic()->getId());
-				
-				$this->subscriptionModel->markTheseAsUnread($subscriptions, $user);
-			}
-		}
-	}
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
+     */
+    public function onTopicReplyComplete(UserTopicEvent $event)
+    {
+        if ($event->getTopic()) {
+            if ($event->getTopic()->getId()) {
+                $user = $this->securityContext->getToken()->getUser();
+
+                if ($event->authorWantsToSubscribe()) {
+                    $this->subscriptionModel->subscribe($event->getTopic(), $user);
+                }
+
+                $subscriptions = $this->subscriptionModel->findAllSubscriptionsForTopicById($event->getTopic()->getId());
+
+                $this->subscriptionModel->markTheseAsUnread($subscriptions, $user);
+            }
+        }
+    }
 }

@@ -9,7 +9,7 @@
 				{%- if post.isDeleted == false or is_granted('ROLE_MODERATOR') -%}
 
 					{%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig" -%}
-					
+
 				{%- endif -%}
 			{%- endfor -%}
 		</div>

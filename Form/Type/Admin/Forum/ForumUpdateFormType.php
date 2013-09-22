@@ -47,12 +47,12 @@ class ForumUpdateFormType extends AbstractType
      *
      * @access public
      * @var string $forumClass
-	 * @var Object $roleHelper
+     * @var Object $roleHelper
      */
     public function __construct($forumClass, $roleHelper)
     {
         $this->forumClass = $forumClass;
-		$this->roleHelper = $roleHelper;
+        $this->roleHelper = $roleHelper;
     }
 
     /**
@@ -98,7 +98,7 @@ class ForumUpdateFormType extends AbstractType
             'intention'           => 'forum_forum_update_item',
             'validation_groups'   => array('forum_forum_update'),
             'cascade_validation'  => true,
-			'available_roles'     => $this->roleHelper->getRoleHierarchy(),
+            'available_roles'     => $this->roleHelper->getRoleHierarchy(),
         );
     }
 

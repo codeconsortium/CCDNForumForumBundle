@@ -61,7 +61,7 @@ class BaseController extends ContainerAware
      *
      * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher;
      */
-	protected $dispatcher;
+    protected $dispatcher;
 
     /**
      *
@@ -369,19 +369,19 @@ class BaseController extends ContainerAware
         return $action;
     }
 
-	public function getQuery($query, $default)
-	{
-		return $this->getRequest()->query->get($query, $default);
-	}
+    public function getQuery($query, $default)
+    {
+        return $this->getRequest()->query->get($query, $default);
+    }
 
-	public function dispatch($name, Event $event)
-	{
-		if (! $this->dispatcher) {
-			$this->dispatcher = $this->container->get('event_dispatcher');
-		}
-		
-		$this->dispatcher->dispatch($name, $event);
-	}
+    public function dispatch($name, Event $event)
+    {
+        if (! $this->dispatcher) {
+            $this->dispatcher = $this->container->get('event_dispatcher');
+        }
+
+        $this->dispatcher->dispatch($name, $event);
+    }
 
     /**
      *
@@ -410,7 +410,7 @@ class BaseController extends ContainerAware
 
         return $this->forumModel;
     }
-		
+
     /**
      *
      * @access protected
@@ -502,6 +502,6 @@ class BaseController extends ContainerAware
     protected function getCrumbs()
     {
         //return $this->container->get('ccdn_component_crumb_trail.component.trail');
-		return $this->container->get('ccdn_forum_forum.component.crumb_builder');
+        return $this->container->get('ccdn_forum_forum.component.crumb_builder');
     }
 }

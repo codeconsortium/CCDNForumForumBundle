@@ -13,10 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Model\Model;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Model\Model\BaseModel;
 use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
@@ -36,7 +33,7 @@ use CCDNForum\ForumBundle\Entity\Board;
  */
 class BoardModel extends BaseModel implements BaseModelInterface
 {
-	/**
+    /**
      *
      * @access public
      * @return \Doctrine\Common\Collection\ArrayCollection
@@ -128,10 +125,10 @@ class BoardModel extends BaseModel implements BaseModelInterface
      * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-	public function deleteBoard(Board $board)
-	{
-		return $this->getManager()->deleteBoard($board);
-	}
+    public function deleteBoard(Board $board)
+    {
+        return $this->getManager()->deleteBoard($board);
+    }
 
     /**
      *
@@ -140,10 +137,10 @@ class BoardModel extends BaseModel implements BaseModelInterface
      * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-	public function reassignTopicsToBoard(ArrayCollection $topics, Board $board = null)
-	{
-		return $this->getManager()->reassignTopicsToBoard($topics, $board);
-	}
+    public function reassignTopicsToBoard(ArrayCollection $topics, Board $board = null)
+    {
+        return $this->getManager()->reassignTopicsToBoard($topics, $board);
+    }
 
     /**
      *
@@ -158,23 +155,6 @@ class BoardModel extends BaseModel implements BaseModelInterface
         return $this->getManager()->reorderBoards($boards, $boardShift, $direction);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
 //    /**
 //     *
 //     * @access public
@@ -210,7 +190,7 @@ class BoardModel extends BaseModel implements BaseModelInterface
 //    }
 //
 
-//	
+//
 //    /**
 //     *
 //     * @access public

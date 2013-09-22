@@ -41,7 +41,7 @@ interface ModelBagInterface
      * @return \CCDNForum\ForumBundle\Model\Model\ForumModel
      */
     public function getForumModel();
-	
+
     /**
      *
      * @access public

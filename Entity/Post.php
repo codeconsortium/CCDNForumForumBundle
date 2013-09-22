@@ -68,13 +68,13 @@ class Post extends AbstractPost
      *
      * @var \DateTime $unlockedDate
      */
-	protected $unlockedDate;
+    protected $unlockedDate;
 
     /**
      *
      * @var \DateTime $unlockedUntilDate
      */
-	protected $unlockedUntilDate;
+    protected $unlockedUntilDate;
 
     /**
      *
@@ -84,9 +84,9 @@ class Post extends AbstractPost
     {
         parent::__construct();
         // your own logic
-		
-		$this->unlockedDate = new \Datetime('now');
-		$this->unlockedUntilDate = new \Datetime('now + 7 days');
+
+        $this->unlockedDate = new \Datetime('now');
+        $this->unlockedUntilDate = new \Datetime('now + 7 days');
     }
 
     /**
@@ -219,10 +219,10 @@ class Post extends AbstractPost
      *
      * @return \datetime
      */
-	public function getUnlockedDate()
-	{
-		return $this->unlockedDate;
-	}
+    public function getUnlockedDate()
+    {
+        return $this->unlockedDate;
+    }
 
     /**
      * Set unlockedDate
@@ -230,22 +230,22 @@ class Post extends AbstractPost
      * @param  \datetime $datetime
      * @return Post
      */
-	public function setUnlockedDate(\Datetime $datetime)
-	{
-		$this->unlockedDate = $datetime;
-		
-		return $this;
-	}
+    public function setUnlockedDate(\Datetime $datetime)
+    {
+        $this->unlockedDate = $datetime;
+
+        return $this;
+    }
 
     /**
      * Get unlockedUntilDate
      *
      * @return \datetime
      */
-	public function getUnlockedUntilDate()
-	{
-		return $this->unlockedUntilDate;
-	}
+    public function getUnlockedUntilDate()
+    {
+        return $this->unlockedUntilDate;
+    }
 
     /**
      * Set unlockedUntilDate
@@ -253,20 +253,20 @@ class Post extends AbstractPost
      * @param  \datetime $datetime
      * @return Post
      */
-	public function setUnlockedUntilDate(\Datetime $datetime)
-	{
-		$this->unlockedUntilDate = $datetime;
-		
-		return $this;
-	}
+    public function setUnlockedUntilDate(\Datetime $datetime)
+    {
+        $this->unlockedUntilDate = $datetime;
+
+        return $this;
+    }
 
     /**
      * Get isUnlocked
      *
      * @return \datetime
      */
-	public function isLocked()
-	{
-		return $this->unlockedUntilDate > new \Datetime('now') ? false : true;
-	}
+    public function isLocked()
+    {
+        return $this->unlockedUntilDate > new \Datetime('now') ? false : true;
+    }
 }

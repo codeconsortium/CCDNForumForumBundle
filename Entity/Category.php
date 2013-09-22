@@ -60,25 +60,25 @@ class Category extends AbstractCategory
     public function __construct()
     {
         parent::__construct();
-		
+
         // your own logic
         $this->readAuthorisedRoles = array();
     }
 
-	public function __toString()
-	{
-		return $this->name;
-	}
+    public function __toString()
+    {
+        return $this->name;
+    }
 
-	public function forumName()
-	{
-		if ($this->getForum()) {
-			return $this->getForum()->getName();
-		}
-		
-		return 'Unassigned';
-	}
-	
+    public function forumName()
+    {
+        if ($this->getForum()) {
+            return $this->getForum()->getName();
+        }
+
+        return 'Unassigned';
+    }
+
     /**
      * Get id
      *
@@ -134,7 +134,7 @@ class Category extends AbstractCategory
 
         return $this;
     }
-	
+
     /**
      *
      * @return array
@@ -157,7 +157,7 @@ class Category extends AbstractCategory
     }
 
     /**
-     * 
+     *
      * @param $role
      * @return bool
      */
@@ -168,7 +168,7 @@ class Category extends AbstractCategory
 
     /**
      *
-     * @param SecurityContextInterface $securityContext
+     * @param  SecurityContextInterface $securityContext
      * @return bool
      */
     public function isAuthorisedToRead(SecurityContextInterface $securityContext)

@@ -15,11 +15,7 @@ namespace CCDNForum\ForumBundle\Form\Type\Moderator\Post;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\Validator\Constraints\True;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  *
@@ -59,15 +55,15 @@ class PostUnlockFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add('unlockedUntilDate', 'date',
-				array(
-					'mapped'             => true,
-					'required'           => true,
-					'label'              => 'Unlock until:',
-					'translation_domain' => 'CCDNForumForumBundle',
-					'data'               => new \Datetime('today + 1 day')
-				)
-			)
+            ->add('unlockedUntilDate', 'date',
+                array(
+                    'mapped'             => true,
+                    'required'           => true,
+                    'label'              => 'Unlock until:',
+                    'translation_domain' => 'CCDNForumForumBundle',
+                    'data'               => new \Datetime('today + 1 day')
+                )
+            )
         ;
     }
 

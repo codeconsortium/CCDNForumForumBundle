@@ -35,17 +35,17 @@ class UserBoardController extends UserBoardBaseController
      */
     public function showAction($forumName, $boardId)
     {
-		$forum = $this->getForumModel()->findOneForumByName($forumName);
-		$this->isFound($forum);
-		
+        $forum = $this->getForumModel()->findOneForumByName($forumName);
+        $this->isFound($forum);
+
         // check board exists.
         $board = $this->getBoardModel()->findOneBoardByIdWithCategory($boardId);
         $this->isFound($board);
 
-		$this->isAuthorised($this->getAuthorizer()->canShowBoard($board, $forum));
+        $this->isAuthorised($this->getAuthorizer()->canShowBoard($board, $forum));
 
-		// Get topics.
-		$page = $this->getQuery('page', 1);
+        // Get topics.
+        $page = $this->getQuery('page', 1);
         $stickyTopics = $this->getTopicModel()->findAllTopicsStickiedByBoardId($boardId, true);
         $topicsPager = $this->getTopicModel()->findAllTopicsPaginatedByBoardId($boardId, $page, true);
 
@@ -55,17 +55,17 @@ class UserBoardController extends UserBoardBaseController
         // setup bread crumbs.
         $category = $board->getCategory();
 
-		$crumbs = $this->getCrumbs()->addUserBoardShow($forum, $board);
+        $crumbs = $this->getCrumbs()->addUserBoardShow($forum, $board);
 
         return $this->renderResponse('CCDNForumForumBundle:User:Board/show.html.',
-			array(
-	            'crumbs' => $crumbs,
-				'forum' => $forum,
-	            'board' => $board,
-	            'pager' => $topicsPager,
-	            'posts_per_page' => $postsPerPage,
-	            'sticky_topics' => $stickyTopics,
-	        )
-		);
+            array(
+                'crumbs' => $crumbs,
+                'forum' => $forum,
+                'board' => $board,
+                'pager' => $topicsPager,
+                'posts_per_page' => $postsPerPage,
+                'sticky_topics' => $stickyTopics,
+            )
+        );
     }
 }

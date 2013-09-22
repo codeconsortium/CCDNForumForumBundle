@@ -51,7 +51,7 @@ services:
         class: %ccdn_forum_forum.form.type.board_delete.class%
         arguments:
             - %ccdn_forum_forum.entity.board.class%
-    
+
     ccdn_forum_forum.form.handler.board_delete:
         class: %ccdn_forum_forum.form.handler.board_delete.class%
         arguments:

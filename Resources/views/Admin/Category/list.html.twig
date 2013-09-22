@@ -11,19 +11,19 @@
 {%- block body_content -%}
 
 	{%- spaceless -%}
-	
+
 		<section>
 			<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_category_create', {'forum_filter': forum_filter}) -}}">
 				Create Category
 			</a>
 		</section>
-	
+
 		<section class="span12">
 			<ul class="nav nav-list span2">
 				<li class="nav-header">
 					Forums
 				</li>
-				
+
 				<li {%- if forum_filter is null or forum_filter == '' %} class="active" {%- endif -%}>
 					<a href="{{- path('ccdn_forum_admin_category_list') -}}">
 						<i class="icon-exclamation-sign"></i>
@@ -33,20 +33,20 @@
 				{%- for forum in forums -%}
 					<li {%- if forum_filter == forum.id %} class="active" {%- endif -%}>
 						<a href="{{- path('ccdn_forum_admin_category_list', {'forum_filter': forum.id}) -}}" title="{{- forum.name -}}">
-							
+
 							<span class="ellipsis">
 								{{- forum.name -}}
 							</span>
-							
+
 							<span class="label pull-right">
 								{{- forum.getCategories | length -}}
 							</span>
-							
+
 						</a>
 					</li>
 				{%- endfor -%}
 			</ul>
-		
+
 			<div class="span9">
 				<table class="table table-bordered" id="admin-categories-list">
 					<thead>
@@ -75,7 +75,7 @@
 											Delete
 										</a>
 									{%- endif -%}
-									
+
 									{%- if forum_filter is not null and forum_filter != '' %}
 										{% if loop.length > 1 %}
 											<div class="btn-group">
@@ -87,7 +87,7 @@
 														<i class="icon-chevron-up"></i>
 													{%- endif -%}
 												</a>
-												
+
 												<a class="btn" href="{{- path('ccdn_forum_admin_category_reorder_down', {'categoryId': category.id, 'forum_filter': forum_filter}) -}}"
 												 id="reorder_down_category[{{- category.name -}}]">
 													{%- if loop.last -%}
@@ -106,7 +106,7 @@
 				</table>
 			</div>
 		</section>
-		
+
 	{%- endspaceless -%}
-	
+
 {%- endblock body_content -%}

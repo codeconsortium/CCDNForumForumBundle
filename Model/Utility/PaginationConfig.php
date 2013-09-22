@@ -30,19 +30,19 @@ class PaginationConfig
      *
      * @var int $topicsPerPageOnSubscriptions
      */
-	protected $topicsPerPageOnSubscriptions;
+    protected $topicsPerPageOnSubscriptions;
 
     /**
      *
      * @var int $topicsPerPageOnBoards
      */
-	protected $topicsPerPageOnBoards;
+    protected $topicsPerPageOnBoards;
 
     /**
      *
      * @var int $postsPerPageOnTopics
      */
-	protected $postsPerPageOnTopics;
+    protected $postsPerPageOnTopics;
 
     /**
      *

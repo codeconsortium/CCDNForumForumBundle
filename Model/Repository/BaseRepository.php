@@ -64,9 +64,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     protected $gateway;
 
-	protected $model;
-	protected $utilBag;
-	
+    protected $model;
+    protected $utilBag;
+
     /**
      *
      * @access public
@@ -84,15 +84,15 @@ abstract class BaseRepository implements BaseRepositoryInterface
         $this->securityContext = $securityContext;
 
         $this->gateway = $gateway;
-		
-		$this->utilBag = $utilBag;
+
+        $this->utilBag = $utilBag;
     }
 
-	public function setModel($model)
-	{
-		$this->model = $model;
-	}
-	
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
+
     /**
      *
      * @access public
@@ -178,7 +178,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         return $this->gateway->all($qb);
     }
-	
+
     /**
      *
      * @access public

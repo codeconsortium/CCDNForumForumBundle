@@ -13,10 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
-use CCDNForum\ForumBundle\Entity\Board;
-
 /**
  *
  * @category CCDNForum

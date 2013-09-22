@@ -71,20 +71,20 @@ class ForumUpdateFormHandler
      */
     protected $forum;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-	 */
-	protected $dispatcher;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     */
+    protected $dispatcher;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
-	
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
+
     /**
      *
      * @access public
@@ -98,31 +98,31 @@ class ForumUpdateFormHandler
         $this->factory = $factory;
         $this->forumUpdateFormType = $forumUpdateFormType;
         $this->forumModel = $forumModel;
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
     }
-
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum $forum
-	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Forum\ForumUpdateFormHandler
-	 */
-	public function setForum(Forum $forum)
-	{
-		$this->forum = $forum;
-		
-		return $this;
-	}
 
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                                    $forum
+     * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Forum\ForumUpdateFormHandler
      */
-	public function setRequest(Request $request)
-	{
-		$this->request = $request;
-	}
+    public function setForum(Forum $forum)
+    {
+        $this->forum = $forum;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      *
@@ -175,12 +175,12 @@ class ForumUpdateFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-			if (!is_object($this->forum) && !$this->forum instanceof Forum) {
-				throw new \Exception('Forum object must be specified to edit.');
-			}
-			
-			$this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_EDIT_INITIALISE, new AdminForumEvent($this->request, $this->forum));
-			
+            if (!is_object($this->forum) && !$this->forum instanceof Forum) {
+                throw new \Exception('Forum object must be specified to edit.');
+            }
+
+            $this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_EDIT_INITIALISE, new AdminForumEvent($this->request, $this->forum));
+
             $this->form = $this->factory->create($this->forumUpdateFormType, $this->forum);
         }
 
@@ -195,8 +195,8 @@ class ForumUpdateFormHandler
      */
     protected function onSuccess(Forum $forum)
     {
-		$this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_EDIT_SUCCESS, new AdminForumEvent($this->request, $forum));
-		
+        $this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_EDIT_SUCCESS, new AdminForumEvent($this->request, $forum));
+
         return $this->forumModel->updateForum($forum)->flush();
     }
 }

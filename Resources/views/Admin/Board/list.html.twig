@@ -11,19 +11,19 @@
 {%- block body_content -%}
 
 	{%- spaceless -%}
-	
+
 		<section>
 			<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_board_create', {'forum_filter': forum_filter, 'category_filter': category_filter}) -}}">
 				Create Board
 			</a>
 		</section>
-		
+
 		<section class="span12">
 			<ul class="nav nav-list span2">
 				<li class="nav-header">
 					Forums
 				</li>
-				
+
 				<li {%- if forum_filter is null or forum_filter == '' %} class="active" {%- endif -%}>
 					<a href="{{- path('ccdn_forum_admin_board_list') -}}">
 						<i class="icon-exclamation-sign"></i>
@@ -33,7 +33,7 @@
 				{%- for forum in forums -%}
 					<li {%- if forum_filter == forum.id %} class="active" {%- endif -%}>
 						<a href="{{- path('ccdn_forum_admin_board_list', {'forum_filter': forum.id}) -}}" title="{{- forum.name -}}">
-							
+
 							<span class="label pull-right">
 								{{- forum.getCategories | length -}}
 							</span>
@@ -41,17 +41,17 @@
 							<span class="ellipsis">
 								{{- forum.name -}}
 							</span>
-							
+
 						</a>
 					</li>
 				{%- endfor -%}
 			</ul>
-		
+
 			<ul class="nav nav-list span2">
 				<li class="nav-header">
 					Categories
 				</li>
-				
+
 				<li {%- if category_filter is null or category_filter == '' %} class="active" {%- endif -%}>
 					<a href="{{- path('ccdn_forum_admin_board_list', {'forum_filter': forum_filter}) -}}">
 						<i class="icon-exclamation-sign"></i>
@@ -74,12 +74,12 @@
 							<span class="ellipsis">
 								{{- category.name -}}
 							</span>
-							
+
 						</a>
 					</li>
 				{%- endfor -%}
 			</ul>
-			
+
 			<div class="span7">
 				<table class="table table-bordered" id="admin-boards-list">
 					<thead>
@@ -108,7 +108,7 @@
 											Delete
 										</a>
 									{%- endif -%}
-									
+
 									{%- if category_filter is not null and category_filter != '' %}
 										{% if loop.length > 1 %}
 											<div class="btn-group">
@@ -120,7 +120,7 @@
 														<i class="icon-chevron-up"></i>
 													{%- endif -%}
 												</a>
-												
+
 												<a class="btn" href="{{- path('ccdn_forum_admin_board_reorder_down', {'boardId': board.id, 'forum_filter': forum_filter, 'category_filter': category_filter}) -}}"
 												 id="reorder_down_board[{{- board.name -}}]">
 													{%- if loop.last -%}
@@ -139,7 +139,7 @@
 				</table>
 			</div>
 		</section>
-		
+
 	{%- endspaceless -%}
-	
+
 {%- endblock body_content -%}

@@ -14,7 +14,6 @@
 namespace CCDNForum\ForumBundle\Model\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Model\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Model\Manager\BaseManager;
@@ -34,69 +33,69 @@ use CCDNForum\ForumBundle\Entity\Forum;
  */
 class ForumManager extends BaseManager implements BaseManagerInterface
 {
-	/**
-	 * 
-	 * @access public
-	 * @param  \CCDNForum\ForumBundle\Entity\Forum $forum
-	 */
-	public function saveNewForum(Forum $forum)
-	{
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Entity\Forum $forum
+     */
+    public function saveNewForum(Forum $forum)
+    {
         // insert a new row
         $this->persist($forum)->flush();
 
-		$this->refresh($forum);
-		
-        return $this;
-	}
+        $this->refresh($forum);
 
-	/**
-	 * 
-	 * @access public
-	 * @param  \CCDNForum\ForumBundle\Entity\Forum $forum
-	 */
-	public function updateForum(Forum $forum)
-	{
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Entity\Forum $forum
+     */
+    public function updateForum(Forum $forum)
+    {
         $this->persist($forum)->flush();
 
-		$this->refresh($forum);
-		
+        $this->refresh($forum);
+
         return $this;
-	}
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  \CCDNForum\ForumBundle\Entity\Forum $forum
-	 */
-	public function deleteForum(Forum $forum)
-	{
-		// If we do not refresh the forum, AND we have reassigned the categories to null, 
-		// then its lazy-loaded categories are dirty, as the categories in memory will
-		// still have the old category id set. Removing the forum will cascade into deleting
-		// categories aswell, even though in the db the relation has been set to null.
-		$this->refresh($forum);
-		
-		$this->remove($forum)->flush();
-		
-		return $this;
-	}
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Entity\Forum $forum
+     */
+    public function deleteForum(Forum $forum)
+    {
+        // If we do not refresh the forum, AND we have reassigned the categories to null,
+        // then its lazy-loaded categories are dirty, as the categories in memory will
+        // still have the old category id set. Removing the forum will cascade into deleting
+        // categories aswell, even though in the db the relation has been set to null.
+        $this->refresh($forum);
 
-	/**
-	 * 
-	 * @access public
-	 * @param  \Doctrine\Common\Collections\ArrayCollection $categories
-	 * @param  \CCDNForum\ForumBundle\Entity\Forum          $forum
-	 */
-	public function reassignCategoriesToForum(ArrayCollection $categories, Forum $forum = null)
-	{
-		foreach ($categories as $category) {
-			$category->setForum($forum);
-			
-			$this->persist($category);
-		}
+        $this->remove($forum)->flush();
 
-		$this->flush();
-		
-		return $this;
-	}
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param \Doctrine\Common\Collections\ArrayCollection $categories
+     * @param \CCDNForum\ForumBundle\Entity\Forum          $forum
+     */
+    public function reassignCategoriesToForum(ArrayCollection $categories, Forum $forum = null)
+    {
+        foreach ($categories as $category) {
+            $category->setForum($forum);
+
+            $this->persist($category);
+        }
+
+        $this->flush();
+
+        return $this;
+    }
 }

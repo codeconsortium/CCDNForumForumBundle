@@ -222,7 +222,7 @@ class Configuration implements ConfigurationInterface
 
         return $this;
     }
-	
+
     /**
      *
      * @access private
@@ -452,7 +452,7 @@ class Configuration implements ConfigurationInterface
 
         return $this;
     }
-	
+
     /**
      *
      * @access private

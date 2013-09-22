@@ -15,9 +15,9 @@
 	{%- endif -%}
 		<a href="{{- path('ccdn_forum_user_subscription_index', {'forumName': forum_name, 'filter': filter_key}) -}}">
 			{{- label -}}
-		
+
 			&nbsp;
-			
+
 			<span class="label">
 				{%- if count_unread is not null and count_total is not null -%}
 					{{- count_unread -}}
@@ -27,7 +27,7 @@
 					{%- if count_unread is not null -%}
 						{{- count_unread -}}
 					{%- endif -%}
-					
+
 					{%- if count_read is not null -%}
 						{{- count_read -}}
 					{%- endif -%}
@@ -56,13 +56,13 @@
 				{{- tabs.subscription_tab('read', '~', 'read', filter, total_subscribed_forums['count_read'], null, null) -}}
 			{%- endif -%}
 		</ul>
-		
+
 		<div class="btn-toolbar">
 			<nav class="span12 btn-right paginate">
 				{{- knp_pagination_render(pager) -}}
 			</nav>
 		</div>
-		
+
 		<table class="table table-striped table-hover">
 			<thead>
 				<tr>

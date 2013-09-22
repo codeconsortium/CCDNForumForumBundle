@@ -28,49 +28,49 @@ use CCDNForum\ForumBundle\Entity\Forum;
  */
 class AdminForumBaseController extends BaseController
 {
-	/**
-	 *
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Form\Handler\ForumCreateFormHandler
-	 */
-	public function getFormHandlerToCreateForum()
-	{
-	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.forum_create');
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Form\Handler\ForumCreateFormHandler
+     */
+    public function getFormHandlerToCreateForum()
+    {
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.forum_create');
 
-		$formHandler->setRequest($this->getRequest());
-		
-	    return $formHandler;
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Form\Handler\ForumUpdateFormHandler
-	 */
-	public function getFormHandlerToUpdateForum(Forum $forum)
-	{
-	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.forum_update');
+        $formHandler->setRequest($this->getRequest());
 
-		$formHandler->setRequest($this->getRequest());
-		
-		$formHandler->setForum($forum);
-		
-	    return $formHandler;
-	}
-	
-	/**
-	 *
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Form\Handler\ForumDeleteFormHandler
-	 */
-	public function getFormHandlerToDeleteForum(Forum $forum)
-	{
-	    $formHandler = $this->container->get('ccdn_forum_forum.form.handler.forum_delete');
+        return $formHandler;
+    }
 
-		$formHandler->setRequest($this->getRequest());
-		
-		$formHandler->setForum($forum);
-		
-	    return $formHandler;
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Form\Handler\ForumUpdateFormHandler
+     */
+    public function getFormHandlerToUpdateForum(Forum $forum)
+    {
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.forum_update');
+
+        $formHandler->setRequest($this->getRequest());
+
+        $formHandler->setForum($forum);
+
+        return $formHandler;
+    }
+
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Form\Handler\ForumDeleteFormHandler
+     */
+    public function getFormHandlerToDeleteForum(Forum $forum)
+    {
+        $formHandler = $this->container->get('ccdn_forum_forum.form.handler.forum_delete');
+
+        $formHandler->setRequest($this->getRequest());
+
+        $formHandler->setForum($forum);
+
+        return $formHandler;
+    }
 }

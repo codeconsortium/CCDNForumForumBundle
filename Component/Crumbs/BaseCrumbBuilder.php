@@ -28,25 +28,25 @@ use CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbFactory;
  */
 class BaseCrumbBuilder
 {
-	/**
-	 * 
-	 * @access protected
-	 * @var \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbFactory $crumbFactory
-	 */
-	protected $crumbFactory;
+    /**
+     *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbFactory $crumbFactory
+     */
+    protected $crumbFactory;
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbFactory $crumbs
-	 */
-	public function __construct(CrumbFactory $crumbFactory)
-	{
-		$this->crumbFactory = $crumbFactory;
-	}
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbFactory $crumbs
+     */
+    public function __construct(CrumbFactory $crumbFactory)
+    {
+        $this->crumbFactory = $crumbFactory;
+    }
 
-	public function createCrumbTrail()
-	{
-		return $this->crumbFactory->createNewCrumbTrail();
-	}
+    public function createCrumbTrail()
+    {
+        return $this->crumbFactory->createNewCrumbTrail();
+    }
 }

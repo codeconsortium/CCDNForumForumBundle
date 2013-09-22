@@ -26,8 +26,8 @@ namespace CCDNForum\ForumBundle\Component\Helper;
  */
 class RoleHelper
 {
-	protected $securityContext;
-	
+    protected $securityContext;
+
     /**
      *
      * @access protected
@@ -39,10 +39,10 @@ class RoleHelper
      * @access protected
      */
     protected $availableRoleKeys;
-	
-	public function __construct($securityContext, $availableRoles)
-	{
-		$this->securityContext = $securityContext;
+
+    public function __construct($securityContext, $availableRoles)
+    {
+        $this->securityContext = $securityContext;
 
         // default role is array is empty.
         if (empty($availableRoles)) {
@@ -53,7 +53,7 @@ class RoleHelper
 
         // Remove the associate arrays.
         $this->availableRoleKeys = array_keys($availableRoles);
-	}
+    }
 
     /**
      *
@@ -71,7 +71,7 @@ class RoleHelper
 
         return $roles;
     }
-	
+
     /**
      *
      * @access public
@@ -81,7 +81,7 @@ class RoleHelper
     {
         return $this->availableRoles;
     }
-	
+
     /**
      *
      * @access public
@@ -154,4 +154,3 @@ class RoleHelper
         }
     }
 }
-

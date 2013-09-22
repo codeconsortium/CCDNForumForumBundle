@@ -15,9 +15,6 @@ namespace CCDNForum\ForumBundle\Model\Manager;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
-
 use CCDNForum\ForumBundle\Model\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Model\Manager\BaseManager;
 
@@ -58,7 +55,6 @@ class PostManager extends BaseManager implements BaseManagerInterface
         //$this->managerBag->getSubscriptionManager()->subscribe($post->getTopic())->flush();
 
         //$this->managerBag->getRegistryManager()->updateCachedPostCountForUser($post->getCreatedBy())->flush();
-
         return $this;
     }
 
@@ -73,8 +69,8 @@ class PostManager extends BaseManager implements BaseManagerInterface
         // update a record
         $this->persist($post)->flush();
 
-		$this->refresh($post);
-		
+        $this->refresh($post);
+
         return $this;
     }
 
@@ -86,12 +82,12 @@ class PostManager extends BaseManager implements BaseManagerInterface
      */
     public function lock(Post $post)
     {
-		$post->setUnlockedUntilDate(new \Datetime('now'));
+        $post->setUnlockedUntilDate(new \Datetime('now'));
 
         $this->persist($post)->flush();
 
-		$this->refresh($post);
-		
+        $this->refresh($post);
+
         return $this;
     }
 

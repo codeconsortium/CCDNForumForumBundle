@@ -13,10 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Model\Repository;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Model\Repository\BaseRepository;
 use CCDNForum\ForumBundle\Model\Repository\BaseRepositoryInterface;
@@ -49,19 +46,19 @@ class ForumRepository extends BaseRepository implements BaseRepositoryInterface
     /**
      *
      * @access public
-     * @param int                                  $forumId
+     * @param  int                                 $forumId
      * @return \CCDNForum\ForumBundle\Entity\Forum
      */
     public function findOneForumById($forumId)
     {
-		$params = array(':forumId' => $forumId);
-		
+        $params = array(':forumId' => $forumId);
+
         $qb = $this->createSelectQuery(array('f'));
-		
-		$qb
-			->where('f.id = :forumId');
-		;
-		
+
+        $qb
+            ->where('f.id = :forumId');
+        ;
+
         return $this->gateway->findForum($qb, $params);
     }
 
@@ -73,14 +70,14 @@ class ForumRepository extends BaseRepository implements BaseRepositoryInterface
      */
     public function findOneForumByName($forumName)
     {
-		$params = array(':forumName' => $forumName);
-		
+        $params = array(':forumName' => $forumName);
+
         $qb = $this->createSelectQuery(array('f'));
-		
-		$qb
-			->where('f.name = :forumName');
-		;
-		
+
+        $qb
+            ->where('f.name = :forumName');
+        ;
+
         return $this->gateway->findForum($qb, $params);
     }
 }

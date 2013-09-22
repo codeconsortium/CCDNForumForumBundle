@@ -20,4 +20,3 @@ ccdn_forum_user_post_delete:
 ccdn_forum_user_post_delete_process:
     pattern: /{postId}/delete/process
     defaults: { _controller: CCDNForumForumBundle:UserPost:deleteProcess, _locale: en, forumName: default }
-

@@ -46,12 +46,12 @@ class TopicChangeBoardFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  string $topicClass
+     * @param string $topicClass
      */
     public function __construct($topicClass, $boardClass)
     {
         $this->topicClass = $topicClass;
-		$this->boardClass = $boardClass;
+        $this->boardClass = $boardClass;
     }
 
     /**

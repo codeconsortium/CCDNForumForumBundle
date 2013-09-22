@@ -13,12 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\EventDispatcher\Event;
-
-use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
-use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent;
-use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicResponseEvent;
 
 use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Topic;
@@ -48,9 +43,9 @@ class ModeratorTopicBaseController extends BaseController
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_delete');
 
         $formHandler->setTopic($topic);
-		$formHandler->setUser($this->getUser());
-		$formHandler->setRequest($this->getRequest());
-		
+        $formHandler->setUser($this->getUser());
+        $formHandler->setRequest($this->getRequest());
+
         return $formHandler;
     }
 
@@ -65,9 +60,9 @@ class ModeratorTopicBaseController extends BaseController
     {
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.change_topics_board');
 
-		$formHandler->setForum($forum);
+        $formHandler->setForum($forum);
         $formHandler->setTopic($topic);
-		$formHandler->setRequest($this->getRequest());
+        $formHandler->setRequest($this->getRequest());
 
         return $formHandler;
     }

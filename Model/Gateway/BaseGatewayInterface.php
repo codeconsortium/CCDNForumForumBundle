@@ -40,13 +40,13 @@ interface BaseGatewayInterface
      */
     public function __construct(Registry $doctrine, $paginator, ModelBagInterface $modelBag, $entityClass);
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
-	 */
-	public function getModelBag();
-	
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
+     */
+    public function getModelBag();
+
     /**
      *
      * @access public
@@ -75,7 +75,7 @@ interface BaseGatewayInterface
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function createSelectQuery(Array $aliases = null);
-	
+
     /**
      *
      * @access public
@@ -106,10 +106,10 @@ interface BaseGatewayInterface
     /**
      *
      * @access public
-     * @param \Doctrine\ORM\QueryBuilder $qb
-     * @param int                        $itemsPerPage
-     * @param int                        $page
-	 * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
+     * @param  \Doctrine\ORM\QueryBuilder                               $qb
+     * @param  int                                                      $itemsPerPage
+     * @param  int                                                      $page
+     * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
     public function paginateQuery(QueryBuilder $qb, $itemsPerPage, $page);
 

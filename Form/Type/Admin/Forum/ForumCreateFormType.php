@@ -36,7 +36,6 @@ class ForumCreateFormType extends AbstractType
      */
     protected $forumClass;
 
-
     /**
      *
      * @access protected
@@ -48,12 +47,12 @@ class ForumCreateFormType extends AbstractType
      *
      * @access public
      * @var string $forumClass
-	 * @var Object $roleHelper
+     * @var Object $roleHelper
      */
     public function __construct($forumClass, $roleHelper)
     {
         $this->forumClass = $forumClass;
-		$this->roleHelper = $roleHelper;
+        $this->roleHelper = $roleHelper;
     }
 
     /**
@@ -70,16 +69,16 @@ class ForumCreateFormType extends AbstractType
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
-	        ->add('readAuthorisedRoles', 'choice',
-	            array(
-	                'required'           => false,
-	                'expanded'           => true,
-	                'multiple'           => true,
-	                'choices'            => $options['available_roles'],
-	                'label'              => 'form.label.board.view_roles',
-	                'translation_domain' => 'CCDNForumAdminBundle',
-	            )
-	        )
+            ->add('readAuthorisedRoles', 'choice',
+                array(
+                    'required'           => false,
+                    'expanded'           => true,
+                    'multiple'           => true,
+                    'choices'            => $options['available_roles'],
+                    'label'              => 'form.label.board.view_roles',
+                    'translation_domain' => 'CCDNForumAdminBundle',
+                )
+            )
         ;
     }
 
@@ -99,7 +98,7 @@ class ForumCreateFormType extends AbstractType
             'intention'           => 'forum_forum_create_item',
             'validation_groups'   => array('forum_forum_create'),
             'cascade_validation'  => true,
-			'available_roles'     => $this->roleHelper->getRoleHierarchy(),
+            'available_roles'     => $this->roleHelper->getRoleHierarchy(),
         );
     }
 

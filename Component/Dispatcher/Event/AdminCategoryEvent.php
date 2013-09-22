@@ -31,49 +31,49 @@ use CCDNForum\ForumBundle\Entity\Category;
  */
 class AdminCategoryEvent extends Event
 {
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \CCDNForum\ForumBundle\Entity\Category $category
-	 */
-	protected $category;
+    /**
+     *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Entity\Category $category
+     */
+    protected $category;
 
-	/**
-	 * 
-	 * @access public
-	 * @param \Symfony\Component\HttpFoundation\Request $request
-	 * @param \CCDNForum\ForumBundle\Entity\Category    $category
-	 */
-	public function __construct(Request $request, Category $category = null)
-	{
-		$this->request = $request;
-		$this->category = $category;
-	}
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \CCDNForum\ForumBundle\Entity\Category    $category
+     */
+    public function __construct(Request $request, Category $category = null)
+    {
+        $this->request = $request;
+        $this->category = $category;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \Symfony\Component\HttpFoundation\Request
-	 */
-	public function getRequest()
-	{
-		return $this->request;
-	}
+    /**
+     *
+     * @access public
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Category
-	 */
-	public function getCategory()
-	{
-		return $this->category;
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
 }

@@ -38,7 +38,7 @@ class SubscriptionManager extends BaseManager implements BaseManagerInterface
      *
      * @access public
      * @param  int                                                 $topicId
-     * @param  \Symfony\Component\Security\Core\User\UserInterface  $userId
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $userId
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function subscribe(Topic $topic, UserInterface $user)
@@ -55,8 +55,8 @@ class SubscriptionManager extends BaseManager implements BaseManagerInterface
             $subscription->setOwnedBy($user);
             $subscription->setTopic($topic);
             $subscription->setIsRead(true);
-			$subscription->setForum($topic->getBoard()->getCategory()->getForum());
-			
+            $subscription->setForum($topic->getBoard()->getCategory()->getForum());
+
             $this->persist($subscription)->flush();
         }
 
@@ -94,12 +94,12 @@ class SubscriptionManager extends BaseManager implements BaseManagerInterface
      */
     public function markAsRead(Subscription $subscription)
     {
-		$subscription->setIsRead(true);
-		
-		$this->persist($subscription)->flush();
-		
-		return $this;
-	}
+        $subscription->setIsRead(true);
+
+        $this->persist($subscription)->flush();
+
+        return $this;
+    }
 
     /**
      *
@@ -109,32 +109,32 @@ class SubscriptionManager extends BaseManager implements BaseManagerInterface
      */
     public function markAsUnread(Subscription $subscription)
     {
-		$subscription->setIsRead(false);
-		
-		$this->persist($subscription)->flush();
-		
-		return $this;
-	}
-	
+        $subscription->setIsRead(false);
+
+        $this->persist($subscription)->flush();
+
+        return $this;
+    }
+
     /**
      *
      * @access public
      * @param  \Doctrine\Common\Collections\ArrayCollection        $subscriptions
-	 * @param  \Symfony\Component\Security\Core\User\UserInterface $exceptUser
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $exceptUser
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
     public function markTheseAsUnread($subscriptions, UserInterface $exceptUser)
-	{
-		foreach ($subscriptions as $subscription) {
-			if ($subscription->getOwnedBy()) {
-				if ($subscription->getOwnedBy()->getId() != $exceptUser->getId()) {
-					$subscription->setIsRead(false);
-			
-					$this->persist($subscription);
-				}
-			}
-		}
-		
-		$this->flush();
-	}
+    {
+        foreach ($subscriptions as $subscription) {
+            if ($subscription->getOwnedBy()) {
+                if ($subscription->getOwnedBy()->getId() != $exceptUser->getId()) {
+                    $subscription->setIsRead(false);
+
+                    $this->persist($subscription);
+                }
+            }
+        }
+
+        $this->flush();
+    }
 }

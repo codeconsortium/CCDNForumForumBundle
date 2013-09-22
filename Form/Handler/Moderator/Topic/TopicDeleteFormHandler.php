@@ -73,26 +73,26 @@ class TopicDeleteFormHandler
      */
     protected $topic;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-	 */
-	protected $dispatcher;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     */
+    protected $dispatcher;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\Security\Core\User\UserInterface
-	 */
-	protected $user;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\Security\Core\User\UserInterface
+     */
+    protected $user;
 
     /**
      *
@@ -104,7 +104,7 @@ class TopicDeleteFormHandler
      */
     public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formTopicType, $topicModel)
     {
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->formTopicType = $formTopicType;
         $this->topicModel = $topicModel;
@@ -116,12 +116,12 @@ class TopicDeleteFormHandler
      * @param  \Symfony\Component\Security\Core\User\UserInterface                  $user
      * @return \CCDNForum\ForumBundle\Form\Handler\Moderator\TopicDeleteFormHandler
      */
-	public function setUser(UserInterface $user)
-	{
-		$this->user = $user;
-		
-		return $this;
-	}
+    public function setUser(UserInterface $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
 
     /**
      *
@@ -139,12 +139,12 @@ class TopicDeleteFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
-	public function setRequest(Request $request)
-	{
-		$this->request = $request;
-	}
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      *
@@ -201,7 +201,7 @@ class TopicDeleteFormHandler
                 throw new \Exception('Topic must be specified to delete in TopicDeleteFormHandler');
             }
 
-			$this->dispatcher->dispatch(ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_INITIALISE, new ModeratorTopicEvent($this->request, $this->topic));
+            $this->dispatcher->dispatch(ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_INITIALISE, new ModeratorTopicEvent($this->request, $this->topic));
 
             $this->form = $this->factory->create($this->formTopicType, $this->topic);
         }
@@ -219,8 +219,8 @@ class TopicDeleteFormHandler
     {
         $this->topicModel->softDelete($topic, $this->user)->flush();
 
-		$this->dispatcher->dispatch(ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_SUCCESS, new ModeratorTopicEvent($this->request, $this->topic));
-		
+        $this->dispatcher->dispatch(ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_SUCCESS, new ModeratorTopicEvent($this->request, $this->topic));
+
         return $this->topicModel;
     }
 }

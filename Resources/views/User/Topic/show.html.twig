@@ -36,7 +36,7 @@
 		<section class="row-fluid">
 			<div class="span12">
 				{%- if topic.isDeleted or topic.isClosed %}
-			        <div class="alert alert-error block-alert">	
+			        <div class="alert alert-error block-alert">
 					    {%- if topic.isDeleted -%}
 				            <i class="icon-trash"></i>
 				            {% set topic_deleter = create_profile(topic.getDeletedBy) %}
@@ -61,12 +61,12 @@
 					    {%- endif -%}
 			        </div>
 				{%- endif -%}
-			
+
 			    {%- if topic.isSticky -%}
 			        <div class="alert alert-inverse block-alert">
 				        <i class="icon-white icon-bullhorn"></i>
 			            {% set topic_stickier = create_profile(topic.stickiedBy) %}
-				
+
 			            {{- 'topic.stickied_by' | trans({'%name%': topic_stickier.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
 
 						&nbsp;&#183;
@@ -77,7 +77,7 @@
 			</div>
 		</section>
 	{%- endif -%}
-		
+
 	<section class="row-fluid">
 	    <div class="span12 btn-toolbar">
 	        <div class="span6">
@@ -89,7 +89,7 @@
 			</nav>
 	    </div>
 	</section>
-	
+
 	<section>
 	    {%- for key, post in pager.getItems() -%}
 	        {%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig" -%}
@@ -107,7 +107,7 @@
 			</nav>
 	    </div>
 	</section>
-	
+
     {%- endspaceless -%}
 
 {% endblock body_content %}

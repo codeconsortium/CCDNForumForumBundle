@@ -35,434 +35,433 @@ use CCDNForum\ForumBundle\Entity\Subscription;
  */
 class Authorizer
 {
-	protected $securityContext;
+    protected $securityContext;
 
-	/**
-	 * 
-	 * @access public
-	 * @param \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
-	 */
-	public function __construct(SecurityContextInterface $securityContext)
-	{
-		$this->securityContext = $securityContext;
-	}
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
+     */
+    public function __construct(SecurityContextInterface $securityContext)
+    {
+        $this->securityContext = $securityContext;
+    }
 
-	public function canShowForum(Forum $forum)
-	{
-		return $forum->isAuthorisedToRead($this->securityContext);
-	}
+    public function canShowForum(Forum $forum)
+    {
+        return $forum->isAuthorisedToRead($this->securityContext);
+    }
 
-	public function canShowCategory(Category $category, Forum $forum = null)
-	{
-		if ($forum) {
-			if ($category->getForum()) {
-				if ($category->getForum()->getId() != $forum->getId()) {
-					return false;
-				}
-			}
-			
-			if (! $this->canShowForum($forum)) {
-				return false;
-			}
-		}
+    public function canShowCategory(Category $category, Forum $forum = null)
+    {
+        if ($forum) {
+            if ($category->getForum()) {
+                if ($category->getForum()->getId() != $forum->getId()) {
+                    return false;
+                }
+            }
 
-		if (! $category->isAuthorisedToRead($this->securityContext)) {
-			return false;
-		}
-		
-		return true;
-	}
+            if (! $this->canShowForum($forum)) {
+                return false;
+            }
+        }
 
-	public function canShowBoard(Board $board, Forum $forum = null)
-	{
-		if ($board->getCategory()) {
-			if (! $this->canShowCategory($board->getCategory(), $forum)) {
-				return false;
-			}
-		}
+        if (! $category->isAuthorisedToRead($this->securityContext)) {
+            return false;
+        }
 
-		if (! $board->isAuthorisedToRead($this->securityContext)) {
-			return false;
-		}
-		
-		return true;
-	}
+        return true;
+    }
 
-	public function canCreateTopicOnBoard(Board $board, Forum $forum = null)
-	{
-		if (! $this->canShowBoard($board, $forum)) {
-			return false;
-		}
-		
-		if (! $this->securityContext->isGranted('ROLE_USER')) {
-			return false;
-		}
-		
-		if (! $board->isAuthorisedToCreateTopic($this->securityContext)) {
-			return false;
-		}
-		
-		return true;
-	}
+    public function canShowBoard(Board $board, Forum $forum = null)
+    {
+        if ($board->getCategory()) {
+            if (! $this->canShowCategory($board->getCategory(), $forum)) {
+                return false;
+            }
+        }
 
-	public function canReplyToTopicOnBoard(Board $board, Forum $forum = null)
-	{
-		if (! $this->canShowBoard($board, $forum)) {
-			return false;
-		}
-		
-		if (! $this->securityContext->isGranted('ROLE_USER')) {
-			return false;
-		}
-		
-		if (! $board->isAuthorisedToReplyToTopic($this->securityContext)) {
-			return false;
-		}
-		
-		return true;
-	}
+        if (! $board->isAuthorisedToRead($this->securityContext)) {
+            return false;
+        }
 
-	public function canShowTopic(Topic $topic, Forum $forum = null)
-	{
-		if ($topic->getBoard()) {
-			if (! $this->canShowBoard($topic->getBoard(), $forum)) {
-				return false;
-			}
-		}
-		
-		if ($topic->isDeleted()) {
-			if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-				return false;
-			}
-		}
-		
-		return true;
-	}
+        return true;
+    }
 
-	public function canReplyToTopic(Topic $topic, Forum $forum = null)
-	{
-		if ($topic->isClosed()) {
-			return false;
-		}
-		
-		if (! $topic->getBoard()) {
-			return false;
-		}
+    public function canCreateTopicOnBoard(Board $board, Forum $forum = null)
+    {
+        if (! $this->canShowBoard($board, $forum)) {
+            return false;
+        }
 
-		if (! $this->canShowTopic($topic, $forum)) {
-			return false;
-		}
-		
-		if (! $topic->getBoard()->isAuthorisedToReplyToTopic($this->securityContext)) {
-			return false;
-		}
-		
-		return true;
-	}
+        if (! $this->securityContext->isGranted('ROLE_USER')) {
+            return false;
+        }
 
-	public function canDeleteTopic(Topic $topic, Forum $forum = null)
-	{
-		if ($topic->isDeleted()) {
-			return false;
-		}
-		
-		if (! $this->canShowTopic($topic, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
-			return false;
-		}
-		
-		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-			return false;
-		}
-		
-		return true;
-	}
+        if (! $board->isAuthorisedToCreateTopic($this->securityContext)) {
+            return false;
+        }
 
-	public function canRestoreTopic(Topic $topic, Forum $forum = null)
-	{
-		if (! $topic->isDeleted()) {
-			return false;
-		}
-		
-		if (! $this->canShowTopic($topic, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
-			return false;
-		}
-		
-		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-			return false;
-		}
+        return true;
+    }
 
+    public function canReplyToTopicOnBoard(Board $board, Forum $forum = null)
+    {
+        if (! $this->canShowBoard($board, $forum)) {
+            return false;
+        }
 
-		return true;
-	}
+        if (! $this->securityContext->isGranted('ROLE_USER')) {
+            return false;
+        }
 
-	public function canCloseTopic(Topic $topic, Forum $forum = null)
-	{
-		if ($topic->isClosed()) {
-			return false;
-		}
+        if (! $board->isAuthorisedToReplyToTopic($this->securityContext)) {
+            return false;
+        }
 
-		if (! $this->canShowTopic($topic, $forum)) {
-			if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
-				return false;
-			}
-		}
-		
-		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-			return false;
-		}
+        return true;
+    }
 
-		return true;
-	}
+    public function canShowTopic(Topic $topic, Forum $forum = null)
+    {
+        if ($topic->getBoard()) {
+            if (! $this->canShowBoard($topic->getBoard(), $forum)) {
+                return false;
+            }
+        }
 
-	public function canReopenTopic(Topic $topic, Forum $forum = null)
-	{
-		if (! $topic->isClosed()) {
-			return false;
-		}
-		
-		if (! $this->canShowTopic($topic, $forum)) {
-			if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
-				return false;
-			}
-		}
-		
-		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-			return false;
-		}
+        if ($topic->isDeleted()) {
+            if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+                return false;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	public function canTopicChangeBoard(Topic $topic, Forum $forum = null)
-	{
-		if (! $this->canShowTopic($topic, $forum)) {
-			if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
-				return false;
-			}
-		}
-		
-		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-			return false;
-		}
+    public function canReplyToTopic(Topic $topic, Forum $forum = null)
+    {
+        if ($topic->isClosed()) {
+            return false;
+        }
 
-		return true;
-	}
+        if (! $topic->getBoard()) {
+            return false;
+        }
 
-	public function canStickyTopic(Topic $topic, Forum $forum = null)
-	{
-		if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
-			if (! $this->canShowTopic($topic, $forum)) {
-				return false;
-			}
-		}
-		
-		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-			return false;
-		}
-		
-		if ($topic->isSticky()) {
-			return false;
-		}
-		
-		return true;
-	}
+        if (! $this->canShowTopic($topic, $forum)) {
+            return false;
+        }
 
-	public function canUnstickyTopic(Topic $topic, Forum $forum = null)
-	{
-		if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
-			if (! $this->canShowTopic($topic, $forum)) {
-				return false;
-			}
-		}
-		
-		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-			return false;
-		}
+        if (! $topic->getBoard()->isAuthorisedToReplyToTopic($this->securityContext)) {
+            return false;
+        }
 
-		if (! $topic->isSticky()) {
-			return false;
-		}
-		
-		return true;
-	}
+        return true;
+    }
 
-	public function canShowPost(Post $post, Forum $forum = null)
-	{
-		if ($post->getTopic()) {
-			if (! $this->canShowTopic($post->getTopic(), $forum)) {
-				return false;
-			}
-		}
-		
-		if ($post->isDeleted() && ! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-			return false;
-		}
-		
-		return true;
-	}
+    public function canDeleteTopic(Topic $topic, Forum $forum = null)
+    {
+        if ($topic->isDeleted()) {
+            return false;
+        }
 
-	public function canEditPost(Post $post, Forum $forum = null)
-	{
-		if (! $this->securityContext->isGranted('ROLE_USER')) {
-			return false;
-		}
-		
-		if (! $this->canShowPost($post, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
-			return false;
-		}
-		
-		if ($post->isLocked()) {
-			if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-				return false;
-			}
-		}
+        if (! $this->canShowTopic($topic, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
+            return false;
+        }
 
-		if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
-			if (! $post->getCreatedBy()) {
-				return false;
-			} else {
-				if ($post->getCreatedBy()->getId() != $this->securityContext->getToken()->getUser()->getId()) {
-					return false;
-				}
-			}
-		}
-		
-		return true;
-	}
+        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+            return false;
+        }
 
-	public function canDeletePost(Post $post, Forum $forum = null)
-	{
-		if ($post->isDeleted()) {
-			return false;
-		}
-		
-		if (! $this->securityContext->isGranted('ROLE_USER')) {
-			return false;
-		}
-		
-		if (! $this->canShowPost($post, $forum) && ! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-			return false;
-		}
-		
-		if ($post->isLocked()) {
-			if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-				return false;
-			}
-		}
-		
-		if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
-			if (! $post->getCreatedBy()) {
-				return false;
-			} else {
-				if ($post->getCreatedBy()->getId() != $this->securityContext->getToken()->getUser()->getId()) {
-					return false;
-				}
-			}
-		}
-		
-		return true;
-	}
+        return true;
+    }
 
-	public function canRestorePost(Post $post, Forum $forum = null)
-	{
-		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-			return false;
-		}
-		
-		if (! $post->isDeleted()) {
-			return false;
-		}
-		
-		if (! $this->canShowPost($post, $forum) && ! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-			return false;
-		}
-		
-		return true;
-	}
+    public function canRestoreTopic(Topic $topic, Forum $forum = null)
+    {
+        if (! $topic->isDeleted()) {
+            return false;
+        }
 
-	public function canLockPost(Post $post, Forum $forum = null)
-	{
-		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-			return false;
-		}
-		
-		if (! $this->canShowPost($post, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
-			return false;
-		}
-		
-		if ($post->isLocked()) {
-			return false;
-		}
-		
-		return true;
-	}
+        if (! $this->canShowTopic($topic, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
+            return false;
+        }
 
-	public function canUnlockPost(Post $post, Forum $forum = null)
-	{
-		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-			return false;
-		}
-		
-		if (! $this->canShowPost($post, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
-			return false;
-		}
-		
-		if (! $post->isLocked()) {
-			return false;
-		}
-		
-		return true;
-	}
-	
-	public function canSubscribeToTopic(Topic $topic, Forum $forum = null, Subscription $subscription = null)
-	{
-		if (! $this->securityContext->isGranted('ROLE_USER')) {
-			return false;
-		}
-		
-		if (! $this->canShowTopic($topic, $forum)) {
-			return false;
-		}
-		
-		if ($subscription) {
-			if ($subscription->getTopic()) {
-				if ($subscription->getTopic()->getId() != $topic->getId()) {
-					return false;
-				}
-			}
-		
-			if ($subscription->isSubscribed()) {
-				return false;
-			}
-		}
-		
-		return true;
-	}
-	
-	public function canUnsubscribeFromTopic(Topic $topic, Forum $forum = null, Subscription $subscription = null)
-	{
-		if (! $this->securityContext->isGranted('ROLE_USER')) {
-			return false;
-		}
-		
-		if (! $this->canShowTopic($topic, $forum)) {
-			return false;
-		}
-		
-		if ($subscription) {
-			if ($subscription->getTopic()) {
-				if ($subscription->getTopic()->getId() != $topic->getId()) {
-					return false;
-				}
-			}
+        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+            return false;
+        }
 
-			if (! $subscription->isSubscribed()) {
-				return false;
-			}
-		} else {
-			return false;
-		}
-		
-		return true;
-	}
+        return true;
+    }
+
+    public function canCloseTopic(Topic $topic, Forum $forum = null)
+    {
+        if ($topic->isClosed()) {
+            return false;
+        }
+
+        if (! $this->canShowTopic($topic, $forum)) {
+            if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
+                return false;
+            }
+        }
+
+        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function canReopenTopic(Topic $topic, Forum $forum = null)
+    {
+        if (! $topic->isClosed()) {
+            return false;
+        }
+
+        if (! $this->canShowTopic($topic, $forum)) {
+            if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
+                return false;
+            }
+        }
+
+        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function canTopicChangeBoard(Topic $topic, Forum $forum = null)
+    {
+        if (! $this->canShowTopic($topic, $forum)) {
+            if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
+                return false;
+            }
+        }
+
+        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function canStickyTopic(Topic $topic, Forum $forum = null)
+    {
+        if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
+            if (! $this->canShowTopic($topic, $forum)) {
+                return false;
+            }
+        }
+
+        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+            return false;
+        }
+
+        if ($topic->isSticky()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function canUnstickyTopic(Topic $topic, Forum $forum = null)
+    {
+        if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
+            if (! $this->canShowTopic($topic, $forum)) {
+                return false;
+            }
+        }
+
+        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+            return false;
+        }
+
+        if (! $topic->isSticky()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function canShowPost(Post $post, Forum $forum = null)
+    {
+        if ($post->getTopic()) {
+            if (! $this->canShowTopic($post->getTopic(), $forum)) {
+                return false;
+            }
+        }
+
+        if ($post->isDeleted() && ! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function canEditPost(Post $post, Forum $forum = null)
+    {
+        if (! $this->securityContext->isGranted('ROLE_USER')) {
+            return false;
+        }
+
+        if (! $this->canShowPost($post, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
+            return false;
+        }
+
+        if ($post->isLocked()) {
+            if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+                return false;
+            }
+        }
+
+        if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
+            if (! $post->getCreatedBy()) {
+                return false;
+            } else {
+                if ($post->getCreatedBy()->getId() != $this->securityContext->getToken()->getUser()->getId()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public function canDeletePost(Post $post, Forum $forum = null)
+    {
+        if ($post->isDeleted()) {
+            return false;
+        }
+
+        if (! $this->securityContext->isGranted('ROLE_USER')) {
+            return false;
+        }
+
+        if (! $this->canShowPost($post, $forum) && ! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+            return false;
+        }
+
+        if ($post->isLocked()) {
+            if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+                return false;
+            }
+        }
+
+        if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
+            if (! $post->getCreatedBy()) {
+                return false;
+            } else {
+                if ($post->getCreatedBy()->getId() != $this->securityContext->getToken()->getUser()->getId()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public function canRestorePost(Post $post, Forum $forum = null)
+    {
+        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+            return false;
+        }
+
+        if (! $post->isDeleted()) {
+            return false;
+        }
+
+        if (! $this->canShowPost($post, $forum) && ! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function canLockPost(Post $post, Forum $forum = null)
+    {
+        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+            return false;
+        }
+
+        if (! $this->canShowPost($post, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
+            return false;
+        }
+
+        if ($post->isLocked()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function canUnlockPost(Post $post, Forum $forum = null)
+    {
+        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+            return false;
+        }
+
+        if (! $this->canShowPost($post, $forum) && ! $this->securityContext->isGranted('ROLE_ADMIN')) {
+            return false;
+        }
+
+        if (! $post->isLocked()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function canSubscribeToTopic(Topic $topic, Forum $forum = null, Subscription $subscription = null)
+    {
+        if (! $this->securityContext->isGranted('ROLE_USER')) {
+            return false;
+        }
+
+        if (! $this->canShowTopic($topic, $forum)) {
+            return false;
+        }
+
+        if ($subscription) {
+            if ($subscription->getTopic()) {
+                if ($subscription->getTopic()->getId() != $topic->getId()) {
+                    return false;
+                }
+            }
+
+            if ($subscription->isSubscribed()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function canUnsubscribeFromTopic(Topic $topic, Forum $forum = null, Subscription $subscription = null)
+    {
+        if (! $this->securityContext->isGranted('ROLE_USER')) {
+            return false;
+        }
+
+        if (! $this->canShowTopic($topic, $forum)) {
+            return false;
+        }
+
+        if ($subscription) {
+            if ($subscription->getTopic()) {
+                if ($subscription->getTopic()->getId() != $topic->getId()) {
+                    return false;
+                }
+            }
+
+            if (! $subscription->isSubscribed()) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+        return true;
+    }
 }

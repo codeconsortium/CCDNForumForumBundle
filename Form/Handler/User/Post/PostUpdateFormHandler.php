@@ -73,38 +73,38 @@ class PostUpdateFormHandler
      */
     protected $post;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-	 */
-	protected $dispatcher;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     */
+    protected $dispatcher;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\Security\Core\User\UserInterface
-	 */
-	protected $user;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\Security\Core\User\UserInterface
+     */
+    protected $user;
 
     /**
      *
      * @access public
      * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                 $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\PostType           $formPostType
-     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface     $postModel
+     * @param \Symfony\Component\Form\FormFactory                                        $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\PostType                                  $formPostType
+     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface                            $postModel
      */
     public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formPostType, $postModel)
     {
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->formPostType = $formPostType;
         $this->postModel = $postModel;
@@ -116,12 +116,12 @@ class PostUpdateFormHandler
      * @param  \Symfony\Component\Security\Core\User\UserInterface       $user
      * @return \CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
      */
-	public function setUser(UserInterface $user)
-	{
-		$this->user = $user;
-		
-		return $this;
-	}
+    public function setUser(UserInterface $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
 
     /**
      *
@@ -139,12 +139,12 @@ class PostUpdateFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
-	public function setRequest(Request $request)
-	{
-		$this->request = $request;
-	}
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      *
@@ -201,7 +201,7 @@ class PostUpdateFormHandler
                 throw new \Exception('Post must be specified to be update a Reply in PostUpdateFormHandler');
             }
 
-			$this->dispatcher->dispatch(ForumEvents::USER_POST_EDIT_INITIALISE, new UserPostEvent($this->request, $this->post));
+            $this->dispatcher->dispatch(ForumEvents::USER_POST_EDIT_INITIALISE, new UserPostEvent($this->request, $this->post));
 
             $this->form = $this->factory->create($this->formPostType, $this->post);
         }
@@ -227,7 +227,7 @@ class PostUpdateFormHandler
             $post->setEditedBy($this->user);
         }
 
-		$this->dispatcher->dispatch(ForumEvents::USER_POST_EDIT_SUCCESS, new UserPostEvent($this->request, $this->post));
+        $this->dispatcher->dispatch(ForumEvents::USER_POST_EDIT_SUCCESS, new UserPostEvent($this->request, $this->post));
 
         return $this->postModel->updatePost($post)->flush();
     }

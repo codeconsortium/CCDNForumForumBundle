@@ -54,7 +54,7 @@ abstract class BaseGateway implements BaseGatewayInterface
      * @var $paginator
      */
     protected $paginator;
-	
+
     /**
      *
      * @access protected
@@ -80,8 +80,8 @@ abstract class BaseGateway implements BaseGatewayInterface
     {
         $this->doctrine = $doctrine;
 
-		$this->paginator = $paginator;
-		
+        $this->paginator = $paginator;
+
         $this->em = $doctrine->getEntityManager();
 
         $this->modelBag = $modelBag;
@@ -89,17 +89,16 @@ abstract class BaseGateway implements BaseGatewayInterface
         $this->entityClass = $entityClass;
     }
 
-	
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
-	 */
-	public function getModelBag()
-	{
-		return $this->modelBag;
-	}
-	
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
+     */
+    public function getModelBag()
+    {
+        return $this->modelBag;
+    }
+
     /**
      *
      * @access public
@@ -148,7 +147,7 @@ abstract class BaseGateway implements BaseGatewayInterface
 
         return $this->getQueryBuilder()->select($aliases)->from($this->entityClass, $this->queryAlias);
     }
-	
+
     /**
      *
      * @access public
@@ -213,43 +212,43 @@ abstract class BaseGateway implements BaseGatewayInterface
         }
     }
 
-	/**
-	 * 
-	 * @access protected
-	 * @param string                    $defaultOrderBy
-	 * @param string                    $direction
-	 * @param Doctrine\ORM\QueryBuilder $qb
-	 */
-	protected function hasDefaultOrderBy($defaultOrderBy, $direction, QueryBuilder $qb)
-	{
-		$sorts = $qb->getDQLPart('orderBy');
-		
-		$isSorted = false;
-		
-		foreach ($sorts as $sort) {
-			if (strstr($sort->__toString(), $defaultOrderBy)) {
-				$isSorted = true;
-				
-				break;
-			}
-		}
-		
-		if (! $isSorted) {
-	        $qb->addOrderBy($defaultOrderBy, $direction);
-		}
-	}
+    /**
+     *
+     * @access protected
+     * @param string                    $defaultOrderBy
+     * @param string                    $direction
+     * @param Doctrine\ORM\QueryBuilder $qb
+     */
+    protected function hasDefaultOrderBy($defaultOrderBy, $direction, QueryBuilder $qb)
+    {
+        $sorts = $qb->getDQLPart('orderBy');
+
+        $isSorted = false;
+
+        foreach ($sorts as $sort) {
+            if (strstr($sort->__toString(), $defaultOrderBy)) {
+                $isSorted = true;
+
+                break;
+            }
+        }
+
+        if (! $isSorted) {
+            $qb->addOrderBy($defaultOrderBy, $direction);
+        }
+    }
 
     /**
      *
      * @access public
-     * @param  \Doctrine\ORM\QueryBuilder $qb
-     * @param  int                        $itemsPerPage
-     * @param  int                        $page
+     * @param  \Doctrine\ORM\QueryBuilder                               $qb
+     * @param  int                                                      $itemsPerPage
+     * @param  int                                                      $page
      * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
     public function paginateQuery(QueryBuilder $qb, $itemsPerPage, $page)
     {
-		return $this->paginator->paginate($qb, $page, $itemsPerPage);
+        return $this->paginator->paginate($qb, $page, $itemsPerPage);
     }
 
     /**

@@ -52,7 +52,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class FeatureContext extends RawMinkContext implements KernelAwareInterface
 {
     /**
-     * 
+     *
      * Kernel.
      *
      * @var KernelInterface
@@ -60,7 +60,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     private $kernel;
 
     /**
-     * 
+     *
      * Parameters.
      *
      * @var array
@@ -68,7 +68,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     private $parameters;
 
     /**
-     * 
+     *
      * Initializes context.
      * Every scenario gets it's own context object.
      *
@@ -86,7 +86,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     }
 
     /**
-     * 
+     *
      * {@inheritdoc}
      */
     public function setKernel(KernelInterface $kernel)
@@ -95,7 +95,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     }
 
     /**
-     * 
+     *
      * @BeforeScenario
      */
     public function purgeDatabase()
@@ -106,19 +106,19 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
         $purger->purge();
     }
 
-	private function getPage()
-	{
-		return $this->getMainContext()->getSession()->getPage();
-	}
+    private function getPage()
+    {
+        return $this->getMainContext()->getSession()->getPage();
+    }
 
     /**
-     * 
+     *
      * @Given /^I am logged in as "([^"]*)"$/
      */
     public function iAmLoggedInAs($user)
     {
-		$session = $this->getMainContext()->getSession();
-		$session->setBasicAuth($user . '@foo.com', 'root');
+        $session = $this->getMainContext()->getSession();
+        $session->setBasicAuth($user . '@foo.com', 'root');
     }
 
     /**
@@ -133,20 +133,20 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
             $this->getPage()->findAll('css', $cssQuery)
         );
 
-		WebTestCase::assertCount(1, $items, 'The link was not found!');
+        WebTestCase::assertCount(1, $items, 'The link was not found!');
 
-		//ld($items[0]);
-		//ldd($this->getPage());
-		$this->getPage()->clickLink($items[0]->getAttribute('href'));
+        //ld($items[0]);
+        //ldd($this->getPage());
+        $this->getPage()->clickLink($items[0]->getAttribute('href'));
     }
 
     /**
-     * 
+     *
      * @Then /^"([^"]*)" should precede "([^"]*)" for the query "([^"]*)"$/
      */
     public function shouldPrecedeForTheQuery($textBefore, $textAfter, $cssQuery)
     {
-		// http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
+        // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
         $items = array_map(
             function ($element) {
                 return $element->getText();
@@ -154,9 +154,9 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
             $this->getPage()->findAll('css', $cssQuery)
         );
 
-		WebTestCase::assertTrue(in_array($textBefore, $items), 'The before text was not found!');
-		WebTestCase::assertTrue(in_array($textAfter,  $items), 'The after text was not found!');
-			
+        WebTestCase::assertTrue(in_array($textBefore, $items), 'The before text was not found!');
+        WebTestCase::assertTrue(in_array($textAfter,  $items), 'The after text was not found!');
+
         WebTestCase::assertGreaterThan(
             array_search($textBefore, $items),
             array_search($textAfter, $items),
@@ -165,12 +165,12 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     }
 
     /**
-     * 
+     *
      * @Given /^I should see "([^"]*)" for the query "([^"]*)"$/
      */
     public function shouldSeeForTheQuery($text, $cssQuery)
     {
-		// http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
+        // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
         $items = array_map(
             function ($element) {
                 return $element->getText();
@@ -185,12 +185,12 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     }
 
     /**
-     * 
+     *
      * @Given /^I should not see "([^"]*)" for the query "([^"]*)"$/
      */
     public function shouldNotSeeForTheQuery($text, $cssQuery)
     {
-		// http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
+        // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
         $items = array_map(
             function ($element) {
                 return $element->getText();
@@ -205,47 +205,47 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     }
 
     /**
-     * 
-	 * @Given /^I select from "([^"]*)" a date "([^"]*)" days from now$/
-	 */
-	public function iSelectFromADateDaysFromNow($cssQuery, $days)
-	{
+     *
+     * @Given /^I select from "([^"]*)" a date "([^"]*)" days from now$/
+     */
+    public function iSelectFromADateDaysFromNow($cssQuery, $days)
+    {
         $items = array_map(
             function ($element) {
-				$id = $element->getAttribute('id');
-				
-				if (substr($id, strlen($id) - strlen('year'), strlen($id)) == 'year') {
-					$fieldName = 'year';
-				}
-			
-				if (substr($id, strlen($id) - strlen('month'), strlen($id)) == 'month') {
-					$fieldName = 'month';
-				}
-			
-				if (substr($id, strlen($id) - strlen('day'), strlen($id)) == 'day') {
-					$fieldName = 'day';
-				}
-				
+                $id = $element->getAttribute('id');
+
+                if (substr($id, strlen($id) - strlen('year'), strlen($id)) == 'year') {
+                    $fieldName = 'year';
+                }
+
+                if (substr($id, strlen($id) - strlen('month'), strlen($id)) == 'month') {
+                    $fieldName = 'month';
+                }
+
+                if (substr($id, strlen($id) - strlen('day'), strlen($id)) == 'day') {
+                    $fieldName = 'day';
+                }
+
                 return array(
-                	$fieldName => $element
+                    $fieldName => $element
                 );
             },
             $this->getPage()->findAll('css', $cssQuery)
-		);
-		
-		$fields = array();
-		foreach ($items as $item) {
-			foreach ($item as $key => $field) {
-				$fields[$key] = $field;
-			}
-		}
-		
-		WebTestCase::assertCount(3, $fields, 'Date fields could not be found!');
-		
-		$date = new \Datetime('now + ' . $days . ' days');
-		
-		$fields['year']->selectOption($date->format('Y'));
-		$fields['month']->selectOption($date->format('M'));
-		$fields['day']->selectOption($date->format('d'));
-	}
+        );
+
+        $fields = array();
+        foreach ($items as $item) {
+            foreach ($item as $key => $field) {
+                $fields[$key] = $field;
+            }
+        }
+
+        WebTestCase::assertCount(3, $fields, 'Date fields could not be found!');
+
+        $date = new \Datetime('now + ' . $days . ' days');
+
+        $fields['year']->selectOption($date->format('Y'));
+        $fields['month']->selectOption($date->format('M'));
+        $fields['day']->selectOption($date->format('d'));
+    }
 }

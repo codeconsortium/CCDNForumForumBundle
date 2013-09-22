@@ -38,82 +38,82 @@ class UserSubscriptionController extends BaseController
     {
         $this->isAuthorised('ROLE_USER');
 
-		if ($forumName != '~') {
-			$forum = $this->getForumModel()->findOneForumByName($forumName);
-			$this->isFound($forum);
-		} else {
-			$forum = null;
-		}
+        if ($forumName != '~') {
+            $forum = $this->getForumModel()->findOneForumByName($forumName);
+            $this->isFound($forum);
+        } else {
+            $forum = null;
+        }
 
-		$page = $this->getQuery('page', 1);
-		$filter = $this->getQuery('filter', 'all');
-		
-		// Use this for the sidebar counters
+        $page = $this->getQuery('page', 1);
+        $filter = $this->getQuery('filter', 'all');
+
+        // Use this for the sidebar counters
         $subscriptionForums = $this->getSubscriptionModel()->findAllSubscriptionsForUserById($this->getUser()->getId(), true);
-		$forumsSubscribed = array();
-		$totalForumsSubscribed = array('count_read' => 0, 'count_unread' => 0, 'count_total' => 0);
-		foreach ($subscriptionForums as $subscription) {
-			$forumSubscribed = $subscription->getForum();
-			
-			if ($forumSubscribed) {
-				$forumSubscribedId = $forumSubscribed->getId();
-			
-				if (! array_key_exists($forumSubscribedId, $forumsSubscribed)) {
-					$forumsSubscribed[$forumSubscribedId] = array(
-						'forum' => $forumSubscribed,
-						'count_read' => 0,
-						'count_unread' => 0,
-						'count_total' => 0,
-					);
-				}
-				
-				$forumsSubscribed[$forumSubscribedId]['count_total']++;
-				if ($subscription->isRead()) {
-					$forumsSubscribed[$forumSubscribedId]['count_read']++;
-				} else {
-					$forumsSubscribed[$forumSubscribedId]['count_unread']++;
-				}
+        $forumsSubscribed = array();
+        $totalForumsSubscribed = array('count_read' => 0, 'count_unread' => 0, 'count_total' => 0);
+        foreach ($subscriptionForums as $subscription) {
+            $forumSubscribed = $subscription->getForum();
 
-				if ($forum) {
-					if ($forum->getId() == $forumSubscribedId) {
-						$totalForumsSubscribed['count_total']++;
-						if ($subscription->isRead()) {
-							$totalForumsSubscribed['count_read']++;
-						} else {
-							$totalForumsSubscribed['count_unread']++;
-						}
-					}
-				} else {
-					$totalForumsSubscribed['count_total']++;
-					if ($subscription->isRead()) {
-						$totalForumsSubscribed['count_read']++;
-					} else {
-						$totalForumsSubscribed['count_unread']++;
-					}
-				}
-			}
-		}
+            if ($forumSubscribed) {
+                $forumSubscribedId = $forumSubscribed->getId();
 
-		// Use this for the ALL/READ/UNREAD tab
-		if ($forumName == '~') {
-	        $subscriptionPager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserById($this->getUser()->getId(), $page, $filter, true);
-		} else {
-	        $subscriptionPager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserByIdAndForumById($forum->getId(), $this->getUser()->getId(), $page, $filter, true);
-		}
-		
+                if (! array_key_exists($forumSubscribedId, $forumsSubscribed)) {
+                    $forumsSubscribed[$forumSubscribedId] = array(
+                        'forum' => $forumSubscribed,
+                        'count_read' => 0,
+                        'count_unread' => 0,
+                        'count_total' => 0,
+                    );
+                }
+
+                $forumsSubscribed[$forumSubscribedId]['count_total']++;
+                if ($subscription->isRead()) {
+                    $forumsSubscribed[$forumSubscribedId]['count_read']++;
+                } else {
+                    $forumsSubscribed[$forumSubscribedId]['count_unread']++;
+                }
+
+                if ($forum) {
+                    if ($forum->getId() == $forumSubscribedId) {
+                        $totalForumsSubscribed['count_total']++;
+                        if ($subscription->isRead()) {
+                            $totalForumsSubscribed['count_read']++;
+                        } else {
+                            $totalForumsSubscribed['count_unread']++;
+                        }
+                    }
+                } else {
+                    $totalForumsSubscribed['count_total']++;
+                    if ($subscription->isRead()) {
+                        $totalForumsSubscribed['count_read']++;
+                    } else {
+                        $totalForumsSubscribed['count_unread']++;
+                    }
+                }
+            }
+        }
+
+        // Use this for the ALL/READ/UNREAD tab
+        if ($forumName == '~') {
+            $subscriptionPager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserById($this->getUser()->getId(), $page, $filter, true);
+        } else {
+            $subscriptionPager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserByIdAndForumById($forum->getId(), $this->getUser()->getId(), $page, $filter, true);
+        }
+
         // this is necessary for working out the last page for each topic.
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
 
         return $this->renderResponse('CCDNForumForumBundle:User:Subscription/show.html.',
-			array(
-				'forum' => $forum,
-				'subscribed_forums' => $forumsSubscribed,
-				'total_subscribed_forums' => $totalForumsSubscribed,
-				'filter' => $filter,
-	            'pager' => $subscriptionPager,
-	            'posts_per_page' => $postsPerPage,
-	        )
-		);
+            array(
+                'forum' => $forum,
+                'subscribed_forums' => $forumsSubscribed,
+                'total_subscribed_forums' => $totalForumsSubscribed,
+                'filter' => $filter,
+                'pager' => $subscriptionPager,
+                'posts_per_page' => $postsPerPage,
+            )
+        );
     }
 
     /**
@@ -127,12 +127,12 @@ class UserSubscriptionController extends BaseController
     {
         $this->isAuthorised('ROLE_USER');
 
-		if ($forumName != '~') {
-			$forum = $this->getForumModel()->findOneForumByName($forumName);
-			$this->isFound($forum);
-		} else {
-			$forum = null;
-		}
+        if ($forumName != '~') {
+            $forum = $this->getForumModel()->findOneForumByName($forumName);
+            $this->isFound($forum);
+        } else {
+            $forum = null;
+        }
 
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
@@ -156,16 +156,16 @@ class UserSubscriptionController extends BaseController
     {
         $this->isAuthorised('ROLE_USER');
 
-		if ($forumName != '~') {
-			$forum = $this->getForumModel()->findOneForumByName($forumName);
-			$this->isFound($forum);
-		} else {
-			$forum = null;
-		}
+        if ($forumName != '~') {
+            $forum = $this->getForumModel()->findOneForumByName($forumName);
+            $this->isFound($forum);
+        } else {
+            $forum = null;
+        }
 
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-		
+
         $subscription = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topicId, $this->getUser()->getId());
         $this->isAuthorised($this->getAuthorizer()->canUnsubscribeFromTopic($topic, $forum, $subscription));
 

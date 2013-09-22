@@ -41,7 +41,7 @@
 
 			<div class="span5 content-right">
 	            {%- if is_granted('ROLE_USER') -%}
-				
+
 					{% if post.id %}
 		                <div class="dropdown btn-group">
 		                    <a class="dropdown-toggle btn btn-mini btn-icon-only" data-toggle="dropdown" href="#">
@@ -49,7 +49,7 @@
 								<span class="caret"></span>
 							</a>
 		                    <ul class="dropdown-menu pull-right content-left" style="z-index:15;">
-								
+
 								{%- if canReplyToTopic(post.getTopic) -%}
 			                        <li>
 										<a rel="nofollow" id="post_reply[{{- post.getBody |slice(0,24) -}}]"
@@ -59,7 +59,7 @@
 										</a>
 									</li>
 								{%- endif -%}
-								
+
 								{%- if canEditPost(post) -%}
 	                                <li>
 										<a rel="nofollow" id="post_edit[{{- post.getBody |slice(0,24) -}}]"
@@ -69,7 +69,7 @@
 										</a>
 									</li>
 								{%- endif -%}
-								
+
                                 {%- if canDeletePost(post) -%}
                                     <li>
 										<a rel="nofollow" id="post_delete[{{- post.getBody |slice(0,24) -}}]"
@@ -97,7 +97,7 @@
 	                                    </a>
 	                                </li>
 								{%- endif -%}
-								
+
 								{%- if canUnlockPost(post) -%}
 	                                <li>
 	                                    <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_unlock', {'forumName': forum.name, 'postId': post.getId }) -}}">
@@ -106,11 +106,11 @@
 	                                    </a>
 	                                </li>
 		                        {%- endif -%}
-								
+
 		                    </ul>
 		                </div>
 		            {%- endif -%}
-				
+
 				{% endif %}
 			</div>
 		</div>

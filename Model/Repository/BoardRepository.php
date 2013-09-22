@@ -13,10 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Model\Repository;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Model\Repository\BaseRepository;
 use CCDNForum\ForumBundle\Model\Repository\BaseRepositoryInterface;
@@ -58,17 +55,17 @@ class BoardRepository extends BaseRepository implements BaseRepositoryInterface
      */
     public function findAllBoardsForCategoryById($categoryId)
     {
-		$params = array();
+        $params = array();
 
         $qb = $this->createSelectQuery(array('b'));
 
-		if ($categoryId == null) {
-	        $qb->where('b.category IS NULL');
-		} else {
-			$params[':categoryId'] = $categoryId;
-	        $qb->where('b.category = :categoryId');
-		}
-		
+        if ($categoryId == null) {
+            $qb->where('b.category IS NULL');
+        } else {
+            $params[':categoryId'] = $categoryId;
+            $qb->where('b.category = :categoryId');
+        }
+
         $qb->addOrderBy('b.listOrderPriority', 'ASC');
 
         return $this->gateway->findBoards($qb, $params);
@@ -81,23 +78,23 @@ class BoardRepository extends BaseRepository implements BaseRepositoryInterface
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function findAllBoardsForForumById($forumId)
-	{
-		$params = array();
+    {
+        $params = array();
 
         $qb = $this->createSelectQuery(array('b'));
 
-		$params[':forumId'] = $forumId;
+        $params[':forumId'] = $forumId;
 
-		$qb
-			->leftJoin('b.category', 'c')
-			->leftJoin('c.forum', 'f')
-		    ->where('f.id = :forumId')
-		;
-		
+        $qb
+            ->leftJoin('b.category', 'c')
+            ->leftJoin('c.forum', 'f')
+            ->where('f.id = :forumId')
+        ;
+
         $qb->addOrderBy('b.listOrderPriority', 'ASC');
 
         return $this->gateway->findBoards($qb, $params);
-	}
+    }
 
     /**
      *
@@ -135,7 +132,7 @@ class BoardRepository extends BaseRepository implements BaseRepositoryInterface
         $qb
             ->leftJoin('b.category', 'c')
             ->where('b.id = :boardId')
-		;
+        ;
 
         return $this->gateway->findBoard($qb, array(':boardId' => $boardId));
     }
@@ -155,32 +152,14 @@ class BoardRepository extends BaseRepository implements BaseRepositoryInterface
 
         try {
             $num = $qb->getQuery()->getSingleResult();
-			
-			return $num['boardCount'];
+
+            return $num['boardCount'];
         } catch (\Doctrine\ORM\NoResultException $e) {
             return 0;
         } catch (\Exception $e) {
             return 0;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //    /**
 //     *

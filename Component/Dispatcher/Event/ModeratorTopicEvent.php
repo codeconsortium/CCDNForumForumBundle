@@ -31,49 +31,49 @@ use CCDNForum\ForumBundle\Entity\Topic;
  */
 class ModeratorTopicEvent extends Event
 {
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \CCDNForum\ForumBundle\Entity\Topic $topic
-	 */
-	protected $topic;
+    /**
+     *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Entity\Topic $topic
+     */
+    protected $topic;
 
-	/**
-	 * 
-	 * @access public
-	 * @param \Symfony\Component\HttpFoundation\Request $request
-	 * @param \CCDNForum\ForumBundle\Entity\Topic       $topic
-	 */
-	public function __construct(Request $request, Topic $topic = null)
-	{
-		$this->request = $request;
-		$this->topic = $topic;
-	}
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \CCDNForum\ForumBundle\Entity\Topic       $topic
+     */
+    public function __construct(Request $request, Topic $topic = null)
+    {
+        $this->request = $request;
+        $this->topic = $topic;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \Symfony\Component\HttpFoundation\Request
-	 */
-	public function getRequest()
-	{
-		return $this->request;
-	}
+    /**
+     *
+     * @access public
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Topic
-	 */
-	public function getTopic()
-	{
-		return $this->topic;
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Topic
+     */
+    public function getTopic()
+    {
+        return $this->topic;
+    }
 }

@@ -13,15 +13,9 @@
 
 namespace CCDNForum\ForumBundle\features\bootstrap;
 
-use Behat\Behat\Context\Step;
-use Behat\Gherkin\Node\TableNode;
-use Behat\Mink\Exception\ElementNotFoundException;
 use Behat\MinkExtension\Context\MinkContext;
-use Behat\Mink\Driver\Selenium2Driver;
-use Behat\Mink\Exception\ExpectationException;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
  *
@@ -39,7 +33,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 class WebUser extends MinkContext implements KernelAwareInterface
 {
     /**
-     * 
+     *
      * Kernel.
      *
      * @var KernelInterface
@@ -47,7 +41,7 @@ class WebUser extends MinkContext implements KernelAwareInterface
     protected $kernel;
 
     /**
-     * 
+     *
      * Constructor.
      */
     public function __construct()
@@ -57,7 +51,7 @@ class WebUser extends MinkContext implements KernelAwareInterface
     }
 
     /**
-     * 
+     *
      * {@inheritdoc}
      */
     public function setKernel(KernelInterface $kernel)

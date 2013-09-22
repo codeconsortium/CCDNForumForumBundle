@@ -32,557 +32,557 @@ use CCDNForum\ForumBundle\Entity\Post;
  */
 class CrumbBuilder extends BaseCrumbBuilder
 {
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addAdminIndex()
-	{
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addAdminIndex()
+    {
         return $this->createCrumbTrail()
             ->add('crumbs.admin.index', 'ccdn_forum_admin_index')
-		;
-	}
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addAdminManageForumsIndex()
-	{
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addAdminManageForumsIndex()
+    {
         return $this->createCrumbTrail()
             ->add('crumbs.admin.index', 'ccdn_forum_admin_index')
-			->add('crumbs.admin.manage-forums.index', 'ccdn_forum_admin_forum_list')
-		;
-	}
+            ->add('crumbs.admin.manage-forums.index', 'ccdn_forum_admin_forum_list')
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addAdminManageForumsCreate()
-	{
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addAdminManageForumsCreate()
+    {
         return $this->createCrumbTrail()
             ->add('crumbs.admin.index', 'ccdn_forum_admin_index')
-			->add('crumbs.admin.manage-forums.index', 'ccdn_forum_admin_forum_list')
-			->add('crumbs.admin.manage-forums.create', 'ccdn_forum_admin_forum_create')
-		;
-	}
+            ->add('crumbs.admin.manage-forums.index', 'ccdn_forum_admin_forum_list')
+            ->add('crumbs.admin.manage-forums.create', 'ccdn_forum_admin_forum_create')
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum $forum
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addAdminManageForumsEdit(Forum $forum)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addAdminManageForumsEdit(Forum $forum)
+    {
         return $this->createCrumbTrail()
             ->add('crumbs.admin.index', 'ccdn_forum_admin_index')
-			->add('crumbs.admin.manage-forums.index', 'ccdn_forum_admin_forum_list')
-			->add(
-				array(
-					'label' => 'crumbs.admin.manage-forums.edit',
-					'params' => array(
-						'%forum_name%' => $forum->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_admin_forum_edit',
-					'params' => array(
-						'forumId' => $forum->getId()
-					)
-				)
-			)
-		;
-	}
+            ->add('crumbs.admin.manage-forums.index', 'ccdn_forum_admin_forum_list')
+            ->add(
+                array(
+                    'label' => 'crumbs.admin.manage-forums.edit',
+                    'params' => array(
+                        '%forum_name%' => $forum->getName()
+                    )
+                ),
+                array(
+                    'route' => 'ccdn_forum_admin_forum_edit',
+                    'params' => array(
+                        'forumId' => $forum->getId()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum $forum
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addAdminManageForumsDelete(Forum $forum)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addAdminManageForumsDelete(Forum $forum)
+    {
         return $this->createCrumbTrail()
             ->add('crumbs.admin.index', 'ccdn_forum_admin_index')
-			->add('crumbs.admin.manage-forums.index', 'ccdn_forum_admin_forum_list')
-			->add(
-				array(
-					'label' => 'crumbs.admin.manage-forums.delete',
-					'params' => array(
-						'%forum_name%' => $forum->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_admin_forum_delete',
-					'params' => array(
-						'forumId' => $forum->getId()
-					)
-				)
-			)
-		;
-	}
+            ->add('crumbs.admin.manage-forums.index', 'ccdn_forum_admin_forum_list')
+            ->add(
+                array(
+                    'label' => 'crumbs.admin.manage-forums.delete',
+                    'params' => array(
+                        '%forum_name%' => $forum->getName()
+                    )
+                ),
+                array(
+                    'route' => 'ccdn_forum_admin_forum_delete',
+                    'params' => array(
+                        'forumId' => $forum->getId()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addAdminManageCategoriesIndex()
-	{
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addAdminManageCategoriesIndex()
+    {
         return $this->createCrumbTrail()
             ->add('crumbs.admin.index', 'ccdn_forum_admin_index')
-			->add('crumbs.admin.manage-categories.index', 'ccdn_forum_admin_category_list')
-		;
-	}
+            ->add('crumbs.admin.manage-categories.index', 'ccdn_forum_admin_category_list')
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addAdminManageCategoriesCreate()
-	{
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addAdminManageCategoriesCreate()
+    {
         return $this->createCrumbTrail()
             ->add('crumbs.admin.index', 'ccdn_forum_admin_index')
-			->add('crumbs.admin.manage-categories.index', 'ccdn_forum_admin_category_list')
-			->add('crumbs.admin.manage-categories.create', 'ccdn_forum_admin_category_create')
-		;
-	}
+            ->add('crumbs.admin.manage-categories.index', 'ccdn_forum_admin_category_list')
+            ->add('crumbs.admin.manage-categories.create', 'ccdn_forum_admin_category_create')
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Category $category
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addAdminManageCategoriesEdit(Category $category)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Category                     $category
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addAdminManageCategoriesEdit(Category $category)
+    {
         return $this->createCrumbTrail()
             ->add('crumbs.admin.index', 'ccdn_forum_admin_index')
-			->add('crumbs.admin.manage-categories.index', 'ccdn_forum_admin_category_list')
-			->add(
-				array(
-					'label' => 'crumbs.admin.manage-categories.edit',
-					'params' => array(
-						'%category_name%' => $category->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_admin_category_edit',
-					'params' => array(
-						'categoryId' => $category->getId()
-					)
-				)
-			)
-		;
-	}
+            ->add('crumbs.admin.manage-categories.index', 'ccdn_forum_admin_category_list')
+            ->add(
+                array(
+                    'label' => 'crumbs.admin.manage-categories.edit',
+                    'params' => array(
+                        '%category_name%' => $category->getName()
+                    )
+                ),
+                array(
+                    'route' => 'ccdn_forum_admin_category_edit',
+                    'params' => array(
+                        'categoryId' => $category->getId()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Category $category
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addAdminManageCategoriesDelete(Category $category)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Category                     $category
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addAdminManageCategoriesDelete(Category $category)
+    {
         return $this->createCrumbTrail()
             ->add('crumbs.admin.index', 'ccdn_forum_admin_index')
-			->add('crumbs.admin.manage-categories.index', 'ccdn_forum_admin_category_list')
-			->add(
-				array(
-					'label' => 'crumbs.admin.manage-categories.delete',
-					'params' => array(
-						'%category_name%' => $category->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_admin_category_delete',
-					'params' => array(
-						'categoryId' => $category->getId()
-					)
-				)
-			)
-		;
-	}
+            ->add('crumbs.admin.manage-categories.index', 'ccdn_forum_admin_category_list')
+            ->add(
+                array(
+                    'label' => 'crumbs.admin.manage-categories.delete',
+                    'params' => array(
+                        '%category_name%' => $category->getName()
+                    )
+                ),
+                array(
+                    'route' => 'ccdn_forum_admin_category_delete',
+                    'params' => array(
+                        'categoryId' => $category->getId()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addAdminManageBoardsIndex()
-	{
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addAdminManageBoardsIndex()
+    {
         return $this->createCrumbTrail()
             ->add('crumbs.admin.index', 'ccdn_forum_admin_index')
-			->add('crumbs.admin.manage-boards.index', 'ccdn_forum_admin_board_list')
-		;
-	}
+            ->add('crumbs.admin.manage-boards.index', 'ccdn_forum_admin_board_list')
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addAdminManageBoardsCreate()
-	{
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addAdminManageBoardsCreate()
+    {
         return $this->createCrumbTrail()
             ->add('crumbs.admin.index', 'ccdn_forum_admin_index')
-			->add('crumbs.admin.manage-boards.index', 'ccdn_forum_admin_board_list')
-			->add('crumbs.admin.manage-boards.create', 'ccdn_forum_admin_board_create')
-		;
-	}
+            ->add('crumbs.admin.manage-boards.index', 'ccdn_forum_admin_board_list')
+            ->add('crumbs.admin.manage-boards.create', 'ccdn_forum_admin_board_create')
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Board $board
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addAdminManageBoardsEdit(Board $board)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Board                        $board
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addAdminManageBoardsEdit(Board $board)
+    {
         return $this->createCrumbTrail()
             ->add('crumbs.admin.index', 'ccdn_forum_admin_index')
-			->add('crumbs.admin.manage-boards.index', 'ccdn_forum_admin_board_list')
-			->add(
-				array(
-					'label' => 'crumbs.admin.manage-boards.edit',
-					'params' => array(
-						'%board_name%' => $board->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_admin_board_edit',
-					'params' => array(
-						'boardId' => $board->getId()
-					)
-				)
-			)
-		;
-	}
+            ->add('crumbs.admin.manage-boards.index', 'ccdn_forum_admin_board_list')
+            ->add(
+                array(
+                    'label' => 'crumbs.admin.manage-boards.edit',
+                    'params' => array(
+                        '%board_name%' => $board->getName()
+                    )
+                ),
+                array(
+                    'route' => 'ccdn_forum_admin_board_edit',
+                    'params' => array(
+                        'boardId' => $board->getId()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Board $board
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addAdminManageBoardsDelete(Board $board)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Board                        $board
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addAdminManageBoardsDelete(Board $board)
+    {
         return $this->createCrumbTrail()
             ->add('crumbs.admin.index', 'ccdn_forum_admin_index')
-			->add('crumbs.admin.manage-boards.index', 'ccdn_forum_admin_board_list')
-			->add(
-				array(
-					'label' => 'crumbs.admin.manage-boards.delete',
-					'params' => array(
-						'%board_name%' => $board->getName()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_admin_board_delete',
-					'params' => array(
-						'boardId' => $board->getId()
-					)
-				)
-			)
-		;
-	}
+            ->add('crumbs.admin.manage-boards.index', 'ccdn_forum_admin_board_list')
+            ->add(
+                array(
+                    'label' => 'crumbs.admin.manage-boards.delete',
+                    'params' => array(
+                        '%board_name%' => $board->getName()
+                    )
+                ),
+                array(
+                    'route' => 'ccdn_forum_admin_board_delete',
+                    'params' => array(
+                        'boardId' => $board->getId()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addUserCategoryIndex(Forum $forum)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addUserCategoryIndex(Forum $forum)
+    {
         return $this->createCrumbTrail()
-			->add(
-				$forum->getName() == 'default' ?  'Index' : $forum->getName() . ' Index',
-				array(
-					'route' => 'ccdn_forum_user_category_index',
-					'params' => array(
-						'forumName' => $forum->getName()
-					)
-				)
-			)
-		;
-	}
+            ->add(
+                $forum->getName() == 'default' ?  'Index' : $forum->getName() . ' Index',
+                array(
+                    'route' => 'ccdn_forum_user_category_index',
+                    'params' => array(
+                        'forumName' => $forum->getName()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
-	 * @param \CCDNForum\ForumBundle\Entity\Category                      $category
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addUserCategoryShow(Forum $forum, Category $category)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Category                     $category
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addUserCategoryShow(Forum $forum, Category $category)
+    {
         return $this->addUserCategoryIndex($forum)
-			->add(
-				$category->getName(),
-				array(
-					'route' => 'ccdn_forum_user_category_show',
-					'params' => array(
-						'forumName' => $forum->getName(),
-						'categoryId' => $category->getId()
-					)
-				)
-			)
-		;
-	}
+            ->add(
+                $category->getName(),
+                array(
+                    'route' => 'ccdn_forum_user_category_show',
+                    'params' => array(
+                        'forumName' => $forum->getName(),
+                        'categoryId' => $category->getId()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
-	 * @param \CCDNForum\ForumBundle\Entity\Board                         $board
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addUserBoardShow(Forum $forum, Board $board)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Board                        $board
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addUserBoardShow(Forum $forum, Board $board)
+    {
         return $this->addUserCategoryShow($forum, $board->getCategory())
-			->add(
-				$board->getName(),
-				array(
-					'route' => 'ccdn_forum_user_board_show',
-					'params' => array(
-						'forumName' => $forum->getName(),
-						'boardId' => $board->getId()
-					)
-				)
-			)
-		;
-	}
+            ->add(
+                $board->getName(),
+                array(
+                    'route' => 'ccdn_forum_user_board_show',
+                    'params' => array(
+                        'forumName' => $forum->getName(),
+                        'boardId' => $board->getId()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
-	 * @param \CCDNForum\ForumBundle\Entity\Topic                         $topic
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addUserTopicShow(Forum $forum, Topic $topic)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                        $topic
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addUserTopicShow(Forum $forum, Topic $topic)
+    {
         return $this->addUserBoardShow($forum, $topic->getBoard())
-			->add(
-				array(
-					'label' => 'crumbs.user.topic.show',
-					'params' => array(
-						'%topic_name%' => $topic->getTitle()
-					)
-				),
-				array(
-					'route' => 'ccdn_forum_user_topic_show',
-					'params' => array(
-						'forumName' => $forum->getName(),
-						'topicId' => $topic->getId()
-					)
-				)
-			)
-		;
-	}
+            ->add(
+                array(
+                    'label' => 'crumbs.user.topic.show',
+                    'params' => array(
+                        '%topic_name%' => $topic->getTitle()
+                    )
+                ),
+                array(
+                    'route' => 'ccdn_forum_user_topic_show',
+                    'params' => array(
+                        'forumName' => $forum->getName(),
+                        'topicId' => $topic->getId()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
-	 * @param \CCDNForum\ForumBundle\Entity\Board                         $board
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addUserTopicCreate(Forum $forum, Board $board)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Board                        $board
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addUserTopicCreate(Forum $forum, Board $board)
+    {
         return $this->addUserBoardShow($forum, $board)
-			->add(
-				array(
-					'label' => 'crumbs.user.topic.create',
-				),
-				array(
-					'route' => 'ccdn_forum_user_topic_create',
-					'params' => array(
-						'forumName' => $forum->getName(),
-						'boardId' => $board->getId()
-					)
-				)
-			)
-		;
-	}
+            ->add(
+                array(
+                    'label' => 'crumbs.user.topic.create',
+                ),
+                array(
+                    'route' => 'ccdn_forum_user_topic_create',
+                    'params' => array(
+                        'forumName' => $forum->getName(),
+                        'boardId' => $board->getId()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
-	 * @param \CCDNForum\ForumBundle\Entity\Topic                         $topic
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addUserTopicReply(Forum $forum, Topic $topic)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                        $topic
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addUserTopicReply(Forum $forum, Topic $topic)
+    {
         return $this->addUserTopicShow($forum, $topic)
-			->add(
-				array(
-					'label' => 'crumbs.user.topic.reply',
-				),
-				array(
-					'route' => 'ccdn_forum_user_topic_reply',
-					'params' => array(
-						'forumName' => $forum->getName(),
-						'topicId' => $topic->getId()
-					)
-				)
-			)
-		;
-	}
+            ->add(
+                array(
+                    'label' => 'crumbs.user.topic.reply',
+                ),
+                array(
+                    'route' => 'ccdn_forum_user_topic_reply',
+                    'params' => array(
+                        'forumName' => $forum->getName(),
+                        'topicId' => $topic->getId()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
-	 * @param \CCDNForum\ForumBundle\Entity\Post                          $post
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addUserPostShow(Forum $forum, Post $post)
-	{
-		return $this->addUserTopicShow($forum, $post->getTopic())
-			->add(
-				array(
-					'label' => 'crumbs.user.post.show',
-				),
-				array(
-					'route' => 'ccdn_forum_user_post_show',
-					'params' => array(
-						'forumName' => $forum->getName(),
-						'postId' => $post->getId()
-					)
-				)
-			)
-		;
-	}
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Post                         $post
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addUserPostShow(Forum $forum, Post $post)
+    {
+        return $this->addUserTopicShow($forum, $post->getTopic())
+            ->add(
+                array(
+                    'label' => 'crumbs.user.post.show',
+                ),
+                array(
+                    'route' => 'ccdn_forum_user_post_show',
+                    'params' => array(
+                        'forumName' => $forum->getName(),
+                        'postId' => $post->getId()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
-	 * @param \CCDNForum\ForumBundle\Entity\Post                          $post
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addUserPostDelete(Forum $forum, Post $post)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Post                         $post
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addUserPostDelete(Forum $forum, Post $post)
+    {
         return $this->addUserPostShow($forum, $post)
-			->add(
-				array(
-					'label' => 'crumbs.user.post.delete',
-				),
-				array(
-					'route' => 'ccdn_forum_user_post_delete',
-					'params' => array(
-						'forumName' => $forum->getName(),
-						'postId' => $post->getId()
-					)
-				)
-			)
-		;
-	}
+            ->add(
+                array(
+                    'label' => 'crumbs.user.post.delete',
+                ),
+                array(
+                    'route' => 'ccdn_forum_user_post_delete',
+                    'params' => array(
+                        'forumName' => $forum->getName(),
+                        'postId' => $post->getId()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addUserSubscriptionIndex(Forum $forum)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addUserSubscriptionIndex(Forum $forum)
+    {
         return $this->addUserCategoryIndex($forum)
-			->add(
-				array(
-					'label' => 'crumbs.user.subscription.index',
-				),
-				array(
-					'route' => 'ccdn_forum_user_subscription_index',
-					'params' => array(
-						'forumName' => $forum->getName()
-					)
-				)
-			)
-		;
-	}
+            ->add(
+                array(
+                    'label' => 'crumbs.user.subscription.index',
+                ),
+                array(
+                    'route' => 'ccdn_forum_user_subscription_index',
+                    'params' => array(
+                        'forumName' => $forum->getName()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
-	 * @param \CCDNForum\ForumBundle\Entity\Topic                         $topic
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addModeratorTopicDelete(Forum $forum, Topic $topic)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                        $topic
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addModeratorTopicDelete(Forum $forum, Topic $topic)
+    {
         return $this->addUserTopicShow($forum, $topic)
-			->add(
-				array(
-					'label' => 'crumbs.moderator.topic.delete',
-				),
-				array(
-					'route' => 'ccdn_forum_moderator_topic_delete',
-					'params' => array(
-						'forumName' => $forum->getName(),
-						'topicId'   => $topic->getId()
-					)
-				)
-			)
-		;
-	}
+            ->add(
+                array(
+                    'label' => 'crumbs.moderator.topic.delete',
+                ),
+                array(
+                    'route' => 'ccdn_forum_moderator_topic_delete',
+                    'params' => array(
+                        'forumName' => $forum->getName(),
+                        'topicId'   => $topic->getId()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
-	 * @param \CCDNForum\ForumBundle\Entity\Topic                         $topic
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addModeratorTopicChangeBoard(Forum $forum, Topic $topic)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                        $topic
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addModeratorTopicChangeBoard(Forum $forum, Topic $topic)
+    {
         return $this->addUserTopicShow($forum, $topic)
-			->add(
-				array(
-					'label' => 'crumbs.moderator.topic.move',
-				),
-				array(
-					'route' => 'ccdn_forum_moderator_topic_change_board',
-					'params' => array(
-						'forumName' => $forum->getName(),
-						'topicId'   => $topic->getId()
-					)
-				)
-			)
-		;
-	}
+            ->add(
+                array(
+                    'label' => 'crumbs.moderator.topic.move',
+                ),
+                array(
+                    'route' => 'ccdn_forum_moderator_topic_change_board',
+                    'params' => array(
+                        'forumName' => $forum->getName(),
+                        'topicId'   => $topic->getId()
+                    )
+                )
+            )
+        ;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
-	 * @param \CCDNForum\ForumBundle\Entity\Post                          $post
-	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
-	 */
-	public function addModeratorPostUnlock(Forum $forum, Post $post)
-	{
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Post                         $post
+     * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+     */
+    public function addModeratorPostUnlock(Forum $forum, Post $post)
+    {
         return $this->addUserPostShow($forum, $post)
-			->add(
-				array(
-					'label' => 'crumbs.moderator.post.unlock',
-				),
-				array(
-					'route' => 'ccdn_forum_moderator_post_unlock',
-					'params' => array(
-						'forumName' => $forum->getName(),
-						'postId'   => $post->getId()
-					)
-				)
-			)
-		;
-	}
+            ->add(
+                array(
+                    'label' => 'crumbs.moderator.post.unlock',
+                ),
+                array(
+                    'route' => 'ccdn_forum_moderator_post_unlock',
+                    'params' => array(
+                        'forumName' => $forum->getName(),
+                        'postId'   => $post->getId()
+                    )
+                )
+            )
+        ;
+    }
 }

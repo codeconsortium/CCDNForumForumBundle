@@ -251,7 +251,7 @@
 	        {% if empty_value is not none %}
 	            <option {% if required %} disabled="disabled"{% if value is empty %} selected="selected"{% endif %}{% else %} value=""{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
 	        {% endif %}
-			
+
 	        {% if preferred_choices|length > 0 %}
 	            {% set options = preferred_choices %}
 	            {{ block('choice_widget_options') }}
@@ -259,7 +259,7 @@
 	                <option disabled="disabled">{{- separator -}}</option>
 	            {% endif %}
 	        {% endif %}
-			
+
 	        {% set options = choices %}
 	        {{ block('choice_widget_options') }}
 	    </select>

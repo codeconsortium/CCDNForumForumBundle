@@ -47,8 +47,8 @@ class BoardManager extends BaseManager implements BaseManagerInterface
 
         // insert a new row
         $this->persist($board)->flush();
-		
-		$this->refresh($board);
+
+        $this->refresh($board);
 
         return $this;
     }
@@ -73,18 +73,18 @@ class BoardManager extends BaseManager implements BaseManagerInterface
      * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-	public function deleteBoard(Board $board)
-	{
-		// If we do not refresh the board, AND we have reassigned the topics to null, 
-		// then its lazy-loaded topics are dirty, as the topics in memory will still
-		// have the old board id set. Removing the board will cascade into deleting
-		// topics aswell, even though in the db the relation has been set to null.
-		$this->refresh($board);
-		
-		$this->remove($board)->flush();
-		
-		return $this;
-	}
+    public function deleteBoard(Board $board)
+    {
+        // If we do not refresh the board, AND we have reassigned the topics to null,
+        // then its lazy-loaded topics are dirty, as the topics in memory will still
+        // have the old board id set. Removing the board will cascade into deleting
+        // topics aswell, even though in the db the relation has been set to null.
+        $this->refresh($board);
+
+        $this->remove($board)->flush();
+
+        return $this;
+    }
 
     /**
      *
@@ -93,18 +93,18 @@ class BoardManager extends BaseManager implements BaseManagerInterface
      * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-	public function reassignTopicsToBoard(ArrayCollection $topics, Board $board = null)
-	{
-		foreach ($topics as $topic) {
-			$topic->setBoard($board);
-			
-			$this->persist($topic);
-		}
+    public function reassignTopicsToBoard(ArrayCollection $topics, Board $board = null)
+    {
+        foreach ($topics as $topic) {
+            $topic->setBoard($board);
 
-		$this->flush();
-		
-		return $this;
-	}
+            $this->persist($topic);
+        }
+
+        $this->flush();
+
+        return $this;
+    }
 
     /**
      *
@@ -116,106 +116,95 @@ class BoardManager extends BaseManager implements BaseManagerInterface
      */
     public function reorderBoards($boards, Board $boardShift, $direction)
     {
-		$boardCount = (count($boards) - 1);
-		
-		// Find board in collection to shift and use list order as array key for easier editing.
-		$sorted = array();
-		$shiftIndex = null;
-		foreach ($boards as $boardIndex => $board) {
-			if ($boards[$boardIndex]->getId() == $boardShift->getId()) {
-				$shiftIndex = $boardIndex;
-			}
-			
-			$sorted[$boardIndex] = $board;
-		}
+        $boardCount = (count($boards) - 1);
 
-		$incrementKeysAfterIndex = function($index, $arr) {
-			$hydrated = array();
-		
-			foreach ($arr as $key => $el) {
-				if ($key > $index) {
-					$hydrated[$key + 1] = $el;
-				} else {
-					$hydrated[$key] = $el;
-				}
-			}
-		
-			return $hydrated;
-		};
-		
-		$decrementKeysBeforeIndex = function($index, $arr) {
-			$hydrated = array();
-		
-			foreach ($arr as $key => $el) {
-				if ($key < $index) {
-					$hydrated[$key - 1] = $el;
-				} else {
-					$hydrated[$key] = $el;
-				}
-			}
-			
-			return $hydrated;
-		};
-			
-		$shifted = array();
-		
-		// First Board needs reordering??
-		if ($shiftIndex == 0) {
-			if ($direction) { // Down (move down 1)
-				$shifted = $sorted;
-				$shifted[$shiftIndex] = $sorted[$shiftIndex + 1];
-				$shifted[$shiftIndex + 1] = $sorted[$shiftIndex];
-			} else { // Up (send to bottom)
-				$shifted[$boardCount] = $sorted[0];
-				unset($sorted[0]);
-				$shifted = array_merge($decrementKeysBeforeIndex($boardCount + 1, $sorted), $shifted);
-			}
-		} else {
-			// Last board needs reordering??
-			if ($shiftIndex == $boardCount) {
-				if ($direction) { // Down (send to top)
-					$shifted[0] = $sorted[$boardCount];
-					unset($sorted[$boardCount]);
-					$shifted = array_merge($shifted, $incrementKeysAfterIndex(-1, $sorted));
-				} else { // Up (move up 1)
-					$shifted = $sorted;
-					$shifted[$shiftIndex] = $sorted[$shiftIndex - 1];
-					$shifted[$shiftIndex - 1] = $sorted[$shiftIndex];
-				}
-			} else {
-				// Swap 2 boards not at beginning or end.
-				$shifted = $sorted;
-				if ($direction) { // Down (move down 1)
-					$shifted[$shiftIndex] = $sorted[$shiftIndex + 1];
-					$shifted[$shiftIndex + 1] = $sorted[$shiftIndex];
-				} else { // Up (move up 1)
-					$shifted[$shiftIndex] = $sorted[$shiftIndex - 1];
-					$shifted[$shiftIndex - 1] = $sorted[$shiftIndex];
-				}
-			}
-		}
-		
-		// Set the order from the $index arranged prior and persist.
-		foreach ($shifted as $index => $board) {
-			$board->setListOrderPriority($index);
-			$this->persist($board);
-		}
-		
+        // Find board in collection to shift and use list order as array key for easier editing.
+        $sorted = array();
+        $shiftIndex = null;
+        foreach ($boards as $boardIndex => $board) {
+            if ($boards[$boardIndex]->getId() == $boardShift->getId()) {
+                $shiftIndex = $boardIndex;
+            }
+
+            $sorted[$boardIndex] = $board;
+        }
+
+        $incrementKeysAfterIndex = function($index, $arr) {
+            $hydrated = array();
+
+            foreach ($arr as $key => $el) {
+                if ($key > $index) {
+                    $hydrated[$key + 1] = $el;
+                } else {
+                    $hydrated[$key] = $el;
+                }
+            }
+
+            return $hydrated;
+        };
+
+        $decrementKeysBeforeIndex = function($index, $arr) {
+            $hydrated = array();
+
+            foreach ($arr as $key => $el) {
+                if ($key < $index) {
+                    $hydrated[$key - 1] = $el;
+                } else {
+                    $hydrated[$key] = $el;
+                }
+            }
+
+            return $hydrated;
+        };
+
+        $shifted = array();
+
+        // First Board needs reordering??
+        if ($shiftIndex == 0) {
+            if ($direction) { // Down (move down 1)
+                $shifted = $sorted;
+                $shifted[$shiftIndex] = $sorted[$shiftIndex + 1];
+                $shifted[$shiftIndex + 1] = $sorted[$shiftIndex];
+            } else { // Up (send to bottom)
+                $shifted[$boardCount] = $sorted[0];
+                unset($sorted[0]);
+                $shifted = array_merge($decrementKeysBeforeIndex($boardCount + 1, $sorted), $shifted);
+            }
+        } else {
+            // Last board needs reordering??
+            if ($shiftIndex == $boardCount) {
+                if ($direction) { // Down (send to top)
+                    $shifted[0] = $sorted[$boardCount];
+                    unset($sorted[$boardCount]);
+                    $shifted = array_merge($shifted, $incrementKeysAfterIndex(-1, $sorted));
+                } else { // Up (move up 1)
+                    $shifted = $sorted;
+                    $shifted[$shiftIndex] = $sorted[$shiftIndex - 1];
+                    $shifted[$shiftIndex - 1] = $sorted[$shiftIndex];
+                }
+            } else {
+                // Swap 2 boards not at beginning or end.
+                $shifted = $sorted;
+                if ($direction) { // Down (move down 1)
+                    $shifted[$shiftIndex] = $sorted[$shiftIndex + 1];
+                    $shifted[$shiftIndex + 1] = $sorted[$shiftIndex];
+                } else { // Up (move up 1)
+                    $shifted[$shiftIndex] = $sorted[$shiftIndex - 1];
+                    $shifted[$shiftIndex - 1] = $sorted[$shiftIndex];
+                }
+            }
+        }
+
+        // Set the order from the $index arranged prior and persist.
+        foreach ($shifted as $index => $board) {
+            $board->setListOrderPriority($index);
+            $this->persist($board);
+        }
+
         $this->flush();
 
         return $this;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 //    /**
 //     *

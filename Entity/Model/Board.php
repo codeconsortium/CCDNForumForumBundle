@@ -109,7 +109,7 @@ abstract class Board
 
         return $this;
     }
-	
+
     /**
      * Get last_post
      *

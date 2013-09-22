@@ -13,8 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
 use CCDNForum\ForumBundle\Entity\Post;
 
 /**
@@ -46,9 +44,9 @@ class UserPostBaseController extends BaseController
         }
 
         $formHandler->setPost($post);
-		$formHandler->setUser($this->getUser());
-		$formHandler->setRequest($this->getRequest());
-		
+        $formHandler->setUser($this->getUser());
+        $formHandler->setRequest($this->getRequest());
+
         return $formHandler;
     }
 
@@ -63,9 +61,9 @@ class UserPostBaseController extends BaseController
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_delete');
 
         $formHandler->setPost($post);
-		$formHandler->setUser($this->getUser());
-		$formHandler->setRequest($this->getRequest());
-		
+        $formHandler->setUser($this->getUser());
+        $formHandler->setRequest($this->getRequest());
+
         return $formHandler;
     }
 }

@@ -43,15 +43,14 @@ interface BaseManagerInterface
      */
     public function __construct(Registry $doctrine, SecurityContext $securityContext, BaseGatewayInterface $gateway, ModelBagInterface $modelBag);
 
-	
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
-	 */
-	public function getModelBag();
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
+     */
+    public function getModelBag();
 
-	/**
+    /**
      *
      * @access public
      * @param  string $role

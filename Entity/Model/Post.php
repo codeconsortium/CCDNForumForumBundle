@@ -38,7 +38,7 @@ abstract class Post
     protected $attachment = null;
 
     /** @var UserInterface $unlockedBy */
-	protected $unlockedBy = null;
+    protected $unlockedBy = null;
 
     /**
      *

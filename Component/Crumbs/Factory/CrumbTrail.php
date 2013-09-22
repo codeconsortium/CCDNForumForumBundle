@@ -41,24 +41,24 @@ class CrumbTrail
      */
     private $router;
 
-	/**
-	 * 
-	 * @var array $crumbs;
-	 */
-	private $crumbs;
+    /**
+     *
+     * @var array $crumbs;
+     */
+    private $crumbs;
 
-	/**
-	 * 
-	 * @access public
-	 * @param \Symfony\Bundle\FrameworkBundle\Translation\Translator $translator
-	 * @param \Symfony\Bundle\FrameworkBundle\Routing\Router         $router
-	 */
-	public function __construct(Translator $translator, Router $router)
-	{
-		$this->translator = $translator;
-		$this->router = $router;
-		$this->crumbs = array();
-	}
+    /**
+     *
+     * @access public
+     * @param \Symfony\Bundle\FrameworkBundle\Translation\Translator $translator
+     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router         $router
+     */
+    public function __construct(Translator $translator, Router $router)
+    {
+        $this->translator = $translator;
+        $this->router = $router;
+        $this->crumbs = array();
+    }
 
     /**
      *
@@ -85,55 +85,54 @@ class CrumbTrail
         return $this->router->generate($route, $params);
     }
 
-	public function getTrail()
-	{
-		return $this->crumbs;
-	}
-	
-	public function count()
-	{
-		return count($this->crumbs);
-	}
-	
-	public function add($label, $route, $icon = null)
-	{
-		if (is_array($label)) {
-			if (! isset($label['label'])) {
-				if (! isset($label['label'])) {
-					throw new \Exception('Label array key must be set when passing an array.');
-				}
-			}
-			
-			if (! isset($label['params'])) {
-				$label['params'] = array();
-			}
-			
-			if (! isset($label['bundle'])) {
-				$label['bundle'] = 'CCDNForumForumBundle';
-			}
-			
-			
-			$labelTranslated = $this->trans($label['label'], $label['params'], $label['bundle']);
-		} else {
-			$labelTranslated = $this->trans($label, array());
-		}
-		
-		if (is_array($route)) {
-			if (! isset($route['route'])) {
-				throw new \Exception('Route array key must be set when passing an array.');
-			}
+    public function getTrail()
+    {
+        return $this->crumbs;
+    }
 
-			if (! isset($route['params'])) {
-				$route['params'] = array();
-			}
-			
-			$path = $this->path($route['route'], $route['params']);
-		} else {
-			$path = $this->path($route, array());
-		}
-		
-		$this->crumbs[] = array('label' => $labelTranslated, 'url' => $path, 'icon' => $icon);
-		
-		return $this;
-	}
+    public function count()
+    {
+        return count($this->crumbs);
+    }
+
+    public function add($label, $route, $icon = null)
+    {
+        if (is_array($label)) {
+            if (! isset($label['label'])) {
+                if (! isset($label['label'])) {
+                    throw new \Exception('Label array key must be set when passing an array.');
+                }
+            }
+
+            if (! isset($label['params'])) {
+                $label['params'] = array();
+            }
+
+            if (! isset($label['bundle'])) {
+                $label['bundle'] = 'CCDNForumForumBundle';
+            }
+
+            $labelTranslated = $this->trans($label['label'], $label['params'], $label['bundle']);
+        } else {
+            $labelTranslated = $this->trans($label, array());
+        }
+
+        if (is_array($route)) {
+            if (! isset($route['route'])) {
+                throw new \Exception('Route array key must be set when passing an array.');
+            }
+
+            if (! isset($route['params'])) {
+                $route['params'] = array();
+            }
+
+            $path = $this->path($route['route'], $route['params']);
+        } else {
+            $path = $this->path($route, array());
+        }
+
+        $this->crumbs[] = array('label' => $labelTranslated, 'url' => $path, 'icon' => $icon);
+
+        return $this;
+    }
 }

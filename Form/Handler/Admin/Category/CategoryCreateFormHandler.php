@@ -72,19 +72,19 @@ class CategoryCreateFormHandler
      */
     protected $defaultForum;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-	 */
-	protected $dispatcher;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     */
+    protected $dispatcher;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
     /**
      *
@@ -99,31 +99,31 @@ class CategoryCreateFormHandler
         $this->factory = $factory;
         $this->categoryCreateFormType = $categoryCreateFormType;
         $this->categoryModel = $categoryModel;
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
     }
-
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum $forum
-	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryCreateFormHandler
-	 */
-	public function setDefaultForum(Forum $forum)
-	{
-		$this->defaultForum = $forum;
-		
-		return $this;
-	}
 
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                                          $forum
+     * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryCreateFormHandler
      */
-	public function setRequest(Request $request)
-	{
-		$this->request = $request;
-	}
+    public function setDefaultForum(Forum $forum)
+    {
+        $this->defaultForum = $forum;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      *
@@ -176,14 +176,14 @@ class CategoryCreateFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-			$category = new Category();
-			
-			$options = array(
-				'default_forum' => $this->defaultForum
-			);
-			
-			$this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_INITIALISE, new AdminCategoryEvent($this->request, $category));
-			
+            $category = new Category();
+
+            $options = array(
+                'default_forum' => $this->defaultForum
+            );
+
+            $this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_INITIALISE, new AdminCategoryEvent($this->request, $category));
+
             $this->form = $this->factory->create($this->categoryCreateFormType, $category, $options);
         }
 
@@ -198,8 +198,8 @@ class CategoryCreateFormHandler
      */
     protected function onSuccess(Category $category)
     {
-		$this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_SUCCESS, new AdminCategoryEvent($this->request, $category));
-		
+        $this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_SUCCESS, new AdminCategoryEvent($this->request, $category));
+
         return $this->categoryModel->saveNewCategory($category)->flush();
     }
 }

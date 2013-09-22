@@ -69,7 +69,7 @@ class CategoryGateway extends BaseGateway implements BaseGatewayInterface
             $qb = $this->createSelectQuery();
         }
 
-		$this->hasDefaultOrderBy('c.listOrderPriority', 'ASC', $qb);
+        $this->hasDefaultOrderBy('c.listOrderPriority', 'ASC', $qb);
 
         return $this->all($qb, $parameters);
     }

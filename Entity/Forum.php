@@ -59,10 +59,10 @@ class Forum extends AbstractForum
         $this->readAuthorisedRoles = array();
     }
 
-	public function __toString()
-	{
-		return $this->name;
-	}
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     /**
      * Get id
@@ -73,7 +73,7 @@ class Forum extends AbstractForum
     {
         return $this->id;
     }
-	
+
     /**
      * Get name
      *
@@ -83,7 +83,7 @@ class Forum extends AbstractForum
     {
         return $this->name;
     }
-	
+
     /**
      * Set name
      *
@@ -93,7 +93,7 @@ class Forum extends AbstractForum
     {
         return $this->name = $name;
     }
-	
+
     /**
      *
      * @return array
@@ -116,7 +116,7 @@ class Forum extends AbstractForum
     }
 
     /**
-     * 
+     *
      * @param $role
      * @return bool
      */
@@ -127,7 +127,7 @@ class Forum extends AbstractForum
 
     /**
      *
-     * @param SecurityContextInterface $securityContext
+     * @param  SecurityContextInterface $securityContext
      * @return bool
      */
     public function isAuthorisedToRead(SecurityContextInterface $securityContext)

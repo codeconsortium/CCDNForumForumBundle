@@ -16,11 +16,7 @@ namespace CCDNForum\ForumBundle\features\bootstrap;
 use Behat\Behat\Context\BehatContext;
 use Behat\Gherkin\Node\TableNode;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Locale\Locale;
-use Symfony\Component\PropertyAccess\StringUtil;
 
 use CCDNUser\UserBundle\Entity\User;
 
@@ -54,21 +50,20 @@ use CCDNForum\ForumBundle\Entity\Subscription;
 class DataContext extends BehatContext implements KernelAwareInterface
 {
     /**
-     * 
+     *
      * Kernel.
      *
      * @var KernelInterface
      */
     protected $kernel;
 
-
     public function __construct()
     {
-		
+
     }
 
     /**
-     * 
+     *
      * {@inheritdoc}
      */
     public function setKernel(KernelInterface $kernel)
@@ -77,7 +72,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
     }
 
     /**
-     * 
+     *
      * Get entity manager.
      *
      * @return EntityManager
@@ -88,7 +83,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
     }
 
     /**
-     * 
+     *
      * Returns Container instance.
      *
      * @return ContainerInterface
@@ -99,7 +94,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
     }
 
     /**
-     * 
+     *
      * Get service by id.
      *
      * @param string $id
@@ -111,10 +106,10 @@ class DataContext extends BehatContext implements KernelAwareInterface
         return $this->getContainer()->get($id);
     }
 
-	protected $users = array();
+    protected $users = array();
 
     /**
-     * 
+     *
      * @Given /^there are following users defined:$/
      */
     public function thereAreFollowingUsersDefined(TableNode $table)
@@ -123,7 +118,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
 
         foreach ($table->getHash() as $data) {
             $this->users[] = $this->thereIsUser(
-				isset($data['username']) ? $data['username'] : sha1(uniqid(mt_rand(), true)),
+                isset($data['username']) ? $data['username'] : sha1(uniqid(mt_rand(), true)),
                 $data['email'],
                 isset($data['password']) ? $data['password'] : 'password',
                 isset($data['role']) ? $data['role'] : 'ROLE_USER',
@@ -136,7 +131,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
     {
         $user = new User();
 
-		$user->setUsername($username);
+        $user->setUsername($username);
         $user->setEmail($email);
         $user->setEnabled($enabled);
         $user->setPlainPassword($password);
@@ -151,10 +146,10 @@ class DataContext extends BehatContext implements KernelAwareInterface
         return $user;
     }
 
-	protected $forums = array();
+    protected $forums = array();
 
     /**
-     * 
+     *
      * @Given /^there are following forums defined:$/
      */
     public function thereAreFollowingForumsDefined(TableNode $table)
@@ -163,27 +158,27 @@ class DataContext extends BehatContext implements KernelAwareInterface
 
         foreach ($table->getHash() as $data) {
             $this->forums[] = $this->thereIsForum(
-				isset($data['name']) ? $data['name'] : sha1(uniqid(mt_rand(), true))
+                isset($data['name']) ? $data['name'] : sha1(uniqid(mt_rand(), true))
             );
         }
     }
-	
+
     public function thereIsForum($name)
     {
         $forum = new Forum();
 
-		$forum->setName($name);
+        $forum->setName($name);
 
         $this->getEntityManager()->persist($forum);
         $this->getEntityManager()->flush();
 
         return $forum;
     }
-	
-	protected $categories = array();
-	
+
+    protected $categories = array();
+
     /**
-     * 
+     *
      * @Given /^there are following categories defined:$/
      */
     public function thereAreFollowingCategoriesDefined(TableNode $table)
@@ -192,9 +187,9 @@ class DataContext extends BehatContext implements KernelAwareInterface
 
         foreach ($table->getHash() as $index => $data) {
             $this->categories[] = $this->thereIsCategory(
-				isset($data['name']) ? $data['name'] : sha1(uniqid(mt_rand(), true)),
-				isset($data['order']) ? $data['order'] : $index,
-				isset($data['forum']) ? $data['forum'] : null
+                isset($data['name']) ? $data['name'] : sha1(uniqid(mt_rand(), true)),
+                isset($data['order']) ? $data['order'] : $index,
+                isset($data['forum']) ? $data['forum'] : null
             );
         }
     }
@@ -203,25 +198,25 @@ class DataContext extends BehatContext implements KernelAwareInterface
     {
         $category = new Category();
 
-		$category->setName($name);
-		$category->setListOrderPriority($order);
-		
-		foreach ($this->forums as $forum) {
-			if ($forum->getName() == $forumName) {
-				$category->setForum($forum);
-			}
-		}
-		
+        $category->setName($name);
+        $category->setListOrderPriority($order);
+
+        foreach ($this->forums as $forum) {
+            if ($forum->getName() == $forumName) {
+                $category->setForum($forum);
+            }
+        }
+
         $this->getEntityManager()->persist($category);
         $this->getEntityManager()->flush();
 
         return $category;
     }
-	
-	protected $boards = array();
-	
+
+    protected $boards = array();
+
     /**
-     * 
+     *
      * @Given /^there are following boards defined:$/
      */
     public function thereAreFollowingBoardsDefined(TableNode $table)
@@ -230,10 +225,10 @@ class DataContext extends BehatContext implements KernelAwareInterface
 
         foreach ($table->getHash() as $index => $data) {
             $this->boards[] = $this->thereIsBoard(
-				isset($data['name']) ? $data['name'] : sha1(uniqid(mt_rand(), true)),
-				isset($data['description']) ? $data['description'] : sha1(uniqid(mt_rand(), true)),
-				isset($data['order']) ? $data['order'] : $index,
-				isset($data['category']) ? $data['category'] : null
+                isset($data['name']) ? $data['name'] : sha1(uniqid(mt_rand(), true)),
+                isset($data['description']) ? $data['description'] : sha1(uniqid(mt_rand(), true)),
+                isset($data['order']) ? $data['order'] : $index,
+                isset($data['category']) ? $data['category'] : null
             );
         }
     }
@@ -242,26 +237,26 @@ class DataContext extends BehatContext implements KernelAwareInterface
     {
         $board = new Board();
 
-		$board->setName($name);
+        $board->setName($name);
         $board->setDescription($description);
-		$board->setListOrderPriority($order);
-		
-		foreach ($this->categories as $category) {
-			if ($category->getName() == $categoryName) {
-				$board->setCategory($category);
-			}
-		}
-		
+        $board->setListOrderPriority($order);
+
+        foreach ($this->categories as $category) {
+            if ($category->getName() == $categoryName) {
+                $board->setCategory($category);
+            }
+        }
+
         $this->getEntityManager()->persist($board);
         $this->getEntityManager()->flush();
 
         return $board;
     }
 
-	protected $topics = array();
+    protected $topics = array();
 
     /**
-     * 
+     *
      * @Given /^there are following topics defined:$/
      */
     public function thereAreFollowingTopicsDefined(TableNode $table)
@@ -270,57 +265,57 @@ class DataContext extends BehatContext implements KernelAwareInterface
 
         foreach ($table->getHash() as $index => $data) {
             $this->topics[] = $this->thereIsTopic(
-				isset($data['title']) ? $data['title'] : sha1(uniqid(mt_rand(), true)),
-				isset($data['body']) ? $data['body'] : sha1(uniqid(mt_rand(), true)),
-				isset($data['board']) ? $data['board'] : null,
-				isset($data['user']) ? $data['user'] : null,
-				isset($data['subscribed']) ? $data['subscribed'] : false
+                isset($data['title']) ? $data['title'] : sha1(uniqid(mt_rand(), true)),
+                isset($data['body']) ? $data['body'] : sha1(uniqid(mt_rand(), true)),
+                isset($data['board']) ? $data['board'] : null,
+                isset($data['user']) ? $data['user'] : null,
+                isset($data['subscribed']) ? $data['subscribed'] : false
             );
         }
     }
 
     public function thereIsTopic($title, $body, $boardName, $userEmail, $subscribed = false)
     {
-		$user = null;
-		
-		foreach ($this->users as $userScan) {
-			if ($userScan->getEmail() == $userEmail) {
-				$user = $userScan;
-			}
-		}
+        $user = null;
 
-		$board = null;
-		
-		foreach ($this->boards as $boardScan) {
-			if ($boardScan->getName() == $boardName) {
-				$board = $boardScan;
-			}
-		}
-		
+        foreach ($this->users as $userScan) {
+            if ($userScan->getEmail() == $userEmail) {
+                $user = $userScan;
+            }
+        }
+
+        $board = null;
+
+        foreach ($this->boards as $boardScan) {
+            if ($boardScan->getName() == $boardName) {
+                $board = $boardScan;
+            }
+        }
+
         $topic = new Topic();
-		$topic->setTitle($title);
-		$topic->setBoard($board);
-		
-		$post = new Post();
-		$post->setBody($body);
-		$post->setCreatedDate(new \DateTime('now'));
-		$post->setCreatedBy($user);
-		$post->setTopic($topic);
+        $topic->setTitle($title);
+        $topic->setBoard($board);
 
-		$topic->setFirstPost($post);
-		$topic->setLastPost($post);
-		
-		if ($subscribed) {
-			$subscription = new Subscription();
-			$subscription->setForum($board->getCategory()->getForum());
-			$subscription->setTopic($topic);
-			$subscription->setOwnedBy($user);
-			$subscription->setIsRead(false);
-			$subscription->setIsSubscribed(true);
+        $post = new Post();
+        $post->setBody($body);
+        $post->setCreatedDate(new \DateTime('now'));
+        $post->setCreatedBy($user);
+        $post->setTopic($topic);
 
-	        $this->getEntityManager()->persist($subscription);
-		}
-		
+        $topic->setFirstPost($post);
+        $topic->setLastPost($post);
+
+        if ($subscribed) {
+            $subscription = new Subscription();
+            $subscription->setForum($board->getCategory()->getForum());
+            $subscription->setTopic($topic);
+            $subscription->setOwnedBy($user);
+            $subscription->setIsRead(false);
+            $subscription->setIsSubscribed(true);
+
+            $this->getEntityManager()->persist($subscription);
+        }
+
         $this->getEntityManager()->persist($topic);
         $this->getEntityManager()->flush();
 

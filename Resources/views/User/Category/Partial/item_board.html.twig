@@ -51,7 +51,7 @@
 	                {{- 'generic.posted_by' | trans({'%name%': profile.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
 
 	                <br>
-					
+
 	                {%- if page < 2 -%}
 	                    <a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forum.name, 'topicId': board.getLastPost.getTopic.getId } ) -}}#{{- board.getLastPost.getId -}}">
 							<i class="icon-arrow-right"></i>

@@ -73,19 +73,19 @@ class ForumDeleteFormHandler
      */
     protected $forum;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-	 */
-	protected $dispatcher;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     */
+    protected $dispatcher;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
     /**
      *
@@ -100,31 +100,31 @@ class ForumDeleteFormHandler
         $this->factory = $factory;
         $this->forumDeleteFormType = $forumDeleteFormType;
         $this->forumModel = $forumModel;
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
     }
-
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum $forum
-	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Forum\ForumDeleteFormHandler
-	 */
-	public function setForum(Forum $forum)
-	{
-		$this->forum = $forum;
-		
-		return $this;
-	}
 
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                                    $forum
+     * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Forum\ForumDeleteFormHandler
      */
-	public function setRequest(Request $request)
-	{
-		$this->request = $request;
-	}
+    public function setForum(Forum $forum)
+    {
+        $this->forum = $forum;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      *
@@ -177,12 +177,12 @@ class ForumDeleteFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-			if (!is_object($this->forum) && !$this->forum instanceof Forum) {
-				throw new \Exception('Forum object must be specified to delete.');
-			}
-			
-			$this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_DELETE_INITIALISE, new AdminForumEvent($this->request, $this->forum));
-			
+            if (!is_object($this->forum) && !$this->forum instanceof Forum) {
+                throw new \Exception('Forum object must be specified to delete.');
+            }
+
+            $this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_DELETE_INITIALISE, new AdminForumEvent($this->request, $this->forum));
+
             $this->form = $this->factory->create($this->forumDeleteFormType, $this->forum);
         }
 
@@ -197,16 +197,16 @@ class ForumDeleteFormHandler
      */
     protected function onSuccess(Forum $forum)
     {
-		$this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_DELETE_SUCCESS, new AdminForumEvent($this->request, $forum));
+        $this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_DELETE_SUCCESS, new AdminForumEvent($this->request, $forum));
 
-		if (! $this->form->get('confirm_subordinates')->getData()) {
-			$categories = new ArrayCollection($forum->getCategories()->toArray());
-			
-			$this->forumModel->reassignCategoriesToForum($categories, null)->flush();
-		}
+        if (! $this->form->get('confirm_subordinates')->getData()) {
+            $categories = new ArrayCollection($forum->getCategories()->toArray());
+
+            $this->forumModel->reassignCategoriesToForum($categories, null)->flush();
+        }
 
         $this->forumModel->deleteForum($forum)->flush();
-		
-		return $this->forumModel;
+
+        return $this->forumModel;
     }
 }

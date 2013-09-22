@@ -40,27 +40,27 @@ class AdminCategoryController extends AdminCategoryBaseController
     public function listAction()
     {
         $this->isAuthorised('ROLE_ADMIN');
-		
-		$forumFilter = $this->getQuery('forum_filter', null);
 
-		$forums = $this->getForumModel()->findAllForums();
+        $forumFilter = $this->getQuery('forum_filter', null);
 
-		$categories = $this->getCategoryModel()->findAllCategoriesForForumById($forumFilter);
-		
-		$crumbs = $this->getCrumbs()->addAdminManageCategoriesIndex();
-		
-		$response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/list.html.', 
-			array(
-				'crumbs' => $crumbs,
-				'forums' => $forums,
-				'forum_filter' => $forumFilter,
-				'categories' => $categories,
-	        )
-		);
-		
-		return $response;
+        $forums = $this->getForumModel()->findAllForums();
+
+        $categories = $this->getCategoryModel()->findAllCategoriesForForumById($forumFilter);
+
+        $crumbs = $this->getCrumbs()->addAdminManageCategoriesIndex();
+
+        $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/list.html.',
+            array(
+                'crumbs' => $crumbs,
+                'forums' => $forums,
+                'forum_filter' => $forumFilter,
+                'categories' => $categories,
+            )
+        );
+
+        return $response;
     }
-	
+
     /**
      *
      * @access public
@@ -69,24 +69,24 @@ class AdminCategoryController extends AdminCategoryBaseController
     public function createAction()
     {
         $this->isAuthorised('ROLE_ADMIN');
-		
-		$forumFilter = $this->getQuery('forum_filter', null);
-		
-		$formHandler = $this->getFormHandlerToCreateCategory($forumFilter);
-		
-		$crumbs = $this->getCrumbs()->addAdminManageCategoriesCreate();
-		
-        $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/create.html.', 
-			array(
-				'crumbs' => $crumbs,
-				'form' => $formHandler->getForm()->createView(),
-				'forum_filter' => $forumFilter
-	        )
-		);
-		
-		$this->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), null, $response));
-		
-		return $response;
+
+        $forumFilter = $this->getQuery('forum_filter', null);
+
+        $formHandler = $this->getFormHandlerToCreateCategory($forumFilter);
+
+        $crumbs = $this->getCrumbs()->addAdminManageCategoriesCreate();
+
+        $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/create.html.',
+            array(
+                'crumbs' => $crumbs,
+                'form' => $formHandler->getForm()->createView(),
+                'forum_filter' => $forumFilter
+            )
+        );
+
+        $this->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), null, $response));
+
+        return $response;
     }
 
     /**
@@ -98,36 +98,36 @@ class AdminCategoryController extends AdminCategoryBaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-		$forumFilter = $this->getQuery('forum_filter', null);
+        $forumFilter = $this->getQuery('forum_filter', null);
 
-		$formHandler = $this->getFormHandlerToCreateCategory($forumFilter);
-		
-		if ($formHandler->process()) {
-			
-			$category = $formHandler->getForm()->getData();
-			
-			$params = $this->getFilterQueryStrings($category);
-			
-			$this->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_COMPLETE, new AdminCategoryEvent($this->getRequest(), $category));
-			
-			$response = $this->redirectResponse($this->path('ccdn_forum_admin_category_list', $params));
-		} else {
-			$crumbs = $this->getCrumbs()->addAdminManageCategoriesCreate();
-			
-	        $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/create.html.', 
-				array(
-					'crumbs' => $crumbs,
-					'form' => $formHandler->getForm()->createView(),
-					'forum_filter' => $forumFilter
-		        )
-			);
-		}
+        $formHandler = $this->getFormHandlerToCreateCategory($forumFilter);
 
-		$this->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        if ($formHandler->process()) {
 
-		return $response;
+            $category = $formHandler->getForm()->getData();
+
+            $params = $this->getFilterQueryStrings($category);
+
+            $this->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_COMPLETE, new AdminCategoryEvent($this->getRequest(), $category));
+
+            $response = $this->redirectResponse($this->path('ccdn_forum_admin_category_list', $params));
+        } else {
+            $crumbs = $this->getCrumbs()->addAdminManageCategoriesCreate();
+
+            $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/create.html.',
+                array(
+                    'crumbs' => $crumbs,
+                    'form' => $formHandler->getForm()->createView(),
+                    'forum_filter' => $forumFilter
+                )
+            );
+        }
+
+        $this->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+
+        return $response;
     }
-	
+
     /**
      *
      * @access public
@@ -137,30 +137,30 @@ class AdminCategoryController extends AdminCategoryBaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-		$category = $this->getCategoryModel()->findOneCategoryById($categoryId);
-	
-		$this->isFound($category);
-		
-		$formHandler = $this->getFormHandlerToUpdateCategory($category);
-		
-		$forumFilter = $this->getQuery('forum_filter', null);
-		
-		$crumbs = $this->getCrumbs()->addAdminManageCategoriesEdit($category);
-		
-        $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/edit.html.', 
-			array(
-				'crumbs' => $crumbs,
-				'form' => $formHandler->getForm()->createView(),
-				'category' => $category,
-				'forum_filter' => $forumFilter
-	        )
-		);
-		
-		$this->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
-		
-		return $response;
+        $category = $this->getCategoryModel()->findOneCategoryById($categoryId);
+
+        $this->isFound($category);
+
+        $formHandler = $this->getFormHandlerToUpdateCategory($category);
+
+        $forumFilter = $this->getQuery('forum_filter', null);
+
+        $crumbs = $this->getCrumbs()->addAdminManageCategoriesEdit($category);
+
+        $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/edit.html.',
+            array(
+                'crumbs' => $crumbs,
+                'form' => $formHandler->getForm()->createView(),
+                'category' => $category,
+                'forum_filter' => $forumFilter
+            )
+        );
+
+        $this->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+
+        return $response;
     }
-	
+
     /**
      *
      * @access public
@@ -170,40 +170,40 @@ class AdminCategoryController extends AdminCategoryBaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-		$category = $this->getCategoryModel()->findOneCategoryById($categoryId);
+        $category = $this->getCategoryModel()->findOneCategoryById($categoryId);
 
-		$this->isFound($category);
-		
-		$formHandler = $this->getFormHandlerToUpdateCategory($category);
+        $this->isFound($category);
 
-		if ($formHandler->process()) {
-			
-			$category = $formHandler->getForm()->getData();
-			
-			$params = $this->getFilterQueryStrings($category);
-			
-			$this->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_COMPLETE, new AdminCategoryEvent($this->getRequest(), $category));
-			
-			$response = $this->redirectResponse($this->path('ccdn_forum_admin_category_list', $params));
-		} else {
-		
-			$forumFilter = $this->getQuery('forum_filter', null);
-		
-			$crumbs = $this->getCrumbs()->addAdminManageCategoriesEdit($category);
-		
-	        $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/edit.html.', 
-				array(
-					'crumbs' => $crumbs,
-					'form' => $formHandler->getForm()->createView(),
-					'category' => $category,
-					'forum_filter' => $forumFilter
-		        )
-			);
-		}
-		
-		$this->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
-		
-		return $response;
+        $formHandler = $this->getFormHandlerToUpdateCategory($category);
+
+        if ($formHandler->process()) {
+
+            $category = $formHandler->getForm()->getData();
+
+            $params = $this->getFilterQueryStrings($category);
+
+            $this->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_COMPLETE, new AdminCategoryEvent($this->getRequest(), $category));
+
+            $response = $this->redirectResponse($this->path('ccdn_forum_admin_category_list', $params));
+        } else {
+
+            $forumFilter = $this->getQuery('forum_filter', null);
+
+            $crumbs = $this->getCrumbs()->addAdminManageCategoriesEdit($category);
+
+            $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/edit.html.',
+                array(
+                    'crumbs' => $crumbs,
+                    'form' => $formHandler->getForm()->createView(),
+                    'category' => $category,
+                    'forum_filter' => $forumFilter
+                )
+            );
+        }
+
+        $this->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+
+        return $response;
     }
 
     /**
@@ -215,30 +215,30 @@ class AdminCategoryController extends AdminCategoryBaseController
     {
         $this->isAuthorised('ROLE_SUPER_ADMIN');
 
-		$category = $this->getCategoryModel()->findOneCategoryById($categoryId);
-	
-		$this->isFound($category);
-		
-		$formHandler = $this->getFormHandlerToDeleteCategory($category);
+        $category = $this->getCategoryModel()->findOneCategoryById($categoryId);
 
-		$forumFilter = $this->getQuery('forum_filter', null);
+        $this->isFound($category);
 
-		$crumbs = $this->getCrumbs()->addAdminManageCategoriesDelete($category);
+        $formHandler = $this->getFormHandlerToDeleteCategory($category);
 
-        $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/delete.html.', 
-			array(
-				'crumbs' => $crumbs,
-				'form' => $formHandler->getForm()->createView(),
-				'category' => $category,
-				'forum_filter' => $forumFilter
-	        )
-		);
-		
-		$this->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
-		
-		return $response;
+        $forumFilter = $this->getQuery('forum_filter', null);
+
+        $crumbs = $this->getCrumbs()->addAdminManageCategoriesDelete($category);
+
+        $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/delete.html.',
+            array(
+                'crumbs' => $crumbs,
+                'form' => $formHandler->getForm()->createView(),
+                'category' => $category,
+                'forum_filter' => $forumFilter
+            )
+        );
+
+        $this->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+
+        return $response;
     }
-	
+
     /**
      *
      * @access public
@@ -248,42 +248,42 @@ class AdminCategoryController extends AdminCategoryBaseController
     {
         $this->isAuthorised('ROLE_SUPER_ADMIN');
 
-		$category = $this->getCategoryModel()->findOneCategoryById($categoryId);
+        $category = $this->getCategoryModel()->findOneCategoryById($categoryId);
 
-		$this->isFound($category);
-		
-		$formHandler = $this->getFormHandlerToDeleteCategory($category);
+        $this->isFound($category);
 
-		if ($formHandler->process()) {
-			
-			$category = $formHandler->getForm()->getData();
-			
-			$params = $this->getFilterQueryStrings($category);
-			
-			$this->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_COMPLETE, new AdminCategoryEvent($this->getRequest(), $category));
-			
-			$response = $this->redirectResponse($this->path('ccdn_forum_admin_category_list', $params));
-		} else {
+        $formHandler = $this->getFormHandlerToDeleteCategory($category);
 
-			$forumFilter = $this->getQuery('forum_filter', null);
-		
-			$crumbs = $this->getCrumbs()->addAdminManageCategoriesDelete($category);
-		
-	        $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/delete.html.', 
-				array(
-					'crumbs' => $crumbs,
-					'form' => $formHandler->getForm()->createView(),
-					'category' => $category,
-					'forum_filter' => $forumFilter
-		        )
-			);
-		}
-		
-		$this->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
-		
-		return $response;
+        if ($formHandler->process()) {
+
+            $category = $formHandler->getForm()->getData();
+
+            $params = $this->getFilterQueryStrings($category);
+
+            $this->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_COMPLETE, new AdminCategoryEvent($this->getRequest(), $category));
+
+            $response = $this->redirectResponse($this->path('ccdn_forum_admin_category_list', $params));
+        } else {
+
+            $forumFilter = $this->getQuery('forum_filter', null);
+
+            $crumbs = $this->getCrumbs()->addAdminManageCategoriesDelete($category);
+
+            $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Category/delete.html.',
+                array(
+                    'crumbs' => $crumbs,
+                    'form' => $formHandler->getForm()->createView(),
+                    'category' => $category,
+                    'forum_filter' => $forumFilter
+                )
+            );
+        }
+
+        $this->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+
+        return $response;
     }
-	
+
     /**
      *
      * @access public
@@ -293,31 +293,31 @@ class AdminCategoryController extends AdminCategoryBaseController
     {
         $this->isAuthorised('ROLE_ADMIN');
 
-		$category = $this->getCategoryModel()->findOneCategoryById($categoryId);
+        $category = $this->getCategoryModel()->findOneCategoryById($categoryId);
 
-		$this->dispatch(ForumEvents::ADMIN_CATEGORY_REORDER_INITIALISE, new AdminCategoryEvent($this->getRequest(), $category));
+        $this->dispatch(ForumEvents::ADMIN_CATEGORY_REORDER_INITIALISE, new AdminCategoryEvent($this->getRequest(), $category));
 
-		$this->isFound($category);
-		
-		$params = array();
-		
-		// We do not re-order categories not set to a forum.
-		if ($category->getForum()) {
-			$forumFilter = $category->getForum()->getId();
-			
-			$params['forum_filter'] = $forumFilter;
-		
-			$categories = $this->getCategoryModel()->findAllCategoriesForForumById($forumFilter);
-			
-			$this->getCategoryModel()->reorderCategories($categories, $category, $direction);
+        $this->isFound($category);
 
-			$this->dispatch(ForumEvents::ADMIN_CATEGORY_REORDER_COMPLETE, new AdminCategoryEvent($this->getRequest(), $category));
-		}
+        $params = array();
+
+        // We do not re-order categories not set to a forum.
+        if ($category->getForum()) {
+            $forumFilter = $category->getForum()->getId();
+
+            $params['forum_filter'] = $forumFilter;
+
+            $categories = $this->getCategoryModel()->findAllCategoriesForForumById($forumFilter);
+
+            $this->getCategoryModel()->reorderCategories($categories, $category, $direction);
+
+            $this->dispatch(ForumEvents::ADMIN_CATEGORY_REORDER_COMPLETE, new AdminCategoryEvent($this->getRequest(), $category));
+        }
 
         $response = $this->redirectResponse($this->path('ccdn_forum_admin_category_list', $params));
-		
-		$this->dispatch(ForumEvents::ADMIN_CATEGORY_REORDER_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $category, $response));
-		
-		return $response;
+
+        $this->dispatch(ForumEvents::ADMIN_CATEGORY_REORDER_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $category, $response));
+
+        return $response;
     }
 }

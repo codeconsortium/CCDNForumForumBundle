@@ -72,19 +72,19 @@ class BoardCreateFormHandler
      */
     protected $defaultCategory;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-	 */
-	protected $dispatcher;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     */
+    protected $dispatcher;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\HttpFoundation\Request $request
-	 */
-	protected $request;
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\HttpFoundation\Request $request
+     */
+    protected $request;
 
     /**
      *
@@ -99,31 +99,31 @@ class BoardCreateFormHandler
         $this->factory = $factory;
         $this->boardCreateFormType = $boardCreateFormType;
         $this->boardModel = $boardModel;
-		$this->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
     }
-
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Entity\Forum $forum
-	 * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryCreateFormHandler
-	 */
-	public function setDefaultCategory(Category $category)
-	{
-		$this->defaultCategory = $category;
-		
-		return $this;
-	}
 
     /**
      *
      * @access public
-     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                                          $forum
+     * @return \CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryCreateFormHandler
      */
-	public function setRequest(Request $request)
-	{
-		$this->request = $request;
-	}
+    public function setDefaultCategory(Category $category)
+    {
+        $this->defaultCategory = $category;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 
     /**
      *
@@ -176,14 +176,14 @@ class BoardCreateFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-			$board = new Board();
-			
-			$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_CREATE_INITIALISE, new AdminBoardEvent($this->request, $board));
-			
-			$options = array(
-				'default_category' => $this->defaultCategory
-			);
-			
+            $board = new Board();
+
+            $this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_CREATE_INITIALISE, new AdminBoardEvent($this->request, $board));
+
+            $options = array(
+                'default_category' => $this->defaultCategory
+            );
+
             $this->form = $this->factory->create($this->boardCreateFormType, $board, $options);
         }
 
@@ -198,8 +198,8 @@ class BoardCreateFormHandler
      */
     protected function onSuccess(Board $board)
     {
-		$this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_CREATE_SUCCESS, new AdminBoardEvent($this->request, $board));
-		
+        $this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_CREATE_SUCCESS, new AdminBoardEvent($this->request, $board));
+
         return $this->boardModel->saveNewBoard($board)->flush();
     }
 }

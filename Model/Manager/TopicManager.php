@@ -15,9 +15,6 @@ namespace CCDNForum\ForumBundle\Model\Manager;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
-
 use CCDNForum\ForumBundle\Model\Manager\BaseManagerInterface;
 use CCDNForum\ForumBundle\Model\Manager\BaseManager;
 
@@ -47,10 +44,10 @@ class TopicManager extends BaseManager implements BaseManagerInterface
      */
     public function saveNewTopic(Post $post)
     {
-		if (! $post->getTopic()) {
-			throw new \Exception('Post must have a set topic to be saved.');
-		}
-		
+        if (! $post->getTopic()) {
+            throw new \Exception('Post must have a set topic to be saved.');
+        }
+
         // insert a new row.
         $this->persist($post)->flush();
 
@@ -74,7 +71,6 @@ class TopicManager extends BaseManager implements BaseManagerInterface
         //$this->managerBag->getSubscriptionManager()->subscribe($topic)->flush();
 
         //$this->managerBag->getRegistryManager()->updateCachedPostCountForUser($post->getCreatedBy())->flush();
-
         return $this;
     }
 
@@ -154,7 +150,6 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 
         // Update affected Topic stats.
 //        $this->updateStats($topic);
-
         return $this;
     }
 

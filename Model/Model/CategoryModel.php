@@ -13,10 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Model\Model;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Model\Model\BaseModel;
 use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
@@ -63,10 +60,10 @@ class CategoryModel extends BaseModel implements BaseModelInterface
      * @param  string                                       $forumName
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-	public function findAllCategoriesWithBoardsForForumByName($forumName)
-	{
+    public function findAllCategoriesWithBoardsForForumByName($forumName)
+    {
         return $this->getRepository()->findAllCategoriesWithBoardsForForumByName($forumName);
-	}
+    }
 
     /**
      *
@@ -118,10 +115,10 @@ class CategoryModel extends BaseModel implements BaseModelInterface
      * @param  \CCDNForum\ForumBundle\Entity\Category              $category
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-	public function deleteCategory(Category $category)
-	{
-		return $this->getManager()->deleteCategory($category);
-	}
+    public function deleteCategory(Category $category)
+    {
+        return $this->getManager()->deleteCategory($category);
+    }
 
     /**
      *
@@ -130,10 +127,10 @@ class CategoryModel extends BaseModel implements BaseModelInterface
      * @param  \CCDNForum\ForumBundle\Entity\Category              $category
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
-	public function reassignBoardsToCategory(ArrayCollection $boards, Category $category = null)
-	{
-		return $this->getManager()->reassignBoardsToCategory($boards, $category);
-	}
+    public function reassignBoardsToCategory(ArrayCollection $boards, Category $category = null)
+    {
+        return $this->getManager()->reassignBoardsToCategory($boards, $category);
+    }
 
     /**
      *
@@ -147,21 +144,6 @@ class CategoryModel extends BaseModel implements BaseModelInterface
     {
         return $this->getManager()->reorderCategories($categories, $categoryShift, $direction);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //    /**
 //     *
