@@ -46,9 +46,7 @@
 
 	                {%- set page = divCeil(( board.getLastPost.getTopic.getCachedReplyCount + 1), topics_per_page) -%}
 
-	                {% set profile = create_profile(board.getLastPost.getCreatedBy) %}
-
-	                {{- 'generic.posted_by' | trans({'%name%': profile.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
+	                {{- 'generic.posted_by' | trans({'%name%': board.getLastPost.getCreatedBy}, 'CCDNForumForumBundle') |raw -}}
 
 	                <br>
 

@@ -36,10 +36,7 @@
 			<br>
 
 			{%- if topic.getFirstPost -%}
-
-                {% set topic_author = create_profile(topic.getFirstPost.getCreatedBy) %}
-
-				{{- 'generic.posted_by' | trans({'%name%': topic_author.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
+				{{- 'generic.posted_by' | trans({'%name%': topic.getFirstPost.getCreatedBy}, 'CCDNForumForumBundle') |raw -}}
 
 				&nbsp;&#183;
                 <a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
@@ -61,9 +58,7 @@
 		</td>
 		<td class="center">
 			{%- if topic.getLastPost -%}
-                {% set last_author = create_profile(topic.getLastPost.getCreatedBy) %}
-
-                {{- 'generic.posted_by' | trans({'%name%': last_author.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
+                {{- 'generic.posted_by' | trans({'%name%': topic.getLastPost.getCreatedBy}, 'CCDNForumForumBundle') |raw -}}
 
                 {%- set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) -%}
 

@@ -99,7 +99,7 @@ class UserPostController extends UserPostBaseController
         // Setup crumb trail.
         $crumbs = $this->getCrumbs()->addUserPostShow($forum, $post);
 
-        $response = $this->renderResponse('CCDNForumForumBundle:User:Post/edit_post.html.',
+        $response = $this->renderResponse('CCDNForumForumBundle:User:Post/edit.html.',
             array(
                 'crumbs' => $crumbs,
                 'forum' => $forum,
@@ -157,7 +157,7 @@ class UserPostController extends UserPostBaseController
             // Setup crumb trail.
             $crumbs = $this->getCrumbs()->addUserPostShow($forum, $post);
 
-            $response = $this->renderResponse('CCDNForumForumBundle:User:Post/edit_post.html.',
+            $response = $this->renderResponse('CCDNForumForumBundle:User:Post/edit.html.',
                 array(
                     'crumbs' => $crumbs,
                     'forum' => $forum,
@@ -197,7 +197,7 @@ class UserPostController extends UserPostBaseController
         // setup crumb trail.
         $crumbs = $this->getCrumbs()->addUserPostDelete($forum, $post);
 
-        $response = $this->renderResponse('CCDNForumForumBundle:User:Post/delete_post.html.',
+        $response = $this->renderResponse('CCDNForumForumBundle:User:Post/delete.html.',
             array(
                 'crumbs' => $crumbs,
                 'forum' => $forum,
@@ -254,7 +254,7 @@ class UserPostController extends UserPostBaseController
             // Setup crumb trail.
             $crumbs = $this->getCrumbs()->addUserPostShow($forum, $post);
 
-            $response = $this->renderResponse('CCDNForumForumBundle:User:Post/delete_post.html.',
+            $response = $this->renderResponse('CCDNForumForumBundle:User:Post/delete.html.',
                 array(
                     'crumbs' => $crumbs,
                     'forum' => $forum,

@@ -1,4 +1,4 @@
-{% extends 'CCDNForumForumBundle::base.html.twig' %}
+{% extends 'CCDNForumForumBundle:User:Layout/base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.topic.show.layout_template %}
 
@@ -39,9 +39,8 @@
 			        <div class="alert alert-error block-alert">
 					    {%- if topic.isDeleted -%}
 				            <i class="icon-trash"></i>
-				            {% set topic_deleter = create_profile(topic.getDeletedBy) %}
 
-				            {{- 'generic.deleted_by' | trans({'%name%': topic_deleter.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
+				            {{- 'generic.deleted_by' | trans({'%name%': topic.getDeletedBy}, 'CCDNForumForumBundle') |raw -}}
 
 							&nbsp;&#183;
 
@@ -51,9 +50,8 @@
 					    {%- if topic.isClosed -%}
 							{%- if topic.isDeleted -%}<br>{%- endif -%}
 				            <i class="icon-lock"></i>
-				            {% set topic_closer = create_profile(topic.getClosedBy) %}
 
-				            {{- 'topic.closed_by' | trans({'%name%': topic_closer.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
+				            {{- 'topic.closed_by' | trans({'%name%': topic.getClosedBy}, 'CCDNForumForumBundle') |raw -}}
 
 							&nbsp;&#183;
 
@@ -65,9 +63,8 @@
 			    {%- if topic.isSticky -%}
 			        <div class="alert alert-inverse block-alert">
 				        <i class="icon-white icon-bullhorn"></i>
-			            {% set topic_stickier = create_profile(topic.stickiedBy) %}
 
-			            {{- 'topic.stickied_by' | trans({'%name%': topic_stickier.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
+			            {{- 'topic.stickied_by' | trans({'%name%': topic.stickiedBy}, 'CCDNForumForumBundle') |raw -}}
 
 						&nbsp;&#183;
 

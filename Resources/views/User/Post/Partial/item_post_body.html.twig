@@ -4,9 +4,8 @@
 		{%- if post.getEditedDate -%}
 		    <div class="label forum-post-notice">
 				<i class="icon-white icon-pencil"></i>
-		        {% set editor = create_profile(post.getEditedBy) %}
 
-		        {{- 'generic.edited_by' |trans({'%name%': editor.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
+		        {{- 'generic.edited_by' |trans({'%name%': post.getEditedBy}, 'CCDNForumForumBundle') |raw -}}
 
 				&nbsp;&#183;
 
@@ -21,9 +20,8 @@
 		<div class="label label-important forum-post-notice">
 			<div class="span8">
 		        <i class="icon-white icon-trash"></i>
-		        {% set deleter = create_profile(post.getDeletedBy) %}
 
-		        {{- 'generic.deleted_by' |trans({'%name%': deleter.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
+		        {{- 'generic.deleted_by' |trans({'%name%': post.getDeletedBy}, 'CCDNForumForumBundle') |raw -}}
 
 				&nbsp;&#183;
 

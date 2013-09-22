@@ -1,16 +1,16 @@
 {%- spaceless -%}
 
 	<div>
-
+		{#
 	    {{ author.renderAvatar(60,60)|raw }}
-
+		#}
 	</div>
 
 
 	<div class="row-fluid">
 		<div class="row-fluid">
 		    <div class="span7">
-		        {{- 'generic.posted_by' |trans({'%name%': author.getProfilePath}, 'CCDNForumForumBundle') |raw -}}
+		        {{- 'generic.posted_by' |trans({'%name%': author.username}, 'CCDNForumForumBundle') |raw -}}
 
 		        &nbsp;&#183;
 
@@ -36,7 +36,9 @@
 
 		<div class="row-fluid">
 			<div class="span7">
+				{#
 		        {{- author.renderRoleBadges|raw -}}
+				#}
 			</div>
 
 			<div class="span5 content-right">
