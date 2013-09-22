@@ -51,6 +51,10 @@ You will need the complimentary bundles for this bundle to work, which are liste
 
 Before installation of this bundle, you can download the [Sandbox](https://github.com/codeconsortium/CCDNSandBox) for testing/development and feature review, or alternatively see the product in use at [CodeConsortium](http://www.codeconsortium.com).
 
+[![Build Status](https://secure.travis-ci.org/codeconsortium/CCDNForumForumBundle.png?branch=master)](https://travis-ci.org/codeconsortium/CCDNForumForumBundle)
+[![Latest Stable Version](https://poser.pugx.org/codeconsortium/ccdn-forum-bundle/v/stable.png)](https://packagist.org/packages/codeconsortium/ccdn-forum-bundle)
+[![Total Downloads](https://poser.pugx.org/codeconsortium/ccdn-forum-bundle/downloads.png)](https://packagist.org/packages/codeconsortium/ccdn-forum-bundle)
+
 ## Documentation.
 
 Documentation can be found in the `Resources/doc/index.md` file in this bundle:
