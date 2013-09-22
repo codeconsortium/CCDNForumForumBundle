@@ -116,7 +116,6 @@ class TopicRepositoryTest extends TestBase
 		$post->setBody('foobar');
         $post->setCreatedDate(new \DateTime());
         $post->setCreatedBy($users['tom']);
-        $post->setIsLocked(false);
         $post->setIsDeleted(false);
 
 		$this->getTopicModel()->getManager()->saveNewTopic($post);
@@ -128,7 +127,6 @@ class TopicRepositoryTest extends TestBase
 		$post2->setBody('foobar');
         $post2->setCreatedDate(new \DateTime());
         $post2->setCreatedBy($users['tom']);
-        $post2->setIsLocked(false);
         $post2->setIsDeleted(false);
 		
 		$this->getPostModel()->getManager()->postTopicReply($post2);

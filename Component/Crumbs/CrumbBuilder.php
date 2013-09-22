@@ -560,4 +560,29 @@ class CrumbBuilder extends BaseCrumbBuilder
 			)
 		;
 	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Entity\Forum                         $forum
+	 * @param \CCDNForum\ForumBundle\Entity\Post                          $post
+	 * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
+	 */
+	public function addModeratorPostUnlock(Forum $forum, Post $post)
+	{
+        return $this->addUserPostShow($forum, $post)
+			->add(
+				array(
+					'label' => 'crumbs.moderator.post.unlock',
+				),
+				array(
+					'route' => 'ccdn_forum_moderator_post_unlock',
+					'params' => array(
+						'forumName' => $forum->getName(),
+						'postId'   => $post->getId()
+					)
+				)
+			)
+		;
+	}
 }

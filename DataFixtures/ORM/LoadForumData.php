@@ -105,7 +105,7 @@ class LoadForumData extends AbstractFixture implements OrderedFixtureInterface, 
         $post->setCreatedBy($author);
         $post->setCreatedDate(new \DateTime());
         $post->setIsDeleted(false);
-        $post->setIsLocked(false);
+        //$post->setIsLocked(false);
         $post->setBody($body);
 
         return $post;

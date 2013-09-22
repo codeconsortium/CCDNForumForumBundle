@@ -39,7 +39,6 @@ class TopicManagerTest extends TestBase
 		$post->setBody('foobar');
         $post->setCreatedDate(new \DateTime());
         $post->setCreatedBy($users['tom']);
-        $post->setIsLocked(false);
         $post->setIsDeleted(false);
 
 		$this->getTopicModel()->getManager()->saveNewTopic($post);
@@ -90,7 +89,6 @@ class TopicManagerTest extends TestBase
 		$post->setBody('foobar');
         $post->setCreatedDate(new \DateTime());
         $post->setCreatedBy($users['tom']);
-        $post->setIsLocked(false);
         $post->setIsDeleted(false);
 
 		$this->getTopicModel()->getManager()->saveNewTopic($post);

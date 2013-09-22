@@ -84,6 +84,23 @@ class PostManager extends BaseManager implements BaseManagerInterface
      * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
+    public function lock(Post $post)
+    {
+		$post->setUnlockedUntilDate(new \Datetime('now'));
+
+        $this->persist($post)->flush();
+
+		$this->refresh($post);
+		
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
     public function restore(Post $post)
     {
         $post->setIsDeleted(false);
@@ -129,9 +146,9 @@ class PostManager extends BaseManager implements BaseManagerInterface
             $post->setDeletedDate(new \DateTime());
 
             // Lock the post as a precaution.
-            $post->setIsLocked(true);
-            $post->setLockedBy($user);
-            $post->setLockedDate(new \DateTime());
+            //$post->setIsLocked(true);
+            //$post->setLockedBy($user);
+            //$post->setLockedDate(new \DateTime());
 
             // update the record
             $this->persist($post)->flush();
@@ -165,89 +182,6 @@ class PostManager extends BaseManager implements BaseManagerInterface
         return $this;
     }
 
-
-
-
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-//     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function lock(Post $post, UserInterface $user)
-//    {
-//        // Don't overwite previous users accountability.
-//        if (! $post->getLockedBy() && ! $post->getLockedDate()) {
-//            $post->setIsLocked(true);
-//            $post->setLockedBy($user);
-//            $post->setLockedDate(new \DateTime());
-//
-//            $this->persist($post);
-//        }
-//
-//        return $this;
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  Array                                               $posts
-//     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function bulkLock($posts, UserInterface $user)
-//    {
-//        foreach ($posts as $post) {
-//            // Don't overwite previous users accountability.
-//            if (! $post->getLockedBy() && ! $post->getLockedDate()) {
-//                $post->setIsLocked(true);
-//                $post->setLockedBy($user);
-//                $post->setLockedDate(new \DateTime());
-//            }
-//
-//            $this->persist($post);
-//        }
-//
-//        return $this;
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function unlock(Post $post)
-//    {
-//        $post->setIsLocked(false);
-//        $post->setLockedBy(null);
-//        $post->setLockedDate(null);
-//
-//        $this->persist($post);
-//
-//        return $this;
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  Array                                               $posts
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function bulkUnlock($posts)
-//    {
-//        foreach ($posts as $post) {
-//            $post->setIsLocked(false);
-//            $post->setLockedBy(null);
-//            $post->setLockedDate(null);
-//
-//            $this->persist($post);
-//        }
-//
-//        return $this;
-//    }
-//
 //
 //    /**
 //     *

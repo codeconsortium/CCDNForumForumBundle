@@ -1,0 +1,52 @@
+{% extends 'CCDNForumForumBundle::base.html.twig' %}
+
+{% set LayoutTemplate = ccdn_forum_forum.topic.change_board.layout_template %}
+
+{% block title %}{{- truncDot('title.post.unlock' | trans({}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
+
+
+{% block body_content %}
+
+	{%- spaceless -%}
+
+	<section>
+		{%- form_theme form ccdn_forum_forum.topic.change_board.form_theme -%}
+		<form action="{{- path('ccdn_forum_moderator_post_unlock_process', {'forumName': forum.name, 'postId': post.getId} ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+			<fieldset>
+
+				<div class="control-group form-title">
+					<div class="controls">
+						<h3>{{- 'title.post.unlock' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}</h3>
+					</div>
+				</div>
+
+				{{- form_errors(form) -}}
+
+				<div class="control-group">
+					<label class="control-label">
+						{{- 'generic.thead.topic' |trans({}, 'CCDNForumForumBundle') -}}
+					</label>
+					<div class="controls">
+						<pre>
+							{{- topic.getTitle -}}
+						</pre>
+					</div>
+				</div>
+
+				{{- form_widget(form) -}}
+
+				<div class="form-actions">
+					<input type="submit" class="btn btn-danger" value="{{- 'form.button.post.unlock' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]" id="submit[post]">
+
+					<a class="btn" href="{{- path('ccdn_forum_user_topic_show', {'topicId': topic.id}) -}}">
+						{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
+					</a>
+				</div>
+
+			</fieldset>
+		</form>
+	</section>
+
+	{%- endspaceless -%}
+
+{% endblock body_content %}

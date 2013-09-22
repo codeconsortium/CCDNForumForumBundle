@@ -122,6 +122,25 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     }
 
     /**
+     * @Given /^I follow "([^"]*)" by selector "([^"]*)"$/
+     */
+    public function iFollowBySelector($linkName, $cssQuery)
+    {
+        $items = array_map(
+            function ($element) {
+                return $element;
+            },
+            $this->getPage()->findAll('css', $cssQuery)
+        );
+
+		WebTestCase::assertCount(1, $items, 'The link was not found!');
+
+		//ld($items[0]);
+		//ldd($this->getPage());
+		$this->getPage()->clickLink($items[0]->getAttribute('href'));
+    }
+
+    /**
      * 
      * @Then /^"([^"]*)" should precede "([^"]*)" for the query "([^"]*)"$/
      */
@@ -184,4 +203,49 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
             "$text was found but should not."
         );
     }
+
+    /**
+     * 
+	 * @Given /^I select from "([^"]*)" a date "([^"]*)" days from now$/
+	 */
+	public function iSelectFromADateDaysFromNow($cssQuery, $days)
+	{
+        $items = array_map(
+            function ($element) {
+				$id = $element->getAttribute('id');
+				
+				if (substr($id, strlen($id) - strlen('year'), strlen($id)) == 'year') {
+					$fieldName = 'year';
+				}
+			
+				if (substr($id, strlen($id) - strlen('month'), strlen($id)) == 'month') {
+					$fieldName = 'month';
+				}
+			
+				if (substr($id, strlen($id) - strlen('day'), strlen($id)) == 'day') {
+					$fieldName = 'day';
+				}
+				
+                return array(
+                	$fieldName => $element
+                );
+            },
+            $this->getPage()->findAll('css', $cssQuery)
+		);
+		
+		$fields = array();
+		foreach ($items as $item) {
+			foreach ($item as $key => $field) {
+				$fields[$key] = $field;
+			}
+		}
+		
+		WebTestCase::assertCount(3, $fields, 'Date fields could not be found!');
+		
+		$date = new \Datetime('now + ' . $days . ' days');
+		
+		$fields['year']->selectOption($date->format('Y'));
+		$fields['month']->selectOption($date->format('M'));
+		$fields['day']->selectOption($date->format('d'));
+	}
 }

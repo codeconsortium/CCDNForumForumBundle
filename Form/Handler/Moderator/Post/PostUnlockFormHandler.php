@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Form\Handler\User\Post;
+namespace CCDNForum\ForumBundle\Form\Handler\Moderator\Post;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
@@ -20,11 +20,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
-use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent;
 
-//use CCDNForum\ForumBundle\Manager\BaseManagerInterface;
-
-use CCDNForum\ForumBundle\Entity\Topic;
+//use CCDNForum\ForumBundle\Model\BaseModelInterface;
 use CCDNForum\ForumBundle\Entity\Post;
 
 /**
@@ -38,7 +36,7 @@ use CCDNForum\ForumBundle\Entity\Post;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class PostCreateFormHandler
+class PostUnlockFormHandler
 {
     /**
      *
@@ -50,7 +48,7 @@ class PostCreateFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\PostType $formPostType
+     * @var \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicType $formPostType
      */
     protected $formPostType;
 
@@ -64,23 +62,16 @@ class PostCreateFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\PostType $form
+     * @var \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicType $form
      */
     protected $form;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Entity\Topic $topic
+     * @var \CCDNForum\ForumBundle\Entity\Post $post
      */
-    protected $topic;
-
-    /**
-     *
-     * @access protected
-     * @var \CCDNForum\ForumBundle\Entity\Post $postToQuote
-     */
-    protected $postToQuote;
+    protected $post;
 
 	/**
 	 * 
@@ -107,9 +98,9 @@ class PostCreateFormHandler
      *
      * @access public
      * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                 $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\PostType           $formPostType
-     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface     $postModel
+     * @param \Symfony\Component\Form\FormFactory                                        $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicType                 $formTopicType
+     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface                            $topicModel
      */
     public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formPostType, $postModel)
     {
@@ -122,8 +113,8 @@ class PostCreateFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\Security\Core\User\UserInterface       $user
-     * @return \CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
+     * @param  \Symfony\Component\Security\Core\User\UserInterface                  $user
+     * @return \CCDNForum\ForumBundle\Form\Handler\Moderator\TopicDeleteFormHandler
      */
 	public function setUser(UserInterface $user)
 	{
@@ -135,25 +126,12 @@ class PostCreateFormHandler
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                       $topic
-     * @return \CCDNForum\ForumBundle\Form\Handler\PostCreateFormHandler
+     * @param  \CCDNForum\ForumBundle\Entity\Post                                         $post
+     * @return \CCDNForum\ForumBundle\Form\Handler\Moderator\Topic\TopicDeleteFormHandler
      */
-    public function setTopic(Topic $topic)
+    public function setPost(Post $post)
     {
-        $this->topic = $topic;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                        $post
-     * @return \CCDNForum\ForumBundle\Form\Handler\PostCreateFormHandler
-     */
-    public function setPostToQuote(Post $post)
-    {
-        $this->postToQuote = $post;
+        $this->post = $post;
 
         return $this;
     }
@@ -214,41 +192,18 @@ class PostCreateFormHandler
     /**
      *
      * @access public
-     * @return string
-     */
-    protected function getQuote()
-    {
-        $quote = "";
-
-        if (is_object($this->postToQuote) && $this->postToQuote instanceof Post) {
-            $author = $this->postToQuote->getCreatedBy();
-            $body = $this->postToQuote->getBody();
-
-            $quote = '[QUOTE="' . $author . '"]' . $body . '[/QUOTE]';
-        }
-
-        return $quote;
-    }
-
-    /**
-     *
-     * @access public
      * @return Form
      */
     public function getForm()
     {
         if (null == $this->form) {
-            if (! is_object($this->topic) || ! ($this->topic instanceof Topic)) {
-                throw new \Exception('Topic must be specified to create a Reply in PostCreateFormHandler');
+            if (! is_object($this->post) || ! ($this->post instanceof Post)) {
+                throw new \Exception('Post must be specified to unlock in PostUnlockFormHandler');
             }
 
-            $post = new Post();
-            $post->setTopic($this->topic);
-            $post->setBody($this->getQuote());
+			$this->dispatcher->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_INITIALISE, new ModeratorPostEvent($this->request, $this->post));
 
-			$this->dispatcher->dispatch(ForumEvents::USER_TOPIC_REPLY_INITIALISE, new UserTopicEvent($this->request, $post->getTopic()));
-
-            $this->form = $this->factory->create($this->formPostType, $post);
+            $this->form = $this->factory->create($this->formPostType, $this->post);
         }
 
         return $this->form;
@@ -257,28 +212,17 @@ class PostCreateFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Post         $post
-     * @return \CCDNForum\ForumBundle\Manager\PostManager
+     * @param  \CCDNForum\ForumBundle\Entity\Post     $post
+     * @return \CCDNForum\ForumBundle\Model\PostModel
      */
     protected function onSuccess(Post $post)
     {
-        $post->setCreatedDate(new \DateTime());
-        $post->setCreatedBy($this->user);
-        $post->setTopic($this->topic);
-        $post->setIsDeleted(false);
+		$post->setUnlockedDate(new \Datetime('now'));
+		$post->setUnlockedBy($this->user);
+        $this->postModel->updatePost($post);
 
-		$this->dispatcher->dispatch(ForumEvents::USER_TOPIC_REPLY_SUCCESS, new UserTopicEvent($this->request, $post->getTopic()));
-
-        return $this->postModel->postTopicReply($post)->flush();
+		$this->dispatcher->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_SUCCESS, new ModeratorPostEvent($this->request, $this->post));
+		
+        return $this->postModel;
     }
-
-	/**
-	 * 
-	 * @access public
-	 * @return bool
-	 */
-	public function didAuthorSubscribe()
-	{
-		return $this->form->get('subscribe')->getData();
-	}
 }

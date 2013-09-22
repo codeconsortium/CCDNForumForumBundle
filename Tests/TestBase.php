@@ -232,7 +232,6 @@ class TestBase extends WebTestCase
 		$post->setBody($body);
         $post->setCreatedDate(new \DateTime());
         $post->setCreatedBy($user);
-        $post->setIsLocked(false);
         $post->setIsDeleted(false);
 		
 		$this->em->persist($post);

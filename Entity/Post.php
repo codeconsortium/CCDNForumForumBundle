@@ -66,15 +66,15 @@ class Post extends AbstractPost
 
     /**
      *
-     * @var Boolean $isLocked
+     * @var \DateTime $unlockedDate
      */
-    protected $isLocked = false;
+	protected $unlockedDate;
 
     /**
      *
-     * @var \DateTime $lockedDate
+     * @var \DateTime $unlockedUntilDate
      */
-    protected $lockedDate;
+	protected $unlockedUntilDate;
 
     /**
      *
@@ -84,6 +84,9 @@ class Post extends AbstractPost
     {
         parent::__construct();
         // your own logic
+		
+		$this->unlockedDate = new \Datetime('now');
+		$this->unlockedUntilDate = new \Datetime('now + 7 days');
     }
 
     /**
@@ -212,48 +215,58 @@ class Post extends AbstractPost
     }
 
     /**
-     * Get isLocked
-     *
-     * @return boolean
-     */
-    public function isLocked()
-    {
-        return $this->isLocked;
-    }
-
-    /**
-     * Set isLocked
-     *
-     * @param  boolean $isLocked
-     * @return Post
-     */
-    public function setIsLocked($isLocked)
-    {
-        $this->isLocked = $isLocked;
-
-        return $this;
-    }
-
-    /**
-     * Get lockedDate
+     * Get unlockedDate
      *
      * @return \datetime
      */
-    public function getLockedDate()
-    {
-        return $this->lockedDate;
-    }
+	public function getUnlockedDate()
+	{
+		return $this->unlockedDate;
+	}
 
     /**
-     * Set lockedDate
+     * Set unlockedDate
      *
-     * @param  \datetime $lockedDate
+     * @param  \datetime $datetime
      * @return Post
      */
-    public function setLockedDate($lockedDate)
-    {
-        $this->lockedDate = $lockedDate;
+	public function setUnlockedDate(\Datetime $datetime)
+	{
+		$this->unlockedDate = $datetime;
+		
+		return $this;
+	}
 
-        return $this;
-    }
+    /**
+     * Get unlockedUntilDate
+     *
+     * @return \datetime
+     */
+	public function getUnlockedUntilDate()
+	{
+		return $this->unlockedUntilDate;
+	}
+
+    /**
+     * Set unlockedUntilDate
+     *
+     * @param  \datetime $datetime
+     * @return Post
+     */
+	public function setUnlockedUntilDate(\Datetime $datetime)
+	{
+		$this->unlockedUntilDate = $datetime;
+		
+		return $this;
+	}
+
+    /**
+     * Get isUnlocked
+     *
+     * @return \datetime
+     */
+	public function isLocked()
+	{
+		return $this->unlockedUntilDate > new \Datetime('now') ? false : true;
+	}
 }

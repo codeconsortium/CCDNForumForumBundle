@@ -24,13 +24,13 @@ CCDNForum\ForumBundle\Entity\Post:
             type: datetime
             column: deleted_date
             nullable: true
-        isLocked:
-            type: boolean
-            column: is_locked
-            nullable: false
-        lockedDate:
+        unlockedDate:
             type: datetime
-            column: locked_date
+            column: unlocked_date
+            nullable: true
+        unlockedUntilDate:
+            type: datetime
+            column: unlocked_until_date
             nullable: true
     manyToOne:
         topic:
@@ -66,12 +66,12 @@ CCDNForum\ForumBundle\Entity\Post:
                 name: fk_deleted_by_user_id
                 referencedColumnName: id
                 onDelete: SET NULL
-        lockedBy:
+        unlockedBy:
             targetEntity: Symfony\Component\Security\Core\User\UserInterface
             cascade: []
             nullable: true
             joinColumn:
-                name: fk_locked_by_user_id
+                name: fk_unlocked_by_user_id
                 referencedColumnName: id
                 onDelete: SET NULL
 #        attachment:

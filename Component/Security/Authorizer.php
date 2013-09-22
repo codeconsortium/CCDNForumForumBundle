@@ -312,7 +312,9 @@ class Authorizer
 		}
 		
 		if ($post->isLocked()) {
-			return false;
+			if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+				return false;
+			}
 		}
 
 		if (! $this->securityContext->isGranted('ROLE_ADMIN')) {
@@ -363,13 +365,13 @@ class Authorizer
 
 	public function canRestorePost(Post $post, Forum $forum = null)
 	{
-		if (! $post->isDeleted()) {
+		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
 			return false;
 		}
 		
-//		if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
-//			return false;
-//		}
+		if (! $post->isDeleted()) {
+			return false;
+		}
 		
 		if (! $this->canShowPost($post, $forum) && ! $this->securityContext->isGranted('ROLE_MODERATOR')) {
 			return false;

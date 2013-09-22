@@ -89,6 +89,17 @@ class PostModel extends BaseModel implements BaseModelInterface
      * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
      * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
      */
+    public function lock(Post $post)
+    {
+		return $this->getManager()->lock($post);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
     public function restore(Post $post)
     {
         return $this->getManager()->restore($post);

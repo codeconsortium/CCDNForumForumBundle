@@ -31,11 +31,14 @@ abstract class Post
     /** @var UserInterface $deletedBy */
     protected $deletedBy = null;
 
-    /** @var UserInterface $lockedBy */
-    protected $lockedBy = null;
+//    /** @var UserInterface $lockedBy */
+//    protected $lockedBy = null;
 
     /** @var Attachment $attachment */
     protected $attachment = null;
+
+    /** @var UserInterface $unlockedBy */
+	protected $unlockedBy = null;
 
     /**
      *
@@ -139,24 +142,24 @@ abstract class Post
     }
 
     /**
-     * Get locked_by
+     * Get unlocked_by
      *
      * @return UserInterface
      */
-    public function getLockedBy()
+    public function getUnlockedBy()
     {
-        return $this->lockedBy;
+        return $this->unlockedBy;
     }
 
     /**
-     * Set locked_by
+     * Set unlocked_by
      *
-     * @param  UserInterface $lockedBy
+     * @param  UserInterface $unlockedBy
      * @return Post
      */
-    public function setLockedBy(UserInterface $lockedBy = null)
+    public function setUnlockedBy(UserInterface $unlockedBy = null)
     {
-        $this->lockedBy = $lockedBy;
+        $this->unlockedBy = $unlockedBy;
 
         return $this;
     }

@@ -4,6 +4,9 @@ parameters:
     ccdn_forum_forum.form.type.post_delete.class:    CCDNForum\ForumBundle\Form\Type\User\Post\PostDeleteFormType
     ccdn_forum_forum.form.handler.post_delete.class: CCDNForum\ForumBundle\Form\Handler\User\Post\PostDeleteFormHandler
 
+    ccdn_forum_forum.form.type.post_unlock.class:    CCDNForum\ForumBundle\Form\Type\Moderator\Post\PostUnlockFormType
+    ccdn_forum_forum.form.handler.post_unlock.class: CCDNForum\ForumBundle\Form\Handler\Moderator\Post\PostUnlockFormHandler
+
 services:
 
     #
@@ -46,4 +49,17 @@ services:
             - @event_dispatcher
             - @form.factory
             - @ccdn_forum_forum.form.type.post_delete
+            - @ccdn_forum_forum.model.post
+
+    ccdn_forum_forum.form.type.post_unlock:
+        class: %ccdn_forum_forum.form.type.post_unlock.class%
+        arguments:
+            - %ccdn_forum_forum.entity.post.class%
+
+    ccdn_forum_forum.form.handler.post_unlock:
+        class: %ccdn_forum_forum.form.handler.post_unlock.class%
+        arguments:
+            - @event_dispatcher
+            - @form.factory
+            - @ccdn_forum_forum.form.type.post_unlock
             - @ccdn_forum_forum.model.post

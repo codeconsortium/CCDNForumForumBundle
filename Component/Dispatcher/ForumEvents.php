@@ -701,4 +701,48 @@ final class ForumEvents
 	 */
 	const MODERATOR_TOPIC_CHANGE_BOARD_RESPONSE = 'ccdn_forum.moderator.topic.change_board.response';
 
+	/**
+	 * 
+	 * The MODERATOR_POST_UNLOCK_INITIALISE event occurs when the post unlock process is initalised.
+	 * 
+	 * This event allows you to modify the default values of the post entity object before binding the form.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent instance.
+	 */
+	const MODERATOR_POST_UNLOCK_INITIALISE = 'ccdn_forum.moderator.post.unlock.initialise';
+
+	/**
+	 * 
+	 * The MODERATOR_POST_UNLOCK_SUCCESS event occurs when the post unlock process is successful before persisting.
+	 * 
+	 * This event allows you to modify the values of the post entity object after form submission before persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent instance.
+	 */
+	const MODERATOR_POST_UNLOCK_SUCCESS = 'ccdn_forum.moderator.post.unlock.success';
+
+	/**
+	 * 
+	 * The MODERATOR_POST_UNLOCK_COMPLETE event occurs when the post unlock process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the post entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent instance.
+	 */
+	const MODERATOR_POST_UNLOCK_COMPLETE = 'ccdn_forum.moderator.post.unlock.complete';
+
+	/**
+	 * 
+	 * The MODERATOR_POST_UNLOCK_RESPONSE event occurs when the post unlock process finishes and returns a HTTP response.
+	 * 
+	 * This event allows you to modify the default values of the response object returned from the controller action.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostResponseEvent instance.
+	 */
+	const MODERATOR_POST_UNLOCK_RESPONSE = 'ccdn_forum.moderator.post.unlock.response';
+
+	/**
+	 * 
+	 * The MODERATOR_POST_LOCK_COMPLETE event occurs when the post lock process is completed successfully after persisting.
+	 * 
+	 * This event allows you to modify the values of the post entity after persisting.
+	 * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent instance.
+	 */
+	const MODERATOR_POST_LOCK_COMPLETE = 'ccdn_forum.moderator.post.lock.complete';
 }

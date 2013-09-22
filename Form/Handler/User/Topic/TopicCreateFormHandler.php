@@ -275,7 +275,6 @@ class TopicCreateFormHandler
     {
         $post->setCreatedDate(new \DateTime());
         $post->setCreatedBy($this->user);
-        $post->setIsLocked(false);
         $post->setIsDeleted(false);
 
         $post->getTopic()->setCachedViewCount(0);

@@ -81,6 +81,8 @@ class FlashListener implements EventSubscriberInterface
 			ForumEvents::USER_POST_SOFT_DELETE_COMPLETE       => 'onPostSoftDeleteComplete',
 			ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_COMPLETE => 'onTopicDeleteComplete',
 			ForumEvents::MODERATOR_POST_RESTORE_COMPLETE      => 'onPostRestoreComplete',
+			ForumEvents::MODERATOR_POST_UNLOCK_COMPLETE       => 'onPostUnlockComplete',
+			ForumEvents::MODERATOR_POST_LOCK_COMPLETE         => 'onPostLockComplete',
 			ForumEvents::MODERATOR_TOPIC_STICKY_COMPLETE      => 'onTopicStickyComplete',
 			ForumEvents::MODERATOR_TOPIC_UNSTICKY_COMPLETE    => 'onTopicUnstickyComplete',
 			ForumEvents::MODERATOR_TOPIC_CLOSE_COMPLETE       => 'onTopicCloseComplete',
@@ -376,6 +378,34 @@ class FlashListener implements EventSubscriberInterface
 			if ($event->getTopic()->getId()) {
 				$this->session->setFlash('success', 'Successfully reopened topic "' . $event->getTopic()->getId() . '"');
 				//$this->setFlash('success', $this->trans('flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent $event
+	 */
+	public function onPostUnlockComplete(ModeratorPostEvent $event)
+	{
+		if ($event->getPost()) {
+			if ($event->getPost()->getId()) {
+				$this->session->setFlash('success', 'Successfully unlocked post "' . $event->getPost()->getId() . '"');
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @access public
+	 * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent $event
+	 */
+	public function onPostLockComplete(ModeratorPostEvent $event)
+	{
+		if ($event->getPost()) {
+			if ($event->getPost()->getId()) {
+				$this->session->setFlash('success', 'Successfully locked post "' . $event->getPost()->getId() . '"');
 			}
 		}
 	}
