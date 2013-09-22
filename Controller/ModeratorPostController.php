@@ -101,7 +101,7 @@ class ModeratorPostController extends ModeratorPostBaseController
             )
         );
 
-        $this->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_RESPONSE, new ModeratorPostResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_RESPONSE, new ModeratorPostResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -159,7 +159,7 @@ class ModeratorPostController extends ModeratorPostBaseController
             );
         }
 
-        $this->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_RESPONSE, new ModeratorPostResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_RESPONSE, new ModeratorPostResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }

@@ -110,7 +110,7 @@ class AdminBoardController extends AdminBoardBaseController
             )
         );
 
-        $this->dispatch(ForumEvents::ADMIN_BOARD_CREATE_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), null, $response));
+        $this->dispatch(ForumEvents::ADMIN_BOARD_CREATE_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $response));
 
         return $response;
     }
@@ -152,7 +152,7 @@ class AdminBoardController extends AdminBoardBaseController
             );
         }
 
-        $this->dispatch(ForumEvents::ADMIN_BOARD_CREATE_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::ADMIN_BOARD_CREATE_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -187,7 +187,7 @@ class AdminBoardController extends AdminBoardBaseController
             )
         );
 
-        $this->dispatch(ForumEvents::ADMIN_BOARD_EDIT_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::ADMIN_BOARD_EDIT_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -234,7 +234,7 @@ class AdminBoardController extends AdminBoardBaseController
             );
         }
 
-        $this->dispatch(ForumEvents::ADMIN_BOARD_EDIT_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::ADMIN_BOARD_EDIT_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -269,7 +269,7 @@ class AdminBoardController extends AdminBoardBaseController
             )
         );
 
-        $this->dispatch(ForumEvents::ADMIN_BOARD_DELETE_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::ADMIN_BOARD_DELETE_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -316,7 +316,7 @@ class AdminBoardController extends AdminBoardBaseController
             );
         }
 
-        $this->dispatch(ForumEvents::ADMIN_BOARD_DELETE_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::ADMIN_BOARD_DELETE_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -357,7 +357,7 @@ class AdminBoardController extends AdminBoardBaseController
 
         $response = $this->redirectResponse($this->path('ccdn_forum_admin_board_list', $params));
 
-        $this->dispatch(ForumEvents::ADMIN_BOARD_REORDER_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $board, $response));
+        $this->dispatch(ForumEvents::ADMIN_BOARD_REORDER_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $response, $board));
 
         return $response;
     }

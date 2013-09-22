@@ -75,7 +75,7 @@ class AdminForumController extends AdminForumBaseController
             )
         );
 
-        $this->dispatch(ForumEvents::ADMIN_FORUM_CREATE_RESPONSE, new AdminForumResponseEvent($this->getRequest(), null, $response));
+        $this->dispatch(ForumEvents::ADMIN_FORUM_CREATE_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $response));
 
         return $response;
     }
@@ -110,7 +110,7 @@ class AdminForumController extends AdminForumBaseController
             );
         }
 
-        $this->dispatch(ForumEvents::ADMIN_FORUM_CREATE_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::ADMIN_FORUM_CREATE_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -140,7 +140,7 @@ class AdminForumController extends AdminForumBaseController
             )
         );
 
-        $this->dispatch(ForumEvents::ADMIN_FORUM_EDIT_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::ADMIN_FORUM_EDIT_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -180,7 +180,7 @@ class AdminForumController extends AdminForumBaseController
             );
         }
 
-        $this->dispatch(ForumEvents::ADMIN_FORUM_EDIT_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::ADMIN_FORUM_EDIT_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -210,7 +210,7 @@ class AdminForumController extends AdminForumBaseController
             )
         );
 
-        $this->dispatch(ForumEvents::ADMIN_FORUM_DELETE_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::ADMIN_FORUM_DELETE_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -250,7 +250,7 @@ class AdminForumController extends AdminForumBaseController
             );
         }
 
-        $this->dispatch(ForumEvents::ADMIN_FORUM_DELETE_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::ADMIN_FORUM_DELETE_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }

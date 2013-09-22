@@ -43,14 +43,14 @@ class AdminBoardResponseEvent extends AdminBoardEvent
      *
      * @access public
      * @param \Symfony\Component\HttpFoundation\Request  $request
-     * @param \CCDNForum\ForumBundle\Entity\Board        $board
      * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param \CCDNForum\ForumBundle\Entity\Board        $board
      */
-    public function __construct(Request $request, Board $board = null, Response $response)
+    public function __construct(Request $request, Response $response, Board $board = null)
     {
         $this->request = $request;
-        $this->board = $board;
         $this->response = $response;
+        $this->board = $board;
     }
 
     /**

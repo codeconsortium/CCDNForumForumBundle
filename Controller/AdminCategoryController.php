@@ -84,7 +84,7 @@ class AdminCategoryController extends AdminCategoryBaseController
             )
         );
 
-        $this->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), null, $response));
+        $this->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $response, null));
 
         return $response;
     }
@@ -123,7 +123,7 @@ class AdminCategoryController extends AdminCategoryBaseController
             );
         }
 
-        $this->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -156,7 +156,7 @@ class AdminCategoryController extends AdminCategoryBaseController
             )
         );
 
-        $this->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -201,7 +201,7 @@ class AdminCategoryController extends AdminCategoryBaseController
             );
         }
 
-        $this->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -234,7 +234,7 @@ class AdminCategoryController extends AdminCategoryBaseController
             )
         );
 
-        $this->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -279,7 +279,7 @@ class AdminCategoryController extends AdminCategoryBaseController
             );
         }
 
-        $this->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -316,7 +316,7 @@ class AdminCategoryController extends AdminCategoryBaseController
 
         $response = $this->redirectResponse($this->path('ccdn_forum_admin_category_list', $params));
 
-        $this->dispatch(ForumEvents::ADMIN_CATEGORY_REORDER_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $category, $response));
+        $this->dispatch(ForumEvents::ADMIN_CATEGORY_REORDER_RESPONSE, new AdminCategoryResponseEvent($this->getRequest(), $response, $category));
 
         return $response;
     }

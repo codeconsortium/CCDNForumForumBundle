@@ -194,7 +194,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
             )
         );
 
-        $this->dispatch(ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_RESPONSE, new ModeratorTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_RESPONSE, new ModeratorTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -249,7 +249,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
             );
         }
 
-        $this->dispatch(ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_RESPONSE, new ModeratorTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_RESPONSE, new ModeratorTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -319,7 +319,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
             )
         );
 
-        $this->dispatch(ForumEvents::MODERATOR_TOPIC_CHANGE_BOARD_RESPONSE, new ModeratorTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::MODERATOR_TOPIC_CHANGE_BOARD_RESPONSE, new ModeratorTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }
@@ -367,7 +367,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
             );
         }
 
-        $this->dispatch(ForumEvents::MODERATOR_TOPIC_CHANGE_BOARD_RESPONSE, new ModeratorTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData(), $response));
+        $this->dispatch(ForumEvents::MODERATOR_TOPIC_CHANGE_BOARD_RESPONSE, new ModeratorTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
     }

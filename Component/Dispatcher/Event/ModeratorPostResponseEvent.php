@@ -43,14 +43,14 @@ class ModeratorPostResponseEvent extends ModeratorPostEvent
      *
      * @access public
      * @param \Symfony\Component\HttpFoundation\Request  $request
-     * @param \CCDNForum\ForumBundle\Entity\Post         $post
      * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param \CCDNForum\ForumBundle\Entity\Post         $post
      */
-    public function __construct(Request $request, Post $post = null, Response $response)
+    public function __construct(Request $request, Response $response, Post $post = null)
     {
         $this->request = $request;
-        $this->post = $post;
         $this->response = $response;
+        $this->post = $post;
     }
 
     /**

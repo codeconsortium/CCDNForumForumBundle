@@ -131,7 +131,7 @@ class UserTopicController extends UserTopicBaseController
             )
         );
 
-        $this->dispatch(ForumEvents::USER_TOPIC_CREATE_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData()->getTopic(), $response));
+        $this->dispatch(ForumEvents::USER_TOPIC_CREATE_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()->getTopic()));
 
         return $response;
     }
@@ -194,7 +194,7 @@ class UserTopicController extends UserTopicBaseController
             );
         }
 
-        $this->dispatch(ForumEvents::USER_TOPIC_CREATE_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData()->getTopic(), $response));
+        $this->dispatch(ForumEvents::USER_TOPIC_CREATE_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()->getTopic()));
 
         return $response;
     }
@@ -238,7 +238,7 @@ class UserTopicController extends UserTopicBaseController
             )
         );
 
-        $this->dispatch(ForumEvents::USER_TOPIC_REPLY_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData()->getTopic(), $response));
+        $this->dispatch(ForumEvents::USER_TOPIC_REPLY_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()->getTopic()));
 
         return $response;
     }
@@ -303,7 +303,7 @@ class UserTopicController extends UserTopicBaseController
             );
         }
 
-        $this->dispatch(ForumEvents::USER_TOPIC_REPLY_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $formHandler->getForm()->getData()->getTopic(), $response));
+        $this->dispatch(ForumEvents::USER_TOPIC_REPLY_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()->getTopic()));
 
         return $response;
     }

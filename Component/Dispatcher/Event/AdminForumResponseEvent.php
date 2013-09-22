@@ -43,14 +43,14 @@ class AdminForumResponseEvent extends AdminForumEvent
      *
      * @access public
      * @param \Symfony\Component\HttpFoundation\Request  $request
-     * @param \CCDNForum\ForumBundle\Entity\Forum        $forum
      * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param \CCDNForum\ForumBundle\Entity\Forum        $forum
      */
-    public function __construct(Request $request, Forum $forum = null, Response $response)
+    public function __construct(Request $request, Response $response, Forum $forum = null)
     {
         $this->request = $request;
-        $this->forum = $forum;
         $this->response = $response;
+        $this->forum = $forum;
     }
 
     /**

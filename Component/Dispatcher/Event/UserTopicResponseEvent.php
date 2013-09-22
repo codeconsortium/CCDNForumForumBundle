@@ -43,14 +43,14 @@ class UserTopicResponseEvent extends UserTopicEvent
      *
      * @access public
      * @param \Symfony\Component\HttpFoundation\Request  $request
-     * @param \CCDNForum\ForumBundle\Entity\Topic        $topic
      * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param \CCDNForum\ForumBundle\Entity\Topic        $topic
      */
-    public function __construct(Request $request, Topic $topic = null, Response $response)
+    public function __construct(Request $request, Response $response, Topic $topic = null)
     {
         $this->request = $request;
-        $this->topic = $topic;
         $this->response = $response;
+        $this->topic = $topic;
     }
 
     /**

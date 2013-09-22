@@ -43,14 +43,14 @@ class AdminCategoryResponseEvent extends AdminCategoryEvent
      *
      * @access public
      * @param \Symfony\Component\HttpFoundation\Request  $request
-     * @param \CCDNForum\ForumBundle\Entity\Category     $category
      * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param \CCDNForum\ForumBundle\Entity\Category     $category
      */
-    public function __construct(Request $request, Category $category = null, Response $response)
+    public function __construct(Request $request, Response $response, Category $category = null)
     {
         $this->request = $request;
-        $this->category = $category;
         $this->response = $response;
+        $this->category = $category;
     }
 
     /**
