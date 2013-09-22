@@ -14,7 +14,6 @@
 namespace CCDNForum\ForumBundle\Model\Repository;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Model\Repository\BaseRepository;
 use CCDNForum\ForumBundle\Model\Repository\BaseRepositoryInterface;
@@ -131,17 +130,6 @@ class PostRepository extends BaseRepository implements BaseRepositoryInterface
 //    /**
 //     *
 //     * @access public
-//     * @return bool
-//     */
-//    public function allowedToViewDeletedTopics()
-//    {
-//		return true;
-//        return $this->managerBag->getPolicyManager()->allowedToViewDeletedTopics();
-//    }
-//
-//    /**
-//     *
-//     * @access public
 //     * @param  int                                $topicId
 //     * @return \CCDNForum\ForumBundle\Entity\Post
 //     */
@@ -187,30 +175,6 @@ class PostRepository extends BaseRepository implements BaseRepositoryInterface
 //        return $this->gateway->findPost($qb, $params);
 //    }
 //
-//
-//
-//    /**
-//     *
-//     * @access protected
-//     * @param  \Doctrine\ORM\QueryBuilder $qb
-//     * @param  bool                       $canViewDeletedTopics
-//     * @return \Doctrine\ORM\QueryBuilder
-//     */
-//    protected function limitQueryByTopicsDeletedStateAndByPostId(QueryBuilder $qb, $canViewDeletedTopics)
-//    {
-//        if ($canViewDeletedTopics) {
-//            $expr = $qb->expr()->eq('p.id', ':postId');
-//        } else {
-//            $expr = $qb->expr()->andX(
-//                $qb->expr()->eq('p.id', ':postId'),
-//                $qb->expr()->eq('t.isDeleted', 'FALSE')
-//            );
-//        }
-//
-//        return $expr;
-//    }
-//
-//
 //    /**
 //     *
 //     * @access public
@@ -231,66 +195,6 @@ class PostRepository extends BaseRepository implements BaseRepositoryInterface
 //        ;
 //
 //        return $this->gateway->findPosts($qb);
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  int                    $page
-//     * @return \Pagerfanta\Pagerfanta
-//     */
-//    public function findLockedPostsForModeratorsPaginated($page)
-//    {
-//        $params = array(':isLocked' => true);
-//
-//        $qb = $this->createSelectQuery(array('p', 't', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 'p_createdBy', 'p_editedBy', 'p_deletedBy'));
-//
-//        $qb
-//            ->join('p.topic', 't')
-//                ->leftJoin('t.firstPost', 'fp')
-//                    ->leftJoin('fp.createdBy', 'fp_author')
-//                ->leftJoin('t.lastPost', 'lp')
-//                    ->leftJoin('lp.createdBy', 'lp_author')
-//            ->leftJoin('p.createdBy', 'p_createdBy')
-//            ->leftJoin('p.editedBy', 'p_editedBy')
-//            ->leftJoin('p.deletedBy', 'p_deletedBy')
-//            ->leftJoin('t.board', 'b')
-//            ->leftJoin('b.category', 'c')
-//            ->where('p.isLocked = :isLocked')
-//            ->setParameters($params)
-//            ->orderBy('p.createdDate', 'ASC');
-//
-//        return $this->gateway->paginateQuery($qb, $this->getPostsPerPageOnTopics(), $page);
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  int                    $page
-//     * @return \Pagerfanta\Pagerfanta
-//     */
-//    public function findDeletedPostsForAdminsPaginated($page)
-//    {
-//        $params = array(':isDeleted' => true);
-//
-//        $qb = $this->createSelectQuery(array('p', 't', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 'p_createdBy', 'p_editedBy', 'p_deletedBy'));
-//
-//        $qb
-//            ->join('p.topic', 't')
-//                ->leftJoin('t.firstPost', 'fp')
-//                    ->leftJoin('fp.createdBy', 'fp_author')
-//                ->leftJoin('t.lastPost', 'lp')
-//                    ->leftJoin('lp.createdBy', 'lp_author')
-//            ->leftJoin('p.createdBy', 'p_createdBy')
-//            ->leftJoin('p.editedBy', 'p_editedBy')
-//            ->leftJoin('p.deletedBy', 'p_deletedBy')
-//            ->leftJoin('t.board', 'b')
-//            ->leftJoin('b.category', 'c')
-//            ->where('p.isDeleted = :isDeleted')
-//            ->setParameters($params)
-//            ->orderBy('p.createdDate', 'ASC');
-//
-//        return $this->gateway->paginateQuery($qb, $this->getPostsPerPageOnTopics(), $page);
 //    }
 //
 //    /**

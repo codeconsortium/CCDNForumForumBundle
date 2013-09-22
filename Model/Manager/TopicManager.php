@@ -234,27 +234,7 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 
 
 
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Topic $topic
-//     * @param  \CCDNForum\ForumBundle\Entity\Post  $post
-//     * @return int
-//     */
-//    public function getPageForPostOnTopic(Topic $topic, Post $post)
-//    {
-//        $postsPerPage = $this->getPostsPerPageOnTopics();
-//        $page = 1;
-//
-//        foreach ($topic->getPosts() as $index => $postTest) {
-//            if ($post->getId() == $postTest->getId()) {
-//                $page = ceil($index / $postsPerPage);
-//                break;
-//            }
-//        }
-//
-//        return $page;
-//    }
+
 //
 //
 //    /**
@@ -324,7 +304,6 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 //
 //        return $this;
 //    }
-
 //
 //    /**
 //     *
@@ -344,8 +323,6 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 //
 //        return $this;
 //    }
-//
-
 //
 //    /**
 //     *
@@ -382,8 +359,6 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 //
 //        return $this;
 //    }
-//
-
 //
 //    /**
 //     *

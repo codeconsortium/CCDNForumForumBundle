@@ -178,7 +178,6 @@ class PostManager extends BaseManager implements BaseManagerInterface
         return $this;
     }
 
-//
 //    /**
 //     *
 //     * @access public

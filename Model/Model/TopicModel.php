@@ -191,36 +191,12 @@ class TopicModel extends BaseModel implements BaseModelInterface
 //    /**
 //     *
 //     * @access public
-//     * @return bool
-//     */
-//    public function allowedToViewDeletedTopics()
-//    {
-//        return $this->managerBag->getPolicyManager()->allowedToViewDeletedTopics();
-//    }
-//
-//    /**
-//     *
-//     * @access public
 //     * @param  int                                 $boardId
 //     * @return \CCDNForum\ForumBundle\Entity\Topic
 //     */
 //    public function findLastTopicForBoardByIdWithLastPost($boardId)
 //    {
 //        return $this->getRepository()->findLastTopicForBoardByIdWithLastPost($boardId);
-//    }
-//
-//
-//
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  int   $boardId
-//     * @return Array
-//     */
-//    public function getPostCountForTopicById($topicId)
-//    {
-//        return $this->getRepository()->getPostCountForTopicById($topicId);
 //    }
 //
 //    /**
@@ -233,43 +209,6 @@ class TopicModel extends BaseModel implements BaseModelInterface
 //    {
 //        return $this->getRepository()->findTheseTopicsById($topicsIds);
 //    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  int                    $page
-//     * @return \Pagerfanta\Pagerfanta
-//     */
-//    public function findClosedTopicsForModeratorsPaginated($page)
-//    {
-//        return $this->getRepository()->findClosedTopicsForModeratorsPaginated($page);
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  int                    $page
-//     * @return \Pagerfanta\Pagerfanta
-//     */
-//    public function findDeletedTopicsForAdminsPaginated($page)
-//    {
-//        return $this->getRepository()->findDeletedTopicsForAdminsPaginated($page);
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Topic $topic
-//     * @param  \CCDNForum\ForumBundle\Entity\Post  $post
-//     * @return int
-//     */
-//    public function getPageForPostOnTopic(Topic $topic, Post $post)
-//    {
-//        return $this->getManager()->getPageForPostOnTopic($topic, $post);
-//    }
-//
-//
-//
 //
 //    /**
 //     *
@@ -297,39 +236,12 @@ class TopicModel extends BaseModel implements BaseModelInterface
 //     *
 //     * @access public
 //     * @param  Array                                               $topics
-//     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function bulkClose($topics, UserInterface $user)
-//    {
-//        return $this->getManager()->bulkClose($topics, $user);
-//    }
-//
-
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  Array                                               $topics
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function bulkReopen($topics)
-//    {
-//        return $this->getManager()->bulkReopen($topics);
-//    }
-
-//    /**
-//     *
-//     * @access public
-//     * @param  Array                                               $topics
 //     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
 //     */
 //    public function bulkRestore($topics)
 //    {
 //        return $this->getManager()->bulkRestore($topics);
 //    }
-//
-
 //
 //    /**
 //     *

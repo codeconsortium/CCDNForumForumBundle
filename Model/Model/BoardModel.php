@@ -158,55 +158,6 @@ class BoardModel extends BaseModel implements BaseModelInterface
 //    /**
 //     *
 //     * @access public
-//     * @param  int                                 $boardId
-//     * @return \CCDNForum\ForumBundle\Entity\Board
-//     */
-//    public function findOneById($boardId)
-//    {
-//        return $this->getRepository()->findOneById($boardId);
-//    }
-//
-//
-//
-//    /**
-//     *
-//     * @access public
-//     * @return \Doctrine\Common\Collections\ArrayCollection
-//     */
-//    public function findAllForFormDropDown()
-//    {
-//        return $this->getRepository()->findAllForFormDropDown();
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  int   $boardId
-//     * @return Array
-//     */
-//    public function getTopicAndPostCountForBoardById($boardId)
-//    {
-//        return $this->getRepository()->getTopicAndPostCountForBoardById($boardId);
-//    }
-//
-
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  Array $boards
-//     * @return Array
-//     */
-//    public function filterViewableBoards($boards)
-//    {
-//        return $this->getRepository()->filterViewableBoards($boards);
-//    }
-//
-//
-//
-//    /**
-//     *
-//     * @access public
 //     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
 //     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
 //     */
@@ -225,6 +176,4 @@ class BoardModel extends BaseModel implements BaseModelInterface
 //    {
 //        return $this->getManager()->bulkUpdateStats($boards);
 //    }
-//
-//
 }

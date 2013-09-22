@@ -14,7 +14,6 @@
 namespace CCDNForum\ForumBundle\Model\Repository;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Model\Repository\BaseRepository;
 use CCDNForum\ForumBundle\Model\Repository\BaseRepositoryInterface;
@@ -234,17 +233,6 @@ class TopicRepository extends BaseRepository implements BaseRepositoryInterface
 //    /**
 //     *
 //     * @access public
-//     * @return bool
-//     */
-//    public function allowedToViewDeletedTopics()
-//    {
-//		return true;
-//        return $this->managerBag->getPolicyManager()->allowedToViewDeletedTopics();
-//    }
-//
-//    /**
-//     *
-//     * @access public
 //     * @param  int                                 $boardId
 //     * @return \CCDNForum\ForumBundle\Entity\Topic
 //     */
@@ -272,96 +260,6 @@ class TopicRepository extends BaseRepository implements BaseRepositoryInterface
 //            ->setMaxResults(1);
 //
 //        return $this->gateway->findTopic($qb, $params);
-//    }
-//
-
-//
-//
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  int                                          $boardId
-//     * @return \Doctrine\Common\Collections\ArrayCollection
-//     */
-//    public function findAllStickiedByBoardId($boardId)
-//    {
-//        if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
-//            throw new \Exception('Board id "' . $boardId . '" is invalid!');
-//        }
-//
-//        $canViewDeleted = $this->allowedToViewDeletedTopics();
-//
-//        $params = array(':boardId' => $boardId, ':isSticky' => true);
-//
-//        $qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
-//
-//        $qb
-//            ->innerJoin('t.firstPost', 'fp')
-//                ->leftJoin('fp.createdBy', 'fp_author')
-//            ->leftJoin('t.lastPost', 'lp')
-//                ->leftJoin('lp.createdBy', 'lp_author')
-//            ->leftJoin('t.closedBy', 't_closedBy')
-//            ->leftJoin('t.deletedBy', 't_deletedBy')
-//            ->leftJoin('t.stickiedBy', 't_stickiedBy')
-//            ->leftJoin('t.board', 'b')
-//            ->leftJoin('b.category', 'c')
-//            ->where(
-//                $this->limitQueryByStickiedAndDeletedStateByBoardId($qb, $canViewDeleted)
-//            )
-//            ->orderBy('lp.createdDate', 'DESC');
-//
-//        return $this->gateway->findTopics($qb, $params);
-//    }
-//
-
-//
-//    /**
-//     *
-//     * @access protected
-//     * @param  \Doctrine\ORM\QueryBuilder $qb
-//     * @param  bool                       $canViewDeletedTopics
-//     * @return \Doctrine\ORM\QueryBuilder
-//     */
-//    protected function limitQueryByDeletedStateAndByTopicId(QueryBuilder $qb, $canViewDeletedTopics)
-//    {
-//        if ($canViewDeletedTopics) {
-//            $expr = $qb->expr()->eq('t.id', ':topicId');
-//        } else {
-//            $expr = $qb->expr()->andX(
-//                $qb->expr()->eq('t.id', ':topicId'),
-//                $qb->expr()->eq('t.isDeleted', 'FALSE')
-//            );
-//        }
-//
-//        return $expr;
-//    }
-//
-//    /**
-//     *
-//     * @access protected
-//     * @param  \Doctrine\ORM\QueryBuilder $qb
-//     * @param  bool                       $canViewDeletedTopics
-//     * @return \Doctrine\ORM\QueryBuilder
-//     */
-//    protected function limitQueryByStickiedAndDeletedStateByBoardId(QueryBuilder $qb, $canViewDeletedTopics)
-//    {
-//        if ($canViewDeletedTopics) {
-//            $expr = $qb->expr()->andX(
-//                $qb->expr()->eq('t.board', ':boardId'),
-//                $qb->expr()->eq('t.isSticky', ':isSticky')
-//            );
-//        } else {
-//            $expr = $qb->expr()->andX(
-//                $qb->expr()->eq('t.board', ':boardId'),
-//                $qb->expr()->andX(
-//                    $qb->expr()->eq('t.isSticky', ':isSticky'),
-//                    $qb->expr()->eq('t.isDeleted', 'FALSE')
-//                )
-//            );
-//        }
-//
-//        return $expr;
 //    }
 //
 //    /**
@@ -413,63 +311,5 @@ class TopicRepository extends BaseRepository implements BaseRepositoryInterface
 //        $qb->where($qb->expr()->in('t.id', $topicIds));
 //
 //        return $this->gateway->findTopics($qb);
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  int                    $page
-//     * @return \Pagerfanta\Pagerfanta
-//     */
-//    public function findClosedTopicsForModeratorsPaginated($page)
-//    {
-//        $params = array(':isClosed' => true);
-//
-//        $qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
-//
-//        $qb
-//            ->innerJoin('t.firstPost', 'fp')
-//                ->leftJoin('fp.createdBy', 'fp_author')
-//            ->leftJoin('t.lastPost', 'lp')
-//                ->leftJoin('lp.createdBy', 'lp_author')
-//            ->leftJoin('t.closedBy', 't_closedBy')
-//            ->leftJoin('t.deletedBy', 't_deletedBy')
-//            ->leftJoin('t.stickiedBy', 't_stickiedBy')
-//            ->leftJoin('t.board', 'b')
-//            ->leftJoin('b.category', 'c')
-//            ->where('t.isClosed = :isClosed')
-//            ->setParameters($params)
-//            ->orderBy('lp.createdDate', 'DESC');
-//
-//        return $this->gateway->paginateQuery($qb, $this->getTopicsPerPageOnBoards(), $page);
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  int                    $page
-//     * @return \Pagerfanta\Pagerfanta
-//     */
-//    public function findDeletedTopicsForAdminsPaginated($page)
-//    {
-//        $params = array(':isDeleted' => true);
-//
-//        $qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
-//
-//        $qb
-//            ->innerJoin('t.firstPost', 'fp')
-//                ->leftJoin('fp.createdBy', 'fp_author')
-//            ->leftJoin('t.lastPost', 'lp')
-//                ->leftJoin('lp.createdBy', 'lp_author')
-//            ->leftJoin('t.closedBy', 't_closedBy')
-//            ->leftJoin('t.deletedBy', 't_deletedBy')
-//            ->leftJoin('t.stickiedBy', 't_stickiedBy')
-//            ->leftJoin('t.board', 'b')
-//            ->leftJoin('b.category', 'c')
-//            ->where('t.isDeleted = :isDeleted')
-//            ->setParameters($params)
-//            ->orderBy('lp.createdDate', 'DESC');
-//
-//        return $this->gateway->paginateQuery($qb, $this->getTopicsPerPageOnBoards(), $page);
 //    }
 }
