@@ -21,6 +21,8 @@ use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent;
 
+use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
+
 use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Category;
 
@@ -35,15 +37,8 @@ use CCDNForum\ForumBundle\Entity\Category;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class CategoryCreateFormHandler
+class CategoryCreateFormHandler extends BaseFormHandler
 {
-    /**
-     *
-     * @access protected
-     * @var \Symfony\Component\Form\FormFactory $factory
-     */
-    protected $factory;
-
     /**
      *
      * @access protected
@@ -61,40 +56,19 @@ class CategoryCreateFormHandler
     /**
      *
      * @access protected
-     * @var \Symfony\Component\Form\Form $form
-     */
-    protected $form;
-
-    /**
-     *
-     * @access protected
      * @var \CCDNForum\ForumBundle\Entity\Forum $defaultForum
      */
     protected $defaultForum;
 
     /**
      *
-     * @access protected
-     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-     */
-    protected $dispatcher;
-
-    /**
-     *
-     * @access protected
-     * @var \Symfony\Component\HttpFoundation\Request $request
-     */
-    protected $request;
-
-    /**
-     *
      * @access public
+     * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                        $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryCreateFormType     $categoryCreateFormType
      * @param \CCDNForum\ForumBundle\Model\Model\CategoryModel                           $categoryModel
-     * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
      */
-    public function __construct(FormFactory $factory, $categoryCreateFormType, $categoryModel, ContainerAwareTraceableEventDispatcher $dispatcher)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $categoryCreateFormType, $categoryModel)
     {
         $this->factory = $factory;
         $this->categoryCreateFormType = $categoryCreateFormType;
@@ -113,59 +87,6 @@ class CategoryCreateFormHandler
         $this->defaultForum = $forum;
 
         return $this;
-    }
-
-    /**
-     *
-     * @access public
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
-    public function setRequest(Request $request)
-    {
-        $this->request = $request;
-    }
-
-    /**
-     *
-     * @access public
-     * @return bool
-     */
-    public function process()
-    {
-        $this->getForm();
-
-        if ($this->request->getMethod() == 'POST') {
-            $this->form->bind($this->request);
-
-            // Validate
-            if ($this->form->isValid()) {
-                $formData = $this->form->getData();
-
-                if ($this->getSubmitAction() == 'post') {
-                    $this->onSuccess($formData);
-
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     *
-     * @access public
-     * @return string
-     */
-    public function getSubmitAction()
-    {
-        if ($this->request->request->has('submit')) {
-            $action = key($this->request->request->get('submit'));
-        } else {
-            $action = 'post';
-        }
-
-        return $action;
     }
 
     /**
@@ -200,6 +121,6 @@ class CategoryCreateFormHandler
     {
         $this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_SUCCESS, new AdminCategoryEvent($this->request, $category));
 
-        return $this->categoryModel->saveNewCategory($category)->flush();
+        return $this->categoryModel->saveNewCategory($category);
     }
 }

@@ -18,9 +18,11 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
-//use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
+use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent;
 
-//use CCDNForum\ForumBundle\Model\BaseModelInterface;
+use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
+
 use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Board;
 use CCDNForum\ForumBundle\Entity\Topic;
@@ -36,42 +38,28 @@ use CCDNForum\ForumBundle\Entity\Topic;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class TopicChangeBoardFormHandler
+class TopicChangeBoardFormHandler extends BaseFormHandler
 {
     /**
      *
      * @access protected
-     * @var \Symfony\Component\Form\FormFactory $factory
-     */
-    protected $factory;
-
-    /**
-     *
-     * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\TopicChangeBoardType $formTopicChangeBoardType
+     * @var \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicChangeBoardFormType $formTopicChangeBoardType
      */
     protected $formTopicChangeBoardType;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\BaseModelInterface $topicModel
+     * @var \CCDNForum\ForumBundle\Model\Model\TopicModel $topicModel
      */
     protected $topicModel;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\BaseModelInterface $boardModel
+     * @var \CCDNForum\ForumBundle\Model\Model\BoardModel $boardModel
      */
     protected $boardModel;
-
-    /**
-     *
-     * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\TopicChangeBoardType $form
-     */
-    protected $form;
 
     /**
      *
@@ -79,20 +67,6 @@ class TopicChangeBoardFormHandler
      * @var \CCDNForum\ForumBundle\Entity\Board $oldBoard
      */
     protected $oldBoard;
-
-    /**
-     *
-     * @access protected
-     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-     */
-    protected $dispatcher;
-
-    /**
-     *
-     * @access protected
-     * @var \Symfony\Component\HttpFoundation\Request $request
-     */
-    protected $request;
 
     /**
      *
@@ -106,9 +80,9 @@ class TopicChangeBoardFormHandler
      * @access public
      * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                        $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\TopicChangeBoardType                      $formTopicChangeBoardType
-     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface                            $topicModel
-     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface                            $boardModel
+     * @param \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicChangeBoardFormType  $formTopicChangeBoardType
+     * @param \CCDNForum\ForumBundle\Model\Model\TopicModel                              $topicModel
+     * @param \CCDNForum\ForumBundle\Model\Model\BoardModel                              $boardModel
      */
     public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formTopicChangeBoardType, $topicModel, $boardModel)
     {
@@ -122,8 +96,8 @@ class TopicChangeBoardFormHandler
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Forum                             $forum
-     * @return \CCDNForum\ForumBundle\Form\Handler\TopicChangeBoardFormHandler
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                                             $forum
+     * @return \CCDNForum\ForumBundle\Form\Handler\Moderator\Topic\TopicChangeBoardFormHandler
      */
     public function setForum(Forum $forum)
     {
@@ -135,8 +109,8 @@ class TopicChangeBoardFormHandler
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                             $topic
-     * @return \CCDNForum\ForumBundle\Form\Handler\TopicChangeBoardFormHandler
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                                             $topic
+     * @return \CCDNForum\ForumBundle\Form\Handler\Moderator\Topic\TopicChangeBoardFormHandler
      */
     public function setTopic(Topic $topic)
     {
@@ -148,60 +122,7 @@ class TopicChangeBoardFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
-    public function setRequest(Request $request)
-    {
-        $this->request = $request;
-    }
-
-    /**
-     *
-     * @access public
-     * @return bool
-     */
-    public function process()
-    {
-        $this->getForm();
-
-        if ($this->request->getMethod() == 'POST') {
-            $this->form->bind($this->request);
-
-            // Validate
-            if ($this->form->isValid()) {
-                $formData = $this->form->getData();
-
-                if ($this->getSubmitAction() == 'post') {
-                    $this->onSuccess($formData);
-
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     *
-     * @access public
-     * @return string
-     */
-    public function getSubmitAction()
-    {
-        if ($this->request->request->has('submit')) {
-            $action = key($this->request->request->get('submit'));
-        } else {
-            $action = 'post';
-        }
-
-        return $action;
-    }
-
-    /**
-     *
-     * @access public
-     * @return Form
+     * @return \Symfony\Component\Form\Form
      */
     public function getForm()
     {
@@ -216,6 +137,8 @@ class TopicChangeBoardFormHandler
 
             $options = array('boards' => $filteredBoards);
 
+            $this->dispatcher->dispatch(ForumEvents::MODERATOR_TOPIC_CHANGE_BOARD_INITIALISE, new ModeratorTopicEvent($this->request, $this->topic));
+
             $this->form = $this->factory->create($this->formTopicChangeBoardType, $this->topic, $options);
         }
 
@@ -225,11 +148,13 @@ class TopicChangeBoardFormHandler
     /**
      *
      * @access protected
-     * @param $entity
-     * @return TopicModel
+     * @param  \CCDNForum\ForumBundle\Entity\Topic           $entity
+     * @return \CCDNForum\ForumBundle\Model\Model\TopicModel
      */
     protected function onSuccess(Topic $topic)
     {
+        $this->dispatcher->dispatch(ForumEvents::MODERATOR_TOPIC_CHANGE_BOARD_SUCCESS, new ModeratorTopicEvent($this->request, $topic));
+
         $this->topicModel->updateTopic($topic);
 
         // Update stats of the topics old board.

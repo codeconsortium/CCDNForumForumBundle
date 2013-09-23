@@ -23,6 +23,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent;
 
+use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
+
 use CCDNForum\ForumBundle\Entity\Category;
 
 /**
@@ -36,15 +38,8 @@ use CCDNForum\ForumBundle\Entity\Category;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class CategoryDeleteFormHandler
+class CategoryDeleteFormHandler extends BaseFormHandler
 {
-    /**
-     *
-     * @access protected
-     * @var \Symfony\Component\Form\FormFactory $factory
-     */
-    protected $factory;
-
     /**
      *
      * @access protected
@@ -62,40 +57,19 @@ class CategoryDeleteFormHandler
     /**
      *
      * @access protected
-     * @var \Symfony\Component\Form\Form $form
-     */
-    protected $form;
-
-    /**
-     *
-     * @access protected
      * @var \CCDNForum\ForumBundle\Entity\Category $category
      */
     protected $category;
 
     /**
      *
-     * @access protected
-     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-     */
-    protected $dispatcher;
-
-    /**
-     *
-     * @access protected
-     * @var \Symfony\Component\HttpFoundation\Request $request
-     */
-    protected $request;
-
-    /**
-     *
      * @access public
+     * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                        $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryDeleteFormType     $categoryDeleteFormType
      * @param \CCDNForum\ForumBundle\Model\Model\CategoryModel                           $categoryModel
-     * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
      */
-    public function __construct(FormFactory $factory, $categoryDeleteFormType, $categoryModel, ContainerAwareTraceableEventDispatcher $dispatcher)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $categoryDeleteFormType, $categoryModel)
     {
         $this->factory = $factory;
         $this->categoryDeleteFormType = $categoryDeleteFormType;
@@ -114,59 +88,6 @@ class CategoryDeleteFormHandler
         $this->category = $category;
 
         return $this;
-    }
-
-    /**
-     *
-     * @access public
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
-    public function setRequest(Request $request)
-    {
-        $this->request = $request;
-    }
-
-    /**
-     *
-     * @access public
-     * @return bool
-     */
-    public function process()
-    {
-        $this->getForm();
-
-        if ($this->request->getMethod() == 'POST') {
-            $this->form->bind($this->request);
-
-            // Validate
-            if ($this->form->isValid()) {
-                $formData = $this->form->getData();
-
-                if ($this->getSubmitAction() == 'post') {
-                    $this->onSuccess($formData);
-
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     *
-     * @access public
-     * @return string
-     */
-    public function getSubmitAction()
-    {
-        if ($this->request->request->has('submit')) {
-            $action = key($this->request->request->get('submit'));
-        } else {
-            $action = 'post';
-        }
-
-        return $action;
     }
 
     /**
@@ -205,8 +126,6 @@ class CategoryDeleteFormHandler
             $this->categoryModel->reassignBoardsToCategory($boards, null)->flush();
         }
 
-        $this->categoryModel->deleteCategory($category)->flush();
-
-        return $this->categoryModel;
+        return $this->categoryModel->deleteCategory($category);
     }
 }

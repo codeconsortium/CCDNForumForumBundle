@@ -16,13 +16,13 @@ namespace CCDNForum\ForumBundle\Form\Handler\Moderator\Post;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent;
 
-//use CCDNForum\ForumBundle\Model\BaseModelInterface;
+use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
+
 use CCDNForum\ForumBundle\Entity\Post;
 
 /**
@@ -36,35 +36,21 @@ use CCDNForum\ForumBundle\Entity\Post;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class PostUnlockFormHandler
+class PostUnlockFormHandler extends BaseFormHandler
 {
     /**
      *
      * @access protected
-     * @var \Symfony\Component\Form\FormFactory $factory
-     */
-    protected $factory;
-
-    /**
-     *
-     * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicType $formPostType
+     * @var \CCDNForum\ForumBundle\Form\Type\Moderator\Post\PostUnlockFormType $formPostType
      */
     protected $formPostType;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\BaseModelInterface $postModel
+     * @var \CCDNForum\ForumBundle\Model\Model\PostModel $postModel
      */
     protected $postModel;
-
-    /**
-     *
-     * @access protected
-     * @var \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicType $form
-     */
-    protected $form;
 
     /**
      *
@@ -75,32 +61,11 @@ class PostUnlockFormHandler
 
     /**
      *
-     * @access protected
-     * @var \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
-     */
-    protected $dispatcher;
-
-    /**
-     *
-     * @access protected
-     * @var \Symfony\Component\HttpFoundation\Request $request
-     */
-    protected $request;
-
-    /**
-     *
-     * @access protected
-     * @var \Symfony\Component\Security\Core\User\UserInterface
-     */
-    protected $user;
-
-    /**
-     *
      * @access public
      * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                        $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicType                 $formTopicType
-     * @param \CCDNForum\ForumBundle\Model\BaseModelInterface                            $topicModel
+     * @param \CCDNForum\ForumBundle\Form\Type\Moderator\Post\PostUnlockFormType         $formPostType
+     * @param \CCDNForum\ForumBundle\Model\Model\PostModel                               $postModel
      */
     public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formPostType, $postModel)
     {
@@ -113,21 +78,8 @@ class PostUnlockFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\Security\Core\User\UserInterface                  $user
-     * @return \CCDNForum\ForumBundle\Form\Handler\Moderator\TopicDeleteFormHandler
-     */
-    public function setUser(UserInterface $user)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                                         $post
-     * @return \CCDNForum\ForumBundle\Form\Handler\Moderator\Topic\TopicDeleteFormHandler
+     * @param  \CCDNForum\ForumBundle\Entity\Post                                       $post
+     * @return \CCDNForum\ForumBundle\Form\Handler\Moderator\Post\PostUnlockFormHandler
      */
     public function setPost(Post $post)
     {
@@ -139,60 +91,7 @@ class PostUnlockFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
-    public function setRequest(Request $request)
-    {
-        $this->request = $request;
-    }
-
-    /**
-     *
-     * @access public
-     * @return bool
-     */
-    public function process()
-    {
-        $this->getForm();
-
-        if ($this->request->getMethod() == 'POST') {
-            $this->form->bind($this->request);
-
-            // Validate
-            if ($this->form->isValid()) {
-                $formData = $this->form->getData();
-
-                if ($this->getSubmitAction() == 'post') {
-                    $this->onSuccess($formData);
-
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     *
-     * @access public
-     * @return string
-     */
-    public function getSubmitAction()
-    {
-        if ($this->request->request->has('submit')) {
-            $action = key($this->request->request->get('submit'));
-        } else {
-            $action = 'post';
-        }
-
-        return $action;
-    }
-
-    /**
-     *
-     * @access public
-     * @return Form
+     * @return \Symfony\Component\Form\Form
      */
     public function getForm()
     {
@@ -212,17 +111,16 @@ class PostUnlockFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Post     $post
-     * @return \CCDNForum\ForumBundle\Model\PostModel
+     * @param  \CCDNForum\ForumBundle\Entity\Post           $post
+     * @return \CCDNForum\ForumBundle\Model\Model\PostModel
      */
     protected function onSuccess(Post $post)
     {
         $post->setUnlockedDate(new \Datetime('now'));
         $post->setUnlockedBy($this->user);
-        $this->postModel->updatePost($post);
 
         $this->dispatcher->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_SUCCESS, new ModeratorPostEvent($this->request, $this->post));
 
-        return $this->postModel;
+        return $this->postModel->updatePost($post);
     }
 }

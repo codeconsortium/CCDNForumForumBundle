@@ -17,10 +17,10 @@ services:
     ccdn_forum_forum.form.handler.category_create:
         class: %ccdn_forum_forum.form.handler.category_create.class%
         arguments:
+            - @event_dispatcher
             - @form.factory
             - @ccdn_forum_forum.form.type.category_create
             - @ccdn_forum_forum.model.category
-            - @event_dispatcher
 
     ccdn_forum_forum.form.type.category_update:
         class: %ccdn_forum_forum.form.type.category_update.class%
@@ -32,10 +32,10 @@ services:
     ccdn_forum_forum.form.handler.category_update:
         class: %ccdn_forum_forum.form.handler.category_update.class%
         arguments:
+            - @event_dispatcher
             - @form.factory
             - @ccdn_forum_forum.form.type.category_update
             - @ccdn_forum_forum.model.category
-            - @event_dispatcher
 
     ccdn_forum_forum.form.type.category_delete:
         class: %ccdn_forum_forum.form.type.category_delete.class%
@@ -45,7 +45,7 @@ services:
     ccdn_forum_forum.form.handler.category_delete:
         class: %ccdn_forum_forum.form.handler.category_delete.class%
         arguments:
+            - @event_dispatcher
             - @form.factory
             - @ccdn_forum_forum.form.type.category_delete
             - @ccdn_forum_forum.model.category
-            - @event_dispatcher
