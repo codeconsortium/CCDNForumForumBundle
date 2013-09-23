@@ -98,8 +98,8 @@ class PostDeleteFormType extends AbstractType
             'csrf_protection'     => true,
             'csrf_field_name'     => '_token',
             // a unique key to help generate the secret token
-            'intention'           => 'post_item',
-            'validation_groups'   => array('post_update'),
+            'intention'           => 'forum_post_delete_item',
+            'validation_groups'   => array('forum_post_delete'),
             'cascade_validation'  => true,
         );
     }

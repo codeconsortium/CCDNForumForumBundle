@@ -86,8 +86,8 @@ class TopicChangeBoardFormType extends AbstractType
             'csrf_protection'    => true,
             'csrf_field_name'    => '_token',
             // a unique key to help generate the secret token
-            'intention'          => 'topic_change_board',
-            'validation_groups'  => array('topic_update'),
+            'intention'          => 'forum_topic_change_board_item',
+            'validation_groups'  => array('forum_topic_change_board'),
             'boards'             => array(),
         );
     }

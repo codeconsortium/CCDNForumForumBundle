@@ -76,8 +76,8 @@ class TopicUpdateFormType extends AbstractType
             'csrf_protection'    => true,
             'csrf_field_name'    => '_token',
             // a unique key to help generate the secret token
-            'intention'          => 'topic_item',
-            'validation_groups'  => array('topic_update'),
+            'intention'          => 'forum_topic_update_item',
+            'validation_groups'  => array('forum_topic_update'),
         );
     }
 

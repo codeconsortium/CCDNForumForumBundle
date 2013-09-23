@@ -83,7 +83,6 @@ class BoardUpdateFormType extends AbstractType
                             return $er
                                 ->createQueryBuilder('c')
                                 ->leftJoin('c.forum', 'f')
-                                //->groupBy('c.forum')
                             ;
                         },
                     'required'           => false,

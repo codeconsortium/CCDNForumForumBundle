@@ -62,20 +62,6 @@ class PostCreateFormType extends AbstractType
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
-//			->add('subscribe', 'choice',
-//				array(
-//					'choices' => array(
-//						'confirm' => 'Subscribe to this topic.',
-//					),
-//					'multiple' => true,
-//					'expanded' => true,
-//					'mapped'   => false,
-//					'required' => false,
-//					'attr'     => array(
-//						'checked' => 'checked'
-//					)
-//				)
-//			)
             ->add('subscribe', 'checkbox',
                 array(
                     'mapped'   => false,
@@ -103,8 +89,8 @@ class PostCreateFormType extends AbstractType
             'csrf_protection'     => true,
             'csrf_field_name'     => '_token',
             // a unique key to help generate the secret token
-            'intention'           => 'post_item',
-            'validation_groups'   => array('post_create'),
+            'intention'           => 'forum_post_create_item',
+            'validation_groups'   => array('forum_post_create'),
             'cascade_validation'  => true,
         );
     }
