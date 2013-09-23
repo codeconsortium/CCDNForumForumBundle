@@ -1,5 +1,5 @@
 Upgrading CCDNForum ForumBundle to 1.1.2
-========================================
+=========================================
 
 Run this SQL to upgrade.
 
