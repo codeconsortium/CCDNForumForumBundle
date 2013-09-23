@@ -18,8 +18,8 @@
         "symfony/symfony": "2.1.*",
         "doctrine/doctrine-bundle": "*",
 		"knplabs/knp-paginator-bundle": "dev-master",
-		"codeconsortium/ccdn-component-common-bundle",
-		"codeconsortium/ccdn-component-crumb-trail-bundle"
+		"codeconsortium/ccdn-component-common-bundle": "2.0.*@dev",
+		"codeconsortium/ccdn-component-crumb-trail-bundle": "2.0.*@dev"
     },
 	"suggest": {
 		"reecefowell/jquery-timestamper": "dev-master",
