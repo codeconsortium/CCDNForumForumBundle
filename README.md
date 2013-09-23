@@ -47,6 +47,7 @@ ForumBundle Provides the following features:
 11. Topics can be subscribed to and followed in the Topic subscription page.
 12. Optional integration with [DashboardBundle](http://github.com/codeconsortium/CCDNComponentDashboardBundle) for easy site navigation.
 13. Utilises Twitter-Bootstrap interface by default.
+14. Unit tested with PHPUnit and Behat.
 
 You will need the complimentary bundles for this bundle to work, which are listed in the dependencies of the installation documentation.
 
