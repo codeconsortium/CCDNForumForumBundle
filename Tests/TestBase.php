@@ -40,14 +40,6 @@ class TestBase extends WebTestCase
 	 */
 	private $container;
 
-//	protected $users = array();
-//	protected $forums = array();
-//	protected $categories = array();
-//	protected $boards = array();
-//	protected $topics = array();
-//	protected $posts = array();
-//	protected $subscriptions = array();
-
 	/**
 	 *
 	 * @access public
@@ -63,14 +55,6 @@ class TestBase extends WebTestCase
         $this->em = $this->container->get('doctrine.orm.entity_manager');
 		
 		$this->purge();
-		
-//		$this->users         = $this->addFixturesForUsers();
-//		$this->forums        = $this->addFixturesForForums();
-//		$this->categories    = $this->addFixturesForCategories($this->forums);
-//		$this->boards        = $this->addFixturesForBoards($this->categories);
-//		$this->topics        = $this->addFixturesForTopics($this->boards);
-//		$this->posts         = $this->addFixturesForPosts($this->topics, $this->users['harry']);
-//		$this->subscriptions = $this->addFixturesForSubscriptions($this->topics, $this->users['harry'], true);
     }
 
     protected function purge()
