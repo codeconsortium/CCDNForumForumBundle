@@ -26,7 +26,7 @@ use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
 use CCDNForum\ForumBundle\Entity\Subscription;
 
-class TestBase extends WebTestCase
+class TestBase extends \PHPUnit_Framework_TestCase //WebTestCase
 {
     /**
 	 *
