@@ -14,7 +14,6 @@
 namespace CCDNForum\ForumBundle\Model\Model;
 
 use CCDNForum\ForumBundle\Model\Model\BaseModel;
-use CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface;
 
 /**
  *
@@ -34,17 +33,13 @@ abstract class BaseModel
 
     protected $manager;
 
-    protected $modelBag;
-
-    public function __construct($repository, $manager, ModelBagInterface $modelBag)
+    public function __construct($repository, $manager)
     {
         $repository->setModel($this);
         $this->repository = $repository;
 
         $manager->setModel($this);
         $this->manager = $manager;
-
-        $this->modelBag = $modelBag;
     }
 
     public function getRepository()
@@ -55,15 +50,5 @@ abstract class BaseModel
     public function getManager()
     {
         return $this->manager;
-    }
-
-    /**
-     *
-     * @access public
-     * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
-     */
-    public function getModelBag()
-    {
-        return $this->modelBag;
     }
 }

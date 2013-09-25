@@ -160,38 +160,4 @@ class BoardRepository extends BaseRepository implements BaseRepositoryInterface
             return 0;
         }
     }
-
-    /**
-     *
-     * @access public
-     * @param  int   $boardId
-     * @return Array
-     */
-    public function getTopicAndPostCountForBoardById($boardId)
-    {
-        if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
-            throw new \Exception('Board id "' . $boardId . '" is invalid!');
-        }
-
-        $topicEntityClass = $this->model->getModelBag()->getTopicModel()->getRepository()->getGateway()->getEntityClass();
-
-        $qb = $this->getQueryBuilder();
-
-        $qb
-            ->select('COUNT(DISTINCT t.id) AS topicCount, COUNT(DISTINCT p.id) AS postCount')
-            ->from($topicEntityClass, 't')
-            ->leftJoin('t.posts', 'p')
-            ->where('t.board = :boardId')
-            ->andWhere('t.isDeleted = FALSE')
-            ->setParameter(':boardId', $boardId)
-        ;
-
-        try {
-            return $qb->getQuery()->getSingleResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return array('topicCount' => null, 'postCount' => null);
-        } catch (\Exception $e) {
-            return array('topicCount' => null, 'postCount' => null);
-        }
-    }
 }

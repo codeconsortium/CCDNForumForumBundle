@@ -13,11 +13,9 @@
 
 namespace CCDNForum\ForumBundle\Model\Manager;
 
-use Symfony\Component\Security\Core\SecurityContext;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface;
 use CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface;
 
 /**
@@ -36,34 +34,18 @@ interface BaseManagerInterface
     /**
      *
      * @access public
-     * @param \Doctrine\Bundle\DoctrineBundle\Registry                  $doctrine
-     * @param \Symfony\Component\Security\Core\SecurityContext          $securityContext
-     * @param \CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface $gateway
-     * @param \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface  $modelBag
+     * @param \Doctrine\Common\Persistence\ObjectManager          $em
+     * @param \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface $gateway
      */
-    public function __construct(Registry $doctrine, SecurityContext $securityContext, BaseGatewayInterface $gateway, ModelBagInterface $modelBag);
+    public function __construct(ObjectManager $em, BaseGatewayInterface $gateway);
 
     /**
      *
      * @access public
-     * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
+     * @param  \CCDNForum\ForumBundle\Model\Model\BaseModelInterface        $model
+     * @return \CCDNForum\ForumBundle\Model\Repository\BaseManagerInterface
      */
-    public function getModelBag();
-
-    /**
-     *
-     * @access public
-     * @param  string $role
-     * @return bool
-     */
-    public function isGranted($role);
-
-    /**
-     *
-     * @access public
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
-    public function getUser();
+    public function setModel($model);
 
     /**
      *

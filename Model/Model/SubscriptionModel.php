@@ -64,13 +64,14 @@ class SubscriptionModel extends BaseModel implements BaseModelInterface
      * @access public
      * @param  int                                                      $userId
      * @param  int                                                      $page
+     * @param  int                                                      $itemsPerPage
      * @param  string                                                   $filter
      * @param  bool                                                     $canViewDeletedTopics
      * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
-    public function findAllSubscriptionsPaginatedForUserById($userId, $page, $filter, $canViewDeletedTopics = false)
+    public function findAllSubscriptionsPaginatedForUserById($userId, $page, $itemsPerPage = 25, $filter = 'unread', $canViewDeletedTopics = false)
     {
-        return $this->getRepository()->findAllSubscriptionsPaginatedForUserById($userId, $page, $filter, $canViewDeletedTopics = false);
+        return $this->getRepository()->findAllSubscriptionsPaginatedForUserById($userId, $page, $itemsPerPage, $filter, $canViewDeletedTopics);
     }
 
     /**
@@ -79,13 +80,14 @@ class SubscriptionModel extends BaseModel implements BaseModelInterface
      * @param  int                                                      $forumId
      * @param  int                                                      $userId
      * @param  int                                                      $page
+     * @param  int                                                      $itemsPerPage
      * @param  string                                                   $filter
      * @param  bool                                                     $canViewDeletedTopics
      * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
-    public function findAllSubscriptionsPaginatedForUserByIdAndForumById($forumId, $userId, $page, $filter, $canViewDeletedTopics = false)
+    public function findAllSubscriptionsPaginatedForUserByIdAndForumById($forumId, $userId, $page, $itemsPerPage = 25, $filter = 'unread', $canViewDeletedTopics = false)
     {
-        return $this->getRepository()->findAllSubscriptionsPaginatedForUserByIdAndForumById($forumId, $userId, $page, $filter, $canViewDeletedTopics = false);
+        return $this->getRepository()->findAllSubscriptionsPaginatedForUserByIdAndForumById($forumId, $userId, $page, $itemsPerPage, $filter, $canViewDeletedTopics);
     }
 
     /**

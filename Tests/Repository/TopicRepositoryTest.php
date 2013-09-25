@@ -33,7 +33,7 @@ class TopicRepositoryTest extends TestBase
 
 		$this->assertCount(3, $topics);
 
-		$pager = $this->getTopicModel()->findAllTopicsPaginatedByBoardId($board->getId(), 1, true);
+		$pager = $this->getTopicModel()->findAllTopicsPaginatedByBoardId($board->getId(), 1, 25, true);
 	
 		$foundTopics = $pager->getItems();
 		
@@ -155,5 +155,22 @@ class TopicRepositoryTest extends TestBase
 		$lastTopic = $this->getTopicModel()->findLastTopicForBoardByIdWithLastPost($topics[count($topics) - 1]->getBoard()->getId());
 
 		$this->assertSame($topics[count($topics) - 1]->getId(), $lastTopic->getId());
+	}
+
+	public function testGetTopicAndPostCountForBoardById()
+	{
+		$this->purge();
+	
+		$users = $this->addFixturesForUsers();
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$boards = $this->addFixturesForBoards($categories);
+		$topics = $this->addFixturesForTopics($boards);
+		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+	
+		$count = $this->getTopicModel()->getTopicAndPostCountForBoardById($boards[0]->getId());
+	
+		$this->assertSame(3, (int) $count['topicCount']);
+		$this->assertSame(9, (int) $count['postCount']);
 	}
 }

@@ -18,7 +18,8 @@ use Behat\Gherkin\Node\TableNode;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-use CCDNUser\UserBundle\Entity\User;
+//use CCDNUser\UserBundle\Entity\User;
+use CCDNForum\ForumBundle\Tests\Functional\src\Entity\User;
 
 use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Category;

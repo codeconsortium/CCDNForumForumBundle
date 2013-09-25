@@ -13,11 +13,10 @@
 
 namespace CCDNForum\ForumBundle\Model\Gateway;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface;
-use CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface;
 
 /**
  *
@@ -44,13 +43,6 @@ abstract class BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access protected
-     * @var \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
-     */
-    protected $doctrine;
-
-    /**
-     *
-     * @access protected
      * @var $paginator
      */
     protected $paginator;
@@ -58,45 +50,24 @@ abstract class BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access protected
-     * @var \Doctrine\ORM\EntityManager $em
+     * @var \Doctrine\Common\Persistence\ObjectManager $em
      */
     protected $em;
 
     /**
      *
-     * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface $modelBag
-     */
-    protected $modelBag;
-
-    /**
-     *
      * @access public
-     * @param \Doctrine\Bundle\DoctrineBundle\Registry                 $doctrine
-     * @param \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface $modelBag
-     * @param string                                                   $entityClass
+     * @param string                                     $entityClass
+     * @param \Doctrine\Common\Persistence\ObjectManager $em
+     * @param \Knp\Component\Pager\Paginator             $paginator
      */
-    public function __construct(Registry $doctrine, $paginator, ModelBagInterface $modelBag, $entityClass)
+    public function __construct($entityClass, ObjectManager $em, $paginator = null)
     {
-        $this->doctrine = $doctrine;
-
-        $this->paginator = $paginator;
-
-        $this->em = $doctrine->getEntityManager();
-
-        $this->modelBag = $modelBag;
-
         $this->entityClass = $entityClass;
-    }
 
-    /**
-     *
-     * @access public
-     * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
-     */
-    public function getModelBag()
-    {
-        return $this->modelBag;
+        $this->em = $em;
+        
+        $this->paginator = $paginator;
     }
 
     /**
@@ -112,7 +83,7 @@ abstract class BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @return \Doctrine\ORM\EntityRepository
+     * @return \CCDNForum\ForumBundle\Model\Repository\BaseRepositoryInterface
      */
     public function getRepository()
     {
@@ -254,7 +225,7 @@ abstract class BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access protected
-     * @param $item
+     * @param  Object                                              $item
      * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
      */
     protected function persist($item)
@@ -267,7 +238,7 @@ abstract class BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access protected
-     * @param $item
+     * @param  Object                                              $item
      * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
      */
     protected function remove($item)

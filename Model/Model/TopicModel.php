@@ -41,12 +41,13 @@ class TopicModel extends BaseModel implements BaseModelInterface
      * @access public
      * @param  int                                                      $boardId
      * @param  int                                                      $page
+     * @param  int                                                      $itemsPerPage
      * @param  bool                                                     $canViewDeletedTopics
      * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
-    public function findAllTopicsPaginatedByBoardId($boardId, $page, $canViewDeletedTopics = false)
+    public function findAllTopicsPaginatedByBoardId($boardId, $page, $itemsPerPage = 25, $canViewDeletedTopics = false)
     {
-        return $this->getRepository()->findAllTopicsPaginatedByBoardId($boardId, $page, $canViewDeletedTopics);
+        return $this->getRepository()->findAllTopicsPaginatedByBoardId($boardId, $page, $itemsPerPage, $canViewDeletedTopics);
     }
 
     /**
@@ -94,6 +95,17 @@ class TopicModel extends BaseModel implements BaseModelInterface
     public function findLastTopicForBoardByIdWithLastPost($boardId)
     {
         return $this->getRepository()->findLastTopicForBoardByIdWithLastPost($boardId);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int   $boardId
+     * @return Array
+     */
+    public function getTopicAndPostCountForBoardById($boardId)
+    {
+        return $this->getRepository()->getTopicAndPostCountForBoardById($boardId);
     }
 
     /**
@@ -199,17 +211,6 @@ class TopicModel extends BaseModel implements BaseModelInterface
         return $this->getManager()->reopen($topic);
     }
 
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic               $topic
-     * @return \CCDNForum\ForumBundle\Model\Manager\TopicManager
-     */
-    public function updateStats(Topic $topic)
-    {
-        return $this->getManager()->updateStats($topic);
-    }
-
 //    /**
 //     *
 //     * @access public
@@ -219,18 +220,6 @@ class TopicModel extends BaseModel implements BaseModelInterface
 //    public function findTheseTopicsById($topicIds = array())
 //    {
 //        return $this->getRepository()->findTheseTopicsById($topicsIds);
-//    }
-//
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  array                                               $topics
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function bulkUpdateStats($topics)
-//    {
-//        return $this->getManager()->bulkUpdateStats($topics);
 //    }
 //
 //    /**

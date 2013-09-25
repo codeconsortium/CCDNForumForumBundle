@@ -51,6 +51,7 @@ services:
         arguments:
             - @ccdn_forum_forum.model.board
             - @ccdn_forum_forum.model.topic
+            - @ccdn_forum_forum.model.post
         tags:
             - { name: kernel.event_subscriber }
 

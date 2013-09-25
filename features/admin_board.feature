@@ -62,7 +62,7 @@ Feature: Board Management
           | test_board_f2_c3_b3       | testing board 3      | 3       | test_category_f2_c3   |
 
 	Scenario: See Board list
-        Given I am on "/en/forum/admin/manage-boards/" 
+        Given I am on "/en/forum/admin/manage-boards/"
           And I should see "test_board_fn_cn_b1"
           And I should see "test_board_fn_cn_b2"
           And I should see "test_board_fn_cn_b3"

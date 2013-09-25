@@ -135,8 +135,6 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
 
         WebTestCase::assertCount(1, $items, 'The link was not found!');
 
-        //ld($items[0]);
-        //ldd($this->getPage());
         $this->getPage()->clickLink($items[0]->getAttribute('href'));
     }
 
@@ -206,46 +204,74 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
 
     /**
      *
-     * @Given /^I select from "([^"]*)" a date "([^"]*)" days from now$/
+     * @Given /^I select from "([^"]*)" a date "([^"]*)"$/
      */
-    public function iSelectFromADateDaysFromNow($cssQuery, $days)
+    public function iSelectFromADateDaysFromNow($cssQuery, $diff)
     {
         $items = array_map(
             function ($element) {
-                $id = $element->getAttribute('id');
-
-                if (substr($id, strlen($id) - strlen('year'), strlen($id)) == 'year') {
-                    $fieldName = 'year';
-                }
-
-                if (substr($id, strlen($id) - strlen('month'), strlen($id)) == 'month') {
-                    $fieldName = 'month';
-                }
-
-                if (substr($id, strlen($id) - strlen('day'), strlen($id)) == 'day') {
-                    $fieldName = 'day';
-                }
-
-                return array(
-                    $fieldName => $element
-                );
+				return $element;
             },
             $this->getPage()->findAll('css', $cssQuery)
         );
 
-        $fields = array();
-        foreach ($items as $item) {
-            foreach ($item as $key => $field) {
-                $fields[$key] = $field;
+		$fields = array();
+		foreach ($items as $item) {
+			$id = $item->getAttribute('id');
+			
+            if (substr($id, strlen($id) - strlen('year'), strlen($id)) == 'year') {
+                $fields['year'] = $item;
+				continue;
             }
-        }
-
+            
+            if (substr($id, strlen($id) - strlen('month'), strlen($id)) == 'month') {
+                $fields['month'] = $item;
+				continue;
+            }
+            
+            if (substr($id, strlen($id) - strlen('day'), strlen($id)) == 'day') {
+                $fields['day'] = $item;
+				continue;
+            }
+		}
+		
         WebTestCase::assertCount(3, $fields, 'Date fields could not be found!');
-
-        $date = new \Datetime('now + ' . $days . ' days');
+		WebTestCase::assertArrayHasKey('year', $fields, 'The year field could not be found!');
+		WebTestCase::assertArrayHasKey('month', $fields, 'The month field could not be found!');
+		WebTestCase::assertArrayHasKey('day', $fields, 'The day field could not be found!');
+		
+        $date = new \Datetime($diff);
+	
+		$filterFunc = function($options, $has) {
+			foreach ($options as $option) {
+				if ($option->getText() == $has) {
+					return true;
+				}
+			}
+			
+			return false;
+		};
+		
+		WebTestCase::assertTrue(call_user_func_array($filterFunc, array($fields['year']->findAll('css', 'option'), $date->format('Y'))));
+		WebTestCase::assertTrue(call_user_func_array($filterFunc, array($fields['month']->findAll('css', 'option'), $date->format('M'))));
+		WebTestCase::assertTrue(call_user_func_array($filterFunc, array($fields['day']->findAll('css', 'option'), $date->format('j'))));
 
         $fields['year']->selectOption($date->format('Y'));
         $fields['month']->selectOption($date->format('M'));
-        $fields['day']->selectOption($date->format('d'));
+        $fields['day']->selectOption($date->format('j'));
     }
+
+    /**
+    * @Then /^I dump the contents$/
+    */
+   public function iDumpTheContents()
+   {
+	   echo PHP_EOL;
+       echo print_r($this->getSession()->getPage()->getContent());
+	   echo PHP_EOL;
+	   die();
+       //or print_r($this->getSession()->getDriver()->getContent());
+       // The following produces "The current node list is empty."
+       //print_r($this->getSession()->getDriver()->getText('//html'));
+   }
 }

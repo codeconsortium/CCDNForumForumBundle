@@ -19,7 +19,7 @@
 	    <td class="left">
 	        <h4>
 	            <a href="{{- path('ccdn_forum_user_board_show', {'forumName': forum.name, 'boardId': board.getId }) -}}" title="{{- board.getName -}}">
-	                {{- truncDot(board.getName, ccdn_forum_forum.seo.title_length) -}}
+	                {{- board.getName -}}
 	            </a>
 	        </h4>
 
@@ -30,13 +30,13 @@
 
 	    <td class="center prominent-figure-large" style="width: 100px;">
 			<span class="label label-info lead" title="{{- board.getCachedTopicCount -}}">
-				{{- abbr_number(board.getCachedTopicCount) -}}
+				{{- board.getCachedTopicCount -}}
 			</span>
 	    </td>
 
 	    <td class="center prominent-figure-large" style="width: 100px;">
 			<span class="label label-info lead" title="{{- board.getCachedPostCount -}}">
-		        {{- abbr_number(board.getCachedPostCount) -}}
+		        {{- board.getCachedPostCount -}}
 			</span>
 	    </td>
 
@@ -44,8 +44,12 @@
 	        {%- if board.getLastPost -%}
 	            {%- if board.getLastPost.getTopic -%}
 
-	                {%- set page = divCeil(( board.getLastPost.getTopic.getCachedReplyCount + 1), topics_per_page) -%}
-
+					{#
+						@TODO figure a way to determine page in a more appropriate way
+		                {%- set page = divCeil(( board.getLastPost.getTopic.getCachedReplyCount + 1), topics_per_page) -%}
+					#}
+					{%- set page = 1 -%}
+					
 	                {{- 'generic.posted_by' | trans({'%name%': board.getLastPost.getCreatedBy}, 'CCDNForumForumBundle') |raw -}}
 
 	                <br>

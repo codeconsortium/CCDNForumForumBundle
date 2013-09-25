@@ -2,7 +2,7 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.post.delete_post.layout_template %}
 
-{% block title %}{{- truncDot('title.post.delete' |trans({'%post_id%': post.id}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
+{% block title %}{{- 'title.post.delete' |trans({'%post_id%': post.id}, 'CCDNForumForumBundle') -}}{% endblock %}
 
 
 {% block body_content %}

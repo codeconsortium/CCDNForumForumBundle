@@ -36,7 +36,6 @@ class SubscriptionManagerTest extends TestBase
 		
 	    $subscriptionFound = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
 		
-		$this->assertNotNull($subscriptionFound);
 		$this->assertTrue($subscriptionFound->isSubscribed());
 		$this->assertInternalType('integer', $subscriptionFound->getId());
     }
@@ -58,7 +57,6 @@ class SubscriptionManagerTest extends TestBase
 	
 	    $subscriptionFound = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
 		
-		$this->assertNotNull($subscriptionFound);
 		$this->assertFalse($subscriptionFound->isSubscribed());
 		$this->assertInternalType('integer', $subscriptionFound->getId());
     }

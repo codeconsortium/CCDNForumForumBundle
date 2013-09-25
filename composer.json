@@ -17,28 +17,34 @@
         "php": ">=5.3.2",
         "symfony/symfony": "2.1.*",
 		"symfony/framework-bundle": "~2.1",
+        "symfony/security-bundle": ">=2.1,<2.3-dev",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
         "doctrine/doctrine-bundle": "*",
-        "doctrine/data-fixtures": "1.0.*@dev",
-        "doctrine/doctrine-fixtures-bundle": "dev-master",
-		"knplabs/knp-paginator-bundle": "dev-master",
-		"codeconsortium/ccdn-component-common-bundle": "2.0.*@dev",
-		"codeconsortium/ccdn-component-crumb-trail-bundle": "2.0.*@dev"
+        "twig/extensions": "1.0.*@dev",
+		"knplabs/knp-paginator-bundle": "2.3.*@dev",
+        "sensio/framework-extra-bundle": "*@dev",
+		"friendsofsymfony/user-bundle": "~2.0@dev"
     },
     "require-dev": {
-        "twig/twig": "~1.5",
-        "doctrine/doctrine-bundle": "*",
-        "swiftmailer/swiftmailer": ">=4.3, <6.0",
-        "willdurand/propel-typehintable-behavior": "dev-master",
-        "symfony/yaml": "~2.1",
-        "symfony/validator": "~2.1"
+        "symfony/swiftmailer-bundle": "2.1.*",
+        "symfony/monolog-bundle": "*@stable",
+        "doctrine/data-fixtures": "1.0.*@dev",
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "incenteev/composer-parameter-handler": "v2.0.0",
+        "behat/behat": "2.4.*@stable",
+        "behat/mink": "1.4@stable",
+        "behat/mink-goutte-driver": "*",
+        "behat/mink-browserkit-driver": "*",
+        "behat/mink-selenium2-driver": "*",
+        "behat/mink-extension": "*",
+        "behat/symfony2-extension": "*",
+        "phpunit/phpunit": "3.7.*"
     },
 	"suggest": {
 		"reecefowell/jquery-timestamper": "dev-master",
 		"reecefowell/jquery-checkboxes": "dev-master",
-        "incenteev/composer-parameter-handler": "v2.0.0",
-        "doctrine/data-fixtures": "1.0.*@dev",
-        "doctrine/doctrine-fixtures-bundle": "dev-master"
+		"codeconsortium/ccdn-component-common-bundle": "2.0.*@dev",
+		"codeconsortium/ccdn-component-crumb-trail-bundle": "2.0.*@dev"
 	},
     "autoload": {
         "psr-0": { "CCDNForum\\ForumBundle": "" }

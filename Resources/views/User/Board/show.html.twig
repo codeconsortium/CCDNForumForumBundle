@@ -2,7 +2,7 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.board.show.layout_template %}
 
-{% block title %}{{- truncDot('title.board.show' | trans({'%board_name%': board.name}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
+{% block title %}{{- 'title.board.show' | trans({'%board_name%': board.name}, 'CCDNForumForumBundle') -}}{% endblock %}
 
 
 {% block body_content %}
@@ -11,16 +11,16 @@
 
 	<header class="row-fluid">
 		<div class="span6">
-		    <h3 title="{{- board.name -}}">{{- truncDot(board.name, ccdn_forum_forum.seo.title_length) -}}</h3>
+		    <h3 title="{{- board.name -}}">{{- board.name -}}</h3>
 		</div>
 		<div class="span6 content-right">
 		    <span class="label label-inverse prominent-figure" title="{{- board.cachedTopicCount -}}">
 				{{- 'board.count.topic' |trans({}, 'CCDNForumForumBundle') -}}
-				{{- abbr_number(board.cachedTopicCount) -}}
+				{{- board.cachedTopicCount -}}
 			</span>
 		    <span class="label label-inverse prominent-figure" title="{{- board.cachedPostCount -}}">
 				{{- 'board.count.post' |trans({}, 'CCDNForumForumBundle') -}}
-				{{- abbr_number(board.cachedPostCount) -}}
+				{{- board.cachedPostCount -}}
 			</span>
 		</div>
 	</header>

@@ -32,7 +32,7 @@ class ForumManagerTest extends TestBase
 		$this->assertTrue(is_numeric($forum->getId()));
 		$this->assertSame('NewForumTest', $forum->getName());
 	}
-	
+
 	public function testUpdateForum()
 	{
 		$this->purge();
@@ -46,7 +46,7 @@ class ForumManagerTest extends TestBase
 		$this->assertTrue(is_numeric($forum->getId()));
 		$this->assertEquals('TestForumUpdated', $forum->getName());
 	}
-	
+
 	public function testDeleteForum()
 	{
 		$this->purge();
@@ -60,7 +60,7 @@ class ForumManagerTest extends TestBase
 		
 		$this->assertNull($foundForum);
 	}
-	
+
 	public function testReassignCategoriesToForum()
 	{
 		$this->purge();

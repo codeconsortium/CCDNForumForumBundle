@@ -1,23 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit bootstrap="Tests/bootstrap.php" colors="true">
+<phpunit
+    backupGlobals               = "false"
+    backupStaticAttributes      = "false"
+    colors                      = "true"
+    convertErrorsToExceptions   = "true"
+    convertNoticesToExceptions  = "true"
+    convertWarningsToExceptions = "true"
+    processIsolation            = "false"
+    stopOnFailure               = "false"
+    syntaxCheck                 = "false"
+	bootstrap="Tests/Functional/bootstrap.php"
+>
 
     <testsuites>
         <testsuite name="CCDNForum ForumBundle Test Suite">
-            <directory>./Tests</directory>
             <directory>./Tests/Repository</directory>
-            <directory>./Tests/Manager</directory>
+			<directory>./Tests/Manager</directory>
         </testsuite>
     </testsuites>
-	<!--
+
     <php>
-        <server name="KERNEL_DIR" value="../../../../../app" />
+        <server name="KERNEL_DIR" value="Tests/Functional/app" />
     </php> 
-	-->
+
     <filter>
         <whitelist>
             <directory suffix=".php">./Tests</directory>
+			<exclude>
+		        <directory>./Resources</directory>
+		        <directory>./vendor</directory>
+			</exclude>
         </whitelist>
+	    <blacklist>
+			<directory>cache</directory>
+			<directory>config</directory>
+			<directory>data</directory>
+			<directory>log</directory>
+			<directory>vendor</directory>
+			<directory>lib/vendor</directory>
+			<directory>plugins</directory>
+			<directory>web</directory>
+			<directory>Resources</directory>
+	    </blacklist>
     </filter>
 
 </phpunit>

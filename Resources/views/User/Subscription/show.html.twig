@@ -2,9 +2,9 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.subscription.list.layout_template %}
 
-{% block title %}{{- truncDot('title.subscription.index' | trans({}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
+{% block title %}{{- 'title.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}{% endblock %}
 
-{%- block sub_title -%}{{- truncDot('title.subscription.index' | trans({}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{%- endblock sub_title -%}
+{%- block sub_title -%}{{- 'title.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}{%- endblock sub_title -%}
 
 
 {%- macro subscription_tab(label, forum_name, filter_key, filter_value, count_read, count_unread, count_total) -%}

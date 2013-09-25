@@ -11,11 +11,23 @@
  * file that was distributed with this source code.
  */
 
-if (!is_file($autoloadFile = __DIR__.'/../vendor/autoload.php')) {
-    throw new \LogicException('Could not find autoload.php in vendor/. Did you run "composer install --dev"?');
+use Doctrine\Common\Annotations\AnnotationRegistry;
+
+if (!file_exists($file = __DIR__.'/../../vendor/autoload.php')) {
+    throw new \RuntimeException('Install the dependencies to run the test suite.');
 }
 
-require $autoloadFile;
+$loader = require $file;
+AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
+
+//if (!is_file($autoloadFile = __DIR__.'/app/autoload.php')) {
+//    throw new \LogicException('Could not find autoload.php in vendor/. Did you run "composer install --dev"?');
+//}
+//
+//require $autoloadFile;
+
+
+
 
 //if (!@include __DIR__ . '/../../../../../../app/autoload.php') {
 //    die(<<<'EOT'

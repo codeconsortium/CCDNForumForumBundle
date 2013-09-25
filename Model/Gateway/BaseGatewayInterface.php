@@ -13,10 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Model\Gateway;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
-
-use CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface;
 
 /**
  *
@@ -34,18 +32,11 @@ interface BaseGatewayInterface
     /**
      *
      * @access public
-     * @param \Doctrine\Bundle\DoctrineBundle\Registry                 $doctrine
-     * @param \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface $modelBag
-     * @param string                                                   $entityClass
+     * @param string                                     $entityClass
+     * @param \Doctrine\Common\Persistence\ObjectManager $em
+     * @param \Knp\Component\Pager\Paginator             $paginator
      */
-    public function __construct(Registry $doctrine, $paginator, ModelBagInterface $modelBag, $entityClass);
-
-    /**
-     *
-     * @access public
-     * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
-     */
-    public function getModelBag();
+    public function __construct($entityClass, ObjectManager $em, $paginator = null);
 
     /**
      *
@@ -57,7 +48,7 @@ interface BaseGatewayInterface
     /**
      *
      * @access public
-     * @return \Doctrine\ORM\EntityRepository
+     * @return \CCDNForum\ForumBundle\Model\Repository\BaseRepositoryInterface
      */
     public function getRepository();
 

@@ -13,13 +13,11 @@
 
 namespace CCDNForum\ForumBundle\Model\Manager;
 
-use Symfony\Component\Security\Core\SecurityContext;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface;
 use CCDNForum\ForumBundle\Model\Manager\BaseManagerInterface;
-use CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface;
 
 /**
  *
@@ -39,23 +37,9 @@ abstract class BaseManager implements BaseManagerInterface
     /**
      *
      * @access protected
-     * @var \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
-     */
-    protected $doctrine;
-
-    /**
-     *
-     * @access protected
      * @var \Doctrine\ORM\EntityManager $em
      */
     protected $em;
-
-    /**
-     *
-     * @access protected
-     * @var \Symfony\Component\Security\Core\SecurityContext $securityContext
-     */
-    protected $securityContext;
 
     /**
      *
@@ -67,73 +51,40 @@ abstract class BaseManager implements BaseManagerInterface
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Manager\Bag\ManagerBagInterface $modelBag
+     * @var \CCDNForum\ForumBundle\Model\Model\BaseModelInterface $model
      */
-    protected $modelBag;
-
     protected $model;
 
     /**
      *
      * @access public
-     * @param \Doctrine\Bundle\DoctrineBundle\Registry                 $doctrine
-     * @param \Symfony\Component\Security\Core\SecurityContext         $securityContext
-     * @param \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface      $gateway
-     * @param \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface $modelBag
+     * @param \Doctrine\Common\Persistence\ObjectManager          $em
+     * @param \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface $gateway
      */
-    public function __construct(Registry $doctrine, SecurityContext $securityContext, BaseGatewayInterface $gateway, ModelBagInterface $modelBag)
+    public function __construct(ObjectManager $em, BaseGatewayInterface $gateway)
     {
-        $this->doctrine = $doctrine;
-
-        $this->em = $doctrine->getEntityManager();
-
-        $this->securityContext = $securityContext;
+        $this->em = $em;
 
         $this->gateway = $gateway;
-
-        $this->modelBag = $modelBag;
     }
 
     /**
      *
      * @access public
-     * @return \CCDNForum\ForumBundle\Model\Model\Bag\ModelBagInterface
+     * @param  \CCDNForum\ForumBundle\Model\Model\BaseModelInterface        $model
+     * @return \CCDNForum\ForumBundle\Model\Repository\BaseManagerInterface
      */
-    public function getModelBag()
-    {
-        return $this->modelBag;
-    }
-
     public function setModel($model)
     {
         $this->model = $model;
+
+        return $this;
     }
 
     /**
      *
      * @access public
-     * @param  string $role
-     * @return bool
-     */
-    public function isGranted($role)
-    {
-        return $this->securityContext->isGranted($role);
-    }
-
-    /**
-     *
-     * @access public
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
-    public function getUser()
-    {
-        return $this->securityContext->getToken()->getUser();
-    }
-
-    /**
-     *
-     * @access public
-     * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface
      */
     public function getGateway()
     {

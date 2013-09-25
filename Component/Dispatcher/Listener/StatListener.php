@@ -52,14 +52,23 @@ class StatListener implements EventSubscriberInterface
 
     /**
      *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Model\Model\PostModel $postModel
+     */
+    protected $postModel;
+
+    /**
+     *
      * @access public
      * @param \CCDNForum\ForumBundle\Model\Model\boardModel $boardModel
      * @param \CCDNForum\ForumBundle\Model\Model\topicModel $topicModel
+     * @param \CCDNForum\ForumBundle\Model\Model\PostModel  $postModel
      */
-    public function __construct($boardModel, $topicModel)
+    public function __construct($boardModel, $topicModel, $postModel)
     {
         $this->boardModel = $boardModel;
         $this->topicModel = $topicModel;
+        $this->postModel = $postModel;
     }
 
     /**
@@ -125,7 +134,17 @@ class StatListener implements EventSubscriberInterface
     protected function updateTopicStats(Topic $topic)
     {
         if ($topic->getId()) {
-            $this->topicModel->updateStats($topic);
+            // Get stats.
+            $topicPostCount = $this->postModel->countPostsForTopicById($topic->getId());
+            $topicFirstPost = $this->postModel->getFirstPostForTopicById($topic->getId());
+            $topicLastPost = $this->postModel->getLastPostForTopicById($topic->getId());
+
+            // Set the board / topic last post.
+            $topic->setCachedReplyCount($topicPostCount > 0 ? --$topicPostCount : 0);
+            $topic->setFirstPost($topicFirstPost ?: null);
+            $topic->setLastPost($topicLastPost ?: null);
+
+            $this->topicModel->updateTopic($topic);
         }
     }
 
@@ -141,12 +160,85 @@ class StatListener implements EventSubscriberInterface
                 $board = $topic->getBoard();
 
                 if ($board) {
-                    $this->boardModel->updateStats($board);
+                    if ($board->getId()) {
+                        $stats = $this->topicModel->getTopicAndPostCountForBoardById($board->getId());
+    //
+    //			        // set the board topic / post count
+    //			        $board->setCachedTopicCount($stats['topicCount']);
+    //			        $board->setCachedPostCount($stats['postCount']);
+
+                        $lastTopic = $this->topicModel->findLastTopicForBoardByIdWithLastPost($board->getId());
+
+                        // set last_post for board
+                        if ($lastTopic) {
+                            $board->setLastPost($lastTopic->getLastPost() ?: null);
+                        } else {
+                            $board->setLastPost(null);
+                        }
+
+                        $this->boardModel->updateBoard($board);
+                    }
                 }
             }
         }
     }
 
+//    /**
+//     *
+//     * @access public
+//     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
+//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+//     */
+//    public function updateTopicStats(Topic $topic)
+//    {
+//        $postModel = $this->model->getModelBag()->getPostModel();
+//
+//        // Get stats.
+//        $topicPostCount = $postModel->countPostsForTopicById($topic->getId());
+//        $topicFirstPost = $postModel->getFirstPostForTopicById($topic->getId());
+//        $topicLastPost = $postModel->getLastPostForTopicById($topic->getId());
+//
+//        // Set the board / topic last post.
+//        $topic->setCachedReplyCount($topicPostCount > 0 ? --$topicPostCount : 0);
+//        $topic->setFirstPost($topicFirstPost ?: null);
+//        $topic->setLastPost($topicLastPost ?: null);
+//
+//        $this->persist($topic)->flush();
+//
+//        return $this;
+//    }
+
+//    /**
+//     *
+//     * @access public
+//     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
+//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+//     */
+//    public function updateBoardStats(Board $board)
+//    {
+//        $boardModel = $this->model->getModelBag()->getBoardModel();
+//
+//        $stats = $boardModel->getTopicAndPostCountForBoardById($board->getId());
+//
+//        // set the board topic / post count
+//        $board->setCachedTopicCount($stats['topicCount']);
+//        $board->setCachedPostCount($stats['postCount']);
+//
+//        $topicModel = $this->model->getModelBag()->getTopicModel();
+//
+//        $lastTopic = $topicModel->findLastTopicForBoardByIdWithLastPost($board->getId());
+//
+//        // set last_post for board
+//        if ($lastTopic) {
+//            $board->setLastPost($lastTopic->getLastPost() ?: null);
+//        } else {
+//            $board->setLastPost(null);
+//        }
+//
+//        $this->persist($board)->flush();
+//
+//        return $this;
+//    }
 //	protected function updateUserStats(Topic $topic)
 //	{
 //

@@ -98,7 +98,6 @@ class TopicManagerTest extends TestBase
 		$foundTopic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topic->getId(), true);
 		
 		$this->assertTrue(is_numeric($foundTopic->getId()));
-		$this->assertTrue(is_numeric($foundTopic->getCachedViewCount()));
 		$this->assertSame(1, $foundTopic->getCachedViewCount());
 	}
 
@@ -207,29 +206,5 @@ class TopicManagerTest extends TestBase
 		
 		$this->em->refresh($topics[0]);
 		$this->assertFalse($topics[0]->isClosed());
-	}
-
-    public function testUpdateStats()
-	{
-		$this->purge();
-		
-		$users = $this->addFixturesForUsers();
-		$forums = $this->addFixturesForForums();
-		$categories = $this->addFixturesForCategories($forums);
-		$boards = $this->addFixturesForBoards($categories);
-		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
-		
-		$topic = $topics[0];
-
-		$this->getTopicModel()->updateStats($topic);
-
-		$tPosts = $topic->getPosts();
-		$firstPost = $tPosts[0];
-		$lastPost = $tPosts[count($tPosts) - 1];
-		
-		$this->assertSame(2, $topic->getCachedReplyCount());
-		$this->assertSame($firstPost->getId(), $topic->getFirstPost()->getId());
-		$this->assertSame($lastPost->getId(), $topic->getLastPost()->getId());
 	}
 }

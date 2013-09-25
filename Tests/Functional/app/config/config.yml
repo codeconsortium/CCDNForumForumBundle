@@ -1,0 +1,117 @@
+framework:
+    test: ~
+    #esi:             ~
+    #translator:      { fallback: "%locale%" }
+    translator: ~
+    secret:          "secret"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: "%kernel.debug%"
+    form:            true
+    csrf_protection: true
+    validation:      { enable_annotations: true }
+    templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
+    default_locale:  "en"
+    trust_proxy_headers: false # Deprecated in 2.0; will be removed in 2.3 (used trusted_proxies instead)
+    trusted_proxies: ~
+    session:
+        storage_id: session.storage.mock_file
+    profiler: { only_exceptions: false }
+
+#monolog:
+#    handlers:
+#      main:
+#        type: test
+monolog:
+    handlers:
+        main:
+            type:  stream
+            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+        firephp:
+            type:  firephp
+            level: info
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form:
+        resources: ~
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     127.0.0.1
+        port:     null
+        dbname:   ccdndev_travis_test
+        user:     root
+        password: ~
+        charset:  UTF8
+    orm:
+        default_entity_manager: default
+        auto_generate_proxy_classes: "%kernel.debug%"
+        #auto_mapping: true
+        resolve_target_entities:
+            # For testing purposes only
+            'Symfony\Component\Security\Core\User\UserInterface': 'CCDNForum\ForumBundle\Tests\Functional\src\Entity\User'
+        entity_managers:
+            default:
+                mappings:
+                    CCDNForumForumBundle:
+                        mapping:              true
+                        type:                 yml
+                        dir:                  "Resources/config/doctrine"
+                        alias:                ~
+                        prefix:               CCDNForum\ForumBundle\Entity
+                        is_bundle:            true
+                    CCDNForumForumBundleUserEntity:
+                        mapping:              true
+                        type:                 yml
+                        dir:                  "Tests/Functional/src/Resources/config/doctrine"
+                        alias:                ~
+                        prefix:               CCDNForum\ForumBundle\Tests\Functional\src\Entity
+                        is_bundle:            false
+
+security:
+    role_hierarchy:
+        ROLE_USER:        ROLE_USER
+        ROLE_MODERATOR:   [ROLE_USER]
+        ROLE_ADMIN:       [ROLE_USER, ROLE_MODERATOR]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_MODERATOR, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
+#        in_memory:
+#            memory:
+#                users:
+#                    user:       { password: root, roles: [ 'ROLE_USER' ] }
+#                    moderator:  { password: root, roles: [ 'ROLE_MODERATOR' ] }
+#                    admin:      { password: root, roles: [ 'ROLE_ADMIN' ] }
+    firewalls:
+        main:
+            http_basic:
+            #switch_user: true
+            #pattern: ^/
+            #logout:
+            #anonymous: true
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+            remember_me:
+                key: secret
+                lifetime: 604800
+    access_control:
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        # You must uncomment the two following rules to restrict access to paths
+        # starting with the /_internal prefix to only localhost
+        #- { path: ^/_internal/secure, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
+        #- { path: ^/_internal/secure, roles: ROLE_NO_ACCESS }
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: CCDNForum\ForumBundle\Tests\Functional\src\Entity\User

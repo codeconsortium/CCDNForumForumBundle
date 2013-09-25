@@ -90,17 +90,6 @@ class BoardModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  int   $boardId
-     * @return Array
-     */
-    public function getTopicAndPostCountForBoardById($boardId)
-    {
-        return $this->getRepository()->getTopicAndPostCountForBoardById($boardId);
-    }
-
-    /**
-     *
-     * @access public
      * @return Array
      */
     public function getBoardCount()
@@ -165,26 +154,4 @@ class BoardModel extends BaseModel implements BaseModelInterface
     {
         return $this->getManager()->reorderBoards($boards, $boardShift, $direction);
     }
-
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Board               $board
-     * @return \CCDNForum\ForumBundle\Model\Manager\BoardManager
-     */
-    public function updateStats(Board $board)
-    {
-        return $this->getManager()->updateStats($board);
-    }
-
-//    /**
-//     *
-//     * @access public
-//     * @param  Array                                               $boards
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function bulkUpdateStats($boards)
-//    {
-//        return $this->getManager()->bulkUpdateStats($boards);
-//    }
 }

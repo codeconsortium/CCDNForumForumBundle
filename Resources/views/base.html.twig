@@ -5,11 +5,12 @@
         <title>{%- block title -%}{%- endblock -%}</title>
 
 		{%- block stylesheets -%}
+		{#
 			{%- stylesheets '@bootstrap_less' '@common_less' '@crumbs_less' '@highlight_less' combine=true -%}
 				<link href="{{- asset_url -}}" type="text/css" rel="stylesheet">
 			{%- endstylesheets -%}
+		#}
 		{%- endblock -%}
-
     </head>
     <body>
 
@@ -78,9 +79,11 @@
 		</footer>
 
 		{%- block javascripts -%}
+		{#
 			{% javascripts '@jquery_js' '@bootstrap_js' '@moment_js' '@timestamper_js' '@checkboxes_js' filter='?yui_js' combine=false %}
 				<script src="{{- asset_url -}}"></script>
 			{%- endjavascripts -%}
+		#}
 		{%- endblock -%}
 
 		<script type='text/javascript'>

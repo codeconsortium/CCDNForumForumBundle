@@ -33,7 +33,7 @@ class CategoryManagerTest extends TestBase
 		$this->assertTrue(is_numeric($category->getId()));
 		$this->assertSame('NewCategoryTest', $category->getName());
 	}
-	
+
 	public function testUpdateCategory()
 	{
 		$this->purge();
@@ -47,7 +47,7 @@ class CategoryManagerTest extends TestBase
 		$this->assertTrue(is_numeric($category->getId()));
 		$this->assertEquals('CategoryTestUpdated', $category->getName());
 	}
-	
+
 	public function testDeleteCategory()
 	{
 		$this->purge();
@@ -61,7 +61,7 @@ class CategoryManagerTest extends TestBase
 		
 		$this->assertNull($foundCategory);
 	}
-	
+
 	public function testReassignBoardsToCategory()
 	{
 		$this->purge();
@@ -83,10 +83,10 @@ class CategoryManagerTest extends TestBase
 		$this->em->refresh($category2);
 		$this->assertCount(6, $category2->getBoards());
 	}
-	
+
 	const REORDER_UP = 0;
 	const REORDER_DOWN = 1;
-	
+
 	public function testReorderCategories()
 	{
 		$this->purge();

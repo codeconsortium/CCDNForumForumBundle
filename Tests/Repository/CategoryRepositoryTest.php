@@ -54,7 +54,6 @@ class CategoryRepositoryTest extends TestBase
 		
 		$foundCategories = $this->getCategoryModel()->findAllCategoriesWithBoardsForForumByName($forum->getName());
 			
-		$this->assertNotNull($foundCategories);
 		$this->assertCount(3, $foundCategories);
 		$this->assertCount(3, $foundCategories[0]->getBoards());
 		$this->assertCount(3, $foundCategories[1]->getBoards());
@@ -70,7 +69,6 @@ class CategoryRepositoryTest extends TestBase
 		
 		$foundCategory = $this->getCategoryModel()->findOneCategoryById($category->getId());
 		
-		$this->assertNotNull($foundCategory);
 		$this->assertEquals($foundCategory->getId(), $category->getId());
 	}
 
@@ -83,7 +81,6 @@ class CategoryRepositoryTest extends TestBase
 		
 		$foundCategory = $this->getCategoryModel()->findOneCategoryByIdWithBoards($category->getId());
 		
-		$this->assertNotNull($foundCategory);
 		$this->assertEquals($foundCategory->getId(), $category->getId());
 	}
 }

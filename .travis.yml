@@ -3,18 +3,21 @@ language: php
 php:
     - 5.3
     - 5.4
-    - 5.5
-
-matrix:
-    allow_failures:
-        - php: 5.5
-
-env:
-    - SYMFONY_VERSION="2.1.*" DB=mysql
 
 before_script:
-    - composer self-update
-    - composer install --dev --prefer-source
+    - curl -s http://getcomposer.org/installer | php
+    - php composer.phar --dev install
+    - mysql -e 'CREATE DATABASE ccdndev_travis_test'
+    - php ./Tests/Functional/app/console doctrine:schema:create
+    - php ./Tests/Functional/app/console doctrine:schema:update --force
+
+script:
+    - 'phpunit -c ./ --testdox'
+    - './vendor/bin/behat'
+
+after_script:
+    - mysql -e 'DROP DATABASE ccdndev_travis_test;'
 
 notifications:
     email: status@codeconsortium.com
+

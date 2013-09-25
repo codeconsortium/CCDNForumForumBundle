@@ -31,7 +31,7 @@ class PostRepositoryTest extends TestBase
 		$topic = $this->addNewTopic('testFindAllPostsPaginatedByTopicId', $board);
 		$posts = $this->addFixturesForPosts(array($topic), $users['tom']);
 	
-		$pager = $this->getPostModel()->findAllPostsPaginatedByTopicId($topic->getId(), 1, true);
+		$pager = $this->getPostModel()->findAllPostsPaginatedByTopicId($topic->getId(), 1, 25, true);
 		
 		$posts = $pager->getItems();
 	

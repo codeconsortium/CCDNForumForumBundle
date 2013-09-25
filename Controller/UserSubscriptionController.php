@@ -99,10 +99,13 @@ class UserSubscriptionController extends BaseController
         }
 
         // Use this for the ALL/READ/UNREAD tab
+        /** @todo use the PaginationConfigHelper class to set this value **/
+        $itemsPerPage = 10;
+
         if ($forumName == '~') {
-            $subscriptionPager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserById($this->getUser()->getId(), $page, $filter, true);
+            $subscriptionPager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserById($this->getUser()->getId(), $page, $itemsPerPage, $filter, true);
         } else {
-            $subscriptionPager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserByIdAndForumById($forum->getId(), $this->getUser()->getId(), $page, $filter, true);
+            $subscriptionPager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserByIdAndForumById($forum->getId(), $this->getUser()->getId(), $page, $itemsPerPage, $filter, true);
         }
 
         // this is necessary for working out the last page for each topic.

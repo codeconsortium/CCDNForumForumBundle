@@ -1,0 +1,21 @@
+{%- spaceless -%}
+	<ol class="breadcrumb">
+	{%- for key, crumb in crumbs.getTrail -%}
+		{%- if key == crumbs.count -%}
+			<li>
+				<a href="{{- crumb.url -}}" title="{{- crumb.label -}}">{{- crumb.label |raw -}}</a>
+			</li>
+		{%- else -%}
+			<li>
+				<a href="{{- crumb.url -}}" title="{{- crumb.label -}}">
+					{%- if key == 0 -%}
+						{{- crumb.label |raw -}}
+					{%- else -%}
+						{{- crumb.label |raw -}}
+					{%- endif -%}
+				</a>
+			</li>
+		{%- endif -%}
+	{%- endfor -%}
+	</ol>
+{%- endspaceless -%}

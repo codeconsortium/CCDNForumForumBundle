@@ -2,7 +2,7 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.topic.show.layout_template %}
 
-{% block title %}{{- truncDot('title.topic.show' | trans({'%topic_title%': topic.getTitle |capitalize}, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
+{% block title %}{{- 'title.topic.show' | trans({'%topic_title%': topic.getTitle |capitalize}, 'CCDNForumForumBundle') -}}{% endblock %}
 
 {%- block body_content -%}
 
@@ -10,23 +10,23 @@
 
 	<header class="row-fluid">
 		<div class="span6">
-		    <h3 title="{{- topic.getTitle -}}">{{- truncDot(topic.getTitle |capitalize, 70) -}}</h3>
+		    <h3 title="{{- topic.getTitle -}}">{{- topic.getTitle |capitalize -}}</h3>
 		</div>
 		<div class="span6 content-right">
 		    <span class="label label-inverse prominent-figure" title="{{- topic.cachedReplyCount -}}">
 				{{- 'topic.count.replies' |trans({}, 'CCDNForumForumBundle') -}}
-				{{- abbr_number(topic.cachedReplyCount) -}}
+				{{- topic.cachedReplyCount -}}
 			</span>
 
 		    <span class="label label-inverse prominent-figure" title="{{- topic.cachedViewCount -}}">
 				{{- 'topic.count.views' |trans({}, 'CCDNForumForumBundle') -}}
-				{{- abbr_number(topic.cachedViewCount) -}}
+				{{- topic.cachedViewCount -}}
 			</span>
 
 		    {%- if subscription_count is defined -%}
 		        <span class="label label-inverse prominent-figure" title="{{- subscription_count -}}">
 					{{- 'topic.count.subscriptions' |trans({}, 'CCDNForumForumBundle') -}}
-					{{- abbr_number(subscription_count) -}}
+					{{- subscription_count -}}
 				</span>
 		    {%- endif -%}
 		</div>

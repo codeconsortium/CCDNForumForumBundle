@@ -36,10 +36,11 @@ class TopicRepository extends BaseRepository implements BaseRepositoryInterface
      * @access public
      * @param  int                                                      $boardId
      * @param  int                                                      $page
+     * @param  int                                                      $itemsPerPage
      * @param  bool                                                     $canViewDeletedTopics
      * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
-    public function findAllTopicsPaginatedByBoardId($boardId, $page, $canViewDeletedTopics = false)
+    public function findAllTopicsPaginatedByBoardId($boardId, $page, $itemsPerPage = 25, $canViewDeletedTopics = false)
     {
         if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
             throw new \Exception('Board id "' . $boardId . '" is invalid!');
@@ -82,7 +83,7 @@ class TopicRepository extends BaseRepository implements BaseRepositoryInterface
             ->orderBy('lp.createdDate', 'DESC')
         ;
 
-        return $this->gateway->paginateQuery($qb, $this->getTopicsPerPageOnBoards(), $page);
+        return $this->gateway->paginateQuery($qb, $itemsPerPage, $page);
     }
 
     /**
@@ -258,37 +259,38 @@ class TopicRepository extends BaseRepository implements BaseRepositoryInterface
         return $this->gateway->findTopic($qb, $params);
     }
 
-//    /**
-//     *
-//     * @access public
-//     * @param  int   $boardId
-//     * @return Array
-//     */
-//    public function getPostCountForTopicById($topicId)
-//    {
-//        if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
-//            throw new \Exception('Topic id "' . $topicId . '" is invalid!');
-//        }
-//
-//        $qb = $this->getQueryBuilder();
-//
-//        $topicEntityClass = $this->managerBag->getTopicManager()->getGateway()->getEntityClass();
-//
-//        $qb
-//            ->select('COUNT(DISTINCT p.id) AS postCount')
-//            ->from($topicEntityClass, 't')
-//            ->leftJoin('t.posts', 'p')
-//            ->where('t.id = :topicId')
-//            ->setParameter(':topicId', $topicId);
-//
-//        try {
-//            return $qb->getQuery()->getSingleResult();
-//        } catch (\Doctrine\ORM\NoResultException $e) {
-//            return array('postCount' => null);
-//        } catch (\Exception $e) {
-//            return array('postCount' => null);
-//        }
-//    }
+    /**
+     *
+     * @access public
+     * @param  int   $boardId
+     * @return Array
+     */
+    public function getTopicAndPostCountForBoardById($boardId)
+    {
+        if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
+            throw new \Exception('Board id "' . $boardId . '" is invalid!');
+        }
+
+        $qb = $this->getQueryBuilder();
+
+        $qb
+            ->select('COUNT(DISTINCT t.id) AS topicCount, COUNT(DISTINCT p.id) AS postCount')
+            ->from($this->gateway->getEntityClass(), 't')
+            ->leftJoin('t.posts', 'p')
+            ->where('t.board = :boardId')
+            ->andWhere('t.isDeleted = FALSE')
+            ->setParameter(':boardId', $boardId)
+        ;
+
+        try {
+            return $qb->getQuery()->getSingleResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return array('topicCount' => null, 'postCount' => null);
+        } catch (\Exception $e) {
+            return array('topicCount' => null, 'postCount' => null);
+        }
+    }
+
 //
 //    /**
 //     *

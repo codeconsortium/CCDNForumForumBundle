@@ -128,11 +128,12 @@ class SubscriptionRepository extends BaseRepository implements BaseRepositoryInt
      * @param  int                                                      $forumId
      * @param  int                                                      $userId
      * @param  int                                                      $page
+     * @param  int                                                      $itemsPerPage
      * @param  string                                                   $filter
      * @param  bool                                                     $canViewDeletedTopics
      * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
-    public function findAllSubscriptionsPaginatedForUserById($userId, $page, $filter, $canViewDeletedTopics = false)
+    public function findAllSubscriptionsPaginatedForUserById($userId, $page, $itemsPerPage = 25, $filter, $canViewDeletedTopics = false)
     {
         if (null == $userId || ! is_numeric($userId) || $userId == 0) {
             throw new \Exception('User id "' . $userId . '" is invalid!');
@@ -191,7 +192,7 @@ class SubscriptionRepository extends BaseRepository implements BaseRepositoryInt
             ->orderBy('lp.createdDate', 'DESC')
         ;
 
-        return $this->gateway->paginateQuery($qb, $this->getTopicsPerPageOnSubscriptions(), $page);
+        return $this->gateway->paginateQuery($qb, $itemsPerPage, $page);
     }
 
     /**
@@ -200,11 +201,12 @@ class SubscriptionRepository extends BaseRepository implements BaseRepositoryInt
      * @param  int                                                      $forumId
      * @param  int                                                      $userId
      * @param  int                                                      $page
+     * @param  int                                                      $itemsPerPage
      * @param  string                                                   $filter
      * @param  bool                                                     $canViewDeletedTopics
      * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
-    public function findAllSubscriptionsPaginatedForUserByIdAndForumById($forumId, $userId, $page, $filter, $canViewDeletedTopics = false)
+    public function findAllSubscriptionsPaginatedForUserByIdAndForumById($forumId, $userId, $page, $itemsPerPage = 25, $filter = 'unread', $canViewDeletedTopics = false)
     {
         if (null == $forumId || ! is_numeric($forumId) || $forumId == 0) {
             throw new \Exception('Forum id "' . $forumId . '" is invalid!');
@@ -272,7 +274,7 @@ class SubscriptionRepository extends BaseRepository implements BaseRepositoryInt
             ->orderBy('lp.createdDate', 'DESC')
         ;
 
-        return $this->gateway->paginateQuery($qb, $this->getTopicsPerPageOnSubscriptions(), $page);
+        return $this->gateway->paginateQuery($qb, $itemsPerPage, $page);
     }
 
     /**

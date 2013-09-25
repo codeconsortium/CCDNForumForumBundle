@@ -33,7 +33,7 @@
 						{%- endif -%}
 
 						<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': topic.board.category.forum.name, 'topicId': topic.getId }) -}}" title="{{- topic.getTitle -}}">
-							{{- truncDot(topic.getTitle, ccdn_forum_forum.board.show.topic_title_truncate) |title -}}
+							{{- topic.getTitle |title -}}
 						</a>
 
 						<br>
@@ -52,12 +52,12 @@
 					</td>
 					<td class="center prominent-figure">
 						<span class="label label-info lead" title="{{- topic.getCachedReplyCount -}}">
-							{{- abbr_number(topic.getCachedReplyCount) -}}
+							{{- topic.getCachedReplyCount -}}
 						</span>
 					</td>
 					<td class="center prominent-figure">
 						<span class="label label-info lead" title="{{- topic.getCachedViewCount -}}">
-							{{- abbr_number(topic.getCachedViewCount) -}}
+							{{- topic.getCachedViewCount -}}
 						</span>
 					</td>
 					<td class="center">
@@ -65,8 +65,12 @@
 
 			                {{- 'generic.posted_by' | trans({'%name%': topic.getLastPost.getCreatedBy}, 'CCDNForumForumBundle') |raw -}}
 
-			                {%- set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) -%}
-
+							{#
+								@TODO figure a way to determine page in a more appropriate way
+				                {%- set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) -%}
+							#}
+							{%- set page = 1 -%}
+							
 							<br>
 
 							{%- if page < 2 -%}
@@ -77,7 +81,7 @@
 									</abbr>
 								</a>
 							{%- else -%}
-								<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': topic.board.category.forum.name, 'topicId': topic.getId, 'page':page }) -}}#{{- topic.getLastPost.getId -}}">
+								<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': topic.board.category.forum.name, 'topicId': topic.getId, 'page': page }) -}}#{{- topic.getLastPost.getId -}}">
 									<i class="icon-arrow-right"></i>
 									<abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 										{{- topic.getLastPost.getCreatedDate |date(ccdn_forum_forum.board.show.last_post_datetime_format) -}}

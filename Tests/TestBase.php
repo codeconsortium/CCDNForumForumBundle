@@ -17,14 +17,15 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 
-use CCDNUser\UserBundle\Entity\User;
-
 use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Category;
 use CCDNForum\ForumBundle\Entity\Board;
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
 use CCDNForum\ForumBundle\Entity\Subscription;
+
+use CCDNForum\ForumBundle\Tests\Functional\src\Entity\User;
+//use CCDNUser\UserBundle\Entity\User;
 
 class TestBase extends WebTestCase
 {
@@ -56,6 +57,17 @@ class TestBase extends WebTestCase
 		
 		$this->purge();
     }
+
+	/*
+     *
+     * Close doctrine connections to avoid having a 'too many connections'
+     * message when running many tests
+     */
+	public function tearDown(){
+		$this->container->get('doctrine')->getConnection()->close();
+	
+		parent::tearDown();
+	}
 
     protected function purge()
     {

@@ -217,47 +217,6 @@ class TopicManager extends BaseManager implements BaseManagerInterface
         return $this;
     }
 
-    /**
-     *
-     * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-     */
-    public function updateStats(Topic $topic)
-    {
-        $postModel = $this->model->getModelBag()->getPostModel();
-
-        // Get stats.
-        $topicPostCount = $postModel->countPostsForTopicById($topic->getId());
-        $topicFirstPost = $postModel->getFirstPostForTopicById($topic->getId());
-        $topicLastPost = $postModel->getLastPostForTopicById($topic->getId());
-
-        // Set the board / topic last post.
-        $topic->setCachedReplyCount($topicPostCount > 0 ? --$topicPostCount : 0);
-        $topic->setFirstPost($topicFirstPost ?: null);
-        $topic->setLastPost($topicLastPost ?: null);
-
-        $this->persist($topic)->flush();
-
-        return $this;
-    }
-
-
-//    /**
-//     *
-//     * @access public
-//     * @param  array                                               $topics
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function bulkUpdateStats($topics)
-//    {
-//        foreach ($topics as $topic) {
-//            $this->updateStats($topic);
-//        }
-//
-//        return $this;
-//    }
-//
 //    /**
 //     *
 //     * @access public

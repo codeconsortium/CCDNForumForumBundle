@@ -33,7 +33,6 @@ class SubscriptionRepositoryTest extends TestBase
 		
 		$subscriptionsFound = $this->getSubscriptionModel()->findAllSubscriptionsForUserById($users['tom']->getId(), true);
 		
-		$this->assertNotNull($subscriptionsFound);
 		$this->assertCount(3, $subscriptionsFound);
 	}
 
@@ -51,7 +50,6 @@ class SubscriptionRepositoryTest extends TestBase
 		
 		$subscriptionsFound = $this->getSubscriptionModel()->findAllSubscriptionsForTopicById($topics[0]->getId(), true);
 		
-		$this->assertNotNull($subscriptionsFound);
 		$this->assertCount(1, $subscriptionsFound);
 	}
 
@@ -67,7 +65,7 @@ class SubscriptionRepositoryTest extends TestBase
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 		$subscriptions = $this->addFixturesForSubscriptions($forum, $topics, $users['tom'], false);
 		
-		$pager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserById($users['tom']->getId(), 1, 'unread', false);
+		$pager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserById($users['tom']->getId(), 1, 25, 'unread', false);
 		
 		$subscriptionsFound = $pager->getItems();
 		
@@ -75,7 +73,7 @@ class SubscriptionRepositoryTest extends TestBase
 		
 		$subscriptions = $this->addFixturesForSubscriptions($forum, $topics, $users['tom'], true);
 		
-		$pager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserById($users['tom']->getId(), 1, 'read', false);
+		$pager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserById($users['tom']->getId(), 1, 25, 'read', false);
 		
 		$subscriptionsFound = $pager->getItems();
 		
@@ -94,7 +92,7 @@ class SubscriptionRepositoryTest extends TestBase
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 		$subscriptions = $this->addFixturesForSubscriptions($forum, $topics, $users['tom'], false);
 		
-		$pager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserByIdAndForumById($forum->getId(), $users['tom']->getId(), 1, 'unread', false);
+		$pager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserByIdAndForumById($forum->getId(), $users['tom']->getId(), 1, 25, 'unread', false);
 		
 		$subscriptionsFound = $pager->getItems();
 
@@ -102,7 +100,7 @@ class SubscriptionRepositoryTest extends TestBase
 		
 		$subscriptions = $this->addFixturesForSubscriptions($forum, $topics, $users['tom'], true);
 		
-		$pager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserByIdAndForumById($forum->getId(), $users['tom']->getId(), 1, 'read', false);
+		$pager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserByIdAndForumById($forum->getId(), $users['tom']->getId(), 1, 25, 'read', false);
 		
 		$subscriptionsFound = $pager->getItems();
 
@@ -123,7 +121,6 @@ class SubscriptionRepositoryTest extends TestBase
 		
 	    $subscriptionFound = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
 
-		$this->assertNotNull($subscriptionFound);
 		$this->assertTrue($subscriptionFound->isSubscribed());
 		$this->assertInternalType('integer', $subscriptionFound->getId());
     }

@@ -39,7 +39,7 @@ Feature: Moderator Post Traversal
           And I follow "Lock"
 		  And I should see "unlock"
           And I follow "Unlock"
-          And I select from "select[id^=Post_unlockedUntilDate]" a date "2" days from now
+          And I select from "select[id^=Post_unlockedUntilDate]" a date "now + 2 days"
           And I press "submit[post]"
 		  And I follow "post_show[test_post_f1_c1_b1_t1_p1]"
 		  And I should not see "unlock"

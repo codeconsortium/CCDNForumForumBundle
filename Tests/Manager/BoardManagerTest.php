@@ -149,29 +149,4 @@ class BoardManagerTest extends TestBase
 		$this->assertSame('test_board_2', $boards[1]->getName());
 		$this->assertSame('test_board_3', $boards[2]->getName());
 	}
-
-    public function testUpdateStats()
-	{
-		$this->purge();
-		
-		$users = $this->addFixturesForUsers();
-		$forums = $this->addFixturesForForums();
-		$categories = $this->addFixturesForCategories($forums);
-		$boards = $this->addFixturesForBoards($categories);
-		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
-		
-		$board = $boards[0];
-		
-		$this->getBoardModel()->updateStats($board);
-		
-		$bTopics = $board->getTopics();
-		$lastTopic = $bTopics[count($bTopics) - 1];
-		$tPosts = $lastTopic->getPosts();
-		$lastPost = $tPosts[count($tPosts) - 1];
-		
-		$this->assertSame(3, (int) $board->getCachedTopicCount());
-		$this->assertSame(9, (int) $board->getCachedPostCount());
-		$this->assertSame($lastPost->getId(), $board->getLastPost()->getId());
-	}
 }

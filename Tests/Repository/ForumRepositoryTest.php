@@ -36,7 +36,6 @@ class ForumRepositoryTest extends TestBase
 		
 		$foundForum = $this->getForumModel()->findOneForumById($forum->getId());
 		
-		$this->assertNotNull($foundForum);
 		$this->assertEquals($foundForum->getId(), $forum->getId());
 	}
 
@@ -48,7 +47,6 @@ class ForumRepositoryTest extends TestBase
 		
 		$foundForum = $this->getForumModel()->findOneForumByName($forum->getName());
 		
-		$this->assertNotNull($foundForum);
 		$this->assertEquals($foundForum->getId(), $forum->getId());
 		$this->assertEquals($foundForum->getName(), $forum->getName());
     }

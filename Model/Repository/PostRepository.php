@@ -36,10 +36,11 @@ class PostRepository extends BaseRepository implements BaseRepositoryInterface
      * @access public
      * @param  int                                                      $topicId
      * @param  int                                                      $page
+     * @param  int                                                      $itemsPerPage
      * @param  bool                                                     $canViewDeletedTopics
      * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
-    public function findAllPostsPaginatedByTopicId($topicId, $page, $canViewDeletedTopics = false)
+    public function findAllPostsPaginatedByTopicId($topicId, $page, $itemsPerPage = 25, $canViewDeletedTopics = false)
     {
         if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
             throw new \Exception('Topic id "' . $topicId . '" is invalid!');
@@ -77,7 +78,7 @@ class PostRepository extends BaseRepository implements BaseRepositoryInterface
             ->orderBy('p.createdDate', 'ASC')
         ;
 
-        return $this->gateway->paginateQuery($qb, $this->getPostsPerPageOnTopics(), $page);
+        return $this->gateway->paginateQuery($qb, $itemsPerPage, $page);
     }
 
     /**
@@ -202,54 +203,6 @@ class PostRepository extends BaseRepository implements BaseRepositoryInterface
         return $this->gateway->countPosts($qb, array(':topicId' => $topicId));
     }
 
-//    /**
-//     *
-//     * @access public
-//     * @param  int                                $topicId
-//     * @return \CCDNForum\ForumBundle\Entity\Post
-//     */
-//    public function getFirstPostForTopicById($topicId)
-//    {
-//        if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
-//            throw new \Exception('Topic id "' . $topicId . '" is invalid!');
-//        }
-//
-//        $params = array(':topicId' => $topicId);
-//
-//        $qb = $this->createSelectQuery(array('p'));
-//
-//        $qb
-//            ->where('p.topic = :topicId')
-//            ->orderBy('p.createdDate', 'ASC')
-//            ->setMaxResults(1);
-//
-//        return $this->gateway->findPost($qb, $params);
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  int                                $topicId
-//     * @return \CCDNForum\ForumBundle\Entity\Post
-//     */
-//    public function getLastPostForTopicById($topicId)
-//    {
-//        if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
-//            throw new \Exception('Topic id "' . $topicId . '" is invalid!');
-//        }
-//
-//        $params = array(':topicId' => $topicId);
-//
-//        $qb = $this->createSelectQuery(array('p'));
-//
-//        $qb
-//            ->where('p.topic = :topicId')
-//            ->orderBy('p.createdDate', 'DESC')
-//            ->setMaxResults(1);
-//
-//        return $this->gateway->findPost($qb, $params);
-//    }
-//
 //    /**
 //     *
 //     * @access public

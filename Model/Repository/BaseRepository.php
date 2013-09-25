@@ -13,8 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Model\Repository;
 
-use Symfony\Component\Security\Core\SecurityContext;
-use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
 
 use CCDNForum\ForumBundle\Model\Repository\BaseRepositoryInterface;
@@ -39,23 +38,9 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      *
      * @access protected
-     * @var \Doctrine\Bundle\DoctrineBundle\Registry $doctrine
-     */
-    protected $doctrine;
-
-    /**
-     *
-     * @access protected
      * @var \Doctrine\ORM\EntityManager $em
      */
     protected $em;
-
-    /**
-     *
-     * @access protected
-     * @var \Symfony\Component\Security\Core\SecurityContext $securityContext
-     */
-    protected $securityContext;
 
     /**
      *
@@ -64,54 +49,37 @@ abstract class BaseRepository implements BaseRepositoryInterface
      */
     protected $gateway;
 
+    /**
+     *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Model\Model\BaseModelInterface $model
+     */
     protected $model;
-    protected $utilBag;
 
     /**
      *
      * @access public
-     * @param \Doctrine\Bundle\DoctrineBundle\Registry               $doctrine
-     * @param \Symfony\Component\Security\Core\SecurityContext       $securityContext
-     * @param \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface    $gateway
-     * @param \CCDNForum\ForumBundle\Manager\Bag\ManagerBagInterface $managerBag
+     * @param \Doctrine\Common\Persistence\ObjectManager          $em
+     * @param \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface $gateway
      */
-    public function __construct(Registry $doctrine, SecurityContext $securityContext, BaseGatewayInterface $gateway, $utilBag)
+    public function __construct(ObjectManager $em, BaseGatewayInterface $gateway)
     {
-        $this->doctrine = $doctrine;
-
-        $this->em = $doctrine->getEntityManager();
-
-        $this->securityContext = $securityContext;
+        $this->em = $em;
 
         $this->gateway = $gateway;
-
-        $this->utilBag = $utilBag;
     }
 
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Model\Model\BaseModelInterface           $model
+     * @return \CCDNForum\ForumBundle\Model\Repository\BaseRepositoryInterface
+     */
     public function setModel($model)
     {
         $this->model = $model;
-    }
 
-    /**
-     *
-     * @access public
-     * @param  string $role
-     * @return bool
-     */
-    public function isGranted($role)
-    {
-        return $this->securityContext->isGranted($role);
-    }
-
-    /**
-     *
-     * @access public
-     * @return \Symfony\Component\Security\Core\User\UserInterface
-     */
-    public function getUser()
-    {
-        return $this->securityContext->getToken()->getUser();
+        return $this;
     }
 
     /**
@@ -177,35 +145,5 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function all(QueryBuilder $qb)
     {
         return $this->gateway->all($qb);
-    }
-
-    /**
-     *
-     * @access public
-     * @return int
-     */
-    public function getTopicsPerPageOnSubscriptions()
-    {
-        return $this->utilBag->getPaginationUtil()->getTopicsPerPageOnSubscriptions();
-    }
-
-    /**
-     *
-     * @access public
-     * @return int
-     */
-    public function getTopicsPerPageOnBoards()
-    {
-        return $this->utilBag->getPaginationUtil()->getTopicsPerPageOnBoards();
-    }
-
-    /**
-     *
-     * @access public
-     * @return int
-     */
-    public function getPostsPerPageOnTopics()
-    {
-        return $this->utilBag->getPaginationUtil()->getPostsPerPageOnTopics();
     }
 }

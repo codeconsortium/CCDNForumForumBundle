@@ -40,12 +40,13 @@ class PostModel extends BaseModel implements BaseModelInterface
      * @access public
      * @param  int                                                      $topicId
      * @param  int                                                      $page
+     * @param  int                                                      $itemsPerPage
      * @param  bool                                                     $canViewDeletedTopics
      * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
      */
-    public function findAllPostsPaginatedByTopicId($topicId, $page, $canViewDeletedTopics = false)
+    public function findAllPostsPaginatedByTopicId($topicId, $page, $itemsPerPage = 25, $canViewDeletedTopics = false)
     {
-        return $this->getRepository()->findAllPostsPaginatedByTopicId($topicId, $page, $canViewDeletedTopics);
+        return $this->getRepository()->findAllPostsPaginatedByTopicId($topicId, $page, $itemsPerPage, $canViewDeletedTopics);
     }
 
     /**

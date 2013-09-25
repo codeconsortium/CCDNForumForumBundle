@@ -8,62 +8,51 @@ services:
     # Gateways.
     #
 
-    #ccdn_forum_forum.gateway_bag:
-    #    class: %ccdn_forum_forum.gateway_bag.class%
-    #    arguments: [@service_container]
-
     ccdn_forum_forum.gateway.forum:
         class: %ccdn_forum_forum.gateway.forum.class%
         arguments:
-            - @doctrine
-            - @knp_paginator
-            - @ccdn_forum_forum.model_bag
             - %ccdn_forum_forum.entity.forum.class%
+            - @doctrine.orm.entity_manager
+            - @knp_paginator
 
     ccdn_forum_forum.gateway.category:
         class: %ccdn_forum_forum.gateway.category.class%
         arguments:
-            - @doctrine
-            - @knp_paginator
-            - @ccdn_forum_forum.model_bag
             - %ccdn_forum_forum.entity.category.class%
+            - @doctrine.orm.entity_manager
+            - @knp_paginator
 
     ccdn_forum_forum.gateway.board:
         class: %ccdn_forum_forum.gateway.board.class%
         arguments:
-            - @doctrine
-            - @knp_paginator
-            - @ccdn_forum_forum.model_bag
             - %ccdn_forum_forum.entity.board.class%
+            - @doctrine.orm.entity_manager
+            - @knp_paginator
 
     ccdn_forum_forum.gateway.topic:
         class: %ccdn_forum_forum.gateway.topic.class%
         arguments:
-            - @doctrine
-            - @knp_paginator
-            - @ccdn_forum_forum.model_bag
             - %ccdn_forum_forum.entity.topic.class%
+            - @doctrine.orm.entity_manager
+            - @knp_paginator
 
     ccdn_forum_forum.gateway.post:
         class: %ccdn_forum_forum.gateway.post.class%
         arguments:
-            - @doctrine
-            - @knp_paginator
-            - @ccdn_forum_forum.model_bag
             - %ccdn_forum_forum.entity.post.class%
+            - @doctrine.orm.entity_manager
+            - @knp_paginator
 
     ccdn_forum_forum.gateway.registry:
         class: %ccdn_forum_forum.gateway.registry.class%
         arguments:
-            - @doctrine
-            - @knp_paginator
-            - @ccdn_forum_forum.model_bag
             - %ccdn_forum_forum.entity.registry.class%
+            - @doctrine.orm.entity_manager
+            - @knp_paginator
 
     ccdn_forum_forum.gateway.subscription:
         class: %ccdn_forum_forum.gateway.subscription.class%
         arguments:
-            - @doctrine
-            - @knp_paginator
-            - @ccdn_forum_forum.model_bag
             - %ccdn_forum_forum.entity.subscription.class%
+            - @doctrine.orm.entity_manager
+            - @knp_paginator

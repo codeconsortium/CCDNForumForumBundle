@@ -2,7 +2,7 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.topic.reply.layout_template %}
 
-{% block title %}{{- truncDot('title.topic.reply' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle'), ccdn_forum_forum.seo.title_length) -}}{% endblock %}
+{% block title %}{{- 'title.topic.reply' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}{% endblock %}
 
 
 {% block body_content %}
