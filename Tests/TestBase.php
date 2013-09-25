@@ -224,13 +224,13 @@ class TestBase extends WebTestCase
 		return $topics;
 	}
 
-	protected function addNewPost($body, $topic, $user)
+	protected function addNewPost($body, $topic, $user, \Datetime $createdDate = null)
 	{
 		$post = new Post();
 
 		$post->setTopic($topic);
 		$post->setBody($body);
-        $post->setCreatedDate(new \DateTime());
+        $post->setCreatedDate($createdDate ?: new \DateTime());
         $post->setCreatedBy($user);
         $post->setIsDeleted(false);
 		
@@ -247,17 +247,21 @@ class TestBase extends WebTestCase
 		$postBodies = array('test_post_1', 'test_post_2', 'test_post_3');
 		$posts = array();
 		
-		foreach ($topics as $topic) {
-			foreach ($postBodies as $index => $postBody) {
-				$posts[] = $this->addNewPost($postBody, $topic, $user);
+		foreach ($topics as $topicIndex => $topic) {
+			foreach ($postBodies as $postIndex => $postBody) {
+				$posts[] = $this->addNewPost($postBody, $topics[$topicIndex], $user, new \DateTime('now + ' . (int)(($topicIndex + 1) . ($postIndex + 1)) . ' minutes'));
 				
-				if ($index == 0) {
-					$topic->setFirstPost($posts[count($posts) - 1]);
+				if ($postIndex == 0) {
+					$topics[$topicIndex]->setFirstPost($posts[count($posts) - 1]);
 				}
 			}
 			
-			$topic->setLastPost($posts[count($posts) - 1]);
+			$topics[$topicIndex]->setLastPost($posts[count($posts) - 1]);
+			
+			$this->em->persist($topic);
 		}
+		
+		$this->em->flush();
 		
 		return $posts;
 	}

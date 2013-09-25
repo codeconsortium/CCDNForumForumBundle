@@ -27,7 +27,7 @@ class ForumManagerTest extends TestBase
 		$forum = new Forum();
 		$forum->setName('NewForumTest');
 		
-		$this->getForumModel()->getManager()->saveNewForum($forum);
+		$this->getForumModel()->saveNewForum($forum);
 		
 		$this->assertTrue(is_numeric($forum->getId()));
 		$this->assertSame('NewForumTest', $forum->getName());
@@ -41,7 +41,7 @@ class ForumManagerTest extends TestBase
 		
 		$forum->setName('TestForumUpdated');
 		
-		$this->getForumModel()->getManager()->updateForum($forum);
+		$this->getForumModel()->updateForum($forum);
 		
 		$this->assertTrue(is_numeric($forum->getId()));
 		$this->assertEquals('TestForumUpdated', $forum->getName());
@@ -54,9 +54,9 @@ class ForumManagerTest extends TestBase
 		$forum = $this->addNewForum('FooBar');
 		
 		$forumId = $forum->getId();
-		$this->getForumModel()->getManager()->deleteForum($forum);
+		$this->getForumModel()->deleteForum($forum);
 		
-		$foundForum = $this->getForumModel()->getRepository()->findOneForumById($forumId);
+		$foundForum = $this->getForumModel()->findOneForumById($forumId);
 		
 		$this->assertNull($foundForum);
 	}
@@ -77,11 +77,11 @@ class ForumManagerTest extends TestBase
 		$categories = new ArrayCollection($forum1->getCategories()->toArray());
 
 		$this->assertCount(3, $forum1->getCategories());
-		$this->getForumModel()->getManager()->reassignCategoriesToForum($categories, null);
+		$this->getForumModel()->reassignCategoriesToForum($categories, null);
 		$this->em->refresh($forum1);
 		$this->assertCount(0, $forum1->getCategories());
 		
-		$this->getForumModel()->getManager()->reassignCategoriesToForum($categories, $forum2);
+		$this->getForumModel()->reassignCategoriesToForum($categories, $forum2);
 		$this->em->refresh($forum2);
 		$this->assertCount(6, $forum2->getCategories());
 	}

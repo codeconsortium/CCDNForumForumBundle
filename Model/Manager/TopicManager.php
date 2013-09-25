@@ -62,15 +62,6 @@ class TopicManager extends BaseManager implements BaseManagerInterface
         $this->persist($topic)->flush();
         $this->refresh($topic);
 
-        //if ($topic->getBoard()) {
-        //    // Update affected Board stats.
-        //    $this->managerBag->getBoardManager()->updateStats($topic->getBoard())->flush();
-        //}
-
-        // Subscribe the user to the topic.
-        //$this->managerBag->getSubscriptionManager()->subscribe($topic)->flush();
-
-        //$this->managerBag->getRegistryManager()->updateCachedPostCountForUser($post->getCreatedBy())->flush();
         return $this;
     }
 
@@ -126,9 +117,6 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 
             // update the record before doing record counts
             $this->persist($topic)->flush();
-
-            // Update affected Topic stats.
-        //    $this->updateStats($topic);
         }
 
         return $this;
@@ -148,8 +136,6 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 
         $this->persist($topic)->flush();
 
-        // Update affected Topic stats.
-//        $this->updateStats($topic);
         return $this;
     }
 
@@ -231,42 +217,32 @@ class TopicManager extends BaseManager implements BaseManagerInterface
         return $this;
     }
 
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function updateStats(Topic $topic)
+    {
+		$postModel = $this->model->getModelBag()->getPostModel();
+        
+        // Get stats.
+        $topicPostCount = $postModel->countPostsForTopicById($topic->getId());
+        $topicFirstPost = $postModel->getFirstPostForTopicById($topic->getId());
+        $topicLastPost = $postModel->getLastPostForTopicById($topic->getId());
+
+        // Set the board / topic last post.
+        $topic->setCachedReplyCount($topicPostCount > 0 ? --$topicPostCount : 0);
+        $topic->setFirstPost($topicFirstPost ?: null);
+        $topic->setLastPost($topicLastPost ?: null);
+
+        $this->persist($topic)->flush();
+
+        return $this;
+    }
 
 
-
-
-//
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function updateStats(Topic $topic)
-//    {
-//        $postManager = $this->managerBag->getPostManager();
-//
-//        // Get stats.
-//        $topicPostCount = $this->getPostCountForTopicById($topic->getId());
-//        $topicFirstPost = $postManager->getFirstPostForTopicById($topic->getId());
-//        $topicLastPost = $postManager->getLastPostForTopicById($topic->getId());
-//
-//        // Set the board / topic last post.
-//        $topic->setCachedReplyCount($topicPostCount['postCount'] > 0 ? --$topicPostCount['postCount'] : 0);
-//        $topic->setFirstPost($topicFirstPost ?: null);
-//        $topic->setLastPost($topicLastPost ?: null);
-//
-//        $this->persist($topic)->flush();
-//
-//        if ($topic->getBoard()) {
-//            // Update affected Board stats.
-//            $this->managerBag->getBoardManager()->updateStats($topic->getBoard())->flush();
-//        }
-//
-//        return $this;
-//    }
-//
 //    /**
 //     *
 //     * @access public
@@ -277,48 +253,6 @@ class TopicManager extends BaseManager implements BaseManagerInterface
 //    {
 //        foreach ($topics as $topic) {
 //            $this->updateStats($topic);
-//        }
-//
-//        return $this;
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  Array                                               $topics
-//     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function bulkClose($topics, UserInterface $user)
-//    {
-//        foreach ($topics as $topic) {
-//            // Don't overwite previous users accountability.
-//            if (! $topic->getClosedBy() && ! $topic->getClosedDate()) {
-//                $topic->setIsClosed(true);
-//                $topic->setClosedBy($user);
-//                $topic->setClosedDate(new \DateTime());
-//
-//                $this->persist($topic);
-//            }
-//        }
-//
-//        return $this;
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  Array                                               $topics
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function bulkReopen($topics)
-//    {
-//        foreach ($topics as $topic) {
-//            $topic->setIsClosed(false);
-//            $topic->setClosedBy(null);
-//            $topic->setClosedDate(null);
-//
-//            $this->persist($topic);
 //        }
 //
 //        return $this;

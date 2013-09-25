@@ -23,7 +23,7 @@ class ForumRepositoryTest extends TestBase
 		
 		$this->addFixturesForForums();
 		
-		$forums = $this->getForumModel()->getRepository()->findAllForums();
+		$forums = $this->getForumModel()->findAllForums();
 		
 		$this->assertCount(3, $forums);
 	}
@@ -34,7 +34,7 @@ class ForumRepositoryTest extends TestBase
 		
 		$forum = $this->addNewForum('TestForumById');
 		
-		$foundForum = $this->getForumModel()->getRepository()->findOneForumById($forum->getId());
+		$foundForum = $this->getForumModel()->findOneForumById($forum->getId());
 		
 		$this->assertNotNull($foundForum);
 		$this->assertEquals($foundForum->getId(), $forum->getId());
@@ -46,7 +46,7 @@ class ForumRepositoryTest extends TestBase
 		
 		$forum = $this->addNewForum('TestForumByName');
 		
-		$foundForum = $this->getForumModel()->getRepository()->findOneForumByName($forum->getName());
+		$foundForum = $this->getForumModel()->findOneForumByName($forum->getName());
 		
 		$this->assertNotNull($foundForum);
 		$this->assertEquals($foundForum->getId(), $forum->getId());

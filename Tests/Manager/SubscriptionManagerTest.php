@@ -32,9 +32,9 @@ class SubscriptionManagerTest extends TestBase
 		$topics = $this->addFixturesForTopics($boards);
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 		
-		$this->getSubscriptionModel()->getManager()->subscribe($topics[0], $users['tom']);
+		$this->getSubscriptionModel()->subscribe($topics[0], $users['tom']);
 		
-	    $subscriptionFound = $this->getSubscriptionModel()->getRepository()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
+	    $subscriptionFound = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
 		
 		$this->assertNotNull($subscriptionFound);
 		$this->assertTrue($subscriptionFound->isSubscribed());
@@ -52,11 +52,11 @@ class SubscriptionManagerTest extends TestBase
 		$topics = $this->addFixturesForTopics($boards);
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 		
-		$this->getSubscriptionModel()->getManager()->subscribe($topics[0], $users['tom']);
+		$this->getSubscriptionModel()->subscribe($topics[0], $users['tom']);
 		
-		$this->getSubscriptionModel()->getManager()->unsubscribe($topics[0], $users['tom']->getId());
+		$this->getSubscriptionModel()->unsubscribe($topics[0], $users['tom']->getId());
 	
-	    $subscriptionFound = $this->getSubscriptionModel()->getRepository()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
+	    $subscriptionFound = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
 		
 		$this->assertNotNull($subscriptionFound);
 		$this->assertFalse($subscriptionFound->isSubscribed());
@@ -74,13 +74,13 @@ class SubscriptionManagerTest extends TestBase
 		$topics = $this->addFixturesForTopics($boards);
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 		
-		$this->getSubscriptionModel()->getManager()->subscribe($topics[0], $users['tom']);
+		$this->getSubscriptionModel()->subscribe($topics[0], $users['tom']);
 
-	    $subscriptionFound = $this->getSubscriptionModel()->getRepository()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
+	    $subscriptionFound = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
 		
-		$this->getSubscriptionModel()->getManager()->markAsRead($subscriptionFound);
+		$this->getSubscriptionModel()->markAsRead($subscriptionFound);
 	
-		$subscriptionsFound = $this->getSubscriptionModel()->getRepository()->findAllSubscriptionsForUserById($users['tom']->getId(), true);
+		$subscriptionsFound = $this->getSubscriptionModel()->findAllSubscriptionsForUserById($users['tom']->getId(), true);
 		
 		foreach ($subscriptionsFound as $subscription) {
 			if ($subscriptionFound->getTopic()->getId() == $topics[0]->getId()) {
@@ -102,13 +102,13 @@ class SubscriptionManagerTest extends TestBase
 		$topics = $this->addFixturesForTopics($boards);
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 		
-		$this->getSubscriptionModel()->getManager()->subscribe($topics[0], $users['tom']);
+		$this->getSubscriptionModel()->subscribe($topics[0], $users['tom']);
 
-	    $subscriptionFound = $this->getSubscriptionModel()->getRepository()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
+	    $subscriptionFound = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
 		
-		$this->getSubscriptionModel()->getManager()->markAsUnread($subscriptionFound);
+		$this->getSubscriptionModel()->markAsUnread($subscriptionFound);
 	
-		$subscriptionsFound = $this->getSubscriptionModel()->getRepository()->findAllSubscriptionsForUserById($users['tom']->getId(), true);
+		$subscriptionsFound = $this->getSubscriptionModel()->findAllSubscriptionsForUserById($users['tom']->getId(), true);
 		
 		foreach ($subscriptionsFound as $subscription) {
 			if ($subscriptionFound->getTopic()->getId() == $topics[0]->getId()) {
@@ -130,18 +130,18 @@ class SubscriptionManagerTest extends TestBase
 		$topics = $this->addFixturesForTopics($boards);
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 		
-		$this->getSubscriptionModel()->getManager()->subscribe($topics[0], $users['tom']);
-		$this->getSubscriptionModel()->getManager()->subscribe($topics[0], $users['dick']);
-		$this->getSubscriptionModel()->getManager()->subscribe($topics[0], $users['harry']);
+		$this->getSubscriptionModel()->subscribe($topics[0], $users['tom']);
+		$this->getSubscriptionModel()->subscribe($topics[0], $users['dick']);
+		$this->getSubscriptionModel()->subscribe($topics[0], $users['harry']);
 
 		$subscriptions = array();
-	    $subscriptions[0] = $this->getSubscriptionModel()->getRepository()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
-	    $subscriptions[1] = $this->getSubscriptionModel()->getRepository()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['dick']->getId());
-	    $subscriptions[2] = $this->getSubscriptionModel()->getRepository()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['harry']->getId());
+	    $subscriptions[0] = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
+	    $subscriptions[1] = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['dick']->getId());
+	    $subscriptions[2] = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['harry']->getId());
 		
-		$this->getSubscriptionModel()->getManager()->markTheseAsUnread($subscriptions, $users['dick']);
+		$this->getSubscriptionModel()->markTheseAsUnread($subscriptions, $users['dick']);
 	
-		$subscriptionsFound = $this->getSubscriptionModel()->getRepository()->findAllSubscriptionsForTopicById($topics[0]->getId(), true);
+		$subscriptionsFound = $this->getSubscriptionModel()->findAllSubscriptionsForTopicById($topics[0]->getId(), true);
 		
 		foreach ($subscriptionsFound as $subscription) {
 			if ($subscription->getTopic()->getId() == $topics[0]->getId()) {

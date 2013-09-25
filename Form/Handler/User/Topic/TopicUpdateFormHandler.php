@@ -121,6 +121,10 @@ class TopicUpdateFormHandler extends BaseFormHandler
 
             $topic = $this->post->getTopic();
 
+            if (! is_object($topic) || ! ($topic instanceof Topic)) {
+                throw new \Exception('Post must have a valid Topic in TopicUpdateFormHandler');
+            }
+
             $this->dispatcher->dispatch(ForumEvents::USER_POST_EDIT_INITIALISE, new UserPostEvent($this->request, $this->post));
 
             $this->form = $this->factory->create($this->formPostType, $this->post);

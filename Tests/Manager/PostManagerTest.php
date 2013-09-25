@@ -41,7 +41,7 @@ class PostManagerTest extends TestBase
         $post->setCreatedBy($users['tom']);
         $post->setIsDeleted(false);
 
-		$this->getTopicModel()->getManager()->saveNewTopic($post);
+		$this->getTopicModel()->saveNewTopic($post);
 
 		$this->em->refresh($post);
 		
@@ -52,9 +52,9 @@ class PostManagerTest extends TestBase
         $post2->setCreatedBy($users['tom']);
         $post2->setIsDeleted(false);
 		
-		$this->getPostModel()->getManager()->postTopicReply($post2);
+		$this->getPostModel()->postTopicReply($post2);
 		
-		$foundTopic = $this->getTopicModel()->getRepository()->findOneTopicByIdWithBoardAndCategory($post->getTopic()->getId(), true);
+		$foundTopic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($post->getTopic()->getId(), true);
 		
 		$this->assertNotNull($foundTopic);
 		$this->assertInstanceOf('CCDNForum\ForumBundle\Entity\Topic', $foundTopic);
@@ -84,12 +84,12 @@ class PostManagerTest extends TestBase
         $post->setCreatedBy($users['tom']);
         $post->setIsDeleted(false);
 
-		$this->getTopicModel()->getManager()->saveNewTopic($post);
+		$this->getTopicModel()->saveNewTopic($post);
 
 		$this->em->refresh($post);
 
 		$post->setBody('edited post');
-		$this->getPostModel()->getManager()->updatePost($post);
+		$this->getPostModel()->updatePost($post);
 
 		$this->em->refresh($post);
 
@@ -108,7 +108,7 @@ class PostManagerTest extends TestBase
 		$topics = $this->addFixturesForTopics($boards);
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 		
-		$this->getPostModel()->getManager()->softDelete($posts[0], $users['tom']);
+		$this->getPostModel()->softDelete($posts[0], $users['tom']);
 	
 		$this->em->refresh($posts[0]);
 		
@@ -126,11 +126,11 @@ class PostManagerTest extends TestBase
 		$topics = $this->addFixturesForTopics($boards);
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 		
-		$this->getPostModel()->getManager()->softDelete($posts[0], $users['tom']);
+		$this->getPostModel()->softDelete($posts[0], $users['tom']);
 		
 		$this->em->refresh($posts[0]);
 		
-		$this->getPostModel()->getManager()->restore($posts[0]);
+		$this->getPostModel()->restore($posts[0]);
 		
 		$this->em->refresh($posts[0]);
 		

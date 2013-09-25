@@ -33,7 +33,7 @@ class TopicRepositoryTest extends TestBase
 
 		$this->assertCount(3, $topics);
 
-		$pager = $this->getTopicModel()->getRepository()->findAllTopicsPaginatedByBoardId($board->getId(), 1, true);
+		$pager = $this->getTopicModel()->findAllTopicsPaginatedByBoardId($board->getId(), 1, true);
 	
 		$foundTopics = $pager->getItems();
 		
@@ -61,7 +61,7 @@ class TopicRepositoryTest extends TestBase
 		
 		$this->em->flush();
 		
-		$foundTopics = $this->getTopicModel()->getRepository()->findAllTopicsStickiedByBoardId($board->getId(), true);
+		$foundTopics = $this->getTopicModel()->findAllTopicsStickiedByBoardId($board->getId(), true);
 		
 		$this->assertCount(3, $foundTopics);
 	}
@@ -79,7 +79,7 @@ class TopicRepositoryTest extends TestBase
 		$this->em->flush($topic1);
 		$this->em->refresh($topic1);
 		
-		$foundTopic1 = $this->getTopicModel()->getRepository()->findOneTopicByIdWithBoardAndCategory($topic1->getId(), true);
+		$foundTopic1 = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topic1->getId(), true);
 		
 		$this->assertNotNull($foundTopic1);
 		$this->assertInstanceOf('CCDNForum\ForumBundle\Entity\Topic', $foundTopic1);
@@ -92,7 +92,7 @@ class TopicRepositoryTest extends TestBase
 		$this->em->flush();
 		$this->em->refresh($topic2);
 		
-		$foundTopic2 = $this->getTopicModel()->getRepository()->findOneTopicByIdWithBoardAndCategory($topic2->getId(), false);
+		$foundTopic2 = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topic2->getId(), false);
         
 		$this->assertNull($foundTopic2);
 	}
@@ -118,7 +118,7 @@ class TopicRepositoryTest extends TestBase
         $post->setCreatedBy($users['tom']);
         $post->setIsDeleted(false);
 
-		$this->getTopicModel()->getManager()->saveNewTopic($post);
+		$this->getTopicModel()->saveNewTopic($post);
 		
 		$this->em->refresh($post);
 		
@@ -129,9 +129,9 @@ class TopicRepositoryTest extends TestBase
         $post2->setCreatedBy($users['tom']);
         $post2->setIsDeleted(false);
 		
-		$this->getPostModel()->getManager()->postTopicReply($post2);
+		$this->getPostModel()->postTopicReply($post2);
 		
-		$foundTopic = $this->getTopicModel()->getRepository()->findOneTopicByIdWithPosts($post->getTopic()->getId(), true);
+		$foundTopic = $this->getTopicModel()->findOneTopicByIdWithPosts($post->getTopic()->getId(), true);
 		
 		$this->assertNotNull($foundTopic);
 		$this->assertInstanceOf('CCDNForum\ForumBundle\Entity\Topic', $foundTopic);
@@ -139,5 +139,21 @@ class TopicRepositoryTest extends TestBase
 		$this->assertTrue(is_numeric($foundTopic->getId()));
 		$this->assertSame('NewTopicTest', $foundTopic->getTitle());
 		$this->assertCount(2, $foundTopic->getPosts());
+	}
+
+	public function testFindLastTopicForBoardByIdWithLastPost()
+	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$boards = $this->addFixturesForBoards($categories);
+		$topics = $this->addFixturesForTopics($boards);
+		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+
+		$lastTopic = $this->getTopicModel()->findLastTopicForBoardByIdWithLastPost($topics[count($topics) - 1]->getBoard()->getId());
+
+		$this->assertSame($topics[count($topics) - 1]->getId(), $lastTopic->getId());
 	}
 }

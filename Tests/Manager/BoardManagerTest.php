@@ -29,7 +29,7 @@ class BoardManagerTest extends TestBase
 		$board->setDescription('Generic description');
 		$board->setListOrderPriority(1);
 		
-		$this->getBoardModel()->getManager()->saveNewBoard($board);
+		$this->getBoardModel()->saveNewBoard($board);
 		
 		$this->assertTrue(is_numeric($board->getId()));
 		$this->assertSame('NewBoardTest', $board->getName());
@@ -43,7 +43,7 @@ class BoardManagerTest extends TestBase
 		
 		$board->setName('BoardTestUpdated');
 		
-		$this->getBoardModel()->getManager()->updateBoard($board);
+		$this->getBoardModel()->updateBoard($board);
 		
 		$this->assertTrue(is_numeric($board->getId()));
 		$this->assertEquals('BoardTestUpdated', $board->getName());
@@ -56,9 +56,9 @@ class BoardManagerTest extends TestBase
 		$board = $this->addNewBoard('DeleteBoardTest', 'Generic Description', 1);
 		
 		$boardId = $board->getId();
-		$this->getBoardModel()->getManager()->deleteBoard($board);
+		$this->getBoardModel()->deleteBoard($board);
 		
-		$foundBoard = $this->getBoardModel()->getRepository()->findOneBoardById($boardId);
+		$foundBoard = $this->getBoardModel()->findOneBoardById($boardId);
 		
 		$this->assertNull($foundBoard);
 	}
@@ -77,11 +77,11 @@ class BoardManagerTest extends TestBase
 		$topics = new ArrayCollection($board1->getTopics()->toArray());
 		
 		$this->assertCount(3, $board1->getTopics());
-		$this->getBoardModel()->getManager()->reassignTopicsToBoard($topics, null);
+		$this->getBoardModel()->reassignTopicsToBoard($topics, null);
 		$this->em->refresh($board1);
 		$this->assertCount(0, $board1->getTopics());
 		
-		$this->getBoardModel()->getManager()->reassignTopicsToBoard($topics, $board2);
+		$this->getBoardModel()->reassignTopicsToBoard($topics, $board2);
 		$this->em->refresh($board2);
 		$this->assertCount(6, $board2->getTopics());
 	}
@@ -108,45 +108,70 @@ class BoardManagerTest extends TestBase
 		$this->assertSame('test_board_3', $boards[2]->getName());
 		
 		// 123 -> 213
-		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[0], $this::REORDER_DOWN);
-		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
+		$this->getBoardModel()->reorderBoards($boards, $boards[0], $this::REORDER_DOWN);
+		$boards = $this->getBoardModel()->findAllBoardsForCategoryById($category->getId());
 		$this->assertSame('test_board_2', $boards[0]->getName());
 		$this->assertSame('test_board_1', $boards[1]->getName());
 		$this->assertSame('test_board_3', $boards[2]->getName());
 
 		// 213 -> 231
-		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[1], $this::REORDER_DOWN);
-		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
+		$this->getBoardModel()->reorderBoards($boards, $boards[1], $this::REORDER_DOWN);
+		$boards = $this->getBoardModel()->findAllBoardsForCategoryById($category->getId());
 		$this->assertSame('test_board_2', $boards[0]->getName());
 		$this->assertSame('test_board_3', $boards[1]->getName());
 		$this->assertSame('test_board_1', $boards[2]->getName());
 
 		// 231 -> 123
-		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[2], $this::REORDER_DOWN);
-		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
+		$this->getBoardModel()->reorderBoards($boards, $boards[2], $this::REORDER_DOWN);
+		$boards = $this->getBoardModel()->findAllBoardsForCategoryById($category->getId());
 		$this->assertSame('test_board_1', $boards[0]->getName());
 		$this->assertSame('test_board_2', $boards[1]->getName());
 		$this->assertSame('test_board_3', $boards[2]->getName());
 		
 		// 123 <- 231
-		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[0], $this::REORDER_UP);
-		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
+		$this->getBoardModel()->reorderBoards($boards, $boards[0], $this::REORDER_UP);
+		$boards = $this->getBoardModel()->findAllBoardsForCategoryById($category->getId());
 		$this->assertSame('test_board_2', $boards[0]->getName());
 		$this->assertSame('test_board_3', $boards[1]->getName());
 		$this->assertSame('test_board_1', $boards[2]->getName());
 		
 		// 231 <- 213
-		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[2], $this::REORDER_UP);
-		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
+		$this->getBoardModel()->reorderBoards($boards, $boards[2], $this::REORDER_UP);
+		$boards = $this->getBoardModel()->findAllBoardsForCategoryById($category->getId());
 		$this->assertSame('test_board_2', $boards[0]->getName());
 		$this->assertSame('test_board_1', $boards[1]->getName());
 		$this->assertSame('test_board_3', $boards[2]->getName());
 		
 		// 213 <- 123
-		$this->getBoardModel()->getManager()->reorderBoards($boards, $boards[1], $this::REORDER_UP);
-		$boards = $this->getBoardModel()->getRepository()->findAllBoardsForCategoryById($category->getId());
+		$this->getBoardModel()->reorderBoards($boards, $boards[1], $this::REORDER_UP);
+		$boards = $this->getBoardModel()->findAllBoardsForCategoryById($category->getId());
 		$this->assertSame('test_board_1', $boards[0]->getName());
 		$this->assertSame('test_board_2', $boards[1]->getName());
 		$this->assertSame('test_board_3', $boards[2]->getName());
+	}
+
+    public function testUpdateStats()
+	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$boards = $this->addFixturesForBoards($categories);
+		$topics = $this->addFixturesForTopics($boards);
+		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		
+		$board = $boards[0];
+		
+		$this->getBoardModel()->updateStats($board);
+		
+		$bTopics = $board->getTopics();
+		$lastTopic = $bTopics[count($bTopics) - 1];
+		$tPosts = $lastTopic->getPosts();
+		$lastPost = $tPosts[count($tPosts) - 1];
+		
+		$this->assertSame(3, (int) $board->getCachedTopicCount());
+		$this->assertSame(9, (int) $board->getCachedPostCount());
+		$this->assertSame($lastPost->getId(), $board->getLastPost()->getId());
 	}
 }

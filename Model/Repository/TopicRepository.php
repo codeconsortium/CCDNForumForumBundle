@@ -230,38 +230,34 @@ class TopicRepository extends BaseRepository implements BaseRepositoryInterface
         return $this->gateway->findTopic($qb, $params);
     }
 
-//    /**
-//     *
-//     * @access public
-//     * @param  int                                 $boardId
-//     * @return \CCDNForum\ForumBundle\Entity\Topic
-//     */
-//    public function findLastTopicForBoardByIdWithLastPost($boardId)
-//    {
-//        if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
-//            throw new \Exception('Board id "' . $boardId . '" is invalid!');
-//        }
-//
-//        $params = array(':boardId' => $boardId);
-//
-//        $qb = $this->createSelectQuery(array('t', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
-//
-//        $qb
-//            ->innerJoin('t.firstPost', 'fp')
-//                ->leftJoin('fp.createdBy', 'fp_author')
-//            ->leftJoin('t.lastPost', 'lp')
-//                ->leftJoin('lp.createdBy', 'lp_author')
-//            ->leftJoin('t.closedBy', 't_closedBy')
-//            ->leftJoin('t.deletedBy', 't_deletedBy')
-//            ->leftJoin('t.stickiedBy', 't_stickiedBy')
-//            ->where('t.board = :boardId')
-//            ->andWhere('t.isDeleted = FALSE')
-//            ->orderBy('lp.createdDate', 'DESC')
-//            ->setMaxResults(1);
-//
-//        return $this->gateway->findTopic($qb, $params);
-//    }
-//
+    /**
+     *
+     * @access public
+     * @param  int                                 $boardId
+     * @return \CCDNForum\ForumBundle\Entity\Topic
+     */
+    public function findLastTopicForBoardByIdWithLastPost($boardId)
+    {
+        if (null == $boardId || ! is_numeric($boardId) || $boardId == 0) {
+            throw new \Exception('Board id "' . $boardId . '" is invalid!');
+        }
+
+        $params = array(':boardId' => $boardId);
+
+        $qb = $this->createSelectQuery(array('t', 'p', 'b'));
+
+        $qb
+			->leftJoin('t.board', 'b')
+            ->leftJoin('t.posts', 'p')
+            ->where('b.id = :boardId')
+            ->andWhere('t.isDeleted = FALSE')
+            ->orderBy('p.createdDate', 'DESC')
+            ->setMaxResults(1)
+		;
+
+        return $this->gateway->findTopic($qb, $params);
+    }
+
 //    /**
 //     *
 //     * @access public

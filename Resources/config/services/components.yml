@@ -1,6 +1,7 @@
 parameters:
 
     # Service Parameters defined in app/config.
+    ccdn_forum_forum.component.event_listener.stats.class: CCDNForum\ForumBundle\Component\Dispatcher\Listener\StatListener
 
 services:
 
@@ -42,6 +43,14 @@ services:
         arguments:
             - @ccdn_forum_forum.model.subscription
             - @security.context
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ccdn_forum_forum.component.event_listener.stats:
+        class: %ccdn_forum_forum.component.event_listener.stats.class%
+        arguments:
+            - @ccdn_forum_forum.model.board
+            - @ccdn_forum_forum.model.topic
         tags:
             - { name: kernel.event_subscriber }
 

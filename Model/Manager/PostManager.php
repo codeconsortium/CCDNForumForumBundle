@@ -48,13 +48,6 @@ class PostManager extends BaseManager implements BaseManagerInterface
         // refresh the user so that we have an PostId to work with.
         $this->refresh($post);
 
-        // Update affected Topic stats.
-        //$this->managerBag->getTopicManager()->updateStats($post->getTopic());
-
-        // Subscribe the user to the topic.
-        //$this->managerBag->getSubscriptionManager()->subscribe($post->getTopic())->flush();
-
-        //$this->managerBag->getRegistryManager()->updateCachedPostCountForUser($post->getCreatedBy())->flush();
         return $this;
     }
 

@@ -41,9 +41,9 @@ class TopicManagerTest extends TestBase
         $post->setCreatedBy($users['tom']);
         $post->setIsDeleted(false);
 
-		$this->getTopicModel()->getManager()->saveNewTopic($post);
+		$this->getTopicModel()->saveNewTopic($post);
 		
-		$foundTopic = $this->getTopicModel()->getRepository()->findOneTopicByIdWithBoardAndCategory($post->getTopic()->getId(), true);
+		$foundTopic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($post->getTopic()->getId(), true);
 		
 		$this->assertNotNull($foundTopic);
 		$this->assertInstanceOf('CCDNForum\ForumBundle\Entity\Topic', $foundTopic);
@@ -65,7 +65,7 @@ class TopicManagerTest extends TestBase
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 
 		$topics[0]->setTitle('the_new_title');
-        $this->getTopicModel()->getManager()->updateTopic($topics[0]);
+        $this->getTopicModel()->updateTopic($topics[0]);
 		
 		$this->em->refresh($topics[0]);
 		$this->assertSame('the_new_title', $topics[0]->getTitle());
@@ -91,11 +91,11 @@ class TopicManagerTest extends TestBase
         $post->setCreatedBy($users['tom']);
         $post->setIsDeleted(false);
 
-		$this->getTopicModel()->getManager()->saveNewTopic($post);
+		$this->getTopicModel()->saveNewTopic($post);
 		
-		$this->getTopicModel()->getManager()->incrementViewCounter($topic);
+		$this->getTopicModel()->incrementViewCounter($topic);
 		
-		$foundTopic = $this->getTopicModel()->getRepository()->findOneTopicByIdWithBoardAndCategory($topic->getId(), true);
+		$foundTopic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topic->getId(), true);
 		
 		$this->assertTrue(is_numeric($foundTopic->getId()));
 		$this->assertTrue(is_numeric($foundTopic->getCachedViewCount()));
@@ -113,12 +113,12 @@ class TopicManagerTest extends TestBase
 		$topics = $this->addFixturesForTopics($boards);
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 
-        $this->getTopicModel()->getManager()->softDelete($topics[0], $users['tom']);
+        $this->getTopicModel()->softDelete($topics[0], $users['tom']);
 		
 		$this->em->refresh($topics[0]);
 		$this->assertTrue($topics[0]->isDeleted());
 
-        $this->getTopicModel()->getManager()->restore($topics[0]);
+        $this->getTopicModel()->restore($topics[0]);
 		
 		$this->em->refresh($topics[0]);
 		$this->assertFalse($topics[0]->isDeleted());
@@ -135,7 +135,7 @@ class TopicManagerTest extends TestBase
 		$topics = $this->addFixturesForTopics($boards);
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 
-        $this->getTopicModel()->getManager()->softDelete($topics[0], $users['tom']);
+        $this->getTopicModel()->softDelete($topics[0], $users['tom']);
 		
 		$this->em->refresh($topics[0]);
 		$this->assertTrue($topics[0]->isDeleted());
@@ -152,7 +152,7 @@ class TopicManagerTest extends TestBase
 		$topics = $this->addFixturesForTopics($boards);
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 
-        $this->getTopicModel()->getManager()->sticky($topics[0], $users['tom']);
+        $this->getTopicModel()->sticky($topics[0], $users['tom']);
 		
 		$this->em->refresh($topics[0]);
 		$this->assertTrue($topics[0]->isSticky());
@@ -169,7 +169,7 @@ class TopicManagerTest extends TestBase
 		$topics = $this->addFixturesForTopics($boards);
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 
-        $this->getTopicModel()->getManager()->unsticky($topics[0]);
+        $this->getTopicModel()->unsticky($topics[0]);
 		
 		$this->em->refresh($topics[0]);
 		$this->assertFalse($topics[0]->isSticky());
@@ -186,7 +186,7 @@ class TopicManagerTest extends TestBase
 		$topics = $this->addFixturesForTopics($boards);
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 
-        $this->getTopicModel()->getManager()->close($topics[0], $users['tom']);
+        $this->getTopicModel()->close($topics[0], $users['tom']);
 		
 		$this->em->refresh($topics[0]);
 		$this->assertTrue($topics[0]->isClosed());
@@ -203,9 +203,33 @@ class TopicManagerTest extends TestBase
 		$topics = $this->addFixturesForTopics($boards);
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 
-        $this->getTopicModel()->getManager()->reopen($topics[0]);
+        $this->getTopicModel()->reopen($topics[0]);
 		
 		$this->em->refresh($topics[0]);
 		$this->assertFalse($topics[0]->isClosed());
+	}
+
+    public function testUpdateStats()
+	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$boards = $this->addFixturesForBoards($categories);
+		$topics = $this->addFixturesForTopics($boards);
+		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		
+		$topic = $topics[0];
+
+		$this->getTopicModel()->updateStats($topic);
+
+		$tPosts = $topic->getPosts();
+		$firstPost = $tPosts[0];
+		$lastPost = $tPosts[count($tPosts) - 1];
+		
+		$this->assertSame(2, $topic->getCachedReplyCount());
+		$this->assertSame($firstPost->getId(), $topic->getFirstPost()->getId());
+		$this->assertSame($lastPost->getId(), $topic->getLastPost()->getId());
 	}
 }

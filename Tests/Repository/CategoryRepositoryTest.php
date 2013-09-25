@@ -24,7 +24,7 @@ class CategoryRepositoryTest extends TestBase
 		$forum = $this->addFixturesForForums();
 		$category = $this->addFixturesForCategories($forum);
 		
-		$categoriesFound = $this->getCategoryModel()->getRepository()->findAllCategories();
+		$categoriesFound = $this->getCategoryModel()->findAllCategories();
 		
 		// 3 Forums, with 3 categories each respectively, 3x3 = 9 Categories total.
 		$this->assertCount(9, $categoriesFound);
@@ -38,7 +38,7 @@ class CategoryRepositoryTest extends TestBase
 		$category = $this->addFixturesForCategories($forums);
 		
 		foreach ($forums as $forum) {
-			$categoriesFound = $this->getCategoryModel()->getRepository()->findAllCategoriesForForumById($forum->getId());
+			$categoriesFound = $this->getCategoryModel()->findAllCategoriesForForumById($forum->getId());
 	
 			$this->assertCount(3, $categoriesFound);
 		}
@@ -52,7 +52,7 @@ class CategoryRepositoryTest extends TestBase
 		$categories = $this->addFixturesForCategories(array($forum));
 		$boards = $this->addFixturesForBoards($categories);
 		
-		$foundCategories = $this->getCategoryModel()->getRepository()->findAllCategoriesWithBoardsForForumByName($forum->getName());
+		$foundCategories = $this->getCategoryModel()->findAllCategoriesWithBoardsForForumByName($forum->getName());
 			
 		$this->assertNotNull($foundCategories);
 		$this->assertCount(3, $foundCategories);
@@ -68,7 +68,7 @@ class CategoryRepositoryTest extends TestBase
 		$forum = $this->addNewForum('testFindOneCategoryById');
 		$category = $this->addNewCategory('testFindOneCategoryById', 1, $forum);
 		
-		$foundCategory = $this->getCategoryModel()->getRepository()->findOneCategoryById($category->getId());
+		$foundCategory = $this->getCategoryModel()->findOneCategoryById($category->getId());
 		
 		$this->assertNotNull($foundCategory);
 		$this->assertEquals($foundCategory->getId(), $category->getId());
@@ -81,7 +81,7 @@ class CategoryRepositoryTest extends TestBase
 		$forum = $this->addNewForum('testFindOneCategoryByIdWithBoards');
 		$category = $this->addNewCategory('testFindOneCategoryByIdWithBoards', 1, $forum);
 		
-		$foundCategory = $this->getCategoryModel()->getRepository()->findOneCategoryByIdWithBoards($category->getId());
+		$foundCategory = $this->getCategoryModel()->findOneCategoryByIdWithBoards($category->getId());
 		
 		$this->assertNotNull($foundCategory);
 		$this->assertEquals($foundCategory->getId(), $category->getId());

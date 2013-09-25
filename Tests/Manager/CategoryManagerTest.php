@@ -28,7 +28,7 @@ class CategoryManagerTest extends TestBase
 		$category->setName('NewCategoryTest');
 		$category->setListOrderPriority(1);
 		
-		$this->getCategoryModel()->getManager()->saveNewCategory($category);
+		$this->getCategoryModel()->saveNewCategory($category);
 		
 		$this->assertTrue(is_numeric($category->getId()));
 		$this->assertSame('NewCategoryTest', $category->getName());
@@ -42,7 +42,7 @@ class CategoryManagerTest extends TestBase
 		
 		$category->setName('CategoryTestUpdated');
 		
-		$this->getCategoryModel()->getManager()->updateCategory($category);
+		$this->getCategoryModel()->updateCategory($category);
 		
 		$this->assertTrue(is_numeric($category->getId()));
 		$this->assertEquals('CategoryTestUpdated', $category->getName());
@@ -55,9 +55,9 @@ class CategoryManagerTest extends TestBase
 		$category = $this->addNewCategory('DeleteCategoryTest', 1);
 		
 		$categoryId = $category->getId();
-		$this->getCategoryModel()->getManager()->deleteCategory($category);
+		$this->getCategoryModel()->deleteCategory($category);
 		
-		$foundCategory = $this->getCategoryModel()->getRepository()->findOneCategoryById($categoryId);
+		$foundCategory = $this->getCategoryModel()->findOneCategoryById($categoryId);
 		
 		$this->assertNull($foundCategory);
 	}
@@ -75,11 +75,11 @@ class CategoryManagerTest extends TestBase
 		$boards = new ArrayCollection($category1->getBoards()->toArray());
 		
 		$this->assertCount(3, $category1->getBoards());
-		$this->getCategoryModel()->getManager()->reassignBoardsToCategory($boards, null);
+		$this->getCategoryModel()->reassignBoardsToCategory($boards, null);
 		$this->em->refresh($category1);
 		$this->assertCount(0, $category1->getBoards());
 		
-		$this->getCategoryModel()->getManager()->reassignBoardsToCategory($boards, $category2);
+		$this->getCategoryModel()->reassignBoardsToCategory($boards, $category2);
 		$this->em->refresh($category2);
 		$this->assertCount(6, $category2->getBoards());
 	}
@@ -105,43 +105,43 @@ class CategoryManagerTest extends TestBase
 		$this->assertSame('test_category_3', $categories[2]->getName());
 		
 		// 123 -> 213
-		$this->getCategoryModel()->getManager()->reorderCategories($categories, $categories[0], $this::REORDER_DOWN);
-		$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForumById($forum->getId());
+		$this->getCategoryModel()->reorderCategories($categories, $categories[0], $this::REORDER_DOWN);
+		$categories = $this->getCategoryModel()->findAllCategoriesForForumById($forum->getId());
 		$this->assertSame('test_category_2', $categories[0]->getName());
 		$this->assertSame('test_category_1', $categories[1]->getName());
 		$this->assertSame('test_category_3', $categories[2]->getName());
 
 		// 213 -> 231
-		$this->getCategoryModel()->getManager()->reorderCategories($categories, $categories[1], $this::REORDER_DOWN);
-		$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForumById($forum->getId());
+		$this->getCategoryModel()->reorderCategories($categories, $categories[1], $this::REORDER_DOWN);
+		$categories = $this->getCategoryModel()->findAllCategoriesForForumById($forum->getId());
 		$this->assertSame('test_category_2', $categories[0]->getName());
 		$this->assertSame('test_category_3', $categories[1]->getName());
 		$this->assertSame('test_category_1', $categories[2]->getName());
 
 		// 231 -> 123
-		$this->getCategoryModel()->getManager()->reorderCategories($categories, $categories[2], $this::REORDER_DOWN);
-		$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForumById($forum->getId());
+		$this->getCategoryModel()->reorderCategories($categories, $categories[2], $this::REORDER_DOWN);
+		$categories = $this->getCategoryModel()->findAllCategoriesForForumById($forum->getId());
 		$this->assertSame('test_category_1', $categories[0]->getName());
 		$this->assertSame('test_category_2', $categories[1]->getName());
 		$this->assertSame('test_category_3', $categories[2]->getName());
 		
 		// 123 <- 231
-		$this->getCategoryModel()->getManager()->reorderCategories($categories, $categories[0], $this::REORDER_UP);
-		$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForumById($forum->getId());
+		$this->getCategoryModel()->reorderCategories($categories, $categories[0], $this::REORDER_UP);
+		$categories = $this->getCategoryModel()->findAllCategoriesForForumById($forum->getId());
 		$this->assertSame('test_category_2', $categories[0]->getName());
 		$this->assertSame('test_category_3', $categories[1]->getName());
 		$this->assertSame('test_category_1', $categories[2]->getName());
 		
 		// 231 <- 213
-		$this->getCategoryModel()->getManager()->reorderCategories($categories, $categories[2], $this::REORDER_UP);
-		$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForumById($forum->getId());
+		$this->getCategoryModel()->reorderCategories($categories, $categories[2], $this::REORDER_UP);
+		$categories = $this->getCategoryModel()->findAllCategoriesForForumById($forum->getId());
 		$this->assertSame('test_category_2', $categories[0]->getName());
 		$this->assertSame('test_category_1', $categories[1]->getName());
 		$this->assertSame('test_category_3', $categories[2]->getName());
 		
 		// 213 <- 123
-		$this->getCategoryModel()->getManager()->reorderCategories($categories, $categories[1], $this::REORDER_UP);
-		$categories = $this->getCategoryModel()->getRepository()->findAllCategoriesForForumById($forum->getId());
+		$this->getCategoryModel()->reorderCategories($categories, $categories[1], $this::REORDER_UP);
+		$categories = $this->getCategoryModel()->findAllCategoriesForForumById($forum->getId());
 		$this->assertSame('test_category_1', $categories[0]->getName());
 		$this->assertSame('test_category_2', $categories[1]->getName());
 		$this->assertSame('test_category_3', $categories[2]->getName());

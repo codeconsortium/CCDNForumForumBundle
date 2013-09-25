@@ -87,6 +87,17 @@ class TopicModel extends BaseModel implements BaseModelInterface
 
     /**
      *
+     * @access public
+     * @param  int                                 $topicId
+     * @return \CCDNForum\ForumBundle\Entity\Topic
+     */
+	public function findLastTopicForBoardByIdWithLastPost($boardId)
+	{
+		return $this->getRepository()->findLastTopicForBoardByIdWithLastPost($boardId);
+	}
+
+    /**
+     *
      * Post must have a set topic for topic to be set correctly.
      *
      * @access public
@@ -188,17 +199,17 @@ class TopicModel extends BaseModel implements BaseModelInterface
         return $this->getManager()->reopen($topic);
     }
 
-//    /**
-//     *
-//     * @access public
-//     * @param  int                                 $boardId
-//     * @return \CCDNForum\ForumBundle\Entity\Topic
-//     */
-//    public function findLastTopicForBoardByIdWithLastPost($boardId)
-//    {
-//        return $this->getRepository()->findLastTopicForBoardByIdWithLastPost($boardId);
-//    }
-//
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Topic               $topic
+     * @return \CCDNForum\ForumBundle\Model\Manager\TopicManager
+     */
+    public function updateStats(Topic $topic)
+    {
+        return $this->getManager()->updateStats($topic);
+    }
+
 //    /**
 //     *
 //     * @access public
@@ -210,16 +221,6 @@ class TopicModel extends BaseModel implements BaseModelInterface
 //        return $this->getRepository()->findTheseTopicsById($topicsIds);
 //    }
 //
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function updateStats(Topic $topic)
-//    {
-//        return $this->getManager()->updateStats($topic);
-//    }
 //
 //    /**
 //     *

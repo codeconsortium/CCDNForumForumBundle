@@ -31,7 +31,7 @@ class PostRepositoryTest extends TestBase
 		$topic = $this->addNewTopic('testFindAllPostsPaginatedByTopicId', $board);
 		$posts = $this->addFixturesForPosts(array($topic), $users['tom']);
 	
-		$pager = $this->getPostModel()->getRepository()->findAllPostsPaginatedByTopicId($topic->getId(), 1, true);
+		$pager = $this->getPostModel()->findAllPostsPaginatedByTopicId($topic->getId(), 1, true);
 		
 		$posts = $pager->getItems();
 	
@@ -53,7 +53,7 @@ class PostRepositoryTest extends TestBase
 		foreach ($posts as $post) {
 			$this->em->refresh($post);
 
-			$foundPost = $this->getPostModel()->getRepository()->findOnePostByIdWithTopicAndBoard($post->getId(), true);
+			$foundPost = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($post->getId(), true);
 			
 			$this->assertNotNull($foundPost->getId());
 			$this->assertInstanceOf('CCDNForum\ForumBundle\Entity\Post', $foundPost);
@@ -71,9 +71,57 @@ class PostRepositoryTest extends TestBase
 		foreach ($posts as $post) {
 			$this->em->refresh($post);
 
-			$foundPost = $this->getPostModel()->getRepository()->findOnePostByIdWithTopicAndBoard($post->getId(), false);
+			$foundPost = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($post->getId(), false);
 			
 			$this->assertNull($foundPost);
 		}
+	}
+
+	public function testGetFirstPostForTopicById()
+	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$boards = $this->addFixturesForBoards($categories);
+		$topics = $this->addFixturesForTopics($boards);
+		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		
+		$firstPost = $this->getPostModel()->getFirstPostForTopicById($topics[0]->getId());
+		
+		$this->assertSame($firstPost->getId(), $topics[0]->getFirstPost()->getId());
+	}
+
+	public function testGetLastPostForTopicById()
+	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$boards = $this->addFixturesForBoards($categories);
+		$topics = $this->addFixturesForTopics($boards);
+		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		
+		$lastPost = $this->getPostModel()->getLastPostForTopicById($topics[0]->getId());
+		
+		$this->assertSame($lastPost->getId(), $topics[0]->getLastPost()->getId());
+	}
+
+	public function testCountPostsForTopicById()
+	{
+		$this->purge();
+		
+		$users = $this->addFixturesForUsers();
+		$forums = $this->addFixturesForForums();
+		$categories = $this->addFixturesForCategories($forums);
+		$boards = $this->addFixturesForBoards($categories);
+		$topics = $this->addFixturesForTopics($boards);
+		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		
+		$count = $this->getPostModel()->countPostsForTopicById($topics[0]->getId());
+		
+		$this->assertSame(3, (int) $count);
 	}
 }

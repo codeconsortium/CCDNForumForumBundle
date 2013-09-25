@@ -208,34 +208,38 @@ class BoardManager extends BaseManager implements BaseManagerInterface
         return $this;
     }
 
-//    /**
-//     *
-//     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
-//     */
-//    public function updateStats(Board $board)
-//    {
-//        $stats = $this->getTopicAndPostCountForBoardById($board->getId());
-//
-//        // set the board topic / post count
-//        $board->setCachedTopicCount($stats['topicCount']);
-//        $board->setCachedPostCount($stats['postCount']);
-//
-//        $lastTopic = $this->managerBag->getTopicManager()->findLastTopicForBoardByIdWithLastPost($board->getId());
-//
-//        // set last_post for board
-//        if ($lastTopic) {
-//            $board->setLastPost($lastTopic->getLastPost() ?: null);
-//        } else {
-//            $board->setLastPost(null);
-//        }
-//
-//        $this->persist($board)->flush();
-//
-//        return $this;
-//    }
-//
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
+     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     */
+    public function updateStats(Board $board)
+    {
+		$boardModel = $this->model->getModelBag()->getBoardModel();
+		
+        $stats = $boardModel->getTopicAndPostCountForBoardById($board->getId());
+
+        // set the board topic / post count
+        $board->setCachedTopicCount($stats['topicCount']);
+        $board->setCachedPostCount($stats['postCount']);
+
+		$topicModel = $this->model->getModelBag()->getTopicModel();
+		
+        $lastTopic = $topicModel->findLastTopicForBoardByIdWithLastPost($board->getId());
+
+        // set last_post for board
+        if ($lastTopic) {
+            $board->setLastPost($lastTopic->getLastPost() ?: null);
+        } else {
+            $board->setLastPost(null);
+        }
+
+        $this->persist($board)->flush();
+
+        return $this;
+    }
+
 //    /**
 //     *
 //     * @access public
