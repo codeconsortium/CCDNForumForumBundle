@@ -44,18 +44,18 @@ class TestBase extends \PHPUnit_Framework_TestCase //WebTestCase
 	 *
 	 * @access public
 	 */
-    public function setUp()
-    {
-        $kernel = static::createKernel();
-
-        $kernel->boot();
-		
-		$this->container = $kernel->getContainer();
-
-        $this->em = $this->container->get('doctrine.orm.entity_manager');
-		
-		$this->purge();
-    }
+//    public function setUp()
+//    {
+//        $kernel = static::createKernel();
+//
+//        $kernel->boot();
+//		
+//		$this->container = $kernel->getContainer();
+//
+//        $this->em = $this->container->get('doctrine.orm.entity_manager');
+//		
+//		$this->purge();
+//    }
 
     protected function purge()
     {

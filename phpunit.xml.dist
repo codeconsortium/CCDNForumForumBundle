@@ -9,11 +9,11 @@
             <directory>./Tests/Manager</directory>
         </testsuite>
     </testsuites>
-
+	<!--
     <php>
         <server name="KERNEL_DIR" value="../../../../../app" />
     </php> 
-
+	-->
     <filter>
         <whitelist>
             <directory suffix=".php">./Tests</directory>
