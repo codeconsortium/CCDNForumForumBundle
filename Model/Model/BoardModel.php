@@ -94,9 +94,9 @@ class BoardModel extends BaseModel implements BaseModelInterface
      * @return Array
      */
     public function getTopicAndPostCountForBoardById($boardId)
-	{
-		return $this->getRepository()->getTopicAndPostCountForBoardById($boardId);
-	}
+    {
+        return $this->getRepository()->getTopicAndPostCountForBoardById($boardId);
+    }
 
     /**
      *

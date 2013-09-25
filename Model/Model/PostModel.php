@@ -66,10 +66,10 @@ class PostModel extends BaseModel implements BaseModelInterface
      * @param  int                                $topicId
      * @return \CCDNForum\ForumBundle\Entity\Post
      */
-	public function getFirstPostForTopicById($topicId)
-	{
-		return $this->getRepository()->getFirstPostForTopicById($topicId);
-	}
+    public function getFirstPostForTopicById($topicId)
+    {
+        return $this->getRepository()->getFirstPostForTopicById($topicId);
+    }
 
     /**
      *
@@ -77,21 +77,21 @@ class PostModel extends BaseModel implements BaseModelInterface
      * @param  int                                $topicId
      * @return \CCDNForum\ForumBundle\Entity\Post
      */
-	public function getLastPostForTopicById($topicId)
-	{
-		return $this->getRepository()->getLastPostForTopicById($topicId);
-	}
+    public function getLastPostForTopicById($topicId)
+    {
+        return $this->getRepository()->getLastPostForTopicById($topicId);
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  int   $topicId
-	 * @return Array
-	 */
-	public function countPostsForTopicById($topicId)
-	{
-		return $this->getRepository()->countPostsForTopicById($topicId);
-	}
+    /**
+     *
+     * @access public
+     * @param  int   $topicId
+     * @return Array
+     */
+    public function countPostsForTopicById($topicId)
+    {
+        return $this->getRepository()->countPostsForTopicById($topicId);
+    }
 
     /**
      *

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit bootstrap="Tests/bootstrap.php" color="true">
+<phpunit bootstrap="Tests/bootstrap.php" colors="true">
+
     <testsuites>
         <testsuite name="CCDNForum ForumBundle Test Suite">
             <directory>./Tests</directory>
             <directory>./Tests/Repository</directory>
+            <directory>./Tests/Manager</directory>
         </testsuite>
     </testsuites>
-    <php>
-        <server name="KERNEL_DIR" value="../../../../../app" />
-    </php>
+
     <filter>
         <whitelist>
             <directory suffix=".php">./Tests</directory>
         </whitelist>
     </filter>
+
 </phpunit>

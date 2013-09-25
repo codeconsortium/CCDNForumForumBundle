@@ -13,19 +13,15 @@
 
 namespace CCDNForum\ForumBundle\Component\Dispatcher\Listener;
 
-use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent;
-use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent;
-use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent;
 
 use CCDNForum\ForumBundle\Entity\Board;
 use CCDNForum\ForumBundle\Entity\Topic;
-use CCDNForum\ForumBundle\Entity\Post;
 
 /**
  *
@@ -87,7 +83,7 @@ class StatListener implements EventSubscriberInterface
      */
     public function onTopicCreateComplete(UserTopicEvent $event)
     {
-		$this->updateBoardStats($event->getTopic());
+        $this->updateBoardStats($event->getTopic());
     }
 
     /**
@@ -97,8 +93,8 @@ class StatListener implements EventSubscriberInterface
      */
     public function onTopicReplyComplete(UserTopicEvent $event)
     {
-		$this->updateTopicStats($event->getTopic());
-		$this->updateBoardStats($event->getTopic());
+        $this->updateTopicStats($event->getTopic());
+        $this->updateBoardStats($event->getTopic());
     }
 
     /**
@@ -107,9 +103,9 @@ class StatListener implements EventSubscriberInterface
      * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
      */
     public function onTopicSoftDeleteComplete(ModeratorTopicEvent $event)
-	{
-		$this->updateBoardStats($event->getTopic());
-	}
+    {
+        $this->updateBoardStats($event->getTopic());
+    }
 
     /**
      *
@@ -117,42 +113,42 @@ class StatListener implements EventSubscriberInterface
      * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
      */
     public function onTopicRestoreComplete(ModeratorTopicEvent $event)
-	{
-		$this->updateBoardStats($event->getTopic());
-	}
+    {
+        $this->updateBoardStats($event->getTopic());
+    }
 
     /**
      *
      * @access protected
      * @param \CCDNForum\ForumBundle\Entity\Topic $topic
      */
-	protected function updateTopicStats(Topic $topic)
-	{
+    protected function updateTopicStats(Topic $topic)
+    {
         if ($topic->getId()) {
-			$this->topicModel->updateStats($topic);
+            $this->topicModel->updateStats($topic);
         }
-	}
+    }
 
     /**
      *
      * @access protected
      * @param \CCDNForum\ForumBundle\Entity\Topic $topic
      */
-	protected function updateBoardStats(Topic $topic)
-	{
-		if ($topic) {
-			if ($topic->getId()) {
-				$board = $topic->getBoard();
-				
-				if ($board) {
-					$this->boardModel->updateStats($board);
-				}
-			}
-		}
-	}
+    protected function updateBoardStats(Topic $topic)
+    {
+        if ($topic) {
+            if ($topic->getId()) {
+                $board = $topic->getBoard();
+
+                if ($board) {
+                    $this->boardModel->updateStats($board);
+                }
+            }
+        }
+    }
 
 //	protected function updateUserStats(Topic $topic)
 //	{
-//		
+//
 //	}
 }

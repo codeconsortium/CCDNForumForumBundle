@@ -247,13 +247,13 @@ class TopicRepository extends BaseRepository implements BaseRepositoryInterface
         $qb = $this->createSelectQuery(array('t', 'p', 'b'));
 
         $qb
-			->leftJoin('t.board', 'b')
+            ->leftJoin('t.board', 'b')
             ->leftJoin('t.posts', 'p')
             ->where('b.id = :boardId')
             ->andWhere('t.isDeleted = FALSE')
             ->orderBy('p.createdDate', 'DESC')
             ->setMaxResults(1)
-		;
+        ;
 
         return $this->gateway->findTopic($qb, $params);
     }

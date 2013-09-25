@@ -91,10 +91,10 @@ class TopicModel extends BaseModel implements BaseModelInterface
      * @param  int                                 $topicId
      * @return \CCDNForum\ForumBundle\Entity\Topic
      */
-	public function findLastTopicForBoardByIdWithLastPost($boardId)
-	{
-		return $this->getRepository()->findLastTopicForBoardByIdWithLastPost($boardId);
-	}
+    public function findLastTopicForBoardByIdWithLastPost($boardId)
+    {
+        return $this->getRepository()->findLastTopicForBoardByIdWithLastPost($boardId);
+    }
 
     /**
      *

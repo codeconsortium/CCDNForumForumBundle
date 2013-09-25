@@ -133,8 +133,8 @@ class PostRepository extends BaseRepository implements BaseRepositoryInterface
      * @param  int                                $topicId
      * @return \CCDNForum\ForumBundle\Entity\Post
      */
-	public function getFirstPostForTopicById($topicId)
-	{
+    public function getFirstPostForTopicById($topicId)
+    {
         if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
             throw new \Exception('Topic id "' . $topicId . '" is invalid!');
         }
@@ -148,12 +148,12 @@ class PostRepository extends BaseRepository implements BaseRepositoryInterface
             ->where(
                 $expr = $qb->expr()->eq('t.id', ':topicId')
             )
-			->orderBy('p.createdDate', 'ASC')
-			->setMaxResults(1)
+            ->orderBy('p.createdDate', 'ASC')
+            ->setMaxResults(1)
         ;
 
         return $this->gateway->findPost($qb, $params);
-	}
+    }
 
     /**
      *
@@ -161,8 +161,8 @@ class PostRepository extends BaseRepository implements BaseRepositoryInterface
      * @param  int                                $topicId
      * @return \CCDNForum\ForumBundle\Entity\Post
      */
-	public function getLastPostForTopicById($topicId)
-	{
+    public function getLastPostForTopicById($topicId)
+    {
         if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
             throw new \Exception('Topic id "' . $topicId . '" is invalid!');
         }
@@ -176,21 +176,21 @@ class PostRepository extends BaseRepository implements BaseRepositoryInterface
             ->where(
                 $expr = $qb->expr()->eq('t.id', ':topicId')
             )
-			->orderBy('p.createdDate', 'DESC')
-			->setMaxResults(1)
+            ->orderBy('p.createdDate', 'DESC')
+            ->setMaxResults(1)
         ;
 
         return $this->gateway->findPost($qb, $params);
-	}
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  int   $topicId
-	 * @return Array
-	 */
-	public function countPostsForTopicById($topicId)
-	{
+    /**
+     *
+     * @access public
+     * @param  int   $topicId
+     * @return Array
+     */
+    public function countPostsForTopicById($topicId)
+    {
         if (null == $topicId || ! is_numeric($topicId) || $topicId == 0) {
             throw new \Exception('Topic id "' . $topicId . '" is invalid!');
         }
@@ -200,7 +200,7 @@ class PostRepository extends BaseRepository implements BaseRepositoryInterface
         $qb->where('p.topic = :topicId');
 
         return $this->gateway->countPosts($qb, array(':topicId' => $topicId));
-	}
+    }
 
 //    /**
 //     *

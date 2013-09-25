@@ -225,8 +225,8 @@ class TopicManager extends BaseManager implements BaseManagerInterface
      */
     public function updateStats(Topic $topic)
     {
-		$postModel = $this->model->getModelBag()->getPostModel();
-        
+        $postModel = $this->model->getModelBag()->getPostModel();
+
         // Get stats.
         $topicPostCount = $postModel->countPostsForTopicById($topic->getId());
         $topicFirstPost = $postModel->getFirstPostForTopicById($topic->getId());
