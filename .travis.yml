@@ -13,7 +13,7 @@ env:
     - SYMFONY_VERSION="2.1.*" DB=mysql
 
 before_script:
-	- composer self-update
+    - composer self-update
     - composer install --dev --prefer-source
 
 notifications:
