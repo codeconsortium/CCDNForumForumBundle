@@ -5,8 +5,8 @@ Installing CCDNForum ForumBundle 2.x
 ## Dependencies:
 
 1. [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle).
-2. [CCDNComponent CommonBundle](http://github.com/codeconsortium/CCDNComponentCommonBundle).
-4. [CCDNComponent CrumbTrailBundle](http://github.com/codeconsortium/CCDNComponentCrumbTrailBundle).
+
+> Note you will need a User Bundle so that you can map the UserInterface to your own User entity. You can use whatecer User Bundle you prefer. FOSUserBundle is highly rated.
 
 ## Installation:
 
@@ -80,12 +80,39 @@ doctrine:
     orm:
         default_entity_manager: default
         auto_generate_proxy_classes: "%kernel.debug%"
+        entity_managers:
+            default:
+                mappings:
+                    CCDNForumForumBundle:
+                        mapping:              true
+                        type:                 yml
+                        dir:                  "Resources/config/doctrine"
+                        alias:                ~
+                        prefix:               CCDNForum\ForumBundle\Entity
+                        is_bundle:            true
+```
+
+You will want to resolve the UserInterface to the User entity of your choice. As an example, if you were using FOSUSerBundle, then your configuration might look like:
+
+```
+# app/config/config.yml
+# Doctrine Configuration
+doctrine:
+    orm:
+        default_entity_manager: default
+        auto_generate_proxy_classes: "%kernel.debug%"
         resolve_target_entities:
             Symfony\Component\Security\Core\User\UserInterface: FOS\UserBundle\Entity\User
         entity_managers:
             default:
                 mappings:
-                    FOSUserBundle: ~
+					FOSUserBundle:       
+	                    mapping:              true
+	                    type:                 yml
+	                    dir:                  "Resources/config/doctrine"
+	                    alias:                ~
+	                    prefix:               FOS\UserBundle\Entity
+	                    is_bundle:            true
                     CCDNForumForumBundle:
                         mapping:              true
                         type:                 yml
