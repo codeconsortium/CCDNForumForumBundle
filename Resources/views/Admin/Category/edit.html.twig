@@ -1,4 +1,4 @@
-{% extends 'CCDNForumForumBundle:Admin:/Layout/base.html.twig' %}
+{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.post.edit_topic.layout_template %}
 
@@ -8,18 +8,40 @@
 
 
 
+{% block sub_title %}
+	<a href="{{ path('ccdn_forum_user_category_index') }}">
+		Forum Admin
+	</a>
+{% endblock sub_title %}
+
+
+
+{%- block sidebar -%}
+
+	{%- spaceless -%}
+	
+	{{- parent() -}}
+
+    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/sidebar_admin.html.twig' -%}
+
+	{%- endspaceless -%}
+	
+{%- endblock sidebar -%}
+
+
+
 {% block body_content %}
 
     {%- spaceless -%}
 
-	<section>
+	<section class="clearfix">
 	    {%- form_theme form ccdn_forum_forum.post.edit_topic.form_theme -%}
 	    <form action="{{- path('ccdn_forum_admin_category_edit_process', {'categoryId': category.id, 'forum_filter': forum_filter}) -}}"
 		 method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
 	        <fieldset>
 
-				<div class="control-group form-title">
-					<div class="controls">
+				<div class="form-group">
+					<div class="col-lg-offset-2 col-lg-10">
 						<h4>Update Category {{ category.id -}}</h4>
 						<h5>{{- category.name -}}</h5>
 					</div>
@@ -29,13 +51,16 @@
 
 				{{- form_rest(form) -}}
 
-	            <div class="form-actions">
-	                <input type="submit" class="btn btn-primary" value="Update" name="submit[post]" id="submit[post]">
+				<div class="form-group">
+					<div class="col-lg-offset-2 col-lg-10">
+		                <input type="submit" class="btn btn-primary" value="Update" name="submit[post]" id="submit[post]">
 
-	                <a class="btn" href="{{- path('ccdn_forum_admin_category_list', { 'forum_filter': forum_filter}) -}}">
-						{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
-					</a>
+		                <a class="btn btn-default" href="{{- path('ccdn_forum_admin_category_list', { 'forum_filter': forum_filter}) -}}">
+							{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
+						</a>
+					</div>
 	            </div>
+				
 	        </fieldset>
 	    </form>
 	</section>

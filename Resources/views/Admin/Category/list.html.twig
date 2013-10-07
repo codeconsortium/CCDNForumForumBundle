@@ -1,4 +1,4 @@
-{% extends 'CCDNForumForumBundle:Admin:/Layout/base.html.twig' %}
+{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.topic.create.layout_template %}
 
@@ -8,25 +8,47 @@
 
 
 
+{% block sub_title %}
+	<a href="{{ path('ccdn_forum_user_category_index') }}">
+		Forum Admin
+	</a>
+{% endblock sub_title %}
+
+
+
+{%- block sidebar -%}
+
+	{%- spaceless -%}
+	
+	{{- parent() -}}
+
+    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/sidebar_admin.html.twig' -%}
+
+	{%- endspaceless -%}
+	
+{%- endblock sidebar -%}
+
+
+
 {%- block body_content -%}
 
 	{%- spaceless -%}
 
-		<section>
+		<section class="row btn-toolbar clearfix">
 			<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_category_create', {'forum_filter': forum_filter}) -}}">
 				Create Category
 			</a>
 		</section>
 
-		<section class="span12">
-			<ul class="nav nav-list span2">
+		<section class="col-md-12 clearfix">
+			<ul class="nav nav-list col-md-2">
 				<li class="nav-header">
 					Forums
 				</li>
 
 				<li {%- if forum_filter is null or forum_filter == '' %} class="active" {%- endif -%}>
 					<a href="{{- path('ccdn_forum_admin_category_list') -}}">
-						<i class="icon-exclamation-sign"></i>
+						<i class="glyphicon glyphicon-exclamation-sign"></i>
 						Unassigned
 					</a>
 				</li>
@@ -47,7 +69,7 @@
 				{%- endfor -%}
 			</ul>
 
-			<div class="span9">
+			<div class="col-md-9">
 				<table class="table table-bordered" id="admin-categories-list">
 					<thead>
 						<tr>
@@ -64,7 +86,7 @@
 								<td>{{- category.name -}}</td>
 								<td>{{- category.boards |length -}}</td>
 								<td>
-									<a class="btn" href="{{- path('ccdn_forum_admin_category_edit', {'categoryId': category.id, 'forum_filter': forum_filter}) -}}"
+									<a class="btn btn-default" href="{{- path('ccdn_forum_admin_category_edit', {'categoryId': category.id, 'forum_filter': forum_filter}) -}}"
 									 id="update_category[{{- category.name -}}]">
 										Edit
 									</a>
@@ -79,21 +101,21 @@
 									{%- if forum_filter is not null and forum_filter != '' %}
 										{% if loop.length > 1 %}
 											<div class="btn-group">
-												<a class="btn" href="{{- path('ccdn_forum_admin_category_reorder_up', {'categoryId': category.id, 'forum_filter': forum_filter}) -}}"
+												<a class="btn btn-default" href="{{- path('ccdn_forum_admin_category_reorder_up', {'categoryId': category.id, 'forum_filter': forum_filter}) -}}"
 												 id="reorder_up_category[{{- category.name -}}]">
 													{%- if loop.first -%}
-														<i class="icon-retweet"></i>
+														<i class="glyphicon glyphicon-retweet"></i>
 													{%- else -%}
-														<i class="icon-chevron-up"></i>
+														<i class="glyphicon glyphicon-chevron-up"></i>
 													{%- endif -%}
 												</a>
 
-												<a class="btn" href="{{- path('ccdn_forum_admin_category_reorder_down', {'categoryId': category.id, 'forum_filter': forum_filter}) -}}"
+												<a class="btn btn-default" href="{{- path('ccdn_forum_admin_category_reorder_down', {'categoryId': category.id, 'forum_filter': forum_filter}) -}}"
 												 id="reorder_down_category[{{- category.name -}}]">
 													{%- if loop.last -%}
-														<i class="icon-retweet"></i>
+														<i class="glyphicon glyphicon-retweet"></i>
 													{%- else -%}
-														<i class="icon-chevron-down"></i>
+														<i class="glyphicon glyphicon-chevron-down"></i>
 													{%- endif -%}
 												</a>
 											</div>

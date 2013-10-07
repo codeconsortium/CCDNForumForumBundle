@@ -1,120 +1,101 @@
 {%- spaceless -%}
 
-	<div>
-		{#
-	    {{ author.renderAvatar(60,60)|raw }}
-		#}
-	</div>
-
-
-	<div class="row-fluid">
-		<div class="row-fluid">
-		    <div class="span7">
+	<div class="row clearfix">
+	    <div class="col-md-7">
+			{%- if author -%}
 		        {{- 'generic.posted_by' |trans({'%name%': author.username}, 'CCDNForumForumBundle') |raw -}}
 
 		        &nbsp;&#183;
 
-		        <span class="timestamper" title="{{- post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-		            {{- post.getCreatedDate |date(ccdn_forum_forum.item_post.created_datetime_format) -}}
-		        </span>
-		    </div>
+			{%- endif -%}
 
-		    <div class="span5 content-right">
-		        {% if post.id %}
-		            <div class="btn-group">
-		                <a class="btn btn-mini btn-icon-only" id="post_show[{{- post.getBody |slice(0,24) -}}]"
-						 href="{{- path('ccdn_forum_user_post_show', {'forumName': forum.name, 'postId': post.getId }) -}}">
-							<i class="icon-fullscreen"></i>
-						</a>
-		                <a class="btn btn-mini btn-icon-only" href="#post_{{- post.getId -}}">
-							<i class="icon-magnet"></i>
-						</a>
-		            </div>
-		        {% endif %}
-		    </div>
-		</div>
+	        <span class="timestamper" title="{{- post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+	            {{- post.getCreatedDate |date(ccdn_forum_forum.item_post.created_datetime_format) -}}
+	        </span>
+	    </div>
 
-		<div class="row-fluid">
-			<div class="span7">
-				{#
-		        {{- author.renderRoleBadges|raw -}}
-				#}
-			</div>
+	    <div class="col-md-5 pull-right text-right">
+	        {% if post.id %}
+	            <div class="btn-group">
+	                <a class="btn btn-default btn-sm btn-icon-only" id="post_show[{{- post.getBody |slice(0,24) -}}]"
+					 href="{{- path('ccdn_forum_user_post_show', {'forumName': forum.name, 'postId': post.getId }) -}}">
+						<i class="glyphicon glyphicon-fullscreen"></i>
+					</a>
+	                <a class="btn btn-default btn-sm btn-icon-only" href="#post_{{- post.getId -}}">
+						<i class="glyphicon glyphicon-magnet"></i>
+					</a>
+	            </div>
+	        {% endif %}
 
-			<div class="span5 content-right">
-	            {%- if is_granted('ROLE_USER') -%}
+            {%- if is_granted('ROLE_USER') and post.id -%}
+				&nbsp;
+                <div class="dropdown btn-group text-left">
+                    <a class="dropdown-toggle btn btn-default btn-sm btn-icon-only" data-toggle="dropdown" href="#">
+						<i class="glyphicon glyphicon-cog"></i>
+						<span class="caret"></span>
+					</a>
+                    <ul class="dropdown-menu pull-right content-left" style="z-index:15;">
 
-					{% if post.id %}
-		                <div class="dropdown btn-group">
-		                    <a class="dropdown-toggle btn btn-mini btn-icon-only" data-toggle="dropdown" href="#">
-								<i class="icon-cog"></i>
-								<span class="caret"></span>
-							</a>
-		                    <ul class="dropdown-menu pull-right content-left" style="z-index:15;">
+						{%- if canReplyToTopic(post.getTopic) -%}
+	                        <li>
+								<a rel="nofollow" id="post_reply[{{- post.getBody |slice(0,24) -}}]"
+								 href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forum.name, 'topicId': post.getTopic.getId }) -}}">
+									<i class="glyphicon glyphicon-pencil"></i>
+									{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
+								</a>
+							</li>
+						{%- endif -%}
 
-								{%- if canReplyToTopic(post.getTopic) -%}
-			                        <li>
-										<a rel="nofollow" id="post_reply[{{- post.getBody |slice(0,24) -}}]"
-										 href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forum.name, 'topicId': post.getTopic.getId }) -}}">
-											<i class="icon-pencil"></i>
-											{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
-										</a>
-									</li>
-								{%- endif -%}
+						{%- if canEditPost(post) -%}
+                            <li>
+								<a rel="nofollow" id="post_edit[{{- post.getBody |slice(0,24) -}}]"
+								 href="{{- path('ccdn_forum_user_post_edit', {'forumName': forum.name, 'postId': post.getId }) -}}">
+									<i class="glyphicon glyphicon-pencil"></i>
+									{{- 'link.post.edit' | trans({}, 'CCDNForumForumBundle') -}}
+								</a>
+							</li>
+						{%- endif -%}
 
-								{%- if canEditPost(post) -%}
-	                                <li>
-										<a rel="nofollow" id="post_edit[{{- post.getBody |slice(0,24) -}}]"
-										 href="{{- path('ccdn_forum_user_post_edit', {'forumName': forum.name, 'postId': post.getId }) -}}">
-											<i class="icon-pencil"></i>
-											{{- 'link.post.edit' | trans({}, 'CCDNForumForumBundle') -}}
-										</a>
-									</li>
-								{%- endif -%}
+                        {%- if canDeletePost(post) -%}
+                            <li>
+								<a rel="nofollow" id="post_delete[{{- post.getBody |slice(0,24) -}}]"
+								 href="{{- path('ccdn_forum_user_post_delete', {'forumName': forum.name, 'postId': post.getId }) -}}">
+									<i class="glyphicon glyphicon-trash"></i>
+									{{- 'link.post.delete' | trans({}, 'CCDNForumForumBundle') -}}
+								</a>
+							</li>
+                        {%- endif -%}
 
-                                {%- if canDeletePost(post) -%}
-                                    <li>
-										<a rel="nofollow" id="post_delete[{{- post.getBody |slice(0,24) -}}]"
-										 href="{{- path('ccdn_forum_user_post_delete', {'forumName': forum.name, 'postId': post.getId }) -}}">
-											<i class="icon-trash"></i>
-											{{- 'link.post.delete' | trans({}, 'CCDNForumForumBundle') -}}
-										</a>
-									</li>
-                                {%- endif -%}
+						{%- if canRestorePost(post) -%}
+                            <li>
+                                <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_restore', {'forumName': forum.name, 'postId': post.getId }) -}}">
+                                    <i class="glyphicon glyphicon-trash"></i>
+									{{- 'link.post.restore' | trans({}, 'CCDNForumForumBundle') -}}
+                                </a>
+                            </li>
+                        {%- endif -%}
 
-								{%- if canRestorePost(post) -%}
-	                                <li>
-	                                    <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_restore', {'forumName': forum.name, 'postId': post.getId }) -}}">
-	                                        <i class="icon-trash"></i>
-											{{- 'link.post.restore' | trans({}, 'CCDNForumForumBundle') -}}
-	                                    </a>
-	                                </li>
-	                            {%- endif -%}
+						{%- if canLockPost(post) -%}
+                            <li>
+                                <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_lock', {'forumName': forum.name, 'postId': post.getId }) -}}">
+                                    <i class="glyphicon glyphicon-lock"></i>
+									{{- 'link.post.lock' | trans({}, 'CCDNForumForumBundle') -}}
+                                </a>
+                            </li>
+						{%- endif -%}
 
-								{%- if canLockPost(post) -%}
-	                                <li>
-	                                    <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_lock', {'forumName': forum.name, 'postId': post.getId }) -}}">
-	                                        <i class="icon-lock"></i>
-											{{- 'link.post.lock' | trans({}, 'CCDNForumForumBundle') -}}
-	                                    </a>
-	                                </li>
-								{%- endif -%}
+						{%- if canUnlockPost(post) -%}
+                            <li>
+                                <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_unlock', {'forumName': forum.name, 'postId': post.getId }) -}}">
+                                    <i class="glyphicon glyphicon-lock"></i>
+									{{- 'link.post.unlock' | trans({}, 'CCDNForumForumBundle') -}}
+                                </a>
+                            </li>
+                        {%- endif -%}
 
-								{%- if canUnlockPost(post) -%}
-	                                <li>
-	                                    <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_unlock', {'forumName': forum.name, 'postId': post.getId }) -}}">
-	                                        <i class="icon-lock"></i>
-											{{- 'link.post.unlock' | trans({}, 'CCDNForumForumBundle') -}}
-	                                    </a>
-	                                </li>
-		                        {%- endif -%}
-
-		                    </ul>
-		                </div>
-		            {%- endif -%}
-
-				{% endif %}
-			</div>
+                    </ul>
+                </div>
+            {%- endif -%}
 		</div>
 	</div>
 

@@ -1,31 +1,46 @@
-{% extends 'CCDNForumForumBundle:User:Layout/base.html.twig' %}
+{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.post.show.layout_template %}
 
 {% block title %}{{- 'title.post.show' | trans({'%post_id%': post.getId}, 'CCDNForumForumBundle') -}}{% endblock %}
 
 
+
+{%- block sidebar -%}
+
+	{%- spaceless -%}
+	
+	{{- parent() -}}
+
+    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/sidebar_user.html.twig' -%}
+
+	{%- endspaceless -%}
+	
+{%- endblock sidebar -%}
+
+
+
 {% block body_content %}
 
 	{%- spaceless -%}
 
-	<header class="row-fluid">
-		<div class="span6">
+	<header class="row clearfix">
+		<div class="col-md-6">
 		    <h3 title="{{- topic.getTitle -}}">{{- topic.getTitle |capitalize -}}</h3>
 		</div>
-		<div class="span6 content-right">
-		    <span class="label label-inverse prominent-figure" title="{{- topic.cachedReplyCount -}}">
+		<div class="col-md-6 content-right">
+		    <span class="label label-default" title="{{- topic.cachedReplyCount -}}">
 				{{- 'topic.count.reply' |trans({}, 'CCDNForumForumBundle') -}}
 				{{- topic.cachedReplyCount -}}
 			</span>
 
-		    <span class="label label-inverse prominent-figure" title="{{- topic.cachedViewCount -}}">
+		    <span class="label label-default" title="{{- topic.cachedViewCount -}}">
 				{{- 'topic.count.view' |trans({}, 'CCDNForumForumBundle') -}}
 				{{- topic.cachedViewCount -}}
 			</span>
 
 		    {%- if subscription_count is defined -%}
-		        <span class="label label-inverse prominent-figure" title="{{- subscription_count -}}">
+		        <span class="label label-default" title="{{- subscription_count -}}">
 					{{- 'topic.count.subscription' |trans({}, 'CCDNForumForumBundle') -}}
 					{{- subscription_count -}}
 				</span>
@@ -34,10 +49,10 @@
 	</header>
 
 	{%- if topic.isDeleted or topic.isClosed or topic.isSticky -%}
-		<section>
+		<section class="row clearfix">
 		    {%- if topic.isDeleted -%}
-		        <div class="alert alert-error block-alert">
-		            <i class="icon-trash"></i>
+		        <div class="alert alert-danger">
+		            <i class="glyphicon glyphicon-trash"></i>
 
 		            {{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}
 		            {{ topic.getDeletedBy }}
@@ -50,7 +65,7 @@
 
 		    {%- if topic.isClosed -%}
 		        <div class="alert alert-error block-alert">
-		            <i class="icon-lock"></i>
+		            <i class="glyphicon glyphicon-lock"></i>
 
 		            {{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}
 		            {{ topic.getClosedBy }}
@@ -63,7 +78,7 @@
 
 		    {%- if topic.isSticky -%}
 		        <div class="alert alert-inverse block-alert">
-			        <i class="icon-bullhorn"></i>
+			        <i class="glyphicon glyphicon-bullhorn"></i>
 
 		            {{- 'ccdn_forum_forum.topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}
 		            {{ topic.stickiedBy }}
@@ -76,26 +91,21 @@
 		</section>
 	{% endif %}
 
-	<section class="row-fluid">
-	    <div class="span12 btn-toolbar">
-	        <div class="span6">
-	            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
-	        </div>
-	    </div>
+	<section class="row btn-toolbar clearfix">
+        <div class="col-md-6">
+            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
+        </div>
 	</section>
 
-	<section>
+	<section class="clearfix">
 		{%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig" -%}
 	</section>
 
-	<section class="row-fluid">
-	    <div class="span12 btn-toolbar">
-	        <div class="span6">
-	            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
-	        </div>
-	    </div>
+	<section class="row btn-toolbar clearfix">
+        <div class="col-md-6">
+            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
+        </div>
 	</section>
-
 	{%- endspaceless -%}
 
 {% endblock body_content %}

@@ -2,24 +2,26 @@
 
 	{%- if post.isDeleted == false or is_granted('ROLE_MODERATOR') -%}
 		{%- if post.getEditedDate -%}
-		    <div class="label forum-post-notice">
-				<i class="icon-white icon-pencil"></i>
+		    <div class="panel panel-warning">
+				<div class="panel-heading">
+					<i class="glyphicon glyphicon-pencil"></i>
 
-		        {{- 'generic.edited_by' |trans({'%name%': post.getEditedBy}, 'CCDNForumForumBundle') |raw -}}
+			        {{- 'generic.edited_by' |trans({'%name%': post.getEditedBy}, 'CCDNForumForumBundle') |raw -}}
 
-				&nbsp;&#183;
+					&nbsp;&#183;
 
-				<abbr class="timestamper" title="{{- post.getEditedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-		            {{- post.getEditedDate |date(ccdn_forum_forum.item_post.edited_datetime_format) -}}
-		        </abbr>
+					<abbr class="timestamper" title="{{- post.getEditedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+			            {{- post.getEditedDate |date(ccdn_forum_forum.item_post.edited_datetime_format) -}}
+			        </abbr>
+				</div>
 		    </div>
 		{%- endif -%}
 	{%- endif -%}
 
 	{%- if post.isDeleted == true -%}
-		<div class="label label-important forum-post-notice">
-			<div class="span8">
-		        <i class="icon-white icon-trash"></i>
+		<div class="panel forum-post-notice">
+			<div class="panel-heading">
+		        <i class="glyphicon glyphicon-trash"></i>
 
 		        {{- 'generic.deleted_by' |trans({'%name%': post.getDeletedBy}, 'CCDNForumForumBundle') |raw -}}
 
@@ -31,7 +33,7 @@
 			</div>
 
 	        {%- if is_granted('ROLE_MODERATOR') -%}
-				<div class="span4 content-right">
+				<div class="pull-right">
 	                <a class="accordion-toggle" data-toggle="collapse" data-parent="#post_{{- post.getId() -}}" href="#post_{{- post.getId() -}}_body">
 	                    {{- 'generic.show_hide' |trans({}, 'CCDNForumForumBundle') -}}
 	                </a>

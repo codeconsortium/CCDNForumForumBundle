@@ -5,14 +5,14 @@
 				<tr>
 					<td class="center">
 						{%- if topic.isDeleted -%}
-							<i class="icon-trash"></i>
+							<i class="glyphicon glyphicon-trash"></i>
 						{%- else -%}
 							{%- if topic.isClosed -%}
-								<i class="icon-lock"></i>
+								<i class="glyphicon glyphicon-lock"></i>
 							{%- else -%}
 								{# else if not closed, then if new posts add special icon here #}
 								{%- if topic.cachedReplyCount > 100 -%}
-									<i class="icon-fire"></i>
+									<i class="glyphicon glyphicon-fire"></i>
 								{%- endif -%}
 							{%- endif -%}
 						{%- endif -%}
@@ -21,15 +21,15 @@
 						{# use custom icons below, will be later specified in the create topic form #}
 						<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': topic.board.category.forum.name, 'topicId': topic.getId }) -}}">
 							{%- if topic.isSticky -%}
-								<i class="icon-bullhorn"></i>
+								<i class="glyphicon glyphicon-bullhorn"></i>
 							{%- else -%}
-								<i class="icon-comment"></i>
+								<i class="glyphicon glyphicon-comment"></i>
 							{%- endif -%}
 						</a>
 					</td>
 					<td class="left">
 						{%- if topic.getClosedDate -%}
-							<span class="label label-important">{{- 'topic.badge.closed' |trans({}, 'CCDNForumForumBundle') -}}</span>&nbsp;
+							<span class="label label-danger">{{- 'topic.badge.closed' |trans({}, 'CCDNForumForumBundle') -}}</span>&nbsp;
 						{%- endif -%}
 
 						<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': topic.board.category.forum.name, 'topicId': topic.getId }) -}}" title="{{- topic.getTitle -}}">
@@ -50,12 +50,12 @@
 			                </a>
 						{%- endif -%}
 					</td>
-					<td class="center prominent-figure">
+					<td class="center">
 						<span class="label label-info lead" title="{{- topic.getCachedReplyCount -}}">
 							{{- topic.getCachedReplyCount -}}
 						</span>
 					</td>
-					<td class="center prominent-figure">
+					<td class="center">
 						<span class="label label-info lead" title="{{- topic.getCachedViewCount -}}">
 							{{- topic.getCachedViewCount -}}
 						</span>
@@ -75,14 +75,14 @@
 
 							{%- if page < 2 -%}
 								<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': topic.board.category.forum.name, 'topicId': topic.getId } ) -}}#{{- topic.getLastPost.getId -}}">
-									<i class="icon-arrow-right"></i>
+									<i class="glyphicon glyphicon-arrow-right"></i>
 									<abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 										{{- topic.getLastPost.getCreatedDate |date(ccdn_forum_forum.board.show.last_post_datetime_format) -}}
 									</abbr>
 								</a>
 							{%- else -%}
 								<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': topic.board.category.forum.name, 'topicId': topic.getId, 'page': page }) -}}#{{- topic.getLastPost.getId -}}">
-									<i class="icon-arrow-right"></i>
+									<i class="glyphicon glyphicon-arrow-right"></i>
 									<abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 										{{- topic.getLastPost.getCreatedDate |date(ccdn_forum_forum.board.show.last_post_datetime_format) -}}
 									</abbr>

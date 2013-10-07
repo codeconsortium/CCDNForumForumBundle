@@ -1,6 +1,6 @@
 {%- spaceless -%}
 	{%- for key, message in app.session.getFlashes() -%}
-		<div class="alert alert_{{ key -}}">
+		<div class="alert alert-{{ key -}}">
 		    {{- message |trans -}}
 		</div>
 	{%- endfor -%}

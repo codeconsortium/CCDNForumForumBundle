@@ -1,4 +1,4 @@
-{% extends 'CCDNForumForumBundle:Admin:/Layout/base.html.twig' %}
+{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.topic.create.layout_template %}
 
@@ -8,25 +8,47 @@
 
 
 
+{% block sub_title %}
+	<a href="{{ path('ccdn_forum_user_category_index') }}">
+		Forum Admin
+	</a>
+{% endblock sub_title %}
+
+
+
+{%- block sidebar -%}
+
+	{%- spaceless -%}
+	
+	{{- parent() -}}
+
+    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/sidebar_admin.html.twig' -%}
+
+	{%- endspaceless -%}
+	
+{%- endblock sidebar -%}
+
+
+
 {%- block body_content -%}
 
 	{%- spaceless -%}
 
-		<section>
+		<section class="row btn-toolbar clearfix">
 			<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_board_create', {'forum_filter': forum_filter, 'category_filter': category_filter}) -}}">
 				Create Board
 			</a>
 		</section>
 
-		<section class="span12">
-			<ul class="nav nav-list span2">
+		<section class="col-md-12 clearfix">
+			<ul class="nav nav-list col-md-2">
 				<li class="nav-header">
 					Forums
 				</li>
 
 				<li {%- if forum_filter is null or forum_filter == '' %} class="active" {%- endif -%}>
 					<a href="{{- path('ccdn_forum_admin_board_list') -}}">
-						<i class="icon-exclamation-sign"></i>
+						<i class="glyphicon glyphicon-exclamation-sign"></i>
 						Unassigned
 					</a>
 				</li>
@@ -47,14 +69,14 @@
 				{%- endfor -%}
 			</ul>
 
-			<ul class="nav nav-list span2">
+			<ul class="nav nav-list col-md-2">
 				<li class="nav-header">
 					Categories
 				</li>
 
 				<li {%- if category_filter is null or category_filter == '' %} class="active" {%- endif -%}>
 					<a href="{{- path('ccdn_forum_admin_board_list', {'forum_filter': forum_filter}) -}}">
-						<i class="icon-exclamation-sign"></i>
+						<i class="glyphicon glyphicon-exclamation-sign"></i>
 						Unassigned
 					</a>
 				</li>
@@ -80,7 +102,7 @@
 				{%- endfor -%}
 			</ul>
 
-			<div class="span7">
+			<div class="col-md-7">
 				<table class="table table-bordered" id="admin-boards-list">
 					<thead>
 						<tr>
@@ -97,7 +119,7 @@
 								<td>{{- board.name -}}</td>
 								<td>{{- board.topics |length -}}</td>
 								<td>
-									<a class="btn" href="{{- path('ccdn_forum_admin_board_edit', {'boardId': board.id, 'forum_filter': forum_filter, 'category_filter': category_filter}) -}}"
+									<a class="btn btn-default" href="{{- path('ccdn_forum_admin_board_edit', {'boardId': board.id, 'forum_filter': forum_filter, 'category_filter': category_filter}) -}}"
 									 id="update_board[{{- board.name -}}]">
 										Edit
 									</a>
@@ -112,21 +134,21 @@
 									{%- if category_filter is not null and category_filter != '' %}
 										{% if loop.length > 1 %}
 											<div class="btn-group">
-												<a class="btn" href="{{- path('ccdn_forum_admin_board_reorder_up', {'boardId': board.id, 'forum_filter': forum_filter, 'category_filter': category_filter}) -}}"
+												<a class="btn btn-default" href="{{- path('ccdn_forum_admin_board_reorder_up', {'boardId': board.id, 'forum_filter': forum_filter, 'category_filter': category_filter}) -}}"
 												 id="reorder_up_board[{{- board.name -}}]">
 													{%- if loop.first -%}
-														<i class="icon-retweet"></i>
+														<i class="glyphicon glyphicon-retweet"></i>
 													{%- else -%}
-														<i class="icon-chevron-up"></i>
+														<i class="glyphicon glyphicon-chevron-up"></i>
 													{%- endif -%}
 												</a>
 
-												<a class="btn" href="{{- path('ccdn_forum_admin_board_reorder_down', {'boardId': board.id, 'forum_filter': forum_filter, 'category_filter': category_filter}) -}}"
+												<a class="btn btn-default" href="{{- path('ccdn_forum_admin_board_reorder_down', {'boardId': board.id, 'forum_filter': forum_filter, 'category_filter': category_filter}) -}}"
 												 id="reorder_down_board[{{- board.name -}}]">
 													{%- if loop.last -%}
-														<i class="icon-retweet"></i>
+														<i class="glyphicon glyphicon-retweet"></i>
 													{%- else -%}
-														<i class="icon-chevron-down"></i>
+														<i class="glyphicon glyphicon-chevron-down"></i>
 													{%- endif -%}
 												</a>
 											</div>

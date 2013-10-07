@@ -1,15 +1,32 @@
-{% extends 'CCDNForumForumBundle:User:Layout/base.html.twig' %}
+{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.category.index.layout_template %}
 
 {% block title %}{{- 'title.category.index' | trans({}, 'CCDNForumForumBundle') -}}{% endblock %}
 
 {% block stylesheets_extra %}
+{#
 	<style type="text/css">
 		section {border-bottom:none;}
 		footer.page-footer {border-top:1px solid #eee;}
 	</style>
+	#}
 {% endblock stylesheets_extra %}
+
+
+
+{%- block sidebar -%}
+
+	{%- spaceless -%}
+	
+	{{- parent() -}}
+
+    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/sidebar_user.html.twig' -%}
+
+	{%- endspaceless -%}
+	
+{%- endblock sidebar -%}
+
 
 
 {% block body_content %}
@@ -19,7 +36,9 @@
 	{%- for category in categories -%}
 		{%- include "CCDNForumForumBundle:User:Category/Partial/item_category.html.twig" -%}
 	{%- else -%}
-		<div class="well">{{- 'category.none' | trans({}, 'CCDNForumForumBundle') -}}</div>
+		<section class="row clearfix">
+			<div class="well">{{- 'category.none' | trans({}, 'CCDNForumForumBundle') -}}</div>
+		</section>
 	{%- endfor -%}
 
 	{%- endspaceless -%}

@@ -1,21 +1,37 @@
-{% extends 'CCDNForumForumBundle:User:Layout/base.html.twig' %}
+{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.topic.reply.layout_template %}
 
 {% block title %}{{- 'title.topic.reply' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}{% endblock %}
 
 
+
+{%- block sidebar -%}
+
+	{%- spaceless -%}
+	
+	{{- parent() -}}
+
+    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/sidebar_user.html.twig' -%}
+
+	{%- endspaceless -%}
+	
+{%- endblock sidebar -%}
+
+
+
 {% block body_content %}
 
 	{%- spaceless -%}
 
-	<section>
+	<section class="clearfix">
 		{%- form_theme form ccdn_forum_forum.topic.reply.form_theme -%}
-		<form action="{{- path('ccdn_forum_user_topic_reply_process', {'forumName': forum.name, 'topicId': topic.id } ) -}}" method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
+		<form action="{{- path('ccdn_forum_user_topic_reply_process', {'forumName': forum.name, 'topicId': topic.id } ) -}}"
+		 method="post" {{ form_enctype(form) }} class="form-horizontal" role="form" novalidate>
 			<fieldset>
 
-				<div class="control-group form-title">
-					<div class="controls">
+				<div class="form-group">
+					<div class="col-lg-offset-2 col-lg-10">
 						<h4>{{- 'title.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}</h4>
 						<h5>{{- topic.getTitle -}}</h5>
 					</div>
@@ -25,15 +41,18 @@
 
 				{{- form_widget(form) -}}
 
-				<div class="form-actions">
-					<input type="submit" class="btn btn-primary" value="{{- 'form.button.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]" id="submit[post]">
-					{#
-					<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">
-					#}
-					<a class="btn" href="{{- path('ccdn_forum_user_topic_show', {'forumName': forum.name, 'topicId': topic.id}) -}}">
-						{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
-					</a>
+				<div class="form-group">
+					<div class="col-lg-offset-2 col-lg-10">
+						<input type="submit" class="btn btn-primary" value="{{- 'form.button.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]" id="submit[post]">
+						
+						{#<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">#}
+						
+						<a class="btn btn-default" href="{{- path('ccdn_forum_user_topic_show', {'forumName': forum.name, 'topicId': topic.id}) -}}">
+							{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
+						</a>
+					</div>
 				</div>
+				
 			</fieldset>
 		</form>
 	</section>

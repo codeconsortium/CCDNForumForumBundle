@@ -1,7 +1,7 @@
 {%- spaceless -%}
 
     {% if preview.getBody %}
-		<section>
+		<section class="clearfix">
 	        {%- include 'CCDNForumForumBundle:User:Post/Partial/item_post.html.twig' with {'post': preview } -%}
 		</section>
     {% endif %}

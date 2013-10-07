@@ -2,17 +2,16 @@
 <html lang="{{- app.request.locale -}}">
     <head>
         <meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <title>{%- block title -%}{%- endblock -%}</title>
 
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
 		{%- block stylesheets -%}
-		{#
-			{%- stylesheets '@bootstrap_less' '@common_less' '@crumbs_less' '@highlight_less' combine=true -%}
-				<link href="{{- asset_url -}}" type="text/css" rel="stylesheet">
-			{%- endstylesheets -%}
-		#}
 		{%- endblock -%}
     </head>
-    <body>
+    <body style="padding-top:70px;">
 
 		{%- spaceless -%}
 
@@ -20,28 +19,31 @@
 			<div id="page-main">
 
 				{%- block navbar -%}
-					<header class="navbar-fixed-top">
+					<header class="navbar navbar-default navbar-fixed-top clearfix" role="navigation">
+						<p class="navbar-text">
+							<a target="_blank" class="navbar-link" href="http://www.codeconsortium.com/">Code Consortium</a>
+						</p>
 					</header>
 
 					{%- block tool_bar -%}
 					{%- endblock tool_bar -%}
 				{%- endblock navbar -%}
 
-				<div class="container-fluid clear-top">
-					<div class="row-fluid">
-				        <aside class="span2 page-sidebar-left">
+				<hr>
+				
+				<div class="container clearfix">
+					<div class="row">
+				        <aside class="col-md-2 page-sidebar-left">
 							<ul class="nav nav-pills nav-stacked">
 								{%- block sidebar -%}
 					            {%- endblock sidebar -%}
 							</ul>
 						</aside>
 
-				        <div class="span10 page-body-right">
-							<div>
-								<div id="top"></div>
-					            {%- block body -%}
-								{%- endblock body -%}
-							</div>
+				        <div class="col-md-10 page-body-right">
+							<div id="top clearfix"></div>
+				            {%- block body -%}
+							{%- endblock body -%}
 				        </div>
 			        </div>
 				</div>
@@ -50,40 +52,33 @@
 
 		<footer class="footer site-footer">
 
-			<div class="container-fluid clearfix">
-				<span class="muted pull-right content-right">
-					Copyright <a target="_blank" href="http://www.codeconsortium.com/">Code Consortium</a> 2011 - {{ 'now'|date("Y") }}.
-				</span>
+			<div class="navbar navbar-default clearfix">
+				<p class="navbar-text pull-right content-right">
+					Copyright <a target="_blank" class="navbar-link" href="http://www.codeconsortium.com/">Code Consortium</a> 2011 - {{ 'now'|date("Y") }}.
+				</p>
 			</div>
 
-			<br>
+			<nav class="navbar navbar-inverse clearfix" style="bottom:0px;margin-bottom:0px;">
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+				    <ul class="nav navbar-nav">
+						<li>
+							<a href="http://www.codeconsortium.com">
+								Code Consortium
+							</a>
+						</li>
 
-			<div class="navbar navbar-inverse clearfix" style="bottom:0px;margin-bottom:0px;">
-				<div class="navbar-inner">
-					<nav class="container-fluid">
-					    <ul class="nav">
-							<li>
-								<a href="http://www.codeconsortium.com">
-									Code Consortium
-								</a>
-							</li>
-
-							<li>
-								<a rel="friend" target="_blank" href="http://github.com/codeconsortium">Contribute</a>
-							</li>
-					    </ul>
-					</nav>
+						<li>
+							<a rel="friend" target="_blank" href="http://github.com/codeconsortium">Contribute</a>
+						</li>
+				    </ul>
 				</div>
-			</div>
+			</nav>
 
 		</footer>
 
+		<script src="//code.jquery.com/jquery.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 		{%- block javascripts -%}
-		{#
-			{% javascripts '@jquery_js' '@bootstrap_js' '@moment_js' '@timestamper_js' '@checkboxes_js' filter='?yui_js' combine=false %}
-				<script src="{{- asset_url -}}"></script>
-			{%- endjavascripts -%}
-		#}
 		{%- endblock -%}
 
 		<script type='text/javascript'>

@@ -1,253 +1,60 @@
-article.forum-post-item {
-	clear:both;
-	margin-bottom:15px;
-	
-    border: 1px solid #dddddd;
-    border-collapse: separate;
-    *border-collapse: collapse;
-    -webkit-border-radius: 4px;
-       -moz-border-radius: 4px;
-            border-radius: 4px;
+button[class~='btn'],
+input[class~='btn'],
+a[class~='btn'] {
+	margin-right:10px !important;
 }
 
-article.forum-post-item > header {
-	clear:both;
-	height:72px;
-	max-height:72px;
-	margin:0px !important;
-	padding:5px;
-	border-bottom:1px solid #ddd;
-	background-color:#eee;
-	
-	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
-	   -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
-	        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
-
-	background-image: -moz-linear-gradient(top, #f1f1f1, #ebebeb);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f1f1f1), to(#ebebeb));
-	background-image: -webkit-linear-gradient(top, #f1f1f1, #ebebeb);
-	background-image: -o-linear-gradient(top, #f1f1f1, #ebebeb);
-	background-image: linear-gradient(to bottom, #f1f1f1, #ebebeb);
-	background-repeat: repeat-x;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f1f1f1', endColorstr='#ebebeb', GradientType=0);
-	*zoom: 1;
-	
+a > i[class^="glyphicon"],
+input[type="submit"] > i[class^="glyphicon"],
+button[type="submit"] > i[class^="glyphicon"],
+button.btn > i[class^="glyphicon"],
+.dropdown-menu > li > a > i[class^="glyphicon"],
+.btn > i[class^="glyphicon"],
+.nav i[class^="glyphicon"],
+.alert i[class^="glyphicon"],
+.badge i[class^="glyphicon"],
+.label i[class^="glyphicon"] {
+    margin-right: 10px;
 }
 
-article.forum-post-item > header > div:nth-child(1) { /* avatar */
-	float:left;
-	height:60px;
-	max-height:60px;
-	margin:0px;
-	margin-right:-100px;
-	padding:5px;
-	overflow:hidden;
-}
-
-article.forum-post-item > header > div:nth-child(1) > img {
-	margin:0px;
-	padding:0px;
-}
-
-article.forum-post-item > header > div:nth-child(2) { /* remainder of header container */
-	/*line-height:100%;*/
-	line-height:inherit;
-	vertical-align:middle;
-	display:inline-block;
-}
-
-article.forum-post-item > header > div:nth-child(2) > div:nth-child(1),
-article.forum-post-item > header > div:nth-child(2) > div:nth-child(2) { /* row 1,2 */
-	width:auto;
-	clear:both;
-
-	max-height:30px;
-	height: 30px;
-	line-height:30px;
-
-	margin-top:2px;
-	margin-bottom:0px;
-	margin-left:80px;
-	
-	padding-right:5px;
-}
-
-article.forum-post-item > header > div:nth-child(2) > div:nth-child(1) > div,
-article.forum-post-item > header > div:nth-child(2) > div:nth-child(2) > div { /* row 1,2 > columns 1,2 */
-	padding:0px;
-	
-	max-height:30px;
-	height: 30px;
-	line-height:30px;
-	vertical-align: middle;
-}
-
-article.forum-post-item > header > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) .btn-group,
-article.forum-post-item > header > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) .icon-container {
-	height:30px;
-	line-height:30px;
-
-	margin:0px;
-	padding:0px;
-
-	margin-bottom:0px;
+a.dropdown-toggle > .caret {
 	margin-left:5px;
-	margin-right:0px;
-	margin-top:0px;
-
-	position: static;
-	display: inline-block;
-	
-	font-size: 0;
-	white-space: nowrap;
-	vertical-align: middle;
 }
 
-article.forum-post-item > header > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > .btn-group > .btn,
-article.forum-post-item > header > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > .btn-group > span  {
-	position:static;
-	display:inline-block;
-    height:auto;	
-	vertical-align:middle;	
+:not(.nav) .badge,
+:not(.nav) .label {
+	margin-right:5px;
 }
 
-/* Post-Item Body
-------------------------------------------------------- */
-article.forum-post-item > .forum-post-notice {
-	min-height:16px;
-	height:16px !important;
-	line-height:100%;
-
-	margin:0px !important;
-	padding:10px;
-	
-    display:block;
-    clear:both;
-	word-wrap:break-word;
-	overflow:hidden;
-
-	        border-radius:0px;
-	   -moz-border-radius:0px;
-	-webkit-border-radius:0px;
-	/*
-	        border-top-left-radius:0px;
-	   -moz-border-radius-topleft: 0px;
-	-webkit-border-top-left-radius:0px;
-	
-	        border-bottom-left-radius:4px;
-	   -moz-border-radius-bottomleft: 4px;
-	-webkit-border-bottom-left-radius:4px;
-
-		 	border-top-right-radius:0px;
-	   -moz-border-radius-topright: 0px;
-	-webkit-border-radius-top-right:0px;
-
-		 	border-bottom-right-radius:4px;
-	   -moz-border-radius-bottomright: 4px;
-	-webkit-border-bottom-right-radius:4px;
-	*/
-}
-
-article.forum-post-item > .forum-post-notice > div {
-	height:20px !important;
-	min-height:20px;
-	margin:0px;
-	padding:0px;
-	float:none;
-    display:inline-block;
-	word-wrap:break-word;
+ul.nav-pills.nav-stacked {
 	overflow:hidden;
 }
 
-article.forum-post-item > .forum-post-notice > div:first-child {clear:left;}
-article.forum-post-item > .forum-post-notice > div:last-child {clear:right;}
 
-article.forum-post-item > .forum-post-notice a:link,
-article.forum-post-item > .forum-post-notice a:visited,
-article.forum-post-item > .forum-post-notice a:active {
-	color:#fff;
+ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked > li > a {
+	padding-left:30px;
+	text-wrap:none;
+	word-wrap:normal;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
 }
 
-/* Post-Item Body
-------------------------------------------------------- */
-article.forum-post-item > section {
-	clear:both;
-    display:block;
-	padding:0px;
-	margin:0px !important;
-	
-	border:none;
-}
-
-article.forum-post-item section.collapse:not(.in) {
-	padding:0px;
-	margin:0px;
-	height:0px;
-}
-
-article.forum-post-item > section > span,
-article.forum-post-item > section > div {
-	margin:5px;
-	padding:10px;
-	
-    display:block;
-    clear:both;
-	word-wrap:break-word;
-}
-
-article.forum-post-item > section > div {
-	padding:0px;
-}
-/* Post-Item Footer
-------------------------------------------------------- */
-article.forum-post-item > footer {
-	clear:both;
-    display:block;
-	border-top:1px solid #eee;
-}
-
-/* Transcript
-------------------------------------------------------- */
-.forum-topic-transcript > .well {
-	height:300px;
-	clear:both;
+ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked:after {
+	content: ' ';
 	display:block;
-	overflow:scroll;
-	overflow-x:hidden;
-	overflow-y:scroll;
+	position:absolute;
+	top:0px;
+	left:20px;
+	width:0px;
+	height:100%;
+	border-left:1px solid grey;
 }
 
-/* Responsive
--------------------------------------------------- */
-
-/* Desktop large
-------------------------- */
-@media (min-width: 1200px) {
-	
+ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked > li > a {
+	padding-left:45px;
 }
 
-/* Desktop
-------------------------- */
-@media (max-width: 980px) {
-	
-}
-
-/* Tablet to desktop
-------------------------- */
-@media (min-width: 768px) and (max-width: 979px) {
-	
-}
-
-/* Tablet
-------------------------- */
-@media (max-width: 767px) {
-	.forum-topic-transcript {
-		display:none;
-	}
-}
-
-/* Landscape phones
-------------------------- */
-@media (max-width: 480px) {
-
+ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked:after {
+	left:35px;
 }

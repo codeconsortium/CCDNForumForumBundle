@@ -1,10 +1,25 @@
-{% extends 'CCDNForumForumBundle:User:Layout/base.html.twig' %}
+{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.subscription.list.layout_template %}
 
 {% block title %}{{- 'title.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}{% endblock %}
 
 {%- block sub_title -%}{{- 'title.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}{%- endblock sub_title -%}
+
+
+
+{%- block sidebar -%}
+
+	{%- spaceless -%}
+	
+	{{- parent() -}}
+
+    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/sidebar_user.html.twig' -%}
+
+	{%- endspaceless -%}
+	
+{%- endblock sidebar -%}
+
 
 
 {%- macro subscription_tab(label, forum_name, filter_key, filter_value, count_read, count_unread, count_total) -%}
@@ -18,7 +33,7 @@
 
 			&nbsp;
 
-			<span class="label">
+			<span class="badge">
 				{%- if count_unread is not null and count_total is not null -%}
 					{{- count_unread -}}
 					&nbsp;/&nbsp;
@@ -42,8 +57,7 @@
 
 	{%- spaceless -%}
 
-	<section>
-
+	<section class="row clearfix">
 		<ul class="nav nav-tabs">
 			{%- import _self as tabs -%}
 			{%- if forum is not null -%}
@@ -56,13 +70,15 @@
 				{{- tabs.subscription_tab('read', '~', 'read', filter, total_subscribed_forums['count_read'], null, null) -}}
 			{%- endif -%}
 		</ul>
-
+		
 		<div class="btn-toolbar">
-			<nav class="span12 btn-right paginate">
+			<nav class="col-md-12 btn-right paginate">
 				{{- knp_pagination_render(pager) -}}
 			</nav>
 		</div>
-
+	</section>
+	
+	<section class="clearfix">
 		<table class="table table-striped table-hover">
 			<thead>
 				<tr>
@@ -88,12 +104,12 @@
 				{%- endfor -%}
 			</tbody>
 		</table>
-
-		<div class="btn-toolbar">
-			<nav class="span12 btn-right paginate">
-				{{- knp_pagination_render(pager) -}}
-			</nav>
-		</div>
+	</section>
+	
+	<section class="row btn-toolbar clearfix">
+		<nav class="col-md-12 btn-right paginate">
+			{{- knp_pagination_render(pager) -}}
+		</nav>
 	</section>
 
 	{%- endspaceless -%}

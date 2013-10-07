@@ -1,4 +1,4 @@
-{% extends 'CCDNForumForumBundle:Admin:/Layout/base.html.twig' %}
+{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.topic.create.layout_template %}
 
@@ -8,15 +8,37 @@
 
 
 
+{% block sub_title %}
+	<a href="{{ path('ccdn_forum_user_category_index') }}">
+		Forum Admin
+	</a>
+{% endblock sub_title %}
+
+
+
+{%- block sidebar -%}
+
+	{%- spaceless -%}
+	
+	{{- parent() -}}
+
+    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/sidebar_admin.html.twig' -%}
+
+	{%- endspaceless -%}
+	
+{%- endblock sidebar -%}
+
+
+
 {%- block body_content -%}
 
 	{%- spaceless -%}
 
-		<section>
+		<section class="row btn-toolbar clearfix">
 			<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_forum_create') -}}">Create Forum</a>
 		</section>
 
-		<section>
+		<section class="clearfix">
 			<table class="table table-bordered" id="admin-forums-list">
 				<thead>
 					<tr>
@@ -33,7 +55,7 @@
 							<td>{{- forum.name -}}</td>
 							<td>{{- forum.categories |length -}}</td>
 							<td>
-								<a class="btn" href="{{- path('ccdn_forum_admin_forum_edit', {'forumId': forum.id}) -}}" id="update_forum[{{- forum.name -}}]">
+								<a class="btn btn-default" href="{{- path('ccdn_forum_admin_forum_edit', {'forumId': forum.id}) -}}" id="update_forum[{{- forum.name -}}]">
 									Edit
 								</a>
 

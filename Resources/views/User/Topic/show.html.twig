@@ -1,30 +1,49 @@
-{% extends 'CCDNForumForumBundle:User:Layout/base.html.twig' %}
+{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.topic.show.layout_template %}
 
 {% block title %}{{- 'title.topic.show' | trans({'%topic_title%': topic.getTitle |capitalize}, 'CCDNForumForumBundle') -}}{% endblock %}
 
+
+
+{%- block sidebar -%}
+
+	{%- spaceless -%}
+	
+	{{- parent() -}}
+
+    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/sidebar_user.html.twig' -%}
+
+	{%- endspaceless -%}
+	
+{%- endblock sidebar -%}
+
+
+
 {%- block body_content -%}
 
     {%- spaceless -%}
-
-	<header class="row-fluid">
-		<div class="span6">
+	
+	<header class="row clearfix">
+		<div class="col-md-6">
 		    <h3 title="{{- topic.getTitle -}}">{{- topic.getTitle |capitalize -}}</h3>
 		</div>
-		<div class="span6 content-right">
-		    <span class="label label-inverse prominent-figure" title="{{- topic.cachedReplyCount -}}">
+		<div class="col-md-6 text-right">
+		    <span class="label label-default" title="{{- topic.cachedReplyCount -}}">
 				{{- 'topic.count.replies' |trans({}, 'CCDNForumForumBundle') -}}
 				{{- topic.cachedReplyCount -}}
 			</span>
-
-		    <span class="label label-inverse prominent-figure" title="{{- topic.cachedViewCount -}}">
+			
+			&nbsp;
+		    
+			<span class="label label-default" title="{{- topic.cachedViewCount -}}">
 				{{- 'topic.count.views' |trans({}, 'CCDNForumForumBundle') -}}
 				{{- topic.cachedViewCount -}}
 			</span>
 
 		    {%- if subscription_count is defined -%}
-		        <span class="label label-inverse prominent-figure" title="{{- subscription_count -}}">
+				&nbsp;
+		        <span class="label label-default" title="{{- subscription_count -}}">
 					{{- 'topic.count.subscriptions' |trans({}, 'CCDNForumForumBundle') -}}
 					{{- subscription_count -}}
 				</span>
@@ -33,76 +52,70 @@
 	</header>
 
 	{%- if topic.isDeleted or topic.isClosed or topic.isSticky -%}
-		<section class="row-fluid">
-			<div class="span12">
-				{%- if topic.isDeleted or topic.isClosed %}
-			        <div class="alert alert-error block-alert">
-					    {%- if topic.isDeleted -%}
-				            <i class="icon-trash"></i>
+		<section class="row clearfix">
+			{%- if topic.isDeleted or topic.isClosed %}
+		        <div class="alert alert-danger">
+				    {%- if topic.isDeleted -%}
+			            <i class="glyphicon glyphicon-trash"></i>
 
-				            {{- 'generic.deleted_by' | trans({'%name%': topic.getDeletedBy}, 'CCDNForumForumBundle') |raw -}}
-
-							&nbsp;&#183;
-
-				            {{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.deleted_datetime_format) -}}
-					    {%- endif -%}
-
-					    {%- if topic.isClosed -%}
-							{%- if topic.isDeleted -%}<br>{%- endif -%}
-				            <i class="icon-lock"></i>
-
-				            {{- 'topic.closed_by' | trans({'%name%': topic.getClosedBy}, 'CCDNForumForumBundle') |raw -}}
-
-							&nbsp;&#183;
-
-				            {{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.closed_datetime_format) -}}
-					    {%- endif -%}
-			        </div>
-				{%- endif -%}
-
-			    {%- if topic.isSticky -%}
-			        <div class="alert alert-inverse block-alert">
-				        <i class="icon-white icon-bullhorn"></i>
-
-			            {{- 'topic.stickied_by' | trans({'%name%': topic.stickiedBy}, 'CCDNForumForumBundle') |raw -}}
+			            {{- 'generic.deleted_by' | trans({'%name%': topic.getDeletedBy}, 'CCDNForumForumBundle') |raw -}}
 
 						&nbsp;&#183;
 
-			            {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.deleted_datetime_format) -}}
-			        </div>
-			    {%- endif -%}
-			</div>
+			            {{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.deleted_datetime_format) -}}
+				    {%- endif -%}
+
+				    {%- if topic.isClosed -%}
+						{%- if topic.isDeleted -%}<br>{%- endif -%}
+			            <i class="glyphicon glyphicon-lock"></i>
+
+			            {{- 'topic.closed_by' | trans({'%name%': topic.getClosedBy}, 'CCDNForumForumBundle') |raw -}}
+
+						&nbsp;&#183;
+
+			            {{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.closed_datetime_format) -}}
+				    {%- endif -%}
+		        </div>
+			{%- endif -%}
+
+		    {%- if topic.isSticky -%}
+		        <div class="alert alert-info">
+			        <i class="glyphicon glyphicon-bullhorn"></i>
+
+		            {{- 'topic.stickied_by' | trans({'%name%': topic.stickiedBy}, 'CCDNForumForumBundle') |raw -}}
+
+					&nbsp;&#183;
+
+		            {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.deleted_datetime_format) -}}
+		        </div>
+		    {%- endif -%}
 		</section>
 	{%- endif -%}
+	
+	<section class="row btn-toolbar clearfix">
+        <div class="col-md-6">
+            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
+        </div>
 
-	<section class="row-fluid">
-	    <div class="span12 btn-toolbar">
-	        <div class="span6">
-	            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
-	        </div>
-
-			<nav class="span6 btn-right paginate">
-				{{- knp_pagination_render(pager) -}}
-			</nav>
-	    </div>
+		<nav class="col-md-6 pull-right btn-right paginate">
+			{{- knp_pagination_render(pager) -}}
+		</nav>
 	</section>
 
-	<section>
+	<section class="clearfix">
 	    {%- for key, post in pager.getItems() -%}
 	        {%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig" -%}
 	    {%- endfor -%}
 	</section>
 
-	<section class="row-fluid">
-	    <div class="span12 btn-toolbar">
-	        <div class="span6">
-	            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
-	        </div>
+	<section class="row btn-toolbar clearfix">
+        <div class="col-md-6">
+            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
+        </div>
 
-			<nav class="span6 btn-right paginate">
-				{{- knp_pagination_render(pager) -}}
-			</nav>
-	    </div>
+		<nav class="col-md-6 btn-right paginate">
+			{{- knp_pagination_render(pager) -}}
+		</nav>
 	</section>
 
     {%- endspaceless -%}
