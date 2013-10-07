@@ -5,7 +5,7 @@ default:
         features: features
         bootstrap: %behat.paths.features%/Context
     context:
-        class: CCDNForum\ForumBundle\features\bootstrap\FeatureContext 
+        class: CCDNForum\ForumBundle\features\bootstrap\FeatureContext
     extensions:
         Behat\Symfony2Extension\Extension:
             mink_driver: true
@@ -20,5 +20,5 @@ default:
         Behat\MinkExtension\Extension:
             default_session: 'symfony2'
             goutte: ~
-            selenium2: ~ 
+            selenium2: ~
         #    base_url: http://ccdn.local/

@@ -49,7 +49,7 @@
 		                {%- set page = divCeil(( board.getLastPost.getTopic.getCachedReplyCount + 1), topics_per_page) -%}
 					#}
 					{%- set page = 1 -%}
-					
+
 	                {{- 'generic.posted_by' | trans({'%name%': board.getLastPost.getCreatedBy}, 'CCDNForumForumBundle') |raw -}}
 
 	                <br>

@@ -66,7 +66,7 @@ abstract class BaseGateway implements BaseGatewayInterface
         $this->entityClass = $entityClass;
 
         $this->em = $em;
-        
+
         $this->paginator = $paginator;
     }
 
