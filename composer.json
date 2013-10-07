@@ -22,8 +22,7 @@
         "doctrine/doctrine-bundle": "*",
         "twig/extensions": "1.0.*@dev",
 		"knplabs/knp-paginator-bundle": "2.3.*@dev",
-        "sensio/framework-extra-bundle": "*@dev",
-		"friendsofsymfony/user-bundle": "~2.0@dev"
+        "sensio/framework-extra-bundle": "*@dev"
     },
     "require-dev": {
         "symfony/swiftmailer-bundle": "2.1.*",
@@ -38,7 +37,8 @@
         "behat/mink-selenium2-driver": "*",
         "behat/mink-extension": "*",
         "behat/symfony2-extension": "*",
-        "phpunit/phpunit": "3.7.*"
+        "phpunit/phpunit": "3.7.*",
+		"friendsofsymfony/user-bundle": "~2.0@dev"
     },
 	"suggest": {
 		"reecefowell/jquery-timestamper": "dev-master",
