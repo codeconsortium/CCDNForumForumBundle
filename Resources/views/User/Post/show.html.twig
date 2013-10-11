@@ -30,74 +30,13 @@
         </div>
 	</section>
 	
-	<header class="row clearfix">
-		<div class="col-md-6">
-		    <span class="lead" title="{{- topic.getTitle -}}">{{- topic.getTitle |capitalize -}}</span>
-		</div>
-		<div class="col-md-6 content-right">
-		    <span class="label label-default" title="{{- topic.cachedReplyCount -}}">
-				{{- 'topic.count.reply' |trans({}, 'CCDNForumForumBundle') -}}
-				{{- topic.cachedReplyCount -}}
-			</span>
-
-		    <span class="label label-default" title="{{- topic.cachedViewCount -}}">
-				{{- 'topic.count.view' |trans({}, 'CCDNForumForumBundle') -}}
-				{{- topic.cachedViewCount -}}
-			</span>
-
-		    {%- if subscription_count is defined -%}
-		        <span class="label label-default" title="{{- subscription_count -}}">
-					{{- 'topic.count.subscription' |trans({}, 'CCDNForumForumBundle') -}}
-					{{- subscription_count -}}
-				</span>
-		    {%- endif -%}
-		</div>
-	</header>
+	{%- include "CCDNForumForumBundle:User:Topic/Partial/stat_vitals.html.twig" -%}
 
 	{%- if topic.isDeleted or topic.isClosed or topic.isSticky -%}
-		<section class="row clearfix">
-		    {%- if topic.isDeleted -%}
-		        <div class="alert alert-danger">
-		            <i class="glyphicon glyphicon-trash"></i>
+		{%- include "CCDNForumForumBundle:User:Topic/Partial/stat_mods.html.twig" -%}
+	{%- endif -%}
 
-		            {{- 'ccdn_forum_forum.topic.deleted_by' | trans({}, 'CCDNForumForumBundle') -}}
-		            {{ topic.getDeletedBy }}
-
-					&nbsp;&#183;
-
-		            {{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.deleted_datetime_format) -}}
-		        </div>
-		    {%- endif -%}
-
-		    {%- if topic.isClosed -%}
-		        <div class="alert alert-error block-alert">
-		            <i class="glyphicon glyphicon-lock"></i>
-
-		            {{- 'ccdn_forum_forum.topic.closed_by' | trans({}, 'CCDNForumForumBundle') -}}
-		            {{ topic.getClosedBy }}
-
-					&nbsp;&#183;
-
-		            {{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.closed_datetime_format) -}}
-		        </div>
-		    {%- endif -%}
-
-		    {%- if topic.isSticky -%}
-		        <div class="alert alert-inverse block-alert">
-			        <i class="glyphicon glyphicon-bullhorn"></i>
-
-		            {{- 'ccdn_forum_forum.topic.stickied_by' | trans({}, 'CCDNForumForumBundle') -}}
-		            {{ topic.stickiedBy }}
-
-					&nbsp;&#183;
-
-		            {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.deleted_datetime_format) -}}
-		        </div>
-		    {%- endif -%}
-		</section>
-	{% endif %}
-
-	<section class="clearfix">
+	<section class="row clearfix">
 		{%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig" -%}
 	</section>
 
