@@ -2,7 +2,7 @@
 
 	{%- if post.isDeleted == false or is_granted('ROLE_MODERATOR') -%}
 		{%- if post.getEditedDate -%}
-		    <div class="panel panel-warning">
+		    <div class="panel panel-default">
 				<div class="panel-heading">
 					<i class="glyphicon glyphicon-pencil"></i>
 
@@ -19,7 +19,7 @@
 	{%- endif -%}
 
 	{%- if post.isDeleted == true -%}
-		<div class="panel forum-post-notice">
+		<div class="panel panel-default">
 			<div class="panel-heading">
 		        <i class="glyphicon glyphicon-trash"></i>
 

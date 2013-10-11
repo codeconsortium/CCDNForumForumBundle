@@ -2,35 +2,37 @@
 
 	<div class="row clearfix">
 	    <div class="col-md-7">
-			{%- if author -%}
-		        {{- 'generic.posted_by' |trans({'%name%': author.username}, 'CCDNForumForumBundle') |raw -}}
+			<h3 class="panel-title">
+				{%- if author -%}
+			        {{- 'generic.posted_by' |trans({'%name%': author.username}, 'CCDNForumForumBundle') |raw -}}
 
-		        &nbsp;&#183;
+			        &nbsp;&#183;&nbsp;
 
-			{%- endif -%}
+				{%- endif -%}
 
-	        <span class="timestamper" title="{{- post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-	            {{- post.getCreatedDate |date(ccdn_forum_forum.item_post.created_datetime_format) -}}
-	        </span>
+		        <span class="timestamper" title="{{- post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+		            {{- post.getCreatedDate |date(ccdn_forum_forum.item_post.created_datetime_format) -}}
+		        </span>
+			</h3>
 	    </div>
 
 	    <div class="col-md-5 pull-right text-right">
-	        {% if post.id %}
+	        {% if post.id and not post.isDeleted %}
 	            <div class="btn-group">
-	                <a class="btn btn-default btn-sm btn-icon-only" id="post_show[{{- post.getBody |slice(0,24) -}}]"
+	                <a class="btn btn-xs btn-icon-only" id="post_show[{{- post.getBody |slice(0,24) -}}]"
 					 href="{{- path('ccdn_forum_user_post_show', {'forumName': forum.name, 'postId': post.getId }) -}}">
 						<i class="glyphicon glyphicon-fullscreen"></i>
 					</a>
-	                <a class="btn btn-default btn-sm btn-icon-only" href="#post_{{- post.getId -}}">
-						<i class="glyphicon glyphicon-magnet"></i>
+	                <a class="btn btn-xs btn-icon-only" href="#post_{{- post.getId -}}">
+						<i class="glyphicon glyphicon-link"></i>
 					</a>
 	            </div>
 	        {% endif %}
 
-            {%- if is_granted('ROLE_USER') and post.id -%}
+            {%- if is_granted('ROLE_USER') and post.id and (is_granted('ROLE_MODERATOR') and not post.isDeleted) -%}
 				&nbsp;
                 <div class="dropdown btn-group text-left">
-                    <a class="dropdown-toggle btn btn-default btn-sm btn-icon-only" data-toggle="dropdown" href="#">
+                    <a class="dropdown-toggle btn btn-xs btn-icon-only" data-toggle="dropdown" href="#">
 						<i class="glyphicon glyphicon-cog"></i>
 						<span class="caret"></span>
 					</a>

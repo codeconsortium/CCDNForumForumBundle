@@ -82,7 +82,10 @@ sidebar:
         tools:              "Tools"
 
 link:
-    admin:                  "Admin"
+    admin:
+        index:              "Admin"
+    forum:
+        index:              "Forum"
     category:
         index:              "Forum Index"
     topic:

@@ -107,6 +107,7 @@ class UserSubscriptionController extends BaseController
         } else {
             $subscriptionPager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserByIdAndForumById($forum->getId(), $this->getUser()->getId(), $page, $itemsPerPage, $filter, true);
         }
+		$this->setPagerTemplate($subscriptionPager);
 
         // this is necessary for working out the last page for each topic.
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');

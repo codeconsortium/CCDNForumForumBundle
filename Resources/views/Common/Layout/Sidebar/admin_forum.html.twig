@@ -1,0 +1,62 @@
+{%- spaceless -%}
+
+	<ul class="nav nav-pills nav-stacked">
+
+		{%- set route = app.request.attributes.get('_route') -%}
+
+		{%- if is_granted('ROLE_SUPER_ADMIN') -%}
+			{%- if route == 'ccdn_forum_admin_forum_list'
+				or route == 'ccdn_forum_admin_forum_create'
+				or route == 'ccdn_forum_admin_forum_edit'
+				or route == 'ccdn_forum_admin_forum_delete'
+			 -%}
+				<li class="active">
+					<a href="{{- path('ccdn_forum_admin_forum_list') -}}">
+						<i class="glyphicon glyphicon-list"></i>
+			{%- else -%}
+				<li>
+					<a href="{{- path('ccdn_forum_admin_forum_list') -}}">
+						<i class="glyphicon glyphicon-list"></i>
+			{%- endif -%}
+						Manage Forums
+					</a>
+				</li>
+		{%- endif -%}
+
+		{%- if route == 'ccdn_forum_admin_category_list'
+			or route == 'ccdn_forum_admin_category_create'
+			or route == 'ccdn_forum_admin_category_edit'
+			or route == 'ccdn_forum_admin_category_delete'
+		 -%}
+			<li class="active">
+				<a href="{{- path('ccdn_forum_admin_category_list') -}}">
+					<i class="glyphicon glyphicon-list"></i>
+		{%- else -%}
+			<li>
+				<a href="{{- path('ccdn_forum_admin_category_list') -}}">
+					<i class="glyphicon glyphicon-list"></i>
+		{%- endif -%}
+					Manage Categories
+				</a>
+			</li>
+
+		{%- if route == 'ccdn_forum_admin_board_list'
+			or route == 'ccdn_forum_admin_board_create'
+			or route == 'ccdn_forum_admin_board_edit'
+			or route == 'ccdn_forum_admin_board_delete'
+		 -%}
+			<li class="active">
+				<a href="{{- path('ccdn_forum_admin_board_list') -}}">
+					<i class="glyphicon glyphicon-list"></i>
+		{%- else -%}
+			<li>
+				<a href="{{- path('ccdn_forum_admin_board_list') -}}">
+					<i class="glyphicon glyphicon-list"></i>
+		{%- endif -%}
+					Manage Boards
+				</a>
+			</li>
+
+	<ul>
+
+{%- endspaceless -%}

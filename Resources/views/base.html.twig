@@ -7,11 +7,11 @@
         <title>{%- block title -%}{%- endblock -%}</title>
 
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+		{#<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">#}
 		{%- block stylesheets -%}
 		{%- endblock -%}
     </head>
-    <body style="padding-top:70px;">
+    <body>
 
 		{%- spaceless -%}
 
@@ -20,24 +20,19 @@
 
 				{%- block navbar -%}
 					<header class="navbar navbar-default navbar-fixed-top clearfix" role="navigation">
-						<p class="navbar-text">
-							<a target="_blank" class="navbar-link" href="http://www.codeconsortium.com/">Code Consortium</a>
-						</p>
+						<a target="_blank" class="navbar-brand" href="http://www.codeconsortium.com/">Code Consortium</a>
 					</header>
 
 					{%- block tool_bar -%}
 					{%- endblock tool_bar -%}
 				{%- endblock navbar -%}
-
-				<hr>
 				
 				<div class="container clearfix">
+					<br>
 					<div class="row">
 				        <aside class="col-md-2 page-sidebar-left">
-							<ul class="nav nav-pills nav-stacked">
-								{%- block sidebar -%}
-					            {%- endblock sidebar -%}
-							</ul>
+							{%- block sidebar -%}
+				            {%- endblock sidebar -%}
 						</aside>
 
 				        <div class="col-md-10 page-body-right">
@@ -50,6 +45,8 @@
 			</div>
 		</div>
 
+		<br>
+		
 		<footer class="footer site-footer">
 
 			<div class="navbar navbar-default clearfix">

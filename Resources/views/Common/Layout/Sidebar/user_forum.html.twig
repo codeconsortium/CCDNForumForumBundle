@@ -32,9 +32,23 @@
 
 
 
-		{%- if is_granted('ROLE_USER') -%}
-			{%- if route|slice(0,28) == 'ccdn_forum_user_subscription' -%}
-				{%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/Partial/user_subscriptions.html.twig' -%}
+		{%- if forum is defined and not null -%}
+			{%- if route == 'ccdn_homepage'
+				or route == 'ccdn_forum_user_category_index' -%}
+				<li class="active">
+					<a href="{{- path('ccdn_forum_user_category_index', {'forumName': forum.name}) -}}">
+						<i class="glyphicon glyphicon-home"></i>
+			{%- else -%}
+				<li>
+					<a href="{{- path('ccdn_forum_user_category_index', {'forumName': forum.name}) -}}">
+						<i class="glyphicon glyphicon-home"></i>
+			{%- endif -%}
+						{{- 'link.category.index' |trans({}, 'CCDNForumForumBundle') -}}
+					</a>
+				</li>
+
+			{%- if route|slice(0,28) != 'ccdn_forum_user_subscription' -%}
+				{%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/Partial/user_boards.html.twig' -%}
 			{%- endif -%}
 		{%- endif -%}
 

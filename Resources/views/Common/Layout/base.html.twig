@@ -21,27 +21,33 @@
 
 {% block tool_bar %}
 	{%- spaceless -%}
-		<header class="container clearfix">
-			<div class="row">
-			    <div class="col-md-2">
-					<h3>
-						{% block sub_title %}
-							<a href="{{ path('ccdn_forum_user_category_index') }}">
-								Forum
-							</a>
-						{% endblock sub_title %}
-					</h3>
-				</div>
 
-				{%- if crumbs is defined -%}
-					<nav class="col-md-10">
-						{%- block crumb_trail -%}
-							{%- include 'CCDNForumForumBundle:Common:Layout/crumbs.html.twig' with {'crumbs': crumbs } -%}
-						{%- endblock crumb_trail -%}
-					</nav>
-				{%- endif -%}
-			</div>
+		<header class="clearfix">
+			<nav class="navbar navbar-default" style="background-color:#fff;">
+				
+				<div class="container clearfix">
+					<div class="row" style="padding:10px 0;">
+						<div class="col-md-2">
+							{% block sub_title %}
+								{%- include 'CCDNForumForumBundle:Common:Layout/SubTitle/sub_title_default.html.twig' -%}
+							{% endblock sub_title %}
+						</div>
+				
+						<div class="col-md-10">
+							<div class="row">
+								{%- if crumbs is defined -%}
+									{%- block crumb_trail -%}
+										{%- include 'CCDNForumForumBundle:Common:Layout/crumbs.html.twig' with {'crumbs': crumbs } -%}
+									{%- endblock crumb_trail -%}
+								{%- endif -%}
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</nav>
 		</header>
+
 	{%- endspaceless -%}
 {% endblock tool_bar %}
 
@@ -59,7 +65,7 @@
 
 {% block body %}
 	{%- spaceless -%}
-
+	
     {%- include 'CCDNForumForumBundle:Common:Layout/flashes.html.twig' -%}
 
 	{%- block body_content -%}

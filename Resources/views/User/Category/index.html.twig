@@ -21,7 +21,7 @@
 	
 	{{- parent() -}}
 
-    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/sidebar_user.html.twig' -%}
+    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
 
 	{%- endspaceless -%}
 	
@@ -37,7 +37,11 @@
 		{%- include "CCDNForumForumBundle:User:Category/Partial/item_category.html.twig" -%}
 	{%- else -%}
 		<section class="row clearfix">
-			<div class="well">{{- 'category.none' | trans({}, 'CCDNForumForumBundle') -}}</div>
+			<div class="well text-center">
+				<span class="lead">
+					{{- 'category.none' | trans({}, 'CCDNForumForumBundle') -}}
+				</span>
+			</div>
 		</section>
 	{%- endfor -%}
 

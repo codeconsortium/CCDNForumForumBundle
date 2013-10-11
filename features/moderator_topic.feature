@@ -102,7 +102,7 @@ Feature: Moderator Topic Traversal
 		  And I should see "Delete Topic"
 		  And I should not see "Restore Topic"
 
-	Scenario: Restore deleted topic
+	Scenario: Move deleted topic
         Given I am on "/en/forum/test_forum_f1"
 		  And I follow "test_category_f1_c1"
 		  And I follow "test_board_f1_c1_b1"
@@ -111,5 +111,5 @@ Feature: Moderator Topic Traversal
 		  And I follow "Change Board"
 		  And I select "test_board_f1_c1_b2" from "Topic[board]"
 		  And I press "submit[post]"
-		  And I should not see "test_board_f1_c1_b1"
-		  And I should see "test_board_f1_c1_b2"
+		  And I should not see "test_board_f1_c1_b1" for the query "ol.breadcrumb li"
+		  And I should see "test_board_f1_c1_b2" for the query "ol.breadcrumb li"

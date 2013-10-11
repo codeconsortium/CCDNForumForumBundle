@@ -1,0 +1,60 @@
+{%- spaceless -%}
+
+	{%- set route = app.request.attributes.get('_route') -%}
+	
+	<div class="btn-group btn-block" id="settings-accessor">
+		{%- set route = app.request.attributes.get('_route') -%}
+	
+		<button class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" type="button">
+			{%- if route|slice(0,16) == 'ccdn_forum_admin' -%} 
+				{{- 'link.admin.index' |trans({}, 'CCDNForumForumBundle') -}}
+			{%- endif -%}
+
+			{%- if route|slice(0,15) == 'ccdn_forum_user' -%}
+				{%- if route|slice(0,28) == 'ccdn_forum_user_subscription' -%}
+					{{- 'link.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}
+				{%- else -%}
+					{{- 'link.forum.index' |trans({}, 'CCDNForumForumBundle') -}}
+				{%- endif -%}
+			{%- endif -%}
+			
+			<span class="caret"></span>
+		</button>
+		
+		<ul class="dropdown-menu section-indicator" role="menu">
+
+			{%- if is_granted('ROLE_ADMIN') -%}
+				<li 
+					{%- if route|slice(0,16) == 'ccdn_forum_admin' %} class="selected"{%- endif -%}>
+						<a href="{{- path('ccdn_forum_admin_index') -}}" rel="nofollow">
+						{{- 'link.admin.index' |trans({}, 'CCDNForumForumBundle') -}}
+					</a>
+				</li>
+			{%- endif -%}
+			
+			<li
+				{%- if route|slice(0,15) == 'ccdn_forum_user' and route|slice(0,28) != 'ccdn_forum_user_subscription' %} class="selected"{%- endif -%}>
+				<a href="{{- path('ccdn_forum_user_category_index') -}}" rel="nofollow">
+					{{- 'link.forum.index' |trans({}, 'CCDNForumForumBundle') -}}
+				</a>
+			</li>
+
+			{%- if is_granted('ROLE_USER') -%}
+				<li
+					{%- if route|slice(0,28) == 'ccdn_forum_user_subscription' %} class="selected"{%- endif -%}>
+						{%- if forum is defined and not null -%}
+							<a href="{{- path('ccdn_forum_user_subscription_index', {'forumName': forum.name}) -}}" rel="nofollow">
+						{%- else -%}
+							<a href="{{- path('ccdn_forum_user_subscription_index', {'forumName': '~'}) -}}" rel="nofollow">
+						{%- endif -%}
+
+						{{- 'link.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}
+					</a>
+				</li>
+			{%- endif -%}
+			
+		</ul>
+		
+	</div>
+
+{%- endspaceless -%}

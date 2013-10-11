@@ -4,8 +4,6 @@
 
 {% block title %}{{- 'title.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}{% endblock %}
 
-{%- block sub_title -%}{{- 'title.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}{%- endblock sub_title -%}
-
 
 
 {%- block sidebar -%}
@@ -14,7 +12,7 @@
 	
 	{{- parent() -}}
 
-    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/sidebar_user.html.twig' -%}
+    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_subscriptions.html.twig' -%}
 
 	{%- endspaceless -%}
 	
@@ -72,7 +70,7 @@
 		</ul>
 		
 		<div class="btn-toolbar">
-			<nav class="col-md-12 btn-right paginate">
+			<nav class="col-md-12 text-right">
 				{{- knp_pagination_render(pager) -}}
 			</nav>
 		</div>
@@ -97,19 +95,15 @@
 					{%- include 'CCDNForumForumBundle:User:Subscription/Partial/item_topic_list.html.twig' -%}
 				{%- else -%}
 					<tr>
-						<td class="center" colspan="6">
-							{{- 'subscription.none' | trans({}, 'CCDNForumForumBundle') -}}
+						<td class="text-center" colspan="6">
+							<span class="lead">
+								{{- 'subscription.none' | trans({}, 'CCDNForumForumBundle') -}}
+							</span>
 						</td>
 					</tr>
 				{%- endfor -%}
 			</tbody>
 		</table>
-	</section>
-	
-	<section class="row btn-toolbar clearfix">
-		<nav class="col-md-12 btn-right paginate">
-			{{- knp_pagination_render(pager) -}}
-		</nav>
 	</section>
 
 	{%- endspaceless -%}

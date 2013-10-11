@@ -176,8 +176,18 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
             $this->getPage()->findAll('css', $cssQuery)
         );
 
+		$found = false;
+		foreach ($items as $item) {
+			if (strpos($item, $text) !== false) {
+				$found = true;
+				break;
+			}
+		}
+		//if ($text == 'test_board_f1_c1_b1') {
+		//	ldd($items);
+		//}
         WebTestCase::assertTrue(
-            in_array($text, $items),
+            $found,
             "$text was not found."
         );
     }
@@ -196,8 +206,16 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
             $this->getPage()->findAll('css', $cssQuery)
         );
 
+		$found = false;
+		foreach ($items as $item) {
+			if (strpos($item, $text) !== false) {
+				$found = true;
+				break;
+			}
+		}
+		
         WebTestCase::assertFalse(
-            in_array($text, $items),
+            $found,
             "$text was found but should not."
         );
     }

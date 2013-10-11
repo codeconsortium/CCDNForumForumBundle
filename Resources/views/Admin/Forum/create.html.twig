@@ -8,21 +8,13 @@
 
 
 
-{% block sub_title %}
-	<a href="{{ path('ccdn_forum_user_category_index') }}">
-		Forum Admin
-	</a>
-{% endblock sub_title %}
-
-
-
 {%- block sidebar -%}
 
 	{%- spaceless -%}
 	
 	{{- parent() -}}
 
-    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/sidebar_admin.html.twig' -%}
+    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/admin_forum.html.twig' -%}
 
 	{%- endspaceless -%}
 	

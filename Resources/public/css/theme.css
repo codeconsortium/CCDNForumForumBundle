@@ -1,7 +1,53 @@
-button[class~='btn'],
-input[class~='btn'],
-a[class~='btn'] {
-	margin-right:10px !important;
+/*
+body {
+	padding-top:50px;
+}
+*/
+
+html, body {
+	height:100%;
+	vertical-align:top;
+}
+
+#page-wrap {
+	min-height: 100%;
+}
+
+#page-main {
+	padding-top:50px;
+	padding-bottom:150px; /* this needs to be bigger than footer height */
+	overflow:auto;
+}
+
+footer.site-footer {
+    clear:both;
+
+    height: auto;
+	margin-bottom:0px;
+	/*padding: 10px 0;*/
+	padding:0px;
+
+	text-align: center;
+	font-size:11px;
+	color: #999;
+}
+
+.btn-toolbar {
+	border-bottom:1px solid #eee;
+	margin-bottom:20px;
+	padding-bottom:10px;
+}
+
+.navbar {
+	margin-bottom:0px;
+	border-radius:0px;
+}
+
+:not(.btn-group) > button[class~='btn']:not(:last-child),
+:not(.btn-group) > input[class~='btn']:not(:last-child),
+:not(.btn-group) > a[class~='btn']:not(:last-child),
+[class~='btn-group'] {
+	margin-right:10px !important; /* fix issue created from natural button spacing hack */
 }
 
 a > i[class^="glyphicon"],
@@ -13,31 +59,57 @@ button.btn > i[class^="glyphicon"],
 .nav i[class^="glyphicon"],
 .alert i[class^="glyphicon"],
 .badge i[class^="glyphicon"],
-.label i[class^="glyphicon"] {
+.label i[class^="glyphicon"],
+.panel-heading i[class^="glyphicon"] {
     margin-right: 10px;
 }
 
-a.dropdown-toggle > .caret {
+.btn-icon-only > i[class^="glyphicon"] {
+	margin-right:0px;
+}
+
+div.dropdown > ul.dropdown-menu > li > a > i[class^="glyphicon"] {
+	color:#000; /* fix issue where dropdown menus icons are white due to panel-header fix */
+}
+div.dropdown > ul.dropdown-menu > li > a:hover > i[class^="glyphicon"] {
+	color:#fff; /* fix issue where dropdown menus icons are white due to panel-header fix */
+}
+
+a > .caret,
+a.dropdown-toggle > .caret,
+button > .caret,
+.dropdown-menu > li > a > .caret,
+.btn > .caret {
 	margin-left:5px;
 }
 
-:not(.nav) .badge,
-:not(.nav) .label {
+.panel-primary .panel-heading i[class^="glyphicon"] {
+	color:#fff;
+}
+.panel-primary .panel-heading span.caret {
+	border-color:rgb(255,255,255) transparent;
+}
+
+:not(.nav) .badge:not(:last-child),
+:not(.nav) .label:not(:last-child) {
 	margin-right:5px;
 }
+
 
 ul.nav-pills.nav-stacked {
 	overflow:hidden;
 }
 
-
-ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked > li > a {
-	padding-left:30px;
+ul.nav-pills.nav-stacked > li > a {
 	text-wrap:none;
 	word-wrap:normal;
 	white-space:nowrap;
 	overflow:hidden;
 	text-overflow:ellipsis;
+}
+
+ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked > li > a {
+	padding-left:30px;
 }
 
 ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked:after {
@@ -51,10 +123,72 @@ ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked:after {
 	border-left:1px solid grey;
 }
 
+ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked > li.active > a:after {
+	content: ' ';
+	display:block;
+	position:absolute;
+	top:0px;
+	left:20px;
+	width:0px;
+	height:100%;
+	border-left:1px solid white;
+	z-index:2;
+}
+
 ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked > li > a {
 	padding-left:45px;
 }
 
 ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked:after {
 	left:35px;
+}
+
+ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked > li.active > a:before {
+	content: ' ';
+	display:block;
+	position:absolute;
+	top:0px;
+	left:20px;
+	width:0px;
+	height:100%;
+	border-left:1px solid white;
+	z-index:2;
+}
+
+ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked > li > ul.nav-pills.nav-stacked > li.active > a:after {
+	content: ' ';
+	display:block;
+	position:absolute;
+	top:0px;
+	left:35px;
+	width:0px;
+	height:100%;
+	border-left:1px solid white;
+	z-index:2;
+}
+
+ul.section-indicator > li > a {
+	padding-left:30px;
+}
+
+ul.section-indicator > li.selected > a:after {
+	content: "";
+	display: block;
+	position: relative;
+	left:-20px;
+	top: -11px;
+	font-family: 'Glyphicons Halflings';
+	-webkit-font-smoothing: antialiased;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 0;
+}
+
+body > div > div > header > nav div.row > ol.breadcrumb {
+	margin-bottom:0px;
+}
+
+
+ul.pagination {
+	margin:0px;
 }

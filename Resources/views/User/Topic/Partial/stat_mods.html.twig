@@ -1,0 +1,42 @@
+{%- spaceless -%}
+
+	<section class="row clearfix">
+		{%- if topic.isDeleted or topic.isClosed %}
+	        <div class="alert alert-danger">
+			    {%- if topic.isDeleted -%}
+		            <i class="glyphicon glyphicon-trash"></i>
+
+		            {{- 'generic.deleted_by' | trans({'%name%': topic.getDeletedBy}, 'CCDNForumForumBundle') |raw -}}
+
+					&nbsp;&#183;
+
+		            {{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.deleted_datetime_format) -}}
+			    {%- endif -%}
+
+			    {%- if topic.isClosed -%}
+					{%- if topic.isDeleted -%}<br>{%- endif -%}
+		            <i class="glyphicon glyphicon-lock"></i>
+
+		            {{- 'topic.closed_by' | trans({'%name%': topic.getClosedBy}, 'CCDNForumForumBundle') |raw -}}
+
+					&nbsp;&#183;
+
+		            {{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.closed_datetime_format) -}}
+			    {%- endif -%}
+	        </div>
+		{%- endif -%}
+
+	    {%- if topic.isSticky -%}
+	        <div class="alert alert-info">
+		        <i class="glyphicon glyphicon-bullhorn"></i>
+
+	            {{- 'topic.stickied_by' | trans({'%name%': topic.stickiedBy}, 'CCDNForumForumBundle') |raw -}}
+
+				&nbsp;&#183;
+
+	            {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.deleted_datetime_format) -}}
+	        </div>
+	    {%- endif -%}
+	</section>
+
+{%- endspaceless -%}

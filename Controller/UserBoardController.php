@@ -50,10 +50,11 @@ class UserBoardController extends BaseController
         $page = $this->getQuery('page', 1);
         $stickyTopics = $this->getTopicModel()->findAllTopicsStickiedByBoardId($boardId, true);
         $topicsPager = $this->getTopicModel()->findAllTopicsPaginatedByBoardId($boardId, $page, $itemsPerPage, true);
+		$this->setPagerTemplate($topicsPager);
 
         // this is necessary for working out the last page for each topic.
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
-
+		
         // setup bread crumbs.
         $category = $board->getCategory();
 

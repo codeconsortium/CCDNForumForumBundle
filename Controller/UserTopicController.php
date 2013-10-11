@@ -57,9 +57,10 @@ class UserTopicController extends UserTopicBaseController
 
         // Get posts for topic paginated.
         /** @todo ser $itemsPerPage by PaginationConfigHelper */
-        $itemsPerPage = 25;
+        $itemsPerPage = 10;
         $page = $this->getQuery('page', 1);
         $postsPager = $this->getPostModel()->findAllPostsPaginatedByTopicId($topicId, $page, $itemsPerPage, true);
+		$this->setPagerTemplate($postsPager);
 
         // get the topic subscriptions.
         if ($this->isGranted('ROLE_USER')) {

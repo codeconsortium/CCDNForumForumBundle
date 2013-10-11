@@ -19,6 +19,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\EventDispatcher\Event;
+use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination as Pager;
 
 /**
  *
@@ -385,6 +386,11 @@ class BaseController extends ContainerAware
 
         return $this->authorizer;
     }
+
+	protected function setPagerTemplate(Pager $pager)
+	{
+		$pager->setTemplate('CCDNForumForumBundle:Common:Paginator/twitter_bootstrap.html.twig');
+	}
 
     /**
      *

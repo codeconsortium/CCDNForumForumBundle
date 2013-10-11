@@ -12,7 +12,7 @@
 	
 	{{- parent() -}}
 
-    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/sidebar_user.html.twig' -%}
+    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
 
 	{%- endspaceless -%}
 	
@@ -24,9 +24,15 @@
 
 	{%- spaceless -%}
 
+	<section class="row btn-toolbar clearfix">
+        <div class="col-md-6">
+            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
+        </div>
+	</section>
+	
 	<header class="row clearfix">
 		<div class="col-md-6">
-		    <h3 title="{{- topic.getTitle -}}">{{- topic.getTitle |capitalize -}}</h3>
+		    <span class="lead" title="{{- topic.getTitle -}}">{{- topic.getTitle |capitalize -}}</span>
 		</div>
 		<div class="col-md-6 content-right">
 		    <span class="label label-default" title="{{- topic.cachedReplyCount -}}">
@@ -91,21 +97,10 @@
 		</section>
 	{% endif %}
 
-	<section class="row btn-toolbar clearfix">
-        <div class="col-md-6">
-            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
-        </div>
-	</section>
-
 	<section class="clearfix">
 		{%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig" -%}
 	</section>
 
-	<section class="row btn-toolbar clearfix">
-        <div class="col-md-6">
-            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
-        </div>
-	</section>
 	{%- endspaceless -%}
 
 {% endblock body_content %}
