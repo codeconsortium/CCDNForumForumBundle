@@ -19,7 +19,7 @@
 	    <div class="col-md-5 pull-right text-right">
 	        {% if post.id and not post.isDeleted %}
 	            <div class="btn-group">
-	                <a class="btn btn-xs btn-icon-only" id="post_show[{{- post.getBody |slice(0,24) -}}]"
+	                <a class="btn btn-xs btn-icon-only" title="show post"
 					 href="{{- path('ccdn_forum_user_post_show', {'forumName': forum.name, 'postId': post.getId }) -}}">
 						<i class="glyphicon glyphicon-fullscreen"></i>
 					</a>
@@ -29,7 +29,7 @@
 	            </div>
 	        {% endif %}
 
-            {%- if is_granted('ROLE_USER') and post.id and (is_granted('ROLE_MODERATOR') and not post.isDeleted) -%}
+            {%- if is_granted('ROLE_USER') and post.id and (is_granted('ROLE_MODERATOR') or not post.isDeleted) -%}
 				&nbsp;
                 <div class="dropdown btn-group text-left">
                     <a class="dropdown-toggle btn btn-xs btn-icon-only" data-toggle="dropdown" href="#">
@@ -40,7 +40,7 @@
 
 						{%- if canReplyToTopic(post.getTopic) -%}
 	                        <li>
-								<a rel="nofollow" id="post_reply[{{- post.getBody |slice(0,24) -}}]"
+								<a rel="nofollow"
 								 href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forum.name, 'topicId': post.getTopic.getId }) -}}">
 									<i class="glyphicon glyphicon-pencil"></i>
 									{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
@@ -60,7 +60,7 @@
 
                         {%- if canDeletePost(post) -%}
                             <li>
-								<a rel="nofollow" id="post_delete[{{- post.getBody |slice(0,24) -}}]"
+								<a rel="nofollow"
 								 href="{{- path('ccdn_forum_user_post_delete', {'forumName': forum.name, 'postId': post.getId }) -}}">
 									<i class="glyphicon glyphicon-trash"></i>
 									{{- 'link.post.delete' | trans({}, 'CCDNForumForumBundle') -}}

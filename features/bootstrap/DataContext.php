@@ -119,7 +119,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
 
         foreach ($table->getHash() as $data) {
             $this->users[] = $this->thereIsUser(
-                isset($data['username']) ? $data['username'] : sha1(uniqid(mt_rand(), true)),
+                $data['email'],
                 $data['email'],
                 isset($data['password']) ? $data['password'] : 'password',
                 isset($data['role']) ? $data['role'] : 'ROLE_USER',

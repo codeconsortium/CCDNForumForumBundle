@@ -21,6 +21,14 @@
 				{%- block navbar -%}
 					<header class="navbar navbar-default navbar-fixed-top clearfix" role="navigation">
 						<a target="_blank" class="navbar-brand" href="http://www.codeconsortium.com/">Code Consortium</a>
+						
+						<p class="navbar-text pull-right">
+							<i class="glyphicon glyphicon-user"></i>
+							&nbsp;
+							{%- if app.user -%}
+								{{- app.user.email -}}
+							{%- endif -%}
+						</p>
 					</header>
 
 					{%- block tool_bar -%}

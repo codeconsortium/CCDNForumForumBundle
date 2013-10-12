@@ -56,25 +56,31 @@
 	{%- spaceless -%}
 
 	<section class="row clearfix">
-		<ul class="nav nav-tabs">
-			{%- import _self as tabs -%}
-			{%- if forum is not null -%}
-				{{- tabs.subscription_tab('all', forum.name, 'all', filter, total_subscribed_forums['count_read'], total_subscribed_forums['count_unread'], total_subscribed_forums['count_total']) -}}
-				{{- tabs.subscription_tab('unread', forum.name, 'unread', filter, null, total_subscribed_forums['count_unread'], null) -}}
-				{{- tabs.subscription_tab('read', forum.name, 'read', filter, total_subscribed_forums['count_read'], null, null) -}}
-			{%- else -%}
-				{{- tabs.subscription_tab('all', '~', 'all', filter, total_subscribed_forums['count_read'], total_subscribed_forums['count_unread'], total_subscribed_forums['count_total']) -}}
-				{{- tabs.subscription_tab('unread', '~', 'unread', filter, null, total_subscribed_forums['count_unread'], null) -}}
-				{{- tabs.subscription_tab('read', '~', 'read', filter, total_subscribed_forums['count_read'], null, null) -}}
-			{%- endif -%}
-		</ul>
-		
 		<div class="btn-toolbar">
 			<nav class="col-md-12 text-right">
 				{{- knp_pagination_render(pager) -}}
 			</nav>
 		</div>
 	</section>
+	
+	<section class="row clearfix">
+		<div class="col-md-12">
+			<ul class="nav nav-tabs">
+				{%- import _self as tabs -%}
+				{%- if forum is not null -%}
+					{{- tabs.subscription_tab('all', forum.name, 'all', filter, total_subscribed_forums['count_read'], total_subscribed_forums['count_unread'], total_subscribed_forums['count_total']) -}}
+					{{- tabs.subscription_tab('unread', forum.name, 'unread', filter, null, total_subscribed_forums['count_unread'], null) -}}
+					{{- tabs.subscription_tab('read', forum.name, 'read', filter, total_subscribed_forums['count_read'], null, null) -}}
+				{%- else -%}
+					{{- tabs.subscription_tab('all', '~', 'all', filter, total_subscribed_forums['count_read'], total_subscribed_forums['count_unread'], total_subscribed_forums['count_total']) -}}
+					{{- tabs.subscription_tab('unread', '~', 'unread', filter, null, total_subscribed_forums['count_unread'], null) -}}
+					{{- tabs.subscription_tab('read', '~', 'read', filter, total_subscribed_forums['count_read'], null, null) -}}
+				{%- endif -%}
+			</ul>
+		</div>
+	</section>
+	
+	<br>
 	
 	<section class="clearfix">
 		<table class="table table-striped table-hover">

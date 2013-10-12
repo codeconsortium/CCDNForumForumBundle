@@ -38,7 +38,8 @@ class AppKernel extends Kernel
      */
     public function getCacheDir()
     {
-        return sys_get_temp_dir().'/CCDNForumForumBundle/cache';
+		//return __DIR__ . '//cache//' . $this->getEnvironment();
+        return sys_get_temp_dir().'/CCDNForumForumBundle/cache/' . $this->getEnvironment();
     }
 
     /**
@@ -46,12 +47,14 @@ class AppKernel extends Kernel
      */
     public function getLogDir()
     {
+		//return __DIR__ . '//logs';
         return sys_get_temp_dir().'/CCDNForumForumBundle/logs';
     }
 
 	/**
 	 * 
 	 * @link http://kriswallsmith.net/post/27979797907/get-fast-an-easy-symfony2-phpunit-optimization
+	 * (does not work)
 	 */
 //	protected function initializeContainer()
 //	{

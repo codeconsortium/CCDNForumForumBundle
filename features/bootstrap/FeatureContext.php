@@ -121,21 +121,134 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
         $session->setBasicAuth($user . '@foo.com', 'root');
     }
 
+	private function getAttributesFromElement($element)
+	{
+		$attr = array();
+		$attr['id']    = strtolower($element->getAttribute('id'));
+		$attr['name']  = strtolower($element->getAttribute('name'));
+		$attr['label'] = strtolower($element->getAttribute('label'));
+		$attr['value'] = strtolower($element->getAttribute('value'));
+		$attr['text']  = strtolower($element->getText());
+		$attr['title'] = strtolower($element->getAttribute('title'));
+		
+		return $attr;
+	}
+
+	private function isSubstringInArray($attributes, $searchStr)
+	{
+		foreach ($attributes as $attribute) {
+			if ($attribute == $searchStr) {
+				return true;
+			}
+			// substr search
+			//if (strpos($attribute, $searchStr) !== false) {
+			//	return true;
+			//}
+		}
+		
+		return false;
+	}
+
     /**
-     * @Given /^I follow "([^"]*)" by selector "([^"]*)"$/
+     * @Given /^I follow "([^"]*)" from the links on post "([^"]*)"$/
      */
-    public function iFollowBySelector($linkName, $cssQuery)
+    public function iFollowFromTheLinksOnPost($linkText, $postId)
     {
+		$link = null;
+        $items = $this->getPage()->findAll('css', '[id^=' . $postId . '] > header a');
+
+		$didFindIt = false;
+		$linkTextLower = strtolower($linkText);
+		$whatWeFound = array();
+		foreach ($items as $item) {
+			$attr = $this->getAttributesFromElement($item);
+			$whatWeFound[] = $attr;
+			if ($this->isSubstringInArray($attr, $linkTextLower)) {
+				$didFindIt = true;
+				$link = $item;
+				break;
+			}
+		}
+		
+		WebTestCase::assertTrue($didFindIt, 'Could not find the link');
+		WebTestCase::assertNotNull($link, 'Could not find the link');
+		
+		$link->click();
+	}
+
+    /**
+     *
+     * @Given /^I should see "([^"]*)" from the links on post "([^"]*)"$/
+     */
+    public function shouldSeeFromTheLinksOnPost($text, $postId)
+    {
+        // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
         $items = array_map(
-            function ($element) {
-                return $element;
-            },
-            $this->getPage()->findAll('css', $cssQuery)
+			function($element) { return strtolower($element->getText()); },
+            $this->getPage()->findAll('css', '[id^=' . $postId . '] > header ul li a')
         );
 
-        WebTestCase::assertCount(1, $items, 'The link was not found!');
+		$didFindIt = false;
+		$textLower = strtolower($text);
+		foreach ($items as $item) {
+			if (strpos($item, $textLower) !== false) {
+				$didFindIt = true;
+				break;
+			}
+		}
 
-        $this->getPage()->clickLink($items[0]->getAttribute('href'));
+        WebTestCase::assertTrue($didFindIt, "$text was not found.");
+    }
+
+    /**
+     *
+     * @Given /^I should not see "([^"]*)" from the links on post "([^"]*)"$/
+     */
+    public function shouldNotSeeFromTheLinksOnPost($text, $postId)
+    {
+        // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
+        $items = array_map(
+            function ($element) { return strtolower($element->getText()); },
+            $this->getPage()->findAll('css', '[id^=' . $postId . '] > header ul li a')
+        );
+
+		$didFindIt = false;
+		$textLower = strtolower($text);
+		foreach ($items as $item) {
+			if (strpos($item, $textLower) !== false) {
+				$didFindIt = true;
+				break;
+			}
+		}
+		
+        WebTestCase::assertFalse($didFindIt, "$text was found but should not.");
+    }
+
+    /**
+     * @Given /^I follow "([^"]*)" for the query "([^"]*)"$/
+     */
+    public function iFollowForTheQuery($linkText, $cssQuery)
+    {
+        $items = $this->getPage()->findAll('css', $cssQuery);
+
+		$didFindIt = false;
+		$link = null;
+		$linkTextLower = strtolower($linkText);
+		$whatWeFound = array();
+		foreach ($items as $item) {
+			$attr = $this->getAttributesFromElement($item);
+			$whatWeFound[] = $attr;
+			if ($this->isSubstringInArray($attr, $linkTextLower)) {
+				$didFindIt = true;
+				$link = $item;
+				break;
+			}
+		}
+		
+		WebTestCase::assertTrue($didFindIt, 'Could not find the link');
+		WebTestCase::assertNotNull($link, 'Could not find the link');
+		
+		$link->click();
     }
 
     /**
@@ -146,20 +259,13 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     {
         // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
         $items = array_map(
-            function ($element) {
-                return $element->getText();
-            },
+            function ($element) { return $element->getText(); },
             $this->getPage()->findAll('css', $cssQuery)
         );
 
         WebTestCase::assertTrue(in_array($textBefore, $items), 'The before text was not found!');
         WebTestCase::assertTrue(in_array($textAfter,  $items), 'The after text was not found!');
-
-        WebTestCase::assertGreaterThan(
-            array_search($textBefore, $items),
-            array_search($textAfter, $items),
-            "$textBefore does not proceed $textAfter"
-        );
+        WebTestCase::assertGreaterThan(array_search($textBefore, $items), array_search($textAfter, $items), "$textBefore does not proceed $textAfter");
     }
 
     /**
@@ -170,26 +276,20 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     {
         // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
         $items = array_map(
-            function ($element) {
-                return $element->getText();
-            },
+			function($element) { return strtolower($element->getText()); },
             $this->getPage()->findAll('css', $cssQuery)
         );
 
-		$found = false;
+		$didFindIt = false;
+		$textLower = strtolower($text);
 		foreach ($items as $item) {
-			if (strpos($item, $text) !== false) {
-				$found = true;
+			if (strpos($item, $textLower) !== false) {
+				$didFindIt = true;
 				break;
 			}
 		}
-		//if ($text == 'test_board_f1_c1_b1') {
-		//	ldd($items);
-		//}
-        WebTestCase::assertTrue(
-            $found,
-            "$text was not found."
-        );
+
+        WebTestCase::assertTrue($didFindIt, "$text was not found.");
     }
 
     /**
@@ -200,24 +300,20 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     {
         // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
         $items = array_map(
-            function ($element) {
-                return $element->getText();
-            },
+            function ($element) { return strtolower($element->getText()); },
             $this->getPage()->findAll('css', $cssQuery)
         );
 
-		$found = false;
+		$didFindIt = false;
+		$textLower = strtolower($text);
 		foreach ($items as $item) {
-			if (strpos($item, $text) !== false) {
-				$found = true;
+			if (strpos($item, $textLower) !== false) {
+				$didFindIt = true;
 				break;
 			}
 		}
 		
-        WebTestCase::assertFalse(
-            $found,
-            "$text was found but should not."
-        );
+        WebTestCase::assertFalse($didFindIt, "$text was found but should not.");
     }
 
     /**
@@ -226,12 +322,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
      */
     public function iSelectFromADateDaysFromNow($cssQuery, $diff)
     {
-        $items = array_map(
-            function ($element) {
-                return $element;
-            },
-            $this->getPage()->findAll('css', $cssQuery)
-        );
+        $items = $this->getPage()->findAll('css', $cssQuery);
 
         $fields = array();
         foreach ($items as $item) {
@@ -288,8 +379,5 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
        echo print_r($this->getSession()->getPage()->getContent());
        echo PHP_EOL;
        die();
-       //or print_r($this->getSession()->getDriver()->getContent());
-       // The following produces "The current node list is empty."
-       //print_r($this->getSession()->getDriver()->getText('//html'));
    }
 }

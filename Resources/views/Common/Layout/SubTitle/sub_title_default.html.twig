@@ -10,7 +10,7 @@
 				{{- 'link.admin.index' |trans({}, 'CCDNForumForumBundle') -}}
 			{%- endif -%}
 
-			{%- if route|slice(0,15) == 'ccdn_forum_user' -%}
+			{%- if route|slice(0,15) == 'ccdn_forum_user' or route|slice(0,20) == 'ccdn_forum_moderator' -%}
 				{%- if route|slice(0,28) == 'ccdn_forum_user_subscription' -%}
 					{{- 'link.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}
 				{%- else -%}
@@ -33,7 +33,7 @@
 			{%- endif -%}
 			
 			<li
-				{%- if route|slice(0,15) == 'ccdn_forum_user' and route|slice(0,28) != 'ccdn_forum_user_subscription' %} class="selected"{%- endif -%}>
+				{%- if route|slice(0,15) == 'ccdn_forum_user' and route|slice(0,28) != 'ccdn_forum_user_subscription' or route|slice(0,20) == 'ccdn_forum_moderator' %} class="selected"{%- endif -%}>
 				<a href="{{- path('ccdn_forum_user_category_index') -}}" rel="nofollow">
 					{{- 'link.forum.index' |trans({}, 'CCDNForumForumBundle') -}}
 				</a>
@@ -45,7 +45,7 @@
 						{%- if forum is defined and not null -%}
 							<a href="{{- path('ccdn_forum_user_subscription_index', {'forumName': forum.name}) -}}" rel="nofollow">
 						{%- else -%}
-							<a href="{{- path('ccdn_forum_user_subscription_index', {'forumName': '~'}) -}}" rel="nofollow">
+							<a href="{{- path('ccdn_forum_user_subscription_index', {'forumName': 'default'}) -}}" rel="nofollow">
 						{%- endif -%}
 
 						{{- 'link.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}

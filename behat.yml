@@ -1,6 +1,13 @@
 default:
     formatter:
-        name: progress
+        name: pretty
+        parameters:
+            decorated:              true
+            verbose:                false
+            time:                   true
+            language:               en
+            output_path:            null
+            multiline_arguments:    true
     paths:
         features: features
         bootstrap: %behat.paths.features%/Context
