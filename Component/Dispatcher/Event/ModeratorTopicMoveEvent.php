@@ -70,8 +70,8 @@ class ModeratorTopicMoveEvent extends Event
     {
         $this->request = $request;
         $this->topic = $topic;
-		$this->oldBoard = $oldBoard;
-		$this->newBoard = $newBoard;
+        $this->oldBoard = $oldBoard;
+        $this->newBoard = $newBoard;
     }
 
     /**

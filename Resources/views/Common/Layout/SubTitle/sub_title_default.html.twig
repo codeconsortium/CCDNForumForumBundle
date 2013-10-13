@@ -1,12 +1,12 @@
 {%- spaceless -%}
 
 	{%- set route = app.request.attributes.get('_route') -%}
-	
+
 	<div class="btn-group btn-block" id="settings-accessor">
 		{%- set route = app.request.attributes.get('_route') -%}
-	
+
 		<button class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" type="button">
-			{%- if route|slice(0,16) == 'ccdn_forum_admin' -%} 
+			{%- if route|slice(0,16) == 'ccdn_forum_admin' -%}
 				{{- 'link.admin.index' |trans({}, 'CCDNForumForumBundle') -}}
 			{%- endif -%}
 
@@ -17,21 +17,21 @@
 					{{- 'link.forum.index' |trans({}, 'CCDNForumForumBundle') -}}
 				{%- endif -%}
 			{%- endif -%}
-			
+
 			<span class="caret"></span>
 		</button>
-		
+
 		<ul class="dropdown-menu section-indicator" role="menu">
 
 			{%- if is_granted('ROLE_ADMIN') -%}
-				<li 
+				<li
 					{%- if route|slice(0,16) == 'ccdn_forum_admin' %} class="selected"{%- endif -%}>
 						<a href="{{- path('ccdn_forum_admin_index') -}}" rel="nofollow">
 						{{- 'link.admin.index' |trans({}, 'CCDNForumForumBundle') -}}
 					</a>
 				</li>
 			{%- endif -%}
-			
+
 			<li
 				{%- if route|slice(0,15) == 'ccdn_forum_user' and route|slice(0,28) != 'ccdn_forum_user_subscription' or route|slice(0,20) == 'ccdn_forum_moderator' %} class="selected"{%- endif -%}>
 				<a href="{{- path('ccdn_forum_user_category_index') -}}" rel="nofollow">
@@ -52,9 +52,9 @@
 					</a>
 				</li>
 			{%- endif -%}
-			
+
 		</ul>
-		
+
 	</div>
 
 {%- endspaceless -%}

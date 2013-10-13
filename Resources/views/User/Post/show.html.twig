@@ -9,13 +9,13 @@
 {%- block sidebar -%}
 
 	{%- spaceless -%}
-	
+
 	{{- parent() -}}
 
     {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
 
 	{%- endspaceless -%}
-	
+
 {%- endblock sidebar -%}
 
 
@@ -29,7 +29,7 @@
             {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
         </div>
 	</section>
-	
+
 	{%- include "CCDNForumForumBundle:User:Topic/Partial/stat_vitals.html.twig" -%}
 
 	{%- if topic.isDeleted or topic.isClosed or topic.isSticky -%}

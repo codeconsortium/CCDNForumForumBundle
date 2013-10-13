@@ -2,11 +2,11 @@
 
 	{%- set sidebar_categories = board_list(forum.name) -%}
 
-	{%- if sidebar_categories |length -%}		
+	{%- if sidebar_categories |length -%}
 		<li>
 			<ul class="nav nav-pills nav-stacked">
 				{%- for sidebar_category in sidebar_categories -%}
-					{%- if sidebar_category.boards |length -%}			
+					{%- if sidebar_category.boards |length -%}
 						{%- if category is defined and route == 'ccdn_forum_user_category_show' -%}
 							{%- if sidebar_category.id == category.id -%}
 								<li class="active">

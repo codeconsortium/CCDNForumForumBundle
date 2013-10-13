@@ -61,9 +61,9 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Model\Model\boardModel $boardModel
-     * @param  \CCDNForum\ForumBundle\Model\Model\topicModel $topicModel
-     * @param  \CCDNForum\ForumBundle\Model\Model\PostModel  $postModel
+     * @param \CCDNForum\ForumBundle\Model\Model\boardModel $boardModel
+     * @param \CCDNForum\ForumBundle\Model\Model\topicModel $topicModel
+     * @param \CCDNForum\ForumBundle\Model\Model\PostModel  $postModel
      */
     public function __construct($boardModel, $topicModel, $postModel)
     {
@@ -83,14 +83,14 @@ class StatListener implements EventSubscriberInterface
             ForumEvents::USER_TOPIC_REPLY_COMPLETE             => 'onTopicReplyComplete',
             ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_COMPLETE  => 'onTopicSoftDeleteComplete',
             ForumEvents::MODERATOR_TOPIC_RESTORE_COMPLETE      => 'onTopicRestoreComplete',
-			ForumEvents::MODERATOR_TOPIC_CHANGE_BOARD_COMPLETE => 'onTopicChangeBoardComplete',
+            ForumEvents::MODERATOR_TOPIC_CHANGE_BOARD_COMPLETE => 'onTopicChangeBoardComplete',
         );
     }
 
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
      */
     public function onTopicCreateComplete(UserTopicEvent $event)
     {
@@ -100,7 +100,7 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
      */
     public function onTopicReplyComplete(UserTopicEvent $event)
     {
@@ -111,7 +111,7 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent $event
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent $event
      */
     public function onTopicSoftDeleteComplete(ModeratorTopicEvent $event)
     {
@@ -121,7 +121,7 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent $event
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent $event
      */
     public function onTopicRestoreComplete(ModeratorTopicEvent $event)
     {
@@ -131,7 +131,7 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicMoveEvent $event
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicMoveEvent $event
      */
     public function onTopicChangeBoardComplete(ModeratorTopicMoveEvent $event)
     {
@@ -142,7 +142,7 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Topic $topic
+     * @param \CCDNForum\ForumBundle\Entity\Topic $topic
      */
     protected function updateTopicStats(Topic $topic)
     {
@@ -164,7 +164,7 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Board $board
+     * @param \CCDNForum\ForumBundle\Entity\Board $board
      */
     protected function updateBoardStats(Board $board)
     {
@@ -172,9 +172,9 @@ class StatListener implements EventSubscriberInterface
             if ($board->getId()) {
                 $stats = $this->topicModel->getTopicAndPostCountForBoardById($board->getId());
 
-		        // set the board topic / post count
-		        $board->setCachedTopicCount($stats['topicCount']);
-		        $board->setCachedPostCount($stats['postCount']);
+                // set the board topic / post count
+                $board->setCachedTopicCount($stats['topicCount']);
+                $board->setCachedPostCount($stats['postCount']);
 
                 $lastTopic = $this->topicModel->findLastTopicForBoardByIdWithLastPost($board->getId());
 
@@ -190,14 +190,14 @@ class StatListener implements EventSubscriberInterface
         }
     }
 
-	private function extractBoardFromTopic(Topic $topic)
-	{
+    private function extractBoardFromTopic(Topic $topic)
+    {
         if ($topic) {
             if ($topic->getId()) {
                 return $topic->getBoard();
-			}
-		}
-		
-		return null;
-	}
+            }
+        }
+
+        return null;
+    }
 }

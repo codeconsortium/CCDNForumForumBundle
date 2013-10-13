@@ -387,10 +387,10 @@ class BaseController extends ContainerAware
         return $this->authorizer;
     }
 
-	protected function setPagerTemplate(Pager $pager)
-	{
-		$pager->setTemplate('CCDNForumForumBundle:Common:Paginator/twitter_bootstrap.html.twig');
-	}
+    protected function setPagerTemplate(Pager $pager)
+    {
+        $pager->setTemplate('CCDNForumForumBundle:Common:Paginator/twitter_bootstrap.html.twig');
+    }
 
     /**
      *

@@ -9,13 +9,13 @@
 {%- block sidebar -%}
 
 	{%- spaceless -%}
-	
+
 	{{- parent() -}}
 
     {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
 
 	{%- endspaceless -%}
-	
+
 {%- endblock sidebar -%}
 
 
@@ -23,7 +23,7 @@
 {%- block body_content -%}
 
     {%- spaceless -%}
-	
+
 	<section class="row clearfix btn-toolbar">
         <div class="col-md-6">
             {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
@@ -33,13 +33,13 @@
 			{{- knp_pagination_render(pager) -}}
 		</nav>
 	</section>
-	
+
 	{%- include "CCDNForumForumBundle:User:Topic/Partial/stat_vitals.html.twig" -%}
 
 	{%- if topic.isDeleted or topic.isClosed or topic.isSticky -%}
 		{%- include "CCDNForumForumBundle:User:Topic/Partial/stat_mods.html.twig" -%}
 	{%- endif -%}
-	
+
 	<section class="row clearfix">
 	    {%- for key, post in pager.getItems() -%}
 	        {%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig" -%}

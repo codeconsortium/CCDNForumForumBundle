@@ -9,13 +9,13 @@
 {%- block sidebar -%}
 
 	{%- spaceless -%}
-	
+
 	{{- parent() -}}
 
     {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
 
 	{%- endspaceless -%}
-	
+
 {%- endblock sidebar -%}
 
 
@@ -38,7 +38,7 @@
 			{{- knp_pagination_render(pager) -}}
 		</nav>
 	</section>
-	
+
 	<header class="row clearfix">
 		<div class="col-md-6">
 		    <span class="lead" title="{{- board.name -}}">{{- board.name -}}</span>

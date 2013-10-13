@@ -9,13 +9,13 @@
 {%- block sidebar -%}
 
 	{%- spaceless -%}
-	
+
 	{{- parent() -}}
 
     {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
 
 	{%- endspaceless -%}
-	
+
 {%- endblock sidebar -%}
 
 
@@ -47,15 +47,15 @@
 				<div class="form-group">
 					<div class="col-lg-offset-2 col-lg-10">
 						<input type="submit" class="btn btn-primary" value="{{- 'form.button.topic.create' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]" id="submit[post]">
-						
+
 						{#<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">#}
-						
+
 						<a class="btn btn-default" href="{{- path('ccdn_forum_user_board_show', {'forumName': forum.name, 'boardId': board.id}) -}}">
 							{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
 						</a>
 					</div>
 				</div>
-				
+
 			</fieldset>
 		</form>
 	</section>

@@ -33,7 +33,7 @@ class AdminPanelController extends BaseController
      */
     public function indexAction()
     {
-		return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
+        return $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
         //$this->isAuthorised('ROLE_ADMIN');
         //
         //return $this->renderResponse('CCDNForumForumBundle:Admin:/Panel/index.html.',

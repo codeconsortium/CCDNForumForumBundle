@@ -60,7 +60,7 @@ class UserTopicController extends UserTopicBaseController
         $itemsPerPage = 10;
         $page = $this->getQuery('page', 1);
         $postsPager = $this->getPostModel()->findAllPostsPaginatedByTopicId($topicId, $page, $itemsPerPage, true);
-		$this->setPagerTemplate($postsPager);
+        $this->setPagerTemplate($postsPager);
 
         // get the topic subscriptions.
         if ($this->isGranted('ROLE_USER')) {

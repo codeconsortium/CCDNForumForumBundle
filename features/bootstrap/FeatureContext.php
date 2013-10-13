@@ -121,60 +121,60 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
         $session->setBasicAuth($user . '@foo.com', 'root');
     }
 
-	private function getAttributesFromElement($element)
-	{
-		$attr = array();
-		$attr['id']    = strtolower($element->getAttribute('id'));
-		$attr['name']  = strtolower($element->getAttribute('name'));
-		$attr['label'] = strtolower($element->getAttribute('label'));
-		$attr['value'] = strtolower($element->getAttribute('value'));
-		$attr['text']  = strtolower($element->getText());
-		$attr['title'] = strtolower($element->getAttribute('title'));
-		
-		return $attr;
-	}
+    private function getAttributesFromElement($element)
+    {
+        $attr = array();
+        $attr['id']    = strtolower($element->getAttribute('id'));
+        $attr['name']  = strtolower($element->getAttribute('name'));
+        $attr['label'] = strtolower($element->getAttribute('label'));
+        $attr['value'] = strtolower($element->getAttribute('value'));
+        $attr['text']  = strtolower($element->getText());
+        $attr['title'] = strtolower($element->getAttribute('title'));
 
-	private function isSubstringInArray($attributes, $searchStr)
-	{
-		foreach ($attributes as $attribute) {
-			if ($attribute == $searchStr) {
-				return true;
-			}
-			// substr search
-			//if (strpos($attribute, $searchStr) !== false) {
-			//	return true;
-			//}
-		}
-		
-		return false;
-	}
+        return $attr;
+    }
+
+    private function isSubstringInArray($attributes, $searchStr)
+    {
+        foreach ($attributes as $attribute) {
+            if ($attribute == $searchStr) {
+                return true;
+            }
+            // substr search
+            //if (strpos($attribute, $searchStr) !== false) {
+            //	return true;
+            //}
+        }
+
+        return false;
+    }
 
     /**
      * @Given /^I follow "([^"]*)" from the links on post "([^"]*)"$/
      */
     public function iFollowFromTheLinksOnPost($linkText, $postId)
     {
-		$link = null;
+        $link = null;
         $items = $this->getPage()->findAll('css', '[id^=' . $postId . '] > header a');
 
-		$didFindIt = false;
-		$linkTextLower = strtolower($linkText);
-		$whatWeFound = array();
-		foreach ($items as $item) {
-			$attr = $this->getAttributesFromElement($item);
-			$whatWeFound[] = $attr;
-			if ($this->isSubstringInArray($attr, $linkTextLower)) {
-				$didFindIt = true;
-				$link = $item;
-				break;
-			}
-		}
-		
-		WebTestCase::assertTrue($didFindIt, 'Could not find the link');
-		WebTestCase::assertNotNull($link, 'Could not find the link');
-		
-		$link->click();
-	}
+        $didFindIt = false;
+        $linkTextLower = strtolower($linkText);
+        $whatWeFound = array();
+        foreach ($items as $item) {
+            $attr = $this->getAttributesFromElement($item);
+            $whatWeFound[] = $attr;
+            if ($this->isSubstringInArray($attr, $linkTextLower)) {
+                $didFindIt = true;
+                $link = $item;
+                break;
+            }
+        }
+
+        WebTestCase::assertTrue($didFindIt, 'Could not find the link');
+        WebTestCase::assertNotNull($link, 'Could not find the link');
+
+        $link->click();
+    }
 
     /**
      *
@@ -184,18 +184,18 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     {
         // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
         $items = array_map(
-			function($element) { return strtolower($element->getText()); },
+            function($element) { return strtolower($element->getText()); },
             $this->getPage()->findAll('css', '[id^=' . $postId . '] > header ul li a')
         );
 
-		$didFindIt = false;
-		$textLower = strtolower($text);
-		foreach ($items as $item) {
-			if (strpos($item, $textLower) !== false) {
-				$didFindIt = true;
-				break;
-			}
-		}
+        $didFindIt = false;
+        $textLower = strtolower($text);
+        foreach ($items as $item) {
+            if (strpos($item, $textLower) !== false) {
+                $didFindIt = true;
+                break;
+            }
+        }
 
         WebTestCase::assertTrue($didFindIt, "$text was not found.");
     }
@@ -212,15 +212,15 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
             $this->getPage()->findAll('css', '[id^=' . $postId . '] > header ul li a')
         );
 
-		$didFindIt = false;
-		$textLower = strtolower($text);
-		foreach ($items as $item) {
-			if (strpos($item, $textLower) !== false) {
-				$didFindIt = true;
-				break;
-			}
-		}
-		
+        $didFindIt = false;
+        $textLower = strtolower($text);
+        foreach ($items as $item) {
+            if (strpos($item, $textLower) !== false) {
+                $didFindIt = true;
+                break;
+            }
+        }
+
         WebTestCase::assertFalse($didFindIt, "$text was found but should not.");
     }
 
@@ -231,24 +231,24 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     {
         $items = $this->getPage()->findAll('css', $cssQuery);
 
-		$didFindIt = false;
-		$link = null;
-		$linkTextLower = strtolower($linkText);
-		$whatWeFound = array();
-		foreach ($items as $item) {
-			$attr = $this->getAttributesFromElement($item);
-			$whatWeFound[] = $attr;
-			if ($this->isSubstringInArray($attr, $linkTextLower)) {
-				$didFindIt = true;
-				$link = $item;
-				break;
-			}
-		}
-		
-		WebTestCase::assertTrue($didFindIt, 'Could not find the link');
-		WebTestCase::assertNotNull($link, 'Could not find the link');
-		
-		$link->click();
+        $didFindIt = false;
+        $link = null;
+        $linkTextLower = strtolower($linkText);
+        $whatWeFound = array();
+        foreach ($items as $item) {
+            $attr = $this->getAttributesFromElement($item);
+            $whatWeFound[] = $attr;
+            if ($this->isSubstringInArray($attr, $linkTextLower)) {
+                $didFindIt = true;
+                $link = $item;
+                break;
+            }
+        }
+
+        WebTestCase::assertTrue($didFindIt, 'Could not find the link');
+        WebTestCase::assertNotNull($link, 'Could not find the link');
+
+        $link->click();
     }
 
     /**
@@ -276,18 +276,18 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     {
         // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
         $items = array_map(
-			function($element) { return strtolower($element->getText()); },
+            function($element) { return strtolower($element->getText()); },
             $this->getPage()->findAll('css', $cssQuery)
         );
 
-		$didFindIt = false;
-		$textLower = strtolower($text);
-		foreach ($items as $item) {
-			if (strpos($item, $textLower) !== false) {
-				$didFindIt = true;
-				break;
-			}
-		}
+        $didFindIt = false;
+        $textLower = strtolower($text);
+        foreach ($items as $item) {
+            if (strpos($item, $textLower) !== false) {
+                $didFindIt = true;
+                break;
+            }
+        }
 
         WebTestCase::assertTrue($didFindIt, "$text was not found.");
     }
@@ -304,15 +304,15 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
             $this->getPage()->findAll('css', $cssQuery)
         );
 
-		$didFindIt = false;
-		$textLower = strtolower($text);
-		foreach ($items as $item) {
-			if (strpos($item, $textLower) !== false) {
-				$didFindIt = true;
-				break;
-			}
-		}
-		
+        $didFindIt = false;
+        $textLower = strtolower($text);
+        foreach ($items as $item) {
+            if (strpos($item, $textLower) !== false) {
+                $didFindIt = true;
+                break;
+            }
+        }
+
         WebTestCase::assertFalse($didFindIt, "$text was found but should not.");
     }
 
