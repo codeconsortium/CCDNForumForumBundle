@@ -40,6 +40,8 @@
 		{%- include "CCDNForumForumBundle:User:Topic/Partial/stat_mods.html.twig" -%}
 	{%- endif -%}
 
+	<br>
+
 	<section class="row clearfix">
 	    {%- for key, post in pager.getItems() -%}
 	        {%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig" -%}
