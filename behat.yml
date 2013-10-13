@@ -1,6 +1,6 @@
 default:
     formatter:
-        name: pretty
+        name: progress
         parameters:
             decorated:              true
             verbose:                false
