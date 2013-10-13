@@ -526,7 +526,7 @@ final class ForumEvents
      * The MODERATOR_TOPIC_CHANGE_BOARD_COMPLETE event occurs when the topic move process is completed successfully after persisting.
      *
      * This event allows you to modify the values of the topic entity after persisting.
-     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent instance.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicMoveEvent instance.
      */
     const MODERATOR_TOPIC_CHANGE_BOARD_COMPLETE = 'ccdn_forum.moderator.topic.change_board.complete';
 

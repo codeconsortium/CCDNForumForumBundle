@@ -345,8 +345,6 @@ class ModeratorTopicController extends ModeratorTopicBaseController
         $formHandler = $this->getFormHandlerToChangeBoardOnTopic($forum, $topic);
 
         if ($formHandler->process($this->getRequest())) {
-            $this->dispatch(ForumEvents::MODERATOR_TOPIC_CHANGE_BOARD_COMPLETE, new ModeratorTopicEvent($this->getRequest(), $topic));
-
             $response = $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
                 array(
                     'forumName' => $forumName,

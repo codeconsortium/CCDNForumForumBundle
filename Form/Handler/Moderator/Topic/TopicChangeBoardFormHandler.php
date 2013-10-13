@@ -20,6 +20,7 @@ use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicMoveEvent;
 
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
 
@@ -157,15 +158,7 @@ class TopicChangeBoardFormHandler extends BaseFormHandler
 
         $this->topicModel->updateTopic($topic);
 
-        // Update stats of the topics old board.
-        if ($this->oldBoard) {
-        //    $this->boardModel->updateStats($this->oldBoard)->flush();
-        }
-
-        // Setup stats on the topics new board.
-        if ($topic->getBoard()) {
-        //    $this->boardModel->updateStats($topic->getBoard())->flush();
-        }
+        $this->dispatcher->dispatch(ForumEvents::MODERATOR_TOPIC_CHANGE_BOARD_COMPLETE, new ModeratorTopicMoveEvent($this->request, $this->oldBoard, $topic->getBoard(), $topic));
 
         return $this->topicModel;
     }
