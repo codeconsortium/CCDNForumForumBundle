@@ -103,7 +103,7 @@ class CategoryGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
+     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function persistCategory(Category $category)
@@ -116,7 +116,7 @@ class CategoryGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
+     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function updateCategory(Category $category)
@@ -129,7 +129,7 @@ class CategoryGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
+     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function deleteCategory(Category $category)

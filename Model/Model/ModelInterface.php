@@ -29,25 +29,25 @@ use CCDNForum\ForumBundle\Model\Repository\RepositoryInterface;
  */
 interface ModelInterface
 {
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Model\Repository\RepositoryInterface $repository
-	 * @param \CCDNForum\ForumBundle\Model\Manager\ManagerInterface       $manager
-	 */
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Model\Repository\RepositoryInterface $repository
+     * @param \CCDNForum\ForumBundle\Model\Manager\ManagerInterface       $manager
+     */
     public function __construct(RepositoryInterface $repository, ManagerInterface $manager);
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Model\Repository\RepositoryInterface
-	 */
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Model\Repository\RepositoryInterface
+     */
     public function getRepository();
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
-	 */
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
+     */
     public function getManager();
 }

@@ -226,7 +226,7 @@ abstract class BaseGateway implements GatewayInterface
     /**
      *
      * @access protected
-     * @param  Object                                              $item
+     * @param  Object                                                $item
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     protected function persist($item)
@@ -239,7 +239,7 @@ abstract class BaseGateway implements GatewayInterface
     /**
      *
      * @access protected
-     * @param  Object                                              $item
+     * @param  Object                                                $item
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     protected function remove($item)

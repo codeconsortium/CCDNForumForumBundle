@@ -31,26 +31,26 @@ use CCDNForum\ForumBundle\Model\Repository\RepositoryInterface;
  */
 abstract class BaseModel implements ModelInterface
 {
-	/**
-	 * 
-	 * @access protected
-	 * @var \CCDNForum\ForumBundle\Model\Repository\RepositoryInterface
-	 */
+    /**
+     *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Model\Repository\RepositoryInterface
+     */
     protected $repository;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
-	 */
+    /**
+     *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
+     */
     protected $manager;
 
-	/**
-	 * 
-	 * @access public
-	 * @param \CCDNForum\ForumBundle\Model\Repository\RepositoryInterface $repository
-	 * @param \CCDNForum\ForumBundle\Model\Manager\ManagerInterface       $manager
-	 */
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Model\Repository\RepositoryInterface $repository
+     * @param \CCDNForum\ForumBundle\Model\Manager\ManagerInterface       $manager
+     */
     public function __construct(RepositoryInterface $repository, ManagerInterface $manager)
     {
         $repository->setModel($this);
@@ -60,21 +60,21 @@ abstract class BaseModel implements ModelInterface
         $this->manager = $manager;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Model\Repository\RepositoryInterface
-	 */
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Model\Repository\RepositoryInterface
+     */
     public function getRepository()
     {
         return $this->repository;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
-	 */
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
+     */
     public function getManager()
     {
         return $this->manager;

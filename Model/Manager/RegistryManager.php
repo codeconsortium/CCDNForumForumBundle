@@ -64,7 +64,7 @@ class RegistryManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  Array                                               $users
+     * @param  Array                                           $users
      * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function bulkUpdateCachedPostCountForUsers($users)

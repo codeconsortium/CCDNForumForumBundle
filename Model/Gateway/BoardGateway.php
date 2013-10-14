@@ -105,7 +105,7 @@ class BoardGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
+     * @param  \CCDNForum\ForumBundle\Entity\Board                   $board
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function persistBoard(Board $board)
@@ -118,7 +118,7 @@ class BoardGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
+     * @param  \CCDNForum\ForumBundle\Entity\Board                   $board
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function updateBoard(Board $board)
@@ -131,7 +131,7 @@ class BoardGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
+     * @param  \CCDNForum\ForumBundle\Entity\Board                   $board
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function deleteBoard(Board $board)

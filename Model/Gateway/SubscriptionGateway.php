@@ -101,7 +101,7 @@ class SubscriptionGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Subscription          $subscription
+     * @param  \CCDNForum\ForumBundle\Entity\Subscription            $subscription
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function persistSubscription(Subscription $subscription)
@@ -114,7 +114,7 @@ class SubscriptionGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Subscription          $subscription
+     * @param  \CCDNForum\ForumBundle\Entity\Subscription            $subscription
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function updateSubscription(Subscription $subscription)
@@ -127,7 +127,7 @@ class SubscriptionGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Subscription          $subscription
+     * @param  \CCDNForum\ForumBundle\Entity\Subscription            $subscription
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function deleteSubscription(Subscription $subscription)

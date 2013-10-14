@@ -101,7 +101,7 @@ class TopicGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function persistTopic(Topic $topic)
@@ -114,7 +114,7 @@ class TopicGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function updateTopic(Topic $topic)
@@ -127,7 +127,7 @@ class TopicGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function deleteTopic(Topic $topic)

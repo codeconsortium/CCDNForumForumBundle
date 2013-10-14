@@ -128,8 +128,8 @@ class SubscriptionModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  int                                                       $topicId
-     * @param  int                                                       $userId
+     * @param  int                                                   $topicId
+     * @param  int                                                   $userId
      * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function unsubscribe(Topic $topic, $userId)

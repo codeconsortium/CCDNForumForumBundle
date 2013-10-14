@@ -176,7 +176,7 @@ class TopicManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic $topic
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
      * @param  \Symfony\Component\Security\Core\User\UserInterface $user
      * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */

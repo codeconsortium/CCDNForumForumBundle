@@ -71,7 +71,7 @@ class RegistryModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  Array                                               $users
+     * @param  Array                                                 $users
      * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function bulkUpdateCachedPostCountForUsers($users)

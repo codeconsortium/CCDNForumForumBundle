@@ -36,7 +36,7 @@ class BoardManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
+     * @param  \CCDNForum\ForumBundle\Entity\Board             $board
      * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function saveNewBoard(Board $board)
@@ -56,7 +56,7 @@ class BoardManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
+     * @param  \CCDNForum\ForumBundle\Entity\Board             $board
      * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function updateBoard(Board $board)
@@ -72,7 +72,7 @@ class BoardManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
+     * @param  \CCDNForum\ForumBundle\Entity\Board             $board
      * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function deleteBoard(Board $board)
@@ -91,8 +91,8 @@ class BoardManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  \Doctrine\Common\Collections\ArrayCollection        $topics
-     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
+     * @param  \Doctrine\Common\Collections\ArrayCollection    $topics
+     * @param  \CCDNForum\ForumBundle\Entity\Board             $board
      * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function reassignTopicsToBoard(ArrayCollection $topics, Board $board = null)
@@ -111,9 +111,9 @@ class BoardManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  Array                                               $boards
-     * @param  \CCDNForum\ForumBundle\Entity\Board                 $boardShift
-     * @param  int                                                 $direction
+     * @param  Array                                           $boards
+     * @param  \CCDNForum\ForumBundle\Entity\Board             $boardShift
+     * @param  int                                             $direction
      * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function reorderBoards($boards, Board $boardShift, $direction)

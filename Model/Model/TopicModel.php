@@ -157,7 +157,7 @@ class TopicModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic $topic
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
      * @param  \Symfony\Component\Security\Core\User\UserInterface   $user
      * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
