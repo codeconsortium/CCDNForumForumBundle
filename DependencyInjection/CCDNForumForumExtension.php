@@ -35,12 +35,12 @@ use Symfony\Component\Config\FileLocator;
  */
 class CCDNForumForumExtension extends Extension
 {
-	/**
-	 * 
-	 * @access protected
-	 * @var string $env
-	 */
-	protected $env;
+    /**
+     *
+     * @access protected
+     * @var string $env
+     */
+    protected $env;
 
     /**
      *
@@ -65,8 +65,8 @@ class CCDNForumForumExtension extends Extension
 
         $config = $processor->processConfiguration($configuration, $configs);
 
-		$this->env = $container->getParameter("kernel.environment");
-		
+        $this->env = $container->getParameter("kernel.environment");
+
         // Class file namespaces.
         $this
             ->getEntitySection($config, $container)
@@ -418,13 +418,13 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.topic.moderator.delete.layout_template', $config['topic']['moderator']['delete']['layout_template']);
         $container->setParameter('ccdn_forum_forum.topic.moderator.delete.form_theme', $config['topic']['moderator']['delete']['form_theme']);
 
-		if ($this->env == 'dev' || $this->env == 'test') {
-			$postLimit = 0;
-			$blockForMinutes = 0;
-		} else {
-			$postLimit = $config['topic']['user']['flood_control']['post_limit'];
-			$blockForMinutes = $config['topic']['user']['flood_control']['block_for_minutes'];
-		}
+        if ($this->env == 'dev' || $this->env == 'test') {
+            $postLimit = 0;
+            $blockForMinutes = 0;
+        } else {
+            $postLimit = $config['topic']['user']['flood_control']['post_limit'];
+            $blockForMinutes = $config['topic']['user']['flood_control']['block_for_minutes'];
+        }
 
         $container->setParameter('ccdn_forum_forum.topic.user.flood_control.post_limit', $postLimit);
         $container->setParameter('ccdn_forum_forum.topic.user.flood_control.block_for_minutes', $blockForMinutes);

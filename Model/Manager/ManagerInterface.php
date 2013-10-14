@@ -16,7 +16,7 @@ namespace CCDNForum\ForumBundle\Model\Manager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface;
+use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
 
 /**
  *
@@ -29,28 +29,28 @@ use CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-interface BaseManagerInterface
+interface ManagerInterface
 {
     /**
      *
      * @access public
-     * @param \Doctrine\Common\Persistence\ObjectManager          $em
-     * @param \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface $gateway
+     * @param \Doctrine\Common\Persistence\ObjectManager      $em
+     * @param \CCDNForum\ForumBundle\Gateway\GatewayInterface $gateway
      */
-    public function __construct(ObjectManager $em, BaseGatewayInterface $gateway);
+    public function __construct(ObjectManager $em, GatewayInterface $gateway);
 
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Model\Model\BaseModelInterface        $model
-     * @return \CCDNForum\ForumBundle\Model\Repository\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Model\Model\ModelInterface        $model
+     * @return \CCDNForum\ForumBundle\Model\Repository\ManagerInterface
      */
     public function setModel($model);
 
     /**
      *
      * @access public
-     * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNForum\ForumBundle\Gateway\GatewayInterface
      */
     public function getGateway();
 
@@ -82,7 +82,7 @@ interface BaseManagerInterface
      *
      * @access public
      * @param $entity
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function persist($entity);
 
@@ -90,14 +90,14 @@ interface BaseManagerInterface
      *
      * @access public
      * @param $entity
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function remove($entity);
 
     /**
      *
      * @access public
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function flush();
 
@@ -105,7 +105,7 @@ interface BaseManagerInterface
      *
      * @access public
      * @param $entity
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function refresh($entity);
 }

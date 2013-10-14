@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Model\Gateway;
 
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface;
+use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
 use CCDNForum\ForumBundle\Model\Gateway\BaseGateway;
 
 use CCDNForum\ForumBundle\Entity\Subscription;
@@ -31,7 +31,7 @@ use CCDNForum\ForumBundle\Entity\Subscription;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class SubscriptionGateway extends BaseGateway implements BaseGatewayInterface
+class SubscriptionGateway extends BaseGateway implements GatewayInterface
 {
     /**
      *
@@ -102,7 +102,7 @@ class SubscriptionGateway extends BaseGateway implements BaseGatewayInterface
      *
      * @access public
      * @param  \CCDNForum\ForumBundle\Entity\Subscription          $subscription
-     * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function persistSubscription(Subscription $subscription)
     {
@@ -115,7 +115,7 @@ class SubscriptionGateway extends BaseGateway implements BaseGatewayInterface
      *
      * @access public
      * @param  \CCDNForum\ForumBundle\Entity\Subscription          $subscription
-     * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function updateSubscription(Subscription $subscription)
     {
@@ -128,7 +128,7 @@ class SubscriptionGateway extends BaseGateway implements BaseGatewayInterface
      *
      * @access public
      * @param  \CCDNForum\ForumBundle\Entity\Subscription          $subscription
-     * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function deleteSubscription(Subscription $subscription)
     {

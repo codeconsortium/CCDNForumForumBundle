@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Model\Gateway;
 
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface;
+use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
 use CCDNForum\ForumBundle\Model\Gateway\BaseGateway;
 
 use CCDNForum\ForumBundle\Entity\Category;
@@ -31,7 +31,7 @@ use CCDNForum\ForumBundle\Entity\Category;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class CategoryGateway extends BaseGateway implements BaseGatewayInterface
+class CategoryGateway extends BaseGateway implements GatewayInterface
 {
     /**
      *
@@ -104,7 +104,7 @@ class CategoryGateway extends BaseGateway implements BaseGatewayInterface
      *
      * @access public
      * @param  \CCDNForum\ForumBundle\Entity\Category              $category
-     * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function persistCategory(Category $category)
     {
@@ -117,7 +117,7 @@ class CategoryGateway extends BaseGateway implements BaseGatewayInterface
      *
      * @access public
      * @param  \CCDNForum\ForumBundle\Entity\Category              $category
-     * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function updateCategory(Category $category)
     {
@@ -130,7 +130,7 @@ class CategoryGateway extends BaseGateway implements BaseGatewayInterface
      *
      * @access public
      * @param  \CCDNForum\ForumBundle\Entity\Category              $category
-     * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function deleteCategory(Category $category)
     {

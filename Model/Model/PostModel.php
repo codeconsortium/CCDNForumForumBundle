@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNForum\ForumBundle\Model\Model\BaseModel;
-use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 
 use CCDNForum\ForumBundle\Entity\Post;
 
@@ -33,7 +33,7 @@ use CCDNForum\ForumBundle\Entity\Post;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class PostModel extends BaseModel implements BaseModelInterface
+class PostModel extends BaseModel implements ModelInterface
 {
     /**
      *
@@ -97,8 +97,8 @@ class PostModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function postTopicReply(Post $post)
     {
@@ -108,8 +108,8 @@ class PostModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function updatePost(Post $post)
     {
@@ -119,8 +119,8 @@ class PostModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function lock(Post $post)
     {
@@ -130,8 +130,8 @@ class PostModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function restore(Post $post)
     {
@@ -141,9 +141,9 @@ class PostModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
+     * @param  \Symfony\Component\Security\Core\User\UserInterface   $user
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function softDelete(Post $post, UserInterface $user)
     {
@@ -164,8 +164,8 @@ class PostModel extends BaseModel implements BaseModelInterface
 //    /**
 //     *
 //     * @access public
-//     * @param  Array                                               $posts
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+//     * @param  Array                                                 $posts
+//     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
 //     */
 //    public function bulkRestore($posts)
 //    {
@@ -175,8 +175,8 @@ class PostModel extends BaseModel implements BaseModelInterface
 //    /**
 //     *
 //     * @access public
-//     * @param  Array                                               $posts
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+//     * @param  Array                                                 $posts
+//     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
 //     */
 //    public function bulkHardDelete($posts)
 //    {

@@ -15,8 +15,9 @@ namespace CCDNForum\ForumBundle\Model\Gateway;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
+use Knp\Component\Pager\Paginator;
 
-use CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface;
+use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
 
 /**
  *
@@ -31,7 +32,7 @@ use CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface;
  * @abstract
  *
  */
-abstract class BaseGateway implements BaseGatewayInterface
+abstract class BaseGateway implements GatewayInterface
 {
     /**
      *
@@ -61,7 +62,7 @@ abstract class BaseGateway implements BaseGatewayInterface
      * @param \Doctrine\Common\Persistence\ObjectManager $em
      * @param \Knp\Component\Pager\Paginator             $paginator
      */
-    public function __construct($entityClass, ObjectManager $em, $paginator = null)
+    public function __construct($entityClass, ObjectManager $em, Paginator $paginator = null)
     {
         $this->entityClass = $entityClass;
 
@@ -83,7 +84,7 @@ abstract class BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @return \CCDNForum\ForumBundle\Model\Repository\BaseRepositoryInterface
+     * @return \CCDNForum\ForumBundle\Model\Repository\RepositoryInterface
      */
     public function getRepository()
     {
@@ -226,7 +227,7 @@ abstract class BaseGateway implements BaseGatewayInterface
      *
      * @access protected
      * @param  Object                                              $item
-     * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     protected function persist($item)
     {
@@ -239,7 +240,7 @@ abstract class BaseGateway implements BaseGatewayInterface
      *
      * @access protected
      * @param  Object                                              $item
-     * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     protected function remove($item)
     {
@@ -251,7 +252,7 @@ abstract class BaseGateway implements BaseGatewayInterface
     /**
      *
      * @access public
-     * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function flush()
     {

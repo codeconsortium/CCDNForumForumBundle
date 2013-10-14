@@ -16,6 +16,8 @@ namespace CCDNForum\ForumBundle\Model\Gateway;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
 
+use Knp\Component\Pager\Paginator;
+
 /**
  *
  * @category CCDNForum
@@ -27,7 +29,7 @@ use Doctrine\ORM\QueryBuilder;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-interface BaseGatewayInterface
+interface GatewayInterface
 {
     /**
      *
@@ -36,7 +38,7 @@ interface BaseGatewayInterface
      * @param \Doctrine\Common\Persistence\ObjectManager $em
      * @param \Knp\Component\Pager\Paginator             $paginator
      */
-    public function __construct($entityClass, ObjectManager $em, $paginator = null);
+    public function __construct($entityClass, ObjectManager $em, Paginator $paginator = null);
 
     /**
      *
@@ -48,7 +50,7 @@ interface BaseGatewayInterface
     /**
      *
      * @access public
-     * @return \CCDNForum\ForumBundle\Model\Repository\BaseRepositoryInterface
+     * @return \CCDNForum\ForumBundle\Model\Repository\RepositoryInterface
      */
     public function getRepository();
 
@@ -107,7 +109,7 @@ interface BaseGatewayInterface
     /**
      *
      * @access public
-     * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function flush();
 }

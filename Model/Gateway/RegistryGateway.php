@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Model\Gateway;
 
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface;
+use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
 use CCDNForum\ForumBundle\Model\Gateway\BaseGateway;
 
 use CCDNForum\ForumBundle\Entity\Registry;
@@ -31,7 +31,7 @@ use CCDNForum\ForumBundle\Entity\Registry;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class RegistryGateway extends BaseGateway implements BaseGatewayInterface
+class RegistryGateway extends BaseGateway implements GatewayInterface
 {
     /**
      *
@@ -102,7 +102,7 @@ class RegistryGateway extends BaseGateway implements BaseGatewayInterface
      *
      * @access public
      * @param  \CCDNForum\ForumBundle\Entity\Registry              $registry
-     * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function persistRegistry(Registry $registry)
     {
@@ -115,7 +115,7 @@ class RegistryGateway extends BaseGateway implements BaseGatewayInterface
      *
      * @access public
      * @param  \CCDNForum\ForumBundle\Entity\Registry              $registry
-     * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function updateRegistry(Registry $registry)
     {
@@ -128,7 +128,7 @@ class RegistryGateway extends BaseGateway implements BaseGatewayInterface
      *
      * @access public
      * @param  \CCDNForum\ForumBundle\Entity\Registry              $registry
-     * @return \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function deleteRegistry(Registry $registry)
     {

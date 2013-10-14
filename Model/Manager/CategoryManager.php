@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Model\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-use CCDNForum\ForumBundle\Model\Manager\BaseManagerInterface;
+use CCDNForum\ForumBundle\Model\Manager\ManagerInterface;
 use CCDNForum\ForumBundle\Model\Manager\BaseManager;
 
 use CCDNForum\ForumBundle\Entity\Category;
@@ -31,13 +31,13 @@ use CCDNForum\ForumBundle\Entity\Category;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class CategoryManager extends BaseManager implements BaseManagerInterface
+class CategoryManager extends BaseManager implements ManagerInterface
 {
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Category          $category
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function saveNewCategory(Category $category)
     {
@@ -52,8 +52,8 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Category          $category
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function updateCategory(Category $category)
     {
@@ -68,8 +68,8 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Category          $category
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function deleteCategory(Category $category)
     {
@@ -87,9 +87,9 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \Doctrine\Common\Collections\ArrayCollection        $boards
-     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \Doctrine\Common\Collections\ArrayCollection    $boards
+     * @param  \CCDNForum\ForumBundle\Entity\Category          $category
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function reassignBoardsToCategory(ArrayCollection $boards, Category $category = null)
     {
@@ -107,10 +107,10 @@ class CategoryManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  Array                                               $categories
-     * @param  \CCDNForum\ForumBundle\Entity\Category              $categoryShift
-     * @param  int                                                 $direction
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  Array                                           $categories
+     * @param  \CCDNForum\ForumBundle\Entity\Category          $categoryShift
+     * @param  int                                             $direction
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function reorderCategories($categories, Category $categoryShift, $direction)
     {

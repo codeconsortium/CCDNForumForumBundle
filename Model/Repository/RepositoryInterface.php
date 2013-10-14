@@ -16,7 +16,6 @@ namespace CCDNForum\ForumBundle\Model\Repository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNForum\ForumBundle\Model\Repository\RepositoryInterface;
 use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
 
 /**
@@ -29,44 +28,16 @@ use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
  * @version  Release: 2.0
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
- * @abstract
- *
  */
-abstract class BaseRepository implements RepositoryInterface
+interface RepositoryInterface
 {
-    /**
-     *
-     * @access protected
-     * @var \Doctrine\ORM\EntityManager $em
-     */
-    protected $em;
-
-    /**
-     *
-     * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface $gateway
-     */
-    protected $gateway;
-
-    /**
-     *
-     * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\ModelInterface $model
-     */
-    protected $model;
-
     /**
      *
      * @access public
      * @param \Doctrine\Common\Persistence\ObjectManager            $em
      * @param \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface $gateway
      */
-    public function __construct(ObjectManager $em, GatewayInterface $gateway)
-    {
-        $this->em = $em;
-
-        $this->gateway = $gateway;
-    }
+    public function __construct(ObjectManager $em, GatewayInterface $gateway);
 
     /**
      *
@@ -74,32 +45,21 @@ abstract class BaseRepository implements RepositoryInterface
      * @param  \CCDNForum\ForumBundle\Model\Model\ModelInterface           $model
      * @return \CCDNForum\ForumBundle\Model\Repository\RepositoryInterface
      */
-    public function setModel($model)
-    {
-        $this->model = $model;
-
-        return $this;
-    }
+    public function setModel($model);
 
     /**
      *
      * @access public
      * @return \CCDNForum\ForumBundle\Gateway\GatewayInterface
      */
-    public function getGateway()
-    {
-        return $this->gateway;
-    }
+    public function getGateway();
 
     /**
      *
      * @access public
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilder()
-    {
-        return $this->gateway->getQueryBuilder();
-    }
+    public function getQueryBuilder();
 
     /**
      *
@@ -108,10 +68,7 @@ abstract class BaseRepository implements RepositoryInterface
      * @param  Array                                        $aliases = null
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function createCountQuery($column = null, Array $aliases = null)
-    {
-        return $this->gateway->createCountQuery($column, $aliases);
-    }
+    public function createCountQuery($column = null, Array $aliases = null);
 
     /**
      *
@@ -119,10 +76,7 @@ abstract class BaseRepository implements RepositoryInterface
      * @param  Array                                        $aliases = null
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function createSelectQuery(Array $aliases = null)
-    {
-        return $this->gateway->createSelectQuery($aliases);
-    }
+    public function createSelectQuery(Array $aliases = null);
 
     /**
      *
@@ -130,10 +84,7 @@ abstract class BaseRepository implements RepositoryInterface
      * @param  \Doctrine\ORM\QueryBuilder                   $qb
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
-    public function one(QueryBuilder $qb)
-    {
-        return $this->gateway->one($qb);
-    }
+    public function one(QueryBuilder $qb);
 
     /**
      *
@@ -141,8 +92,5 @@ abstract class BaseRepository implements RepositoryInterface
      * @param  \Doctrine\ORM\QueryBuilder $qb
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function all(QueryBuilder $qb)
-    {
-        return $this->gateway->all($qb);
-    }
+    public function all(QueryBuilder $qb);
 }

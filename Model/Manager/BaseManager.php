@@ -16,8 +16,8 @@ namespace CCDNForum\ForumBundle\Model\Manager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
 
-use CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface;
-use CCDNForum\ForumBundle\Model\Manager\BaseManagerInterface;
+use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
+use CCDNForum\ForumBundle\Model\Manager\ManagerInterface;
 
 /**
  *
@@ -32,7 +32,7 @@ use CCDNForum\ForumBundle\Model\Manager\BaseManagerInterface;
  * @abstract
  *
  */
-abstract class BaseManager implements BaseManagerInterface
+abstract class BaseManager implements ManagerInterface
 {
     /**
      *
@@ -44,24 +44,24 @@ abstract class BaseManager implements BaseManagerInterface
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Manager\BaseManagerInterface $gateway
+     * @var \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface $gateway
      */
     protected $gateway;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\BaseModelInterface $model
+     * @var \CCDNForum\ForumBundle\Model\Model\ModelInterface $model
      */
     protected $model;
 
     /**
      *
      * @access public
-     * @param \Doctrine\Common\Persistence\ObjectManager          $em
-     * @param \CCDNForum\ForumBundle\Gateway\BaseGatewayInterface $gateway
+     * @param \Doctrine\Common\Persistence\ObjectManager      $em
+     * @param \CCDNForum\ForumBundle\Gateway\GatewayInterface $gateway
      */
-    public function __construct(ObjectManager $em, BaseGatewayInterface $gateway)
+    public function __construct(ObjectManager $em, GatewayInterface $gateway)
     {
         $this->em = $em;
 
@@ -71,8 +71,8 @@ abstract class BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Model\Model\BaseModelInterface        $model
-     * @return \CCDNForum\ForumBundle\Model\Repository\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Model\Model\ModelInterface        $model
+     * @return \CCDNForum\ForumBundle\Model\Repository\ManagerInterface
      */
     public function setModel($model)
     {
@@ -84,7 +84,7 @@ abstract class BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @return \CCDNForum\ForumBundle\Model\Gateway\BaseGatewayInterface
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function getGateway()
     {
@@ -150,7 +150,7 @@ abstract class BaseManager implements BaseManagerInterface
      *
      * @access public
      * @param $entity
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function persist($entity)
     {
@@ -163,7 +163,7 @@ abstract class BaseManager implements BaseManagerInterface
      *
      * @access public
      * @param $entity
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function remove($entity)
     {
@@ -175,7 +175,7 @@ abstract class BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function flush()
     {
@@ -188,7 +188,7 @@ abstract class BaseManager implements BaseManagerInterface
      *
      * @access public
      * @param $entity
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function refresh($entity)
     {

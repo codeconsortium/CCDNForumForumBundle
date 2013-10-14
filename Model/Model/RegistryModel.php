@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNForum\ForumBundle\Model\Model\BaseModel;
-use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 
 use CCDNForum\ForumBundle\Entity\Registry;
 
@@ -33,7 +33,7 @@ use CCDNForum\ForumBundle\Entity\Registry;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class RegistryModel extends BaseModel implements BaseModelInterface
+class RegistryModel extends BaseModel implements ModelInterface
 {
     /**
      *
@@ -60,8 +60,8 @@ class RegistryModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param $user
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \Symfony\Component\Security\Core\User\UserInterface   $user
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function updateCachedPostCountForUser(UserInterface $user)
     {
@@ -72,7 +72,7 @@ class RegistryModel extends BaseModel implements BaseModelInterface
      *
      * @access public
      * @param  Array                                               $users
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function bulkUpdateCachedPostCountForUsers($users)
     {

@@ -16,7 +16,7 @@ namespace CCDNForum\ForumBundle\Model\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNForum\ForumBundle\Model\Model\BaseModel;
-use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 
 use CCDNForum\ForumBundle\Entity\Category;
 
@@ -31,7 +31,7 @@ use CCDNForum\ForumBundle\Entity\Category;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class CategoryModel extends BaseModel implements BaseModelInterface
+class CategoryModel extends BaseModel implements ModelInterface
 {
     /**
      *
@@ -90,8 +90,8 @@ class CategoryModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function saveNewCategory(Category $category)
     {
@@ -101,8 +101,8 @@ class CategoryModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function updateCategory(Category $category)
     {
@@ -112,8 +112,8 @@ class CategoryModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function deleteCategory(Category $category)
     {
@@ -123,9 +123,9 @@ class CategoryModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \Doctrine\Common\Collections\ArrayCollection        $boards
-     * @param  \CCDNForum\ForumBundle\Entity\Category              $category
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \Doctrine\Common\Collections\ArrayCollection          $boards
+     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function reassignBoardsToCategory(ArrayCollection $boards, Category $category = null)
     {
@@ -135,10 +135,10 @@ class CategoryModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  Array                                               $categories
-     * @param  \CCDNForum\ForumBundle\Entity\Category              $categoryShift
-     * @param  int                                                 $direction
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  Array                                                 $categories
+     * @param  \CCDNForum\ForumBundle\Entity\Category                $categoryShift
+     * @param  int                                                   $direction
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function reorderCategories($categories, Category $categoryShift, $direction)
     {

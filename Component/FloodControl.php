@@ -89,10 +89,10 @@ class FloodControl
     public function isFlooded()
     {
         $timeLimit = new \DateTime('-' . $this->blockTimeInMinutes . ' minutes');
-		
-		if ($this->postLimit < 1) {
-			return false;
-		}
+
+        if ($this->postLimit < 1) {
+            return false;
+        }
 
         if ($this->session->has('flood_control_forum_post_count')) {
             $attempts = $this->session->get('flood_control_forum_post_count');

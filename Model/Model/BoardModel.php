@@ -16,7 +16,7 @@ namespace CCDNForum\ForumBundle\Model\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNForum\ForumBundle\Model\Model\BaseModel;
-use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 
 use CCDNForum\ForumBundle\Entity\Board;
 
@@ -31,7 +31,7 @@ use CCDNForum\ForumBundle\Entity\Board;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class BoardModel extends BaseModel implements BaseModelInterface
+class BoardModel extends BaseModel implements ModelInterface
 {
     /**
      *
@@ -100,8 +100,8 @@ class BoardModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Board                   $board
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function saveNewBoard(Board $board)
     {
@@ -111,8 +111,8 @@ class BoardModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Board                   $board
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function updateBoard(Board $board)
     {
@@ -122,8 +122,8 @@ class BoardModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Board                   $board
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function deleteBoard(Board $board)
     {
@@ -133,9 +133,9 @@ class BoardModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \Doctrine\Common\Collections\ArrayCollection        $topics
-     * @param  \CCDNForum\ForumBundle\Entity\Board                 $board
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \Doctrine\Common\Collections\ArrayCollection          $topics
+     * @param  \CCDNForum\ForumBundle\Entity\Board                   $board
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function reassignTopicsToBoard(ArrayCollection $topics, Board $board = null)
     {
@@ -145,10 +145,10 @@ class BoardModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  Array                                               $boards
-     * @param  \CCDNForum\ForumBundle\Entity\Board                 $boardShift
-     * @param  int                                                 $direction
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  Array                                                 $boards
+     * @param  \CCDNForum\ForumBundle\Entity\Board                   $boardShift
+     * @param  int                                                   $direction
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function reorderBoards($boards, Board $boardShift, $direction)
     {

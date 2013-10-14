@@ -15,8 +15,8 @@ namespace CCDNForum\ForumBundle\Model\Repository;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-use CCDNForum\ForumBundle\Model\Repository\BaseRepository;
-use CCDNForum\ForumBundle\Model\Repository\BaseRepositoryInterface;
+use CCDNForum\ForumBundle\Model\Repository\Repository;
+use CCDNForum\ForumBundle\Model\Repository\RepositoryInterface;
 
 use CCDNForum\ForumBundle\Entity\Board;
 
@@ -31,7 +31,7 @@ use CCDNForum\ForumBundle\Entity\Board;
  * @version  Release: 2.0
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  */
-class BoardRepository extends BaseRepository implements BaseRepositoryInterface
+class BoardRepository extends BaseRepository implements RepositoryInterface
 {
     /**
      *

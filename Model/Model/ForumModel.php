@@ -16,7 +16,7 @@ namespace CCDNForum\ForumBundle\Model\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNForum\ForumBundle\Model\Model\BaseModel;
-use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 
 use CCDNForum\ForumBundle\Entity\Forum;
 
@@ -31,7 +31,7 @@ use CCDNForum\ForumBundle\Entity\Forum;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class ForumModel extends BaseModel implements BaseModelInterface
+class ForumModel extends BaseModel implements ModelInterface
 {
     /**
      *

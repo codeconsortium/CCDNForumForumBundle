@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNForum\ForumBundle\Model\Model\BaseModel;
-use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 
 use CCDNForum\ForumBundle\Entity\Subscription;
 use CCDNForum\ForumBundle\Entity\Topic;
@@ -34,7 +34,7 @@ use CCDNForum\ForumBundle\Entity\Topic;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class SubscriptionModel extends BaseModel implements BaseModelInterface
+class SubscriptionModel extends BaseModel implements ModelInterface
 {
     /**
      *
@@ -116,9 +116,9 @@ class SubscriptionModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  int                                                 $topicId
-     * @param  \Symfony\Component\Security\Core\User\UserInterface $userId
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  int                                                   $topicId
+     * @param  \Symfony\Component\Security\Core\User\UserInterface   $userId
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function subscribe(Topic $topic, UserInterface $user)
     {
@@ -128,9 +128,9 @@ class SubscriptionModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  int                                                 $topicId
-     * @param  int                                                 $userId
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  int                                                       $topicId
+     * @param  int                                                       $userId
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function unsubscribe(Topic $topic, $userId)
     {
@@ -140,8 +140,8 @@ class SubscriptionModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Subscription          $subscription
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Subscription            $subscription
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function markAsRead(Subscription $subscription)
     {
@@ -151,8 +151,8 @@ class SubscriptionModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Subscription          $subscription
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Subscription            $subscription
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function markAsUnread(Subscription $subscription)
     {
@@ -162,9 +162,9 @@ class SubscriptionModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \Doctrine\Common\Collections\ArrayCollection        $subscriptions
-     * @param  \Symfony\Component\Security\Core\User\UserInterface $exceptUser
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \Doctrine\Common\Collections\ArrayCollection          $subscriptions
+     * @param  \Symfony\Component\Security\Core\User\UserInterface   $exceptUser
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function markTheseAsUnread($subscriptions, UserInterface $exceptUser)
     {

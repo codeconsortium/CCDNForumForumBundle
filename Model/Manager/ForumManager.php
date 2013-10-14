@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Model\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-use CCDNForum\ForumBundle\Model\Manager\BaseManagerInterface;
+use CCDNForum\ForumBundle\Model\Manager\ManagerInterface;
 use CCDNForum\ForumBundle\Model\Manager\BaseManager;
 
 use CCDNForum\ForumBundle\Entity\Forum;
@@ -31,7 +31,7 @@ use CCDNForum\ForumBundle\Entity\Forum;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class ForumManager extends BaseManager implements BaseManagerInterface
+class ForumManager extends BaseManager implements ManagerInterface
 {
     /**
      *

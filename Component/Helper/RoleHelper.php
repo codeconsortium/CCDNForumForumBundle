@@ -13,6 +13,9 @@
 
 namespace CCDNForum\ForumBundle\Component\Helper;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
+
 /**
  *
  * @category CCDNForum
@@ -26,21 +29,34 @@ namespace CCDNForum\ForumBundle\Component\Helper;
  */
 class RoleHelper
 {
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
+     */
     protected $securityContext;
 
     /**
      *
      * @access protected
+     * @var array $availableRoles
      */
     protected $availableRoles;
 
     /**
      *
      * @access protected
+     * @var array $availableRoleKeys
      */
     protected $availableRoleKeys;
 
-    public function __construct($securityContext, $availableRoles)
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
+     * @param array                                                     $availableRoles
+     */
+    public function __construct(SecurityContextInterface $securityContext, $availableRoles)
     {
         $this->securityContext = $securityContext;
 
@@ -57,7 +73,7 @@ class RoleHelper
 
     /**
      *
-     * @access protected
+     * @access public
      * @return Array
      */
     public function getRoleHierarchy()
@@ -95,10 +111,11 @@ class RoleHelper
     /**
      *
      * @access public
-     * @param $user, string $role
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
+     * @param  string                                              $role
      * @return bool
      */
-    public function hasRole($user, $role)
+    public function hasRole(UserInterface $user, $role)
     {
         foreach ($this->availableRoles as $aRoleKey => $aRole) {
             if ($user->hasRole($aRoleKey)) {

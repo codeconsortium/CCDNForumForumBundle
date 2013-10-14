@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNForum\ForumBundle\Model\Model\BaseModel;
-use CCDNForum\ForumBundle\Model\Model\BaseModelInterface;
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
@@ -34,7 +34,7 @@ use CCDNForum\ForumBundle\Entity\Post;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class TopicModel extends BaseModel implements BaseModelInterface
+class TopicModel extends BaseModel implements ModelInterface
 {
     /**
      *
@@ -113,8 +113,8 @@ class TopicModel extends BaseModel implements BaseModelInterface
      * Post must have a set topic for topic to be set correctly.
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function saveNewTopic(Post $post)
     {
@@ -124,8 +124,8 @@ class TopicModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function updateTopic(Topic $topic)
     {
@@ -135,8 +135,8 @@ class TopicModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function incrementViewCounter(Topic $topic)
     {
@@ -146,8 +146,8 @@ class TopicModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function restore(Topic $topic)
     {
@@ -157,9 +157,9 @@ class TopicModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Entity\Topic $topic
-     * @param $user
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Topic $topic
+     * @param  \Symfony\Component\Security\Core\User\UserInterface   $user
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function softDelete(Topic $topic, UserInterface $user)
     {
@@ -169,8 +169,9 @@ class TopicModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
+     * @param  \Symfony\Component\Security\Core\User\UserInterface   $user
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function sticky(Topic $topic, UserInterface $user)
     {
@@ -180,8 +181,8 @@ class TopicModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function unsticky(Topic $topic)
     {
@@ -191,9 +192,9 @@ class TopicModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param Topic $topic
-     * @param $user
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
+     * @param  \Symfony\Component\Security\Core\User\UserInterface   $user
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function close(Topic $topic, UserInterface $user)
     {
@@ -203,8 +204,8 @@ class TopicModel extends BaseModel implements BaseModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
+     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
      */
     public function reopen(Topic $topic)
     {
@@ -225,8 +226,8 @@ class TopicModel extends BaseModel implements BaseModelInterface
 //    /**
 //     *
 //     * @access public
-//     * @param  Array                                               $topics
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+//     * @param  Array                                                 $topics
+//     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
 //     */
 //    public function bulkRestore($topics)
 //    {
@@ -236,9 +237,9 @@ class TopicModel extends BaseModel implements BaseModelInterface
 //    /**
 //     *
 //     * @access public
-//     * @param  array                                               $topics
-//     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+//     * @param  array                                                 $topics
+//     * @param  \Symfony\Component\Security\Core\User\UserInterface   $user
+//     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
 //     */
 //    public function bulkSoftDelete($topics, UserInterface $user)
 //    {
@@ -248,8 +249,8 @@ class TopicModel extends BaseModel implements BaseModelInterface
 //    /**
 //     *
 //     * @access public
-//     * @param  \CCDNForum\ForumBundle\Entity\Topic                 $topic
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+//     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
+//     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
 //     */
 //    public function hardDelete(Topic $topic)
 //    {
@@ -259,8 +260,8 @@ class TopicModel extends BaseModel implements BaseModelInterface
 //    /**
 //     *
 //     * @access public
-//     * @param  Array                                               $topics
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+//     * @param  Array                                                  $topics
+//     * @return \CCDNForum\ForumBundle\Model\Manager\BManagerInterface
 //     */
 //    public function bulkHardDelete($topics)
 //    {

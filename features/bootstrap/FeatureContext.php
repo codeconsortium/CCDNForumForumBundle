@@ -21,6 +21,7 @@ use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
 use Behat\MinkExtension\Context\RawMinkContext;
+use Behat\Mink\Element\NodeElement;
 
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
@@ -121,7 +122,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
         $session->setBasicAuth($user . '@foo.com', 'root');
     }
 
-    private function getAttributesFromElement($element)
+    private function getAttributesFromElement(NodeElement $element)
     {
         $attr = array();
         $attr['id']    = strtolower($element->getAttribute('id'));

@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Model\Manager;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use CCDNForum\ForumBundle\Model\Manager\BaseManagerInterface;
+use CCDNForum\ForumBundle\Model\Manager\ManagerInterface;
 use CCDNForum\ForumBundle\Model\Manager\BaseManager;
 
 use CCDNForum\ForumBundle\Entity\Registry;
@@ -31,13 +31,13 @@ use CCDNForum\ForumBundle\Entity\Registry;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class RegistryManager extends BaseManager implements BaseManagerInterface
+class RegistryManager extends BaseManager implements ManagerInterface
 {
     /**
      *
      * @access public
-     * @param $user
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function updateCachedPostCountForUser(UserInterface $user)
     {
@@ -65,7 +65,7 @@ class RegistryManager extends BaseManager implements BaseManagerInterface
      *
      * @access public
      * @param  Array                                               $users
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function bulkUpdateCachedPostCountForUsers($users)
     {

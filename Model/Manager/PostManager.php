@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Model\Manager;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use CCDNForum\ForumBundle\Model\Manager\BaseManagerInterface;
+use CCDNForum\ForumBundle\Model\Manager\ManagerInterface;
 use CCDNForum\ForumBundle\Model\Manager\BaseManager;
 
 use CCDNForum\ForumBundle\Entity\Topic;
@@ -32,13 +32,13 @@ use CCDNForum\ForumBundle\Entity\Post;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class PostManager extends BaseManager implements BaseManagerInterface
+class PostManager extends BaseManager implements ManagerInterface
 {
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Post              $post
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function postTopicReply(Post $post)
     {
@@ -54,8 +54,8 @@ class PostManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Post              $post
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function updatePost(Post $post)
     {
@@ -70,8 +70,8 @@ class PostManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Post              $post
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function lock(Post $post)
     {
@@ -87,8 +87,8 @@ class PostManager extends BaseManager implements BaseManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @param  \CCDNForum\ForumBundle\Entity\Post              $post
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function restore(Post $post)
     {
@@ -110,9 +110,6 @@ class PostManager extends BaseManager implements BaseManagerInterface
                 $topic->setDeletedDate(null);
 
                 $this->persist($topic)->flush();
-
-                // Update affected Topic stats.
-//                $this->managerBag->getTopicManager()->updateStats($post->getTopic())->flush();
             }
         }
 
@@ -124,7 +121,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
      * @access public
      * @param  \CCDNForum\ForumBundle\Entity\Post                  $post
      * @param  \Symfony\Component\Security\Core\User\UserInterface $user
-     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function softDelete(Post $post, UserInterface $user)
     {
@@ -134,38 +131,8 @@ class PostManager extends BaseManager implements BaseManagerInterface
             $post->setDeletedBy($user);
             $post->setDeletedDate(new \DateTime());
 
-            // Lock the post as a precaution.
-            //$post->setIsLocked(true);
-            //$post->setLockedBy($user);
-            //$post->setLockedDate(new \DateTime());
-
             // update the record
             $this->persist($post)->flush();
-
-// Temporarily commented out because cachedReplyCount is not being used as of yet, so topics get erroniously deleted when deleting post.
-//            if ($post->getTopic()) {
-//                $topic = $post->getTopic();
-//
-//                // if this is the first post and only post, then soft delete the topic aswell.
-//                if ($topic->getCachedReplyCount() < 1) {
-//                    // Don't overwite previous users accountability.
-//                    if (! $topic->getDeletedBy() && ! $topic->getDeletedDate()) {
-//                        $topic->setIsDeleted(true);
-//                        $topic->setDeletedBy($user);
-//                        $topic->setDeletedDate(new \DateTime());
-//
-//                        // Close the topic as a precaution.
-//                        $topic->setIsClosed(true);
-//                        $topic->setClosedBy($user);
-//                        $topic->setClosedDate(new \DateTime());
-//
-//                        $this->persist($topic)->flush();
-//
-//                        // Update affected Topic stats.
-////                        $this->managerBag->getTopicManager()->updateStats($post->getTopic())->flush();
-//                    }
-//                }
-//            }
         }
 
         return $this;
@@ -174,8 +141,8 @@ class PostManager extends BaseManager implements BaseManagerInterface
 //    /**
 //     *
 //     * @access public
-//     * @param  Array                                               $posts
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+//     * @param  Array                                           $posts
+//     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
 //     */
 //    public function bulkRestore($posts)
 //    {
@@ -223,7 +190,7 @@ class PostManager extends BaseManager implements BaseManagerInterface
 //     * @access public
 //     * @param  Array                                               $posts
 //     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+//     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
 //     */
 //    public function bulkSoftDelete($posts, UserInterface $user)
 //    {
@@ -272,8 +239,8 @@ class PostManager extends BaseManager implements BaseManagerInterface
 //    /**
 //     *
 //     * @access public
-//     * @param  Array                                               $posts
-//     * @return \CCDNForum\ForumBundle\Manager\BaseManagerInterface
+//     * @param  Array                                           $posts
+//     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
 //     */
 //    public function bulkHardDelete($posts)
 //    {
