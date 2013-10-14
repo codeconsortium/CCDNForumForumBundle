@@ -12,8 +12,8 @@ services:
        class: %ccdn_forum_forum.component.flood_control.class%
        arguments:
            - @session
-           - %ccdn_forum_forum.topic.flood_control.post_limit%
-           - %ccdn_forum_forum.topic.flood_control.block_for_minutes%
+           - %ccdn_forum_forum.topic.user.flood_control.post_limit%
+           - %ccdn_forum_forum.topic.user.flood_control.block_for_minutes%
 
     #
     # Dashboard Integrator.

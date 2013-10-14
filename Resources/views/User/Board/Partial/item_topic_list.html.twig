@@ -41,7 +41,7 @@
 				&nbsp;&#183;
                 <a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
                     <abbr class="timestamper" title="{{- topic.getFirstPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-                        {{- topic.getFirstPost.getCreatedDate |date(ccdn_forum_forum.board.show.first_post_datetime_format) -}}
+                        {{- topic.getFirstPost.getCreatedDate |date(ccdn_forum_forum.board.user.show.first_post_datetime_format) -}}
                     </abbr>
                 </a>
 			{%- endif -%}
@@ -72,14 +72,14 @@
 					<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forum.name, 'topicId': topic.getId } ) -}}#{{- topic.getLastPost.getId -}}">
 						<i class="glyphicon glyphicon-arrow-right"></i>
 						<abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-							{{- topic.getLastPost.getCreatedDate |date(ccdn_forum_forum.board.show.last_post_datetime_format) -}}
+							{{- topic.getLastPost.getCreatedDate |date(ccdn_forum_forum.board.user.show.last_post_datetime_format) -}}
 						</abbr>
 					</a>
 				{%- else -%}
 					<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forum.name, 'topicId': topic.getId, 'page':page }) -}}#{{- topic.getLastPost.getId -}}">
 						<i class="glyphicon glyphicon-arrow-right"></i>
 						<abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-							{{- topic.getLastPost.getCreatedDate |date(ccdn_forum_forum.board.show.last_post_datetime_format) -}}
+							{{- topic.getLastPost.getCreatedDate |date(ccdn_forum_forum.board.user.show.last_post_datetime_format) -}}
 						</abbr>
 					</a>
 				{%- endif -%}

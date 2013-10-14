@@ -110,7 +110,7 @@ class UserSubscriptionController extends BaseController
         $this->setPagerTemplate($subscriptionPager);
 
         // this is necessary for working out the last page for each topic.
-        $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.show.posts_per_page');
+        $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.user.show.posts_per_page');
 
         return $this->renderResponse('CCDNForumForumBundle:User:Subscription/show.html.',
             array(

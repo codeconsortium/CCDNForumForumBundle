@@ -69,121 +69,121 @@ Feature: User Category Traversal
 
 	Scenario: See Category list filtered by forum
         Given I am on "/en/forum/test_forum_f1" 
-          And I should not see "test_category_fn_c1" for the query "h3"
-		  And I should not see "test_category_fn_c2" for the query "h3"
-          And I should see "test_category_f1_c1" for the query "h3"
-		  And I should see "test_category_f1_c2" for the query "h3"
-          And I should not see "test_category_f2_c1" for the query "h3"
-		  And I should not see "test_category_f2_c2" for the query "h3"
-          And I should not see "test_category_f3_c1" for the query "h3"
-		  And I should not see "test_category_f3_c2" for the query "h3"
+          And I should not see category named "test_category_fn_c1" on category list
+		  And I should not see category named "test_category_fn_c2" on category list
+          And I should see category named "test_category_f1_c1" on category list
+		  And I should see category named "test_category_f1_c2" on category list
+          And I should not see category named "test_category_f2_c1" on category list
+		  And I should not see category named "test_category_f2_c2" on category list
+          And I should not see category named "test_category_f3_c1" on category list
+		  And I should not see category named "test_category_f3_c2" on category list
         Given I am on "/en/forum/test_forum_f2" 
-          And I should not see "test_category_fn_c1" for the query "h3"
-		  And I should not see "test_category_fn_c2" for the query "h3"
-          And I should not see "test_category_f1_c1" for the query "h3"
-		  And I should not see "test_category_f1_c2" for the query "h3"
-          And I should see "test_category_f2_c1" for the query "h3"
-		  And I should see "test_category_f2_c2" for the query "h3"
-          And I should not see "test_category_f3_c1" for the query "h3"
-		  And I should not see "test_category_f3_c2" for the query "h3"
+          And I should not see category named "test_category_fn_c1" on category list
+		  And I should not see category named "test_category_fn_c2" on category list
+          And I should not see category named "test_category_f1_c1" on category list
+		  And I should not see category named "test_category_f1_c2" on category list
+          And I should see category named "test_category_f2_c1" on category list
+		  And I should see category named "test_category_f2_c2" on category list
+          And I should not see category named "test_category_f3_c1" on category list
+		  And I should not see category named "test_category_f3_c2" on category list
         Given I am on "/en/forum/test_forum_f3" 
-          And I should not see "test_category_fn_c1" for the query "h3"
-		  And I should not see "test_category_fn_c2" for the query "h3"
-          And I should not see "test_category_f1_c1" for the query "h3"
-		  And I should not see "test_category_f1_c2" for the query "h3"
-          And I should not see "test_category_f2_c1" for the query "h3"
-		  And I should not see "test_category_f2_c2" for the query "h3"
-          And I should see "test_category_f3_c1" for the query "h3"
-		  And I should see "test_category_f3_c2" for the query "h3"
+          And I should not see category named "test_category_fn_c1" on category list
+		  And I should not see category named "test_category_fn_c2" on category list
+          And I should not see category named "test_category_f1_c1" on category list
+		  And I should not see category named "test_category_f1_c2" on category list
+          And I should not see category named "test_category_f2_c1" on category list
+		  And I should not see category named "test_category_f2_c2" on category list
+          And I should see category named "test_category_f3_c1" on category list
+		  And I should see category named "test_category_f3_c2" on category list
 
 	Scenario: See Category list filtered by forum and category show
         Given I am on "/en/forum/test_forum_f1"
 		  And I follow "test_category_f1_c1"
-		  And I should see "test_category_f1_c1" for the query "h3"
-          And I should see "test_board_f1_c1_b1" for the query "table > tbody tr > td"
-          And I should see "test_board_f1_c1_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c2_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c2_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c3_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c3_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c1_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c1_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c2_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c2_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c3_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c3_b2" for the query "table > tbody tr > td"
+		  And I should see category named "test_category_f1_c1" on category list
+          And I should see board named "test_board_f1_c1_b1" on category list
+          And I should see board named "test_board_f1_c1_b2" on category list
+          And I should not see board named "test_board_f1_c2_b1" on category list
+          And I should not see board named "test_board_f1_c2_b2" on category list
+          And I should not see board named "test_board_f1_c3_b1" on category list
+          And I should not see board named "test_board_f1_c3_b2" on category list
+          And I should not see board named "test_board_f2_c1_b1" on category list
+          And I should not see board named "test_board_f2_c1_b2" on category list
+          And I should not see board named "test_board_f2_c2_b1" on category list
+          And I should not see board named "test_board_f2_c2_b2" on category list
+          And I should not see board named "test_board_f2_c3_b1" on category list
+          And I should not see board named "test_board_f2_c3_b2" on category list
         Given I am on "/en/forum/test_forum_f1" 
 		  And I follow "test_category_f1_c2"
-		  And I should see "test_category_f1_c2" for the query "h3"
-          And I should not see "test_board_f1_c1_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c1_b2" for the query "table > tbody tr > td"
-          And I should see "test_board_f1_c2_b1" for the query "table > tbody tr > td"
-          And I should see "test_board_f1_c2_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c3_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c3_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c1_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c1_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c2_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c2_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c3_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c3_b2" for the query "table > tbody tr > td"
+		  And I should see category named "test_category_f1_c2" on category list
+          And I should not see board named "test_board_f1_c1_b1" on category list
+          And I should not see board named "test_board_f1_c1_b2" on category list
+          And I should see board named "test_board_f1_c2_b1" on category list
+          And I should see board named "test_board_f1_c2_b2" on category list
+          And I should not see board named "test_board_f1_c3_b1" on category list
+          And I should not see board named "test_board_f1_c3_b2" on category list
+          And I should not see board named "test_board_f2_c1_b1" on category list
+          And I should not see board named "test_board_f2_c1_b2" on category list
+          And I should not see board named "test_board_f2_c2_b1" on category list
+          And I should not see board named "test_board_f2_c2_b2" on category list
+          And I should not see board named "test_board_f2_c3_b1" on category list
+          And I should not see board named "test_board_f2_c3_b2" on category list
         Given I am on "/en/forum/test_forum_f1" 
 		  And I follow "test_category_f1_c3"
-		  And I should see "test_category_f1_c3" for the query "h3"
-          And I should not see "test_board_f1_c1_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c1_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c2_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c2_b2" for the query "table > tbody tr > td"
-          And I should see "test_board_f1_c3_b1" for the query "table > tbody tr > td"
-          And I should see "test_board_f1_c3_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c1_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c1_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c2_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c2_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c3_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c3_b2" for the query "table > tbody tr > td"
+		  And I should see category named "test_category_f1_c3" on category list
+          And I should not see board named "test_board_f1_c1_b1" on category list
+          And I should not see board named "test_board_f1_c1_b2" on category list
+          And I should not see board named "test_board_f1_c2_b1" on category list
+          And I should not see board named "test_board_f1_c2_b2" on category list
+          And I should see board named "test_board_f1_c3_b1" on category list
+          And I should see board named "test_board_f1_c3_b2" on category list
+          And I should not see board named "test_board_f2_c1_b1" on category list
+          And I should not see board named "test_board_f2_c1_b2" on category list
+          And I should not see board named "test_board_f2_c2_b1" on category list
+          And I should not see board named "test_board_f2_c2_b2" on category list
+          And I should not see board named "test_board_f2_c3_b1" on category list
+          And I should not see board named "test_board_f2_c3_b2" on category list
         Given I am on "/en/forum/test_forum_f2" 
 		  And I follow "test_category_f2_c1"
-		  And I should see "test_category_f2_c1" for the query "h3"
-          And I should not see "test_board_f1_c1_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c1_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c2_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c2_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c3_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c3_b2" for the query "table > tbody tr > td"
-          And I should see "test_board_f2_c1_b1" for the query "table > tbody tr > td"
-          And I should see "test_board_f2_c1_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c2_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c2_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c3_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c3_b2" for the query "table > tbody tr > td"
+		  And I should see category named "test_category_f2_c1" on category list
+          And I should not see board named "test_board_f1_c1_b1" on category list
+          And I should not see board named "test_board_f1_c1_b2" on category list
+          And I should not see board named "test_board_f1_c2_b1" on category list
+          And I should not see board named "test_board_f1_c2_b2" on category list
+          And I should not see board named "test_board_f1_c3_b1" on category list
+          And I should not see board named "test_board_f1_c3_b2" on category list
+          And I should see board named "test_board_f2_c1_b1" on category list
+          And I should see board named "test_board_f2_c1_b2" on category list
+          And I should not see board named "test_board_f2_c2_b1" on category list
+          And I should not see board named "test_board_f2_c2_b2" on category list
+          And I should not see board named "test_board_f2_c3_b1" on category list
+          And I should not see board named "test_board_f2_c3_b2" on category list
         Given I am on "/en/forum/test_forum_f2" 
 		  And I follow "test_category_f2_c2"
-		  And I should see "test_category_f2_c2" for the query "h3"
-          And I should not see "test_board_f1_c1_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c1_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c2_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c2_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c3_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c3_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c1_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c1_b2" for the query "table > tbody tr > td"
-          And I should see "test_board_f2_c2_b1" for the query "table > tbody tr > td"
-          And I should see "test_board_f2_c2_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c3_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c3_b2" for the query "table > tbody tr > td"
+		  And I should see category named "test_category_f2_c2" on category list
+          And I should not see board named "test_board_f1_c1_b1" on category list
+          And I should not see board named "test_board_f1_c1_b2" on category list
+          And I should not see board named "test_board_f1_c2_b1" on category list
+          And I should not see board named "test_board_f1_c2_b2" on category list
+          And I should not see board named "test_board_f1_c3_b1" on category list
+          And I should not see board named "test_board_f1_c3_b2" on category list
+          And I should not see board named "test_board_f2_c1_b1" on category list
+          And I should not see board named "test_board_f2_c1_b2" on category list
+          And I should see board named "test_board_f2_c2_b1" on category list
+          And I should see board named "test_board_f2_c2_b2" on category list
+          And I should not see board named "test_board_f2_c3_b1" on category list
+          And I should not see board named "test_board_f2_c3_b2" on category list
         Given I am on "/en/forum/test_forum_f2" 
 		  And I follow "test_category_f2_c3"
-		  And I should see "test_category_f2_c3" for the query "h3"
-          And I should not see "test_board_f1_c1_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c1_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c2_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c2_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c3_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f1_c3_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c1_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c1_b2" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c2_b1" for the query "table > tbody tr > td"
-          And I should not see "test_board_f2_c2_b2" for the query "table > tbody tr > td"
-          And I should see "test_board_f2_c3_b1" for the query "table > tbody tr > td"
-          And I should see "test_board_f2_c3_b2" for the query "table > tbody tr > td"
+		  And I should see category named "test_category_f2_c3" on category list
+          And I should not see board named "test_board_f1_c1_b1" on category list
+          And I should not see board named "test_board_f1_c1_b2" on category list
+          And I should not see board named "test_board_f1_c2_b1" on category list
+          And I should not see board named "test_board_f1_c2_b2" on category list
+          And I should not see board named "test_board_f1_c3_b1" on category list
+          And I should not see board named "test_board_f1_c3_b2" on category list
+          And I should not see board named "test_board_f2_c1_b1" on category list
+          And I should not see board named "test_board_f2_c1_b2" on category list
+          And I should not see board named "test_board_f2_c2_b1" on category list
+          And I should not see board named "test_board_f2_c2_b2" on category list
+          And I should see board named "test_board_f2_c3_b1" on category list
+          And I should see board named "test_board_f2_c3_b2" on category list

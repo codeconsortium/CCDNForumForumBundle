@@ -10,7 +10,7 @@
 
 					&nbsp;&#183;
 
-		            {{- topic.getDeletedDate |date(ccdn_forum_forum.topic.show.deleted_datetime_format) -}}
+		            {{- topic.getDeletedDate |date(ccdn_forum_forum.topic.user.show.deleted_datetime_format) -}}
 			    {%- endif -%}
 
 			    {%- if topic.isClosed -%}
@@ -21,7 +21,7 @@
 
 					&nbsp;&#183;
 
-		            {{- topic.getClosedDate |date(ccdn_forum_forum.topic.show.closed_datetime_format) -}}
+		            {{- topic.getClosedDate |date(ccdn_forum_forum.topic.user.show.closed_datetime_format) -}}
 			    {%- endif -%}
 	        </div>
 		{%- endif -%}
@@ -34,7 +34,7 @@
 
 				&nbsp;&#183;
 
-	            {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.show.deleted_datetime_format) -}}
+	            {{- topic.getStickiedDate |date(ccdn_forum_forum.topic.user.show.deleted_datetime_format) -}}
 	        </div>
 	    {%- endif -%}
 	</section>

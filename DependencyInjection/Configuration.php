@@ -36,6 +36,20 @@ class Configuration implements ConfigurationInterface
 {
     /**
      *
+     * @access protected
+     * @var string $layoutTemplate
+     */
+    protected $layoutTemplate = 'CCDNForumForumBundle::base.html.twig';
+
+    /**
+     *
+     * @access protected
+     * @var string $formTheme
+     */
+    protected $formTheme = 'CCDNForumForumBundle:Common:Form/fields.html.twig';
+
+    /**
+     *
      * @access public
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
@@ -67,14 +81,15 @@ class Configuration implements ConfigurationInterface
 
         // Configuration stuff.
         $this
-            ->addFixtureReferenceSection($rootNode)
-            ->addSEOSection($rootNode)
+            ->addForumSection($rootNode)
             ->addCategorySection($rootNode)
             ->addBoardSection($rootNode)
             ->addTopicSection($rootNode)
             ->addPostSection($rootNode)
             ->addItemPostSection($rootNode)
             ->addSubscriptionSection($rootNode)
+            ->addFixtureReferenceSection($rootNode)
+            ->addSEOSection($rootNode)
         ;
 
         return $treeBuilder;
@@ -383,33 +398,6 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->canBeUnset()
                     ->children()
-                        ->arrayNode('bag')
-                            ->addDefaultsIfNotSet()
-                            ->canBeUnset()
-                            ->children()
-                                ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Model\Model\Bag\ModelBag')->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('utility_bag')
-                            ->addDefaultsIfNotSet()
-                            ->canBeUnset()
-                            ->children()
-                                ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Model\Utility\Bag\UtilityBag')->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('utility')
-                            ->addDefaultsIfNotSet()
-                            ->canBeUnset()
-                            ->children()
-                                ->arrayNode('pagination_config')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Model\Utility\PaginationConfig')->end()
-                                    ->end()
-                                ->end()
-                            ->end()
-                        ->end()
                         ->arrayNode('forum')
                             ->addDefaultsIfNotSet()
                             ->canBeUnset()
@@ -482,273 +470,302 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->canBeUnset()
                     ->children()
-                        ->arrayNode('type')
-                            ->addDefaultsIfNotSet()
-                            ->canBeUnset()
-                            ->children()
-                                ->arrayNode('forum_create')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumCreateFormType')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('forum_update')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumUpdateFormType')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('forum_delete')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumDeleteFormType')->end()
-                                    ->end()
-                                ->end()
-
-                                ->arrayNode('category_create')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryCreateFormType')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('category_update')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryUpdateFormType')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('category_delete')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryDeleteFormType')->end()
-                                    ->end()
-                                ->end()
-
-                                ->arrayNode('board_create')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardCreateFormType')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('board_update')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardUpdateFormType')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('board_delete')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardDeleteFormType')->end()
-                                    ->end()
-                                ->end()
-
-                                ->arrayNode('topic_create')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\User\Topic\TopicCreateFormType')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('topic_update')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\User\Topic\TopicUpdateFormType')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('topic_delete')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicDeleteFormType')->end()
-                                    ->end()
-                                ->end()
-
-                                ->arrayNode('change_topics_board')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicChangeBoardFormType')->end()
-                                    ->end()
-                                ->end()
-
-                                ->arrayNode('post_create')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\User\Post\PostCreateFormType')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('post_update')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\User\Post\PostUpdateFormType')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('post_delete')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\User\Post\PostDeleteFormType')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('post_unlock')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Moderator\Post\PostUnlockFormType')->end()
-                                    ->end()
-                                ->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('handler')
-                            ->addDefaultsIfNotSet()
-                            ->canBeUnset()
-                            ->children()
-                                ->arrayNode('forum_create')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Forum\ForumCreateFormHandler')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('forum_update')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Forum\ForumUpdateFormHandler')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('forum_delete')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Forum\ForumDeleteFormHandler')->end()
-                                    ->end()
-                                ->end()
-
-                                ->arrayNode('category_create')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryCreateFormHandler')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('category_update')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryUpdateFormHandler')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('category_delete')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryDeleteFormHandler')->end()
-                                    ->end()
-                                ->end()
-
-                                ->arrayNode('board_create')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Board\BoardCreateFormHandler')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('board_update')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Board\BoardUpdateFormHandler')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('board_delete')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Board\BoardDeleteFormHandler')->end()
-                                    ->end()
-                                ->end()
-
-                                ->arrayNode('topic_create')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\User\Topic\TopicCreateFormHandler')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('topic_update')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\User\Topic\TopicUpdateFormHandler')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('topic_delete')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Moderator\Topic\TopicDeleteFormHandler')->end()
-                                    ->end()
-                                ->end()
-
-                                ->arrayNode('change_topics_board')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Moderator\Topic\TopicChangeBoardFormHandler')->end()
-                                    ->end()
-                                ->end()
-
-                                ->arrayNode('post_create')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\User\Post\PostCreateFormHandler')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('post_update')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\User\Post\PostUpdateFormHandler')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('post_delete')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\User\Post\PostDeleteFormHandler')->end()
-                                    ->end()
-                                ->end()
-                                ->arrayNode('post_unlock')
-                                    ->addDefaultsIfNotSet()
-                                    ->canBeUnset()
-                                    ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Moderator\Post\PostUnlockFormHandler')->end()
-                                    ->end()
-                                ->end()
-
-                            ->end()
-                        ->end()
+                        ->append($this->addFormHandlerSection())
+                        ->append($this->addFormTypeSection())
                     ->end()
                 ->end()
             ->end()
         ;
 
         return $this;
+    }
+
+    /**
+     *
+     * @access private
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
+     */
+    private function addFormHandlerSection()
+    {
+        $treeBuilder = new TreeBuilder();
+        $node = $treeBuilder->root('handler');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->canBeUnset()
+            ->children()
+                ->arrayNode('forum_create')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Forum\ForumCreateFormHandler')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('forum_update')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Forum\ForumUpdateFormHandler')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('forum_delete')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Forum\ForumDeleteFormHandler')->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('category_create')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryCreateFormHandler')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('category_update')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryUpdateFormHandler')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('category_delete')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Category\CategoryDeleteFormHandler')->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('board_create')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Board\BoardCreateFormHandler')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('board_update')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Board\BoardUpdateFormHandler')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('board_delete')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Admin\Board\BoardDeleteFormHandler')->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('topic_create')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\User\Topic\TopicCreateFormHandler')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('topic_update')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\User\Topic\TopicUpdateFormHandler')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('topic_delete')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Moderator\Topic\TopicDeleteFormHandler')->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('change_topics_board')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Moderator\Topic\TopicChangeBoardFormHandler')->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('post_create')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\User\Post\PostCreateFormHandler')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('post_update')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\User\Post\PostUpdateFormHandler')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('post_delete')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\User\Post\PostDeleteFormHandler')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('post_unlock')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Handler\Moderator\Post\PostUnlockFormHandler')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    /**
+     *
+     * @access private
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
+     */
+    private function addFormTypeSection()
+    {
+        $treeBuilder = new TreeBuilder();
+        $node = $treeBuilder->root('type');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->canBeUnset()
+            ->children()
+                ->arrayNode('forum_create')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumCreateFormType')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('forum_update')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumUpdateFormType')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('forum_delete')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumDeleteFormType')->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('category_create')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryCreateFormType')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('category_update')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryUpdateFormType')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('category_delete')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryDeleteFormType')->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('board_create')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardCreateFormType')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('board_update')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardUpdateFormType')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('board_delete')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardDeleteFormType')->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('topic_create')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\User\Topic\TopicCreateFormType')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('topic_update')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\User\Topic\TopicUpdateFormType')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('topic_delete')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicDeleteFormType')->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('change_topics_board')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicChangeBoardFormType')->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('post_create')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\User\Post\PostCreateFormType')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('post_update')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\User\Post\PostUpdateFormType')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('post_delete')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\User\Post\PostDeleteFormType')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('post_unlock')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Form\Type\Moderator\Post\PostUnlockFormType')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
     }
 
     /**
@@ -874,42 +891,19 @@ class Configuration implements ConfigurationInterface
 
     /**
      *
-     * @access protected
-     * @param  ArrayNodeDefinition                                      $node
+     * @access private
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
      * @return \CCDNForum\ForumBundle\DependencyInjection\Configuration
      */
-    protected function addFixtureReferenceSection(ArrayNodeDefinition $node)
+    private function addForumSection(ArrayNodeDefinition $node)
     {
         $node
             ->addDefaultsIfNotSet()
             ->children()
-                ->arrayNode('fixtures')
+                ->arrayNode('forum')
                     ->addDefaultsIfNotSet()
                     ->children()
-                    ->scalarNode('user_admin')->defaultValue('user-admin')->end()
-                ->end()
-            ->end()
-        ;
-
-        return $this;
-    }
-
-    /**
-     *
-     * @access protected
-     * @param  ArrayNodeDefinition                                      $node
-     * @return \CCDNForum\ForumBundle\DependencyInjection\Configuration
-     */
-    protected function addSEOSection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->addDefaultsIfNotSet()
-            ->children()
-                ->arrayNode('seo')
-                    ->addDefaultsIfNotSet()
-                    ->canBeUnset()
-                    ->children()
-                        ->scalarNode('title_length')->defaultValue('67')->end()
+                        ->append($this->addForumAdminSection())
                     ->end()
                 ->end()
             ->end()
@@ -921,7 +915,54 @@ class Configuration implements ConfigurationInterface
     /**
      *
      * @access private
-     * @param  ArrayNodeDefinition                                      $node
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
+     */
+    private function addForumAdminSection()
+    {
+        $treeBuilder = new TreeBuilder();
+        $node = $treeBuilder->root('admin');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->canBeUnset()
+            ->children()
+                ->arrayNode('create')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('form_theme')->defaultValue($this->formTheme)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('delete')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('form_theme')->defaultValue($this->formTheme)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('edit')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('form_theme')->defaultValue($this->formTheme)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('list')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    /**
+     *
+     * @access private
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
      * @return \CCDNForum\ForumBundle\DependencyInjection\Configuration
      */
     private function addCategorySection(ArrayNodeDefinition $node)
@@ -933,19 +974,8 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->canBeUnset()
                     ->children()
-                        ->scalarNode('last_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-                        ->arrayNode('index')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNForumForumBundle::base.html.twig')->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('show')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNForumForumBundle::base.html.twig')->end()
-                            ->end()
-                        ->end()
+                        ->append($this->addCategoryAdminSection())
+                        ->append($this->addCategoryUserSection())
                     ->end()
                 ->end()
             ->end()
@@ -957,7 +987,87 @@ class Configuration implements ConfigurationInterface
     /**
      *
      * @access private
-     * @param  ArrayNodeDefinition                                      $node
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
+     */
+    private function addCategoryAdminSection()
+    {
+        $treeBuilder = new TreeBuilder();
+        $node = $treeBuilder->root('admin');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->canBeUnset()
+            ->children()
+                ->arrayNode('create')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('form_theme')->defaultValue($this->formTheme)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('delete')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('form_theme')->defaultValue($this->formTheme)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('edit')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('form_theme')->defaultValue($this->formTheme)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('list')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    /**
+     *
+     * @access private
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
+     */
+    private function addCategoryUserSection()
+    {
+        $treeBuilder = new TreeBuilder();
+        $node = $treeBuilder->root('user');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->canBeUnset()
+            ->children()
+                ->scalarNode('last_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+                ->arrayNode('index')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('show')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    /**
+     *
+     * @access private
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
      * @return \CCDNForum\ForumBundle\DependencyInjection\Configuration
      */
     private function addBoardSection(ArrayNodeDefinition $node)
@@ -969,16 +1079,8 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->canBeUnset()
                     ->children()
-                        ->arrayNode('show')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNForumForumBundle::base.html.twig')->end()
-                                ->scalarNode('topics_per_page')->defaultValue('50')->end()
-                                ->scalarNode('topic_title_truncate')->defaultValue('50')->end()
-                                ->scalarNode('first_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-                                ->scalarNode('last_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-                            ->end()
-                        ->end()
+                        ->append($this->addBoardAdminSection())
+                        ->append($this->addBoardUserSection())
                     ->end()
                 ->end()
             ->end()
@@ -990,7 +1092,84 @@ class Configuration implements ConfigurationInterface
     /**
      *
      * @access private
-     * @param  ArrayNodeDefinition                                      $node
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
+     */
+    private function addBoardAdminSection()
+    {
+        $treeBuilder = new TreeBuilder();
+        $node = $treeBuilder->root('admin');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->canBeUnset()
+            ->children()
+                ->arrayNode('create')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('form_theme')->defaultValue($this->formTheme)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('delete')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('form_theme')->defaultValue($this->formTheme)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('edit')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('form_theme')->defaultValue($this->formTheme)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('list')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    /**
+     *
+     * @access private
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
+     */
+    private function addBoardUserSection()
+    {
+        $treeBuilder = new TreeBuilder();
+        $node = $treeBuilder->root('user');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->canBeUnset()
+            ->children()
+                ->arrayNode('show')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('topics_per_page')->defaultValue('50')->end()
+                        ->scalarNode('topic_title_truncate')->defaultValue('50')->end()
+                        ->scalarNode('first_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+                        ->scalarNode('last_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    /**
+     *
+     * @access private
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
      * @return \CCDNForum\ForumBundle\DependencyInjection\Configuration
      */
     private function addTopicSection(ArrayNodeDefinition $node)
@@ -1002,43 +1181,8 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->canBeUnset()
                     ->children()
-                        ->arrayNode('flood_control')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('post_limit')->defaultValue(4)->end()
-                                ->scalarNode('block_for_minutes')->defaultValue(1)->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('show')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNForumForumBundle::base.html.twig')->end()
-                                ->scalarNode('posts_per_page')->defaultValue('20')->end()
-                                ->scalarNode('closed_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-                                ->scalarNode('deleted_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('create')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNForumForumBundle::base.html.twig')->end()
-                                ->scalarNode('form_theme')->defaultValue('CCDNForumForumBundle:Common:Form/fields.html.twig')->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('reply')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNForumForumBundle::base.html.twig')->end()
-                                ->scalarNode('form_theme')->defaultValue('CCDNForumForumBundle:Common:Form/fields.html.twig')->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('change_board')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNForumForumBundle::base.html.twig')->end()
-                                ->scalarNode('form_theme')->defaultValue('CCDNForumForumBundle:Common:Form/fields.html.twig')->end()
-                            ->end()
-                        ->end()
+                        ->append($this->addTopicModeratorSection())
+                        ->append($this->addTopicUserSection())
                     ->end()
                 ->end()
             ->end()
@@ -1050,7 +1194,91 @@ class Configuration implements ConfigurationInterface
     /**
      *
      * @access private
-     * @param  ArrayNodeDefinition                                      $node
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
+     */
+    private function addTopicModeratorSection()
+    {
+        $treeBuilder = new TreeBuilder();
+        $node = $treeBuilder->root('moderator');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->canBeUnset()
+            ->children()
+                ->arrayNode('change_board')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('form_theme')->defaultValue($this->formTheme)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('delete')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('form_theme')->defaultValue($this->formTheme)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    /**
+     *
+     * @access private
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
+     */
+    private function addTopicUserSection()
+    {
+        $treeBuilder = new TreeBuilder();
+        $node = $treeBuilder->root('user');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->canBeUnset()
+            ->children()
+                ->arrayNode('flood_control')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('post_limit')->defaultValue(4)->end()
+                        ->scalarNode('block_for_minutes')->defaultValue(1)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('show')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('posts_per_page')->defaultValue('20')->end()
+                        ->scalarNode('closed_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+                        ->scalarNode('deleted_datetime_format')->defaultValue('d-m-Y - H:i')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('create')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('form_theme')->defaultValue($this->formTheme)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('reply')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('form_theme')->defaultValue($this->formTheme)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    /**
+     *
+     * @access private
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
      * @return \CCDNForum\ForumBundle\DependencyInjection\Configuration
      */
     private function addPostSection(ArrayNodeDefinition $node)
@@ -1062,34 +1290,8 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->canBeUnset()
                     ->children()
-                        ->arrayNode('show')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNForumForumBundle::base.html.twig')->end()
-//                                ->scalarNode('closed_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-//                                ->scalarNode('deleted_datetime_format')->defaultValue('d-m-Y - H:i')->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('edit_topic')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNForumForumBundle::base.html.twig')->end()
-                                ->scalarNode('form_theme')->defaultValue('CCDNForumForumBundle:Common:Form/fields.html.twig')->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('edit_post')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNForumForumBundle::base.html.twig')->end()
-                                ->scalarNode('form_theme')->defaultValue('CCDNForumForumBundle:Common:Form/fields.html.twig')->end()
-                            ->end()
-                        ->end()
-                        ->arrayNode('delete_post')
-                            ->addDefaultsIfNotSet()
-                            ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNForumForumBundle::base.html.twig')->end()
-                            ->end()
-                        ->end()
+                        ->append($this->addPostModeratorSection())
+                        ->append($this->addPostUserSection())
                     ->end()
                 ->end()
             ->end()
@@ -1101,7 +1303,80 @@ class Configuration implements ConfigurationInterface
     /**
      *
      * @access private
-     * @param  ArrayNodeDefinition                                      $node
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
+     */
+    private function addPostModeratorSection()
+    {
+        $treeBuilder = new TreeBuilder();
+        $node = $treeBuilder->root('moderator');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->canBeUnset()
+            ->children()
+                ->arrayNode('unlock')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('form_theme')->defaultValue($this->formTheme)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    /**
+     *
+     * @access private
+     * @return \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition
+     */
+    private function addPostUserSection()
+    {
+        $treeBuilder = new TreeBuilder();
+        $node = $treeBuilder->root('user');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->canBeUnset()
+            ->children()
+                ->arrayNode('show')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('edit_topic')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('form_theme')->defaultValue($this->formTheme)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('edit_post')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                        ->scalarNode('form_theme')->defaultValue($this->formTheme)->end()
+                    ->end()
+                ->end()
+                ->arrayNode('delete_post')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
+    /**
+     *
+     * @access private
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
      * @return \CCDNForum\ForumBundle\DependencyInjection\Configuration
      */
     private function addItemPostSection(ArrayNodeDefinition $node)
@@ -1128,7 +1403,7 @@ class Configuration implements ConfigurationInterface
     /**
      *
      * @access private
-     * @param  ArrayNodeDefinition                                      $node
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
      * @return \CCDNForum\ForumBundle\DependencyInjection\Configuration
      */
     private function addSubscriptionSection(ArrayNodeDefinition $node)
@@ -1143,13 +1418,59 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('list')
                             ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('layout_template')->defaultValue('CCDNForumForumBundle::base.html.twig')->end()
+                                ->scalarNode('layout_template')->defaultValue($this->layoutTemplate)->end()
                                 ->scalarNode('topics_per_page')->defaultValue('50')->end()
                                 ->scalarNode('topic_title_truncate')->defaultValue('50')->end()
                                 ->scalarNode('first_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
                                 ->scalarNode('last_post_datetime_format')->defaultValue('d-m-Y - H:i')->end()
                             ->end()
                         ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access protected
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @return \CCDNForum\ForumBundle\DependencyInjection\Configuration
+     */
+    protected function addFixtureReferenceSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('fixtures')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                    ->scalarNode('user_admin')->defaultValue('user-admin')->end()
+                ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access protected
+     * @param  \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     * @return \CCDNForum\ForumBundle\DependencyInjection\Configuration
+     */
+    protected function addSEOSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('seo')
+                    ->addDefaultsIfNotSet()
+                    ->canBeUnset()
+                    ->children()
+                        ->scalarNode('title_length')->defaultValue('67')->end()
                     ->end()
                 ->end()
             ->end()

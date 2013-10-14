@@ -1,6 +1,6 @@
 {% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
 
-{% set LayoutTemplate = ccdn_forum_forum.topic.change_board.layout_template %}
+{% set LayoutTemplate = ccdn_forum_forum.topic.moderator.change_board.layout_template %}
 
 {% block title %}{{- 'title.topic.change_board' | trans({}, 'CCDNForumForumBundle') -}}{% endblock %}
 
@@ -25,7 +25,7 @@
 	{%- spaceless -%}
 
 	<section class="clearfix">
-		{%- form_theme form ccdn_forum_forum.topic.change_board.form_theme -%}
+		{%- form_theme form ccdn_forum_forum.topic.moderator.change_board.form_theme -%}
 		<form action="{{- path('ccdn_forum_moderator_topic_change_board_process', {'forumName': forum.name, 'topicId': topic.getId} ) -}}"
 		 method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
 			<fieldset>

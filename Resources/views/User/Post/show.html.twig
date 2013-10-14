@@ -1,6 +1,6 @@
 {% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
 
-{% set LayoutTemplate = ccdn_forum_forum.post.show.layout_template %}
+{% set LayoutTemplate = ccdn_forum_forum.post.user.show.layout_template %}
 
 {% block title %}{{- 'title.post.show' | trans({'%post_id%': post.getId}, 'CCDNForumForumBundle') -}}{% endblock %}
 

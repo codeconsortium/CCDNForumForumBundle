@@ -150,6 +150,79 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     }
 
     /**
+     *
+     * @Given /^I should see category named "([^"]*)" on category list$/
+     */
+    public function iShouldSeeCategoryNamedOnCategoryList($categoryId)
+    {
+        $this->iShouldSeeForTheQuery($categoryId, 'span.lead');
+    }
+
+    /**
+     *
+     * @Given /^I should not see category named "([^"]*)" on category list$/
+     */
+    public function iShouldNotSeeCategoryNamedOnCategoryList($categoryId)
+    {
+        $this->iShouldNotSeeForTheQuery($categoryId, 'span.lead');
+    }
+
+    /**
+     *
+     * @Given /^I should see board named "([^"]*)" on category list$/
+     */
+    public function iShouldSeeBoardNamedOnCategoryList($boardId)
+    {
+        $this->iShouldSeeForTheQuery($boardId, 'table > tbody > tr > td');
+    }
+
+    /**
+     *
+     * @Given /^I should not see board named "([^"]*)" on category list$/
+     */
+    public function iShouldNotSeeBoardNamedOnCategoryList($boardId)
+    {
+        $this->iShouldNotSeeForTheQuery($boardId, 'table > tbody > tr > td');
+    }
+
+
+    /**
+     *
+     * @Given /^I should see board named "([^"]*)" on topic list$/
+     */
+    public function iShouldSeeBoardNamedOnTopicList($topicId)
+    {
+        $this->iShouldSeeForTheQuery($topicId, 'span.lead');
+    }
+
+    /**
+     *
+     * @Given /^I should not see board named "([^"]*)" on topic list$/
+     */
+    public function iShouldNotSeeBoardNamedOnTopicList($topicId)
+    {
+        $this->iShouldNotSeeForTheQuery($topicId, 'span.lead');
+    }
+
+    /**
+     *
+     * @Given /^I should see topic named "([^"]*)" on topic list$/
+     */
+    public function iShouldSeeTopicNamedOnTopicList($topicId)
+    {
+        $this->iShouldSeeForTheQuery($topicId, 'table > tbody > tr > td');
+    }
+
+    /**
+     *
+     * @Given /^I should not see topic named "([^"]*)" on topic list$/
+     */
+    public function iShouldNotSeeTopicNamedOnTopicList($topicId)
+    {
+        $this->iShouldNotSeeForTheQuery($topicId, 'table > tbody > tr > td');
+    }
+
+    /**
      * @Given /^I follow "([^"]*)" from the links on post "([^"]*)"$/
      */
     public function iFollowFromTheLinksOnPost($linkText, $postId)
@@ -272,7 +345,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
      *
      * @Given /^I should see "([^"]*)" for the query "([^"]*)"$/
      */
-    public function shouldSeeForTheQuery($text, $cssQuery)
+    public function iShouldSeeForTheQuery($text, $cssQuery)
     {
         // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
         $items = array_map(
@@ -296,7 +369,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
      *
      * @Given /^I should not see "([^"]*)" for the query "([^"]*)"$/
      */
-    public function shouldNotSeeForTheQuery($text, $cssQuery)
+    public function iShouldNotSeeForTheQuery($text, $cssQuery)
     {
         // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
         $items = array_map(
