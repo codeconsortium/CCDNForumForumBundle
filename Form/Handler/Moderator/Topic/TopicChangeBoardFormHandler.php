@@ -24,7 +24,6 @@ use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicMoveEvent;
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
 
 use CCDNForum\ForumBundle\Entity\Forum;
-use CCDNForum\ForumBundle\Entity\Board;
 use CCDNForum\ForumBundle\Entity\Topic;
 
 /**
