@@ -21,9 +21,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
-
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Board;
 
 /**
@@ -68,7 +67,7 @@ class BoardDeleteFormHandler extends BaseFormHandler
      * @param \CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardDeleteFormType           $boardDeleteFormType
      * @param \CCDNForum\ForumBundle\Model\Model\BoardModel                              $boardModel
      */
-    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $boardDeleteFormType, $boardModel)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $boardDeleteFormType, ModelInterface $boardModel)
     {
         $this->factory = $factory;
         $this->boardDeleteFormType = $boardDeleteFormType;
@@ -125,6 +124,10 @@ class BoardDeleteFormHandler extends BaseFormHandler
             $this->boardModel->reassignTopicsToBoard($topics, null)->flush();
         }
 
-        return $this->boardModel->deleteBoard($board);
+        $this->boardModel->deleteBoard($board);
+
+        $this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_DELETE_COMPLETE, new AdminBoardEvent($this->request, $board));
+
+        return $this->boardModel;
     }
 }

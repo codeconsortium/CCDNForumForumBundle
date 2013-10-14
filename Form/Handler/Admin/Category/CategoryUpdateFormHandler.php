@@ -19,9 +19,8 @@ use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent;
-
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Category;
 
 /**
@@ -66,7 +65,7 @@ class CategoryUpdateFormHandler extends BaseFormHandler
      * @param \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryUpdateFormType     $categoryUpdateFormType
      * @param \CCDNForum\ForumBundle\Model\Model\CategoryModel                           $categoryModel
      */
-    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $categoryUpdateFormType, $categoryModel)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $categoryUpdateFormType, ModelInterface $categoryModel)
     {
         $this->factory = $factory;
         $this->categoryUpdateFormType = $categoryUpdateFormType;
@@ -117,6 +116,10 @@ class CategoryUpdateFormHandler extends BaseFormHandler
     {
         $this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_SUCCESS, new AdminCategoryEvent($this->request, $category));
 
-        return $this->categoryModel->updateCategory($category);
+        $this->categoryModel->updateCategory($category);
+
+        $this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_COMPLETE, new AdminCategoryEvent($this->request, $category));
+
+        return $this->categoryModel;
     }
 }

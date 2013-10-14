@@ -19,9 +19,8 @@ use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
-
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Board;
 
 /**
@@ -66,7 +65,7 @@ class BoardUpdateFormHandler extends BaseFormHandler
      * @param \CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardUpdateFormType           $boardUpdateFormType
      * @param \CCDNForum\ForumBundle\Model\Model\BoardModel                              $boardModel
      */
-    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $boardUpdateFormType, $boardModel)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $boardUpdateFormType, ModelInterface $boardModel)
     {
         $this->factory = $factory;
         $this->boardUpdateFormType = $boardUpdateFormType;
@@ -117,6 +116,10 @@ class BoardUpdateFormHandler extends BaseFormHandler
     {
         $this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_EDIT_SUCCESS, new AdminBoardEvent($this->request, $board));
 
-        return $this->boardModel->updateBoard($board);
+        $this->boardModel->updateBoard($board);
+
+        $this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_EDIT_COMPLETE, new AdminBoardEvent($this->request, $board));
+
+        return $this->boardModel;
     }
 }

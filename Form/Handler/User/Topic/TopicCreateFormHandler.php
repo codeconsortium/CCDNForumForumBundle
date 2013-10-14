@@ -19,13 +19,14 @@ use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent;
-
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent;
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Board;
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
+use CCDNForum\ForumBundle\Component\FloodControl;
 
 /**
  *
@@ -84,6 +85,13 @@ class TopicCreateFormHandler extends BaseFormHandler
 
     /**
      *
+     * @access private
+     * @var \CCDNForum\ForumBundle\Component\FloodControl $floodControl
+     */
+    private $floodControl;
+
+    /**
+     *
      * @access public
      * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                        $factory
@@ -91,8 +99,10 @@ class TopicCreateFormHandler extends BaseFormHandler
      * @param \CCDNForum\ForumBundle\Form\Type\User\Post\PostCreateFormType              $formPostType
      * @param \CCDNForum\ForumBundle\Model\Model\TopicModel                              $topicModel
      * @param \CCDNForum\ForumBundle\Model\Model\BoardModel                              $boardModel
+     * @param \\CCDNForum\ForumBundle\Component\FloodControl                             $floodControl
      */
-    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formTopicType, $formPostType, $topicModel, $boardModel)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formTopicType,
+     $formPostType, ModelInterface $topicModel, ModelInterface $boardModel, FloodControl $floodControl)
     {
         $this->dispatcher = $dispatcher;
         $this->factory = $factory;
@@ -100,6 +110,7 @@ class TopicCreateFormHandler extends BaseFormHandler
         $this->formPostType = $formPostType;
         $this->topicModel = $topicModel;
         $this->boardModel = $boardModel;
+        $this->floodControl = $floodControl;
     }
 
     /**
@@ -126,6 +137,41 @@ class TopicCreateFormHandler extends BaseFormHandler
         $this->board = $board;
 
         return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @return bool
+     */
+    public function process()
+    {
+        $this->getForm();
+
+        if ($this->floodControl->isFlooded()) {
+            $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_CREATE_FLOODED, new UserTopicFloodEvent($this->request));
+
+            return false;
+        }
+
+        $this->floodControl->incrementCounter();
+
+        if ($this->request->getMethod() == 'POST') {
+            $this->form->bind($this->request);
+
+            // Validate
+            if ($this->form->isValid()) {
+                if ($this->getSubmitAction() == 'post') {
+                    $formData = $this->form->getData();
+
+                    $this->onSuccess($formData);
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -181,7 +227,11 @@ class TopicCreateFormHandler extends BaseFormHandler
 
         $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_CREATE_SUCCESS, new UserTopicEvent($this->request, $post->getTopic()));
 
-        return $this->topicModel->saveNewTopic($post);
+        $this->topicModel->saveNewTopic($post);
+
+        $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_CREATE_COMPLETE, new UserTopicEvent($this->request, $post->getTopic(), $this->didAuthorSubscribe()));
+
+        return $this->topicModel;
     }
 
     /**

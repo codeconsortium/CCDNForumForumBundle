@@ -34,18 +34,15 @@ class UserCategoryController extends BaseController
      */
     public function indexAction($forumName)
     {
-        $forum = $this->getForumModel()->findOneForumByName($forumName);
-        $this->isFound($forum);
+        $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $categories = $this->getCategoryModel()->findAllCategoriesWithBoardsForForumByName($forumName);
         $this->isAuthorised($this->getAuthorizer()->canShowForum($forum, $forum));
-        $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.user.show.topics_per_page');
-        $crumbs = $this->getCrumbs()->addUserCategoryIndex($forum);
 
         return $this->renderResponse('CCDNForumForumBundle:User:/Category/index.html.', array(
-            'crumbs' => $crumbs,
+            'crumbs' => $this->getCrumbs()->addUserCategoryIndex($forum),
             'forum' => $forum,
             'categories' => $categories,
-            'topics_per_page' => $topicsPerPage,
+            'topics_per_page' => $this->container->getParameter('ccdn_forum_forum.board.user.show.topics_per_page'),
         ));
     }
 
@@ -58,20 +55,16 @@ class UserCategoryController extends BaseController
      */
     public function showAction($forumName, $categoryId)
     {
-        $forum = $this->getForumModel()->findOneForumByName($forumName);
-        $this->isFound($forum);
-        $category = $this->getCategoryModel()->findOneCategoryByIdWithBoards($categoryId);
-        $this->isFound($category);
+        $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
+        $this->isFound($category = $this->getCategoryModel()->findOneCategoryByIdWithBoards($categoryId));
         $this->isAuthorised($this->getAuthorizer()->canShowCategory($category, $forum));
-        $topicsPerPage = $this->container->getParameter('ccdn_forum_forum.board.user.show.topics_per_page');
-        $crumbs = $this->getCrumbs()->addUserCategoryShow($forum, $category);
 
         return $this->renderResponse('CCDNForumForumBundle:User:Category/show.html.', array(
-            'crumbs' => $crumbs,
+            'crumbs' => $this->getCrumbs()->addUserCategoryShow($forum, $category),
             'forum' => $forum,
             'category' => $category,
             'categories' => array($category),
-            'topics_per_page' => $topicsPerPage,
+            'topics_per_page' => $this->container->getParameter('ccdn_forum_forum.board.user.show.topics_per_page'),
         ));
     }
 }

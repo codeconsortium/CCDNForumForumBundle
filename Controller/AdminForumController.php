@@ -14,7 +14,6 @@
 namespace CCDNForum\ForumBundle\Controller;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
-use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumResponseEvent;
 
 /**
@@ -39,9 +38,8 @@ class AdminForumController extends AdminForumBaseController
     {
         $this->isAuthorised('ROLE_SUPER_ADMIN');
         $forums = $this->getForumModel()->findAllForums();
-        $crumbs = $this->getCrumbs()->addAdminManageForumsIndex();
         $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/list.html.', array(
-            'crumbs' => $crumbs,
+            'crumbs' => $this->getCrumbs()->addAdminManageForumsIndex(),
             'forums' => $forums
         ));
 
@@ -57,11 +55,10 @@ class AdminForumController extends AdminForumBaseController
     {
         $this->isAuthorised('ROLE_SUPER_ADMIN');
         $formHandler = $this->getFormHandlerToCreateForum();
-        $crumbs = $this->getCrumbs()->addAdminManageForumsCreate();
         $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/create.html.', array(
-            'crumbs' => $crumbs,
+            'crumbs' => $this->getCrumbs()->addAdminManageForumsCreate(),
             'form' => $formHandler->getForm()->createView()
-		));
+        ));
 
         $this->dispatch(ForumEvents::ADMIN_FORUM_CREATE_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $response));
 
@@ -79,15 +76,12 @@ class AdminForumController extends AdminForumBaseController
         $formHandler = $this->getFormHandlerToCreateForum();
 
         if ($formHandler->process()) {
-            $forum = $formHandler->getForm()->getData();
-            $this->dispatch(ForumEvents::ADMIN_FORUM_CREATE_COMPLETE, new AdminForumEvent($this->getRequest(), $forum));
             $response = $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
         } else {
-            $crumbs = $this->getCrumbs()->addAdminManageForumsCreate();
             $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/create.html.', array(
-                'crumbs' => $crumbs,
+                'crumbs' => $this->getCrumbs()->addAdminManageForumsCreate(),
                 'form' => $formHandler->getForm()->createView()
-			));
+            ));
         }
 
         $this->dispatch(ForumEvents::ADMIN_FORUM_CREATE_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
@@ -103,15 +97,13 @@ class AdminForumController extends AdminForumBaseController
     public function editAction($forumId)
     {
         $this->isAuthorised('ROLE_SUPER_ADMIN');
-        $forum = $this->getForumModel()->findOneForumById($forumId);
-        $this->isFound($forum);
+        $this->isFound($forum = $this->getForumModel()->findOneForumById($forumId));
         $formHandler = $this->getFormHandlerToUpdateForum($forum);
-        $crumbs = $this->getCrumbs()->addAdminManageForumsEdit($forum);
         $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/edit.html.', array(
-            'crumbs' => $crumbs,
+            'crumbs' => $this->getCrumbs()->addAdminManageForumsEdit($forum),
             'form' => $formHandler->getForm()->createView(),
             'forum' => $forum
-		));
+        ));
 
         $this->dispatch(ForumEvents::ADMIN_FORUM_EDIT_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
@@ -126,21 +118,17 @@ class AdminForumController extends AdminForumBaseController
     public function editProcessAction($forumId)
     {
         $this->isAuthorised('ROLE_SUPER_ADMIN');
-        $forum = $this->getForumModel()->findOneForumById($forumId);
-        $this->isFound($forum);
+        $this->isFound($forum = $this->getForumModel()->findOneForumById($forumId));
         $formHandler = $this->getFormHandlerToUpdateForum($forum);
 
         if ($formHandler->process()) {
-            $forum = $formHandler->getForm()->getData();
-            $this->dispatch(ForumEvents::ADMIN_FORUM_EDIT_COMPLETE, new AdminForumEvent($this->getRequest(), $forum));
             $response = $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
         } else {
-            $crumbs = $this->getCrumbs()->addAdminManageForumsEdit($forum);
             $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/edit.html.', array(
-                'crumbs' => $crumbs,
+                'crumbs' => $this->getCrumbs()->addAdminManageForumsEdit($forum),
                 'form' => $formHandler->getForm()->createView(),
                 'forum' => $forum
-			));
+            ));
         }
 
         $this->dispatch(ForumEvents::ADMIN_FORUM_EDIT_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
@@ -156,15 +144,13 @@ class AdminForumController extends AdminForumBaseController
     public function deleteAction($forumId)
     {
         $this->isAuthorised('ROLE_SUPER_ADMIN');
-        $forum = $this->getForumModel()->findOneForumById($forumId);
-        $this->isFound($forum);
+        $this->isFound($forum = $this->getForumModel()->findOneForumById($forumId));
         $formHandler = $this->getFormHandlerToDeleteForum($forum);
-        $crumbs = $this->getCrumbs()->addAdminManageForumsDelete($forum);
         $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/delete.html.', array(
-            'crumbs' => $crumbs,
+            'crumbs' => $this->getCrumbs()->addAdminManageForumsDelete($forum),
             'form' => $formHandler->getForm()->createView(),
             'forum' => $forum
-		));
+        ));
 
         $this->dispatch(ForumEvents::ADMIN_FORUM_DELETE_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
@@ -179,21 +165,17 @@ class AdminForumController extends AdminForumBaseController
     public function deleteProcessAction($forumId)
     {
         $this->isAuthorised('ROLE_SUPER_ADMIN');
-        $forum = $this->getForumModel()->findOneForumById($forumId);
-        $this->isFound($forum);
+        $this->isFound($forum = $this->getForumModel()->findOneForumById($forumId));
         $formHandler = $this->getFormHandlerToDeleteForum($forum);
 
         if ($formHandler->process()) {
-            $forum = $formHandler->getForm()->getData();
-            $this->dispatch(ForumEvents::ADMIN_FORUM_DELETE_COMPLETE, new AdminForumEvent($this->getRequest(), $forum));
             $response = $this->redirectResponse($this->path('ccdn_forum_admin_forum_list'));
         } else {
-            $crumbs = $this->getCrumbs()->addAdminManageForumsDelete($forum);
             $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/delete.html.', array(
-                'crumbs' => $crumbs,
+                'crumbs' => $this->getCrumbs()->addAdminManageForumsDelete($forum),
                 'form' => $formHandler->getForm()->createView(),
                 'forum' => $forum
-			));
+            ));
         }
 
         $this->dispatch(ForumEvents::ADMIN_FORUM_DELETE_RESPONSE, new AdminForumResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));

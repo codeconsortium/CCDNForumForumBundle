@@ -19,9 +19,8 @@ use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent;
-
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Post;
 
 /**
@@ -66,7 +65,7 @@ class PostDeleteFormHandler extends BaseFormHandler
      * @param \CCDNForum\ForumBundle\Form\Type\User\Post\PostDeleteFormType              $formPostType
      * @param \CCDNForum\ForumBundle\Model\Model\PostModel                               $postModel
      */
-    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formPostType, $postModel)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formPostType, ModelInterface $postModel)
     {
         $this->dispatcher = $dispatcher;
         $this->factory = $factory;
@@ -117,6 +116,10 @@ class PostDeleteFormHandler extends BaseFormHandler
     {
         $this->dispatcher->dispatch(ForumEvents::USER_POST_SOFT_DELETE_SUCCESS, new UserPostEvent($this->request, $this->post));
 
-        return $this->postModel->softDelete($post, $this->user);
+        $this->postModel->softDelete($post, $this->user);
+
+        $this->dispatcher->dispatch(ForumEvents::USER_POST_SOFT_DELETE_COMPLETE, new UserPostEvent($this->request, $post));
+
+        return $this->postModel;
     }
 }

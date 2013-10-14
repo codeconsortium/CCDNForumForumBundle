@@ -20,9 +20,8 @@ use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicMoveEvent;
-
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Topic;
 
@@ -83,7 +82,7 @@ class TopicChangeBoardFormHandler extends BaseFormHandler
      * @param \CCDNForum\ForumBundle\Model\Model\TopicModel                              $topicModel
      * @param \CCDNForum\ForumBundle\Model\Model\BoardModel                              $boardModel
      */
-    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formTopicChangeBoardType, $topicModel, $boardModel)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formTopicChangeBoardType, ModelInterface $topicModel, ModelInterface $boardModel)
     {
         $this->dispatcher = $dispatcher;
         $this->factory = $factory;

@@ -43,10 +43,8 @@ class ModeratorPostController extends ModeratorPostBaseController
     public function lockAction($forumName, $postId)
     {
         $this->isAuthorised('ROLE_MODERATOR');
-        $forum = $this->getForumModel()->findOneForumByName($forumName);
-        $this->isFound($forum);
-        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
-        $this->isFound($post);
+        $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
+        $this->isFound($post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true));
         $this->isAuthorised($this->getAuthorizer()->canLockPost($post, $forum));
         $this->getPostModel()->lock($post);
         $this->dispatch(ForumEvents::MODERATOR_POST_LOCK_COMPLETE, new ModeratorPostEvent($this->getRequest(), $post));
@@ -54,7 +52,7 @@ class ModeratorPostController extends ModeratorPostBaseController
         return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
             'forumName' => $forumName,
             'topicId' => $post->getTopic()->getId()
-		)));
+        )));
     }
 
     /**
@@ -67,20 +65,17 @@ class ModeratorPostController extends ModeratorPostBaseController
     public function unlockAction($forumName, $postId)
     {
         $this->isAuthorised('ROLE_MODERATOR');
-        $forum = $this->getForumModel()->findOneForumByName($forumName);
-        $this->isFound($forum);
-        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
-        $this->isFound($post);
+        $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
+        $this->isFound($post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true));
         $this->isAuthorised($this->getAuthorizer()->canUnlockPost($post, $forum));
         $formHandler = $this->getFormHandlerToUnlockPost($forum, $post);
-        $crumbs = $this->getCrumbs()->addModeratorPostUnlock($forum, $post);
         $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Post/unlock.html.', array(
-            'crumbs' => $crumbs,
+            'crumbs' => $this->getCrumbs()->addModeratorPostUnlock($forum, $post),
             'forum' => $forum,
             'topic' => $post->getTopic(),
             'post' => $post,
             'form' => $formHandler->getForm()->createView(),
-		));
+        ));
 
         $this->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_RESPONSE, new ModeratorPostResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
@@ -97,32 +92,27 @@ class ModeratorPostController extends ModeratorPostBaseController
     public function unlockProcessAction($forumName, $postId)
     {
         $this->isAuthorised('ROLE_MODERATOR');
-        $forum = $this->getForumModel()->findOneForumByName($forumName);
-        $this->isFound($forum);
-        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
-        $this->isFound($post);
+        $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
+        $this->isFound($post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true));
         $this->isAuthorised($this->getAuthorizer()->canUnlockPost($post, $forum));
         $formHandler = $this->getFormHandlerToUnlockPost($forum, $post);
         $topic = $post->getTopic();
 
         if ($formHandler->process()) {
-            // Page of the last post.
-            //$page = $this->getTopicModel()->getPageForPostOnTopic($topic, $topic->getLastPost());
-            $this->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_COMPLETE, new ModeratorPostEvent($this->getRequest(), $post));
+            //$page = $this->getTopicModel()->getPageForPostOnTopic($topic, $topic->getLastPost()); // Page of the last post.
             $response = $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
                 'forumName' => $forumName,
                 'topicId' => $topic->getId(),
-				/*'page' => $page*/
+                /*'page' => $page*/
             )) /* . '#' . $topic->getLastPost()->getId()*/);
         } else {
-            $crumbs = $this->getCrumbs()->addModeratorPostUnlock($forum, $topic);
             $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Post/unlock.html.', array(
-                'crumbs' => $crumbs,
+                'crumbs' => $this->getCrumbs()->addModeratorPostUnlock($forum, $topic),
                 'forum' => $forum,
                 'topic' => $topic,
                 'post' => $post,
                 'form' => $formHandler->getForm()->createView(),
-			));
+            ));
         }
 
         $this->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_RESPONSE, new ModeratorPostResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
@@ -140,18 +130,15 @@ class ModeratorPostController extends ModeratorPostBaseController
     public function restoreAction($forumName, $postId)
     {
         $this->isAuthorised('ROLE_MODERATOR');
-        $forum = $this->getForumModel()->findOneForumByName($forumName);
-        $this->isFound($forum);
-        $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
-        $this->isFound($post);
+        $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
+        $this->isFound($post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true));
         $this->isAuthorised($this->getAuthorizer()->canRestorePost($post, $forum));
         $this->getPostModel()->restore($post)->flush();
         $this->dispatch(ForumEvents::MODERATOR_POST_RESTORE_COMPLETE, new ModeratorPostEvent($this->getRequest(), $post));
 
-        // forward user
         return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
             'forumName' => $forumName,
             'topicId' => $post->getTopic()->getId()
-		)));
+        )));
     }
 }

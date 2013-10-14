@@ -19,9 +19,8 @@ use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent;
-
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
 
@@ -83,7 +82,8 @@ class TopicUpdateFormHandler extends BaseFormHandler
      * @param \CCDNForum\ForumBundle\Model\Model\TopicModel                              $topicModel
      * @param \CCDNForum\ForumBundle\Model\Model\PostModel                               $postModel
      */
-    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formTopicType, $formPostType, $topicModel, $postModel)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory,
+     $formTopicType, $formPostType, ModelInterface $topicModel, ModelInterface $postModel)
     {
         $this->dispatcher = $dispatcher;
         $this->factory = $factory;

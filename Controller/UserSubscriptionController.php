@@ -42,8 +42,7 @@ class UserSubscriptionController extends BaseController
         $this->isAuthorised('ROLE_USER');
 
         if ($forumName != '~') {
-            $forum = $this->getForumModel()->findOneForumByName($forumName);
-            $this->isFound($forum);
+            $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         } else {
             $forum = null;
         }
@@ -105,15 +104,13 @@ class UserSubscriptionController extends BaseController
         }
         $this->setPagerTemplate($subscriptionPager);
 
-        // this is necessary for working out the last page for each topic.
-        $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.user.show.posts_per_page');
         return $this->renderResponse('CCDNForumForumBundle:User:Subscription/show.html.', array(
             'forum' => $forum,
             'subscribed_forums' => $forumsSubscribed,
             'total_subscribed_forums' => $totalForumsSubscribed,
             'filter' => $filter,
             'pager' => $subscriptionPager,
-            'posts_per_page' => $postsPerPage,
+            'posts_per_page' => $this->container->getParameter('ccdn_forum_forum.topic.user.show.posts_per_page')
         ));
     }
 
@@ -129,14 +126,12 @@ class UserSubscriptionController extends BaseController
         $this->isAuthorised('ROLE_USER');
 
         if ($forumName != '~') {
-            $forum = $this->getForumModel()->findOneForumByName($forumName);
-            $this->isFound($forum);
+            $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         } else {
             $forum = null;
         }
 
-        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
-        $this->isFound($topic);
+        $this->isFound($topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId));
         $this->isAuthorised($this->getAuthorizer()->canSubscribeToTopic($topic, $forum));
         $this->getSubscriptionModel()->subscribe($topic, $this->getUser())->flush();
         $this->dispatch(ForumEvents::USER_TOPIC_SUBSCRIBE_COMPLETE, new UserTopicEvent($this->getRequest(), $topic, true));
@@ -159,14 +154,12 @@ class UserSubscriptionController extends BaseController
         $this->isAuthorised('ROLE_USER');
 
         if ($forumName != '~') {
-            $forum = $this->getForumModel()->findOneForumByName($forumName);
-            $this->isFound($forum);
+            $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         } else {
             $forum = null;
         }
 
-        $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
-        $this->isFound($topic);
+        $this->isFound($topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId));
         $subscription = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topicId, $this->getUser()->getId());
         $this->isAuthorised($this->getAuthorizer()->canUnsubscribeFromTopic($topic, $forum, $subscription));
         $this->getSubscriptionModel()->unsubscribe($topic, $this->getUser()->getId())->flush();

@@ -21,9 +21,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent;
-
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Category;
 
 /**
@@ -68,7 +67,7 @@ class CategoryDeleteFormHandler extends BaseFormHandler
      * @param \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryDeleteFormType     $categoryDeleteFormType
      * @param \CCDNForum\ForumBundle\Model\Model\CategoryModel                           $categoryModel
      */
-    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $categoryDeleteFormType, $categoryModel)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $categoryDeleteFormType, ModelInterface $categoryModel)
     {
         $this->factory = $factory;
         $this->categoryDeleteFormType = $categoryDeleteFormType;
@@ -125,6 +124,10 @@ class CategoryDeleteFormHandler extends BaseFormHandler
             $this->categoryModel->reassignBoardsToCategory($boards, null)->flush();
         }
 
-        return $this->categoryModel->deleteCategory($category);
+        $this->categoryModel->deleteCategory($category);
+
+        $this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_COMPLETE, new AdminCategoryEvent($this->request, $category));
+
+        return $this->categoryModel;
     }
 }

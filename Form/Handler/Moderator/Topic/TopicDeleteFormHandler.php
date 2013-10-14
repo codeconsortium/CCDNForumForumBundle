@@ -19,9 +19,8 @@ use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent;
-
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Topic;
 
 /**
@@ -66,7 +65,7 @@ class TopicDeleteFormHandler extends BaseFormHandler
      * @param \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicDeleteFormType       $formTopicType
      * @param \CCDNForum\ForumBundle\Model\Model\TopicModel                              $topicModel
      */
-    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formTopicType, $topicModel)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $formTopicType, ModelInterface $topicModel)
     {
         $this->dispatcher = $dispatcher;
         $this->factory = $factory;
@@ -117,6 +116,10 @@ class TopicDeleteFormHandler extends BaseFormHandler
     {
         $this->dispatcher->dispatch(ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_SUCCESS, new ModeratorTopicEvent($this->request, $this->topic));
 
-        return $this->topicModel->softDelete($topic, $this->user);
+        $this->topicModel->softDelete($topic, $this->user);
+
+        $this->dispatcher->dispatch(ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_COMPLETE, new ModeratorTopicEvent($this->request, $topic));
+
+        return $this->topicModel;
     }
 }

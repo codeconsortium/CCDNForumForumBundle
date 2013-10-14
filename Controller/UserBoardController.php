@@ -35,25 +35,20 @@ class UserBoardController extends BaseController
      */
     public function showAction($forumName, $boardId)
     {
-        $forum = $this->getForumModel()->findOneForumByName($forumName);
-        $this->isFound($forum);
-        $board = $this->getBoardModel()->findOneBoardByIdWithCategory($boardId);
-        $this->isFound($board);
+        $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
+        $this->isFound($board = $this->getBoardModel()->findOneBoardByIdWithCategory($boardId));
         $this->isAuthorised($this->getAuthorizer()->canShowBoard($board, $forum));
         $itemsPerPage = $this->getPageHelper()->getTopicsPerPageOnBoards();
-        $page = $this->getQuery('page', 1);
         $stickyTopics = $this->getTopicModel()->findAllTopicsStickiedByBoardId($boardId, true);
-        $topicsPager = $this->getTopicModel()->findAllTopicsPaginatedByBoardId($boardId, $page, $itemsPerPage, true);
+        $topicsPager = $this->getTopicModel()->findAllTopicsPaginatedByBoardId($boardId, $this->getQuery('page', 1), $itemsPerPage, true);
         $this->setPagerTemplate($topicsPager);
-        $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.user.show.posts_per_page');
-        $crumbs = $this->getCrumbs()->addUserBoardShow($forum, $board);
 
         return $this->renderResponse('CCDNForumForumBundle:User:Board/show.html.', array(
-            'crumbs' => $crumbs,
+            'crumbs' => $this->getCrumbs()->addUserBoardShow($forum, $board),
             'forum' => $forum,
             'board' => $board,
             'pager' => $topicsPager,
-            'posts_per_page' => $postsPerPage, // this is necessary for working out the last page for each topic.
+            'posts_per_page' => $this->container->getParameter('ccdn_forum_forum.topic.user.show.posts_per_page'), // for working out last page per topic.
             'sticky_topics' => $stickyTopics,
         ));
     }

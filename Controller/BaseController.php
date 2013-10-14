@@ -498,13 +498,13 @@ class BaseController extends ContainerAware
         return $this->container->get('ccdn_forum_forum.component.crumb_builder');
     }
 
-	/**
-	 * 
-	 * @access protected
-	 * @return \CCDNForum\ForumBundle\Component\Helper\PaginationConfigHelper
-	 */
+    /**
+     *
+     * @access protected
+     * @return \CCDNForum\ForumBundle\Component\Helper\PaginationConfigHelper
+     */
     protected function getPageHelper()
-	{
-		return $this->container->get('ccdn_forum_forum.component.helper.pagination_config');
-	}
+    {
+        return $this->container->get('ccdn_forum_forum.component.helper.pagination_config');
+    }
 }

@@ -19,6 +19,7 @@ services:
             - @form.factory
             - @ccdn_forum_forum.form.type.post_create
             - @ccdn_forum_forum.model.post
+            - @ccdn_forum_forum.component.flood_control
 
     ccdn_forum_forum.form.type.post_update:
         class: %ccdn_forum_forum.form.type.post_update.class%

@@ -19,9 +19,8 @@ use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent;
-
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Forum;
 
 /**
@@ -59,7 +58,7 @@ class ForumCreateFormHandler extends BaseFormHandler
      * @param \CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumCreateFormType           $forumCreateFormType
      * @param \CCDNForum\ForumBundle\Model\Model\ForumModel                              $forumModel
      */
-    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $forumCreateFormType, $forumModel)
+    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $forumCreateFormType, ModelInterface $forumModel)
     {
         $this->factory = $factory;
         $this->forumCreateFormType = $forumCreateFormType;
@@ -95,6 +94,10 @@ class ForumCreateFormHandler extends BaseFormHandler
     {
         $this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_CREATE_SUCCESS, new AdminForumEvent($this->request, $forum));
 
-        return $this->forumModel->saveNewForum($forum);
+        $this->forumModel->saveNewForum($forum);
+
+        $this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_CREATE_COMPLETE, new AdminForumEvent($this->request, $forum));
+
+        return $this->forumModel;
     }
 }

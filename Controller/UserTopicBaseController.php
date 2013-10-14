@@ -32,27 +32,6 @@ class UserTopicBaseController extends BaseController
 {
     /**
      *
-     * @access private
-     * @var \CCDNForum\ForumBundle\Component\FloodControl $floodControl
-     */
-    private $floodControl;
-
-    /**
-     *
-     * @access protected
-     * @return \CCDNForum\ForumBundle\Component\FloodControl
-     */
-    protected function getFloodControl()
-    {
-        if (null == $this->floodControl) {
-            $this->floodControl = $this->container->get('ccdn_forum_forum.component.flood_control');
-        }
-
-        return $this->floodControl;
-    }
-
-    /**
-     *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
      * @param  \CCDNForum\ForumBundle\Entity\Board                        $board
