@@ -495,7 +495,16 @@ class BaseController extends ContainerAware
      */
     protected function getCrumbs()
     {
-        //return $this->container->get('ccdn_component_crumb_trail.component.trail');
         return $this->container->get('ccdn_forum_forum.component.crumb_builder');
     }
+
+	/**
+	 * 
+	 * @access protected
+	 * @return \CCDNForum\ForumBundle\Component\Helper\PaginationConfigHelper
+	 */
+    protected function getPageHelper()
+	{
+		return $this->container->get('ccdn_forum_forum.component.helper.pagination_config');
+	}
 }

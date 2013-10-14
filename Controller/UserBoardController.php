@@ -45,8 +45,7 @@ class UserBoardController extends BaseController
         $this->isAuthorised($this->getAuthorizer()->canShowBoard($board, $forum));
 
         // Get topics.
-        /** @todo get $itemsPerPage from PaginationConfigHelper */
-        $itemsPerPage = 25;
+        $itemsPerPage = $this->getPageHelper()->getTopicsPerPageOnBoards();
         $page = $this->getQuery('page', 1);
         $stickyTopics = $this->getTopicModel()->findAllTopicsStickiedByBoardId($boardId, true);
         $topicsPager = $this->getTopicModel()->findAllTopicsPaginatedByBoardId($boardId, $page, $itemsPerPage, true);

@@ -52,8 +52,7 @@ class UserTopicController extends UserTopicBaseController
         $this->isAuthorised($this->getAuthorizer()->canShowTopic($topic, $forum));
 
         // Get posts for topic paginated.
-        /** @todo ser $itemsPerPage by PaginationConfigHelper */
-        $itemsPerPage = 10;
+        $itemsPerPage = $this->getPageHelper()->getPostsPerPageOnTopics();
         $page = $this->getQuery('page', 1);
         $postsPager = $this->getPostModel()->findAllPostsPaginatedByTopicId($topicId, $page, $itemsPerPage, true);
         $this->setPagerTemplate($postsPager);

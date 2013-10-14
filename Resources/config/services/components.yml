@@ -2,8 +2,16 @@ parameters:
 
     # Service Parameters defined in app/config.
     ccdn_forum_forum.component.event_listener.stats.class: CCDNForum\ForumBundle\Component\Dispatcher\Listener\StatListener
+    ccdn_forum_forum.component.helper.pagination_config.class: CCDNForum\ForumBundle\Component\Helper\PaginationConfigHelper
 
 services:
+
+    ccdn_forum_forum.component.helper.pagination_config:
+        class: %ccdn_forum_forum.component.helper.pagination_config.class%
+        arguments:
+            - %ccdn_forum_forum.board.user.show.topics_per_page%
+            - %ccdn_forum_forum.topic.user.show.posts_per_page%
+            - %ccdn_forum_forum.subscription.list.topics_per_page%
 
     #
     # Flood Control.
