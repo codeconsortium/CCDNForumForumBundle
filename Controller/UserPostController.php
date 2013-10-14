@@ -43,11 +43,8 @@ class UserPostController extends UserPostBaseController
     {
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
-        // Get post by id.
         $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
         $this->isFound($post);
-
         $this->isAuthorised($this->getAuthorizer()->canShowPost($post, $forum));
 
         // get the topic subscriptions.
@@ -58,20 +55,16 @@ class UserPostController extends UserPostBaseController
         }
 
         $subscriberCount = $this->getSubscriptionModel()->countSubscriptionsForTopicById($post->getTopic()->getId());
-
-        // Setup crumb trail.
         $crumbs = $this->getCrumbs()->addUserPostShow($forum, $post);
 
-        return $this->renderResponse('CCDNForumForumBundle:User:Post/show.html.',
-            array(
-                'crumbs' => $crumbs,
-                'forum' => $forum,
-                'topic' => $post->getTopic(),
-                'post' => $post,
-                'subscription' => $subscription,
-                'subscription_count' => $subscriberCount,
-            )
-        );
+        return $this->renderResponse('CCDNForumForumBundle:User:Post/show.html.', array(
+            'crumbs' => $crumbs,
+            'forum' => $forum,
+            'topic' => $post->getTopic(),
+            'post' => $post,
+            'subscription' => $subscription,
+            'subscription_count' => $subscriberCount,
+		));
     }
 
     /**
@@ -84,29 +77,21 @@ class UserPostController extends UserPostBaseController
     public function editAction($forumName, $postId)
     {
         $this->isAuthorised('ROLE_USER');
-
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
         $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
         $this->isFound($post);
-
         $this->isAuthorised($this->getAuthorizer()->canEditPost($post, $forum));
-
         $formHandler = $this->getFormHandlerToEditPost($post);
-
-        // Setup crumb trail.
         $crumbs = $this->getCrumbs()->addUserPostShow($forum, $post);
 
-        $response = $this->renderResponse('CCDNForumForumBundle:User:Post/edit.html.',
-            array(
-                'crumbs' => $crumbs,
-                'forum' => $forum,
-                'post' => $post,
-                'preview' => $formHandler->getForm()->getData(),
-                'form' => $formHandler->getForm()->createView(),
-            )
-        );
+        $response = $this->renderResponse('CCDNForumForumBundle:User:Post/edit.html.', array(
+            'crumbs' => $crumbs,
+            'forum' => $forum,
+            'post' => $post,
+            'preview' => $formHandler->getForm()->getData(),
+            'form' => $formHandler->getForm()->createView(),
+		));
 
         $this->dispatch(ForumEvents::USER_POST_EDIT_RESPONSE, new UserPostResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
@@ -123,48 +108,32 @@ class UserPostController extends UserPostBaseController
     public function editProcessAction($forumName, $postId)
     {
         $this->isAuthorised('ROLE_USER');
-
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
         $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
         $this->isFound($post);
-
         $this->isAuthorised($this->getAuthorizer()->canEditPost($post, $forum));
-
         $formHandler = $this->getFormHandlerToEditPost($post);
 
         if ($formHandler->process()) {
-            // get posts for determining the page of the edited post
-            $post = $formHandler->getForm()->getData();
+            $post = $formHandler->getForm()->getData(); // get posts for determining the page of the edited post
             $topic = $post->getTopic();
-
             //$page = $this->getModelManager()->getPageForPostOnTopic($topic, $post);
-
             $this->dispatch(ForumEvents::USER_POST_EDIT_COMPLETE, new UserPostEvent($this->getRequest(), $post));
-
-            $response = $this->redirectResponse(
-                $this->path('ccdn_forum_user_topic_show',
-                    array(
-                        'forumName' => $forumName,
-                        'topicId' => $topic->getId(),
-                        //'page' => $page,
-                    )
-                ) //. '#' . $post->getId()
-            );
+            $response = $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
+                'forumName' => $forumName,
+                'topicId' => $topic->getId(),
+                /*'page' => $page,*/
+            )) /*. '#' . $post->getId()*/);
         } else {
-            // Setup crumb trail.
             $crumbs = $this->getCrumbs()->addUserPostShow($forum, $post);
-
-            $response = $this->renderResponse('CCDNForumForumBundle:User:Post/edit.html.',
-                array(
-                    'crumbs' => $crumbs,
-                    'forum' => $forum,
-                    'post' => $post,
-                    'preview' => $formHandler->getForm()->getData(),
-                    'form' => $formHandler->getForm()->createView(),
-                )
-            );
+            $response = $this->renderResponse('CCDNForumForumBundle:User:Post/edit.html.', array(
+                'crumbs' => $crumbs,
+                'forum' => $forum,
+                'post' => $post,
+                'preview' => $formHandler->getForm()->getData(),
+                'form' => $formHandler->getForm()->createView(),
+			));
         }
 
         $this->dispatch(ForumEvents::USER_POST_EDIT_RESPONSE, new UserPostResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
@@ -182,28 +151,19 @@ class UserPostController extends UserPostBaseController
     public function deleteAction($forumName, $postId)
     {
         $this->isAuthorised('ROLE_USER');
-
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
         $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
         $this->isFound($post);
-
         $this->isAuthorised($this->getAuthorizer()->canDeletePost($post, $forum));
-
         $formHandler = $this->getFormHandlerToDeletePost($post);
-
-        // setup crumb trail.
         $crumbs = $this->getCrumbs()->addUserPostDelete($forum, $post);
-
-        $response = $this->renderResponse('CCDNForumForumBundle:User:Post/delete.html.',
-            array(
-                'crumbs' => $crumbs,
-                'forum' => $forum,
-                'post' => $post,
-                'form' => $formHandler->getForm()->createView(),
-            )
-        );
+        $response = $this->renderResponse('CCDNForumForumBundle:User:Post/delete.html.', array(
+            'crumbs' => $crumbs,
+            'forum' => $forum,
+            'post' => $post,
+            'form' => $formHandler->getForm()->createView(),
+		));
 
         $this->dispatch(ForumEvents::USER_POST_SOFT_DELETE_RESPONSE, new UserPostResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
@@ -220,47 +180,31 @@ class UserPostController extends UserPostBaseController
     public function deleteProcessAction($forumName, $postId)
     {
         $this->isAuthorised('ROLE_USER');
-
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
         $post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true);
         $this->isFound($post);
-
         $this->isAuthorised($this->getAuthorizer()->canDeletePost($post, $forum));
-
         $formHandler = $this->getFormHandlerToDeletePost($post);
 
         if ($formHandler->process()) {
-            // get posts for determining the page of the edited post
-            $post = $formHandler->getForm()->getData();
+            $post = $formHandler->getForm()->getData(); // get posts for determining the page of the edited post
             $topic = $post->getTopic();
-
             //$page = $this->getModelManager()->getPageForPostOnTopic($topic, $post);
-
             $this->dispatch(ForumEvents::USER_POST_SOFT_DELETE_COMPLETE, new UserPostEvent($this->getRequest(), $post));
-
-            $response = $this->redirectResponse(
-                $this->path('ccdn_forum_user_topic_show',
-                    array(
-                        'forumName' => $forumName,
-                        'topicId' => $topic->getId(),
-                        //'page' => $page,
-                    )
-                ) //. '#' . $post->getId()
-            );
+            $response = $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
+                'forumName' => $forumName,
+                'topicId' => $topic->getId(),
+                /*'page' => $page,*/
+            )) /*. '#' . $post->getId() */);
         } else {
-            // Setup crumb trail.
             $crumbs = $this->getCrumbs()->addUserPostShow($forum, $post);
-
-            $response = $this->renderResponse('CCDNForumForumBundle:User:Post/delete.html.',
-                array(
-                    'crumbs' => $crumbs,
-                    'forum' => $forum,
-                    'post' => $post,
-                    'form' => $formHandler->getForm()->createView(),
-                )
-            );
+            $response = $this->renderResponse('CCDNForumForumBundle:User:Post/delete.html.', array(
+                'crumbs' => $crumbs,
+                'forum' => $forum,
+                'post' => $post,
+                'form' => $formHandler->getForm()->createView(),
+			));
         }
 
         $this->dispatch(ForumEvents::USER_POST_SOFT_DELETE_RESPONSE, new UserPostResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));

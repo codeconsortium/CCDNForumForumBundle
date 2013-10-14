@@ -42,25 +42,18 @@ class ModeratorTopicController extends ModeratorTopicBaseController
     public function stickyAction($forumName, $topicId)
     {
         $this->isAuthorised('ROLE_MODERATOR');
-
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true);
         $this->isFound($topic);
-
         $this->isAuthorised($this->getAuthorizer()->canStickyTopic($topic, $forum));
-
         $this->getTopicModel()->sticky($topic, $this->getUser());
-
         $this->dispatch(ForumEvents::MODERATOR_TOPIC_UNSTICKY_COMPLETE, new ModeratorTopicEvent($this->getRequest(), $topic));
 
-        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
-            array(
-                'forumName' => $forumName,
-                'topicId' => $topic->getId()
-            )
-        ));
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
+            'forumName' => $forumName,
+            'topicId' => $topic->getId()
+		)));
     }
 
     /**
@@ -73,25 +66,18 @@ class ModeratorTopicController extends ModeratorTopicBaseController
     public function unstickyAction($forumName, $topicId)
     {
         $this->isAuthorised('ROLE_MODERATOR');
-
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true);
         $this->isFound($topic);
-
         $this->isAuthorised($this->getAuthorizer()->canUnstickyTopic($topic, $forum));
-
         $this->getTopicModel()->unsticky($topic);
-
         $this->dispatch(ForumEvents::MODERATOR_TOPIC_UNSTICKY_COMPLETE, new ModeratorTopicEvent($this->getRequest(), $topic));
 
-        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
-            array(
-                'forumName' => $forumName,
-                'topicId' => $topic->getId()
-            )
-        ));
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
+            'forumName' => $forumName,
+            'topicId' => $topic->getId()
+		)));
     }
 
     /**
@@ -106,25 +92,18 @@ class ModeratorTopicController extends ModeratorTopicBaseController
     public function closeAction($forumName, $topicId)
     {
         $this->isAuthorised('ROLE_MODERATOR');
-
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-
         $this->isAuthorised($this->getAuthorizer()->canCloseTopic($topic, $forum));
-
         $this->getTopicModel()->close($topic, $this->getUser())->flush();
-
         $this->dispatch(ForumEvents::MODERATOR_TOPIC_CLOSE_COMPLETE, new ModeratorTopicEvent($this->getRequest(), $topic));
 
-        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
-            array(
-                'forumName' => $forumName,
-                'topicId' => $topic->getId()
-            )
-        ));
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
+            'forumName' => $forumName,
+            'topicId' => $topic->getId()
+		)));
     }
 
     /**
@@ -137,25 +116,18 @@ class ModeratorTopicController extends ModeratorTopicBaseController
     public function reopenAction($forumName, $topicId)
     {
         $this->isAuthorised('ROLE_MODERATOR');
-
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-
         $this->isAuthorised($this->getAuthorizer()->canReopenTopic($topic, $forum));
-
         $this->getTopicModel()->reopen($topic)->flush();
-
         $this->dispatch(ForumEvents::MODERATOR_TOPIC_REOPEN_COMPLETE, new ModeratorTopicEvent($this->getRequest(), $topic));
 
-        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
-            array(
-                'forumName' => $forumName,
-                'topicId' => $topic->getId()
-            )
-        ));
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
+            'forumName' => $forumName,
+            'topicId' => $topic->getId()
+		)));
     }
 
     /**
@@ -168,28 +140,19 @@ class ModeratorTopicController extends ModeratorTopicBaseController
     public function deleteAction($forumName, $topicId)
     {
         $this->isAuthorised('ROLE_MODERATOR');
-
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true);
         $this->isFound($topic);
-
         $this->isAuthorised($this->getAuthorizer()->canDeleteTopic($topic, $forum));
-
         $formHandler = $this->getFormHandlerToDeleteTopic($forum, $topic);
-
-        // setup crumb trail.
         $crumbs = $this->getCrumbs()->addModeratorTopicDelete($forum, $topic);
-
-        $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Topic/delete.html.',
-            array(
-                'crumbs' => $crumbs,
-                'forum' => $forum,
-                'topic' => $topic,
-                'form' => $formHandler->getForm()->createView(),
-            )
-        );
+        $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Topic/delete.html.', array(
+            'crumbs' => $crumbs,
+            'forum' => $forum,
+            'topic' => $topic,
+            'form' => $formHandler->getForm()->createView(),
+		));
 
         $this->dispatch(ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_RESPONSE, new ModeratorTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
@@ -206,44 +169,30 @@ class ModeratorTopicController extends ModeratorTopicBaseController
     public function deleteProcessAction($forumName, $topicId)
     {
         $this->isAuthorised('ROLE_MODERATOR');
-
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true);
         $this->isFound($topic);
-
         $this->isAuthorised($this->getAuthorizer()->canDeleteTopic($topic, $forum));
-
         $formHandler = $this->getFormHandlerToDeleteTopic($forum, $topic);
 
         if ($formHandler->process()) {
             // Page of the last post.
             //$page = $this->getTopicModel()->getPageForPostOnTopic($topic, $topic->getLastPost());
-
             $this->dispatch(ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_COMPLETE, new ModeratorTopicEvent($this->getRequest(), $topic));
-
-            $response = $this->redirectResponse(
-                $this->path('ccdn_forum_user_topic_show',
-                    array(
-                        'forumName' => $forum->getName(),
-                        'topicId' => $topicId,
-                        //'page' => $page
-                    )
-                ) // . '#' . $topic->getLastPost()->getId()
-            );
+            $response = $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
+                'forumName' => $forum->getName(),
+                'topicId' => $topicId,
+                /*'page' => $page*/
+            )) /* . '#' . $topic->getLastPost()->getId()*/);
         } else {
-            // setup crumb trail.
             $crumbs = $this->getCrumbs()->addModeratorTopicDelete($forum, $topic);
-
-            $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Topic/delete.html.',
-                array(
-                    'crumbs' => $crumbs,
-                    'forum' => $forum,
-                    'topic' => $topic,
-                    'form' => $formHandler->getForm()->createView(),
-                )
-            );
+            $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Topic/delete.html.', array(
+                'crumbs' => $crumbs,
+                'forum' => $forum,
+                'topic' => $topic,
+                'form' => $formHandler->getForm()->createView(),
+			));
         }
 
         $this->dispatch(ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_RESPONSE, new ModeratorTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
@@ -261,26 +210,19 @@ class ModeratorTopicController extends ModeratorTopicBaseController
     public function restoreAction($forumName, $topicId)
     {
         $this->isAuthorised('ROLE_MODERATOR');
-
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true);
         $this->isFound($topic);
-
         $this->isAuthorised($this->getAuthorizer()->canRestoreTopic($topic, $forum));
-
         $this->getTopicModel()->restore($topic)->flush();
-
         $this->dispatch(ForumEvents::MODERATOR_TOPIC_RESTORE_COMPLETE, new ModeratorTopicEvent($this->getRequest(), $topic));
 
         // forward user
-        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
-            array(
-                'forumName' => $forumName,
-                'topicId' => $topic->getId()
-            )
-        ));
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
+            'forumName' => $forumName,
+            'topicId' => $topic->getId()
+		)));
     }
 
     /**
@@ -293,27 +235,19 @@ class ModeratorTopicController extends ModeratorTopicBaseController
     public function changeBoardAction($forumName, $topicId)
     {
         $this->isAuthorised('ROLE_MODERATOR');
-
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-
         $this->isAuthorised($this->getAuthorizer()->canTopicChangeBoard($topic, $forum));
-
         $formHandler = $this->getFormHandlerToChangeBoardOnTopic($forum, $topic);
-
         $crumbs = $this->getCrumbs()->addModeratorTopicChangeBoard($forum, $topic);
-
-        $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Topic/change_board.html.',
-            array(
-                'crumbs' => $crumbs,
-                'forum' => $forum,
-                'topic' => $topic,
-                'form' => $formHandler->getForm()->createView(),
-            )
-        );
+        $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Topic/change_board.html.', array(
+            'crumbs' => $crumbs,
+            'forum' => $forum,
+            'topic' => $topic,
+            'form' => $formHandler->getForm()->createView(),
+		));
 
         $this->dispatch(ForumEvents::MODERATOR_TOPIC_CHANGE_BOARD_RESPONSE, new ModeratorTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
@@ -330,35 +264,26 @@ class ModeratorTopicController extends ModeratorTopicBaseController
     public function changeBoardProcessAction($forumName, $topicId)
     {
         $this->isAuthorised('ROLE_MODERATOR');
-
         $forum = $this->getForumModel()->findOneForumByName($forumName);
         $this->isFound($forum);
-
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-
         $this->isAuthorised($this->getAuthorizer()->canTopicChangeBoard($topic, $forum));
-
         $formHandler = $this->getFormHandlerToChangeBoardOnTopic($forum, $topic);
 
         if ($formHandler->process($this->getRequest())) {
-            $response = $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
-                array(
-                    'forumName' => $forumName,
-                    'topicId' => $topic->getId()
-                )
-            ));
+            $response = $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
+                'forumName' => $forumName,
+                'topicId' => $topic->getId()
+			)));
         } else {
             $crumbs = $this->getCrumbs()->addModeratorTopicChangeBoard($forum, $topic);
-
-            $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Topic/change_board.html.',
-                array(
-                    'crumbs' => $crumbs,
-                    'forum' => $forum,
-                    'topic' => $topic,
-                    'form' => $formHandler->getForm()->createView(),
-                )
-            );
+            $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Topic/change_board.html.', array(
+                'crumbs' => $crumbs,
+                'forum' => $forum,
+                'topic' => $topic,
+                'form' => $formHandler->getForm()->createView(),
+			));
         }
 
         $this->dispatch(ForumEvents::MODERATOR_TOPIC_CHANGE_BOARD_RESPONSE, new ModeratorTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));

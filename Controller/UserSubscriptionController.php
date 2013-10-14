@@ -50,7 +50,6 @@ class UserSubscriptionController extends BaseController
 
         $page = $this->getQuery('page', 1);
         $filter = $this->getQuery('filter', 'all');
-
         // Use this for the sidebar counters
         $subscriptionForums = $this->getSubscriptionModel()->findAllSubscriptionsForUserById($this->getUser()->getId(), true);
         $forumsSubscribed = array();
@@ -108,17 +107,14 @@ class UserSubscriptionController extends BaseController
 
         // this is necessary for working out the last page for each topic.
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.user.show.posts_per_page');
-
-        return $this->renderResponse('CCDNForumForumBundle:User:Subscription/show.html.',
-            array(
-                'forum' => $forum,
-                'subscribed_forums' => $forumsSubscribed,
-                'total_subscribed_forums' => $totalForumsSubscribed,
-                'filter' => $filter,
-                'pager' => $subscriptionPager,
-                'posts_per_page' => $postsPerPage,
-            )
-        );
+        return $this->renderResponse('CCDNForumForumBundle:User:Subscription/show.html.', array(
+            'forum' => $forum,
+            'subscribed_forums' => $forumsSubscribed,
+            'total_subscribed_forums' => $totalForumsSubscribed,
+            'filter' => $filter,
+            'pager' => $subscriptionPager,
+            'posts_per_page' => $postsPerPage,
+        ));
     }
 
     /**
@@ -142,17 +138,13 @@ class UserSubscriptionController extends BaseController
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
         $this->isAuthorised($this->getAuthorizer()->canSubscribeToTopic($topic, $forum));
-
         $this->getSubscriptionModel()->subscribe($topic, $this->getUser())->flush();
-
         $this->dispatch(ForumEvents::USER_TOPIC_SUBSCRIBE_COMPLETE, new UserTopicEvent($this->getRequest(), $topic, true));
 
-        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
-            array(
-                'forumName' => $forumName,
-                'topicId' => $topicId
-            )
-        ));
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
+            'forumName' => $forumName,
+            'topicId' => $topicId
+        )));
     }
 
     /**
@@ -175,19 +167,14 @@ class UserSubscriptionController extends BaseController
 
         $topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId);
         $this->isFound($topic);
-
         $subscription = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topicId, $this->getUser()->getId());
         $this->isAuthorised($this->getAuthorizer()->canUnsubscribeFromTopic($topic, $forum, $subscription));
-
         $this->getSubscriptionModel()->unsubscribe($topic, $this->getUser()->getId())->flush();
-
         $this->dispatch(ForumEvents::USER_TOPIC_UNSUBSCRIBE_COMPLETE, new UserTopicEvent($this->getRequest(), $topic, false));
 
-        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show',
-            array(
-                'forumName' => $forumName,
-                'topicId' => $topicId
-            )
-        ));
+        return $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
+            'forumName' => $forumName,
+            'topicId' => $topicId
+        )));
     }
 }
