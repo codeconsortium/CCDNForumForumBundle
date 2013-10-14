@@ -30,7 +30,7 @@ class AdminBoardBaseController extends BaseController
 {
     /**
      *
-     * @access public
+     * @access protected
      * @return \CCDNForum\ForumBundle\Form\Handler\BoardCreateFormHandler
      */
     protected function getFormHandlerToCreateBoard($categoryFilter = null)
@@ -52,7 +52,7 @@ class AdminBoardBaseController extends BaseController
 
     /**
      *
-     * @access public
+     * @access protected
      * @return \CCDNForum\ForumBundle\Form\Handler\BoardUpdateFormHandler
      */
     protected function getFormHandlerToUpdateBoard(Board $board)
@@ -68,7 +68,7 @@ class AdminBoardBaseController extends BaseController
 
     /**
      *
-     * @access public
+     * @access protected
      * @return \CCDNForum\ForumBundle\Form\Handler\BoardDeleteFormHandler
      */
     protected function getFormHandlerToDeleteBoard(Board $board)
@@ -82,6 +82,12 @@ class AdminBoardBaseController extends BaseController
         return $formHandler;
     }
 
+    /**
+     *
+     * @access protected
+     * @param  \CCDNForum\ForumBundle\Entity\Board $board
+     * @return array
+     */
     protected function getFilterQueryStrings(Board $board)
     {
         $params = array();

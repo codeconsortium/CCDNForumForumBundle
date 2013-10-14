@@ -31,12 +31,12 @@ class ModeratorTopicBaseController extends BaseController
 {
     /**
      *
-     * @access public
+     * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
      * @param  \CCDNForum\ForumBundle\Entity\Topic                        $topic
      * @return \CCDNForum\ForumBundle\Form\Handler\TopicCreateFormHandler
      */
-    public function getFormHandlerToDeleteTopic(Forum $forum, Topic $topic)
+    protected function getFormHandlerToDeleteTopic(Forum $forum, Topic $topic)
     {
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_delete');
 
@@ -49,12 +49,12 @@ class ModeratorTopicBaseController extends BaseController
 
     /**
      *
-     * @access public
+     * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Forum                             $forum
      * @param  \CCDNForum\ForumBundle\Entity\Topic                             $topic
      * @return \CCDNForum\ForumBundle\Form\Handler\TopicChangeBoardFormHandler
      */
-    public function getFormHandlerToChangeBoardOnTopic(Forum $forum, Topic $topic)
+    protected function getFormHandlerToChangeBoardOnTopic(Forum $forum, Topic $topic)
     {
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.change_topics_board');
 

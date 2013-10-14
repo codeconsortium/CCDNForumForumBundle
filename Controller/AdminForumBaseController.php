@@ -30,10 +30,10 @@ class AdminForumBaseController extends BaseController
 {
     /**
      *
-     * @access public
+     * @access protected
      * @return \CCDNForum\ForumBundle\Form\Handler\ForumCreateFormHandler
      */
-    public function getFormHandlerToCreateForum()
+    protected function getFormHandlerToCreateForum()
     {
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.forum_create');
 
@@ -44,10 +44,10 @@ class AdminForumBaseController extends BaseController
 
     /**
      *
-     * @access public
+     * @access protected
      * @return \CCDNForum\ForumBundle\Form\Handler\ForumUpdateFormHandler
      */
-    public function getFormHandlerToUpdateForum(Forum $forum)
+    protected function getFormHandlerToUpdateForum(Forum $forum)
     {
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.forum_update');
 
@@ -60,10 +60,10 @@ class AdminForumBaseController extends BaseController
 
     /**
      *
-     * @access public
+     * @access protected
      * @return \CCDNForum\ForumBundle\Form\Handler\ForumDeleteFormHandler
      */
-    public function getFormHandlerToDeleteForum(Forum $forum)
+    protected function getFormHandlerToDeleteForum(Forum $forum)
     {
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.forum_delete');
 

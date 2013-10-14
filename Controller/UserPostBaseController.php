@@ -30,11 +30,11 @@ class UserPostBaseController extends BaseController
 {
     /**
      *
-     * @access public
+     * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Post                        $post
      * @return \CCDNForum\ForumBundle\Form\Handler\PostUpdateFormHandler
      */
-    public function getFormHandlerToEditPost(Post $post)
+    protected function getFormHandlerToEditPost(Post $post)
     {
         // If post is the very first post of the topic then use a topic handler so user can change topic title.
         if ($post->getTopic()->getFirstPost()->getId() == $post->getId()) {
@@ -52,11 +52,11 @@ class UserPostBaseController extends BaseController
 
     /**
      *
-     * @access public
+     * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Post                        $post
      * @return \CCDNForum\ForumBundle\Form\Handler\PostDeleteFormHandler
      */
-    public function getFormHandlerToDeletePost(Post $post)
+    protected function getFormHandlerToDeletePost(Post $post)
     {
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_delete');
 

@@ -39,10 +39,10 @@ class UserTopicBaseController extends BaseController
 
     /**
      *
-     * @access public
+     * @access protected
      * @return \CCDNForum\ForumBundle\Component\FloodControl
      */
-    public function getFloodControl()
+    protected function getFloodControl()
     {
         if (null == $this->floodControl) {
             $this->floodControl = $this->container->get('ccdn_forum_forum.component.flood_control');
@@ -53,12 +53,12 @@ class UserTopicBaseController extends BaseController
 
     /**
      *
-     * @access public
+     * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
      * @param  \CCDNForum\ForumBundle\Entity\Board                        $board
      * @return \CCDNForum\ForumBundle\Form\Handler\TopicCreateFormHandler
      */
-    public function getFormHandlerToCreateTopic(Forum $forum, Board $board)
+    protected function getFormHandlerToCreateTopic(Forum $forum, Board $board)
     {
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_create');
 
@@ -72,11 +72,11 @@ class UserTopicBaseController extends BaseController
 
     /**
      *
-     * @access public
+     * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Topic                        $topic
      * @return \CCDNForum\ForumBundle\Form\Handler\TopicCreateFormHandler
      */
-    public function getFormHandlerToReplyToTopic(Topic $topic)
+    protected function getFormHandlerToReplyToTopic(Topic $topic)
     {
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_create');
 

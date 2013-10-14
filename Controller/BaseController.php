@@ -343,10 +343,10 @@ class BaseController extends ContainerAware
 
     /**
      *
-     * @access public
+     * @access protected
      * @return string
      */
-    public function getSubmitAction()
+    protected function getSubmitAction()
     {
         $request = $this->getRequest();
 
@@ -359,12 +359,12 @@ class BaseController extends ContainerAware
         return $action;
     }
 
-    public function getQuery($query, $default)
+    protected function getQuery($query, $default)
     {
         return $this->getRequest()->query->get($query, $default);
     }
 
-    public function dispatch($name, Event $event)
+    protected function dispatch($name, Event $event)
     {
         if (! $this->dispatcher) {
             $this->dispatcher = $this->container->get('event_dispatcher');
