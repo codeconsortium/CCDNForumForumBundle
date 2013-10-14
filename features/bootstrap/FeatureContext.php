@@ -13,19 +13,19 @@
 
 namespace CCDNForum\ForumBundle\features\bootstrap;
 
-use Behat\Behat\Context\ClosuredContextInterface,
-    Behat\Behat\Context\TranslatedContextInterface,
-    Behat\Behat\Context\BehatContext,
-    Behat\Behat\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode,
-    Behat\Gherkin\Node\TableNode;
+//use Behat\Behat\Context\ClosuredContextInterface,
+//    Behat\Behat\Context\TranslatedContextInterface,
+//    Behat\Behat\Context\BehatContext,
+//    Behat\Behat\Exception\PendingException;
+//use Behat\Gherkin\Node\PyStringNode,
+//    Behat\Gherkin\Node\TableNode;
 
 use Behat\MinkExtension\Context\RawMinkContext;
 use Behat\Mink\Element\NodeElement;
 
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Symfony\Component\HttpFoundation\Request;
+//use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

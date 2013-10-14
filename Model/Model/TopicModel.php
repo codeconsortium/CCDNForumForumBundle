@@ -15,8 +15,6 @@ namespace CCDNForum\ForumBundle\Model\Model;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 use CCDNForum\ForumBundle\Model\Model\BaseModel;
 use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 

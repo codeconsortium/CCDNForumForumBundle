@@ -13,8 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Controller;
 
-use Symfony\Component\EventDispatcher\Event;
-
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardResponseEvent;

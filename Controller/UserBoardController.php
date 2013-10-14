@@ -56,8 +56,6 @@ class UserBoardController extends BaseController
         $postsPerPage = $this->container->getParameter('ccdn_forum_forum.topic.user.show.posts_per_page');
 
         // setup bread crumbs.
-        $category = $board->getCategory();
-
         $crumbs = $this->getCrumbs()->addUserBoardShow($forum, $board);
 
         return $this->renderResponse('CCDNForumForumBundle:User:Board/show.html.',

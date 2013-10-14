@@ -15,7 +15,6 @@ namespace CCDNForum\ForumBundle\Form\Handler\Admin\Category;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
 use Doctrine\Common\Collections\ArrayCollection;

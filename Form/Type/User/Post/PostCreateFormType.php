@@ -16,8 +16,6 @@ namespace CCDNForum\ForumBundle\Form\Type\User\Post;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-use CCDNForum\ForumBundle\Entity\Post;
-
 /**
  *
  * @category CCDNForum

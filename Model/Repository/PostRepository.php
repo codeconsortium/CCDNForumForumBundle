@@ -13,8 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Model\Repository;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 use CCDNForum\ForumBundle\Model\Repository\Repository;
 use CCDNForum\ForumBundle\Model\Repository\RepositoryInterface;
 
@@ -147,7 +145,7 @@ class PostRepository extends BaseRepository implements RepositoryInterface
         $qb
             ->leftJoin('p.topic', 't')
             ->where(
-                $expr = $qb->expr()->eq('t.id', ':topicId')
+                $qb->expr()->eq('t.id', ':topicId')
             )
             ->orderBy('p.createdDate', 'ASC')
             ->setMaxResults(1)
@@ -175,7 +173,7 @@ class PostRepository extends BaseRepository implements RepositoryInterface
         $qb
             ->leftJoin('p.topic', 't')
             ->where(
-                $expr = $qb->expr()->eq('t.id', ':topicId')
+                $qb->expr()->eq('t.id', ':topicId')
             )
             ->orderBy('p.createdDate', 'DESC')
             ->setMaxResults(1)

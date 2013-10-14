@@ -13,8 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Model\Repository;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 use CCDNForum\ForumBundle\Model\Repository\Repository;
 use CCDNForum\ForumBundle\Model\Repository\RepositoryInterface;
 
@@ -110,7 +108,7 @@ class SubscriptionRepository extends BaseRepository implements RepositoryInterfa
             ->leftJoin('t.board', 'b')
             ->leftJoin('b.category', 'c')
             ->where(
-                $expr = $qb->expr()->andX(
+                $qb->expr()->andX(
                     $qb->expr()->eq('s.topic', ':topicId'),
                     $qb->expr()->eq('t.isDeleted', 'FALSE')
                 )

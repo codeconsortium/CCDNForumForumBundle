@@ -115,8 +115,6 @@ class DataContext extends BehatContext implements KernelAwareInterface
      */
     public function thereAreFollowingUsersDefined(TableNode $table)
     {
-        $manager = $this->getEntityManager();
-
         foreach ($table->getHash() as $data) {
             $this->users[] = $this->thereIsUser(
                 $data['email'],
@@ -155,8 +153,6 @@ class DataContext extends BehatContext implements KernelAwareInterface
      */
     public function thereAreFollowingForumsDefined(TableNode $table)
     {
-        $manager = $this->getEntityManager();
-
         foreach ($table->getHash() as $data) {
             $this->forums[] = $this->thereIsForum(
                 isset($data['name']) ? $data['name'] : sha1(uniqid(mt_rand(), true))
@@ -184,8 +180,6 @@ class DataContext extends BehatContext implements KernelAwareInterface
      */
     public function thereAreFollowingCategoriesDefined(TableNode $table)
     {
-        $manager = $this->getEntityManager();
-
         foreach ($table->getHash() as $index => $data) {
             $this->categories[] = $this->thereIsCategory(
                 isset($data['name']) ? $data['name'] : sha1(uniqid(mt_rand(), true)),
@@ -222,8 +216,6 @@ class DataContext extends BehatContext implements KernelAwareInterface
      */
     public function thereAreFollowingBoardsDefined(TableNode $table)
     {
-        $manager = $this->getEntityManager();
-
         foreach ($table->getHash() as $index => $data) {
             $this->boards[] = $this->thereIsBoard(
                 isset($data['name']) ? $data['name'] : sha1(uniqid(mt_rand(), true)),
@@ -262,8 +254,6 @@ class DataContext extends BehatContext implements KernelAwareInterface
      */
     public function thereAreFollowingTopicsDefined(TableNode $table)
     {
-        $manager = $this->getEntityManager();
-
         foreach ($table->getHash() as $index => $data) {
             $this->topics[] = $this->thereIsTopic(
                 isset($data['title']) ? $data['title'] : sha1(uniqid(mt_rand(), true)),

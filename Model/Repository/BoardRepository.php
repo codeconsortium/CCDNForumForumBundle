@@ -13,12 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Model\Repository;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 use CCDNForum\ForumBundle\Model\Repository\Repository;
 use CCDNForum\ForumBundle\Model\Repository\RepositoryInterface;
-
-use CCDNForum\ForumBundle\Entity\Board;
 
 /**
  * BoardRepository

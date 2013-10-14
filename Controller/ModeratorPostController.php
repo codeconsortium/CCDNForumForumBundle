@@ -20,8 +20,6 @@ use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorPostResponseEvent;
 
-use CCDNForum\ForumBundle\Entity\Post;
-
 /**
  *
  * @category CCDNForum

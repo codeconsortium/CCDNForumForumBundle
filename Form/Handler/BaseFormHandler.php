@@ -13,11 +13,8 @@
 
 namespace CCDNForum\ForumBundle\Form\Handler;
 
-use Symfony\Component\Form\Form;
-use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 
 /**
  *

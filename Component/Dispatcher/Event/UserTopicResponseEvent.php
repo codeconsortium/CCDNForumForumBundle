@@ -13,7 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Component\Dispatcher\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

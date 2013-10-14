@@ -18,7 +18,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use CCDNForum\ForumBundle\Model\Manager\ManagerInterface;
 use CCDNForum\ForumBundle\Model\Manager\BaseManager;
 
-use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
 
 /**

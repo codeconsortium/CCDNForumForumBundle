@@ -15,7 +15,6 @@ namespace CCDNForum\ForumBundle\Form\Type\Moderator\Post;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Validator\Constraints\True;
 
 /**
  *
