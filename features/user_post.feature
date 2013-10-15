@@ -7,7 +7,6 @@ Feature: User Post Traversal
         Given I am logged in as "user"
         And there are following users defined:
           | email          | password | enabled  | role                |
-          | admin@foo.com  | root     | 1        | ROLE_SUPER_ADMIN    |
           | user@foo.com   | root     | 1        | ROLE_USER           |
         And there are following forums defined:
           | name                      | order    |

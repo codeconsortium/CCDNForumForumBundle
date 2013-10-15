@@ -7,8 +7,6 @@ Feature: Moderator Post Traversal
         Given I am logged in as "moderator"
         And there are following users defined:
           | email             | password | enabled  | role             |
-          | admin@foo.com     | root     | 1        | ROLE_SUPER_ADMIN |
-          | user@foo.com      | root     | 1        | ROLE_USER        |
 		  | moderator@foo.com | root     | 1        | ROLE_MODERATOR   |
         And there are following forums defined:
           | name                      | order    |
