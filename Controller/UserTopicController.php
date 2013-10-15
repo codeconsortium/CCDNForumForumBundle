@@ -43,8 +43,7 @@ class UserTopicController extends UserTopicBaseController
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true));
         $this->isAuthorised($this->getAuthorizer()->canShowTopic($topic, $forum));
-        $postsPager = $this->getPostModel()->findAllPostsPaginatedByTopicId($topicId, $this->getQuery('page', 1), $this->getPageHelper()->getPostsPerPageOnTopics(), true);
-        $this->setPagerTemplate($postsPager);
+        $this->setPagerTemplate($postsPager = $this->getPostModel()->findAllPostsPaginatedByTopicId($topicId, $this->getQuery('page', 1), $this->getPageHelper()->getPostsPerPageOnTopics(), true));
 
         if ($this->isGranted('ROLE_USER')) {
             if ($subscription = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topicId, $this->getUser()->getId())) {
@@ -57,12 +56,8 @@ class UserTopicController extends UserTopicBaseController
         $subscriberCount = $this->getSubscriptionModel()->countSubscriptionsForTopicById($topicId);
         $this->getTopicModel()->incrementViewCounter($topic);
         $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/show.html.', array(
-            'crumbs' => $this->getCrumbs()->addUserTopicShow($forum, $topic),
-            'forum' => $forum,
-            'topic' => $topic,
-            'pager' => $postsPager,
-            'subscription' => $subscription,
-            'subscription_count' => $subscriberCount,
+            'crumbs' => $this->getCrumbs()->addUserTopicShow($forum, $topic), 'forum' => $forum, 'topic' => $topic,
+            'pager' => $postsPager, 'subscription' => $subscription, 'subscription_count' => $subscriberCount,
         ));
 
         return $response;
@@ -114,10 +109,8 @@ class UserTopicController extends UserTopicBaseController
             $response = $this->redirectResponseForTopicOnPageFromPost($forumName, $formHandler->getForm()->getData()->getTopic(), $formHandler->getForm()->getData());
         } else {
             $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/create.html.', array(
-                'crumbs' => $this->getCrumbs()->addUserTopicCreate($forum, $board),
-                'forum' => $forum, 'board' => $board,
-                'preview' => $formHandler->getForm()->getData(),
-                'form' => $formHandler->getForm()->createView(),
+                'crumbs' => $this->getCrumbs()->addUserTopicCreate($forum, $board), 'forum' => $forum, 'board' => $board,
+                'preview' => $formHandler->getForm()->getData(), 'form' => $formHandler->getForm()->createView(),
             ));
         }
         $this->dispatch(ForumEvents::USER_TOPIC_CREATE_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()->getTopic()));
@@ -171,10 +164,8 @@ class UserTopicController extends UserTopicBaseController
             $response = $this->redirectResponseForTopicOnPageFromPost($forumName, $topic, $formHandler->getForm()->getData());
         } else {
             $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/reply.html.', array(
-                'crumbs' => $this->getCrumbs()->addUserTopicReply($forum, $topic),
-                'forum' => $forum, 'topic' => $topic,
-                'preview' => $formHandler->getForm()->getData(),
-                'form' => $formHandler->getForm()->createView(),
+                'crumbs' => $this->getCrumbs()->addUserTopicReply($forum, $topic), 'forum' => $forum, 'topic' => $topic,
+                'preview' => $formHandler->getForm()->getData(), 'form' => $formHandler->getForm()->createView(),
             ));
         }
         $this->dispatch(ForumEvents::USER_TOPIC_REPLY_RESPONSE, new UserTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()->getTopic()));

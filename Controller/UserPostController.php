@@ -106,10 +106,8 @@ class UserPostController extends UserPostBaseController
             $response = $this->redirectResponseForTopicOnPageFromPost($forumName, $formHandler->getForm()->getData()->getTopic(), $formHandler->getForm()->getData());
         } else {
             $response = $this->renderResponse('CCDNForumForumBundle:User:Post/edit.html.', array(
-                'crumbs' => $this->getCrumbs()->addUserPostShow($forum, $post),
-                'forum' => $forum, 'post' => $post,
-                'preview' => $formHandler->getForm()->getData(),
-                'form' => $formHandler->getForm()->createView(),
+                'crumbs' => $this->getCrumbs()->addUserPostShow($forum, $post), 'forum' => $forum, 'post' => $post,
+                'preview' => $formHandler->getForm()->getData(), 'form' => $formHandler->getForm()->createView(),
             ));
         }
         $this->dispatch(ForumEvents::USER_POST_EDIT_RESPONSE, new UserPostResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
