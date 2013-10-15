@@ -54,8 +54,7 @@ class UserPostController extends UserPostBaseController
         return $this->renderResponse('CCDNForumForumBundle:User:Post/show.html.', array(
             'crumbs' => $this->getCrumbs()->addUserPostShow($forum, $post),
             'forum' => $forum,
-            'topic' => $post->getTopic(),
-            'post' => $post,
+            'topic' => $post->getTopic(), 'post' => $post,
             'subscription' => $subscription,
             'subscription_count' => $subscriberCount,
         ));
@@ -83,7 +82,6 @@ class UserPostController extends UserPostBaseController
             'preview' => $formHandler->getForm()->getData(),
             'form' => $formHandler->getForm()->createView(),
         ));
-
         $this->dispatch(ForumEvents::USER_POST_EDIT_RESPONSE, new UserPostResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
@@ -105,23 +103,15 @@ class UserPostController extends UserPostBaseController
         $formHandler = $this->getFormHandlerToEditPost($post);
 
         if ($formHandler->process()) {
-            $post = $formHandler->getForm()->getData(); // get posts for determining the page of the edited post
-            //$page = $this->getModelManager()->getPageForPostOnTopic($topic, $post);
-            $response = $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
-                'forumName' => $forumName,
-                'topicId' => $post->getTopic()->getId(),
-                /*'page' => $page,*/
-            )) /*. '#' . $post->getId()*/);
+            $response = $this->redirectResponseForTopicOnPageFromPost($forumName, $formHandler->getForm()->getData()->getTopic(), $formHandler->getForm()->getData());
         } else {
             $response = $this->renderResponse('CCDNForumForumBundle:User:Post/edit.html.', array(
                 'crumbs' => $this->getCrumbs()->addUserPostShow($forum, $post),
-                'forum' => $forum,
-                'post' => $post,
+                'forum' => $forum, 'post' => $post,
                 'preview' => $formHandler->getForm()->getData(),
                 'form' => $formHandler->getForm()->createView(),
             ));
         }
-
         $this->dispatch(ForumEvents::USER_POST_EDIT_RESPONSE, new UserPostResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
@@ -147,7 +137,6 @@ class UserPostController extends UserPostBaseController
             'post' => $post,
             'form' => $formHandler->getForm()->createView(),
         ));
-
         $this->dispatch(ForumEvents::USER_POST_SOFT_DELETE_RESPONSE, new UserPostResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
@@ -169,22 +158,14 @@ class UserPostController extends UserPostBaseController
         $formHandler = $this->getFormHandlerToDeletePost($post);
 
         if ($formHandler->process()) {
-            $post = $formHandler->getForm()->getData(); // get posts for determining the page of the edited post
-            //$page = $this->getModelManager()->getPageForPostOnTopic($topic, $post);
-            $response = $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
-                'forumName' => $forumName,
-                'topicId' => $post->getTopic()->getId(),
-                /*'page' => $page,*/
-            )) /*. '#' . $post->getId() */);
+            $response = $this->redirectResponseForTopicOnPageFromPost($forumName, $post->getTopic(), $post);
         } else {
             $response = $this->renderResponse('CCDNForumForumBundle:User:Post/delete.html.', array(
                 'crumbs' => $this->getCrumbs()->addUserPostShow($forum, $post),
-                'forum' => $forum,
-                'post' => $post,
+                'forum' => $forum, 'post' => $post,
                 'form' => $formHandler->getForm()->createView(),
             ));
         }
-
         $this->dispatch(ForumEvents::USER_POST_SOFT_DELETE_RESPONSE, new UserPostResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;

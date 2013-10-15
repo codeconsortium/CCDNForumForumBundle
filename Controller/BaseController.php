@@ -20,6 +20,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\EventDispatcher\Event;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination as Pager;
 
+use CCDNForum\ForumBundle\Entity\Topic;
+use CCDNForum\ForumBundle\Entity\Post;
+
 /**
  *
  * @category CCDNForum
@@ -249,6 +252,26 @@ class BaseController extends ContainerAware
     protected function redirectResponse($url)
     {
         return new RedirectResponse($url);
+    }
+
+    /**
+     *
+     * @access protected
+     * @param  string                                             $forumName
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                $topic
+     * @param  \CCDNForum\ForumBundle\Entity\Post                 $post
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function redirectResponseForTopicOnPageFromPost($forumName, Topic $topic, Post $post)
+    {
+        //$page = $this->getTopicModel()->getPageForPostOnTopic($topic, $topic->getLastPost()); // Page of the last post.
+        $response = $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
+            'forumName' => $forumName,
+            'topicId' => $topic->getId(),
+            /*'page' => $page*/
+        )) /* . '#' . $topic->getLastPost()->getId()*/);
+
+        return $response;
     }
 
     /**

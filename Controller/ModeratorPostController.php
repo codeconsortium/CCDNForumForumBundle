@@ -76,7 +76,6 @@ class ModeratorPostController extends ModeratorPostBaseController
             'post' => $post,
             'form' => $formHandler->getForm()->createView(),
         ));
-
         $this->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_RESPONSE, new ModeratorPostResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
@@ -96,25 +95,18 @@ class ModeratorPostController extends ModeratorPostBaseController
         $this->isFound($post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true));
         $this->isAuthorised($this->getAuthorizer()->canUnlockPost($post, $forum));
         $formHandler = $this->getFormHandlerToUnlockPost($forum, $post);
-        $topic = $post->getTopic();
 
         if ($formHandler->process()) {
-            //$page = $this->getTopicModel()->getPageForPostOnTopic($topic, $topic->getLastPost()); // Page of the last post.
-            $response = $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
-                'forumName' => $forumName,
-                'topicId' => $topic->getId(),
-                /*'page' => $page*/
-            )) /* . '#' . $topic->getLastPost()->getId()*/);
+            $response = $this->redirectResponseForTopicOnPageFromPost($forumName, $post->getTopic(), $post);
         } else {
             $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Post/unlock.html.', array(
-                'crumbs' => $this->getCrumbs()->addModeratorPostUnlock($forum, $topic),
+                'crumbs' => $this->getCrumbs()->addModeratorPostUnlock($forum, $post->getTopic()),
                 'forum' => $forum,
-                'topic' => $topic,
+                'topic' => $post->getTopic(),
                 'post' => $post,
                 'form' => $formHandler->getForm()->createView(),
             ));
         }
-
         $this->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_RESPONSE, new ModeratorPostResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;

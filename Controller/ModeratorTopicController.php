@@ -142,7 +142,6 @@ class ModeratorTopicController extends ModeratorTopicBaseController
             'topic' => $topic,
             'form' => $formHandler->getForm()->createView(),
         ));
-
         $this->dispatch(ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_RESPONSE, new ModeratorTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
@@ -164,12 +163,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
         $formHandler = $this->getFormHandlerToDeleteTopic($forum, $topic);
 
         if ($formHandler->process()) {
-            //$page = $this->getTopicModel()->getPageForPostOnTopic($topic, $topic->getLastPost()); // Page of the last post.
-            $response = $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
-                'forumName' => $forum->getName(),
-                'topicId' => $topicId,
-                /*'page' => $page*/
-            )) /* . '#' . $topic->getLastPost()->getId()*/);
+            $response = $this->redirectResponseForTopicOnPageFromPost($forumName, $topic, $topic->getLastPost());
         } else {
             $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Topic/delete.html.', array(
                 'crumbs' => $this->getCrumbs()->addModeratorTopicDelete($forum, $topic),
@@ -178,7 +172,6 @@ class ModeratorTopicController extends ModeratorTopicBaseController
                 'form' => $formHandler->getForm()->createView(),
             ));
         }
-
         $this->dispatch(ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_RESPONSE, new ModeratorTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
@@ -226,7 +219,6 @@ class ModeratorTopicController extends ModeratorTopicBaseController
             'topic' => $topic,
             'form' => $formHandler->getForm()->createView(),
         ));
-
         $this->dispatch(ForumEvents::MODERATOR_TOPIC_CHANGE_BOARD_RESPONSE, new ModeratorTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
@@ -247,11 +239,8 @@ class ModeratorTopicController extends ModeratorTopicBaseController
         $this->isAuthorised($this->getAuthorizer()->canTopicChangeBoard($topic, $forum));
         $formHandler = $this->getFormHandlerToChangeBoardOnTopic($forum, $topic);
 
-        if ($formHandler->process($this->getRequest())) {
-            $response = $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array(
-                'forumName' => $forumName,
-                'topicId' => $topic->getId()
-            )));
+        if ($formHandler->process()) {
+            $response = $this->redirectResponse($this->path('ccdn_forum_user_topic_show', array('forumName' => $forumName, 'topicId' => $topic->getId() )));
         } else {
             $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Topic/change_board.html.', array(
                 'crumbs' => $this->getCrumbs()->addModeratorTopicChangeBoard($forum, $topic),
@@ -260,7 +249,6 @@ class ModeratorTopicController extends ModeratorTopicBaseController
                 'form' => $formHandler->getForm()->createView(),
             ));
         }
-
         $this->dispatch(ForumEvents::MODERATOR_TOPIC_CHANGE_BOARD_RESPONSE, new ModeratorTopicResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;

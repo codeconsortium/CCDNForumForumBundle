@@ -38,29 +38,15 @@ class AdminBoardController extends AdminBoardBaseController
     public function listAction()
     {
         $this->isAuthorised('ROLE_ADMIN');
-        $forumFilter = $this->getQuery('forum_filter', null);
-        $categoryFilter = $this->getQuery('category_filter', null);
-
-        if ($categoryFilter) { // Corrective Measure incase forum/category filters fall out of sync.
-            $category = $this->getCategoryModel()->findOneCategoryById($categoryFilter);
-            if ($category) {
-                if ($category->getForum()) {
-                    $forumFilter = $category->getForum()->getId();
-                } else {
-                    $forumFilter = null; // Force it to be blank so 'unassigned' is highlighted.
-                }
-            } else {
-                $forumFilter = null;
-            }
-        }
+        $filters = $this->getNormalisedCategoryAndForumFilters();
 
         $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Board/list.html.', array(
             'crumbs' => $this->getCrumbs()->addAdminManageBoardsIndex(),
             'forums' => $this->getForumModel()->findAllForums(), // Forums for the parametric filter.,
-            'forum_filter' => $forumFilter,
-            'categories' => $this->getCategoryModel()->findAllCategoriesForForumById($forumFilter), // Categories for the parametric filter.,
-            'category_filter' => $categoryFilter,
-            'boards' => $this->getBoardModel()->findAllBoardsForCategoryById($categoryFilter), // Boards for the configuration table list.,
+            'forum_filter' => $filters['forum_filter'],
+            'categories' => $this->getCategoryModel()->findAllCategoriesForForumById($filters['forum_filter']), // Categories for the parametric filter.,
+            'category_filter' => $filters['category_filter'],
+            'boards' => $this->getBoardModel()->findAllBoardsForCategoryById($filters['category_filter']), // Boards for the configuration table list.,
         ));
 
         return $response;
@@ -82,7 +68,6 @@ class AdminBoardController extends AdminBoardBaseController
             'forum_filter' => $this->getQuery('forum_filter', null),
             'category_filter' => $categoryFilter
         ));
-
         $this->dispatch(ForumEvents::ADMIN_BOARD_CREATE_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $response));
 
         return $response;
@@ -100,8 +85,7 @@ class AdminBoardController extends AdminBoardBaseController
         $formHandler = $this->getFormHandlerToCreateBoard($categoryFilter);
 
         if ($formHandler->process()) {
-            $params = $this->getFilterQueryStrings($formHandler->getForm()->getData());
-            $response = $this->redirectResponse($this->path('ccdn_forum_admin_board_list', $params));
+            $response = $this->redirectResponse($this->path('ccdn_forum_admin_board_list', $this->getFilterQueryStrings($formHandler->getForm()->getData())));
         } else {
             $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Board/create.html.', array(
                 'crumbs' => $this->getCrumbs()->addAdminManageBoardsCreate(),
@@ -110,7 +94,6 @@ class AdminBoardController extends AdminBoardBaseController
                 'category_filter' => $categoryFilter
             ));
         }
-
         $this->dispatch(ForumEvents::ADMIN_BOARD_CREATE_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
@@ -133,7 +116,6 @@ class AdminBoardController extends AdminBoardBaseController
             'forum_filter' => $this->getQuery('forum_filter', null),
             'category_filter' => $this->getQuery('category_filter', null)
         ));
-
         $this->dispatch(ForumEvents::ADMIN_BOARD_EDIT_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
@@ -161,7 +143,6 @@ class AdminBoardController extends AdminBoardBaseController
                 'category_filter' => $this->getQuery('category_filter', null)
             ));
         }
-
         $this->dispatch(ForumEvents::ADMIN_BOARD_EDIT_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
@@ -184,7 +165,6 @@ class AdminBoardController extends AdminBoardBaseController
             'forum_filter' => $this->getQuery('forum_filter', null),
             'category_filter' => $this->getQuery('category_filter', null)
         ));
-
         $this->dispatch(ForumEvents::ADMIN_BOARD_DELETE_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
@@ -202,8 +182,7 @@ class AdminBoardController extends AdminBoardBaseController
         $formHandler = $this->getFormHandlerToDeleteBoard($board);
 
         if ($formHandler->process()) {
-            $params = $this->getFilterQueryStrings($formHandler->getForm()->getData());
-            $response = $this->redirectResponse($this->path('ccdn_forum_admin_board_list', $params));
+            $response = $this->redirectResponse($this->path('ccdn_forum_admin_board_list', $this->getFilterQueryStrings($formHandler->getForm()->getData())));
         } else {
             $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Board/delete.html.', array(
                 'crumbs' => $this->getCrumbs()->addAdminManageBoardsIndex($board),
@@ -213,7 +192,6 @@ class AdminBoardController extends AdminBoardBaseController
                 'category_filter' => $this->getQuery('category_filter', null)
             ));
         }
-
         $this->dispatch(ForumEvents::ADMIN_BOARD_DELETE_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $response, $formHandler->getForm()->getData()));
 
         return $response;
@@ -232,16 +210,13 @@ class AdminBoardController extends AdminBoardBaseController
         $params = array();
 
         if ($board->getCategory()) { // We do not re-order boards not set to a category.
-            $categoryFilter = $board->getCategory()->getId();
-            $params['category_filter'] = $categoryFilter;
+            $params['category_filter'] = $board->getCategory()->getId();
             if ($board->getCategory()->getForum()) {
                 $params['forum_filter'] = $board->getCategory()->getForum()->getId();
             }
-            $boards = $this->getBoardModel()->findAllBoardsForCategoryById($categoryFilter);
-            $this->getBoardModel()->reorderBoards($boards, $board, $direction);
+            $this->getBoardModel()->reorderBoards($this->getBoardModel()->findAllBoardsForCategoryById($params['category_filter']), $board, $direction);
             $this->dispatch(ForumEvents::ADMIN_BOARD_REORDER_COMPLETE, new AdminBoardEvent($this->getRequest(), $board));
         }
-
         $response = $this->redirectResponse($this->path('ccdn_forum_admin_board_list', $params));
         $this->dispatch(ForumEvents::ADMIN_BOARD_REORDER_RESPONSE, new AdminBoardResponseEvent($this->getRequest(), $response, $board));
 

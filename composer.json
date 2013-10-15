@@ -19,10 +19,9 @@
 		"symfony/framework-bundle": "~2.1",
         "symfony/security-bundle": ">=2.1,<2.3-dev",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
-        "doctrine/doctrine-bundle": "*",
+        "doctrine/doctrine-bundle": "1.1.*",
         "twig/extensions": "1.0.*@dev",
-		"knplabs/knp-paginator-bundle": "2.3.*@dev",
-        "sensio/framework-extra-bundle": "*@dev"
+		"knplabs/knp-paginator-bundle": "2.3.*@dev"
     },
     "require-dev": {
         "symfony/swiftmailer-bundle": "2.1.*",

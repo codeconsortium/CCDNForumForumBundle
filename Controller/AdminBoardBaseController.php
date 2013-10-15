@@ -102,4 +102,32 @@ class AdminBoardBaseController extends BaseController
 
         return $params;
     }
+
+    /**
+     *
+     * @access protected
+     * @return array
+     */
+    protected function getNormalisedCategoryAndForumFilters()
+    {
+        $forumFilter = $this->getQuery('forum_filter', null);
+        $categoryFilter = $this->getQuery('category_filter', null);
+
+        if ($categoryFilter) { // Corrective Measure incase forum/category filters fall out of sync.
+            if ($category = $this->getCategoryModel()->findOneCategoryById($categoryFilter)) {
+                if ($category->getForum()) {
+                    $forumFilter = $category->getForum()->getId();
+                } else {
+                    $forumFilter = null; // Force it to be blank so 'unassigned' is highlighted.
+                }
+            } else {
+                $forumFilter = null;
+            }
+        }
+
+        return array(
+            'forum_filter' => $forumFilter,
+            'category_filter' => $categoryFilter
+        );
+    }
 }
