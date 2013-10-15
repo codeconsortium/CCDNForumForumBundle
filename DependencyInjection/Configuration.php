@@ -69,28 +69,24 @@ class Configuration implements ConfigurationInterface
             ->end();
 
         // Class file namespaces.
-        $this
-            ->addEntitySection($rootNode)
-            ->addGatewaySection($rootNode)
-            ->addRepositorySection($rootNode)
-            ->addManagerSection($rootNode)
-            ->addModelSection($rootNode)
-            ->addFormSection($rootNode)
-            ->addComponentSection($rootNode)
-        ;
+        $this->addEntitySection($rootNode);
+        $this->addGatewaySection($rootNode);
+        $this->addRepositorySection($rootNode);
+        $this->addManagerSection($rootNode);
+        $this->addModelSection($rootNode);
+        $this->addFormSection($rootNode);
+        $this->addComponentSection($rootNode);
 
         // Configuration stuff.
-        $this
-            ->addForumSection($rootNode)
-            ->addCategorySection($rootNode)
-            ->addBoardSection($rootNode)
-            ->addTopicSection($rootNode)
-            ->addPostSection($rootNode)
-            ->addItemPostSection($rootNode)
-            ->addSubscriptionSection($rootNode)
-            ->addFixtureReferenceSection($rootNode)
-            ->addSEOSection($rootNode)
-        ;
+        $this->addForumSection($rootNode);
+        $this->addCategorySection($rootNode);
+        $this->addBoardSection($rootNode);
+        $this->addTopicSection($rootNode);
+        $this->addPostSection($rootNode);
+        $this->addItemPostSection($rootNode);
+        $this->addSubscriptionSection($rootNode);
+        $this->addFixtureReferenceSection($rootNode);
+        $this->addSEOSection($rootNode);
 
         return $treeBuilder;
     }

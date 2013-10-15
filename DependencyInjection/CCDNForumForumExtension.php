@@ -68,30 +68,26 @@ class CCDNForumForumExtension extends Extension
         $this->env = $container->getParameter("kernel.environment");
 
         // Class file namespaces.
-        $this
-            ->getEntitySection($config, $container)
-            ->getGatewaySection($config, $container)
-            ->getRepositorySection($config, $container)
-            ->getManagerSection($config, $container)
-            ->getModelSection($config, $container)
-            ->getFormSection($config, $container)
-            ->getComponentSection($config, $container)
-        ;
+        $this->getEntitySection($config, $container);
+        $this->getGatewaySection($config, $container);
+        $this->getRepositorySection($config, $container);
+        $this->getManagerSection($config, $container);
+        $this->getModelSection($config, $container);
+        $this->getFormSection($config, $container);
+        $this->getComponentSection($config, $container);
 
         // Configuration stuff.
         $container->setParameter('ccdn_forum_forum.template.engine', $config['template']['engine']);
 
-        $this
-            ->getFixtureReferenceSection($config, $container)
-            ->getSEOSection($config, $container)
-            ->getForumSection($config, $container)
-            ->getCategorySection($config, $container)
-            ->getBoardSection($config, $container)
-            ->getTopicSection($config, $container)
-            ->getPostSection($config, $container)
-            ->getItemPostSection($config, $container)
-            ->getSubscriptionSection($config, $container)
-        ;
+        $this->getFixtureReferenceSection($config, $container);
+        $this->getSEOSection($config, $container);
+        $this->getForumSection($config, $container);
+        $this->getCategorySection($config, $container);
+        $this->getBoardSection($config, $container);
+        $this->getTopicSection($config, $container);
+        $this->getPostSection($config, $container);
+        $this->getItemPostSection($config, $container);
+        $this->getSubscriptionSection($config, $container);
 
         // Load Service definitions.
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
