@@ -63,7 +63,7 @@ class PostRepositoryTest extends TestBase
 		$topic2 = $this->addNewTopic('topic2', $board);
 		$posts = $this->addFixturesForPosts(array($topic2), $users['harry']);
 		
-		$topic2->setIsDeleted(true);
+		$topic2->setDeleted(true);
 		$this->em->persist($topic2);
 		$this->em->flush();
 		$this->em->refresh($topic2);

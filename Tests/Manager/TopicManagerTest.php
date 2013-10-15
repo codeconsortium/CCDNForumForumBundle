@@ -30,16 +30,16 @@ class TopicManagerTest extends TestBase
 		$topic->setTitle('NewTopicTest');
         $topic->setCachedViewCount(0);
         $topic->setCachedReplyCount(0);
-        $topic->setIsClosed(false);
-        $topic->setIsDeleted(false);
-        $topic->setIsSticky(false);
+        $topic->setClosed(false);
+        $topic->setDeleted(false);
+        $topic->setSticky(false);
 		
 		$post = new Post();
 		$post->setTopic($topic);
 		$post->setBody('foobar');
         $post->setCreatedDate(new \DateTime());
         $post->setCreatedBy($users['tom']);
-        $post->setIsDeleted(false);
+        $post->setDeleted(false);
 
 		$this->getTopicModel()->saveNewTopic($post);
 		
@@ -80,16 +80,16 @@ class TopicManagerTest extends TestBase
 		$topic->setTitle('NewTopicTest');
         $topic->setCachedViewCount(0);
         $topic->setCachedReplyCount(0);
-        $topic->setIsClosed(false);
-        $topic->setIsDeleted(false);
-        $topic->setIsSticky(false);
+        $topic->setClosed(false);
+        $topic->setDeleted(false);
+        $topic->setSticky(false);
 		
 		$post = new Post();
 		$post->setTopic($topic);
 		$post->setBody('foobar');
         $post->setCreatedDate(new \DateTime());
         $post->setCreatedBy($users['tom']);
-        $post->setIsDeleted(false);
+        $post->setDeleted(false);
 
 		$this->getTopicModel()->saveNewTopic($post);
 		

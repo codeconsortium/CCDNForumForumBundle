@@ -91,7 +91,7 @@ class PostManager extends BaseManager implements ManagerInterface
      */
     public function restore(Post $post)
     {
-        $post->setIsDeleted(false);
+        $post->setDeleted(false);
         $post->setDeletedBy(null);
         $post->setDeletedDate(null);
 
@@ -104,7 +104,7 @@ class PostManager extends BaseManager implements ManagerInterface
             // if this is the first post and only post,
             // then restore the topic aswell.
             if ($topic->getCachedReplyCount() < 1) {
-                $topic->setIsDeleted(false);
+                $topic->setDeleted(false);
                 $topic->setDeletedBy(null);
                 $topic->setDeletedDate(null);
 
@@ -126,7 +126,7 @@ class PostManager extends BaseManager implements ManagerInterface
     {
         // Don't overwite previous users accountability.
         if (! $post->getDeletedBy() && ! $post->getDeletedDate()) {
-            $post->setIsDeleted(true);
+            $post->setDeleted(true);
             $post->setDeletedBy($user);
             $post->setDeletedDate(new \DateTime());
 

@@ -184,7 +184,7 @@ class Post extends AbstractPost
      * @param  boolean $isDeleted
      * @return Post
      */
-    public function setIsDeleted($isDeleted)
+    public function setDeleted($isDeleted)
     {
         $this->isDeleted = $isDeleted;
 

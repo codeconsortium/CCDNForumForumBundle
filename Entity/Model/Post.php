@@ -31,9 +31,6 @@ abstract class Post
     /** @var UserInterface $deletedBy */
     protected $deletedBy = null;
 
-//    /** @var UserInterface $lockedBy */
-//    protected $lockedBy = null;
-
     /** @var Attachment $attachment */
     protected $attachment = null;
 

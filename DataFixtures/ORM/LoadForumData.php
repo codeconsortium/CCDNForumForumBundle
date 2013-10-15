@@ -90,9 +90,9 @@ class LoadForumData extends AbstractFixture implements OrderedFixtureInterface, 
         $topic->setTitle($title);
         $topic->setCachedViewCount(0);
         $topic->setCachedReplyCount(0);
-        $topic->setIsSticky(false);
-        $topic->setIsClosed(false);
-        $topic->setIsDeleted(false);
+        $topic->setSticky(false);
+        $topic->setClosed(false);
+        $topic->setDeleted(false);
 
         return $topic;
     }
@@ -104,7 +104,7 @@ class LoadForumData extends AbstractFixture implements OrderedFixtureInterface, 
         $post->setTopic($topic);
         $post->setCreatedBy($author);
         $post->setCreatedDate(new \DateTime());
-        $post->setIsDeleted(false);
+        $post->setDeleted(false);
         //$post->setIsLocked(false);
         $post->setBody($body);
 

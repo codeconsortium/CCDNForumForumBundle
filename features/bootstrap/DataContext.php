@@ -294,8 +294,8 @@ class DataContext extends BehatContext implements KernelAwareInterface
             $subscription->setForum($board->getCategory()->getForum());
             $subscription->setTopic($topic);
             $subscription->setOwnedBy($user);
-            $subscription->setIsRead(false);
-            $subscription->setIsSubscribed(true);
+            $subscription->setRead(false);
+            $subscription->setSubscribed(true);
 
             $this->getEntityManager()->persist($subscription);
         }

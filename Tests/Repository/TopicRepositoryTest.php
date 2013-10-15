@@ -55,7 +55,7 @@ class TopicRepositoryTest extends TestBase
 		$this->assertCount(3, $topics);
 
 		foreach ($topics as $topic) {
-			$topic->setIsSticky(true);
+			$topic->setSticky(true);
 			$this->em->persist($topic);
 		}
 		
@@ -86,7 +86,7 @@ class TopicRepositoryTest extends TestBase
         
 		// Can NOT view deleted topics.
 		$topic2 = $this->addNewTopic('topic2', $board);
-		$topic2->setIsDeleted(true);
+		$topic2->setDeleted(true);
 		
 		$this->em->persist($topic2);
 		$this->em->flush();
@@ -107,16 +107,16 @@ class TopicRepositoryTest extends TestBase
 		$topic->setTitle('NewTopicTest');
         $topic->setCachedViewCount(0);
         $topic->setCachedReplyCount(0);
-        $topic->setIsClosed(false);
-        $topic->setIsDeleted(false);
-        $topic->setIsSticky(false);
+        $topic->setClosed(false);
+        $topic->setDeleted(false);
+        $topic->setSticky(false);
 		
 		$post = new Post();
 		$post->setTopic($topic);
 		$post->setBody('foobar');
         $post->setCreatedDate(new \DateTime());
         $post->setCreatedBy($users['tom']);
-        $post->setIsDeleted(false);
+        $post->setDeleted(false);
 
 		$this->getTopicModel()->saveNewTopic($post);
 		
@@ -127,7 +127,7 @@ class TopicRepositoryTest extends TestBase
 		$post2->setBody('foobar');
         $post2->setCreatedDate(new \DateTime());
         $post2->setCreatedBy($users['tom']);
-        $post2->setIsDeleted(false);
+        $post2->setDeleted(false);
 		
 		$this->getPostModel()->postTopicReply($post2);
 		

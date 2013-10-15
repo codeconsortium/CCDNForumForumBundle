@@ -106,12 +106,12 @@ class TopicManager extends BaseManager implements ManagerInterface
     {
         // Don't overwite previous users accountability.
         if (! $topic->getDeletedBy() && ! $topic->getDeletedDate()) {
-            $topic->setIsDeleted(true);
+            $topic->setDeleted(true);
             $topic->setDeletedBy($user);
             $topic->setDeletedDate(new \DateTime());
 
             // Close the topic as a precaution.
-            $topic->setIsClosed(true);
+            $topic->setClosed(true);
             $topic->setClosedBy($user);
             $topic->setClosedDate(new \DateTime());
 
@@ -130,7 +130,7 @@ class TopicManager extends BaseManager implements ManagerInterface
      */
     public function restore(Topic $topic)
     {
-        $topic->setIsDeleted(false);
+        $topic->setDeleted(false);
         $topic->setDeletedBy(null);
         $topic->setDeletedDate(null);
 
@@ -147,7 +147,7 @@ class TopicManager extends BaseManager implements ManagerInterface
      */
     public function sticky(Topic $topic, UserInterface $user)
     {
-        $topic->setIsSticky(true);
+        $topic->setSticky(true);
         $topic->setStickiedBy($user);
         $topic->setStickiedDate(new \DateTime());
 
@@ -164,7 +164,7 @@ class TopicManager extends BaseManager implements ManagerInterface
      */
     public function unsticky(Topic $topic)
     {
-        $topic->setIsSticky(false);
+        $topic->setSticky(false);
         $topic->setStickiedBy(null);
         $topic->setStickiedDate(null);
 
@@ -184,7 +184,7 @@ class TopicManager extends BaseManager implements ManagerInterface
     {
         // Don't overwite previous users accountability.
         if (! $topic->getClosedBy() && ! $topic->getClosedDate()) {
-            $topic->setIsClosed(true);
+            $topic->setClosed(true);
             $topic->setClosedBy($user);
             $topic->setClosedDate(new \DateTime());
 
@@ -202,12 +202,12 @@ class TopicManager extends BaseManager implements ManagerInterface
      */
     public function reopen(Topic $topic)
     {
-        $topic->setIsClosed(false);
+        $topic->setClosed(false);
         $topic->setClosedBy(null);
         $topic->setClosedDate(null);
 
         if ($topic->isDeleted()) {
-            $topic->setIsDeleted(false);
+            $topic->setDeleted(false);
             $topic->setDeletedBy(null);
             $topic->setDeletedDate(null);
         }

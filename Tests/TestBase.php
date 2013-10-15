@@ -228,7 +228,7 @@ class TestBase extends WebTestCase
 		$post->setBody($body);
         $post->setCreatedDate($createdDate ?: new \DateTime());
         $post->setCreatedBy($user);
-        $post->setIsDeleted(false);
+        $post->setDeleted(false);
 		
 		$this->em->persist($post);
 		$this->em->flush();
@@ -269,8 +269,8 @@ class TestBase extends WebTestCase
 		$subscription->setTopic($topic);
         $subscription->setOwnedBy($user);
 		$subscription->setForum($forum);
-        $subscription->setIsRead($isRead);
-        $subscription->setIsSubscribed(true);
+        $subscription->setRead($isRead);
+        $subscription->setSubscribed(true);
 		
 		$this->em->persist($subscription);
 		$this->em->flush();

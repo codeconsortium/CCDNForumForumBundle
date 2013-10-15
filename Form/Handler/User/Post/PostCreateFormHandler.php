@@ -207,7 +207,7 @@ class PostCreateFormHandler extends BaseFormHandler
         $post->setCreatedDate(new \DateTime());
         $post->setCreatedBy($this->user);
         $post->setTopic($this->topic);
-        $post->setIsDeleted(false);
+        $post->setDeleted(false);
 
         $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_REPLY_SUCCESS, new UserTopicEvent($this->request, $post->getTopic()));
 

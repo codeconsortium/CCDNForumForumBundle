@@ -50,11 +50,11 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
         }
 
         if (! $subscription->isSubscribed()) {
-            $subscription->setIsSubscribed(true);
+            $subscription->setSubscribed(true);
 
             $subscription->setOwnedBy($user);
             $subscription->setTopic($topic);
-            $subscription->setIsRead(true);
+            $subscription->setRead(true);
             $subscription->setForum($topic->getBoard()->getCategory()->getForum());
 
             $this->persist($subscription)->flush();
@@ -78,8 +78,8 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
             return $this;
         }
 
-        $subscription->setIsSubscribed(false);
-        $subscription->setIsRead(true);
+        $subscription->setSubscribed(false);
+        $subscription->setRead(true);
 
         $this->persist($subscription)->flush();
 
@@ -94,7 +94,7 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
      */
     public function markAsRead(Subscription $subscription)
     {
-        $subscription->setIsRead(true);
+        $subscription->setRead(true);
 
         $this->persist($subscription)->flush();
 
@@ -109,7 +109,7 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
      */
     public function markAsUnread(Subscription $subscription)
     {
-        $subscription->setIsRead(false);
+        $subscription->setRead(false);
 
         $this->persist($subscription)->flush();
 
@@ -128,7 +128,7 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
         foreach ($subscriptions as $subscription) {
             if ($subscription->getOwnedBy()) {
                 if ($subscription->getOwnedBy()->getId() != $exceptUser->getId()) {
-                    $subscription->setIsRead(false);
+                    $subscription->setRead(false);
 
                     $this->persist($subscription);
                 }

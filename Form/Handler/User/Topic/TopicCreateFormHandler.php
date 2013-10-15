@@ -217,13 +217,13 @@ class TopicCreateFormHandler extends BaseFormHandler
     {
         $post->setCreatedDate(new \DateTime());
         $post->setCreatedBy($this->user);
-        $post->setIsDeleted(false);
+        $post->setDeleted(false);
 
         $post->getTopic()->setCachedViewCount(0);
         $post->getTopic()->setCachedReplyCount(0);
-        $post->getTopic()->setIsClosed(false);
-        $post->getTopic()->setIsDeleted(false);
-        $post->getTopic()->setIsSticky(false);
+        $post->getTopic()->setClosed(false);
+        $post->getTopic()->setDeleted(false);
+        $post->getTopic()->setSticky(false);
 
         $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_CREATE_SUCCESS, new UserTopicEvent($this->request, $post->getTopic()));
 

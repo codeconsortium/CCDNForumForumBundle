@@ -193,7 +193,7 @@ class Topic extends AbstractTopic
      * @param  boolean $isClosed
      * @return Topic
      */
-    public function setIsClosed($isClosed)
+    public function setClosed($isClosed)
     {
         $this->isClosed = $isClosed;
 
@@ -239,7 +239,7 @@ class Topic extends AbstractTopic
      * @param  boolean $isDeleted
      * @return Topic
      */
-    public function setIsDeleted($isDeleted)
+    public function setDeleted($isDeleted)
     {
         $this->isDeleted = $isDeleted;
 
@@ -285,7 +285,7 @@ class Topic extends AbstractTopic
      * @param  boolean $isSticky
      * @return Topic
      */
-    public function setIsSticky($isSticky)
+    public function setSticky($isSticky)
     {
         $this->isSticky = $isSticky;
 

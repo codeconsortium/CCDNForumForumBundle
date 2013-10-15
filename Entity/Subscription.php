@@ -82,7 +82,7 @@ class Subscription extends AbstractSubscription
      * @param  boolean      $isRead
      * @return Subscription
      */
-    public function setIsRead($isRead)
+    public function setRead($isRead)
     {
         $this->isRead = $isRead;
 
@@ -105,7 +105,7 @@ class Subscription extends AbstractSubscription
      * @param  boolean      $isSubscribed
      * @return Subscription
      */
-    public function setIsSubscribed($isSubscribed)
+    public function setSubscribed($isSubscribed)
     {
         $this->isSubscribed = $isSubscribed;
 
