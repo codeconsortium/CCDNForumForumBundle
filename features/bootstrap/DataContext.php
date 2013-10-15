@@ -18,7 +18,6 @@ use Behat\Gherkin\Node\TableNode;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-//use CCDNUser\UserBundle\Entity\User;
 use CCDNForum\ForumBundle\Tests\Functional\src\Entity\User;
 
 use CCDNForum\ForumBundle\Entity\Forum;
@@ -28,12 +27,6 @@ use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
 use CCDNForum\ForumBundle\Entity\Subscription;
 
-//
-// Require 3rd-party libraries here:
-//
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
-//
 
 /**
  *

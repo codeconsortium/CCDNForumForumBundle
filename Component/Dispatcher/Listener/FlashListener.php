@@ -227,7 +227,6 @@ class FlashListener implements EventSubscriberInterface
         if ($event->getTopic()) {
             if ($event->getTopic()->getId()) {
                 $this->session->setFlash('success', 'Successfully deleted the topic "' . $event->getTopic()->getId() . '"');
-    //        $this->setFlash('warning', $this->trans('flash.topic.delete.success', array('%topic_title%' => $topic->getTitle())));
             }
         }
     }
@@ -256,7 +255,6 @@ class FlashListener implements EventSubscriberInterface
         if ($event->getTopic()) {
             if ($event->getTopic()->getId()) {
                 $this->session->setFlash('success', 'Successfully stickied topic "' . $event->getTopic()->getId() . '"');
-                //$this->setFlash('success', $this->trans('flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
             }
         }
     }
@@ -271,7 +269,6 @@ class FlashListener implements EventSubscriberInterface
         if ($event->getTopic()) {
             if ($event->getTopic()->getId()) {
                 $this->session->setFlash('success', 'Successfully unstickied topic "' . $event->getTopic()->getId() . '"');
-                //$this->setFlash('success', $this->trans('flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
             }
         }
     }
@@ -286,7 +283,6 @@ class FlashListener implements EventSubscriberInterface
         if ($event->getTopic()) {
             if ($event->getTopic()->getId()) {
                 $this->session->setFlash('success', 'Successfully closed topic "' . $event->getTopic()->getId() . '"');
-                //$this->setFlash('success', $this->trans('flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
             }
         }
     }
@@ -301,7 +297,6 @@ class FlashListener implements EventSubscriberInterface
         if ($event->getTopic()) {
             if ($event->getTopic()->getId()) {
                 $this->session->setFlash('success', 'Successfully reopened topic "' . $event->getTopic()->getId() . '"');
-                //$this->setFlash('success', $this->trans('flash.topic.sticky.success', array('%topic_title%' => $topic->getTitle())));
             }
         }
     }
@@ -370,7 +365,6 @@ class FlashListener implements EventSubscriberInterface
     public function onTopicCreateFlooded(UserTopicFloodEvent $event)
     {
         $this->session->setFlash('warning', 'You have posted too much in a short time, take a break.');
-        //$this->setFlash('warning', $this->trans('flash.topic.flood_control'));
     }
 
     /**

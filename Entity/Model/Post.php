@@ -163,27 +163,4 @@ abstract class Post
 
         return $this;
     }
-
-//    /**
-//     * Get attachment
-//     *
-//     * @return Attachment
-//     */
-//    public function getAttachment()
-//    {
-//        return $this->attachment;
-//    }
-//
-//    /**
-//     * Set attachment
-//     *
-//     * @param  Attachment $attachment
-//     * @return Post
-//     */
-//    public function setAttachment(Attachment $attachment = null)
-//    {
-//        $this->attachment = $attachment;
-//
-//        return $this;
-//    }
 }

@@ -288,24 +288,4 @@ class TopicRepository extends BaseRepository implements RepositoryInterface
             return array('topicCount' => null, 'postCount' => null);
         }
     }
-
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  Array                                        $topicIds
-//     * @return \Doctrine\Common\Collections\ArrayCollection
-//     */
-//    public function findTheseTopicsById($topicIds = array())
-//    {
-//        if (! is_array($topicIds) || count($topicIds) < 1) {
-//            throw new \Exception('Parameter 1 must be an array and contain at least 1 topic id!');
-//        }
-//
-//        $qb = $this->createSelectQuery(array('t'));
-//
-//        $qb->where($qb->expr()->in('t.id', $topicIds));
-//
-//        return $this->gateway->findTopics($qb);
-//    }
 }

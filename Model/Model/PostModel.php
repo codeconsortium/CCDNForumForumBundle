@@ -147,37 +147,4 @@ class PostModel extends BaseModel implements ModelInterface
     {
         return $this->getManager()->softDelete($post, $user);
     }
-
-//    /**
-//     *
-//     * @access public
-//     * @param  Array                                        $postIds
-//     * @return \Doctrine\Common\Collections\ArrayCollection
-//     */
-//    public function findThesePostsById($postIds = array())
-//    {
-//        return $this->getRepository()->findThesePostsById($postIds);
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  Array                                                 $posts
-//     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
-//     */
-//    public function bulkRestore($posts)
-//    {
-//        return $this->getManager()->bulkRestore($posts);
-//    }
-//
-//    /**
-//     *
-//     * @access public
-//     * @param  Array                                                 $posts
-//     * @return \CCDNForum\ForumBundle\Model\Manager\ManagerInterface
-//     */
-//    public function bulkHardDelete($posts)
-//    {
-//        return $this->getManager()->bulkHardDelete($posts);
-//    }
 }

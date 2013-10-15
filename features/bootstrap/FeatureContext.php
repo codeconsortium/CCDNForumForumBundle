@@ -13,29 +13,14 @@
 
 namespace CCDNForum\ForumBundle\features\bootstrap;
 
-//use Behat\Behat\Context\ClosuredContextInterface,
-//    Behat\Behat\Context\TranslatedContextInterface,
-//    Behat\Behat\Context\BehatContext,
-//    Behat\Behat\Exception\PendingException;
-//use Behat\Gherkin\Node\PyStringNode,
-//    Behat\Gherkin\Node\TableNode;
-
 use Behat\MinkExtension\Context\RawMinkContext;
 use Behat\Mink\Element\NodeElement;
 
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-//use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-
-//
-// Require 3rd-party libraries here:
-//
-//   require_once 'PHPUnit/Autoload.php';
-//   require_once 'PHPUnit/Framework/Assert/Functions.php';
-//
 
 /**
  *
@@ -82,8 +67,6 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
 
         // Web user context.
         $this->useContext('web-user', new WebUser());
-
-        //Request::enableHttpMethodParameterOverride();
     }
 
     /**
@@ -141,10 +124,6 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
             if ($attribute == $searchStr) {
                 return true;
             }
-            // substr search
-            //if (strpos($attribute, $searchStr) !== false) {
-            //	return true;
-            //}
         }
 
         return false;
