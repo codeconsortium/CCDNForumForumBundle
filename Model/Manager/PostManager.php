@@ -36,12 +36,12 @@ use CCDNForum\ForumBundle\Entity\Post;
  */
 class PostManager extends BaseManager implements ManagerInterface
 {
-	/**
-	 * 
-	 * @access protected
-	 * @var \CCDNForum\ForumBundle\Component\Helper\PostLockHelper $postLockHelper
-	 */
-	protected $postLockHelper;
+    /**
+     *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Component\Helper\PostLockHelper $postLockHelper
+     */
+    protected $postLockHelper;
 
     /**
      *
@@ -54,7 +54,7 @@ class PostManager extends BaseManager implements ManagerInterface
     {
         $this->em = $em;
         $this->gateway = $gateway;
-		$this->postLockHelper = $postLockHelper;
+        $this->postLockHelper = $postLockHelper;
     }
 
     /**
@@ -65,8 +65,8 @@ class PostManager extends BaseManager implements ManagerInterface
      */
     public function postTopicReply(Post $post)
     {
-		$this->postLockHelper->setLockLimitOnPost($post);
-		
+        $this->postLockHelper->setLockLimitOnPost($post);
+
         // insert a new row
         $this->persist($post)->flush();
 

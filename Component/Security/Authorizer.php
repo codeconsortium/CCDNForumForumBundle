@@ -36,30 +36,30 @@ use CCDNForum\ForumBundle\Entity\Subscription;
  */
 class Authorizer
 {
-	/**
-	 * 
-	 * @access protected
-	 * @var \CCDNForum\ForumBundle\Component\Helper\PostLockHelper $postLockHelper
-	 */
-	protected $postLockHelper;
+    /**
+     *
+     * @access protected
+     * @var \CCDNForum\ForumBundle\Component\Helper\PostLockHelper $postLockHelper
+     */
+    protected $postLockHelper;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
-	 */
+    /**
+     *
+     * @access protected
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
+     */
     protected $securityContext;
 
     /**
      *
      * @access public
-     * @param  \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
-	 * @param  \CCDNForum\ForumBundle\Component\Helper\PostLockHelper    $postLockHelper
+     * @param \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
+     * @param \CCDNForum\ForumBundle\Component\Helper\PostLockHelper    $postLockHelper
      */
     public function __construct(SecurityContextInterface $securityContext, PostLockHelper $postLockHelper)
     {
         $this->securityContext = $securityContext;
-		$this->postLockHelper = $postLockHelper;
+        $this->postLockHelper = $postLockHelper;
     }
 
     public function canShowForum(Forum $forum)

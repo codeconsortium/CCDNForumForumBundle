@@ -27,7 +27,6 @@ use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
 use CCDNForum\ForumBundle\Entity\Subscription;
 
-
 /**
  *
  * Features context.

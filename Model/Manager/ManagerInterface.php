@@ -13,10 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Model\Manager;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
-
-use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
 
 /**
  *

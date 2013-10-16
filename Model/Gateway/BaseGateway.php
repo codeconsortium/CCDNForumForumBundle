@@ -75,7 +75,7 @@ abstract class BaseGateway implements GatewayInterface
         $this->entityClass = $entityClass;
         $this->em = $em;
         $this->paginator = $paginator;
-		$this->pagerTheme = $pagerTheme;
+        $this->pagerTheme = $pagerTheme;
     }
 
     /**
@@ -228,9 +228,9 @@ abstract class BaseGateway implements GatewayInterface
     public function paginateQuery(QueryBuilder $qb, $itemsPerPage, $page)
     {
         $pager = $this->paginator->paginate($qb, $page, $itemsPerPage);
-		$pager->setTemplate($this->pagerTheme);
-		
-		return $pager;
+        $pager->setTemplate($this->pagerTheme);
+
+        return $pager;
     }
 
     /**

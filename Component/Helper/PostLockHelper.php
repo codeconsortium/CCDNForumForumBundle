@@ -28,64 +28,64 @@ use CCDNForum\ForumBundle\Entity\Post;
  */
 class PostLockHelper
 {
-	/**
-	 * 
-	 * @access protected
-	 * @var bool $enabled
-	 */
-	protected $enabled;
+    /**
+     *
+     * @access protected
+     * @var bool $enabled
+     */
+    protected $enabled;
 
-	/**
-	 * 
-	 * @access protected
-	 * @var int $afterDays
-	 */
-	protected $afterDays;
+    /**
+     *
+     * @access protected
+     * @var int $afterDays
+     */
+    protected $afterDays;
 
-	/**
-	 * 
-	 * @access public
-	 * @param  bool $enabled
-	 * @param  int  $afterDays
-	 */
-	public function __construct($enabled, $afterDays)
-	{
-		$this->enabled = $enabled;
-		$this->afterDays = $afterDays;
-	}
+    /**
+     *
+     * @access public
+     * @param bool $enabled
+     * @param int  $afterDays
+     */
+    public function __construct($enabled, $afterDays)
+    {
+        $this->enabled = $enabled;
+        $this->afterDays = $afterDays;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @return bool
-	 */
-	public function isEnabled()
-	{
-		return $this->enabled;
-	}
+    /**
+     *
+     * @access public
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  \CCDNForum\ForumBundle\Entity\Post $post
-	 */
-	public function setLockLimitOnPost(Post $post)
-	{
-		$post->setUnlockedUntilDate(new \Datetime('now + ' . $this->afterDays . ' days'));
-	}
+    /**
+     *
+     * @access public
+     * @param \CCDNForum\ForumBundle\Entity\Post $post
+     */
+    public function setLockLimitOnPost(Post $post)
+    {
+        $post->setUnlockedUntilDate(new \Datetime('now + ' . $this->afterDays . ' days'));
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  \CCDNForum\ForumBundle\Entity\Post $post
-	 * @return bool
-	 */
-	public function isLocked(Post $post)
-	{
-		if ($this->enabled) {
-			return $post->isLocked();
-		}
-		
-		return false;
-	}
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Post $post
+     * @return bool
+     */
+    public function isLocked(Post $post)
+    {
+        if ($this->enabled) {
+            return $post->isLocked();
+        }
+
+        return false;
+    }
 }
