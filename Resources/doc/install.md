@@ -149,6 +149,12 @@ framework:
     translator: ~
 ```
 
+# Add a default forum
+
+In order to use the forum bundle you will first need to have setup a default forum.
+
+To do this, navigate to en/forum/admin/manage-forums/ and click on 'Create Forum', then add a new forum calls 'default', then you are ready to go! Enjoy!
+
 ## Next Steps.
 
 Change the layout template you wish to use for each page by changing the configs under the labelled section 'layout_templates'.
