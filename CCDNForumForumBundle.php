@@ -139,10 +139,6 @@ class CCDNForumForumBundle extends Bundle
                             'layout_template' => $this->container->getParameter('ccdn_forum_forum.topic.user.reply.layout_template'),
                             'form_theme' => $this->container->getParameter('ccdn_forum_forum.topic.user.reply.form_theme'),
                         ),
-                        'change_board' => array(
-                            'layout_template' => $this->container->getParameter('ccdn_forum_forum.topic.user.change_board.layout_template'),
-                            'form_theme' => $this->container->getParameter('ccdn_forum_forum.topic.user.change_board.form_theme'),
-                        ),
                     ),
                 ),
                 'post' => array(
@@ -156,16 +152,13 @@ class CCDNForumForumBundle extends Bundle
                         'show' => array(
                             'layout_template' => $this->container->getParameter('ccdn_forum_forum.post.user.show.layout_template'),
                         ),
-                        'edit_post' => array(
-                            'layout_template' => $this->container->getParameter('ccdn_forum_forum.post.user.edit_post.layout_template'),
-                            'form_theme' => $this->container->getParameter('ccdn_forum_forum.post.user.edit_post.form_theme'),
+                        'edit' => array(
+                            'layout_template' => $this->container->getParameter('ccdn_forum_forum.post.user.edit.layout_template'),
+                            'form_theme' => $this->container->getParameter('ccdn_forum_forum.post.user.edit.form_theme'),
                         ),
-                        'edit_topic' => array(
-                            'layout_template' => $this->container->getParameter('ccdn_forum_forum.post.user.edit_topic.layout_template'),
-                            'form_theme' => $this->container->getParameter('ccdn_forum_forum.post.user.edit_topic.form_theme'),
-                        ),
-                        'delete_post' => array(
-                            'layout_template' => $this->container->getParameter('ccdn_forum_forum.post.user.delete_post.layout_template'),
+                        'delete' => array(
+                            'layout_template' => $this->container->getParameter('ccdn_forum_forum.post.user.delete.layout_template'),
+                            'form_theme' => $this->container->getParameter('ccdn_forum_forum.post.user.delete.form_theme'),
                         ),
                     ),
                 ),

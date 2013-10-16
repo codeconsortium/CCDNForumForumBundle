@@ -436,9 +436,6 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.topic.user.reply.layout_template', $config['topic']['user']['reply']['layout_template']);
         $container->setParameter('ccdn_forum_forum.topic.user.reply.form_theme', $config['topic']['user']['reply']['form_theme']);
 
-        $container->setParameter('ccdn_forum_forum.topic.user.change_board.layout_template', $config['topic']['moderator']['change_board']['layout_template']);
-        $container->setParameter('ccdn_forum_forum.topic.user.change_board.form_theme', $config['topic']['moderator']['change_board']['form_theme']);
-
         return $this;
     }
 
@@ -455,11 +452,10 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.post.moderator.unlock.form_theme', $config['post']['moderator']['unlock']['form_theme']);
 
         $container->setParameter('ccdn_forum_forum.post.user.show.layout_template', $config['post']['user']['show']['layout_template']);
-        $container->setParameter('ccdn_forum_forum.post.user.edit_topic.layout_template', $config['post']['user']['edit_topic']['layout_template']);
-        $container->setParameter('ccdn_forum_forum.post.user.edit_topic.form_theme', $config['post']['user']['edit_topic']['form_theme']);
-        $container->setParameter('ccdn_forum_forum.post.user.edit_post.layout_template', $config['post']['user']['edit_post']['layout_template']);
-        $container->setParameter('ccdn_forum_forum.post.user.edit_post.form_theme', $config['post']['user']['edit_post']['form_theme']);
-        $container->setParameter('ccdn_forum_forum.post.user.delete_post.layout_template', $config['post']['user']['delete_post']['layout_template']);
+        $container->setParameter('ccdn_forum_forum.post.user.edit.layout_template', $config['post']['user']['edit']['layout_template']);
+        $container->setParameter('ccdn_forum_forum.post.user.edit.form_theme', $config['post']['user']['edit']['form_theme']);
+        $container->setParameter('ccdn_forum_forum.post.user.delete.layout_template', $config['post']['user']['delete']['layout_template']);
+        $container->setParameter('ccdn_forum_forum.post.user.delete.form_theme', $config['post']['user']['delete']['form_theme']);
 
         $container->setParameter('ccdn_forum_forum.post.user.lock.enable', $config['post']['user']['lock']['enable']);
         $container->setParameter('ccdn_forum_forum.post.user.lock.after_days', $config['post']['user']['lock']['after_days']);

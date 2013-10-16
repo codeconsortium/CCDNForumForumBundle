@@ -27,7 +27,7 @@
     {%- spaceless -%}
 
 	<section class="clearfix">
-	    {%- form_theme form ccdn_forum_forum.board.admin.edit.form_theme -%}
+	    {%- form_theme form ccdn_forum_forum.board.admin.delete.form_theme -%}
 	    <form action="{{- path('ccdn_forum_admin_board_delete_process', {'boardId': board.id, 'forum_filter': forum_filter, 'category_filter': category_filter}) -}}"
 		 method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
 	        <fieldset>
