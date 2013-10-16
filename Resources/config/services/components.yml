@@ -1,9 +1,6 @@
 parameters:
 
     # Service Parameters defined in app/config.
-    ccdn_forum_forum.component.event_listener.stats.class:     CCDNForum\ForumBundle\Component\Dispatcher\Listener\StatListener
-    ccdn_forum_forum.component.helper.pagination_config.class: CCDNForum\ForumBundle\Component\Helper\PaginationConfigHelper
-    ccdn_forum_forum.component.helper.post_lock.class:         CCDNForum\ForumBundle\Component\Helper\PostLockHelper
 
 services:
 
@@ -19,6 +16,12 @@ services:
             - %ccdn_forum_forum.board.user.show.topics_per_page%
             - %ccdn_forum_forum.topic.user.show.posts_per_page%
             - %ccdn_forum_forum.subscription.list.topics_per_page%
+
+    ccdn_forum_forum.component.helper.role:
+        class: %ccdn_forum_forum.component.helper.role.class%
+        arguments:
+            - @security.context
+            - %security.role_hierarchy.roles%
 
     #
     # Flood Control.
@@ -37,12 +40,6 @@ services:
         class: %ccdn_forum_forum.component.dashboard.integrator.class%
         tags:
             - { name: ccdn_component_dashboard.integrator }
-
-    ccdn_forum_forum.component.role_helper:
-        class: %ccdn_forum_forum.component.role_helper.class%
-        arguments:
-            - @security.context
-            - %security.role_hierarchy.roles%
 
     #
     # Event Subscribers.

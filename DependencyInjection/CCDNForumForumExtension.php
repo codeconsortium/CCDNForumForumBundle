@@ -282,12 +282,15 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.component.crumb_factory.class', $config['component']['crumb_factory']['class']);
         $container->setParameter('ccdn_forum_forum.component.crumb_builder.class', $config['component']['crumb_builder']['class']);
         $container->setParameter('ccdn_forum_forum.component.security.authorizer.class', $config['component']['security']['authorizer']['class']);
-        $container->setParameter('ccdn_forum_forum.component.role_helper.class', $config['component']['role_helper']['class']);
         $container->setParameter('ccdn_forum_forum.component.flood_control.class', $config['component']['flood_control']['class']);
+        $container->setParameter('ccdn_forum_forum.component.helper.role.class', $config['component']['helper']['role']['class']);
+        $container->setParameter('ccdn_forum_forum.component.helper.pagination_config.class', $config['component']['helper']['pagination_config']['class']);
+        $container->setParameter('ccdn_forum_forum.component.helper.post_lock.class', $config['component']['helper']['post_lock']['class']);
         $container->setParameter('ccdn_forum_forum.component.twig_extension.board_list.class', $config['component']['twig_extension']['board_list']['class']);
         $container->setParameter('ccdn_forum_forum.component.twig_extension.authorizer.class', $config['component']['twig_extension']['authorizer']['class']);
         $container->setParameter('ccdn_forum_forum.component.event_listener.flash.class', $config['component']['event_listener']['flash']['class']);
         $container->setParameter('ccdn_forum_forum.component.event_listener.subscriber.class', $config['component']['event_listener']['subscriber']['class']);
+        $container->setParameter('ccdn_forum_forum.component.event_listener.stats.class', $config['component']['event_listener']['stats']['class']);
 
         return $this;
     }

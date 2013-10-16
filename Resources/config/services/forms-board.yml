@@ -12,7 +12,7 @@ services:
         arguments:
             - %ccdn_forum_forum.entity.board.class%
             - %ccdn_forum_forum.entity.category.class%
-            - @ccdn_forum_forum.component.role_helper
+            - @ccdn_forum_forum.component.helper.role
 
     ccdn_forum_forum.form.handler.board_create:
         class: %ccdn_forum_forum.form.handler.board_create.class%
@@ -27,7 +27,7 @@ services:
         arguments:
             - %ccdn_forum_forum.entity.board.class%
             - %ccdn_forum_forum.entity.category.class%
-            - @ccdn_forum_forum.component.role_helper
+            - @ccdn_forum_forum.component.helper.role
 
     ccdn_forum_forum.form.handler.board_update:
         class: %ccdn_forum_forum.form.handler.board_update.class%
