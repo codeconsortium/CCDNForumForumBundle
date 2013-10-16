@@ -37,12 +37,6 @@ class BaseController extends ContainerAware
 {
     /**
      *
-     * @var \Symfony\Bundle\FrameworkBundle\Translation\Translator $translator
-     */
-    private $translator;
-
-    /**
-     *
      * @var \Symfony\Bundle\FrameworkBundle\Routing\Router $router
      */
     private $router;
@@ -118,33 +112,6 @@ class BaseController extends ContainerAware
      * @var \CCDNForum\ForumBundle\Model\Model\SubscriptionModel $subscriptionModel
      */
     private $subscriptionModel;
-
-    /**
-     *
-     * @access protected
-     * @return \Symfony\Bundle\FrameworkBundle\Translation\Translator
-     */
-    protected function getTranslator()
-    {
-        if (null == $this->translator) {
-            $this->translator = $this->container->get('translator');
-        }
-
-        return $this->translator;
-    }
-
-    /**
-     *
-     * @access protected
-     * @param  string $message
-     * @param  Array  $params
-     * @param  string $bundle
-     * @return string
-     */
-    protected function trans($message, $params = array(), $bundle = 'CCDNForumForumBundle')
-    {
-        return $this->getTranslator()->trans($message, $params, $bundle);
-    }
 
     /**
      *
@@ -360,24 +327,6 @@ class BaseController extends ContainerAware
         }
 
         return true;
-    }
-
-    /**
-     *
-     * @access protected
-     * @return string
-     */
-    protected function getSubmitAction()
-    {
-        $request = $this->getRequest();
-
-        if ($request->request->has('submit')) {
-            $action = key($request->request->get('submit'));
-        } else {
-            $action = 'post';
-        }
-
-        return $action;
     }
 
     protected function getQuery($query, $default)

@@ -47,12 +47,12 @@ class LoadForumData extends AbstractFixture implements OrderedFixtureInterface, 
 
     protected function checkCategory($categoryName)
     {
-        return $this->container->get('ccdn_forum_forum.repository.category')->findOneByName($categoryName);
+        return $this->container->get('ccdn_forum_forum.repository.category')->findOneCategoryByName($categoryName);
     }
 
     protected function checkBoard($boardName)
     {
-        return $this->container->get('ccdn_forum_forum.repository.board')->findOneByName($boardName);
+        return $this->container->get('ccdn_forum_forum.repository.board')->findOneCategoryByName($boardName);
     }
 
     protected function createCategory($name, $order)
@@ -105,7 +105,6 @@ class LoadForumData extends AbstractFixture implements OrderedFixtureInterface, 
         $post->setCreatedBy($author);
         $post->setCreatedDate(new \DateTime());
         $post->setDeleted(false);
-        //$post->setIsLocked(false);
         $post->setBody($body);
 
         return $post;
