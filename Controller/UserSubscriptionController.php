@@ -102,7 +102,6 @@ class UserSubscriptionController extends BaseController
         } else {
             $subscriptionPager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserByIdAndForumById($forum->getId(), $this->getUser()->getId(), $page, $itemsPerPage, $filter, true);
         }
-        $this->setPagerTemplate($subscriptionPager);
 
         return $this->renderResponse('CCDNForumForumBundle:User:Subscription/show.html.', array(
             'forum' => $forum,

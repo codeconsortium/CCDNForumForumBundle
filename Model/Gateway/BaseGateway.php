@@ -57,18 +57,25 @@ abstract class BaseGateway implements GatewayInterface
 
     /**
      *
+     * @access private
+     * @var string $pagerTheme
+     */
+    protected $pagerTheme;
+
+    /**
+     *
      * @access public
      * @param string                                     $entityClass
      * @param \Doctrine\Common\Persistence\ObjectManager $em
      * @param \Knp\Component\Pager\Paginator             $paginator
+     * @param string                                     $pagerTheme
      */
-    public function __construct($entityClass, ObjectManager $em, Paginator $paginator = null)
+    public function __construct($entityClass, ObjectManager $em, Paginator $paginator = null, $pagerTheme)
     {
         $this->entityClass = $entityClass;
-
         $this->em = $em;
-
         $this->paginator = $paginator;
+		$this->pagerTheme = $pagerTheme;
     }
 
     /**
@@ -220,7 +227,10 @@ abstract class BaseGateway implements GatewayInterface
      */
     public function paginateQuery(QueryBuilder $qb, $itemsPerPage, $page)
     {
-        return $this->paginator->paginate($qb, $page, $itemsPerPage);
+        $pager = $this->paginator->paginate($qb, $page, $itemsPerPage);
+		$pager->setTemplate($this->pagerTheme);
+		
+		return $pager;
     }
 
     /**

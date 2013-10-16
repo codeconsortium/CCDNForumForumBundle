@@ -37,8 +37,9 @@ interface GatewayInterface
      * @param string                                     $entityClass
      * @param \Doctrine\Common\Persistence\ObjectManager $em
      * @param \Knp\Component\Pager\Paginator             $paginator
+     * @param string                                     $pagerTheme
      */
-    public function __construct($entityClass, ObjectManager $em, Paginator $paginator = null);
+    public function __construct($entityClass, ObjectManager $em, Paginator $paginator = null, $pagerTheme);
 
     /**
      *

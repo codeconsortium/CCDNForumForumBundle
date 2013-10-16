@@ -78,6 +78,7 @@ class CCDNForumForumExtension extends Extension
 
         // Configuration stuff.
         $container->setParameter('ccdn_forum_forum.template.engine', $config['template']['engine']);
+        $container->setParameter('ccdn_forum_forum.template.pager_theme', $config['template']['pager_theme']);
 
         $this->getFixtureReferenceSection($config, $container);
         $this->getSEOSection($config, $container);

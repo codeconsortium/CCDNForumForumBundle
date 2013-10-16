@@ -64,6 +64,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('engine')->defaultValue('twig')->end()
+                        ->scalarNode('pager_theme')->defaultValue('CCDNForumForumBundle:Common:Paginator/twitter_bootstrap.html.twig')->end()
                     ->end()
                 ->end()
             ->end();

@@ -41,7 +41,6 @@ class UserBoardController extends BaseController
         $itemsPerPage = $this->getPageHelper()->getTopicsPerPageOnBoards();
         $stickyTopics = $this->getTopicModel()->findAllTopicsStickiedByBoardId($boardId, true);
         $topicsPager = $this->getTopicModel()->findAllTopicsPaginatedByBoardId($boardId, $this->getQuery('page', 1), $itemsPerPage, true);
-        $this->setPagerTemplate($topicsPager);
 
         return $this->renderResponse('CCDNForumForumBundle:User:Board/show.html.', array(
             'crumbs' => $this->getCrumbs()->addUserBoardShow($forum, $board),

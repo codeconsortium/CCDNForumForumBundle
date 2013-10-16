@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\EventDispatcher\Event;
-use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination as Pager;
 
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
@@ -407,11 +406,6 @@ class BaseController extends ContainerAware
         }
 
         return $this->authorizer;
-    }
-
-    protected function setPagerTemplate(Pager $pager)
-    {
-        $pager->setTemplate('CCDNForumForumBundle:Common:Paginator/twitter_bootstrap.html.twig');
     }
 
     /**
