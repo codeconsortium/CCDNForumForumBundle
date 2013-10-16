@@ -15,6 +15,7 @@ namespace CCDNForum\ForumBundle\Component\Security;
 
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
+use CCDNForum\ForumBundle\Component\Helper\PostLockHelper;
 use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Category;
 use CCDNForum\ForumBundle\Entity\Board;
@@ -35,16 +36,30 @@ use CCDNForum\ForumBundle\Entity\Subscription;
  */
 class Authorizer
 {
+	/**
+	 * 
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Component\Helper\PostLockHelper $postLockHelper
+	 */
+	protected $postLockHelper;
+
+	/**
+	 * 
+	 * @access protected
+	 * @var \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
+	 */
     protected $securityContext;
 
     /**
      *
      * @access public
-     * @param \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
+     * @param  \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
+	 * @param  \CCDNForum\ForumBundle\Component\Helper\PostLockHelper    $postLockHelper
      */
-    public function __construct(SecurityContextInterface $securityContext)
+    public function __construct(SecurityContextInterface $securityContext, PostLockHelper $postLockHelper)
     {
         $this->securityContext = $securityContext;
+		$this->postLockHelper = $postLockHelper;
     }
 
     public function canShowForum(Forum $forum)
@@ -310,7 +325,7 @@ class Authorizer
             return false;
         }
 
-        if ($post->isLocked()) {
+        if ($this->postLockHelper->isLocked($post)) {
             if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
                 return false;
             }

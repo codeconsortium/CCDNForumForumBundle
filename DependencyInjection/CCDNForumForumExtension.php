@@ -461,6 +461,9 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.post.user.edit_post.form_theme', $config['post']['user']['edit_post']['form_theme']);
         $container->setParameter('ccdn_forum_forum.post.user.delete_post.layout_template', $config['post']['user']['delete_post']['layout_template']);
 
+        $container->setParameter('ccdn_forum_forum.post.user.lock.enable', $config['post']['user']['lock']['enable']);
+        $container->setParameter('ccdn_forum_forum.post.user.lock.after_days', $config['post']['user']['lock']['after_days']);
+
         return $this;
     }
 

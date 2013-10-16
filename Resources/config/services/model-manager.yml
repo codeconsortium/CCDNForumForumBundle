@@ -31,12 +31,14 @@ services:
         arguments:
             - @doctrine.orm.entity_manager
             - @ccdn_forum_forum.gateway.topic
+            - @ccdn_forum_forum.component.helper.post_lock
 
     ccdn_forum_forum.manager.post:
         class: %ccdn_forum_forum.manager.post.class%
         arguments:
             - @doctrine.orm.entity_manager
             - @ccdn_forum_forum.gateway.post
+            - @ccdn_forum_forum.component.helper.post_lock
 
     ccdn_forum_forum.manager.registry:
         class: %ccdn_forum_forum.manager.registry.class%

@@ -1363,6 +1363,13 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('layout_template')->defaultValue($this->defaultValueLayoutTemplate)->end()
                     ->end()
                 ->end()
+				->arrayNode('lock')
+	                ->addDefaultsIfNotSet()
+	                ->children()
+	                    ->booleanNode('enable')->defaultTrue()->end()
+						->scalarNode('after_days')->defaultValue('7')->end()
+	                ->end()
+				->end()
             ->end()
         ;
 

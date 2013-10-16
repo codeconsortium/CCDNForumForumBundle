@@ -34,14 +34,6 @@ interface ManagerInterface
     /**
      *
      * @access public
-     * @param \Doctrine\Common\Persistence\ObjectManager      $em
-     * @param \CCDNForum\ForumBundle\Gateway\GatewayInterface $gateway
-     */
-    public function __construct(ObjectManager $em, GatewayInterface $gateway);
-
-    /**
-     *
-     * @access public
      * @param  \CCDNForum\ForumBundle\Model\Model\ModelInterface        $model
      * @return \CCDNForum\ForumBundle\Model\Repository\ManagerInterface
      */

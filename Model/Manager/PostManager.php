@@ -15,8 +15,11 @@ namespace CCDNForum\ForumBundle\Model\Manager;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Doctrine\Common\Persistence\ObjectManager;
+use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
 use CCDNForum\ForumBundle\Model\Manager\ManagerInterface;
 use CCDNForum\ForumBundle\Model\Manager\BaseManager;
+use CCDNForum\ForumBundle\Component\Helper\PostLockHelper;
 
 use CCDNForum\ForumBundle\Entity\Post;
 
@@ -33,6 +36,27 @@ use CCDNForum\ForumBundle\Entity\Post;
  */
 class PostManager extends BaseManager implements ManagerInterface
 {
+	/**
+	 * 
+	 * @access protected
+	 * @var \CCDNForum\ForumBundle\Component\Helper\PostLockHelper $postLockHelper
+	 */
+	protected $postLockHelper;
+
+    /**
+     *
+     * @access public
+     * @param \Doctrine\Common\Persistence\ObjectManager             $em
+     * @param \CCDNForum\ForumBundle\Gateway\GatewayInterface        $gateway
+     * @param \CCDNForum\ForumBundle\Component\Helper\PostLockHelper $postLockHelper
+     */
+    public function __construct(ObjectManager $em, GatewayInterface $gateway, PostLockHelper $postLockHelper)
+    {
+        $this->em = $em;
+        $this->gateway = $gateway;
+		$this->postLockHelper = $postLockHelper;
+    }
+
     /**
      *
      * @access public
@@ -41,6 +65,8 @@ class PostManager extends BaseManager implements ManagerInterface
      */
     public function postTopicReply(Post $post)
     {
+		$this->postLockHelper->setLockLimitOnPost($post);
+		
         // insert a new row
         $this->persist($post)->flush();
 

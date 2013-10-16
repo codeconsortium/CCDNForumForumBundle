@@ -1,10 +1,17 @@
 parameters:
 
     # Service Parameters defined in app/config.
-    ccdn_forum_forum.component.event_listener.stats.class: CCDNForum\ForumBundle\Component\Dispatcher\Listener\StatListener
+    ccdn_forum_forum.component.event_listener.stats.class:     CCDNForum\ForumBundle\Component\Dispatcher\Listener\StatListener
     ccdn_forum_forum.component.helper.pagination_config.class: CCDNForum\ForumBundle\Component\Helper\PaginationConfigHelper
+    ccdn_forum_forum.component.helper.post_lock.class:         CCDNForum\ForumBundle\Component\Helper\PostLockHelper
 
 services:
+
+    ccdn_forum_forum.component.helper.post_lock:
+        class: %ccdn_forum_forum.component.helper.post_lock.class%
+        arguments:
+            - %ccdn_forum_forum.post.user.lock.enable%
+            - %ccdn_forum_forum.post.user.lock.after_days%
 
     ccdn_forum_forum.component.helper.pagination_config:
         class: %ccdn_forum_forum.component.helper.pagination_config.class%
@@ -81,3 +88,4 @@ services:
         class: %ccdn_forum_forum.component.security.authorizer.class%
         arguments:
             - @security.context
+            - @ccdn_forum_forum.component.helper.post_lock

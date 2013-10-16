@@ -24,7 +24,7 @@ For the full copyright and license information, please view the [LICENSE](http:/
 
 [![Build Status](https://secure.travis-ci.org/codeconsortium/CCDNForumForumBundle.png)](https://travis-ci.org/codeconsortium/CCDNForumForumBundle) [![Latest Stable Version](https://poser.pugx.org/codeconsortium/ccdn-forum-bundle/v/stable.png)](https://packagist.org/packages/codeconsortium/ccdn-forum-bundle) [![Total Downloads](https://poser.pugx.org/codeconsortium/ccdn-forum-bundle/downloads.png)](https://packagist.org/packages/codeconsortium/ccdn-forum-bundle)
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/5ad1db2a-0342-4716-8d29-0c056f784c79/big.png)](https://insight.sensiolabs.com/projects/5ad1db2a-0342-4716-8d29-0c056f784c79)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/5ad1db2a-0342-4716-8d29-0c056f784c79/big.png)](https://insight.sensiolabs.com/projects/5ad1db2a-0342-4716-8d29-0c056f784c79) 
 [![knpbundles.com](http://knpbundles.com/codeconsortium/CCDNForumForumBundle/badge-short)](http://knpbundles.com/codeconsortium/CCDNForumForumBundle) 
 
 ## Description:
