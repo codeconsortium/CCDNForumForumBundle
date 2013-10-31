@@ -107,7 +107,7 @@ class CCDNForumForumExtension extends Extension
         $loader->load('services/forms-topic.yml');
         $loader->load('services/forms-post.yml');
 
-        $loader->load('services/twig_extensions.yml');
+        $loader->load('services/twig-extensions.yml');
     }
 
     /**

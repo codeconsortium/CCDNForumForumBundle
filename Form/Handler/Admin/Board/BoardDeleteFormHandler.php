@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Form\Handler\Admin\Board;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -62,12 +62,12 @@ class BoardDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher $dispatcher
+     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                        $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardDeleteFormType           $boardDeleteFormType
      * @param \CCDNForum\ForumBundle\Model\Model\BoardModel                              $boardModel
      */
-    public function __construct(ContainerAwareTraceableEventDispatcher $dispatcher, FormFactory $factory, $boardDeleteFormType, ModelInterface $boardModel)
+    public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $boardDeleteFormType, ModelInterface $boardModel)
     {
         $this->factory = $factory;
         $this->boardDeleteFormType = $boardDeleteFormType;

@@ -36,7 +36,7 @@ abstract class BaseGateway implements GatewayInterface
 {
     /**
      *
-     * @access private
+     * @access protected
      * @var string $entityClass
      */
     protected $entityClass;
@@ -57,7 +57,7 @@ abstract class BaseGateway implements GatewayInterface
 
     /**
      *
-     * @access private
+     * @access protected
      * @var string $pagerTheme
      */
     protected $pagerTheme;
