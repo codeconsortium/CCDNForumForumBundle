@@ -16,6 +16,7 @@ namespace CCDNForum\ForumBundle\features\bootstrap;
 use Behat\MinkExtension\Context\MinkContext;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
+use CCDNForum\ForumBundle\features\bootstrap\DataContext;
 
 /**
  *

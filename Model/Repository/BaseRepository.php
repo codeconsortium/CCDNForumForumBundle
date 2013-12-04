@@ -15,9 +15,9 @@ namespace CCDNForum\ForumBundle\Model\Repository;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
-
 use CCDNForum\ForumBundle\Model\Repository\RepositoryInterface;
 use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 
 /**
  *
@@ -74,7 +74,7 @@ abstract class BaseRepository implements RepositoryInterface
      * @param  \CCDNForum\ForumBundle\Model\Model\ModelInterface           $model
      * @return \CCDNForum\ForumBundle\Model\Repository\RepositoryInterface
      */
-    public function setModel($model)
+    public function setModel(ModelInterface $model)
     {
         $this->model = $model;
 

@@ -14,6 +14,7 @@
 namespace CCDNForum\ForumBundle\Model\Manager;
 
 use Doctrine\ORM\QueryBuilder;
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 
 /**
  *
@@ -34,7 +35,7 @@ interface ManagerInterface
      * @param  \CCDNForum\ForumBundle\Model\Model\ModelInterface        $model
      * @return \CCDNForum\ForumBundle\Model\Repository\ManagerInterface
      */
-    public function setModel($model);
+    public function setModel(ModelInterface $model);
 
     /**
      *

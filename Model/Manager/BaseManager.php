@@ -15,9 +15,9 @@ namespace CCDNForum\ForumBundle\Model\Manager;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
-
 use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
 use CCDNForum\ForumBundle\Model\Manager\ManagerInterface;
+use CCDNForum\ForumBundle\Model\Model\ModelInterface;
 
 /**
  *
@@ -74,7 +74,7 @@ abstract class BaseManager implements ManagerInterface
      * @param  \CCDNForum\ForumBundle\Model\Model\ModelInterface        $model
      * @return \CCDNForum\ForumBundle\Model\Repository\ManagerInterface
      */
-    public function setModel($model)
+    public function setModel(ModelInterface $model)
     {
         $this->model = $model;
 

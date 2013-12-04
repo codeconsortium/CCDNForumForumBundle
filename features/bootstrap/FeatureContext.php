@@ -21,6 +21,7 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use CCDNForum\ForumBundle\features\bootstrap\WebUser;
 
 /**
  *
