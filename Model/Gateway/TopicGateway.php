@@ -14,10 +14,8 @@
 namespace CCDNForum\ForumBundle\Model\Gateway;
 
 use Doctrine\ORM\QueryBuilder;
-
 use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
 use CCDNForum\ForumBundle\Model\Gateway\BaseGateway;
-
 use CCDNForum\ForumBundle\Entity\Topic;
 
 /**
