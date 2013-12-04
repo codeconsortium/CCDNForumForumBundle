@@ -83,6 +83,10 @@ button > .caret,
 	margin-left:5px;
 }
 
+.panel-primary .panel-heading, .panel-primary .panel-heading a:not(.btn) {
+	color:#fff;
+}
+
 .panel-primary .panel-heading i[class^="glyphicon"] {
 	color:#fff;
 }
