@@ -76,18 +76,20 @@ class TestBase extends WebTestCase
         $executor->purge();
 	}
 
-	protected function addNewUser($username, $email, $password)
+	protected function addNewUser($username, $email, $password, $persist = true, $andFlush = true)
 	{
 		$user = new User();
-		
 		$user->setUsername($username);
 		$user->setEmail($email);
 		$user->setPlainPassword($password);
 		
-		$this->em->persist($user);
-		$this->em->flush();
-		
-		$this->em->refresh($user);
+		if ($persist) {
+			$this->em->persist($user);
+			if ($andFlush) {
+				$this->em->flush();
+				$this->em->refresh($user);
+			}
+		}
 		
 		return $user;
 	}
@@ -96,24 +98,27 @@ class TestBase extends WebTestCase
 	{
 		$userNames = array('admin', 'tom', 'dick', 'harry');
 		$users = array();
-		
 		foreach ($userNames as $username) {
-			$users[$username] = $this->addNewUser($username, $username . '@foobar.com', 'password');
+			$users[$username] = $this->addNewUser($username, $username . '@foobar.com', 'password', true, false);
 		}
+
+		$this->em->flush();
 	
 		return $users;
 	}
 
-	protected function addNewForum($forumName)
+	protected function addNewForum($forumName, $persist = true, $andFlush = true)
 	{
 		$forum = new Forum();
-		
 		$forum->setName($forumName);
 		
-		$this->em->persist($forum);
-		$this->em->flush();
-
-		$this->em->refresh($forum);
+		if ($persist) {
+			$this->em->persist($forum);
+			if ($andFlush) {
+				$this->em->flush();
+				$this->em->refresh($forum);
+			}
+		}
 		
 		return $forum;
 	}
@@ -122,26 +127,29 @@ class TestBase extends WebTestCase
 	{
 		$forumNames = array('test_forum_1', 'test_forum_2', 'test_forum_3');
 		$forums = array();
-		
 		foreach ($forumNames as $forumName) {
-			$forums[] = $this->addNewForum($forumName);
+			$forums[] = $this->addNewForum($forumName, true, false);
 		}
+		
+		$this->em->flush();
 		
 		return $forums;
 	}
 
-	protected function addNewCategory($categoryName, $order, Forum $forum = null)
+	protected function addNewCategory($categoryName, $order, Forum $forum = null, $persist = true, $andFlush = true)
 	{
 		$category = new Category();
-		
 		$category->setName($categoryName);
 		$category->setListOrderPriority($order);
 		$category->setForum($forum);
 		
-		$this->em->persist($category);
-		$this->em->flush();
-		
-		$this->em->refresh($category);
+		if ($persist) {
+			$this->em->persist($category);
+			if ($andFlush) {
+				$this->em->flush();
+				$this->em->refresh($category);
+			}
+		}
 		
 		return $category;
 	}
@@ -150,29 +158,32 @@ class TestBase extends WebTestCase
 	{
 		$categoryNames = array('test_category_1', 'test_category_2', 'test_category_3');
 		$categories = array();
-		
 		foreach ($forums as $forum) {
 			foreach ($categoryNames as $index => $categoryName) {
-				$categories[] = $this->addNewCategory($categoryName, $index, $forum);
+				$categories[] = $this->addNewCategory($categoryName, $index, $forum, true, true);
 			}
 		}
+		
+		$this->em->flush();
 		
 		return $categories;
 	}
 
-	protected function addNewBoard($boardName, $boardDescription, $order, Category $category = null)
+	protected function addNewBoard($boardName, $boardDescription, $order, Category $category = null, $persist = true, $andFlush = true)
 	{
 		$board = new Board();
-		
 		$board->setName($boardName);
 		$board->setDescription($boardDescription);
 		$board->setListOrderPriority($order);
 		$board->setCategory($category);
 		
-		$this->em->persist($board);
-		$this->em->flush();
-		
-		$this->em->refresh($board);
+		if ($persist) {
+			$this->em->persist($board);
+			if ($andFlush) {
+				$this->em->flush();
+				$this->em->refresh($board);
+			}
+		}
 		
 		return $board;
 	}
@@ -181,27 +192,30 @@ class TestBase extends WebTestCase
 	{
 		$boardNames = array('test_board_1', 'test_board_2', 'test_board_3');
 		$boards = array();
-		
 		foreach ($categories as $category) {
 			foreach ($boardNames as $index => $boardName) {
-				$boards[] = $this->addNewBoard($boardName, $boardName, $index, $category);
+				$boards[] = $this->addNewBoard($boardName, $boardName, $index, $category, true, true);
 			}
 		}
 		
+		$this->em->flush();
+
 		return $boards;
 	}
 
-	protected function addNewTopic($title, Board $board = null)
+	protected function addNewTopic($title, Board $board = null, $persist = true, $andFlush = true)
 	{
 		$topic = new Topic();
-		
 		$topic->setTitle($title);
 		$topic->setBoard($board);
 		
-		$this->em->persist($topic);
-		$this->em->flush();
-		
-		$this->em->refresh($topic);
+		if ($persist) {
+			$this->em->persist($topic);
+			if ($andFlush) {
+				$this->em->flush();
+				$this->em->refresh($topic);
+			}
+		}
 		
 		return $topic;
 	}
@@ -210,30 +224,33 @@ class TestBase extends WebTestCase
 	{
 		$topicTitles = array('test_topic_1', 'test_topic_2', 'test_topic_3');
 		$topics = array();
-		
 		foreach ($boards as $board) {
 			foreach ($topicTitles as $index => $topicTitle) {
-				$topics[] = $this->addNewTopic($topicTitle, $board);
+				$topics[] = $this->addNewTopic($topicTitle, $board, true, false);
 			}
 		}
+		
+		$this->em->flush();
 		
 		return $topics;
 	}
 
-	protected function addNewPost($body, $topic, $user, \Datetime $createdDate = null)
+	protected function addNewPost($body, $topic, $user, \Datetime $createdDate = null, $persist = true, $andFlush = true)
 	{
 		$post = new Post();
-
 		$post->setTopic($topic);
 		$post->setBody($body);
         $post->setCreatedDate($createdDate ?: new \DateTime());
         $post->setCreatedBy($user);
         $post->setDeleted(false);
 		
-		$this->em->persist($post);
-		$this->em->flush();
-		
-		$this->em->refresh($post);
+		if ($persist) {
+			$this->em->persist($post);
+			if ($andFlush) {
+				$this->em->flush();
+				$this->em->refresh($post);
+			}
+		}
 		
 		return $post;
 	}
@@ -242,10 +259,10 @@ class TestBase extends WebTestCase
 	{
 		$postBodies = array('test_post_1', 'test_post_2', 'test_post_3');
 		$posts = array();
-		
 		foreach ($topics as $topicIndex => $topic) {
 			foreach ($postBodies as $postIndex => $postBody) {
-				$posts[] = $this->addNewPost($postBody, $topics[$topicIndex], $user, new \DateTime('now + ' . (int)(($topicIndex + 1) . ($postIndex + 1)) . ' minutes'));
+				$datetime = new \DateTime('now + ' . (int)(($topicIndex + 1) . ($postIndex + 1)) . ' minutes');
+				$posts[] = $this->addNewPost($postBody, $topics[$topicIndex], $user, $datetime, true, false);
 				
 				if ($postIndex == 0) {
 					$topics[$topicIndex]->setFirstPost($posts[count($posts) - 1]);
@@ -253,7 +270,6 @@ class TestBase extends WebTestCase
 			}
 			
 			$topics[$topicIndex]->setLastPost($posts[count($posts) - 1]);
-			
 			$this->em->persist($topic);
 		}
 		
@@ -262,20 +278,22 @@ class TestBase extends WebTestCase
 		return $posts;
 	}
 
-	protected function addNewSubscription($forum, $topic, $user, $isRead = false)
+	protected function addNewSubscription($forum, $topic, $user, $isRead = false, $persist = true, $andFlush = true)
 	{
 		$subscription = new Subscription();
-
 		$subscription->setTopic($topic);
         $subscription->setOwnedBy($user);
 		$subscription->setForum($forum);
         $subscription->setRead($isRead);
         $subscription->setSubscribed(true);
 		
-		$this->em->persist($subscription);
-		$this->em->flush();
-		
-		$this->em->refresh($subscription);
+		if ($persist) {
+			$this->em->persist($subscription);
+			if ($andFlush) {
+				$this->em->flush();
+				$this->em->refresh($subscription);
+			}
+		}
 		
 		return $subscription;
 	}
@@ -283,10 +301,11 @@ class TestBase extends WebTestCase
 	protected function addFixturesForSubscriptions($forum, $topics, $user, $isRead = false)
 	{
 		$subscriptions = array();
-		
 		foreach ($topics as $topic) {
-			$subscriptions[] = $this->addNewSubscription($forum, $topic, $user, $isRead);
+			$subscriptions[] = $this->addNewSubscription($forum, $topic, $user, $isRead, true, false);
 		}
+		
+		$this->em->flush();
 		
 		return $subscriptions;
 	}

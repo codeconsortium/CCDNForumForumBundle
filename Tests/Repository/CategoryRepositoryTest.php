@@ -53,7 +53,7 @@ class CategoryRepositoryTest extends TestBase
 		$boards = $this->addFixturesForBoards($categories);
 		
 		$foundCategories = $this->getCategoryModel()->findAllCategoriesWithBoardsForForumByName($forum->getName());
-			
+
 		$this->assertCount(3, $foundCategories);
 		$this->assertCount(3, $foundCategories[0]->getBoards());
 		$this->assertCount(3, $foundCategories[1]->getBoards());

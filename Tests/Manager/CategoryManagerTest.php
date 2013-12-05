@@ -72,8 +72,9 @@ class CategoryManagerTest extends TestBase
 		
 		$category1 = $categories[0];
 		$category2 = $categories[1];
+
 		$boards = new ArrayCollection($category1->getBoards()->toArray());
-		
+
 		$this->assertCount(3, $category1->getBoards());
 		$this->getCategoryModel()->reassignBoardsToCategory($boards, null);
 		$this->em->refresh($category1);
@@ -94,7 +95,6 @@ class CategoryManagerTest extends TestBase
 		$forum = $this->addNewForum('testReorderCategories');
 		$this->addFixturesForCategories(array($forum));
 		
-		//$forum = $this->forums[count($this->forums)];
 		$this->em->refresh($forum);
 		$categories = $forum->getCategories();
 		$this->assertCount(3, $categories);

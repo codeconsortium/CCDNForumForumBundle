@@ -19,7 +19,7 @@ class AppKernel extends Kernel
             //new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
 			new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
-            new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
+            //new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
 			new FOS\UserBundle\FOSUserBundle(),
 			new CCDNForum\ForumBundle\CCDNForumForumBundle(),
         );
@@ -38,7 +38,6 @@ class AppKernel extends Kernel
      */
     public function getCacheDir()
     {
-		//return __DIR__ . '//cache//' . $this->getEnvironment();
         return sys_get_temp_dir().'/CCDNForumForumBundle/cache/' . $this->getEnvironment();
     }
 
@@ -47,7 +46,6 @@ class AppKernel extends Kernel
      */
     public function getLogDir()
     {
-		//return __DIR__ . '//logs';
         return sys_get_temp_dir().'/CCDNForumForumBundle/logs';
     }
 
