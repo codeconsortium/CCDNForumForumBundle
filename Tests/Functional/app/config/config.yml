@@ -1,3 +1,6 @@
+imports:
+    - { resource: ccdn/forum-forum.yml }
+
 framework:
     test: ~
     #esi:             ~
