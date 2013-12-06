@@ -71,7 +71,7 @@ interface ManagerInterface
     /**
      *
      * @access public
-     * @param $entity
+     * @param  Object                                          $entity
      * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function persist($entity);
@@ -79,7 +79,7 @@ interface ManagerInterface
     /**
      *
      * @access public
-     * @param $entity
+     * @param  Object                                          $entity
      * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function remove($entity);
@@ -94,7 +94,7 @@ interface ManagerInterface
     /**
      *
      * @access public
-     * @param $entity
+     * @param  Object                                          $entity
      * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function refresh($entity);

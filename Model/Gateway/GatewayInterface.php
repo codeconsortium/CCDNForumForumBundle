@@ -110,7 +110,31 @@ interface GatewayInterface
     /**
      *
      * @access public
+     * @param  Object                                                $entity
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
+     */
+    public function persist($entity);
+
+    /**
+     *
+     * @access public
+     * @param  Object                                                $entity
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
+     */
+    public function remove($entity);
+
+    /**
+     *
+     * @access public
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
     public function flush();
+
+    /**
+     *
+     * @access public
+     * @param  Object                                                $entity
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
+     */
+    public function refresh($entity);
 }

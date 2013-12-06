@@ -235,26 +235,26 @@ abstract class BaseGateway implements GatewayInterface
 
     /**
      *
-     * @access protected
-     * @param  Object                                                $item
+     * @access public
+     * @param  Object                                                $entity
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
-    protected function persist($item)
+    public function persist($entity)
     {
-        $this->em->persist($item);
+        $this->em->persist($entity);
 
         return $this;
     }
 
     /**
      *
-     * @access protected
-     * @param  Object                                                $item
+     * @access public
+     * @param  Object                                                $entity
      * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
      */
-    protected function remove($item)
+    public function remove($entity)
     {
-        $this->em->remove($item);
+        $this->em->remove($entity);
 
         return $this;
     }
@@ -267,6 +267,19 @@ abstract class BaseGateway implements GatewayInterface
     public function flush()
     {
         $this->em->flush();
+
+        return $this;
+    }
+
+    /**
+     *
+     * @access public
+     * @param  Object                                                $entity
+     * @return \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface
+     */
+    public function refresh($entity)
+    {
+        $this->em->refresh($entity);
 
         return $this;
     }

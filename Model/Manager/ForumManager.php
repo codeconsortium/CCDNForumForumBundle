@@ -42,7 +42,6 @@ class ForumManager extends BaseManager implements ManagerInterface
     {
         // insert a new row
         $this->persist($forum)->flush();
-
         $this->refresh($forum);
 
         return $this;
@@ -56,7 +55,6 @@ class ForumManager extends BaseManager implements ManagerInterface
     public function updateForum(Forum $forum)
     {
         $this->persist($forum)->flush();
-
         $this->refresh($forum);
 
         return $this;
@@ -74,7 +72,6 @@ class ForumManager extends BaseManager implements ManagerInterface
         // still have the old category id set. Removing the forum will cascade into deleting
         // categories aswell, even though in the db the relation has been set to null.
         $this->refresh($forum);
-
         $this->remove($forum)->flush();
 
         return $this;
@@ -90,7 +87,6 @@ class ForumManager extends BaseManager implements ManagerInterface
     {
         foreach ($categories as $category) {
             $category->setForum($forum);
-
             $this->persist($category);
         }
 

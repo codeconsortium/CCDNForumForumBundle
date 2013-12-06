@@ -43,7 +43,6 @@ class CategoryManager extends BaseManager implements ManagerInterface
     {
         // insert a new row
         $this->persist($category)->flush();
-
         $this->refresh($category);
 
         return $this;
@@ -59,7 +58,6 @@ class CategoryManager extends BaseManager implements ManagerInterface
     {
         // update a record.
         $this->persist($category)->flush();
-
         $this->refresh($category);
 
         return $this;
@@ -78,7 +76,6 @@ class CategoryManager extends BaseManager implements ManagerInterface
         // have the old category id set. Removing the category will cascade into deleting
         // boards aswell, even though in the db the relation has been set to null.
         $this->refresh($category);
-
         $this->remove($category)->flush();
 
         return $this;
@@ -95,7 +92,6 @@ class CategoryManager extends BaseManager implements ManagerInterface
     {
         foreach ($boards as $board) {
             $board->setCategory($category);
-
             $this->persist($board);
         }
 

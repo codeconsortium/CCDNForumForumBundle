@@ -42,12 +42,10 @@ class BoardManager extends BaseManager implements ManagerInterface
     public function saveNewBoard(Board $board)
     {
         $boardCount = $this->model->getBoardCount();
-
         $board->setListOrderPriority(++$boardCount);
 
         // insert a new row
         $this->persist($board)->flush();
-
         $this->refresh($board);
 
         return $this;
@@ -63,7 +61,6 @@ class BoardManager extends BaseManager implements ManagerInterface
     {
         // update a record
         $this->persist($board)->flush();
-
         $this->refresh($board);
 
         return $this;
@@ -82,7 +79,6 @@ class BoardManager extends BaseManager implements ManagerInterface
         // have the old board id set. Removing the board will cascade into deleting
         // topics aswell, even though in the db the relation has been set to null.
         $this->refresh($board);
-
         $this->remove($board)->flush();
 
         return $this;
@@ -99,7 +95,6 @@ class BoardManager extends BaseManager implements ManagerInterface
     {
         foreach ($topics as $topic) {
             $topic->setBoard($board);
-
             $this->persist($topic);
         }
 

@@ -15,7 +15,6 @@ namespace CCDNForum\ForumBundle\Model\Manager;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
 use CCDNForum\ForumBundle\Model\Manager\ManagerInterface;
 use CCDNForum\ForumBundle\Model\Manager\BaseManager;
@@ -46,13 +45,11 @@ class PostManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param \Doctrine\Common\Persistence\ObjectManager             $em
      * @param \CCDNForum\ForumBundle\Gateway\GatewayInterface        $gateway
      * @param \CCDNForum\ForumBundle\Component\Helper\PostLockHelper $postLockHelper
      */
-    public function __construct(ObjectManager $em, GatewayInterface $gateway, PostLockHelper $postLockHelper)
+    public function __construct(GatewayInterface $gateway, PostLockHelper $postLockHelper)
     {
-        $this->em = $em;
         $this->gateway = $gateway;
         $this->postLockHelper = $postLockHelper;
     }
@@ -66,10 +63,8 @@ class PostManager extends BaseManager implements ManagerInterface
     public function postTopicReply(Post $post)
     {
         $this->postLockHelper->setLockLimitOnPost($post);
-
         // insert a new row
         $this->persist($post)->flush();
-
         // refresh the user so that we have an PostId to work with.
         $this->refresh($post);
 
@@ -86,7 +81,6 @@ class PostManager extends BaseManager implements ManagerInterface
     {
         // update a record
         $this->persist($post)->flush();
-
         $this->refresh($post);
 
         return $this;
@@ -101,9 +95,7 @@ class PostManager extends BaseManager implements ManagerInterface
     public function lock(Post $post)
     {
         $post->setUnlockedUntilDate(new \Datetime('now'));
-
         $this->persist($post)->flush();
-
         $this->refresh($post);
 
         return $this;

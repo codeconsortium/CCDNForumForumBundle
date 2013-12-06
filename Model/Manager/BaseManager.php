@@ -13,7 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Model\Manager;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
 use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
 use CCDNForum\ForumBundle\Model\Manager\ManagerInterface;
@@ -37,13 +36,6 @@ abstract class BaseManager implements ManagerInterface
     /**
      *
      * @access protected
-     * @var \Doctrine\ORM\EntityManager $em
-     */
-    protected $em;
-
-    /**
-     *
-     * @access protected
      * @var \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface $gateway
      */
     protected $gateway;
@@ -58,13 +50,10 @@ abstract class BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param \Doctrine\Common\Persistence\ObjectManager      $em
      * @param \CCDNForum\ForumBundle\Gateway\GatewayInterface $gateway
      */
-    public function __construct(ObjectManager $em, GatewayInterface $gateway)
+    public function __construct(GatewayInterface $gateway)
     {
-        $this->em = $em;
-
         $this->gateway = $gateway;
     }
 
@@ -149,12 +138,12 @@ abstract class BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $entity
+     * @param  Object                                          $entity
      * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function persist($entity)
     {
-        $this->em->persist($entity);
+        $this->gateway->persist($entity);
 
         return $this;
     }
@@ -162,12 +151,12 @@ abstract class BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $entity
+     * @param  Object                                          $entity
      * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function remove($entity)
     {
-        $this->em->remove($entity);
+        $this->gateway->remove($entity);
 
         return $this;
     }
@@ -179,7 +168,7 @@ abstract class BaseManager implements ManagerInterface
      */
     public function flush()
     {
-        $this->em->flush();
+        $this->gateway->flush();
 
         return $this;
     }
@@ -187,12 +176,12 @@ abstract class BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param $entity
+     * @param  Object                                          $entity
      * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
     public function refresh($entity)
     {
-        $this->em->refresh($entity);
+        $this->gateway->refresh($entity);
 
         return $this;
     }

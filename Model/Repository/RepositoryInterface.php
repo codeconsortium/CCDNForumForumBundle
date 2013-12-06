@@ -13,7 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Model\Repository;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
 use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
 use CCDNForum\ForumBundle\Model\Model\ModelInterface;
@@ -34,10 +33,9 @@ interface RepositoryInterface
     /**
      *
      * @access public
-     * @param \Doctrine\Common\Persistence\ObjectManager            $em
      * @param \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface $gateway
      */
-    public function __construct(ObjectManager $em, GatewayInterface $gateway);
+    public function __construct(GatewayInterface $gateway);
 
     /**
      *

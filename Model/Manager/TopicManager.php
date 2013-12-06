@@ -15,7 +15,6 @@ namespace CCDNForum\ForumBundle\Model\Manager;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
 use CCDNForum\ForumBundle\Model\Manager\ManagerInterface;
 use CCDNForum\ForumBundle\Model\Manager\BaseManager;
@@ -47,13 +46,11 @@ class TopicManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param \Doctrine\Common\Persistence\ObjectManager             $em
      * @param \CCDNForum\ForumBundle\Gateway\GatewayInterface        $gateway
      * @param \CCDNForum\ForumBundle\Component\Helper\PostLockHelper $postLockHelper
      */
-    public function __construct(ObjectManager $em, GatewayInterface $gateway, PostLockHelper $postLockHelper)
+    public function __construct(GatewayInterface $gateway, PostLockHelper $postLockHelper)
     {
-        $this->em = $em;
         $this->gateway = $gateway;
         $this->postLockHelper = $postLockHelper;
     }
@@ -76,14 +73,14 @@ class TopicManager extends BaseManager implements ManagerInterface
 
         // insert a new row.
         $this->persist($post)->flush();
-
-        // get the topic.
+        
+		// get the topic.
         $topic = $post->getTopic();
-
-        // set topic last_post and first_post, board's last_post.
+        
+		// set topic last_post and first_post, board's last_post.
         $topic->setFirstPost($post);
         $topic->setLastPost($post);
-
+		
         // persist and refresh after a flush to get topic id.
         $this->persist($topic)->flush();
         $this->refresh($topic);

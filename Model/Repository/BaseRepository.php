@@ -13,7 +13,6 @@
 
 namespace CCDNForum\ForumBundle\Model\Repository;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
 use CCDNForum\ForumBundle\Model\Repository\RepositoryInterface;
 use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
@@ -37,13 +36,6 @@ abstract class BaseRepository implements RepositoryInterface
     /**
      *
      * @access protected
-     * @var \Doctrine\ORM\EntityManager $em
-     */
-    protected $em;
-
-    /**
-     *
-     * @access protected
      * @var \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface $gateway
      */
     protected $gateway;
@@ -58,13 +50,10 @@ abstract class BaseRepository implements RepositoryInterface
     /**
      *
      * @access public
-     * @param \Doctrine\Common\Persistence\ObjectManager            $em
      * @param \CCDNForum\ForumBundle\Model\Gateway\GatewayInterface $gateway
      */
-    public function __construct(ObjectManager $em, GatewayInterface $gateway)
+    public function __construct(GatewayInterface $gateway)
     {
-        $this->em = $em;
-
         $this->gateway = $gateway;
     }
 

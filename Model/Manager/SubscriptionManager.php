@@ -51,7 +51,6 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
 
         if (! $subscription->isSubscribed()) {
             $subscription->setSubscribed(true);
-
             $subscription->setOwnedBy($user);
             $subscription->setTopic($topic);
             $subscription->setRead(true);
