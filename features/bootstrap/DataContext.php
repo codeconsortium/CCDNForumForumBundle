@@ -116,6 +116,8 @@ class DataContext extends BehatContext implements KernelAwareInterface
                 isset($data['enabled']) ? $data['enabled'] : true
             );
         }
+        
+		$this->getEntityManager()->flush();
     }
 
     public function thereIsUser($username, $email, $password, $role = 'ROLE_USER', $enabled = true)
@@ -132,7 +134,6 @@ class DataContext extends BehatContext implements KernelAwareInterface
         }
 
         $this->getEntityManager()->persist($user);
-        $this->getEntityManager()->flush();
 
         return $user;
     }
@@ -150,6 +151,8 @@ class DataContext extends BehatContext implements KernelAwareInterface
                 isset($data['name']) ? $data['name'] : sha1(uniqid(mt_rand(), true))
             );
         }
+		
+        $this->getEntityManager()->flush();
     }
 
     public function thereIsForum($name)
@@ -159,7 +162,6 @@ class DataContext extends BehatContext implements KernelAwareInterface
         $forum->setName($name);
 
         $this->getEntityManager()->persist($forum);
-        $this->getEntityManager()->flush();
 
         return $forum;
     }
@@ -179,6 +181,8 @@ class DataContext extends BehatContext implements KernelAwareInterface
                 isset($data['forum']) ? $data['forum'] : null
             );
         }
+		
+        $this->getEntityManager()->flush();
     }
 
     public function thereIsCategory($name, $order, $forumName = null)
@@ -195,7 +199,6 @@ class DataContext extends BehatContext implements KernelAwareInterface
         }
 
         $this->getEntityManager()->persist($category);
-        $this->getEntityManager()->flush();
 
         return $category;
     }
@@ -216,6 +219,8 @@ class DataContext extends BehatContext implements KernelAwareInterface
                 isset($data['category']) ? $data['category'] : null
             );
         }
+		
+        $this->getEntityManager()->flush();
     }
 
     public function thereIsBoard($name, $description, $order, $categoryName = null)
@@ -233,7 +238,6 @@ class DataContext extends BehatContext implements KernelAwareInterface
         }
 
         $this->getEntityManager()->persist($board);
-        $this->getEntityManager()->flush();
 
         return $board;
     }
@@ -255,6 +259,8 @@ class DataContext extends BehatContext implements KernelAwareInterface
                 isset($data['subscribed']) ? $data['subscribed'] : false
             );
         }
+		
+        $this->getEntityManager()->flush();
     }
 
     public function thereIsTopic($title, $body, $boardName, $userEmail, $subscribed = false)
@@ -300,7 +306,6 @@ class DataContext extends BehatContext implements KernelAwareInterface
         }
 
         $this->getEntityManager()->persist($topic);
-        $this->getEntityManager()->flush();
 
         return $topic;
     }
