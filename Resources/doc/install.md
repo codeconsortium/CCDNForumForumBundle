@@ -60,6 +60,7 @@ public function registerBundles()
 In your app/config/routing.yml add:
 
 ``` yml
+# app/config/routing.yml
 CCDNForumForumBundle:
     resource: "@CCDNForumForumBundle/Resources/config/routing.yml"
 ```
@@ -111,7 +112,6 @@ If you wish to use default texts provided in this bundle, you have to make sure 
 
 ``` yaml
 # app/config/config.yml
-
 framework:
     translator: ~
 ```
@@ -129,6 +129,7 @@ Change the layout template you wish to use for each page by changing the configs
 If you want to have the forum appear as your home page, add this route to your app/config/routing.yml:
 
 ``` yaml
+# app/config/routing.yml
 ccdn_homepage:
     pattern: /
     defaults: { _controller: CCDNForumForumBundle:UserCategory:index, _locale: en, forumName: default }
