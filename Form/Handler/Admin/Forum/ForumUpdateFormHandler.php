@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent;
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-use CCDNForum\ForumBundle\Model\Model\ModelInterface;
+use CCDNForum\ForumBundle\Model\FrontModel\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Forum;
 
 /**
@@ -46,7 +46,7 @@ class ForumUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\ForumModel $forumModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\ForumModel $forumModel
      */
     protected $forumModel;
 
@@ -63,7 +63,7 @@ class ForumUpdateFormHandler extends BaseFormHandler
      * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                        $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumUpdateFormType           $forumUpdateFormType
-     * @param \CCDNForum\ForumBundle\Model\Model\ForumModel                              $forumModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\ForumModel                              $forumModel
      */
     public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $forumUpdateFormType, ModelInterface $forumModel)
     {
@@ -110,7 +110,7 @@ class ForumUpdateFormHandler extends BaseFormHandler
      *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Forum           $forum
-     * @return \CCDNForum\ForumBundle\Model\Model\ForumModel
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\ForumModel
      */
     protected function onSuccess(Forum $forum)
     {

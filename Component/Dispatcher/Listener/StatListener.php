@@ -40,30 +40,30 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access private
-     * @var \CCDNForum\ForumBundle\Model\Model\BoardModel $boardModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\BoardModel $boardModel
      */
     protected $boardModel;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\TopicModel $topicModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\TopicModel $topicModel
      */
     protected $topicModel;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\PostModel $postModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\PostModel $postModel
      */
     protected $postModel;
 
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Model\Model\boardModel $boardModel
-     * @param \CCDNForum\ForumBundle\Model\Model\topicModel $topicModel
-     * @param \CCDNForum\ForumBundle\Model\Model\PostModel  $postModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\boardModel $boardModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\topicModel $topicModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\PostModel  $postModel
      */
     public function __construct($boardModel, $topicModel, $postModel)
     {

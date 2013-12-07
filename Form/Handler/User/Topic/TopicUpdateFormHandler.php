@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent;
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-use CCDNForum\ForumBundle\Model\Model\ModelInterface;
+use CCDNForum\ForumBundle\Model\FrontModel\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
 
@@ -54,14 +54,14 @@ class TopicUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\TopicModel $topicModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\TopicModel $topicModel
      */
     protected $topicModel;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\PostModel $postModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\PostModel $postModel
      */
     protected $postModel;
 
@@ -79,8 +79,8 @@ class TopicUpdateFormHandler extends BaseFormHandler
      * @param \Symfony\Component\Form\FormFactory                                        $factory
      * @param \CCDNForum\ForumBundle\Form\Type\User\Topic\TopicUpdateFormType            $formTopicType
      * @param \CCDNForum\ForumBundle\Form\Type\User\Post\PostUpdateFormType              $formPostType
-     * @param \CCDNForum\ForumBundle\Model\Model\TopicModel                              $topicModel
-     * @param \CCDNForum\ForumBundle\Model\Model\PostModel                               $postModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\TopicModel                              $topicModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\PostModel                               $postModel
      */
     public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory,
      $formTopicType, $formPostType, ModelInterface $topicModel, ModelInterface $postModel)
@@ -137,7 +137,7 @@ class TopicUpdateFormHandler extends BaseFormHandler
      *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Post            $post
-     * @return \CCDNForum\ForumBundle\Model\Model\TopicModel
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\TopicModel
      */
     protected function onSuccess(Post $post)
     {

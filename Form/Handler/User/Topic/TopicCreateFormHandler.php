@@ -21,7 +21,7 @@ use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent;
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-use CCDNForum\ForumBundle\Model\Model\ModelInterface;
+use CCDNForum\ForumBundle\Model\FrontModel\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Board;
 use CCDNForum\ForumBundle\Entity\Topic;
@@ -58,14 +58,14 @@ class TopicCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\TopicModel $topicModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\TopicModel $topicModel
      */
     protected $topicModel;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\BoardModel $boardModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\BoardModel $boardModel
      */
     protected $boardModel;
 
@@ -97,8 +97,8 @@ class TopicCreateFormHandler extends BaseFormHandler
      * @param \Symfony\Component\Form\FormFactory                                        $factory
      * @param \CCDNForum\ForumBundle\Form\Type\User\Topic\TopicCreateFormType            $formTopicType
      * @param \CCDNForum\ForumBundle\Form\Type\User\Post\PostCreateFormType              $formPostType
-     * @param \CCDNForum\ForumBundle\Model\Model\TopicModel                              $topicModel
-     * @param \CCDNForum\ForumBundle\Model\Model\BoardModel                              $boardModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\TopicModel                              $topicModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\BoardModel                              $boardModel
      * @param \\CCDNForum\ForumBundle\Component\FloodControl                             $floodControl
      */
     public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $formTopicType,
@@ -211,7 +211,7 @@ class TopicCreateFormHandler extends BaseFormHandler
      *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Post            $post
-     * @return \CCDNForum\ForumBundle\Model\Model\TopicModel
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\TopicModel
      */
     protected function onSuccess(Post $post)
     {

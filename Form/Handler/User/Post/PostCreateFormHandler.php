@@ -21,7 +21,7 @@ use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent;
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-use CCDNForum\ForumBundle\Model\Model\ModelInterface;
+use CCDNForum\ForumBundle\Model\FrontModel\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
 use CCDNForum\ForumBundle\Component\FloodControl;
@@ -49,7 +49,7 @@ class PostCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\PostModel $postModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\PostModel $postModel
      */
     protected $postModel;
 
@@ -80,7 +80,7 @@ class PostCreateFormHandler extends BaseFormHandler
      * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                        $factory
      * @param \CCDNForum\ForumBundle\Form\Type\User\Post\PostCreateFormType              $formPostType
-     * @param \CCDNForum\ForumBundle\Model\Model\PostModel                               $postModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\PostModel                               $postModel
      * @param \\CCDNForum\ForumBundle\Component\FloodControl                             $floodControl
      */
     public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $formPostType, ModelInterface $postModel, FloodControl $floodControl)
@@ -200,7 +200,7 @@ class PostCreateFormHandler extends BaseFormHandler
      *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Post           $post
-     * @return \CCDNForum\ForumBundle\Model\Model\PostModel
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\PostModel
      */
     protected function onSuccess(Post $post)
     {

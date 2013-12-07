@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-use CCDNForum\ForumBundle\Model\Model\ModelInterface;
+use CCDNForum\ForumBundle\Model\FrontModel\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Category;
 use CCDNForum\ForumBundle\Entity\Board;
 
@@ -47,7 +47,7 @@ class BoardCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\BoardModel $boardModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\BoardModel $boardModel
      */
     protected $boardModel;
 
@@ -64,7 +64,7 @@ class BoardCreateFormHandler extends BaseFormHandler
      * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                        $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Board\BoardCreateFormType                 $boardCreateFormType
-     * @param \CCDNForum\ForumBundle\Model\Model\BoardModel                              $boardModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\BoardModel                              $boardModel
      */
     public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $boardCreateFormType, ModelInterface $boardModel)
     {
@@ -113,7 +113,7 @@ class BoardCreateFormHandler extends BaseFormHandler
      *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Board           $board
-     * @return \CCDNForum\ForumBundle\Model\Model\BoardModel
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\BoardModel
      */
     protected function onSuccess(Board $board)
     {

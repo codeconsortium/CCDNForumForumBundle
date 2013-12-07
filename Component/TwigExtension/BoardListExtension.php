@@ -13,7 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Component\TwigExtension;
 
-use CCDNForum\ForumBundle\Model\Model\ModelInterface;
+use CCDNForum\ForumBundle\Model\FrontModel\ModelInterface;
 
 /**
  *
@@ -31,14 +31,14 @@ class BoardListExtension extends \Twig_Extension
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\ModelInterface $categoryModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\ModelInterface $categoryModel
      */
     protected $categoryModel;
 
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Model\Manager\ManagerInterface $categoryManager
+     * @param \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface $categoryManager
      */
     public function __construct(ModelInterface $categoryModel)
     {

@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent;
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-use CCDNForum\ForumBundle\Model\Model\ModelInterface;
+use CCDNForum\ForumBundle\Model\FrontModel\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Topic;
 
 /**
@@ -46,7 +46,7 @@ class TopicDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\TopicModel $topicModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\TopicModel $topicModel
      */
     protected $topicModel;
 
@@ -63,7 +63,7 @@ class TopicDeleteFormHandler extends BaseFormHandler
      * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                        $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicDeleteFormType       $formTopicType
-     * @param \CCDNForum\ForumBundle\Model\Model\TopicModel                              $topicModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\TopicModel                              $topicModel
      */
     public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $formTopicType, ModelInterface $topicModel)
     {
@@ -110,7 +110,7 @@ class TopicDeleteFormHandler extends BaseFormHandler
      *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Topic           $topic
-     * @return \CCDNForum\ForumBundle\Model\Model\TopicModel
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\TopicModel
      */
     protected function onSuccess(Topic $topic)
     {

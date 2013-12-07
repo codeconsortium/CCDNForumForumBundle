@@ -36,7 +36,7 @@ class SubscriberListener implements EventSubscriberInterface
     /**
      *
      * @access private
-     * @var \CCDNForum\ForumBundle\Model\Model\SubscriptionModel $subscriptionModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\SubscriptionModel $subscriptionModel
      */
     protected $subscriptionModel;
 
@@ -50,7 +50,7 @@ class SubscriberListener implements EventSubscriberInterface
     /**
      *
      * @access public
-     * @param \CCDNForum\ForumBundle\Model\Model\SubscriptionModel $subscriptionModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\SubscriptionModel $subscriptionModel
      * @param \Symfony\Component\Security\Core\SecurityContext     $securityContext
      */
     public function __construct($subscriptionModel, SecurityContext $securityContext)

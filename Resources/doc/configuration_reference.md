@@ -28,64 +28,64 @@ ccdn_forum_forum:
             class:                CCDNForum\ForumBundle\Entity\Registry
     gateway:
         forum:
-            class:                CCDNForum\ForumBundle\Model\Gateway\ForumGateway
+            class:                CCDNForum\ForumBundle\Model\Component\Gateway\ForumGateway
         category:
-            class:                CCDNForum\ForumBundle\Model\Gateway\CategoryGateway
+            class:                CCDNForum\ForumBundle\Model\Component\Gateway\CategoryGateway
         board:
-            class:                CCDNForum\ForumBundle\Model\Gateway\BoardGateway
+            class:                CCDNForum\ForumBundle\Model\Component\Gateway\BoardGateway
         topic:
-            class:                CCDNForum\ForumBundle\Model\Gateway\TopicGateway
+            class:                CCDNForum\ForumBundle\Model\Component\Gateway\TopicGateway
         post:
-            class:                CCDNForum\ForumBundle\Model\Gateway\PostGateway
+            class:                CCDNForum\ForumBundle\Model\Component\Gateway\PostGateway
         subscription:
-            class:                CCDNForum\ForumBundle\Model\Gateway\SubscriptionGateway
+            class:                CCDNForum\ForumBundle\Model\Component\Gateway\SubscriptionGateway
         registry:
-            class:                CCDNForum\ForumBundle\Model\Gateway\RegistryGateway
+            class:                CCDNForum\ForumBundle\Model\Component\Gateway\RegistryGateway
     repository:
         forum:
-            class:                CCDNForum\ForumBundle\Model\Repository\ForumRepository
+            class:                CCDNForum\ForumBundle\Model\Component\Repository\ForumRepository
         category:
-            class:                CCDNForum\ForumBundle\Model\Repository\CategoryRepository
+            class:                CCDNForum\ForumBundle\Model\Component\Repository\CategoryRepository
         board:
-            class:                CCDNForum\ForumBundle\Model\Repository\BoardRepository
+            class:                CCDNForum\ForumBundle\Model\Component\Repository\BoardRepository
         topic:
-            class:                CCDNForum\ForumBundle\Model\Repository\TopicRepository
+            class:                CCDNForum\ForumBundle\Model\Component\Repository\TopicRepository
         post:
-            class:                CCDNForum\ForumBundle\Model\Repository\PostRepository
+            class:                CCDNForum\ForumBundle\Model\Component\Repository\PostRepository
         subscription:
-            class:                CCDNForum\ForumBundle\Model\Repository\SubscriptionRepository
+            class:                CCDNForum\ForumBundle\Model\Component\Repository\SubscriptionRepository
         registry:
-            class:                CCDNForum\ForumBundle\Model\Repository\RegistryRepository
+            class:                CCDNForum\ForumBundle\Model\Component\Repository\RegistryRepository
     manager:
         forum:
-            class:                CCDNForum\ForumBundle\Model\Manager\ForumManager
+            class:                CCDNForum\ForumBundle\Model\Component\Manager\ForumManager
         category:
-            class:                CCDNForum\ForumBundle\Model\Manager\CategoryManager
+            class:                CCDNForum\ForumBundle\Model\Component\Manager\CategoryManager
         board:
-            class:                CCDNForum\ForumBundle\Model\Manager\BoardManager
+            class:                CCDNForum\ForumBundle\Model\Component\Manager\BoardManager
         topic:
-            class:                CCDNForum\ForumBundle\Model\Manager\TopicManager
+            class:                CCDNForum\ForumBundle\Model\Component\Manager\TopicManager
         post:
-            class:                CCDNForum\ForumBundle\Model\Manager\PostManager
+            class:                CCDNForum\ForumBundle\Model\Component\Manager\PostManager
         subscription:
-            class:                CCDNForum\ForumBundle\Model\Manager\SubscriptionManager
+            class:                CCDNForum\ForumBundle\Model\Component\Manager\SubscriptionManager
         registry:
-            class:                CCDNForum\ForumBundle\Model\Manager\RegistryManager
+            class:                CCDNForum\ForumBundle\Model\Component\Manager\RegistryManager
     model:
         forum:
-            class:                CCDNForum\ForumBundle\Model\Model\ForumModel
+            class:                CCDNForum\ForumBundle\Model\FrontModel\ForumModel
         category:
-            class:                CCDNForum\ForumBundle\Model\Model\CategoryModel
+            class:                CCDNForum\ForumBundle\Model\FrontModel\CategoryModel
         board:
-            class:                CCDNForum\ForumBundle\Model\Model\BoardModel
+            class:                CCDNForum\ForumBundle\Model\FrontModel\BoardModel
         topic:
-            class:                CCDNForum\ForumBundle\Model\Model\TopicModel
+            class:                CCDNForum\ForumBundle\Model\FrontModel\TopicModel
         post:
-            class:                CCDNForum\ForumBundle\Model\Model\PostModel
+            class:                CCDNForum\ForumBundle\Model\FrontModel\PostModel
         subscription:
-            class:                CCDNForum\ForumBundle\Model\Model\SubscriptionModel
+            class:                CCDNForum\ForumBundle\Model\FrontModel\SubscriptionModel
         registry:
-            class:                CCDNForum\ForumBundle\Model\Model\RegistryModel
+            class:                CCDNForum\ForumBundle\Model\FrontModel\RegistryModel
     form:
         handler:
             forum_create:

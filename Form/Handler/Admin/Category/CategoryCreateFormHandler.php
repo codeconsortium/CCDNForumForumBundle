@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminCategoryEvent;
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-use CCDNForum\ForumBundle\Model\Model\ModelInterface;
+use CCDNForum\ForumBundle\Model\FrontModel\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Category;
 
@@ -47,7 +47,7 @@ class CategoryCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\CategoryModel $categoryModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\CategoryModel $categoryModel
      */
     protected $categoryModel;
 
@@ -64,7 +64,7 @@ class CategoryCreateFormHandler extends BaseFormHandler
      * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                        $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryCreateFormType     $categoryCreateFormType
-     * @param \CCDNForum\ForumBundle\Model\Model\CategoryModel                           $categoryModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\CategoryModel                           $categoryModel
      */
     public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $categoryCreateFormType, ModelInterface $categoryModel)
     {
@@ -113,7 +113,7 @@ class CategoryCreateFormHandler extends BaseFormHandler
      *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Category           $category
-     * @return \CCDNForum\ForumBundle\Model\Model\CategoryModel
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\CategoryModel
      */
     protected function onSuccess(Category $category)
     {

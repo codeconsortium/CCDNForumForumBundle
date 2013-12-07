@@ -21,7 +21,7 @@ use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicMoveEvent;
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
-use CCDNForum\ForumBundle\Model\Model\ModelInterface;
+use CCDNForum\ForumBundle\Model\FrontModel\ModelInterface;
 use CCDNForum\ForumBundle\Entity\Forum;
 use CCDNForum\ForumBundle\Entity\Topic;
 
@@ -48,14 +48,14 @@ class TopicChangeBoardFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\TopicModel $topicModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\TopicModel $topicModel
      */
     protected $topicModel;
 
     /**
      *
      * @access protected
-     * @var \CCDNForum\ForumBundle\Model\Model\BoardModel $boardModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\BoardModel $boardModel
      */
     protected $boardModel;
 
@@ -79,8 +79,8 @@ class TopicChangeBoardFormHandler extends BaseFormHandler
      * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                        $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicChangeBoardFormType  $formTopicChangeBoardType
-     * @param \CCDNForum\ForumBundle\Model\Model\TopicModel                              $topicModel
-     * @param \CCDNForum\ForumBundle\Model\Model\BoardModel                              $boardModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\TopicModel                              $topicModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\BoardModel                              $boardModel
      */
     public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $formTopicChangeBoardType, ModelInterface $topicModel, ModelInterface $boardModel)
     {
@@ -147,7 +147,7 @@ class TopicChangeBoardFormHandler extends BaseFormHandler
      *
      * @access protected
      * @param  \CCDNForum\ForumBundle\Entity\Topic           $entity
-     * @return \CCDNForum\ForumBundle\Model\Model\TopicModel
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\TopicModel
      */
     protected function onSuccess(Topic $topic)
     {

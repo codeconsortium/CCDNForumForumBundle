@@ -73,43 +73,43 @@ class BaseController extends ContainerAware
 
     /**
      *
-     * @var \CCDNForum\ForumBundle\Model\Model\ForumModel $forumModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\ForumModel $forumModel
      */
     private $forumModel;
 
     /**
      *
-     * @var \CCDNForum\ForumBundle\Model\Model\CategoryModel $categoryModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\CategoryModel $categoryModel
      */
     private $categoryModel;
 
     /**
      *
-     * @var \CCDNForum\ForumBundle\Model\Model\BoardModel $boardModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\BoardModel $boardModel
      */
     private $boardModel;
 
     /**
      *
-     * @var \CCDNForum\ForumBundle\Model\Model\TopicModel $topicModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\TopicModel $topicModel
      */
     private $topicModel;
 
     /**
      *
-     * @var \CCDNForum\ForumBundle\Model\Model\PostModel $postModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\PostModel $postModel
      */
     private $postModel;
 
     /**
      *
-     * @var \CCDNForum\ForumBundle\Model\Model\RegistryModel $registryModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\RegistryModel $registryModel
      */
     private $registryModel;
 
     /**
      *
-     * @var \CCDNForum\ForumBundle\Model\Model\SubscriptionModel $subscriptionModel
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\SubscriptionModel $subscriptionModel
      */
     private $subscriptionModel;
 
@@ -360,7 +360,7 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Model\Model\ForumModel
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\ForumModel
      */
     protected function getForumModel()
     {
@@ -374,7 +374,7 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Model\Model\CategoryModel
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\CategoryModel
      */
     protected function getCategoryModel()
     {
@@ -388,7 +388,7 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Model\Model\BoardModel
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\BoardModel
      */
     protected function getBoardModel()
     {
@@ -402,7 +402,7 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Model\Model\TopicModel
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\TopicModel
      */
     protected function getTopicModel()
     {
@@ -416,7 +416,7 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Model\Model\PostModel
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\PostModel
      */
     protected function getPostModel()
     {
@@ -430,7 +430,7 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Model\Model\RegistryModel
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\RegistryModel
      */
     protected function getRegistryModel()
     {
@@ -444,7 +444,7 @@ class BaseController extends ContainerAware
     /**
      *
      * @access protected
-     * @return \CCDNForum\ForumBundle\Model\Model\SubscriptionModel
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\SubscriptionModel
      */
     protected function getSubscriptionModel()
     {
