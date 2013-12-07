@@ -50,6 +50,13 @@ class Configuration implements ConfigurationInterface
 
     /**
      *
+     * @access protected
+     * @var string $defaultValuePaginatorTheme
+     */
+    protected $defaultValuePaginatorTheme = 'CCDNForumForumBundle:Common:Paginator/twitter_bootstrap.html.twig';
+
+    /**
+     *
      * @access public
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
@@ -64,7 +71,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('engine')->defaultValue('twig')->end()
-                        ->scalarNode('pager_theme')->defaultValue('CCDNForumForumBundle:Common:Paginator/twitter_bootstrap.html.twig')->end()
+                        ->scalarNode('pager_theme')->defaultValue($this->defaultValuePaginatorTheme)->end()
                     ->end()
                 ->end()
             ->end();

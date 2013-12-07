@@ -1,10 +1,7 @@
 Installing CCDNForum ForumBundle 2.x
 ====================================
 
-
 ## Dependencies:
-
-1. [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle).
 
 > Note you will need a User Bundle so that you can map the UserInterface to your own User entity. You can use whatecer User Bundle you prefer. FOSUserBundle is highly rated.
 
@@ -67,8 +64,6 @@ CCDNForumForumBundle:
     resource: "@CCDNForumForumBundle/Resources/config/routing.yml"
 ```
 
-You can change the route of the standalone route to any route you like, it is included for convenience.
-
 ### Step 4: Update your database schema.
 
 Make sure to add the ForumBundle to doctrines mapping configuration:
@@ -80,39 +75,11 @@ doctrine:
     orm:
         default_entity_manager: default
         auto_generate_proxy_classes: "%kernel.debug%"
-        entity_managers:
-            default:
-                mappings:
-                    CCDNForumForumBundle:
-                        mapping:              true
-                        type:                 yml
-                        dir:                  "Resources/config/doctrine"
-                        alias:                ~
-                        prefix:               CCDNForum\ForumBundle\Entity
-                        is_bundle:            true
-```
-
-You will want to resolve the UserInterface to the User entity of your choice. As an example, if you were using FOSUSerBundle, then your configuration might look like:
-
-```
-# app/config/config.yml
-# Doctrine Configuration
-doctrine:
-    orm:
-        default_entity_manager: default
-        auto_generate_proxy_classes: "%kernel.debug%"
         resolve_target_entities:
-            Symfony\Component\Security\Core\User\UserInterface: FOS\UserBundle\Entity\User
+            Symfony\Component\Security\Core\User\UserInterface: Acme\YourUserBundle\Entity\User
         entity_managers:
             default:
                 mappings:
-					FOSUserBundle:       
-	                    mapping:              true
-	                    type:                 yml
-	                    dir:                  "Resources/config/doctrine"
-	                    alias:                ~
-	                    prefix:               FOS\UserBundle\Entity
-	                    is_bundle:            true
                     CCDNForumForumBundle:
                         mapping:              true
                         type:                 yml
@@ -122,7 +89,7 @@ doctrine:
                         is_bundle:            true
 ```
 
-> FOSUserBundle is noted as an additional example, you can add multiple bundles here. You should however choose a UserBundle of your own and change the user entity that UserInterface will resolve to.
+Replace Acme\YourUserBundle\Entity\User with the user class of your chosen user bundle.
 
 From your projects root Symfony directory on the command line run:
 
