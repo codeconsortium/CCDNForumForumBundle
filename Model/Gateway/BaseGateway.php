@@ -16,7 +16,6 @@ namespace CCDNForum\ForumBundle\Model\Gateway;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\Paginator;
-
 use CCDNForum\ForumBundle\Model\Gateway\GatewayInterface;
 
 /**
@@ -37,6 +36,13 @@ abstract class BaseGateway implements GatewayInterface
     /**
      *
      * @access protected
+     * @var \Doctrine\Common\Persistence\ObjectManager $em
+     */
+    protected $em;
+
+    /**
+     *
+     * @access protected
      * @var string $entityClass
      */
     protected $entityClass;
@@ -51,13 +57,6 @@ abstract class BaseGateway implements GatewayInterface
     /**
      *
      * @access protected
-     * @var \Doctrine\Common\Persistence\ObjectManager $em
-     */
-    protected $em;
-
-    /**
-     *
-     * @access protected
      * @var string $pagerTheme
      */
     protected $pagerTheme;
@@ -65,13 +64,17 @@ abstract class BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param string                                     $entityClass
-     * @param \Doctrine\Common\Persistence\ObjectManager $em
-     * @param \Knp\Component\Pager\Paginator             $paginator
-     * @param string                                     $pagerTheme
+     * @param  \Doctrine\Common\Persistence\ObjectManager $em
+     * @param  string                                     $entityClass
+     * @param  \Knp\Component\Pager\Paginator             $paginator
+     * @param  string                                     $pagerTheme
      */
-    public function __construct($entityClass, ObjectManager $em, Paginator $paginator = null, $pagerTheme)
+    public function __construct(ObjectManager $em, $entityClass, Paginator $paginator = null, $pagerTheme = null)
     {
+        if (null == $entityClass) {
+            throw new \Exception('Entity class for gateway must be specified!');
+        }
+		
         $this->entityClass = $entityClass;
         $this->em = $em;
         $this->paginator = $paginator;

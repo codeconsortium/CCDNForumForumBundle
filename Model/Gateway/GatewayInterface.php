@@ -15,7 +15,6 @@ namespace CCDNForum\ForumBundle\Model\Gateway;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
-
 use Knp\Component\Pager\Paginator;
 
 /**
@@ -34,12 +33,12 @@ interface GatewayInterface
     /**
      *
      * @access public
-     * @param string                                     $entityClass
-     * @param \Doctrine\Common\Persistence\ObjectManager $em
-     * @param \Knp\Component\Pager\Paginator             $paginator
-     * @param string                                     $pagerTheme
+     * @param  \Doctrine\Common\Persistence\ObjectManager $em
+     * @param  string                                     $entityClass
+     * @param  \Knp\Component\Pager\Paginator             $paginator
+     * @param  string                                     $pagerTheme
      */
-    public function __construct($entityClass, ObjectManager $em, Paginator $paginator = null, $pagerTheme);
+    public function __construct(ObjectManager $em, $entityClass, Paginator $paginator = null, $pagerTheme = null);
 
     /**
      *
