@@ -73,28 +73,10 @@ class TopicManager extends BaseManager implements ManagerInterface
      * @param  \CCDNForum\ForumBundle\Entity\Post              $post
      * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
-    public function saveNewTopic(Post $post)
+    public function saveTopic(Topic $topic)
     {
-        if (! $post->getTopic()) {
-            throw new \Exception('Post must have a set topic to be saved.');
-        }
-
-        $this->postLockHelper->setLockLimitOnPost($post);
-
-        // insert a new row.
-        $this->persist($post)->flush();
-        
-		// get the topic.
-        $topic = $post->getTopic();
-        
-		// set topic last_post and first_post, board's last_post.
-        $topic->setFirstPost($post);
-        $topic->setLastPost($post);
+		$this->gateway->saveTopic($topic);
 		
-        // persist and refresh after a flush to get topic id.
-        $this->persist($topic)->flush();
-        $this->refresh($topic);
-
         return $this;
     }
 
@@ -107,7 +89,7 @@ class TopicManager extends BaseManager implements ManagerInterface
     public function updateTopic(Topic $topic)
     {
         // update the record
-        $this->persist($topic)->flush();
+        $this->gateway->updateTopic($topic);
 
         return $this;
     }

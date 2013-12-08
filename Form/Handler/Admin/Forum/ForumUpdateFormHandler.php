@@ -109,8 +109,7 @@ class ForumUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Forum                $forum
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\ForumModel
+     * @param  \CCDNForum\ForumBundle\Entity\Forum $forum
      */
     protected function onSuccess(Forum $forum)
     {
@@ -119,7 +118,5 @@ class ForumUpdateFormHandler extends BaseFormHandler
         $this->forumModel->updateForum($forum);
 
         $this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_EDIT_COMPLETE, new AdminForumEvent($this->request, $forum));
-
-        return $this->forumModel;
     }
 }

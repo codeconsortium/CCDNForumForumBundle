@@ -109,8 +109,7 @@ class BoardUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Board                $board
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\BoardModel
+     * @param  \CCDNForum\ForumBundle\Entity\Board $board
      */
     protected function onSuccess(Board $board)
     {
@@ -119,7 +118,5 @@ class BoardUpdateFormHandler extends BaseFormHandler
         $this->boardModel->updateBoard($board);
 
         $this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_EDIT_COMPLETE, new AdminBoardEvent($this->request, $board));
-
-        return $this->boardModel;
     }
 }

@@ -109,8 +109,7 @@ class PostUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Post                $post
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\PostModel
+     * @param  \CCDNForum\ForumBundle\Entity\Post $post
      */
     protected function onSuccess(Post $post)
     {
@@ -129,7 +128,5 @@ class PostUpdateFormHandler extends BaseFormHandler
         $this->postModel->updatePost($post);
 
         $this->dispatcher->dispatch(ForumEvents::USER_POST_EDIT_COMPLETE, new UserPostEvent($this->request, $post));
-
-        return $this->postModel;
     }
 }

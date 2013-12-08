@@ -49,11 +49,9 @@ class CategoryManager extends BaseManager implements ManagerInterface
      * @param  \CCDNForum\ForumBundle\Entity\Category          $category
      * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
-    public function saveNewCategory(Category $category)
+    public function saveCategory(Category $category)
     {
-        // insert a new row
-        $this->persist($category)->flush();
-        $this->refresh($category);
+		$this->gateway->saveCategory($category);
 
         return $this;
     }
@@ -66,9 +64,10 @@ class CategoryManager extends BaseManager implements ManagerInterface
      */
     public function updateCategory(Category $category)
     {
+		$this->gateway->updateCategory($category);
         // update a record.
-        $this->persist($category)->flush();
-        $this->refresh($category);
+        //$this->persist($category)->flush();
+        //$this->refresh($category);
 
         return $this;
     }

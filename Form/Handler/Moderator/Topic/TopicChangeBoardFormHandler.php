@@ -147,8 +147,7 @@ class TopicChangeBoardFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                $topic
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\TopicModel
+     * @param  \CCDNForum\ForumBundle\Entity\Topic $topic
      */
     protected function onSuccess(Topic $topic)
     {
@@ -157,7 +156,5 @@ class TopicChangeBoardFormHandler extends BaseFormHandler
         $this->topicModel->updateTopic($topic);
 
         $this->dispatcher->dispatch(ForumEvents::MODERATOR_TOPIC_CHANGE_BOARD_COMPLETE, new ModeratorTopicMoveEvent($this->request, $this->oldBoard, $topic->getBoard(), $topic));
-
-        return $this->topicModel;
     }
 }

@@ -112,17 +112,14 @@ class BoardCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Board                $board
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\BoardModel
+     * @param  \CCDNForum\ForumBundle\Entity\Board $board
      */
     protected function onSuccess(Board $board)
     {
         $this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_CREATE_SUCCESS, new AdminBoardEvent($this->request, $board));
 
-        $this->boardModel->saveNewBoard($board);
+        $this->boardModel->saveBoard($board);
 
         $this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_CREATE_COMPLETE, new AdminBoardEvent($this->request, $board));
-
-        return $this->boardModel;
     }
 }

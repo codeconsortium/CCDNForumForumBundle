@@ -48,11 +48,9 @@ class ForumManager extends BaseManager implements ManagerInterface
      * @access public
      * @param \CCDNForum\ForumBundle\Entity\Forum $forum
      */
-    public function saveNewForum(Forum $forum)
+    public function saveForum(Forum $forum)
     {
-        // insert a new row
-        $this->persist($forum)->flush();
-        $this->refresh($forum);
+		$this->gateway->saveForum($forum);
 
         return $this;
     }
@@ -64,8 +62,9 @@ class ForumManager extends BaseManager implements ManagerInterface
      */
     public function updateForum(Forum $forum)
     {
-        $this->persist($forum)->flush();
-        $this->refresh($forum);
+		$this->gateway->updateForum($forum);
+        //$this->persist($forum)->flush();
+        //$this->refresh($forum);
 
         return $this;
     }

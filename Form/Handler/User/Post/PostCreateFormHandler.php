@@ -199,8 +199,7 @@ class PostCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Post                $post
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\PostModel
+     * @param  \CCDNForum\ForumBundle\Entity\Post $post
      */
     protected function onSuccess(Post $post)
     {
@@ -211,11 +210,9 @@ class PostCreateFormHandler extends BaseFormHandler
 
         $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_REPLY_SUCCESS, new UserTopicEvent($this->request, $post->getTopic()));
 
-        $this->postModel->postTopicReply($post);
+        $this->postModel->savePost($post);
 
         $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_REPLY_COMPLETE, new UserTopicEvent($this->request, $this->topic, $this->didAuthorSubscribe()));
-
-        return $this->postModel;
     }
 
     /**

@@ -111,8 +111,7 @@ class ForumDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Forum                $forum
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\ForumModel
+     * @param  \CCDNForum\ForumBundle\Entity\Forum $forum
      */
     protected function onSuccess(Forum $forum)
     {
@@ -127,7 +126,5 @@ class ForumDeleteFormHandler extends BaseFormHandler
         $this->forumModel->deleteForum($forum);
 
         $this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_DELETE_COMPLETE, new AdminForumEvent($this->request, $forum));
-
-        return $this->forumModel;
     }
 }

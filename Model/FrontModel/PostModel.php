@@ -117,9 +117,9 @@ class PostModel extends BaseModel implements ModelInterface
      * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
-    public function postTopicReply(Post $post)
+    public function savePost(Post $post)
     {
-        return $this->getManager()->postTopicReply($post);
+        return $this->getManager()->savePost($post);
     }
 
     /**

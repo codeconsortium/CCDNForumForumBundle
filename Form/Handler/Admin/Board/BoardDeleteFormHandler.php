@@ -111,8 +111,7 @@ class BoardDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Board                $board
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\BoardModel
+     * @param  \CCDNForum\ForumBundle\Entity\Board $board
      */
     protected function onSuccess(Board $board)
     {
@@ -127,7 +126,5 @@ class BoardDeleteFormHandler extends BaseFormHandler
         $this->boardModel->deleteBoard($board);
 
         $this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_DELETE_COMPLETE, new AdminBoardEvent($this->request, $board));
-
-        return $this->boardModel;
     }
 }

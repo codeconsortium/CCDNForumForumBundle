@@ -18,13 +18,14 @@ use CCDNForum\ForumBundle\Tests\TestBase;
 
 class TopicManagerTest extends TestBase
 {
-	public function testSaveNewTopic()
+	public function testSaveTopic()
 	{
 		$this->purge();
 		$users = $this->addFixturesForUsers();
 		$topic = $this->addNewTopic('NewTopicTest', null, false, false);
 		$post = $this->addNewPost('foobar', $topic, $users['tom'], new \DateTime(), false, false);
-		$this->getTopicModel()->saveNewTopic($post);
+		$this->getPostModel()->savePost($post);
+		$this->getTopicModel()->saveTopic($topic);
 		$foundTopic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topic->getId(), true);
 
 		$this->assertNotNull($foundTopic);
@@ -56,7 +57,8 @@ class TopicManagerTest extends TestBase
 		$users = $this->addFixturesForUsers();
 		$topic = $this->addNewTopic('NewTopicTest', null, false, false);
 		$post = $this->addNewPost('foobar', $topic, $users['tom'], new \DateTime(), false, false);
-		$this->getTopicModel()->saveNewTopic($post);
+		$this->getPostModel()->savePost($post);
+		$this->getTopicModel()->saveTopic($topic);
 		$this->getTopicModel()->incrementViewCounter($topic);
 		$foundTopic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topic->getId(), true);
 		

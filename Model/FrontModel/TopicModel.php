@@ -122,9 +122,9 @@ class TopicModel extends BaseModel implements ModelInterface
      * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
-    public function saveNewTopic(Post $post)
+    public function saveTopic(Topic $topic)
     {
-        return $this->getManager()->saveNewTopic($post);
+        return $this->getManager()->saveTopic($topic);
     }
 
     /**

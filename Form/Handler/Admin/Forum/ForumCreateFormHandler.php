@@ -87,17 +87,14 @@ class ForumCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Forum                $forum
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\ForumModel
+     * @param  \CCDNForum\ForumBundle\Entity\Forum $forum
      */
     protected function onSuccess(Forum $forum)
     {
         $this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_CREATE_SUCCESS, new AdminForumEvent($this->request, $forum));
 
-        $this->forumModel->saveNewForum($forum);
+        $this->forumModel->saveForum($forum);
 
         $this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_CREATE_COMPLETE, new AdminForumEvent($this->request, $forum));
-
-        return $this->forumModel;
     }
 }

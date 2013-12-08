@@ -66,7 +66,7 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
             $subscription->setRead(true);
             $subscription->setForum($topic->getBoard()->getCategory()->getForum());
 
-            $this->persist($subscription)->flush();
+            $this->gateway->saveSubscription($subscription);
         }
 
         return $this;
@@ -90,7 +90,7 @@ class SubscriptionManager extends BaseManager implements ManagerInterface
         $subscription->setSubscribed(false);
         $subscription->setRead(true);
 
-        $this->persist($subscription)->flush();
+        $this->gateway->saveSubscription($subscription);
 
         return $this;
     }

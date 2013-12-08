@@ -109,8 +109,7 @@ class PostUnlockFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Post                $post
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\PostModel
+     * @param  \CCDNForum\ForumBundle\Entity\Post $post
      */
     protected function onSuccess(Post $post)
     {
@@ -122,7 +121,5 @@ class PostUnlockFormHandler extends BaseFormHandler
         $this->postModel->updatePost($post);
 
         $this->dispatcher->dispatch(ForumEvents::MODERATOR_POST_UNLOCK_COMPLETE, new ModeratorPostEvent($this->request, $post));
-
-        return $this->postModel;
     }
 }

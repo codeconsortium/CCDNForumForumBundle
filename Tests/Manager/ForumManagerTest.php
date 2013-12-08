@@ -18,11 +18,11 @@ use CCDNForum\ForumBundle\Tests\TestBase;
 
 class ForumManagerTest extends TestBase
 {
-	public function testSaveNewForum()
+	public function testSaveForum()
 	{
 		$this->purge();
 		$forum = $this->addNewForum('NewForumTest', false, false);
-		$this->getForumModel()->saveNewForum($forum);
+		$this->getForumModel()->saveForum($forum);
 		
 		$this->assertTrue(is_numeric($forum->getId()));
 		$this->assertSame('NewForumTest', $forum->getName());

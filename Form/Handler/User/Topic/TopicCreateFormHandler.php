@@ -219,8 +219,7 @@ class TopicCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Post                 $post
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\TopicModel
+     * @param  \CCDNForum\ForumBundle\Entity\Post $post
      */
     protected function onSuccess(Post $post)
     {
@@ -228,19 +227,21 @@ class TopicCreateFormHandler extends BaseFormHandler
         $post->setCreatedBy($this->user);
         $post->setDeleted(false);
 
-        $post->getTopic()->setCachedViewCount(0);
-        $post->getTopic()->setCachedReplyCount(0);
-        $post->getTopic()->setClosed(false);
-        $post->getTopic()->setDeleted(false);
-        $post->getTopic()->setSticky(false);
+		$topic = $post->getTopic();
+        $topic->setCachedViewCount(0);
+        $topic->setCachedReplyCount(0);
+        $topic->setClosed(false);
+        $topic->setDeleted(false);
+        $topic->setSticky(false);
 
-        $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_CREATE_SUCCESS, new UserTopicEvent($this->request, $post->getTopic()));
+        $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_CREATE_SUCCESS, new UserTopicEvent($this->request, $topic));
 
-        $this->topicModel->saveNewTopic($post);
+		$this->postModel->savePost($post);
+        $topic->setFirstPost($post);
+        $topic->setLastPost($post);
+        $this->topicModel->saveTopic($topic);
 
-        $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_CREATE_COMPLETE, new UserTopicEvent($this->request, $post->getTopic(), $this->didAuthorSubscribe()));
-
-        return $this->topicModel;
+        $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_CREATE_COMPLETE, new UserTopicEvent($this->request, $topic, $this->didAuthorSubscribe()));
     }
 
     /**

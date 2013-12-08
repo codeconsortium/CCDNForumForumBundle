@@ -109,8 +109,7 @@ class PostDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Post                $post
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\PostModel
+     * @param  \CCDNForum\ForumBundle\Entity\Post $post
      */
     protected function onSuccess(Post $post)
     {
@@ -119,7 +118,5 @@ class PostDeleteFormHandler extends BaseFormHandler
         $this->postModel->softDelete($post, $this->user);
 
         $this->dispatcher->dispatch(ForumEvents::USER_POST_SOFT_DELETE_COMPLETE, new UserPostEvent($this->request, $post));
-
-        return $this->postModel;
     }
 }

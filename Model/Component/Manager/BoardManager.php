@@ -49,14 +49,12 @@ class BoardManager extends BaseManager implements ManagerInterface
      * @param  \CCDNForum\ForumBundle\Entity\Board             $board
      * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
      */
-    public function saveNewBoard(Board $board)
+    public function saveBoard(Board $board)
     {
         $boardCount = $this->model->getBoardCount();
         $board->setListOrderPriority(++$boardCount);
 
-        // insert a new row
-        $this->persist($board)->flush();
-        $this->refresh($board);
+		$this->gateway->saveBoard($board);
 
         return $this;
     }
@@ -69,9 +67,10 @@ class BoardManager extends BaseManager implements ManagerInterface
      */
     public function updateBoard(Board $board)
     {
+		$this->gateway->updateBoard($board);
         // update a record
-        $this->persist($board)->flush();
-        $this->refresh($board);
+        //$this->persist($board)->flush();
+        //$this->refresh($board);
 
         return $this;
     }

@@ -136,8 +136,7 @@ class TopicUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Post                 $post
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\TopicModel
+     * @param  \CCDNForum\ForumBundle\Entity\Post $post
      */
     protected function onSuccess(Post $post)
     {
@@ -153,6 +152,8 @@ class TopicUpdateFormHandler extends BaseFormHandler
 
         $this->dispatcher->dispatch(ForumEvents::USER_POST_EDIT_SUCCESS, new UserPostEvent($this->request, $this->post));
 
-        return $this->postModel->updatePost($post);
+        $this->postModel->updatePost($post);
+		
+        $this->dispatcher->dispatch(ForumEvents::USER_POST_EDIT_COMPLETE, new UserPostEvent($this->request, $this->post));
     }
 }

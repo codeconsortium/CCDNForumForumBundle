@@ -109,8 +109,7 @@ class CategoryUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\CategoryModel
+     * @param  \CCDNForum\ForumBundle\Entity\Category $category
      */
     protected function onSuccess(Category $category)
     {
@@ -119,7 +118,5 @@ class CategoryUpdateFormHandler extends BaseFormHandler
         $this->categoryModel->updateCategory($category);
 
         $this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_EDIT_COMPLETE, new AdminCategoryEvent($this->request, $category));
-
-        return $this->categoryModel;
     }
 }

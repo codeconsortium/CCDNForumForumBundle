@@ -111,8 +111,7 @@ class CategoryDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\CategoryModel
+     * @param  \CCDNForum\ForumBundle\Entity\Category $category
      */
     protected function onSuccess(Category $category)
     {
@@ -127,7 +126,5 @@ class CategoryDeleteFormHandler extends BaseFormHandler
         $this->categoryModel->deleteCategory($category);
 
         $this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_DELETE_COMPLETE, new AdminCategoryEvent($this->request, $category));
-
-        return $this->categoryModel;
     }
 }

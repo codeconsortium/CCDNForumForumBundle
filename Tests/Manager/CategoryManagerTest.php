@@ -18,11 +18,11 @@ use CCDNForum\ForumBundle\Tests\TestBase;
 
 class CategoryManagerTest extends TestBase
 {
-	public function testSaveNewCategory()
+	public function testSaveCategory()
 	{
 		$this->purge();
 		$category = $this->addNewCategory('NewCategoryTest', 1, null, false, false);
-		$this->getCategoryModel()->saveNewCategory($category);
+		$this->getCategoryModel()->saveCategory($category);
 		
 		$this->assertTrue(is_numeric($category->getId()));
 		$this->assertSame('NewCategoryTest', $category->getName());

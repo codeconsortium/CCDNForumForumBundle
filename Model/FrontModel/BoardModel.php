@@ -111,9 +111,9 @@ class BoardModel extends BaseModel implements ModelInterface
      * @param  \CCDNForum\ForumBundle\Entity\Board                   $board
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
-    public function saveNewBoard(Board $board)
+    public function saveBoard(Board $board)
     {
-        return $this->getManager()->saveNewBoard($board);
+        return $this->getManager()->saveBoard($board);
     }
 
     /**

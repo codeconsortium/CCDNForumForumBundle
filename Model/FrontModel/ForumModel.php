@@ -78,9 +78,9 @@ class ForumModel extends BaseModel implements ModelInterface
      * @access public
      * @param \CCDNForum\ForumBundle\Entity\Forum $forum
      */
-    public function saveNewForum(Forum $forum)
+    public function saveForum(Forum $forum)
     {
-        return $this->getManager()->saveNewForum($forum);
+        return $this->getManager()->saveForum($forum);
     }
 
     /**

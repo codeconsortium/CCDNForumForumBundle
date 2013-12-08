@@ -109,8 +109,7 @@ class TopicDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                $topic
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\TopicModel
+     * @param  \CCDNForum\ForumBundle\Entity\Topic $topic
      */
     protected function onSuccess(Topic $topic)
     {
@@ -119,7 +118,5 @@ class TopicDeleteFormHandler extends BaseFormHandler
         $this->topicModel->softDelete($topic, $this->user);
 
         $this->dispatcher->dispatch(ForumEvents::MODERATOR_TOPIC_SOFT_DELETE_COMPLETE, new ModeratorTopicEvent($this->request, $topic));
-
-        return $this->topicModel;
     }
 }

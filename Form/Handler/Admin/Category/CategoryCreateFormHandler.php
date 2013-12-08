@@ -112,17 +112,14 @@ class CategoryCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
-     * @return \CCDNForum\ForumBundle\Model\FrontModel\CategoryModel
+     * @param  \CCDNForum\ForumBundle\Entity\Category $category
      */
     protected function onSuccess(Category $category)
     {
         $this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_SUCCESS, new AdminCategoryEvent($this->request, $category));
 
-        $this->categoryModel->saveNewCategory($category);
+        $this->categoryModel->saveCategory($category);
 
         $this->dispatcher->dispatch(ForumEvents::ADMIN_CATEGORY_CREATE_COMPLETE, new AdminCategoryEvent($this->request, $category));
-
-        return $this->categoryModel;
     }
 }

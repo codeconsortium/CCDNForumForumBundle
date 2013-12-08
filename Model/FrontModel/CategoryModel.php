@@ -98,18 +98,18 @@ class CategoryModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
+     * @param  \CCDNForum\ForumBundle\Entity\Category                          $category
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
-    public function saveNewCategory(Category $category)
+    public function saveCategory(Category $category)
     {
-        return $this->getManager()->saveNewCategory($category);
+        return $this->getManager()->saveCategory($category);
     }
 
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
+     * @param  \CCDNForum\ForumBundle\Entity\Category                          $category
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function updateCategory(Category $category)
@@ -120,7 +120,7 @@ class CategoryModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
+     * @param  \CCDNForum\ForumBundle\Entity\Category                          $category
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function deleteCategory(Category $category)
@@ -131,8 +131,8 @@ class CategoryModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \Doctrine\Common\Collections\ArrayCollection          $boards
-     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
+     * @param  \Doctrine\Common\Collections\ArrayCollection                    $boards
+     * @param  \CCDNForum\ForumBundle\Entity\Category                          $category
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function reassignBoardsToCategory(ArrayCollection $boards, Category $category = null)
@@ -143,9 +143,9 @@ class CategoryModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  Array                                                 $categories
-     * @param  \CCDNForum\ForumBundle\Entity\Category                $categoryShift
-     * @param  int                                                   $direction
+     * @param  Array                                                           $categories
+     * @param  \CCDNForum\ForumBundle\Entity\Category                          $categoryShift
+     * @param  int                                                             $direction
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function reorderCategories($categories, Category $categoryShift, $direction)

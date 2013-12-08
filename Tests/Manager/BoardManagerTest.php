@@ -18,11 +18,11 @@ use CCDNForum\ForumBundle\Tests\TestBase;
 
 class BoardManagerTest extends TestBase
 {
-	public function testSaveNewBoard()
+	public function testSaveBoard()
 	{
 		$this->purge();
 		$board = $this->addNewBoard('NewBoardTest', 'Generic description', 1, null, false, false);
-		$this->getBoardModel()->saveNewBoard($board);
+		$this->getBoardModel()->saveBoard($board);
 		
 		$this->assertTrue(is_numeric($board->getId()));
 		$this->assertSame('NewBoardTest', $board->getName());

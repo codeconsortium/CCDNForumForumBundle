@@ -18,16 +18,17 @@ use CCDNForum\ForumBundle\Tests\TestBase;
 
 class PostManagerTest extends TestBase
 {
-	public function testPostTopicReply()
+	public function testSavePost()
 	{
 		$this->purge();
 		$users = $this->addFixturesForUsers();
 		$topic = $this->addNewTopic('NewTopicTest', null, false, false);
 		$post = $this->addNewPost('foobar', $topic, $users['tom'], new \DateTime(), false, false);
-		$this->getTopicModel()->saveNewTopic($post);
+		$this->getPostModel()->savePost($post);
+		$this->getTopicModel()->saveTopic($topic);
 		$this->em->refresh($post);
 		$post2 = $this->addNewPost('foobar', $post->getTopic(), $users['tom'], new \DateTime(), false, false);
-		$this->getPostModel()->postTopicReply($post2);
+		$this->getPostModel()->savePost($post2);
 		$foundTopic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($post->getTopic()->getId(), true);
 		
 		$this->assertNotNull($foundTopic);
@@ -43,7 +44,8 @@ class PostManagerTest extends TestBase
 		$users = $this->addFixturesForUsers();
 		$topic = $this->addNewTopic('NewTopicTest', null, false, false);;
 		$post = $this->addNewPost('foobar', $topic, $users['tom'], new \DateTime(), false, false);
-		$this->getTopicModel()->saveNewTopic($post);
+		$this->getPostModel()->savePost($post);
+		$this->getTopicModel()->saveTopic($topic);
 		$this->em->refresh($post);
 		$post->setBody('edited post');
 		$this->getPostModel()->updatePost($post);
