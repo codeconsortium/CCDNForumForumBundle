@@ -14,10 +14,8 @@
 namespace CCDNForum\ForumBundle\Model\FrontModel;
 
 use Doctrine\Common\Collections\ArrayCollection;
-
 use CCDNForum\ForumBundle\Model\FrontModel\BaseModel;
 use CCDNForum\ForumBundle\Model\FrontModel\ModelInterface;
-
 use CCDNForum\ForumBundle\Entity\Category;
 
 /**
@@ -33,6 +31,16 @@ use CCDNForum\ForumBundle\Entity\Category;
  */
 class CategoryModel extends BaseModel implements ModelInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Category
+	 */
+	public function createCategory()
+	{
+		return $this->getManager()->createCategory();
+	}
+
     /**
      *
      * @access public

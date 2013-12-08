@@ -109,7 +109,7 @@ class TestBase extends WebTestCase
 
 	protected function addNewForum($forumName, $persist = true, $andFlush = true)
 	{
-		$forum = new Forum();
+		$forum = $this->getForumModel()->createForum();
 		$forum->setName($forumName);
 		
 		if ($persist) {
@@ -138,7 +138,7 @@ class TestBase extends WebTestCase
 
 	protected function addNewCategory($categoryName, $order, Forum $forum = null, $persist = true, $andFlush = true)
 	{
-		$category = new Category();
+		$category = $this->getCategoryModel()->createCategory();
 		$category->setName($categoryName);
 		$category->setListOrderPriority($order);
 		$category->setForum($forum);
@@ -171,7 +171,7 @@ class TestBase extends WebTestCase
 
 	protected function addNewBoard($boardName, $boardDescription, $order, Category $category = null, $persist = true, $andFlush = true)
 	{
-		$board = new Board();
+		$board = $this->getBoardModel()->createBoard();
 		$board->setName($boardName);
 		$board->setDescription($boardDescription);
 		$board->setListOrderPriority($order);
@@ -205,7 +205,7 @@ class TestBase extends WebTestCase
 
 	protected function addNewTopic($title, Board $board = null, $persist = true, $andFlush = true)
 	{
-		$topic = new Topic();
+		$topic = $this->getTopicModel()->createTopic();
 		$topic->setTitle($title);
 		$topic->setBoard($board);
 		
@@ -237,12 +237,20 @@ class TestBase extends WebTestCase
 
 	protected function addNewPost($body, $topic, $user, \Datetime $createdDate = null, $persist = true, $andFlush = true)
 	{
-		$post = new Post();
+		$post = $this->getPostModel()->createPost();
 		$post->setTopic($topic);
 		$post->setBody($body);
         $post->setCreatedDate($createdDate ?: new \DateTime());
         $post->setCreatedBy($user);
         $post->setDeleted(false);
+		
+		if ($topic) {
+			$topic->setLastPost($post);
+			
+			if (! $topic->getFirstPost()) {
+				$topic->setFirstPost($post);
+			}
+		}
 		
 		if ($persist) {
 			$this->em->persist($post);
@@ -280,7 +288,7 @@ class TestBase extends WebTestCase
 
 	protected function addNewSubscription($forum, $topic, $user, $isRead = false, $persist = true, $andFlush = true)
 	{
-		$subscription = new Subscription();
+		$subscription = $this->getSubscriptionModel()->createSubscription();
 		$subscription->setTopic($topic);
         $subscription->setOwnedBy($user);
 		$subscription->setForum($forum);

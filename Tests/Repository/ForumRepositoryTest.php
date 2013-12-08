@@ -20,9 +20,7 @@ class ForumRepositoryTest extends TestBase
 	public function testFindAllForums()
 	{
 		$this->purge();
-		
 		$this->addFixturesForForums();
-		
 		$forums = $this->getForumModel()->findAllForums();
 		
 		$this->assertCount(3, $forums);
@@ -31,9 +29,7 @@ class ForumRepositoryTest extends TestBase
 	public function testFindOneForumById()
 	{
 		$this->purge();
-		
 		$forum = $this->addNewForum('TestForumById');
-		
 		$foundForum = $this->getForumModel()->findOneForumById($forum->getId());
 		
 		$this->assertEquals($foundForum->getId(), $forum->getId());
@@ -42,9 +38,7 @@ class ForumRepositoryTest extends TestBase
     public function testFindOneForumByName()
     {
 		$this->purge();
-		
 		$forum = $this->addNewForum('TestForumByName');
-		
 		$foundForum = $this->getForumModel()->findOneForumByName($forum->getName());
 		
 		$this->assertEquals($foundForum->getId(), $forum->getId());

@@ -77,13 +77,13 @@ class PostCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                                        $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\User\Post\PostCreateFormType              $formPostType
-     * @param \CCDNForum\ForumBundle\Model\FrontModel\PostModel                               $postModel
-     * @param \\CCDNForum\ForumBundle\Component\FloodControl                             $floodControl
+     * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param  \Symfony\Component\Form\FormFactory                              $factory
+     * @param  \CCDNForum\ForumBundle\Form\Type\User\Post\PostCreateFormType    $formPostType
+     * @param  \CCDNForum\ForumBundle\Model\FrontModel\PostModel                $postModel
+     * @param  \CCDNForum\ForumBundle\Component\FloodControl                    $floodControl
      */
-    public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $formPostType, ModelInterface $postModel, FloodControl $floodControl)
+    public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory, $formPostType, ModelInterface $postModel, FloodControl $floodControl)
     {
         $this->dispatcher = $dispatcher;
         $this->factory = $factory;
@@ -184,7 +184,7 @@ class PostCreateFormHandler extends BaseFormHandler
                 throw new \Exception('Topic must be specified to create a Reply in PostCreateFormHandler');
             }
 
-            $post = new Post();
+            $post = $this->postModel->createPost();
             $post->setTopic($this->topic);
             $post->setBody($this->getQuote());
 
@@ -199,7 +199,7 @@ class PostCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Post           $post
+     * @param  \CCDNForum\ForumBundle\Entity\Post                $post
      * @return \CCDNForum\ForumBundle\Model\FrontModel\PostModel
      */
     protected function onSuccess(Post $post)

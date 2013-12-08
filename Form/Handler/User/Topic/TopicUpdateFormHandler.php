@@ -75,14 +75,14 @@ class TopicUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                                        $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\User\Topic\TopicUpdateFormType            $formTopicType
-     * @param \CCDNForum\ForumBundle\Form\Type\User\Post\PostUpdateFormType              $formPostType
-     * @param \CCDNForum\ForumBundle\Model\FrontModel\TopicModel                              $topicModel
-     * @param \CCDNForum\ForumBundle\Model\FrontModel\PostModel                               $postModel
+     * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param  \Symfony\Component\Form\FormFactory                              $factory
+     * @param  \CCDNForum\ForumBundle\Form\Type\User\Topic\TopicUpdateFormType  $formTopicType
+     * @param  \CCDNForum\ForumBundle\Form\Type\User\Post\PostUpdateFormType    $formPostType
+     * @param  \CCDNForum\ForumBundle\Model\FrontModel\TopicModel               $topicModel
+     * @param  \CCDNForum\ForumBundle\Model\FrontModel\PostModel                $postModel
      */
-    public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory,
+    public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory,
      $formTopicType, $formPostType, ModelInterface $topicModel, ModelInterface $postModel)
     {
         $this->dispatcher = $dispatcher;
@@ -136,7 +136,7 @@ class TopicUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Post            $post
+     * @param  \CCDNForum\ForumBundle\Entity\Post                 $post
      * @return \CCDNForum\ForumBundle\Model\FrontModel\TopicModel
      */
     protected function onSuccess(Post $post)

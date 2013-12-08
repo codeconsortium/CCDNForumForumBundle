@@ -14,9 +14,9 @@
 namespace CCDNForum\ForumBundle\Model\FrontModel;
 
 use Symfony\Component\Security\Core\User\UserInterface;
-
 use CCDNForum\ForumBundle\Model\FrontModel\BaseModel;
 use CCDNForum\ForumBundle\Model\FrontModel\ModelInterface;
+use CCDNForum\ForumBundle\Entity\Registry;
 
 /**
  *
@@ -34,13 +34,21 @@ class RegistryModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  Array                                        $userIds
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
+     * @return \CCDNForum\ForumBundle\Entity\Registry
      */
-    public function findRegistriesForTheseUsersById($registryUserIds = array())
-    {
-        return $this->getRepository()->findRegistriesForTheseUsersById($registryUserIds);
-    }
+	public function findOrCreateOneRegistryForUser(UserInterface $user)
+	{
+		$registry = $this->findOneRegistryForUserById($user->getId());
+		
+		if (! $registry) {
+			$registry = $this->createRegistry();
+			$registry->setOwnedBy($user);
+			$this->saveRegistry($registry);
+		}
+		
+		return $registry;
+	}
 
     /**
      *
@@ -48,30 +56,31 @@ class RegistryModel extends BaseModel implements ModelInterface
      * @param  int                                    $userId
      * @return \CCDNForum\ForumBundle\Entity\Registry
      */
-    public function findRegistryForUserById($userId)
-    {
-        return $this->getRepository()->findRegistryForUserById($userId);
-    }
+	public function findOneRegistryForUserById($userId)
+	{
+		return $this->getRepository()->findOneRegistryForUserById($userId);
+	}
 
-    /**
-     *
-     * @access public
-     * @param  \Symfony\Component\Security\Core\User\UserInterface   $user
-     * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
-     */
-    public function updateCachedPostCountForUser(UserInterface $user)
-    {
-        return $this->getManager()->updateCachedPostCountForUser($user);
-    }
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Registry
+	 */
+	public function createRegistry()
+	{
+		return $this->getManager()->createRegistry();
+	}
 
-    /**
-     *
-     * @access public
-     * @param  Array                                                 $users
-     * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
-     */
-    public function bulkUpdateCachedPostCountForUsers($users)
-    {
-        return $this->getManager()->bulkUpdateCachedPostCountForUsers($users);
-    }
+	/**
+	 *
+	 * @access public
+	 * @param  \CCDNForum\ForumBundle\Entity\Registry                $registryModel
+	 * @return \CCDNForum\ForumBundle\Model\FrontModel\RegistryModel
+	 */
+	public function saveRegistry(Registry $registry)
+	{
+		$this->getManager()->saveRegistry($registry);
+		
+		return $this;
+	}
 }

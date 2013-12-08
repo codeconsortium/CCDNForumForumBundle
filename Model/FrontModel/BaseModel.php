@@ -13,7 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Model\FrontModel;
 
-use CCDNForum\ForumBundle\Model\FrontModel\ModelInterface;
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface;
 use CCDNForum\ForumBundle\Model\Component\Repository\RepositoryInterface;
 
@@ -29,7 +29,7 @@ use CCDNForum\ForumBundle\Model\Component\Repository\RepositoryInterface;
  *
  * @abstract
  */
-abstract class BaseModel implements ModelInterface
+abstract class BaseModel
 {
     /**
      *
@@ -47,12 +47,22 @@ abstract class BaseModel implements ModelInterface
 
     /**
      *
-     * @access public
-     * @param \CCDNForum\ForumBundle\Model\Component\Repository\RepositoryInterface $repository
-     * @param \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface       $manager
+     * @access protected
+     * @var \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
      */
-    public function __construct(RepositoryInterface $repository, ManagerInterface $manager)
+    protected $dispatcher;
+
+    /**
+     *
+     * @access public
+     * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher      $dispatcher
+     * @param  \CCDNForum\ForumBundle\Model\Component\Repository\RepositoryInterface $repository
+     * @param  \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface       $manager
+     */
+    public function __construct(ContainerAwareEventDispatcher $dispatcher, RepositoryInterface $repository, ManagerInterface $manager)
     {
+		$this->dispatcher = $dispatcher;
+		
         $repository->setModel($this);
         $this->repository = $repository;
 

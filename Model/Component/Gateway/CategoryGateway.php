@@ -101,10 +101,10 @@ class CategoryGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
+     * @param  \CCDNForum\ForumBundle\Entity\Category                          $category
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
-    public function persistCategory(Category $category)
+    public function saveCategory(Category $category)
     {
         $this->persist($category)->flush();
 
@@ -114,7 +114,7 @@ class CategoryGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
+     * @param  \CCDNForum\ForumBundle\Entity\Category                          $category
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
     public function updateCategory(Category $category)
@@ -127,7 +127,7 @@ class CategoryGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
+     * @param  \CCDNForum\ForumBundle\Entity\Category                          $category
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
     public function deleteCategory(Category $category)
@@ -136,4 +136,14 @@ class CategoryGateway extends BaseGateway implements GatewayInterface
 
         return $this;
     }
+
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Category
+	 */
+	public function createCategory()
+	{
+		return new $this->entityClass();
+	}
 }

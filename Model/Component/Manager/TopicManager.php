@@ -55,6 +55,16 @@ class TopicManager extends BaseManager implements ManagerInterface
         $this->postLockHelper = $postLockHelper;
     }
 
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Topic
+	 */
+	public function createTopic()
+	{
+		return $this->gateway->createTopic();
+	}
+
     /**
      *
      * Post must have a set topic for topic to be set  correctly.

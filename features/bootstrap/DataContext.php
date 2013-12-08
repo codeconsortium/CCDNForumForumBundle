@@ -157,7 +157,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
 
     public function thereIsForum($name)
     {
-        $forum = new Forum();
+        $forum = $this->getForumModel()->createForum();
 
         $forum->setName($name);
 
@@ -187,7 +187,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
 
     public function thereIsCategory($name, $order, $forumName = null)
     {
-        $category = new Category();
+        $category = $this->getCategoryModel()->createCategory();
 
         $category->setName($name);
         $category->setListOrderPriority($order);
@@ -225,7 +225,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
 
     public function thereIsBoard($name, $description, $order, $categoryName = null)
     {
-        $board = new Board();
+        $board = $this->getBoardModel()->createBoard();
 
         $board->setName($name);
         $board->setDescription($description);
@@ -281,11 +281,11 @@ class DataContext extends BehatContext implements KernelAwareInterface
             }
         }
 
-        $topic = new Topic();
+        $topic = $this->getTopicModel()->createTopic();
         $topic->setTitle($title);
         $topic->setBoard($board);
 
-        $post = new Post();
+        $post = $this->getPostModel()->createPost();
         $post->setBody($body);
         $post->setCreatedDate(new \DateTime('now'));
         $post->setCreatedBy($user);
@@ -295,7 +295,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
         $topic->setLastPost($post);
 
         if ($subscribed) {
-            $subscription = new Subscription();
+            $subscription = $this->getSubscriptionModel()->createSubscription();
             $subscription->setForum($board->getCategory()->getForum());
             $subscription->setTopic($topic);
             $subscription->setOwnedBy($user);
@@ -308,5 +308,145 @@ class DataContext extends BehatContext implements KernelAwareInterface
         $this->getEntityManager()->persist($topic);
 
         return $topic;
+    }
+
+    /**
+     *
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\ForumModel $forumModel
+     */
+    private $forumModel;
+
+    /**
+     *
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\CategoryModel $categoryModel
+     */
+    private $categoryModel;
+
+    /**
+     *
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\BoardModel $boardModel
+     */
+    private $boardModel;
+
+    /**
+     *
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\TopicModel $topicModel
+     */
+    private $topicModel;
+
+    /**
+     *
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\PostModel $postModel
+     */
+    private $postModel;
+
+    /**
+     *
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\RegistryModel $registryModel
+     */
+    private $registryModel;
+
+    /**
+     *
+     * @var \CCDNForum\ForumBundle\Model\FrontModel\SubscriptionModel $subscriptionModel
+     */
+    private $subscriptionModel;
+
+    /**
+     *
+     * @access protected
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\ForumModel
+     */
+    protected function getForumModel()
+    {
+        if (null == $this->forumModel) {
+            $this->forumModel = $this->getService('ccdn_forum_forum.model.forum');
+        }
+
+        return $this->forumModel;
+    }
+
+    /**
+     *
+     * @access protected
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\CategoryModel
+     */
+    protected function getCategoryModel()
+    {
+        if (null == $this->categoryModel) {
+            $this->categoryModel = $this->getService('ccdn_forum_forum.model.category');
+        }
+
+        return $this->categoryModel;
+    }
+
+    /**
+     *
+     * @access protected
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\BoardModel
+     */
+    protected function getBoardModel()
+    {
+        if (null == $this->boardModel) {
+            $this->boardModel = $this->getService('ccdn_forum_forum.model.board');
+        }
+
+        return $this->boardModel;
+    }
+
+    /**
+     *
+     * @access protected
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\TopicModel
+     */
+    protected function getTopicModel()
+    {
+        if (null == $this->topicModel) {
+            $this->topicModel = $this->getService('ccdn_forum_forum.model.topic');
+        }
+
+        return $this->topicModel;
+    }
+
+    /**
+     *
+     * @access protected
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\PostModel
+     */
+    protected function getPostModel()
+    {
+        if (null == $this->postModel) {
+            $this->postModel = $this->getService('ccdn_forum_forum.model.post');
+        }
+
+        return $this->postModel;
+    }
+
+    /**
+     *
+     * @access protected
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\RegistryModel
+     */
+    protected function getRegistryModel()
+    {
+        if (null == $this->registryModel) {
+            $this->registryModel = $this->getService('ccdn_forum_forum.model.registry');
+        }
+
+        return $this->registryModel;
+    }
+
+    /**
+     *
+     * @access protected
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\SubscriptionModel
+     */
+    protected function getSubscriptionModel()
+    {
+        if (null == $this->subscriptionModel) {
+            $this->subscriptionModel = $this->getService('ccdn_forum_forum.model.subscription');
+        }
+
+        return $this->subscriptionModel;
     }
 }

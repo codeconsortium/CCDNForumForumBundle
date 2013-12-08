@@ -11,22 +11,17 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Tests\Repository;
+namespace CCDNForum\ForumBundle\Tests\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
-
 use CCDNForum\ForumBundle\Tests\TestBase;
-use CCDNForum\ForumBundle\Entity\Forum;
 
 class ForumManagerTest extends TestBase
 {
 	public function testSaveNewForum()
 	{
 		$this->purge();
-		
-		$forum = new Forum();
-		$forum->setName('NewForumTest');
-		
+		$forum = $this->addNewForum('NewForumTest', false, false);
 		$this->getForumModel()->saveNewForum($forum);
 		
 		$this->assertTrue(is_numeric($forum->getId()));
@@ -36,11 +31,8 @@ class ForumManagerTest extends TestBase
 	public function testUpdateForum()
 	{
 		$this->purge();
-		
-		$forum = $this->addNewForum('TestUpdateForum');
-		
+		$forum = $this->addNewForum('TestUpdateForum', true, true);
 		$forum->setName('TestForumUpdated');
-		
 		$this->getForumModel()->updateForum($forum);
 		
 		$this->assertTrue(is_numeric($forum->getId()));
@@ -50,12 +42,9 @@ class ForumManagerTest extends TestBase
 	public function testDeleteForum()
 	{
 		$this->purge();
-		
-		$forum = $this->addNewForum('FooBar');
-		
+		$forum = $this->addNewForum('FooBar', true, true);
 		$forumId = $forum->getId();
 		$this->getForumModel()->deleteForum($forum);
-		
 		$foundForum = $this->getForumModel()->findOneForumById($forumId);
 		
 		$this->assertNull($foundForum);
@@ -64,12 +53,10 @@ class ForumManagerTest extends TestBase
 	public function testReassignCategoriesToForum()
 	{
 		$this->purge();
-		
 		$forums = array();
-		$forums[0] = $this->addNewForum('testReassignCategoriesToForum0');
-		$forums[1] = $this->addNewForum('testReassignCategoriesToForum1');
+		$forums[0] = $this->addNewForum('testReassignCategoriesToForum0', true, true);
+		$forums[1] = $this->addNewForum('testReassignCategoriesToForum1', true, true);
 		$this->addFixturesForCategories($forums);
-		
 		$forum1 = $forums[0];
 		$forum2 = $forums[1];
 		$this->em->refresh($forum1);

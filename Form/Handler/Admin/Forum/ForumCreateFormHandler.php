@@ -53,17 +53,17 @@ class ForumCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                                        $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumCreateFormType           $forumCreateFormType
-     * @param \CCDNForum\ForumBundle\Model\FrontModel\ForumModel                              $forumModel
+     * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param  \Symfony\Component\Form\FormFactory                              $factory
+     * @param  \CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumCreateFormType $forumCreateFormType
+     * @param  \CCDNForum\ForumBundle\Model\FrontModel\ForumModel               $forumModel
      */
-    public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $forumCreateFormType, ModelInterface $forumModel)
+    public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory, $forumCreateFormType, ModelInterface $forumModel)
     {
+        $this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->forumCreateFormType = $forumCreateFormType;
         $this->forumModel = $forumModel;
-        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -74,7 +74,7 @@ class ForumCreateFormHandler extends BaseFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-            $forum = new Forum();
+            $forum = $this->forumModel->createForum();
 
             $this->dispatcher->dispatch(ForumEvents::ADMIN_FORUM_CREATE_INITIALISE, new AdminForumEvent($this->request, $forum));
 
@@ -87,7 +87,7 @@ class ForumCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Forum           $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                $forum
      * @return \CCDNForum\ForumBundle\Model\FrontModel\ForumModel
      */
     protected function onSuccess(Forum $forum)

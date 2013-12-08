@@ -54,6 +54,16 @@ class PostManager extends BaseManager implements ManagerInterface
         $this->postLockHelper = $postLockHelper;
     }
 
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Post
+	 */
+	public function createPost()
+	{
+		return $this->gateway->createPost();
+	}
+
     /**
      *
      * @access public

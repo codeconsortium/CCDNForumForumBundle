@@ -33,6 +33,16 @@ use CCDNForum\ForumBundle\Entity\Board;
  */
 class BoardManager extends BaseManager implements ManagerInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Board
+	 */
+	public function createBoard()
+	{
+		return $this->gateway->createBoard();
+	}
+
     /**
      *
      * @access public

@@ -14,10 +14,8 @@
 namespace CCDNForum\ForumBundle\Model\FrontModel;
 
 use Symfony\Component\Security\Core\User\UserInterface;
-
 use CCDNForum\ForumBundle\Model\FrontModel\BaseModel;
 use CCDNForum\ForumBundle\Model\FrontModel\ModelInterface;
-
 use CCDNForum\ForumBundle\Entity\Post;
 
 /**
@@ -33,6 +31,16 @@ use CCDNForum\ForumBundle\Entity\Post;
  */
 class PostModel extends BaseModel implements ModelInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Post
+	 */
+	public function createPost()
+	{
+		return $this->getManager()->createPost();
+	}
+
     /**
      *
      * @access public
@@ -90,6 +98,17 @@ class PostModel extends BaseModel implements ModelInterface
     public function countPostsForTopicById($topicId)
     {
         return $this->getRepository()->countPostsForTopicById($topicId);
+    }
+
+    /**
+     *
+     * @access public
+     * @param  int   $topicId
+     * @return Array
+     */
+    public function countPostsForUserById($userId)
+    {
+        return $this->getRepository()->countPostsForUserById($userId);
     }
 
     /**

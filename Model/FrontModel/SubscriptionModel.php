@@ -14,10 +14,8 @@
 namespace CCDNForum\ForumBundle\Model\FrontModel;
 
 use Symfony\Component\Security\Core\User\UserInterface;
-
 use CCDNForum\ForumBundle\Model\FrontModel\BaseModel;
 use CCDNForum\ForumBundle\Model\FrontModel\ModelInterface;
-
 use CCDNForum\ForumBundle\Entity\Subscription;
 use CCDNForum\ForumBundle\Entity\Topic;
 
@@ -34,6 +32,16 @@ use CCDNForum\ForumBundle\Entity\Topic;
  */
 class SubscriptionModel extends BaseModel implements ModelInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Subscription
+	 */
+	public function createSubscription()
+	{
+		return $this->getManager()->createSubscription();
+	}
+
     /**
      *
      * @access public

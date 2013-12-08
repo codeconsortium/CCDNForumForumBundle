@@ -61,17 +61,17 @@ class BoardCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                                        $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\Board\BoardCreateFormType                 $boardCreateFormType
-     * @param \CCDNForum\ForumBundle\Model\FrontModel\BoardModel                              $boardModel
+     * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param  \Symfony\Component\Form\FormFactory                              $factory
+     * @param  \CCDNForum\ForumBundle\Form\Type\Board\BoardCreateFormType       $boardCreateFormType
+     * @param  \CCDNForum\ForumBundle\Model\FrontModel\BoardModel               $boardModel
      */
-    public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $boardCreateFormType, ModelInterface $boardModel)
+    public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory, $boardCreateFormType, ModelInterface $boardModel)
     {
+        $this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->boardCreateFormType = $boardCreateFormType;
         $this->boardModel = $boardModel;
-        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -95,7 +95,7 @@ class BoardCreateFormHandler extends BaseFormHandler
     public function getForm()
     {
         if (null == $this->form) {
-            $board = new Board();
+            $board = $this->boardModel->createBoard();
 
             $this->dispatcher->dispatch(ForumEvents::ADMIN_BOARD_CREATE_INITIALISE, new AdminBoardEvent($this->request, $board));
 
@@ -112,7 +112,7 @@ class BoardCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Board           $board
+     * @param  \CCDNForum\ForumBundle\Entity\Board                $board
      * @return \CCDNForum\ForumBundle\Model\FrontModel\BoardModel
      */
     protected function onSuccess(Board $board)

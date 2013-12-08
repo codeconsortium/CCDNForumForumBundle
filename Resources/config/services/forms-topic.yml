@@ -20,6 +20,7 @@ services:
             - @ccdn_forum_forum.form.type.topic_create
             - @ccdn_forum_forum.form.type.post_create
             - @ccdn_forum_forum.model.topic
+            - @ccdn_forum_forum.model.post
             - @ccdn_forum_forum.model.board
             - @ccdn_forum_forum.component.flood_control
 

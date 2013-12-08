@@ -14,10 +14,8 @@
 namespace CCDNForum\ForumBundle\Model\FrontModel;
 
 use Doctrine\Common\Collections\ArrayCollection;
-
 use CCDNForum\ForumBundle\Model\FrontModel\BaseModel;
 use CCDNForum\ForumBundle\Model\FrontModel\ModelInterface;
-
 use CCDNForum\ForumBundle\Entity\Forum;
 
 /**
@@ -33,6 +31,16 @@ use CCDNForum\ForumBundle\Entity\Forum;
  */
 class ForumModel extends BaseModel implements ModelInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Forum
+	 */
+	public function createForum()
+	{
+		return $this->getManager()->createForum();
+	}
+
     /**
      *
      * @access public

@@ -33,6 +33,16 @@ use CCDNForum\ForumBundle\Entity\Category;
  */
 class CategoryManager extends BaseManager implements ManagerInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Category
+	 */
+	public function createCategory()
+	{
+		return $this->gateway->createCategory();
+	}
+
     /**
      *
      * @access public

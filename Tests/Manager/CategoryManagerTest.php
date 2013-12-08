@@ -11,23 +11,17 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Tests\Repository;
+namespace CCDNForum\ForumBundle\Tests\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
-
 use CCDNForum\ForumBundle\Tests\TestBase;
-use CCDNForum\ForumBundle\Entity\Category;
 
 class CategoryManagerTest extends TestBase
 {
 	public function testSaveNewCategory()
 	{
 		$this->purge();
-		
-		$category = new Category();
-		$category->setName('NewCategoryTest');
-		$category->setListOrderPriority(1);
-		
+		$category = $this->addNewCategory('NewCategoryTest', 1, null, false, false);
 		$this->getCategoryModel()->saveNewCategory($category);
 		
 		$this->assertTrue(is_numeric($category->getId()));
@@ -37,11 +31,8 @@ class CategoryManagerTest extends TestBase
 	public function testUpdateCategory()
 	{
 		$this->purge();
-		
-		$category = $this->addNewCategory('UpdateCategoryTest', 1);
-		
+		$category = $this->addNewCategory('UpdateCategoryTest', 1, null, true, true);
 		$category->setName('CategoryTestUpdated');
-		
 		$this->getCategoryModel()->updateCategory($category);
 		
 		$this->assertTrue(is_numeric($category->getId()));
@@ -51,12 +42,9 @@ class CategoryManagerTest extends TestBase
 	public function testDeleteCategory()
 	{
 		$this->purge();
-		
-		$category = $this->addNewCategory('DeleteCategoryTest', 1);
-		
+		$category = $this->addNewCategory('DeleteCategoryTest', 1, null, true, true);
 		$categoryId = $category->getId();
 		$this->getCategoryModel()->deleteCategory($category);
-		
 		$foundCategory = $this->getCategoryModel()->findOneCategoryById($categoryId);
 		
 		$this->assertNull($foundCategory);
@@ -65,14 +53,11 @@ class CategoryManagerTest extends TestBase
 	public function testReassignBoardsToCategory()
 	{
 		$this->purge();
-		
 		$forum = $this->addNewForum('testReassignBoardsToCategory');
 		$categories = $this->addFixturesForCategories(array($forum));
 		$boards = $this->addFixturesForBoards($categories);
-		
 		$category1 = $categories[0];
 		$category2 = $categories[1];
-
 		$boards = new ArrayCollection($category1->getBoards()->toArray());
 
 		$this->assertCount(3, $category1->getBoards());
@@ -91,7 +76,6 @@ class CategoryManagerTest extends TestBase
 	public function testReorderCategories()
 	{
 		$this->purge();
-
 		$forum = $this->addNewForum('testReorderCategories');
 		$this->addFixturesForCategories(array($forum));
 		

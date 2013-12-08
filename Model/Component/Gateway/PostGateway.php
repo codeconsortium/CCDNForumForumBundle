@@ -101,10 +101,10 @@ class PostGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
+     * @param  \CCDNForum\ForumBundle\Entity\Post                              $post
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
-    public function persistPost(Post $post)
+    public function savePost(Post $post)
     {
         $this->persist($post)->flush();
 
@@ -114,7 +114,7 @@ class PostGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
+     * @param  \CCDNForum\ForumBundle\Entity\Post                              $post
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
     public function updatePost(Post $post)
@@ -127,7 +127,7 @@ class PostGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
+     * @param  \CCDNForum\ForumBundle\Entity\Post                              $post
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
     public function deletePost(Post $post)
@@ -136,4 +136,14 @@ class PostGateway extends BaseGateway implements GatewayInterface
 
         return $this;
     }
+
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Post
+	 */
+	public function createPost()
+	{
+		return new $this->entityClass();
+	}
 }

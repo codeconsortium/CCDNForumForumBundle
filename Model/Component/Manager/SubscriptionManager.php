@@ -34,6 +34,16 @@ use CCDNForum\ForumBundle\Entity\Topic;
  */
 class SubscriptionManager extends BaseManager implements ManagerInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Subscription
+	 */
+	public function createSubscription()
+	{
+		return $this->gateway->createSubscription();
+	}
+
     /**
      *
      * @access public

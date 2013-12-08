@@ -14,17 +14,13 @@
 namespace CCDNForum\ForumBundle\Tests\Repository;
 
 use CCDNForum\ForumBundle\Tests\TestBase;
-use CCDNForum\ForumBundle\Entity\Topic;
-use CCDNForum\ForumBundle\Entity\Post;
 
 class TopicRepositoryTest extends TestBase
 {
 	public function testFindAllTopicsPaginatedByBoardId()
 	{
 		$this->purge();
-		
 		$users = $this->addFixturesForUsers();
-		
 		$forum = $this->addNewForum('testFindAllTopicsPaginatedByBoardId');
 		$category = $this->addNewCategory('testFindAllTopicsPaginatedByBoardId', 1, $forum);
 		$board = $this->addNewBoard('testFindAllTopicsPaginatedByBoardId', 'testFindAllTopicsPaginatedByBoardId', 1, $category);
@@ -32,20 +28,15 @@ class TopicRepositoryTest extends TestBase
 		$posts = $this->addFixturesForPosts($topics, $users['tom']);
 
 		$this->assertCount(3, $topics);
-
 		$pager = $this->getTopicModel()->findAllTopicsPaginatedByBoardId($board->getId(), 1, 25, true);
-	
 		$foundTopics = $pager->getItems();
-		
 		$this->assertCount(3, $foundTopics);
 	}
 
 	public function testFindAllTopicsStickiedByBoardId()
 	{
 		$this->purge();
-		
 		$users = $this->addFixturesForUsers();
-		
 		$forum = $this->addNewForum('testFindAllPostsPaginatedByTopicId');
 		$category = $this->addNewCategory('testFindAllPostsPaginatedByTopicId', 1, $forum);
 		$board = $this->addNewBoard('testFindAllPostsPaginatedByTopicId', 'testFindAllPostsPaginatedByTopicId', 1, $category);
@@ -60,21 +51,17 @@ class TopicRepositoryTest extends TestBase
 		}
 		
 		$this->em->flush();
-		
 		$foundTopics = $this->getTopicModel()->findAllTopicsStickiedByBoardId($board->getId(), true);
-		
 		$this->assertCount(3, $foundTopics);
 	}
 
 	public function testFindOneTopicByIdWithBoardAndCategory()
 	{
 		$this->purge();
-		
 		$board = $this->addNewBoard('testFindOneTopicByIdWithBoardAndCategory', 'testFindOneTopicByIdWithBoardAndCategory', 1);
 
 		// Can view deleted topics.
 		$topic1 = $this->addNewTopic('topic1', $board);
-		
 		$this->em->persist($topic1);
 		$this->em->flush($topic1);
 		$this->em->refresh($topic1);
@@ -91,7 +78,6 @@ class TopicRepositoryTest extends TestBase
 		$this->em->persist($topic2);
 		$this->em->flush();
 		$this->em->refresh($topic2);
-		
 		$foundTopic2 = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topic2->getId(), false);
         
 		$this->assertNull($foundTopic2);
@@ -100,42 +86,15 @@ class TopicRepositoryTest extends TestBase
 	public function testFindOneTopicByIdWithPosts()
 	{
 		$this->purge();
-		
 		$users = $this->addFixturesForUsers();
-		
-		$topic = new Topic();
-		$topic->setTitle('NewTopicTest');
-        $topic->setCachedViewCount(0);
-        $topic->setCachedReplyCount(0);
-        $topic->setClosed(false);
-        $topic->setDeleted(false);
-        $topic->setSticky(false);
-		
-		$post = new Post();
-		$post->setTopic($topic);
-		$post->setBody('foobar');
-        $post->setCreatedDate(new \DateTime());
-        $post->setCreatedBy($users['tom']);
-        $post->setDeleted(false);
-
-		$this->getTopicModel()->saveNewTopic($post);
-		
-		$this->em->refresh($post);
-		
-		$post2 = new Post();
-		$post2->setTopic($post->getTopic());
-		$post2->setBody('foobar');
-        $post2->setCreatedDate(new \DateTime());
-        $post2->setCreatedBy($users['tom']);
-        $post2->setDeleted(false);
-		
-		$this->getPostModel()->postTopicReply($post2);
-		
-		$foundTopic = $this->getTopicModel()->findOneTopicByIdWithPosts($post->getTopic()->getId(), true);
+		$topic = $this->addNewTopic('NewTopicTest', null, true, true);
+		$post1 = $this->addNewPost('foobar1', $topic, $users['tom'], new \DateTime(), true, true);
+		$post2 = $this->addNewPost('foobar2', $topic, $users['tom'], new \DateTime(), true, true);
+		$this->em->refresh($topic);
+		$foundTopic = $this->getTopicModel()->findOneTopicByIdWithPosts($topic->getId(), true);
 		
 		$this->assertNotNull($foundTopic);
 		$this->assertInstanceOf('CCDNForum\ForumBundle\Entity\Topic', $foundTopic);
-		
 		$this->assertTrue(is_numeric($foundTopic->getId()));
 		$this->assertSame('NewTopicTest', $foundTopic->getTitle());
 		$this->assertCount(2, $foundTopic->getPosts());
@@ -144,7 +103,6 @@ class TopicRepositoryTest extends TestBase
 	public function testFindLastTopicForBoardByIdWithLastPost()
 	{
 		$this->purge();
-		
 		$users = $this->addFixturesForUsers();
 		$forums = $this->addFixturesForForums();
 		$categories = $this->addFixturesForCategories($forums);
@@ -160,7 +118,6 @@ class TopicRepositoryTest extends TestBase
 	public function testGetTopicAndPostCountForBoardById()
 	{
 		$this->purge();
-	
 		$users = $this->addFixturesForUsers();
 		$forums = $this->addFixturesForForums();
 		$categories = $this->addFixturesForCategories($forums);

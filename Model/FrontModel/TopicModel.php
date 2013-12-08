@@ -14,10 +14,8 @@
 namespace CCDNForum\ForumBundle\Model\FrontModel;
 
 use Symfony\Component\Security\Core\User\UserInterface;
-
 use CCDNForum\ForumBundle\Model\FrontModel\BaseModel;
 use CCDNForum\ForumBundle\Model\FrontModel\ModelInterface;
-
 use CCDNForum\ForumBundle\Entity\Topic;
 use CCDNForum\ForumBundle\Entity\Post;
 
@@ -34,6 +32,16 @@ use CCDNForum\ForumBundle\Entity\Post;
  */
 class TopicModel extends BaseModel implements ModelInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Topic
+	 */
+	public function createTopic()
+	{
+		return $this->getManager()->createTopic();
+	}
+
     /**
      *
      * @access public

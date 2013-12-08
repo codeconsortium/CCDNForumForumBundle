@@ -200,4 +200,23 @@ class PostRepository extends BaseRepository implements RepositoryInterface
 
         return $this->gateway->countPosts($qb, array(':topicId' => $topicId));
     }
+
+    /**
+     *
+     * @access public
+     * @param  int   $userId
+     * @return Array
+     */
+    public function countPostsForUserById($userId)
+    {
+        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+            throw new \Exception('User id "' . $userId . '" is invalid!');
+        }
+
+        $qb = $this->createCountQuery();
+
+        $qb->where('p.createdBy = :userId');
+
+        return $this->gateway->countPosts($qb, array(':userId' => $userId));
+    }
 }

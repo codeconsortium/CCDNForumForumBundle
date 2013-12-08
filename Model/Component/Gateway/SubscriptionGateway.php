@@ -99,10 +99,10 @@ class SubscriptionGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Subscription            $subscription
+     * @param  \CCDNForum\ForumBundle\Entity\Subscription                      $subscription
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
-    public function persistSubscription(Subscription $subscription)
+    public function saveSubscription(Subscription $subscription)
     {
         $this->persist($subscription)->flush();
 
@@ -112,7 +112,7 @@ class SubscriptionGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Subscription            $subscription
+     * @param  \CCDNForum\ForumBundle\Entity\Subscription                      $subscription
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
     public function updateSubscription(Subscription $subscription)
@@ -125,7 +125,7 @@ class SubscriptionGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Subscription            $subscription
+     * @param  \CCDNForum\ForumBundle\Entity\Subscription                      $subscription
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
     public function deleteSubscription(Subscription $subscription)
@@ -134,4 +134,14 @@ class SubscriptionGateway extends BaseGateway implements GatewayInterface
 
         return $this;
     }
+
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Subscription
+	 */
+	public function createSubscription()
+	{
+		return new $this->entityClass();
+	}
 }

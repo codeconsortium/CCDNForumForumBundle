@@ -62,17 +62,17 @@ class BoardDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                                        $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardDeleteFormType           $boardDeleteFormType
-     * @param \CCDNForum\ForumBundle\Model\FrontModel\BoardModel                              $boardModel
+     * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param  \Symfony\Component\Form\FormFactory                              $factory
+     * @param  \CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardDeleteFormType $boardDeleteFormType
+     * @param  \CCDNForum\ForumBundle\Model\FrontModel\BoardModel               $boardModel
      */
     public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $boardDeleteFormType, ModelInterface $boardModel)
     {
+        $this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->boardDeleteFormType = $boardDeleteFormType;
         $this->boardModel = $boardModel;
-        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -111,7 +111,7 @@ class BoardDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Board           $board
+     * @param  \CCDNForum\ForumBundle\Entity\Board                $board
      * @return \CCDNForum\ForumBundle\Model\FrontModel\BoardModel
      */
     protected function onSuccess(Board $board)

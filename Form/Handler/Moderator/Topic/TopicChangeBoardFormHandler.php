@@ -76,13 +76,14 @@ class TopicChangeBoardFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                                        $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicChangeBoardFormType  $formTopicChangeBoardType
-     * @param \CCDNForum\ForumBundle\Model\FrontModel\TopicModel                              $topicModel
-     * @param \CCDNForum\ForumBundle\Model\FrontModel\BoardModel                              $boardModel
+     * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher          $dispatcher
+     * @param  \Symfony\Component\Form\FormFactory                                       $factory
+     * @param  \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicChangeBoardFormType $formTopicChangeBoardType
+     * @param  \CCDNForum\ForumBundle\Model\FrontModel\TopicModel                        $topicModel
+     * @param  \CCDNForum\ForumBundle\Model\FrontModel\BoardModel                        $boardModel
      */
-    public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $formTopicChangeBoardType, ModelInterface $topicModel, ModelInterface $boardModel)
+    public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory,
+	 $formTopicChangeBoardType, ModelInterface $topicModel, ModelInterface $boardModel)
     {
         $this->dispatcher = $dispatcher;
         $this->factory = $factory;
@@ -146,7 +147,7 @@ class TopicChangeBoardFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Topic           $entity
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                $topic
      * @return \CCDNForum\ForumBundle\Model\FrontModel\TopicModel
      */
     protected function onSuccess(Topic $topic)

@@ -33,6 +33,16 @@ use CCDNForum\ForumBundle\Entity\Forum;
  */
 class ForumManager extends BaseManager implements ManagerInterface
 {
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Forum
+	 */
+	public function createForum()
+	{
+		return $this->gateway->createForum();
+	}
+
     /**
      *
      * @access public

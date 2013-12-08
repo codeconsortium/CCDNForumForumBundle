@@ -99,10 +99,10 @@ class ForumGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Forum                   $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                             $forum
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
-    public function persistForum(Forum $forum)
+    public function saveForum(Forum $forum)
     {
         $this->persist($forum)->flush();
 
@@ -112,7 +112,7 @@ class ForumGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Forum                   $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                             $forum
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
     public function updateForum(Forum $forum)
@@ -125,7 +125,7 @@ class ForumGateway extends BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Forum                   $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                             $forum
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
     public function deleteForum(Forum $forum)
@@ -134,4 +134,14 @@ class ForumGateway extends BaseGateway implements GatewayInterface
 
         return $this;
     }
+
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Forum
+	 */
+	public function createForum()
+	{
+		return new $this->entityClass();
+	}
 }

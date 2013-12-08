@@ -33,44 +33,26 @@ use CCDNForum\ForumBundle\Entity\Registry;
  */
 class RegistryManager extends BaseManager implements ManagerInterface
 {
-    /**
-     *
-     * @access public
-     * @param  \Symfony\Component\Security\Core\User\UserInterface $user
-     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
-     */
-    public function updateCachedPostCountForUser(UserInterface $user)
-    {
-        $record = $this->findRegistryForUserById($user->getId());
+	/**
+	 * 
+	 * @access public
+	 * @return \CCDNForum\ForumBundle\Entity\Registry
+	 */
+	public function createRegistry()
+	{
+		return $this->gateway->createRegistry();
+	}
 
-        if (! $record) {
-            $record = new Registry();
-            $record->setOwnedBy($user);
-        }
-
-        $postCount = $this->managerBag->getPostManager()->getPostCountForUserById($user->getId());
-
-        if (! $postCount) {
-            $record->setCachedPostCount(0);
-        } else {
-            $record->setCachedPostCount($postCount['postCount']);
-        }
-
-        $this->persist($record)->flush();
-
-        return $this;
-    }
-
-    /**
-     *
-     * @access public
-     * @param  Array                                           $users
-     * @return \CCDNForum\ForumBundle\Manager\ManagerInterface
-     */
-    public function bulkUpdateCachedPostCountForUsers($users)
-    {
-        foreach ($users as $user) {
-            $this->updateCachePostCountForUser($user);
-        }
-    }
+	/**
+	 * 
+	 * @access public
+	 * @param  \CCDNForum\ForumBundle\Entity\Registry                         $registry
+	 * @return \CCDNForum\ForumBundle\Model\Component\Manager\RegistryManager
+	 */
+	public function saveRegistry(Registry $registry)
+	{
+		$this->gateway->saveRegistry($registry);
+		
+		return $this;
+	}
 }

@@ -60,17 +60,17 @@ class ForumUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                                        $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumUpdateFormType           $forumUpdateFormType
-     * @param \CCDNForum\ForumBundle\Model\FrontModel\ForumModel                              $forumModel
+     * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param  \Symfony\Component\Form\FormFactory                              $factory
+     * @param  \CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumUpdateFormType $forumUpdateFormType
+     * @param  \CCDNForum\ForumBundle\Model\FrontModel\ForumModel               $forumModel
      */
-    public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $forumUpdateFormType, ModelInterface $forumModel)
+    public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory, $forumUpdateFormType, ModelInterface $forumModel)
     {
+        $this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->forumUpdateFormType = $forumUpdateFormType;
         $this->forumModel = $forumModel;
-        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -109,7 +109,7 @@ class ForumUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Forum           $forum
+     * @param  \CCDNForum\ForumBundle\Entity\Forum                $forum
      * @return \CCDNForum\ForumBundle\Model\FrontModel\ForumModel
      */
     protected function onSuccess(Forum $forum)

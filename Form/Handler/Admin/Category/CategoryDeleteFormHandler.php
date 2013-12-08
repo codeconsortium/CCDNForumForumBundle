@@ -62,17 +62,17 @@ class CategoryDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                                        $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryDeleteFormType     $categoryDeleteFormType
-     * @param \CCDNForum\ForumBundle\Model\FrontModel\CategoryModel                           $categoryModel
+     * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher       $dispatcher
+     * @param  \Symfony\Component\Form\FormFactory                                    $factory
+     * @param  \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryDeleteFormType $categoryDeleteFormType
+     * @param  \CCDNForum\ForumBundle\Model\FrontModel\CategoryModel                  $categoryModel
      */
-    public function __construct(ContainerAwareEventDispatcher  $dispatcher, FormFactory $factory, $categoryDeleteFormType, ModelInterface $categoryModel)
+    public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory, $categoryDeleteFormType, ModelInterface $categoryModel)
     {
+        $this->dispatcher = $dispatcher;
         $this->factory = $factory;
         $this->categoryDeleteFormType = $categoryDeleteFormType;
         $this->categoryModel = $categoryModel;
-        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -111,7 +111,7 @@ class CategoryDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Category           $category
+     * @param  \CCDNForum\ForumBundle\Entity\Category                $category
      * @return \CCDNForum\ForumBundle\Model\FrontModel\CategoryModel
      */
     protected function onSuccess(Category $category)

@@ -11,24 +11,17 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Tests\Repository;
+namespace CCDNForum\ForumBundle\Tests\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
-
 use CCDNForum\ForumBundle\Tests\TestBase;
-use CCDNForum\ForumBundle\Entity\Board;
 
 class BoardManagerTest extends TestBase
 {
 	public function testSaveNewBoard()
 	{
 		$this->purge();
-		
-		$board = new Board();
-		$board->setName('NewBoardTest');
-		$board->setDescription('Generic description');
-		$board->setListOrderPriority(1);
-		
+		$board = $this->addNewBoard('NewBoardTest', 'Generic description', 1, null, false, false);
 		$this->getBoardModel()->saveNewBoard($board);
 		
 		$this->assertTrue(is_numeric($board->getId()));
@@ -38,11 +31,8 @@ class BoardManagerTest extends TestBase
 	public function testUpdateBoard()
 	{
 		$this->purge();
-		
-		$board = $this->addNewBoard('UpdateBoardTest', 'Generic Description', 1);
-		
+		$board = $this->addNewBoard('UpdateBoardTest', 'Generic Description', 1, null, true, true);
 		$board->setName('BoardTestUpdated');
-		
 		$this->getBoardModel()->updateBoard($board);
 		
 		$this->assertTrue(is_numeric($board->getId()));
@@ -52,12 +42,9 @@ class BoardManagerTest extends TestBase
 	public function testDeleteBoard()
 	{
 		$this->purge();
-		
-		$board = $this->addNewBoard('DeleteBoardTest', 'Generic Description', 1);
-		
+		$board = $this->addNewBoard('DeleteBoardTest', 'Generic Description', 1, null, true, true);
 		$boardId = $board->getId();
 		$this->getBoardModel()->deleteBoard($board);
-		
 		$foundBoard = $this->getBoardModel()->findOneBoardById($boardId);
 		
 		$this->assertNull($foundBoard);
@@ -66,12 +53,10 @@ class BoardManagerTest extends TestBase
 	public function testReassignTopicsToBoard()
 	{
 		$this->purge();
-		
 		$forum = $this->addNewForum('testReassignTopicsToBoard');
 		$categories = $this->addFixturesForCategories(array($forum));
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		
 		$board1 = $boards[0];
 		$board2 = $boards[1];
 		$topics = new ArrayCollection($board1->getTopics()->toArray());
@@ -92,7 +77,6 @@ class BoardManagerTest extends TestBase
 	public function testReorderBoards()
 	{
 		$this->purge();
-		
 		$forum = $this->addNewForum('testReorderBoards');
 		$categories = $this->addFixturesForCategories(array($forum));
 		$this->addFixturesForBoards($categories);
