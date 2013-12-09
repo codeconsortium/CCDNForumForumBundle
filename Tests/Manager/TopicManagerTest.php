@@ -24,8 +24,8 @@ class TopicManagerTest extends TestBase
 		$users = $this->addFixturesForUsers();
 		$topic = $this->addNewTopic('NewTopicTest', null, false, false);
 		$post = $this->addNewPost('foobar', $topic, $users['tom'], new \DateTime(), false, false);
-		$this->getPostModel()->savePost($post);
 		$this->getTopicModel()->saveTopic($topic);
+		$this->getPostModel()->savePost($post);
 		$foundTopic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topic->getId(), true);
 
 		$this->assertNotNull($foundTopic);
