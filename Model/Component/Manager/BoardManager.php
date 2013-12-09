@@ -68,9 +68,6 @@ class BoardManager extends BaseManager implements ManagerInterface
     public function updateBoard(Board $board)
     {
 		$this->gateway->updateBoard($board);
-        // update a record
-        //$this->persist($board)->flush();
-        //$this->refresh($board);
 
         return $this;
     }

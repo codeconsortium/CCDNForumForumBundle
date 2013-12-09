@@ -88,7 +88,6 @@ class TopicManager extends BaseManager implements ManagerInterface
      */
     public function updateTopic(Topic $topic)
     {
-        // update the record
         $this->gateway->updateTopic($topic);
 
         return $this;

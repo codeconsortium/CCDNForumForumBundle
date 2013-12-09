@@ -25,17 +25,18 @@ class PostManagerTest extends TestBase
 		$topic = $this->addNewTopic('NewTopicTest', null, false, false);
 		$post = $this->addNewPost('foobar', $topic, $users['tom'], new \DateTime(), false, false);
 		$this->getPostModel()->savePost($post);
-		$this->getTopicModel()->saveTopic($topic);
 		$this->em->refresh($post);
-		$post2 = $this->addNewPost('foobar', $post->getTopic(), $users['tom'], new \DateTime(), false, false);
+		$topic->setFirstPost($post);
+		$topic->setLastPost($post);
+		$this->getTopicModel()->saveTopic($topic);
+		$post2 = $this->addNewPost('foobar', $topic, $users['tom'], new \DateTime(), false, false);
 		$this->getPostModel()->savePost($post2);
-		$foundTopic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($post->getTopic()->getId(), true);
-		
+		$foundTopic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topic->getId(), true);
+
 		$this->assertNotNull($foundTopic);
 		$this->assertInstanceOf('CCDNForum\ForumBundle\Entity\Topic', $foundTopic);
 		$this->assertTrue(is_numeric($foundTopic->getId()));
 		$this->assertSame('NewTopicTest', $foundTopic->getTitle());
-		$this->assertSame(2, count($foundTopic->getPosts()));
 	}
 
     public function testUpdatePost()

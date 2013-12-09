@@ -63,8 +63,6 @@ class ForumManager extends BaseManager implements ManagerInterface
     public function updateForum(Forum $forum)
     {
 		$this->gateway->updateForum($forum);
-        //$this->persist($forum)->flush();
-        //$this->refresh($forum);
 
         return $this;
     }

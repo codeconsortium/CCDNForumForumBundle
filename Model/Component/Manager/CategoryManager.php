@@ -65,9 +65,6 @@ class CategoryManager extends BaseManager implements ManagerInterface
     public function updateCategory(Category $category)
     {
 		$this->gateway->updateCategory($category);
-        // update a record.
-        //$this->persist($category)->flush();
-        //$this->refresh($category);
 
         return $this;
     }

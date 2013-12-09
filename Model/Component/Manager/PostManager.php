@@ -90,9 +90,6 @@ class PostManager extends BaseManager implements ManagerInterface
      */
     public function updatePost(Post $post)
     {
-        // update a record
-        //$this->persist($post)->flush();
-        //$this->refresh($post);
 		$this->gateway->updatePost($post);
 		
         return $this;

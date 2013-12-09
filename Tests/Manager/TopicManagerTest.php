@@ -32,7 +32,6 @@ class TopicManagerTest extends TestBase
 		$this->assertInstanceOf('CCDNForum\ForumBundle\Entity\Topic', $foundTopic);
 		$this->assertTrue(is_numeric($foundTopic->getId()));
 		$this->assertSame('NewTopicTest', $foundTopic->getTitle());
-		$this->assertSame(1, count($foundTopic->getPosts()));
 	}
 
 	public function testUpdateTopic()
