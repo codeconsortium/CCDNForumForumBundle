@@ -35,11 +35,11 @@
 
 						<div class="col-md-10">
 							<div class="row">
-								{%- if crumbs is defined -%}
-									{%- block crumb_trail -%}
+								{%- block crumb_trail -%}
+									{%- if crumbs is defined -%}
 										{%- include 'CCDNForumForumBundle:Common:Layout/crumbs.html.twig' with {'crumbs': crumbs } -%}
-									{%- endblock crumb_trail -%}
-								{%- endif -%}
+									{%- endif -%}
+								{%- endblock crumb_trail -%}
 							</div>
 						</div>
 					</div>
