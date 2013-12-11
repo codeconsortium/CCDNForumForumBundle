@@ -42,7 +42,7 @@
     },
 	"suggest": {
 		"reecefowell/jquery-timestamper": "dev-master",
-		"reecefowell/jquery-checkboxes": "dev-master",
+		"reecefowell/jquery-checkboxes": "dev-master"
 	},
     "autoload": {
         "psr-0": { "CCDNForum\\ForumBundle": "" }
