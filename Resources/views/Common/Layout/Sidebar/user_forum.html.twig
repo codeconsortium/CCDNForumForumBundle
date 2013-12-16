@@ -15,7 +15,9 @@
 				{%- set board = topic.getBoard -%}
 			{%- else -%}
 				{%- if post is defined -%}
-					{%- set board = topic.getBoard -%}
+					{%- if post.getTopic is defined -%}
+						{%- set board = post.getTopic.getBoard -%}
+					{%- endif -%}
 				{%- endif -%}
 			{%- endif -%}
 		{%- endif -%}
@@ -36,11 +38,11 @@
 			{%- if route == 'ccdn_homepage'
 				or route == 'ccdn_forum_user_category_index' -%}
 				<li class="active">
-					<a href="{{- path('ccdn_forum_user_category_index', {'forumName': forum.name}) -}}">
+					<a href="{{- path('ccdn_forum_user_category_index', {'forumName': forumName}) -}}">
 						<i class="glyphicon glyphicon-home"></i>
 			{%- else -%}
 				<li>
-					<a href="{{- path('ccdn_forum_user_category_index', {'forumName': forum.name}) -}}">
+					<a href="{{- path('ccdn_forum_user_category_index', {'forumName': forumName}) -}}">
 						<i class="glyphicon glyphicon-home"></i>
 			{%- endif -%}
 						{{- 'link.category.index' |trans({}, 'CCDNForumForumBundle') -}}

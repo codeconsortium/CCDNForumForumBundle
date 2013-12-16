@@ -57,6 +57,7 @@ class UserTopicController extends UserTopicBaseController
         $this->getTopicModel()->incrementViewCounter($topic);
         $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/show.html.', array(
             'crumbs' => $this->getCrumbs()->addUserTopicShow($forum, $topic), 'forum' => $forum, 'topic' => $topic,
+			'forumName' => $forumName,
             'pager' => $postsPager, 'subscription' => $subscription, 'subscription_count' => $subscriberCount,
         ));
 
@@ -81,6 +82,7 @@ class UserTopicController extends UserTopicBaseController
         $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/create.html.', array(
             'crumbs' => $this->getCrumbs()->addUserTopicCreate($forum, $board),
             'forum' => $forum,
+			'forumName' => $forumName,
             'board' => $board,
             'preview' => $formHandler->getForm()->getData(),
             'form' => $formHandler->getForm()->createView(),
@@ -110,6 +112,7 @@ class UserTopicController extends UserTopicBaseController
         } else {
             $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/create.html.', array(
                 'crumbs' => $this->getCrumbs()->addUserTopicCreate($forum, $board), 'forum' => $forum, 'board' => $board,
+				'forumName' => $forumName,
                 'preview' => $formHandler->getForm()->getData(), 'form' => $formHandler->getForm()->createView(),
             ));
         }
@@ -136,6 +139,7 @@ class UserTopicController extends UserTopicBaseController
         $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/reply.html.', array(
             'crumbs' => $this->getCrumbs()->addUserTopicReply($forum, $topic),
             'forum' => $forum,
+			'forumName' => $forumName,
             'topic' => $topic,
             'preview' => $formHandler->getForm()->getData(),
             'form' => $formHandler->getForm()->createView(),
@@ -165,6 +169,7 @@ class UserTopicController extends UserTopicBaseController
         } else {
             $response = $this->renderResponse('CCDNForumForumBundle:User:Topic/reply.html.', array(
                 'crumbs' => $this->getCrumbs()->addUserTopicReply($forum, $topic), 'forum' => $forum, 'topic' => $topic,
+				'forumName' => $forumName,
                 'preview' => $formHandler->getForm()->getData(), 'form' => $formHandler->getForm()->createView(),
             ));
         }

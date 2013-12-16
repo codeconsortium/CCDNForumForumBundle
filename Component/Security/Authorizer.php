@@ -67,6 +67,11 @@ class Authorizer
         return $forum->isAuthorisedToRead($this->securityContext);
     }
 
+    public function canShowForumUnassigned()
+    {
+        return true;
+    }
+
     public function canShowCategory(Category $category, Forum $forum = null)
     {
         if ($forum) {

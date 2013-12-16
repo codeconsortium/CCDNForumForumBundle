@@ -20,7 +20,7 @@
 	        {% if post.id and not post.isDeleted %}
 	            <div class="btn-group">
 	                <a class="btn btn-xs btn-icon-only" title="show post"
-					 href="{{- path('ccdn_forum_user_post_show', {'forumName': forum.name, 'postId': post.getId }) -}}">
+					 href="{{- path('ccdn_forum_user_post_show', {'forumName': forumName, 'postId': post.getId }) -}}">
 						<i class="glyphicon glyphicon-fullscreen"></i>
 					</a>
 	                <a class="btn btn-xs btn-icon-only" href="#post_{{- post.getId -}}">
@@ -41,7 +41,7 @@
 						{%- if canReplyToTopic(post.getTopic) -%}
 	                        <li>
 								<a rel="nofollow"
-								 href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forum.name, 'topicId': post.getTopic.getId }) -}}">
+								 href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forumName, 'topicId': post.getTopic.getId }) -}}">
 									<i class="glyphicon glyphicon-pencil"></i>
 									{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
 								</a>
@@ -51,7 +51,7 @@
 						{%- if canEditPost(post) -%}
                             <li>
 								<a rel="nofollow" id="post_edit[{{- post.getBody |slice(0,24) -}}]"
-								 href="{{- path('ccdn_forum_user_post_edit', {'forumName': forum.name, 'postId': post.getId }) -}}">
+								 href="{{- path('ccdn_forum_user_post_edit', {'forumName': forumName, 'postId': post.getId }) -}}">
 									<i class="glyphicon glyphicon-pencil"></i>
 									{{- 'link.post.edit' | trans({}, 'CCDNForumForumBundle') -}}
 								</a>
@@ -61,7 +61,7 @@
                         {%- if canDeletePost(post) -%}
                             <li>
 								<a rel="nofollow"
-								 href="{{- path('ccdn_forum_user_post_delete', {'forumName': forum.name, 'postId': post.getId }) -}}">
+								 href="{{- path('ccdn_forum_user_post_delete', {'forumName': forumName, 'postId': post.getId }) -}}">
 									<i class="glyphicon glyphicon-trash"></i>
 									{{- 'link.post.delete' | trans({}, 'CCDNForumForumBundle') -}}
 								</a>
@@ -70,7 +70,7 @@
 
 						{%- if canRestorePost(post) -%}
                             <li>
-                                <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_restore', {'forumName': forum.name, 'postId': post.getId }) -}}">
+                                <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_restore', {'forumName': forumName, 'postId': post.getId }) -}}">
                                     <i class="glyphicon glyphicon-trash"></i>
 									{{- 'link.post.restore' | trans({}, 'CCDNForumForumBundle') -}}
                                 </a>
@@ -79,7 +79,7 @@
 
 						{%- if canLockPost(post) -%}
                             <li>
-                                <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_lock', {'forumName': forum.name, 'postId': post.getId }) -}}">
+                                <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_lock', {'forumName': forumName, 'postId': post.getId }) -}}">
                                     <i class="glyphicon glyphicon-lock"></i>
 									{{- 'link.post.lock' | trans({}, 'CCDNForumForumBundle') -}}
                                 </a>
@@ -88,7 +88,7 @@
 
 						{%- if canUnlockPost(post) -%}
                             <li>
-                                <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_unlock', {'forumName': forum.name, 'postId': post.getId }) -}}">
+                                <a rel="nofollow" href="{{- path('ccdn_forum_moderator_post_unlock', {'forumName': forumName, 'postId': post.getId }) -}}">
                                     <i class="glyphicon glyphicon-lock"></i>
 									{{- 'link.post.unlock' | trans({}, 'CCDNForumForumBundle') -}}
                                 </a>

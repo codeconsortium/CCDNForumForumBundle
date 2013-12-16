@@ -299,15 +299,19 @@ class CrumbBuilder extends BaseCrumbBuilder
      * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
      * @return \CCDNForum\ForumBundle\Component\Crumbs\Factory\CrumbTrail
      */
-    public function addUserCategoryIndex(Forum $forum)
+    public function addUserCategoryIndex(Forum $forum = null)
     {
         return $this->createCrumbTrail()
             ->add(
-                $forum->getName() == 'default' ?  'Index' : $forum->getName() . ' Index',
+				$forum ? 
+					$forum->getName() == 'default' ?  'Index' : $forum->getName() . ' Index'
+					:
+					'Index'
+				,
                 array(
                     'route' => 'ccdn_forum_user_category_index',
                     'params' => array(
-                        'forumName' => $forum->getName()
+                        'forumName' => $forum ? $forum->getName() : ''
                     )
                 )
             )

@@ -1,4 +1,4 @@
-Feature: Category Management
+Feature: Admin Category Management
 	In order to manage categories
 	As an administrator
 	I want to be able to list, create, edit and delete categories.

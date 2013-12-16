@@ -26,7 +26,7 @@
 
 	<section class="clearfix">
 		{%- form_theme form ccdn_forum_forum.topic.user.create.form_theme -%}
-		<form action="{{- path('ccdn_forum_user_topic_create_process', {'forumName': forum.name, 'boardId': board.id } ) -}}"
+		<form action="{{- path('ccdn_forum_user_topic_create_process', {'forumName': forumName, 'boardId': board.id } ) -}}"
 		 method="post" {{ form_enctype(form) }} class="form-horizontal" role="form" novalidate>
 			<fieldset>
 
@@ -50,7 +50,7 @@
 
 						{#<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">#}
 
-						<a class="btn btn-default" href="{{- path('ccdn_forum_user_board_show', {'forumName': forum.name, 'boardId': board.id}) -}}">
+						<a class="btn btn-default" href="{{- path('ccdn_forum_user_board_show', {'forumName': forumName, 'boardId': board.id}) -}}">
 							{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
 						</a>
 					</div>

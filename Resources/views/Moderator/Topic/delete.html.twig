@@ -28,7 +28,7 @@
 
 	<section class="clearfix">
 		{%- form_theme form ccdn_forum_forum.topic.moderator.delete.form_theme -%}
-	    <form action="{{- path('ccdn_forum_moderator_topic_delete_process', {'forumName': forum.name, 'topicId': topic.id } ) -}}"
+	    <form action="{{- path('ccdn_forum_moderator_topic_delete_process', {'forumName': forumName, 'topicId': topic.id } ) -}}"
 		 method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
 	        <fieldset>
 
@@ -46,7 +46,7 @@
 					<div class="col-lg-offset-2 col-lg-10">
 		                <input type="submit" class="btn btn-primary" value="{{- 'form.button.topic.delete' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]" id="submit[post]">
 
-		                <a class="btn btn-default" href="{{- path('ccdn_forum_user_topic_show', {'forumName': forum.name, 'topicId': topic.getId}) -}}">
+		                <a class="btn btn-default" href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId}) -}}">
 							{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
 						</a>
 					</div>

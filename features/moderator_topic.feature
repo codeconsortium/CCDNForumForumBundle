@@ -1,4 +1,4 @@
-Feature: Moderator Topic Traversal
+Feature: Moderator Topic Management
 	In order to manage topics.
 	As a Moderator
 	I want to be able to delete/restore, sticky/unsticky topics etc.

@@ -1,4 +1,4 @@
-Feature: Moderator Post Traversal
+Feature: Moderator Post Management
 	In order to manage posts.
 	As a Moderator
 	I want to be able to delete/restore, lock/unlock posts etc.

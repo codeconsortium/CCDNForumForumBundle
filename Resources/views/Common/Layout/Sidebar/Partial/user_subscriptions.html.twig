@@ -4,7 +4,7 @@
 		<ul class="nav nav-pills nav-stacked">
 			{% for subscribed_forum in subscribed_forums %}
 				{%- if forum is not null -%}
-					{%- if forum.name == subscribed_forum['forum'].name -%}
+					{%- if forumName == subscribed_forum['forum'].name -%}
 						<li class="active">
 							<a href="{{- path('ccdn_forum_user_subscription_index', {'forumName': subscribed_forum['forum'].name}) -}}">
 								<i class="glyphicon glyphicon-folder-open"></i>

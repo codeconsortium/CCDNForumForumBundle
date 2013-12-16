@@ -16,7 +16,7 @@
 		</td>
 		<td class="center">
 			{# use custom icons below, will be later specified in the create topic form #}
-			<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
+			<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId }) -}}">
 				{%- if topic.isSticky -%}
 					<i class="glyphicon glyphicon-bullhorn"></i>
 				{%- else -%}
@@ -29,7 +29,7 @@
 				<span class="label label-danger">{{- 'topic.badge.closed' |trans({}, 'CCDNForumForumBundle') -}}</span>&nbsp;
 			{%- endif -%}
 
-			<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forum.name, 'topicId': topic.getId }) -}}" title="{{- topic.getTitle -}}">
+			<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId }) -}}" title="{{- topic.getTitle -}}">
 				{{- topic.getTitle |title -}}
 			</a>
 
@@ -39,7 +39,7 @@
 				{{- 'generic.posted_by' | trans({'%name%': topic.getFirstPost.getCreatedBy}, 'CCDNForumForumBundle') |raw -}}
 
 				&nbsp;&#183;
-                <a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forum.name, 'topicId': topic.getId }) -}}">
+                <a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId }) -}}">
                     <abbr class="timestamper" title="{{- topic.getFirstPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
                         {{- topic.getFirstPost.getCreatedDate |date(ccdn_forum_forum.board.user.show.first_post_datetime_format) -}}
                     </abbr>
@@ -69,14 +69,14 @@
 				<br>
 
 				{%- if page < 2 -%}
-					<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forum.name, 'topicId': topic.getId } ) -}}#{{- topic.getLastPost.getId -}}">
+					<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId } ) -}}#{{- topic.getLastPost.getId -}}">
 						<i class="glyphicon glyphicon-arrow-right"></i>
 						<abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 							{{- topic.getLastPost.getCreatedDate |date(ccdn_forum_forum.board.user.show.last_post_datetime_format) -}}
 						</abbr>
 					</a>
 				{%- else -%}
-					<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forum.name, 'topicId': topic.getId, 'page':page }) -}}#{{- topic.getLastPost.getId -}}">
+					<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId, 'page':page }) -}}#{{- topic.getLastPost.getId -}}">
 						<i class="glyphicon glyphicon-arrow-right"></i>
 						<abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 							{{- topic.getLastPost.getCreatedDate |date(ccdn_forum_forum.board.user.show.last_post_datetime_format) -}}

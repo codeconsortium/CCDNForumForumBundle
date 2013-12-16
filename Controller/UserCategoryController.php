@@ -28,19 +28,32 @@ class UserCategoryController extends BaseController
 {
     /**
      *
+     * Has 2 modes, when forum name is specified, categories for that forum are listed.
+     * But, when forumName is ommitted all unassigned categories are listed.
+     * 
+     * Optional Defaults:
+     * default = unassigned categories only (will not include categories assigned to a forum, acts as default).
+     * 
      * @access public
      * @param  string         $forumName
      * @return RenderResponse
      */
     public function indexAction($forumName)
     {
-        $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
-        $categories = $this->getCategoryModel()->findAllCategoriesWithBoardsForForumByName($forumName);
-        $this->isAuthorised($this->getAuthorizer()->canShowForum($forum, $forum));
+        if ($forumName != 'default') {
+            $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
+	        $this->isAuthorised($this->getAuthorizer()->canShowForum($forum));
+        } else {
+            $forum = null;
+	        $this->isAuthorised($this->getAuthorizer()->canShowForumUnassigned());
+        }
 
-        return $this->renderResponse('CCDNForumForumBundle:User:/Category/index.html.', array(
+        $categories = $this->getCategoryModel()->findAllCategoriesWithBoardsForForumByName($forumName);
+
+        return $this->renderResponse('CCDNForumForumBundle:User:Category/index.html.', array(
             'crumbs' => $this->getCrumbs()->addUserCategoryIndex($forum),
             'forum' => $forum,
+			'forumName' => $forumName,
             'categories' => $categories,
             'topics_per_page' => $this->container->getParameter('ccdn_forum_forum.board.user.show.topics_per_page'),
         ));
@@ -62,6 +75,7 @@ class UserCategoryController extends BaseController
         return $this->renderResponse('CCDNForumForumBundle:User:Category/show.html.', array(
             'crumbs' => $this->getCrumbs()->addUserCategoryShow($forum, $category),
             'forum' => $forum,
+			'forumName' => $forumName,
             'category' => $category,
             'categories' => array($category),
             'topics_per_page' => $this->container->getParameter('ccdn_forum_forum.board.user.show.topics_per_page'),

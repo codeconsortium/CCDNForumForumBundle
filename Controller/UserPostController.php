@@ -54,6 +54,7 @@ class UserPostController extends UserPostBaseController
         return $this->renderResponse('CCDNForumForumBundle:User:Post/show.html.', array(
             'crumbs' => $this->getCrumbs()->addUserPostShow($forum, $post),
             'forum' => $forum,
+			'forumName' => $forumName,
             'topic' => $post->getTopic(), 'post' => $post,
             'subscription' => $subscription,
             'subscription_count' => $subscriberCount,
@@ -78,6 +79,7 @@ class UserPostController extends UserPostBaseController
         $response = $this->renderResponse('CCDNForumForumBundle:User:Post/edit.html.', array(
             'crumbs' => $this->getCrumbs()->addUserPostShow($forum, $post),
             'forum' => $forum,
+			'forumName' => $forumName,
             'post' => $post,
             'preview' => $formHandler->getForm()->getData(),
             'form' => $formHandler->getForm()->createView(),
@@ -107,6 +109,7 @@ class UserPostController extends UserPostBaseController
         } else {
             $response = $this->renderResponse('CCDNForumForumBundle:User:Post/edit.html.', array(
                 'crumbs' => $this->getCrumbs()->addUserPostShow($forum, $post), 'forum' => $forum, 'post' => $post,
+				'forumName' => $forumName,
                 'preview' => $formHandler->getForm()->getData(), 'form' => $formHandler->getForm()->createView(),
             ));
         }
@@ -132,6 +135,7 @@ class UserPostController extends UserPostBaseController
         $response = $this->renderResponse('CCDNForumForumBundle:User:Post/delete.html.', array(
             'crumbs' => $this->getCrumbs()->addUserPostDelete($forum, $post),
             'forum' => $forum,
+			'forumName' => $forumName,
             'post' => $post,
             'form' => $formHandler->getForm()->createView(),
         ));
@@ -161,6 +165,7 @@ class UserPostController extends UserPostBaseController
             $response = $this->renderResponse('CCDNForumForumBundle:User:Post/delete.html.', array(
                 'crumbs' => $this->getCrumbs()->addUserPostShow($forum, $post),
                 'forum' => $forum, 'post' => $post,
+				'forumName' => $forumName,
                 'form' => $formHandler->getForm()->createView(),
             ));
         }

@@ -65,10 +65,6 @@ class BoardListExtension extends \Twig_Extension
      */
     public function boardList($forumName)
     {
-        if (!$forumName) {
-            $forumName = 'default';
-        }
-
         return $this->categoryModel->findAllCategoriesWithBoardsForForumByName($forumName);
     }
 

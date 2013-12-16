@@ -1,4 +1,4 @@
-Feature: Board Management
+Feature: Admin Board Management
 	In order to manage boards
 	As an administrator
 	I want to be able to list, create, edit and delete boards.

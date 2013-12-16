@@ -1,4 +1,4 @@
-Feature: Forum Management
+Feature: Admin Forum Management
 	In order to manage forums
 	As an administrator
 	I want to be able to list, create, edit and delete forums.
