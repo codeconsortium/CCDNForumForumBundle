@@ -94,4 +94,4 @@ Feature: User Subscription Traversal And Management
 		  And I should see "Ipsum lorem doler sit amet"
 		  And I should see "my response"
         Given I am on "/en/forum/test_forum_f1/subscription"
-		  And I should see "New Test Topic Reply with Subscription"
+		  And I should see "New Test Topic with Subscription"
