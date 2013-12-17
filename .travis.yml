@@ -17,8 +17,8 @@ before_script:
     - php ./Tests/Functional/app/console doctrine:schema:update --force
 
 script:
-    - 'phpunit -c ./ --testdox'
-    - './vendor/bin/behat'
+    - 'php ./vendor/bin/phpunit -c ./ --testdox'
+    - 'php ./vendor/bin/behat'
 
 after_script:
     - mysql -e 'DROP DATABASE ccdndev_travis_test;'
