@@ -1,8 +1,13 @@
 dashboard:
     pages:
         forum:                         "Forum"
+        community:                     "Community"
     categories:
         forum:                         "Forum"
+        community:                     "Community"
+    links:
+        forum:                         "Forum Index"
+        subscriptions:                 "Forum Subscriptions"
 
 layout:
     header_links:
