@@ -6,7 +6,8 @@
 			    {%- if topic.isDeleted -%}
 		            <i class="glyphicon glyphicon-trash"></i>
 
-		            {{- 'generic.deleted_by' | trans({'%name%': topic.getDeletedBy}, 'CCDNForumForumBundle') |raw -}}
+		            {{- 'topic.deleted-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
+					{{- topic.getDeletedBy -}}
 
 					&nbsp;&#183;
 
@@ -17,7 +18,8 @@
 					{%- if topic.isDeleted -%}<br>{%- endif -%}
 		            <i class="glyphicon glyphicon-lock"></i>
 
-		            {{- 'topic.closed_by' | trans({'%name%': topic.getClosedBy}, 'CCDNForumForumBundle') |raw -}}
+		            {{- 'topic.closed-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
+					{{- topic.getClosedBy -}}
 
 					&nbsp;&#183;
 
@@ -30,7 +32,8 @@
 	        <div class="alert alert-info">
 		        <i class="glyphicon glyphicon-bullhorn"></i>
 
-	            {{- 'topic.stickied_by' | trans({'%name%': topic.stickiedBy}, 'CCDNForumForumBundle') |raw -}}
+	            {{- 'topic.stickied-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
+				{{- topic.stickiedBy -}}
 
 				&nbsp;&#183;
 

@@ -39,7 +39,7 @@ class PostUnlockFormType extends AbstractType
     /**
      *
      * @access public
-     * @var string $postClass
+     * @param  string $postClass
      */
     public function __construct($postClass)
     {
@@ -49,7 +49,8 @@ class PostUnlockFormType extends AbstractType
     /**
      *
      * @access public
-     * @param FormBuilderInterface $builder, array $options
+     * @param  FormBuilderInterface $builder
+     * @param  array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -58,7 +59,7 @@ class PostUnlockFormType extends AbstractType
                 array(
                     'mapped'             => true,
                     'required'           => true,
-                    'label'              => 'Unlock until:',
+                    'label'              => 'post.unlock-until-label',
                     'translation_domain' => 'CCDNForumForumBundle',
                     'data'               => new \Datetime('today + 1 day')
                 )

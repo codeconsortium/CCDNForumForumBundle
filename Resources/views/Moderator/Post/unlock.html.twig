@@ -2,26 +2,18 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.post.moderator.unlock.layout_template %}
 
-{% block title %}{{- 'title.post.unlock' | trans({}, 'CCDNForumForumBundle') -}}{% endblock %}
-
-
+{%- block title -%}
+	{{- 'title.post.unlock' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}
+{%- endblock title -%}
 
 {%- block sidebar -%}
-
 	{%- spaceless -%}
-
 	{{- parent() -}}
-
     {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
-
 	{%- endspaceless -%}
-
 {%- endblock sidebar -%}
 
-
-
-{% block body_content %}
-
+{%- block body_content -%}
 	{%- spaceless -%}
 
 	<section class="clearfix">
@@ -32,7 +24,9 @@
 
 				<div class="form-group">
 					<div class="col-lg-offset-2 col-lg-10">
-						<h3>{{- 'title.post.unlock' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}</h3>
+						<h4>
+							{{- 'title.post.unlock' | trans({'%topic_title%': topic.getTitle }, 'CCDNForumForumBundle') -}}
+						</h4>
 					</div>
 				</div>
 
@@ -40,7 +34,7 @@
 
 				<div class="form-group">
 					<label class="col-lg-2 control-label">
-						{{- 'generic.thead.topic' |trans({}, 'CCDNForumForumBundle') -}}
+						{{- 'topic.label' |trans({}, 'CCDNForumForumBundle') -}}
 					</label>
 					<div class="col-lg-10">
 						<pre>
@@ -53,7 +47,9 @@
 
 				<div class="form-group">
 					<div class="col-lg-offset-2 col-lg-10">
-						<input type="submit" class="btn btn-danger" value="{{- 'form.button.post.unlock' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]" id="submit[post]">
+						<input type="submit" class="btn btn-danger" value="
+							{{- 'form.button.post.unlock' | trans({}, 'CCDNForumForumBundle') -}}
+						" name="submit[post]" id="submit[post]">
 
 						<a class="btn btn-default" href="{{- path('ccdn_forum_user_topic_show', {'topicId': topic.id}) -}}">
 							{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
@@ -66,5 +62,4 @@
 	</section>
 
 	{%- endspaceless -%}
-
-{% endblock body_content %}
+{%- endblock body_content -%}

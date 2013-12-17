@@ -14,8 +14,9 @@
 
 						    <header class="panel-heading">
 								{%- if post.getCreatedBy -%}
-							        {{- 'generic.posted_by' |trans({'%name%': post.getCreatedBy.username}, 'CCDNForumForumBundle') |raw -}}
-
+							        {{- 'post.posted-by' |trans({}, 'CCDNForumForumBundle') |raw -}}
+									{{- post.getCreatedBy.username -}}
+									
 							        &nbsp;&#183;
 
 								{%- endif -%}
@@ -26,7 +27,9 @@
 							</header>
 
 							<div class="panel-body">
-								{{ post.getBody }}
+								<p>
+									{{ post.getBody }}
+								</p>
 							</div>
 
 						</article>

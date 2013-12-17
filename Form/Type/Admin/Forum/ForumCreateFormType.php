@@ -46,8 +46,8 @@ class ForumCreateFormType extends AbstractType
     /**
      *
      * @access public
-     * @var string $forumClass
-     * @var Object $roleHelper
+     * @param  string $forumClass
+     * @param  Object $roleHelper
      */
     public function __construct($forumClass, $roleHelper)
     {
@@ -58,14 +58,15 @@ class ForumCreateFormType extends AbstractType
     /**
      *
      * @access public
-     * @param FormBuilderInterface $builder, array $options
+     * @param  FormBuilderInterface $builder
+	 * @param  array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('name', 'text',
                 array(
-                    'label'              => 'form.label.forum.name',
+                    'label'              => 'forum.name-label',
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
@@ -75,8 +76,8 @@ class ForumCreateFormType extends AbstractType
                     'expanded'           => true,
                     'multiple'           => true,
                     'choices'            => $options['available_roles'],
-                    'label'              => 'form.label.board.view_roles',
-                    'translation_domain' => 'CCDNForumAdminBundle',
+                    'label'              => 'forum.roles.board-view-label',
+                    'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
         ;

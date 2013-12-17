@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the CCDNForum AdminBundle
+ * This file is part of the CCDNForum ForumBundle
  *
  * (c) CCDN (c) CodeConsortium <http://www.codeconsortium.com/>
  *
@@ -46,7 +46,8 @@ class TopicChangeBoardFormType extends AbstractType
     /**
      *
      * @access public
-     * @param string $topicClass
+     * @param  string $topicClass
+	 * @param  string $boardClass
      */
     public function __construct($topicClass, $boardClass)
     {
@@ -57,7 +58,8 @@ class TopicChangeBoardFormType extends AbstractType
     /**
      *
      * @access public
-     * @param FormBuilderInterface $builder, array $options
+     * @param  FormBuilderInterface $builder
+     * @param  array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -65,9 +67,9 @@ class TopicChangeBoardFormType extends AbstractType
             ->add('board', 'entity',
                 array(
                     'property'           => 'name',
-                    'class'              => $this->boardClass, //'CCDNForumForumBundle:Board'
+                    'class'              => $this->boardClass,
                     'choices'            => $options['boards'],
-                    'label'              => 'form.label.board',
+                    'label'              => 'topic.board-label',
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )

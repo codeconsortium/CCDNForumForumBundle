@@ -375,12 +375,7 @@ class CrumbBuilder extends BaseCrumbBuilder
     {
         return $this->addUserBoardShow($forum, $topic->getBoard())
             ->add(
-                array(
-                    'label' => 'crumbs.user.topic.show',
-                    'params' => array(
-                        '%topic_name%' => $topic->getTitle()
-                    )
-                ),
+                $topic->getTitle(),
                 array(
                     'route' => 'ccdn_forum_user_topic_show',
                     'params' => array(
@@ -453,9 +448,7 @@ class CrumbBuilder extends BaseCrumbBuilder
     {
         return $this->addUserTopicShow($forum, $post->getTopic())
             ->add(
-                array(
-                    'label' => 'crumbs.user.post.show',
-                ),
+                '# ' . $post->getId(),
                 array(
                     'route' => 'ccdn_forum_user_post_show',
                     'params' => array(

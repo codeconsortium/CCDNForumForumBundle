@@ -43,17 +43,16 @@
 	    <td class="center" style="width:170px;">
 	        {%- if board.getLastPost -%}
 	            {%- if board.getLastPost.getTopic -%}
+	                {{- 'post.posted-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
+					{{- board.getLastPost.getCreatedBy -}}
+					
+	                <br>
 
 					{#
 						@TODO figure a way to determine page in a more appropriate way
 		                {%- set page = divCeil(( board.getLastPost.getTopic.getCachedReplyCount + 1), topics_per_page) -%}
 					#}
 					{%- set page = 1 -%}
-
-	                {{- 'generic.posted_by' | trans({'%name%': board.getLastPost.getCreatedBy}, 'CCDNForumForumBundle') |raw -}}
-
-	                <br>
-
 	                {%- if page < 2 -%}
 	                    <a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': board.getLastPost.getTopic.getId } ) -}}#{{- board.getLastPost.getId -}}">
 							<i class="glyphicon glyphicon-arrow-right"></i>

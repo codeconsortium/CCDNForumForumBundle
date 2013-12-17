@@ -4,26 +4,16 @@
 
 {%- block title -%}
 	{{- 'title.admin.manage-boards.edit' |trans({'%board_name%': board.name}, 'CCDNForumForumBundle') -}}
-{%- endblock -%}
-
-
+{%- endblock title -%}
 
 {%- block sidebar -%}
-
 	{%- spaceless -%}
-
 	{{- parent() -}}
-
     {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/admin_forum.html.twig' -%}
-
 	{%- endspaceless -%}
-
 {%- endblock sidebar -%}
 
-
-
-{% block body_content %}
-
+{%- block body_content -%}
     {%- spaceless -%}
 
 	<section class="clearfix">
@@ -34,8 +24,9 @@
 
 				<div class="form-group">
 					<div class="col-lg-offset-2 col-lg-10">
-						<h4>Update Board {{ board.id -}}</h4>
-						<h5>{{- board.name -}}</h5>
+						<h4>
+							{{- 'title.admin.manage-boards.edit' |trans({'%board_name%': board.name}, 'CCDNForumForumBundle') -}}
+						</h4>
 					</div>
 				</div>
 
@@ -45,7 +36,9 @@
 
 				<div class="form-group">
 					<div class="col-lg-offset-2 col-lg-10">
-		                <input type="submit" class="btn btn-primary" value="Update" name="submit[post]" id="submit[post]">
+		                <input type="submit" class="btn btn-primary" value="
+							{{- 'form.button.save-changes' |trans({}, 'CCDNForumForumBundle') -}}
+						" name="submit[post]" id="submit[post]">
 
 		                <a class="btn btn-default" href="{{- path('ccdn_forum_admin_board_list', {'forum_filter': forum_filter, 'category_filter': category_filter}) -}}">
 							{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
@@ -58,5 +51,4 @@
 	</section>
 
     {%- endspaceless -%}
-
-{% endblock body_content %}
+{%- endblock body_content -%}

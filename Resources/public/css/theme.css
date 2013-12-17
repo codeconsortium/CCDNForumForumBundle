@@ -196,3 +196,11 @@ body > div > div > header > nav div.row > ol.breadcrumb {
 ul.pagination {
 	margin:0px;
 }
+
+.ellipsis {
+	text-wrap:none;
+	word-wrap:normal;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+}

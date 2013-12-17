@@ -2,26 +2,18 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.board.user.show.layout_template %}
 
-{% block title %}{{- 'title.board.show' | trans({'%board_name%': board.name}, 'CCDNForumForumBundle') -}}{% endblock %}
-
-
+{%- block title -%}
+	{{- 'title.board.show' | trans({'%board_name%': board.name}, 'CCDNForumForumBundle') -}}
+{%- endblock title -%}
 
 {%- block sidebar -%}
-
 	{%- spaceless -%}
-
 	{{- parent() -}}
-
     {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
-
 	{%- endspaceless -%}
-
 {%- endblock sidebar -%}
 
-
-
-{% block body_content %}
-
+{%- block body_content -%}
     {%- spaceless -%}
 
 	<section class="row btn-toolbar clearfix">
@@ -45,12 +37,12 @@
 		</div>
 		<div class="col-md-6 text-right">
 		    <span class="label label-default" title="{{- board.cachedTopicCount -}}">
-				{{- 'board.count.topic' |trans({}, 'CCDNForumForumBundle') -}}
+				{{- 'board.topic-count-label' |trans({}, 'CCDNForumForumBundle') -}}
 				{{- board.cachedTopicCount -}}
 			</span>
 			&nbsp;
 		    <span class="label label-default" title="{{- board.cachedPostCount -}}">
-				{{- 'board.count.post' |trans({}, 'CCDNForumForumBundle') -}}
+				{{- 'board.post-count-label' |trans({}, 'CCDNForumForumBundle') -}}
 				{{- board.cachedPostCount -}}
 			</span>
 		</div>
@@ -64,17 +56,17 @@
                 <tr>
                     <th class="center" style="width: 18px;"></th>
                     <th class="center" style="width: 18px;"></th>
-                    <th class="left">{{- 'generic.thead.topic' | trans({}, 'CCDNForumForumBundle') -}}</th>
-                    <th class="center" style="width: 80px;">{{- 'generic.thead.replies' | trans({}, 'CCDNForumForumBundle') -}}</th>
-                    <th class="center" style="width: 80px;">{{- 'generic.thead.views' | trans({}, 'CCDNForumForumBundle') -}}</th>
-                    <th class="center" style="width: 170px;">{{- 'generic.last_post' | trans({}, 'CCDNForumForumBundle') -}}</th>
+                    <th class="left">{{- 'board.topic-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
+                    <th class="center" style="width: 80px;">{{- 'board.reply-count-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
+                    <th class="center" style="width: 80px;">{{- 'board.view-count-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
+                    <th class="center" style="width: 170px;">{{- 'board.last-post-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
                 </tr>
             </thead>
             <tbody>
 			    {%- if sticky_topics is not empty -%}
 					<tr>
 						<td colspan="6" class="row-group-heading">
-							{{- 'generic.thead.announcements' | trans({}, 'CCDNForumForumBundle') -}}
+							{{- 'board.announcements-th' | trans({}, 'CCDNForumForumBundle') -}}
 						</td>
 					</tr>
 
@@ -86,7 +78,7 @@
 
 					<tr>
 						<td colspan="6" class="row-group-heading">
-							{{- 'generic.thead.topics' | trans({}, 'CCDNForumForumBundle') -}}
+							{{- 'board.topics-th' | trans({}, 'CCDNForumForumBundle') -}}
 						</td>
 					</tr>
 			    {%- endif -%}
@@ -98,7 +90,7 @@
 		        {%- else -%}
 		            <tr>
 		                <td class="center" colspan="6">
-		                    {{- 'board.empty' | trans({}, 'CCDNForumForumBundle') -}}
+		                    {{- 'board.no-topics' | trans({}, 'CCDNForumForumBundle') -}}
 		                </td>
 		            </tr>
 		        {%- endfor -%}
@@ -107,5 +99,4 @@
 	</section>
 
     {%- endspaceless -%}
-
-{% endblock body_content %}
+{%- endblock body_content -%}

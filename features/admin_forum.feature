@@ -28,47 +28,21 @@ Feature: Admin Forum Management
 		 Then I should be on "/en/forum/admin/manage-forums/"
           And I should see "FooBar" for the query "table#admin-forums-list tr td:nth-child(2)"
 
-    Scenario: Abort Create a new Forum
-        Given I am on "/en/forum/admin/manage-forums/create"
-		  And I should see "Create New Forum"
-          And I follow "Cancel"
-		 Then I should be on "/en/forum/admin/manage-forums/"
-
     Scenario: Update existing Forum
 	    Given I am on "/en/forum/admin/manage-forums/"
 		  And I follow "update_forum[test_forum_f1]"
-		  And I should see "Update Forum"
 		  And I should see "test_forum_f1"
           And I fill in "Forum_ForumUpdate[name]" with "FooBaz"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-forums/"
 		  And I should not see "test_forum_f1" for the query "table#admin-forums-list tr td:nth-child(2)"
           And I should see "FooBaz" for the query "table#admin-forums-list tr td:nth-child(2)"
-
-    Scenario: Abort Update existing Forum
-	    Given I am on "/en/forum/admin/manage-forums/"
-		  And I follow "update_forum[test_forum_f1]"
-		  And I should see "Update Forum"
-		  And I should see "test_forum_f1"
-          And I follow "Cancel"
-		 Then I should be on "/en/forum/admin/manage-forums/"
-		  And I should see "test_forum_f1" for the query "table#admin-forums-list tr td:nth-child(2)"
 		  
     Scenario: Delete existing Forum
 	    Given I am on "/en/forum/admin/manage-forums/"
 		  And I follow "delete_forum[test_forum_f3]"
-		  And I should see "Delete Forum"
 		  And I should see "test_forum_f3"
 		  And I check "Forum_ForumDelete[confirm_delete]"
           And I press "submit[post]"
 		 Then I should be on "/en/forum/admin/manage-forums/"
           And I should not see "test_forum_f3" for the query "table#admin-forums-list tr td:nth-child(2)"
-
-    Scenario: Abort deleting existing Forum
-	    Given I am on "/en/forum/admin/manage-forums/"
-		  And I follow "delete_forum[test_forum_f3]"
-		  And I should see "Delete Forum"
-		  And I should see "test_forum_f3"
-		  And I follow "Cancel"
-		 Then I should be on "/en/forum/admin/manage-forums/"
-          And I should see "test_forum_f3" for the query "table#admin-forums-list tr td:nth-child(2)"

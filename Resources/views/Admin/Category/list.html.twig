@@ -4,70 +4,56 @@
 
 {%- block title -%}
 	{{- 'title.admin.manage-categories.index' |trans({}, 'CCDNForumForumBundle') -}}
-{%- endblock -%}
-
-
+{%- endblock title -%}
 
 {%- block sidebar -%}
-
 	{%- spaceless -%}
-
 	{{- parent() -}}
-
     {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/admin_forum.html.twig' -%}
-
 	{%- endspaceless -%}
-
 {%- endblock sidebar -%}
 
-
-
 {%- block body_content -%}
-
 	{%- spaceless -%}
 
 		<section class="row btn-toolbar clearfix">
 			<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_category_create', {'forum_filter': forum_filter}) -}}">
-				Create Category
+				{{- 'link.category.create' |trans({}, 'CCDNForumForumBundle') -}}
 			</a>
 		</section>
 
-		<section class="col-md-12 clearfix">
-			<ul class="nav nav-list col-md-2">
-				<li class="nav-header">
-					Forums
-				</li>
-
-				<li {%- if forum_filter is null or forum_filter == '' %} class="active" {%- endif -%}>
-					<a href="{{- path('ccdn_forum_admin_category_list') -}}">
-						<i class="glyphicon glyphicon-exclamation-sign"></i>
-						Unassigned
-					</a>
-				</li>
-				{%- for forum in forums -%}
-					<li {%- if forum_filter == forum.id %} class="active" {%- endif -%}>
-						<a href="{{- path('ccdn_forum_admin_category_list', {'forum_filter': forum.id}) -}}" title="{{- forum.name -}}">
-
-							<span class="ellipsis">
-								{{- forum.name -}}
-							</span>
-
-							<span class="label pull-right">
-								{{- forum.getCategories | length -}}
-							</span>
-
+		<section class="col-md-12 row clearfix">
+			<div class="col-md-3 row">
+				<div class="panel panel-default">
+					<div class="panel-heading clearfix">
+						{{- 'filter.forums' |trans({}, 'CCDNForumForumBundle') -}}
+					</div>
+					<div class="list-group">
+						<a href="{{- path('ccdn_forum_admin_category_list') -}}"
+						 class="list-group-item ellipsis {%- if forum_filter is null or forum_filter == '' %} active {%- endif -%}">
+							<i class="glyphicon glyphicon-exclamation-sign"></i>
+							{{- 'link.unassigned' |trans({}, 'CCDNForumForumBundle') -}}
 						</a>
-					</li>
-				{%- endfor -%}
-			</ul>
-
+						{%- for forum in forums -%}
+							<a href="{{- path('ccdn_forum_admin_category_list', {'forum_filter': forum.id}) -}}" title="{{- forum.name -}}"
+							 class="list-group-item ellipsis {%- if forum_filter == forum.id %} active {%- endif -%}">
+								<span class="label pull-right">
+									{{- forum.getCategories | length -}}
+								</span>
+								{{- forum.name -}}
+							</a>
+						{%- endfor -%}
+					</div>
+				</div>
+			</div>
+			
 			<div class="col-md-9">
 				<table class="table table-bordered" id="admin-categories-list">
 					<thead>
 						<tr>
-							<th>ID</th>
-							<th>Name</th>
-							<th>Board Count</th>
+							<th>{{- 'category.id-th' |trans({}, 'CCDNForumForumBundle') -}}</th>
+							<th>{{- 'category.name-th' |trans({}, 'CCDNForumForumBundle') -}}</th>
+							<th>{{- 'category.board-count-th' |trans({}, 'CCDNForumForumBundle') -}}</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -80,13 +66,13 @@
 								<td>
 									<a class="btn btn-default" href="{{- path('ccdn_forum_admin_category_edit', {'categoryId': category.id, 'forum_filter': forum_filter}) -}}"
 									 id="update_category[{{- category.name -}}]">
-										Edit
+										{{- 'link.edit' |trans({}, 'CCDNForumForumBundle') -}}
 									</a>
 
 									{%- if is_granted('ROLE_SUPER_ADMIN') -%}
 										<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_category_delete', {'categoryId': category.id, 'forum_filter': forum_filter}) -}}"
 										 id="delete_category[{{- category.name -}}]">
-											Delete
+											{{- 'link.delete' |trans({}, 'CCDNForumForumBundle') -}}
 										</a>
 									{%- endif -%}
 
@@ -122,5 +108,4 @@
 		</section>
 
 	{%- endspaceless -%}
-
 {%- endblock body_content -%}

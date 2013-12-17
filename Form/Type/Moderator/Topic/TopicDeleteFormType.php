@@ -44,7 +44,7 @@ class TopicDeleteFormType extends AbstractType
     /**
      *
      * @access public
-     * @var string $topicClass
+     * @param  string $topicClass
      */
     public function __construct($topicClass)
     {
@@ -54,7 +54,8 @@ class TopicDeleteFormType extends AbstractType
     /**
      *
      * @access public
-     * @param FormBuilderInterface $builder, array $options
+     * @param  FormBuilderInterface $builder
+     * @param  array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -73,7 +74,7 @@ class TopicDeleteFormType extends AbstractType
                 array(
                     'mapped'             => false,
                     'required'           => true,
-                    'label'              => 'I confirm I want to delete this Topic.',
+                    'label'              => 'topic.confirm-delete-label',
                     'translation_domain' => 'CCDNForumForumBundle',
                     'constraints'        => array(
                         new True(),

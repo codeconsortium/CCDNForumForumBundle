@@ -2,26 +2,18 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.post.user.edit.layout_template %}
 
-{% block title %}{{- 'title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}{% endblock %}
-
-
+{%- block title -%}
+	{{- 'title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}
+{%- endblock title -%}
 
 {%- block sidebar -%}
-
 	{%- spaceless -%}
-
 	{{- parent() -}}
-
     {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
-
 	{%- endspaceless -%}
-
 {%- endblock sidebar -%}
 
-
-
-{% block body_content %}
-
+{%- block body_content -%}
     {%- spaceless -%}
 
 	<section class="clearfix">
@@ -32,7 +24,9 @@
 
 				<div class="form-group">
 					<div class="col-lg-offset-2 col-lg-10">
-						<h3>{{- 'title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}</h3>
+						<h4>
+							{{- 'title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}
+						</h4>
 					</div>
 				</div>
 
@@ -46,9 +40,15 @@
 
 				<div class="form-group">
 					<div class="col-lg-offset-2 col-lg-10">
-		                <input type="submit" class="btn btn-primary" value="{{- 'form.button.post.edit' | trans({}, 'CCDNForumForumBundle') -}}" name="submit[post]" id="submit[post]">
+		                <input type="submit" class="btn btn-primary" value="
+							{{- 'form.button.save-changes' | trans({}, 'CCDNForumForumBundle') -}}
+						" name="submit[post]" id="submit[post]">
 
-						{#<input type="submit" class="btn" value="{{- 'ccdn_forum_forum.form.button.post.preview' | trans({}, 'CCDNForumForumBundle') -}}" name="submit_preview">#}
+					{#
+						<input type="submit" class="btn" value="
+							{{- 'form.button.preview' | trans({}, 'CCDNForumForumBundle') -}}
+						" name="submit[preview]">
+					#}
 
 		                <a class="btn btn-default" href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': post.getTopic.getId}) -}}">
 							{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
@@ -60,14 +60,11 @@
 	    </form>
 	</section>
 
-	{#
     {%- if preview is defined -%}
         {%- if preview is not empty -%}
-            {%- include "CCDNForumForumBundle:Post:post_preview.html.twig" with {'post': preview} -%}
+            {%- include "CCDNForumForumBundle:User:Post/Partial/post_preview.html.twig" with {'post': preview} -%}
         {%- endif -%}
     {%- endif -%}
-	#}
 
     {%- endspaceless -%}
-
-{% endblock body_content %}
+{%- endblock body_content -%}

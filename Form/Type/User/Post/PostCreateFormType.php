@@ -39,7 +39,7 @@ class PostCreateFormType extends AbstractType
     /**
      *
      * @access public
-     * @var string $postClass
+     * @param  string $postClass
      */
     public function __construct($postClass)
     {
@@ -49,22 +49,23 @@ class PostCreateFormType extends AbstractType
     /**
      *
      * @access public
-     * @param FormBuilderInterface $builder, array $options
+     * @param  FormBuilderInterface $builder
+	 * @param  array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('body', 'textarea',
                 array(
-                    'label'              => 'form.label.post.body',
+                    'label'              => 'post.body-label',
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
             ->add('subscribe', 'checkbox',
                 array(
-                    'mapped'   => false,
-                    'required' => false,
-                    'label'    => 'Subscribe to this topic.',
+                    'mapped'             => false,
+                    'required'           => false,
+                    'label'              => 'post.subscribe-label',
                     'translation_domain' => 'CCDNForumForumBundle',
                     'attr'     => array(
                         'checked' => 'checked'

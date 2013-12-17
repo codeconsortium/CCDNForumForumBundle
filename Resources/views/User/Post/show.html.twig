@@ -2,26 +2,18 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.post.user.show.layout_template %}
 
-{% block title %}{{- 'title.post.show' | trans({'%post_id%': post.getId}, 'CCDNForumForumBundle') -}}{% endblock %}
-
-
+{%- block title -%}
+	{{- 'title.post.show' | trans({'%post_id%': post.getId}, 'CCDNForumForumBundle') -}}
+{%- endblock title -%}
 
 {%- block sidebar -%}
-
 	{%- spaceless -%}
-
 	{{- parent() -}}
-
     {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
-
 	{%- endspaceless -%}
-
 {%- endblock sidebar -%}
 
-
-
-{% block body_content %}
-
+{%- block body_content -%}
 	{%- spaceless -%}
 
 	<section class="row btn-toolbar clearfix">
@@ -36,10 +28,11 @@
 		{%- include "CCDNForumForumBundle:User:Topic/Partial/stat_mods.html.twig" -%}
 	{%- endif -%}
 
+	<br>
+
 	<section class="row clearfix">
 		{%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig" -%}
 	</section>
 
 	{%- endspaceless -%}
-
-{% endblock body_content %}
+{%- endblock body_content -%}

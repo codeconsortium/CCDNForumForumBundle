@@ -39,7 +39,7 @@ class TopicUpdateFormType extends AbstractType
     /**
      *
      * @access public
-     * @var string $topicClass
+     * @param  string $topicClass
      */
     public function __construct($topicClass)
     {
@@ -49,14 +49,15 @@ class TopicUpdateFormType extends AbstractType
     /**
      *
      * @access public
-     * @param FormBuilderInterface $builder, array $options
+     * @param  FormBuilderInterface $builder
+     * @param  array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('title', null,
                 array(
-                    'label'              => 'form.label.topic.title',
+                    'label'              => 'topic.title-label',
                     'translation_domain' => 'CCDNForumForumBundle'
                 )
             )

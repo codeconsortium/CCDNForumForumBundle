@@ -2,23 +2,16 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.subscription.list.layout_template %}
 
-{% block title %}{{- 'title.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}{% endblock %}
-
-
+{%- block title -%}
+	{{- 'title.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}
+{%- endblock title -%}
 
 {%- block sidebar -%}
-
 	{%- spaceless -%}
-
 	{{- parent() -}}
-
     {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_subscriptions.html.twig' -%}
-
 	{%- endspaceless -%}
-
 {%- endblock sidebar -%}
-
-
 
 {%- macro subscription_tab(label, forum_name, filter_key, filter_value, count_read, count_unread, count_total) -%}
 	{% if filter_key == filter_value -%}
@@ -51,8 +44,7 @@
 {%- endmacro -%}
 
 
-{% block body_content %}
-
+{%- block body_content -%}
 	{%- spaceless -%}
 
 	<section class="row clearfix">
@@ -88,10 +80,10 @@
 				<tr>
 					<th class="center" style="width:18px;"></th>
 					<th class="center" style="width:18px;"></th>
-					<th class="left">{{- 'generic.thead.topic' | trans({}, 'CCDNForumForumBundle') -}}</th>
-					<th class="center" style="width: 100px;">{{- 'generic.thead.replies' | trans({}, 'CCDNForumForumBundle') -}}</th>
-					<th class="center" style="width: 100px;">{{- 'generic.thead.views' | trans({}, 'CCDNForumForumBundle') -}}</th>
-					<th class="center" style="width: 170px;">{{- 'generic.last_post' | trans({}, 'CCDNForumForumBundle') -}}</th>
+					<th class="left">{{- 'board.topic-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
+					<th class="center" style="width: 100px;">{{- 'board.reply-count-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
+					<th class="center" style="width: 100px;">{{- 'board.view-count-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
+					<th class="center" style="width: 170px;">{{- 'board.last-post-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -103,7 +95,7 @@
 					<tr>
 						<td class="text-center" colspan="6">
 							<span class="lead">
-								{{- 'subscription.none' | trans({}, 'CCDNForumForumBundle') -}}
+								{{- 'subscription.no-topics' | trans({}, 'CCDNForumForumBundle') -}}
 							</span>
 						</td>
 					</tr>
@@ -113,5 +105,4 @@
 	</section>
 
 	{%- endspaceless -%}
-
-{% endblock body_content %}
+{%- endblock body_content -%}

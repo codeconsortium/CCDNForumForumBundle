@@ -59,13 +59,13 @@ class TopicCreateFormType extends AbstractType
                     'property'           => 'name',
                     'class'              => 'CCDNForumForumBundle:Board',
                     'choices'            => $options['boards'],
-                    'label'              => 'form.label.board',
+                    'label'              => 'board.label',
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
             ->add('title', null,
                 array(
-                    'label'              => 'form.label.topic.title',
+                    'label'              => 'topic.title-label',
                     'translation_domain' => 'CCDNForumForumBundle'
                 )
             )

@@ -1,9 +1,33 @@
 {%- spaceless -%}
+    {%- if preview.getBody -%}
+	<h4>
+		{{- 'post.preview' |trans({}, 'CCDNForumForumBundle') -}}
+	</h4>
+	
+		<div class="col-md-12">
+			<article class="row panel panel-default clearfix" {%- if post.id %} id="{{- post.getBody |slice(0,24) -}}"{%- endif -%}>
 
-    {% if preview.getBody %}
-		<section class="clearfix">
-	        {%- include 'CCDNForumForumBundle:User:Post/Partial/item_post.html.twig' with {'post': preview } -%}
-		</section>
-    {% endif %}
+			    <header class="panel-heading">
+					<h3 class="panel-title">
+						{%- if post.getCreatedBy -%}
+					        {{- 'post.posted-by' |trans({}, 'CCDNForumForumBundle') |raw -}}
+							{{- post.getCreatedBy.username -}}
 
+					        &nbsp;&#183;&nbsp;
+
+						{%- endif -%}
+
+				        <span class="timestamper" title="{{- post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+				            {{- post.getCreatedDate |date(ccdn_forum_forum.item_post.created_datetime_format) -}}
+				        </span>
+					</h3>
+				</header>
+
+				<div class="panel-body">
+					{%- include 'CCDNForumForumBundle:User:Post/Partial/item_post_body.html.twig' with {'post': preview } -%}
+				</div>
+
+			</article>
+		</div>
+    {%- endif -%}
 {%- endspaceless -%}

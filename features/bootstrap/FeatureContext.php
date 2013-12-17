@@ -423,4 +423,13 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
         $fields['month']->selectOption($date->format('M'));
         $fields['day']->selectOption($date->format('j'));
     }
+
+    /**
+     *
+     * @Given /^I dump$/
+     */
+    public function iDump()
+    {
+		ldd(substr($this->getPage()->getHtml(), 0, 9000));
+	}
 }

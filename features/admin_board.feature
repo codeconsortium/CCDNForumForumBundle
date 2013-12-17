@@ -167,7 +167,6 @@ Feature: Admin Board Management
 
     Scenario: Create a new Board (Assigned)
         Given I am on "/en/forum/admin/manage-boards/create"
-		  And I should see "Create New Board"
 		  And I select "test_category_f1_c1" from "Forum_BoardCreate[category]"
           And I fill in "Forum_BoardCreate[name]" with "New Test Board"
 		  And I fill in "Forum_BoardCreate[description]" with "Some description"
@@ -176,16 +175,9 @@ Feature: Admin Board Management
 		Given I am on "/en/forum/admin/manage-boards/"
           And I should not see "New Test Board" for the query "table#admin-boards-list tr td:nth-child(2)"
 
-    Scenario: Abort Create a new Board
-        Given I am on "/en/forum/admin/manage-boards/create"
-		  And I should see "Create New Board"
-          And I follow "Cancel"
-		  And I should not see "Create New Board"
-
     Scenario: Update existing Board (Assign)
 	    Given I am on "/en/forum/admin/manage-boards/"
 		  And I follow "update_board[test_board_fn_cn_b1]"
-		  And I should see "Update Board"
 		  And I should see "test_board_fn_cn_b1"
 		  And I select "test_category_f1_c1" from "Forum_BoardUpdate[category]"
           And I fill in "Forum_BoardUpdate[name]" with "Testing Board update form"
@@ -206,7 +198,6 @@ Feature: Admin Board Management
 		  And I should see "test_category_f1_c2"
 		  And I follow "test_category_f1_c2"
 		  And I follow "update_board[test_board_f1_c2_b1]"
-		  And I should see "Update Board"
 		  And I should see "test_board_f1_c2_b1"
 		  And I select "" from "Forum_BoardUpdate[category]"
           And I fill in "Forum_BoardUpdate[name]" with "Testing Board update form"
@@ -220,23 +211,6 @@ Feature: Admin Board Management
 		  And I follow "test_category_f1_c2"
 		  And I should not see "test_board_f1_c2_b1" for the query "table#admin-boards-list tr td:nth-child(2)"
 
-    Scenario: Abort Update existing Board
-	    Given I am on "/en/forum/admin/manage-boards/"
-		  And I should see "test_forum_f1"
-		  And I follow "test_forum_f1"
-		  And I should see "test_category_f1_c2"
-		  And I follow "test_category_f1_c2"
-		  And I follow "update_board[test_board_f1_c2_b3]"
-		  And I should see "Update Board"
-		  And I should see "test_board_f1_c2_b3"
-          And I follow "Cancel"
-		 Then I should be on "/en/forum/admin/manage-boards/"
-		  And I should see "test_forum_f1"
-		  And I follow "test_forum_f1"
-		  And I should see "test_category_f1_c2"
-		  And I follow "test_category_f1_c2"
-		  And I should see "test_board_f1_c2_b3" for the query "table#admin-boards-list tr td:nth-child(2)"
-
     Scenario: Delete existing Board
 	    Given I am on "/en/forum/admin/manage-boards/"
 		  And I should see "test_forum_f1"
@@ -244,7 +218,6 @@ Feature: Admin Board Management
 		  And I should see "test_category_f1_c3"
 		  And I follow "test_category_f1_c3"
 		  And I follow "delete_board[test_board_f1_c3_b1]"
-		  And I should see "Delete Board"
 		  And I should see "test_board_f1_c3_b1"
 		  And I check "Forum_BoardDelete[confirm_delete]"
           And I press "submit[post]"
@@ -254,23 +227,6 @@ Feature: Admin Board Management
 		  And I should see "test_category_f1_c3"
 		  And I follow "test_category_f1_c3"
           And I should not see "test_board_f1_c3_b1" for the query "table#admin-boards-list tr td:nth-child(2)"
-
-    Scenario: Abort deleting existing Board
-	    Given I am on "/en/forum/admin/manage-boards/"
-		  And I should see "test_forum_f1"
-		  And I follow "test_forum_f1"
-		  And I should see "test_category_f1_c3"
-		  And I follow "test_category_f1_c3"
-		  And I follow "delete_board[test_board_f1_c3_b2]"
-		  And I should see "Delete Board"
-		  And I should see "test_board_f1_c3_b2"
-		  And I follow "Cancel"
-		 Then I should be on "/en/forum/admin/manage-boards/"
-		  And I should see "test_forum_f1"
-		  And I follow "test_forum_f1"
-		  And I should see "test_category_f1_c3"
-		  And I follow "test_category_f1_c3"
-          And I should see "test_board_f1_c3_b2" for the query "table#admin-boards-list tr td:nth-child(2)"
 
 	Scenario: Reorder boards
 		Given I am on "/en/forum/admin/manage-boards/"

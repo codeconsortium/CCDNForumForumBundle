@@ -4,26 +4,16 @@
 
 {%- block title -%}
 	{{- 'title.admin.manage-forums.create' |trans({}, 'CCDNForumForumBundle') -}}
-{%- endblock -%}
-
-
+{%- endblock title -%}
 
 {%- block sidebar -%}
-
 	{%- spaceless -%}
-
 	{{- parent() -}}
-
     {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/admin_forum.html.twig' -%}
-
 	{%- endspaceless -%}
-
 {%- endblock sidebar -%}
 
-
-
-{% block body_content %}
-
+{%- block body_content -%}
     {%- spaceless -%}
 
 	<section class="clearfix">
@@ -34,7 +24,9 @@
 
 				<div class="form-group">
 					<div class="col-lg-offset-2 col-lg-10">
-						<h4>Create New Forum</h4>
+						<h4>
+							{{- 'title.admin.manage-forums.create' |trans({}, 'CCDNForumForumBundle') -}}
+						</h4>
 					</div>
 				</div>
 
@@ -44,7 +36,9 @@
 
 				<div class="form-group">
 					<div class="col-lg-offset-2 col-lg-10">
-		                <input type="submit" class="btn btn-primary" value="Save" name="submit[post]" id="submit[post]">
+		                <input type="submit" class="btn btn-primary" value="
+							{{- 'form.button.save' |trans({}, 'CCDNForumForumBundle') -}}
+						" name="submit[post]" id="submit[post]">
 
 		                <a class="btn btn-default" href="{{- path('ccdn_forum_admin_forum_list') -}}">
 							{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
@@ -57,5 +51,4 @@
 	</section>
 
     {%- endspaceless -%}
-
-{% endblock body_content %}
+{%- endblock body_content -%}

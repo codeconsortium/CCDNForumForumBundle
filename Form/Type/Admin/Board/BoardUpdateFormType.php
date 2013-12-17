@@ -54,9 +54,9 @@ class BoardUpdateFormType extends AbstractType
     /**
      *
      * @access public
-     * @var string $boardClass
-     * @var string $categoryClass
-     * @var Object $roleHelper
+     * @param  string $boardClass
+     * @param  string $categoryClass
+     * @param  Object $roleHelper
      */
     public function __construct($boardClass, $categoryClass, $roleHelper)
     {
@@ -68,7 +68,8 @@ class BoardUpdateFormType extends AbstractType
     /**
      *
      * @access public
-     * @param FormBuilderInterface $builder, array $options
+     * @param  FormBuilderInterface $builder
+	 * @param  array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -86,19 +87,19 @@ class BoardUpdateFormType extends AbstractType
                             ;
                         },
                     'required'           => false,
-                    'label'              => 'form.label.category',
+                    'label'              => 'category.label',
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
             ->add('name', 'text',
                 array(
-                    'label'              => 'form.label.board.name',
+                    'label'              => 'board.name-label',
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
             ->add('description', 'textarea',
                 array(
-                    'label'              => 'form.label.board.description',
+                    'label'              => 'board.description-label',
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
@@ -108,8 +109,8 @@ class BoardUpdateFormType extends AbstractType
                     'expanded'           => true,
                     'multiple'           => true,
                     'choices'            => $options['available_roles'],
-                    'label'              => 'form.label.board.view_roles',
-                    'translation_domain' => 'CCDNForumAdminBundle',
+                    'label'              => 'board.roles.topic-view-label',
+                    'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
             ->add('topicCreateAuthorisedRoles', 'choice',
@@ -118,8 +119,8 @@ class BoardUpdateFormType extends AbstractType
                     'expanded'           => true,
                     'multiple'           => true,
                     'choices'            => $options['available_roles'],
-                    'label'              => 'form.label.topic.create_roles',
-                    'translation_domain' => 'CCDNForumAdminBundle',
+                    'label'              => 'board.roles.topic-create-label',
+                    'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
             ->add('topicReplyAuthorisedRoles', 'choice',
@@ -128,8 +129,8 @@ class BoardUpdateFormType extends AbstractType
                     'expanded'           => true,
                     'multiple'           => true,
                     'choices'            => $options['available_roles'],
-                    'label'              => 'form.label.topic.reply_roles',
-                    'translation_domain' => 'CCDNForumAdminBundle',
+                    'label'              => 'board.roles.topic-reply-label',
+                    'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
         ;

@@ -44,7 +44,7 @@ class ForumDeleteFormType extends AbstractType
     /**
      *
      * @access public
-     * @var string $forumClass
+     * @param  string $forumClass
      */
     public function __construct($forumClass)
     {
@@ -54,7 +54,8 @@ class ForumDeleteFormType extends AbstractType
     /**
      *
      * @access public
-     * @param FormBuilderInterface $builder, array $options
+     * @param  FormBuilderInterface $builder
+     * @param  array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -73,7 +74,7 @@ class ForumDeleteFormType extends AbstractType
                 array(
                     'mapped'             => false,
                     'required'           => true,
-                    'label'              => 'I confirm I want to delete this Forum.',
+                    'label'              => 'forum.confirm-delete-label',
                     'translation_domain' => 'CCDNForumForumBundle',
                     'constraints'        => array(
                         new True(),
@@ -85,7 +86,7 @@ class ForumDeleteFormType extends AbstractType
                 array(
                     'mapped'             => false,
                     'required'           => true,
-                    'label'              => 'Also delete categories, boards and topics.',
+                    'label'              => 'forum.confirm-delete-subordinates-label',
                     'translation_domain' => 'CCDNForumForumBundle',
                     'constraints'        => array(
                         new True(),

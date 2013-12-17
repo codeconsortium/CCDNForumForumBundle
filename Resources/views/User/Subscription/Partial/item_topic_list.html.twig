@@ -40,7 +40,8 @@
 
 						{%- if topic.getFirstPost -%}
 
-							{{- 'generic.posted_by' | trans({'%name%': topic.getFirstPost.getCreatedBy}, 'CCDNForumForumBundle') |raw -}}
+							{{- 'post.posted-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
+							{{- topic.getFirstPost.getCreatedBy -}}
 
 							&nbsp;&#183;
 			                <a href="{{- path('ccdn_forum_user_topic_show', {'forumName': topic.board.category.forumName, 'topicId': topic.getId }) -}}">
@@ -63,16 +64,16 @@
 					<td class="center">
 						{%- if topic.getLastPost -%}
 
-			                {{- 'generic.posted_by' | trans({'%name%': topic.getLastPost.getCreatedBy}, 'CCDNForumForumBundle') |raw -}}
+			                {{- 'post.posted-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
+							{{- topic.getLastPost.getCreatedBy -}}
+
+							<br>
 
 							{#
 								@TODO figure a way to determine page in a more appropriate way
 				                {%- set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) -%}
 							#}
 							{%- set page = 1 -%}
-
-							<br>
-
 							{%- if page < 2 -%}
 								<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': topic.board.category.forumName, 'topicId': topic.getId } ) -}}#{{- topic.getLastPost.getId -}}">
 									<i class="glyphicon glyphicon-arrow-right"></i>

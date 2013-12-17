@@ -3,8 +3,9 @@
 	<div class="row clearfix">
 	    <div class="col-md-7">
 			<h3 class="panel-title">
-				{%- if author -%}
-			        {{- 'generic.posted_by' |trans({'%name%': author.username}, 'CCDNForumForumBundle') |raw -}}
+				{%- if post.getCreatedBy -%}
+			        {{- 'post.posted-by' |trans({}, 'CCDNForumForumBundle') |raw -}}
+					{{- post.getCreatedBy.username -}}
 
 			        &nbsp;&#183;&nbsp;
 
@@ -53,7 +54,7 @@
 								<a rel="nofollow" id="post_edit[{{- post.getBody |slice(0,24) -}}]"
 								 href="{{- path('ccdn_forum_user_post_edit', {'forumName': forumName, 'postId': post.getId }) -}}">
 									<i class="glyphicon glyphicon-pencil"></i>
-									{{- 'link.post.edit' | trans({}, 'CCDNForumForumBundle') -}}
+									{{- 'link.edit' | trans({}, 'CCDNForumForumBundle') -}}
 								</a>
 							</li>
 						{%- endif -%}

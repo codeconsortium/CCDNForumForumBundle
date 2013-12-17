@@ -2,35 +2,18 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.category.user.index.layout_template %}
 
-{% block title %}{{- 'title.category.index' | trans({}, 'CCDNForumForumBundle') -}}{% endblock %}
-
-{% block stylesheets_extra %}
-{#
-	<style type="text/css">
-		section {border-bottom:none;}
-		footer.page-footer {border-top:1px solid #eee;}
-	</style>
-	#}
-{% endblock stylesheets_extra %}
-
-
+{%- block title -%}
+	{{- 'title.category.index' | trans({}, 'CCDNForumForumBundle') -}}
+{%- endblock title -%}
 
 {%- block sidebar -%}
-
 	{%- spaceless -%}
-
 	{{- parent() -}}
-
     {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
-
 	{%- endspaceless -%}
-
 {%- endblock sidebar -%}
 
-
-
-{% block body_content %}
-
+{%- block body_content -%}
 	{%- spaceless -%}
 
 	{%- for category in categories -%}
@@ -46,5 +29,4 @@
 	{%- endfor -%}
 
 	{%- endspaceless -%}
-
-{% endblock body_content %}
+{%- endblock body_content -%}

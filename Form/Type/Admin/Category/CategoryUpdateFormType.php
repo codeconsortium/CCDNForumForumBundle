@@ -54,9 +54,9 @@ class CategoryUpdateFormType extends AbstractType
     /**
      *
      * @access public
-     * @var string $categoryClass
-     * @var string $forumClass
-     * @var Object $roleHelper
+     * @param  string $categoryClass
+     * @param  string $forumClass
+     * @param  Object $roleHelper
      */
     public function __construct($categoryClass, $forumClass, $roleHelper)
     {
@@ -68,7 +68,8 @@ class CategoryUpdateFormType extends AbstractType
     /**
      *
      * @access public
-     * @param FormBuilderInterface $builder, array $options
+     * @param  FormBuilderInterface $builder
+	 * @param  array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -84,13 +85,13 @@ class CategoryUpdateFormType extends AbstractType
                             ;
                         },
                     'required'           => false,
-                    'label'              => 'form.label.forum',
+                    'label'              => 'forum.label',
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
             ->add('name', 'text',
                 array(
-                    'label'              => 'form.label.forum.name',
+                    'label'              => 'category.name-label',
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
@@ -100,8 +101,8 @@ class CategoryUpdateFormType extends AbstractType
                     'expanded'           => true,
                     'multiple'           => true,
                     'choices'            => $options['available_roles'],
-                    'label'              => 'form.label.board.view_roles',
-                    'translation_domain' => 'CCDNForumAdminBundle',
+                    'label'              => 'category.roles.board-view-label',
+                    'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
         ;

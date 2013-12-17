@@ -11,10 +11,10 @@
 			<thead>
 				<tr>
 					<th class="center" style="width:32px;">&nbsp;</th>
-					<th class="left">{{- 'generic.thead.board' | trans({}, 'CCDNForumForumBundle') -}}</th>
-					<th class="center" style="width:60px;">{{- 'generic.thead.topics' | trans({}, 'CCDNForumForumBundle') -}}</th>
-					<th class="center" style="width:60px;">{{- 'generic.thead.posts' | trans({}, 'CCDNForumForumBundle') -}}</th>
-					<th class="center" style="width:170px;">{{- 'generic.last_post' | trans({}, 'CCDNForumForumBundle') -}}</th>
+					<th class="left">{{- 'board.th' | trans({}, 'CCDNForumForumBundle') -}}</th>
+					<th class="center" style="width:60px;">{{- 'board.topic-count-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
+					<th class="center" style="width:60px;">{{- 'board.post-count-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
+					<th class="center" style="width:170px;">{{- 'board.last-post-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -23,7 +23,7 @@
 				{%- else -%}
 					<tr>
 						<td class="text-center" colspan="5" style="width:100%;">
-							{{- 'category.boards.none' | trans({}, 'CCDNForumForumBundle') -}}
+							{{- 'category.no-boards' | trans({}, 'CCDNForumForumBundle') -}}
 						</td>
 					</tr>
 				{%- endfor -%}
