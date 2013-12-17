@@ -37,18 +37,18 @@ class RegistryModel extends BaseModel implements ModelInterface
      * @param  \Symfony\Component\Security\Core\User\UserInterface $user
      * @return \CCDNForum\ForumBundle\Entity\Registry
      */
-	public function findOrCreateOneRegistryForUser(UserInterface $user)
-	{
-		$registry = $this->findOneRegistryForUserById($user->getId());
-		
-		if (! $registry) {
-			$registry = $this->createRegistry();
-			$registry->setOwnedBy($user);
-			$this->saveRegistry($registry);
-		}
-		
-		return $registry;
-	}
+    public function findOrCreateOneRegistryForUser(UserInterface $user)
+    {
+        $registry = $this->findOneRegistryForUserById($user->getId());
+
+        if (! $registry) {
+            $registry = $this->createRegistry();
+            $registry->setOwnedBy($user);
+            $this->saveRegistry($registry);
+        }
+
+        return $registry;
+    }
 
     /**
      *
@@ -56,31 +56,31 @@ class RegistryModel extends BaseModel implements ModelInterface
      * @param  int                                    $userId
      * @return \CCDNForum\ForumBundle\Entity\Registry
      */
-	public function findOneRegistryForUserById($userId)
-	{
-		return $this->getRepository()->findOneRegistryForUserById($userId);
-	}
+    public function findOneRegistryForUserById($userId)
+    {
+        return $this->getRepository()->findOneRegistryForUserById($userId);
+    }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Registry
-	 */
-	public function createRegistry()
-	{
-		return $this->getManager()->createRegistry();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Registry
+     */
+    public function createRegistry()
+    {
+        return $this->getManager()->createRegistry();
+    }
 
-	/**
-	 *
-	 * @access public
-	 * @param  \CCDNForum\ForumBundle\Entity\Registry                $registryModel
-	 * @return \CCDNForum\ForumBundle\Model\FrontModel\RegistryModel
-	 */
-	public function saveRegistry(Registry $registry)
-	{
-		$this->getManager()->saveRegistry($registry);
-		
-		return $this;
-	}
+    /**
+     *
+     * @access public
+     * @param  \CCDNForum\ForumBundle\Entity\Registry                $registryModel
+     * @return \CCDNForum\ForumBundle\Model\FrontModel\RegistryModel
+     */
+    public function saveRegistry(Registry $registry)
+    {
+        $this->getManager()->saveRegistry($registry);
+
+        return $this;
+    }
 }

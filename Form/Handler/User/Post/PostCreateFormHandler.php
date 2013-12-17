@@ -77,11 +77,11 @@ class PostCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
-     * @param  \Symfony\Component\Form\FormFactory                              $factory
-     * @param  \CCDNForum\ForumBundle\Form\Type\User\Post\PostCreateFormType    $formPostType
-     * @param  \CCDNForum\ForumBundle\Model\FrontModel\PostModel                $postModel
-     * @param  \CCDNForum\ForumBundle\Component\FloodControl                    $floodControl
+     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param \Symfony\Component\Form\FormFactory                              $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\User\Post\PostCreateFormType    $formPostType
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\PostModel                $postModel
+     * @param \CCDNForum\ForumBundle\Component\FloodControl                    $floodControl
      */
     public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory, $formPostType, ModelInterface $postModel, FloodControl $floodControl)
     {
@@ -199,7 +199,7 @@ class PostCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Post $post
+     * @param \CCDNForum\ForumBundle\Entity\Post $post
      */
     protected function onSuccess(Post $post)
     {

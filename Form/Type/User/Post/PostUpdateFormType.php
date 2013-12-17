@@ -39,7 +39,7 @@ class PostUpdateFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  string $postClass
+     * @param string $postClass
      */
     public function __construct($postClass)
     {
@@ -49,8 +49,8 @@ class PostUpdateFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  FormBuilderInterface $builder
-     * @param  array                $options
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

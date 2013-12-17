@@ -50,7 +50,7 @@ abstract class BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Gateway\GatewayInterface $gateway
+     * @param \CCDNForum\ForumBundle\Gateway\GatewayInterface $gateway
      */
     public function __construct(GatewayInterface $gateway)
     {
@@ -60,7 +60,7 @@ abstract class BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Model\FrontModel\ModelInterface        $model
+     * @param  \CCDNForum\ForumBundle\Model\FrontModel\ModelInterface             $model
      * @return \CCDNForum\ForumBundle\Model\Component\Repository\ManagerInterface
      */
     public function setModel(ModelInterface $model)

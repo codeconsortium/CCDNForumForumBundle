@@ -54,9 +54,9 @@ class BoardCreateFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  string $boardClass
-     * @param  string $categoryClass
-     * @param  Object $roleHelper
+     * @param string $boardClass
+     * @param string $categoryClass
+     * @param Object $roleHelper
      */
     public function __construct($boardClass, $categoryClass, $roleHelper)
     {
@@ -68,8 +68,8 @@ class BoardCreateFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  FormBuilderInterface $builder
-     * @param  array                $options
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

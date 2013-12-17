@@ -33,10 +33,10 @@ interface GatewayInterface
     /**
      *
      * @access public
-     * @param  \Doctrine\Common\Persistence\ObjectManager $em
-     * @param  string                                     $entityClass
-     * @param  \Knp\Component\Pager\Paginator             $paginator
-     * @param  string                                     $pagerTheme
+     * @param \Doctrine\Common\Persistence\ObjectManager $em
+     * @param string                                     $entityClass
+     * @param \Knp\Component\Pager\Paginator             $paginator
+     * @param string                                     $pagerTheme
      */
     public function __construct(ObjectManager $em, $entityClass, Paginator $paginator = null, $pagerTheme = null);
 
@@ -109,7 +109,7 @@ interface GatewayInterface
     /**
      *
      * @access public
-     * @param  Object                                                $entity
+     * @param  Object                                                          $entity
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
     public function persist($entity);
@@ -117,7 +117,7 @@ interface GatewayInterface
     /**
      *
      * @access public
-     * @param  Object                                                $entity
+     * @param  Object                                                          $entity
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
     public function remove($entity);
@@ -132,7 +132,7 @@ interface GatewayInterface
     /**
      *
      * @access public
-     * @param  Object                                                $entity
+     * @param  Object                                                          $entity
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
     public function refresh($entity);

@@ -169,8 +169,8 @@ class ModeratorTopicController extends ModeratorTopicBaseController
             $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Topic/delete.html.', array(
                 'crumbs' => $this->getCrumbs()->addModeratorTopicDelete($forum, $topic),
                 'forum' => $forum,
-	            'forumName' => $forumName,
-				'topic' => $topic,
+                'forumName' => $forumName,
+                'topic' => $topic,
                 'form' => $formHandler->getForm()->createView(),
             ));
         }
@@ -248,8 +248,8 @@ class ModeratorTopicController extends ModeratorTopicBaseController
             $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Topic/change_board.html.', array(
                 'crumbs' => $this->getCrumbs()->addModeratorTopicChangeBoard($forum, $topic),
                 'forum' => $forum,
-	            'forumName' => $forumName,
-				'topic' => $topic,
+                'forumName' => $forumName,
+                'topic' => $topic,
                 'form' => $formHandler->getForm()->createView(),
             ));
         }

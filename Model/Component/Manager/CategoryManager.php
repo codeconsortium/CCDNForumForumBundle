@@ -33,15 +33,15 @@ use CCDNForum\ForumBundle\Entity\Category;
  */
 class CategoryManager extends BaseManager implements ManagerInterface
 {
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Category
-	 */
-	public function createCategory()
-	{
-		return $this->gateway->createCategory();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Category
+     */
+    public function createCategory()
+    {
+        return $this->gateway->createCategory();
+    }
 
     /**
      *
@@ -51,7 +51,7 @@ class CategoryManager extends BaseManager implements ManagerInterface
      */
     public function saveCategory(Category $category)
     {
-		$this->gateway->saveCategory($category);
+        $this->gateway->saveCategory($category);
 
         return $this;
     }
@@ -64,7 +64,7 @@ class CategoryManager extends BaseManager implements ManagerInterface
      */
     public function updateCategory(Category $category)
     {
-		$this->gateway->updateCategory($category);
+        $this->gateway->updateCategory($category);
 
         return $this;
     }

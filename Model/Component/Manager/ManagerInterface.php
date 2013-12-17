@@ -32,7 +32,7 @@ interface ManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Model\FrontModel\ModelInterface        $model
+     * @param  \CCDNForum\ForumBundle\Model\FrontModel\ModelInterface             $model
      * @return \CCDNForum\ForumBundle\Model\Component\Repository\ManagerInterface
      */
     public function setModel(ModelInterface $model);

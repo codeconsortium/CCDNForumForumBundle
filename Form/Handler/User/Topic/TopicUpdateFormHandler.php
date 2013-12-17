@@ -75,12 +75,12 @@ class TopicUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
-     * @param  \Symfony\Component\Form\FormFactory                              $factory
-     * @param  \CCDNForum\ForumBundle\Form\Type\User\Topic\TopicUpdateFormType  $formTopicType
-     * @param  \CCDNForum\ForumBundle\Form\Type\User\Post\PostUpdateFormType    $formPostType
-     * @param  \CCDNForum\ForumBundle\Model\FrontModel\TopicModel               $topicModel
-     * @param  \CCDNForum\ForumBundle\Model\FrontModel\PostModel                $postModel
+     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param \Symfony\Component\Form\FormFactory                              $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\User\Topic\TopicUpdateFormType  $formTopicType
+     * @param \CCDNForum\ForumBundle\Form\Type\User\Post\PostUpdateFormType    $formPostType
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\TopicModel               $topicModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\PostModel                $postModel
      */
     public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory,
      $formTopicType, $formPostType, ModelInterface $topicModel, ModelInterface $postModel)
@@ -136,7 +136,7 @@ class TopicUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Post $post
+     * @param \CCDNForum\ForumBundle\Entity\Post $post
      */
     protected function onSuccess(Post $post)
     {
@@ -153,7 +153,7 @@ class TopicUpdateFormHandler extends BaseFormHandler
         $this->dispatcher->dispatch(ForumEvents::USER_POST_EDIT_SUCCESS, new UserPostEvent($this->request, $this->post));
 
         $this->postModel->updatePost($post);
-		
+
         $this->dispatcher->dispatch(ForumEvents::USER_POST_EDIT_COMPLETE, new UserPostEvent($this->request, $this->post));
     }
 }

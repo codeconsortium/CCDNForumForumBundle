@@ -135,13 +135,13 @@ class SubscriptionGateway extends BaseGateway implements GatewayInterface
         return $this;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Subscription
-	 */
-	public function createSubscription()
-	{
-		return new $this->entityClass();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Subscription
+     */
+    public function createSubscription()
+    {
+        return new $this->entityClass();
+    }
 }

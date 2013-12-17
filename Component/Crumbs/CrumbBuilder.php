@@ -303,11 +303,11 @@ class CrumbBuilder extends BaseCrumbBuilder
     {
         return $this->createCrumbTrail()
             ->add(
-				$forum ? 
-					$forum->getName() == 'default' ?  'Index' : $forum->getName() . ' Index'
-					:
-					'Index'
-				,
+                $forum ?
+                    $forum->getName() == 'default' ?  'Index' : $forum->getName() . ' Index'
+                    :
+                    'Index'
+                ,
                 array(
                     'route' => 'ccdn_forum_user_category_index',
                     'params' => array(

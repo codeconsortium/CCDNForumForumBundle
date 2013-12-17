@@ -64,17 +64,17 @@ abstract class BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  \Doctrine\Common\Persistence\ObjectManager $em
-     * @param  string                                     $entityClass
-     * @param  \Knp\Component\Pager\Paginator             $paginator
-     * @param  string                                     $pagerTheme
+     * @param \Doctrine\Common\Persistence\ObjectManager $em
+     * @param string                                     $entityClass
+     * @param \Knp\Component\Pager\Paginator             $paginator
+     * @param string                                     $pagerTheme
      */
     public function __construct(ObjectManager $em, $entityClass, Paginator $paginator = null, $pagerTheme = null)
     {
         if (null == $entityClass) {
             throw new \Exception('Entity class for gateway must be specified!');
         }
-		
+
         $this->entityClass = $entityClass;
         $this->em = $em;
         $this->paginator = $paginator;
@@ -239,7 +239,7 @@ abstract class BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  Object                                                $entity
+     * @param  Object                                                          $entity
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
     public function persist($entity)
@@ -252,7 +252,7 @@ abstract class BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  Object                                                $entity
+     * @param  Object                                                          $entity
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
     public function remove($entity)
@@ -277,7 +277,7 @@ abstract class BaseGateway implements GatewayInterface
     /**
      *
      * @access public
-     * @param  Object                                                $entity
+     * @param  Object                                                          $entity
      * @return \CCDNForum\ForumBundle\Model\Component\Gateway\GatewayInterface
      */
     public function refresh($entity)

@@ -46,8 +46,8 @@ class ForumCreateFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  string $forumClass
-     * @param  Object $roleHelper
+     * @param string $forumClass
+     * @param Object $roleHelper
      */
     public function __construct($forumClass, $roleHelper)
     {
@@ -58,8 +58,8 @@ class ForumCreateFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  FormBuilderInterface $builder
-	 * @param  array                $options
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

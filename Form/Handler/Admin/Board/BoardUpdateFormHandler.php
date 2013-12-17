@@ -60,10 +60,10 @@ class BoardUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
-     * @param  \Symfony\Component\Form\FormFactory                              $factory
-     * @param  \CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardUpdateFormType $boardUpdateFormType
-     * @param  \CCDNForum\ForumBundle\Model\FrontModel\BoardModel               $boardModel
+     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param \Symfony\Component\Form\FormFactory                              $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardUpdateFormType $boardUpdateFormType
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\BoardModel               $boardModel
      */
     public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory, $boardUpdateFormType, ModelInterface $boardModel)
     {
@@ -109,7 +109,7 @@ class BoardUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Board $board
+     * @param \CCDNForum\ForumBundle\Entity\Board $board
      */
     protected function onSuccess(Board $board)
     {

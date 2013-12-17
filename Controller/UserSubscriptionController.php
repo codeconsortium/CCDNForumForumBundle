@@ -105,7 +105,7 @@ class UserSubscriptionController extends BaseController
 
         return $this->renderResponse('CCDNForumForumBundle:User:Subscription/show.html.', array(
             'forum' => $forum,
-			'forumName' => $forumName,
+            'forumName' => $forumName,
             'subscribed_forums' => $forumsSubscribed,
             'total_subscribed_forums' => $totalForumsSubscribed,
             'filter' => $filter,

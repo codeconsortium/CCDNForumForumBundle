@@ -430,6 +430,6 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
      */
     public function iDump()
     {
-		ldd(substr($this->getPage()->getHtml(), 0, 9000));
-	}
+        ldd(substr($this->getPage()->getHtml(), 0, 9000));
+    }
 }

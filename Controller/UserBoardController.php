@@ -45,7 +45,7 @@ class UserBoardController extends BaseController
         return $this->renderResponse('CCDNForumForumBundle:User:Board/show.html.', array(
             'crumbs' => $this->getCrumbs()->addUserBoardShow($forum, $board),
             'forum' => $forum,
-			'forumName' => $forumName,
+            'forumName' => $forumName,
             'board' => $board,
             'pager' => $topicsPager,
             'posts_per_page' => $this->container->getParameter('ccdn_forum_forum.topic.user.show.posts_per_page'), // for working out last page per topic.

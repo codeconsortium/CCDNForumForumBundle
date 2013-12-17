@@ -33,15 +33,15 @@ use CCDNForum\ForumBundle\Entity\Forum;
  */
 class ForumManager extends BaseManager implements ManagerInterface
 {
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Forum
-	 */
-	public function createForum()
-	{
-		return $this->gateway->createForum();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Forum
+     */
+    public function createForum()
+    {
+        return $this->gateway->createForum();
+    }
 
     /**
      *
@@ -50,7 +50,7 @@ class ForumManager extends BaseManager implements ManagerInterface
      */
     public function saveForum(Forum $forum)
     {
-		$this->gateway->saveForum($forum);
+        $this->gateway->saveForum($forum);
 
         return $this;
     }
@@ -62,7 +62,7 @@ class ForumManager extends BaseManager implements ManagerInterface
      */
     public function updateForum(Forum $forum)
     {
-		$this->gateway->updateForum($forum);
+        $this->gateway->updateForum($forum);
 
         return $this;
     }

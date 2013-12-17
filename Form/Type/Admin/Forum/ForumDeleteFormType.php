@@ -44,7 +44,7 @@ class ForumDeleteFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  string $forumClass
+     * @param string $forumClass
      */
     public function __construct($forumClass)
     {
@@ -54,8 +54,8 @@ class ForumDeleteFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  FormBuilderInterface $builder
-     * @param  array                $options
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

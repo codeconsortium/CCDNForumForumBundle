@@ -46,8 +46,8 @@ class TopicChangeBoardFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  string $topicClass
-	 * @param  string $boardClass
+     * @param string $topicClass
+     * @param string $boardClass
      */
     public function __construct($topicClass, $boardClass)
     {
@@ -58,8 +58,8 @@ class TopicChangeBoardFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  FormBuilderInterface $builder
-     * @param  array                $options
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

@@ -60,7 +60,7 @@ abstract class BaseRepository implements RepositoryInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Model\FrontModel\ModelInterface           $model
+     * @param  \CCDNForum\ForumBundle\Model\FrontModel\ModelInterface                $model
      * @return \CCDNForum\ForumBundle\Model\Component\Repository\RepositoryInterface
      */
     public function setModel(ModelInterface $model)

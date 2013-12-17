@@ -31,15 +31,15 @@ use CCDNForum\ForumBundle\Entity\Forum;
  */
 class ForumModel extends BaseModel implements ModelInterface
 {
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Forum
-	 */
-	public function createForum()
-	{
-		return $this->getManager()->createForum();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Forum
+     */
+    public function createForum()
+    {
+        return $this->getManager()->createForum();
+    }
 
     /**
      *

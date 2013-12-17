@@ -60,10 +60,10 @@ class TopicDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher     $dispatcher
-     * @param  \Symfony\Component\Form\FormFactory                                  $factory
-     * @param  \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicDeleteFormType $formTopicType
-     * @param  \CCDNForum\ForumBundle\Model\FrontModel\TopicModel                   $topicModel
+     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher     $dispatcher
+     * @param \Symfony\Component\Form\FormFactory                                  $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicDeleteFormType $formTopicType
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\TopicModel                   $topicModel
      */
     public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory, $formTopicType, ModelInterface $topicModel)
     {
@@ -109,7 +109,7 @@ class TopicDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Topic $topic
+     * @param \CCDNForum\ForumBundle\Entity\Topic $topic
      */
     protected function onSuccess(Topic $topic)
     {

@@ -135,13 +135,13 @@ class TopicGateway extends BaseGateway implements GatewayInterface
         return $this;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Topic
-	 */
-	public function createTopic()
-	{
-		return new $this->entityClass();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Topic
+     */
+    public function createTopic()
+    {
+        return new $this->entityClass();
+    }
 }

@@ -68,17 +68,17 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Model\FrontModel\boardModel    $boardModel
-     * @param  \CCDNForum\ForumBundle\Model\FrontModel\topicModel    $topicModel
-     * @param  \CCDNForum\ForumBundle\Model\FrontModel\PostModel     $postModel
-     * @param  \CCDNForum\ForumBundle\Model\FrontModel\RegistryModel $registryModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\boardModel    $boardModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\topicModel    $topicModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\PostModel     $postModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\RegistryModel $registryModel
      */
     public function __construct(ModelInterface $boardModel, ModelInterface $topicModel, ModelInterface $postModel, ModelInterface $registryModel)
     {
         $this->boardModel = $boardModel;
         $this->topicModel = $topicModel;
         $this->postModel = $postModel;
-		$this->registryModel = $registryModel;
+        $this->registryModel = $registryModel;
     }
 
     /**
@@ -99,30 +99,30 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
      */
     public function onTopicCreateComplete(UserTopicEvent $event)
     {
         $this->updateBoardStats($this->extractBoardFromTopic($event->getTopic()));
-		$this->updateRegistryStats($event->getTopic()->getFirstPost());
+        $this->updateRegistryStats($event->getTopic()->getFirstPost());
     }
 
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent $event
      */
     public function onTopicReplyComplete(UserTopicEvent $event)
     {
         $this->updateTopicStats($event->getTopic());
         $this->updateBoardStats($this->extractBoardFromTopic($event->getTopic()));
-		$this->updateRegistryStats($event->getTopic()->getLastPost());
+        $this->updateRegistryStats($event->getTopic()->getLastPost());
     }
 
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent $event
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent $event
      */
     public function onTopicSoftDeleteComplete(ModeratorTopicEvent $event)
     {
@@ -132,7 +132,7 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent $event
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent $event
      */
     public function onTopicRestoreComplete(ModeratorTopicEvent $event)
     {
@@ -142,7 +142,7 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicMoveEvent $event
+     * @param \CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicMoveEvent $event
      */
     public function onTopicChangeBoardComplete(ModeratorTopicMoveEvent $event)
     {
@@ -153,7 +153,7 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Topic $topic
+     * @param \CCDNForum\ForumBundle\Entity\Topic $topic
      */
     protected function updateTopicStats(Topic $topic)
     {
@@ -175,7 +175,7 @@ class StatListener implements EventSubscriberInterface
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Board $board
+     * @param \CCDNForum\ForumBundle\Entity\Board $board
      */
     protected function updateBoardStats(Board $board)
     {
@@ -201,12 +201,12 @@ class StatListener implements EventSubscriberInterface
         }
     }
 
-	/**
-	 * 
-	 * @access protected
-	 * @param  \CCDNForum\ForumBundle\Entity\Topic      $topic
-	 * @return null|\CCDNForum\ForumBundle\Entity\Board
-	 */
+    /**
+     *
+     * @access protected
+     * @param  \CCDNForum\ForumBundle\Entity\Topic      $topic
+     * @return null|\CCDNForum\ForumBundle\Entity\Board
+     */
     private function extractBoardFromTopic(Topic $topic)
     {
         if ($topic) {
@@ -218,22 +218,22 @@ class StatListener implements EventSubscriberInterface
         return null;
     }
 
-	/**
-	 * 
-	 * @access protected
-	 * @param  \CCDNForum\ForumBundle\Entity\Post $post
-	 */
-	protected function updateRegistryStats(Post $post)
-	{
-		$user = $post->getCreatedBy();
-		
-		if ($user) {
-			$registry = $this->registryModel->findOrCreateOneRegistryForUser($user);
-			$postCount = $this->postModel->countPostsForUserById($user->getId());
+    /**
+     *
+     * @access protected
+     * @param \CCDNForum\ForumBundle\Entity\Post $post
+     */
+    protected function updateRegistryStats(Post $post)
+    {
+        $user = $post->getCreatedBy();
 
-			$registry->setCachedPostCount($postCount ? $postCount : 0);
-			
-			$this->registryModel->saveRegistry($registry);
-		}
-	}
+        if ($user) {
+            $registry = $this->registryModel->findOrCreateOneRegistryForUser($user);
+            $postCount = $this->postModel->countPostsForUserById($user->getId());
+
+            $registry->setCachedPostCount($postCount ? $postCount : 0);
+
+            $this->registryModel->saveRegistry($registry);
+        }
+    }
 }

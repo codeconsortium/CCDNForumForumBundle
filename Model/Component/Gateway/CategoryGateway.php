@@ -137,13 +137,13 @@ class CategoryGateway extends BaseGateway implements GatewayInterface
         return $this;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Category
-	 */
-	public function createCategory()
-	{
-		return new $this->entityClass();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Category
+     */
+    public function createCategory()
+    {
+        return new $this->entityClass();
+    }
 }

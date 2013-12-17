@@ -139,13 +139,13 @@ class BoardGateway extends BaseGateway implements GatewayInterface
         return $this;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Board
-	 */
-	public function createBoard()
-	{
-		return new $this->entityClass();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Board
+     */
+    public function createBoard()
+    {
+        return new $this->entityClass();
+    }
 }

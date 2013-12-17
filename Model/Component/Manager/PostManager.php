@@ -45,8 +45,8 @@ class PostManager extends BaseManager implements ManagerInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Gateway\GatewayInterface        $gateway
-     * @param  \CCDNForum\ForumBundle\Component\Helper\PostLockHelper $postLockHelper
+     * @param \CCDNForum\ForumBundle\Gateway\GatewayInterface        $gateway
+     * @param \CCDNForum\ForumBundle\Component\Helper\PostLockHelper $postLockHelper
      */
     public function __construct(GatewayInterface $gateway, PostLockHelper $postLockHelper)
     {
@@ -54,15 +54,15 @@ class PostManager extends BaseManager implements ManagerInterface
         $this->postLockHelper = $postLockHelper;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Post
-	 */
-	public function createPost()
-	{
-		return $this->gateway->createPost();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Post
+     */
+    public function createPost()
+    {
+        return $this->gateway->createPost();
+    }
 
     /**
      *
@@ -73,8 +73,8 @@ class PostManager extends BaseManager implements ManagerInterface
     public function savePost(Post $post)
     {
         $this->postLockHelper->setLockLimitOnPost($post);
-		
-		$this->gateway->savePost($post);
+
+        $this->gateway->savePost($post);
 
         // refresh the user so that we have an PostId to work with.
         $this->refresh($post);
@@ -90,8 +90,8 @@ class PostManager extends BaseManager implements ManagerInterface
      */
     public function updatePost(Post $post)
     {
-		$this->gateway->updatePost($post);
-		
+        $this->gateway->updatePost($post);
+
         return $this;
     }
 

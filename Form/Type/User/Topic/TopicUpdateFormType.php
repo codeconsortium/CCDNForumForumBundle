@@ -39,7 +39,7 @@ class TopicUpdateFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  string $topicClass
+     * @param string $topicClass
      */
     public function __construct($topicClass)
     {
@@ -49,8 +49,8 @@ class TopicUpdateFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  FormBuilderInterface $builder
-     * @param  array                $options
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

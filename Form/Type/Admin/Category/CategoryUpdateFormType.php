@@ -54,9 +54,9 @@ class CategoryUpdateFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  string $categoryClass
-     * @param  string $forumClass
-     * @param  Object $roleHelper
+     * @param string $categoryClass
+     * @param string $forumClass
+     * @param Object $roleHelper
      */
     public function __construct($categoryClass, $forumClass, $roleHelper)
     {
@@ -68,8 +68,8 @@ class CategoryUpdateFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  FormBuilderInterface $builder
-	 * @param  array                $options
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

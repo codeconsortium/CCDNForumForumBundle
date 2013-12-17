@@ -60,10 +60,10 @@ class CategoryUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher       $dispatcher
-     * @param  \Symfony\Component\Form\FormFactory                                    $factory
-     * @param  \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryUpdateFormType $categoryUpdateFormType
-     * @param  \CCDNForum\ForumBundle\Model\FrontModel\CategoryModel                  $categoryModel
+     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher       $dispatcher
+     * @param \Symfony\Component\Form\FormFactory                                    $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\Admin\Category\CategoryUpdateFormType $categoryUpdateFormType
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\CategoryModel                  $categoryModel
      */
     public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory, $categoryUpdateFormType, ModelInterface $categoryModel)
     {
@@ -109,7 +109,7 @@ class CategoryUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Category $category
+     * @param \CCDNForum\ForumBundle\Entity\Category $category
      */
     protected function onSuccess(Category $category)
     {

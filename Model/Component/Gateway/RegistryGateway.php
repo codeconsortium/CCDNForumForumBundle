@@ -135,13 +135,13 @@ class RegistryGateway extends BaseGateway implements GatewayInterface
         return $this;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Registry
-	 */
-	public function createRegistry()
-	{
-		return new $this->entityClass();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Registry
+     */
+    public function createRegistry()
+    {
+        return new $this->entityClass();
+    }
 }

@@ -33,15 +33,15 @@ use CCDNForum\ForumBundle\Entity\Board;
  */
 class BoardManager extends BaseManager implements ManagerInterface
 {
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Board
-	 */
-	public function createBoard()
-	{
-		return $this->gateway->createBoard();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Board
+     */
+    public function createBoard()
+    {
+        return $this->gateway->createBoard();
+    }
 
     /**
      *
@@ -54,7 +54,7 @@ class BoardManager extends BaseManager implements ManagerInterface
         $boardCount = $this->model->getBoardCount();
         $board->setListOrderPriority(++$boardCount);
 
-		$this->gateway->saveBoard($board);
+        $this->gateway->saveBoard($board);
 
         return $this;
     }
@@ -67,7 +67,7 @@ class BoardManager extends BaseManager implements ManagerInterface
      */
     public function updateBoard(Board $board)
     {
-		$this->gateway->updateBoard($board);
+        $this->gateway->updateBoard($board);
 
         return $this;
     }

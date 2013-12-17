@@ -103,9 +103,9 @@ class ModeratorPostController extends ModeratorPostBaseController
             $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Post/unlock.html.', array(
                 'crumbs' => $this->getCrumbs()->addModeratorPostUnlock($forum, $post->getTopic()),
                 'forum' => $forum,
-	            'forumName' => $forumName,
-				'topic' => $post->getTopic(),
-				'post' => $post,
+                'forumName' => $forumName,
+                'topic' => $post->getTopic(),
+                'post' => $post,
                 'form' => $formHandler->getForm()->createView(),
             ));
         }

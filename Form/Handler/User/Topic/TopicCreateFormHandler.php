@@ -100,14 +100,14 @@ class TopicCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param  \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
-     * @param  \Symfony\Component\Form\FormFactory                              $factory
-     * @param  \CCDNForum\ForumBundle\Form\Type\User\Topic\TopicCreateFormType  $formTopicType
-     * @param  \CCDNForum\ForumBundle\Form\Type\User\Post\PostCreateFormType    $formPostType
-     * @param  \CCDNForum\ForumBundle\Model\FrontModel\TopicModel               $topicModel
-     * @param  \CCDNForum\ForumBundle\Model\FrontModel\PostModel                $postModel
-     * @param  \CCDNForum\ForumBundle\Model\FrontModel\BoardModel               $boardModel
-     * @param  \CCDNForum\ForumBundle\Component\FloodControl                    $floodControl
+     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param \Symfony\Component\Form\FormFactory                              $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\User\Topic\TopicCreateFormType  $formTopicType
+     * @param \CCDNForum\ForumBundle\Form\Type\User\Post\PostCreateFormType    $formPostType
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\TopicModel               $topicModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\PostModel                $postModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\BoardModel               $boardModel
+     * @param \CCDNForum\ForumBundle\Component\FloodControl                    $floodControl
      */
     public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory, $formTopicType,
      $formPostType, ModelInterface $topicModel, ModelInterface $postModel, ModelInterface $boardModel, FloodControl $floodControl)
@@ -219,7 +219,7 @@ class TopicCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Post $post
+     * @param \CCDNForum\ForumBundle\Entity\Post $post
      */
     protected function onSuccess(Post $post)
     {
@@ -227,7 +227,7 @@ class TopicCreateFormHandler extends BaseFormHandler
         $post->setCreatedBy($this->user);
         $post->setDeleted(false);
 
-		$topic = $post->getTopic();
+        $topic = $post->getTopic();
         $topic->setCachedViewCount(0);
         $topic->setCachedReplyCount(0);
         $topic->setClosed(false);
@@ -236,7 +236,7 @@ class TopicCreateFormHandler extends BaseFormHandler
 
         $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_CREATE_SUCCESS, new UserTopicEvent($this->request, $topic));
 
-		$this->postModel->savePost($post);
+        $this->postModel->savePost($post);
         $topic->setFirstPost($post);
         $topic->setLastPost($post);
         $this->topicModel->saveTopic($topic);

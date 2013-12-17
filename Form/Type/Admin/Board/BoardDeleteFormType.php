@@ -44,7 +44,7 @@ class BoardDeleteFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  string $boardClass
+     * @param string $boardClass
      */
     public function __construct($boardClass)
     {
@@ -54,8 +54,8 @@ class BoardDeleteFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  FormBuilderInterface $builder
-     * @param  array                $options
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

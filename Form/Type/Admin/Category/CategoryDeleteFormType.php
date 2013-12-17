@@ -44,7 +44,7 @@ class CategoryDeleteFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  string $categoryClass
+     * @param string $categoryClass
      */
     public function __construct($categoryClass)
     {
@@ -54,8 +54,8 @@ class CategoryDeleteFormType extends AbstractType
     /**
      *
      * @access public
-     * @param  FormBuilderInterface $builder
-     * @param  array                $options
+     * @param FormBuilderInterface $builder
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

@@ -31,15 +31,15 @@ use CCDNForum\ForumBundle\Entity\Post;
  */
 class PostModel extends BaseModel implements ModelInterface
 {
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Post
-	 */
-	public function createPost()
-	{
-		return $this->getManager()->createPost();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Post
+     */
+    public function createPost()
+    {
+        return $this->getManager()->createPost();
+    }
 
     /**
      *
@@ -114,7 +114,7 @@ class PostModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
+     * @param  \CCDNForum\ForumBundle\Entity\Post                              $post
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function savePost(Post $post)
@@ -125,7 +125,7 @@ class PostModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
+     * @param  \CCDNForum\ForumBundle\Entity\Post                              $post
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function updatePost(Post $post)
@@ -136,7 +136,7 @@ class PostModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
+     * @param  \CCDNForum\ForumBundle\Entity\Post                              $post
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function lock(Post $post)
@@ -147,7 +147,7 @@ class PostModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
+     * @param  \CCDNForum\ForumBundle\Entity\Post                              $post
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function restore(Post $post)
@@ -158,8 +158,8 @@ class PostModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
-     * @param  \Symfony\Component\Security\Core\User\UserInterface   $user
+     * @param  \CCDNForum\ForumBundle\Entity\Post                              $post
+     * @param  \Symfony\Component\Security\Core\User\UserInterface             $user
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function softDelete(Post $post, UserInterface $user)

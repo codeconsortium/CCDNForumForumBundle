@@ -137,13 +137,13 @@ class PostGateway extends BaseGateway implements GatewayInterface
         return $this;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Post
-	 */
-	public function createPost()
-	{
-		return new $this->entityClass();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Post
+     */
+    public function createPost()
+    {
+        return new $this->entityClass();
+    }
 }

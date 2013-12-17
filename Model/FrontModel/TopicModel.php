@@ -32,15 +32,15 @@ use CCDNForum\ForumBundle\Entity\Post;
  */
 class TopicModel extends BaseModel implements ModelInterface
 {
-	/**
-	 * 
-	 * @access public
-	 * @return \CCDNForum\ForumBundle\Entity\Topic
-	 */
-	public function createTopic()
-	{
-		return $this->getManager()->createTopic();
-	}
+    /**
+     *
+     * @access public
+     * @return \CCDNForum\ForumBundle\Entity\Topic
+     */
+    public function createTopic()
+    {
+        return $this->getManager()->createTopic();
+    }
 
     /**
      *
@@ -119,7 +119,7 @@ class TopicModel extends BaseModel implements ModelInterface
      * Post must have a set topic for topic to be set correctly.
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Post                    $post
+     * @param  \CCDNForum\ForumBundle\Entity\Post                              $post
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function saveTopic(Topic $topic)
@@ -130,7 +130,7 @@ class TopicModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                             $topic
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function updateTopic(Topic $topic)
@@ -141,7 +141,7 @@ class TopicModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                             $topic
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function incrementViewCounter(Topic $topic)
@@ -152,7 +152,7 @@ class TopicModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                             $topic
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function restore(Topic $topic)
@@ -163,8 +163,8 @@ class TopicModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
-     * @param  \Symfony\Component\Security\Core\User\UserInterface   $user
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                             $topic
+     * @param  \Symfony\Component\Security\Core\User\UserInterface             $user
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function softDelete(Topic $topic, UserInterface $user)
@@ -175,8 +175,8 @@ class TopicModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
-     * @param  \Symfony\Component\Security\Core\User\UserInterface   $user
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                             $topic
+     * @param  \Symfony\Component\Security\Core\User\UserInterface             $user
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function sticky(Topic $topic, UserInterface $user)
@@ -187,7 +187,7 @@ class TopicModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                             $topic
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function unsticky(Topic $topic)
@@ -198,8 +198,8 @@ class TopicModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
-     * @param  \Symfony\Component\Security\Core\User\UserInterface   $user
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                             $topic
+     * @param  \Symfony\Component\Security\Core\User\UserInterface             $user
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function close(Topic $topic, UserInterface $user)
@@ -210,7 +210,7 @@ class TopicModel extends BaseModel implements ModelInterface
     /**
      *
      * @access public
-     * @param  \CCDNForum\ForumBundle\Entity\Topic                   $topic
+     * @param  \CCDNForum\ForumBundle\Entity\Topic                             $topic
      * @return \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface
      */
     public function reopen(Topic $topic)
