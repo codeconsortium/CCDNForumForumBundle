@@ -1,7 +1,7 @@
 {% block field_errors %}{# errors for next to each field #}
 	{%- spaceless -%}
 	    {%- if errors|length > 0 -%}
-			<div class="alert alert-error alert-block">
+			<div class="alert alert-danger alert-block">
 			    <ul>
 			        {%- for error in errors -%}
 			            <li>
@@ -21,7 +21,7 @@
 {% block form_errors %}{# for the overall form #}
 	{%- spaceless -%}
 	    {%- if errors|length > 0 -%}
-			<div class="alert alert-error alert-block">
+			<div class="alert alert-danger alert-block">
 			    <ul>
 			        {%- for error in errors -%}
 			            <li>
@@ -43,7 +43,7 @@
 		{%- if compound and not form.vars.block_prefixes[1] == 'field' -%}
 			{{- form_widget(form) -}}
 		{%- else -%}
-			<div class="form-group{{- (form.vars.errors|length > 0) ? ' error': '' -}}">
+			<div class="form-group{{- (form.vars.errors|length > 0) ? ' has-error': '' -}}">
 				{%- if 'repeated' in form.vars.block_prefixes -%}
 					{%- if form.vars.block_prefixes[1] == 'checkbox' -%}
 						<div class="col-lg-offset-2 col-lg-10">
