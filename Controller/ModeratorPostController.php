@@ -68,7 +68,7 @@ class ModeratorPostController extends ModeratorPostBaseController
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true));
         $this->isAuthorised($this->getAuthorizer()->canUnlockPost($post, $forum));
-        $formHandler = $this->getFormHandlerToUnlockPost($forum, $post);
+        $formHandler = $this->getFormHandlerToUnlockPost($post);
         $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Post/unlock.html.', array(
             'crumbs' => $this->getCrumbs()->addModeratorPostUnlock($forum, $post),
             'forum' => $forum,
@@ -95,7 +95,7 @@ class ModeratorPostController extends ModeratorPostBaseController
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true));
         $this->isAuthorised($this->getAuthorizer()->canUnlockPost($post, $forum));
-        $formHandler = $this->getFormHandlerToUnlockPost($forum, $post);
+        $formHandler = $this->getFormHandlerToUnlockPost($post);
 
         if ($formHandler->process()) {
             $response = $this->redirectResponseForTopicOnPageFromPost($forumName, $post->getTopic(), $post);

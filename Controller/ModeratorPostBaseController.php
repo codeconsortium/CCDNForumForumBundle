@@ -32,11 +32,10 @@ class ModeratorPostBaseController extends BaseController
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Forum                                      $forum
      * @param  \CCDNForum\ForumBundle\Entity\Post                                       $post
      * @return \CCDNForum\ForumBundle\Form\Handler\Moderator\Post\PostUnlockFormHandler
      */
-    protected function getFormHandlerToUnlockPost(Forum $forum, Post $post)
+    protected function getFormHandlerToUnlockPost(Post $post)
     {
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.post_unlock');
 

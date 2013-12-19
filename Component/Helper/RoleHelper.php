@@ -140,7 +140,7 @@ class RoleHelper
 
         // Compare (A)vailable roles against (U)sers roles.
         foreach ($this->availableRoleKeys as $aRoleKey => $aRole) {
-            foreach ($usersRoles as $uRoleKey => $uRole) {
+            foreach ($usersRoles as $uRole) {
                 if ($uRole == $aRole && $aRoleKey > $usersHighestRoleKey) {
                     $usersHighestRoleKey = $aRoleKey;
 

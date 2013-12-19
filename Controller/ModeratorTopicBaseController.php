@@ -32,11 +32,10 @@ class ModeratorTopicBaseController extends BaseController
     /**
      *
      * @access protected
-     * @param  \CCDNForum\ForumBundle\Entity\Forum                        $forum
      * @param  \CCDNForum\ForumBundle\Entity\Topic                        $topic
      * @return \CCDNForum\ForumBundle\Form\Handler\TopicCreateFormHandler
      */
-    protected function getFormHandlerToDeleteTopic(Forum $forum, Topic $topic)
+    protected function getFormHandlerToDeleteTopic(Topic $topic)
     {
         $formHandler = $this->container->get('ccdn_forum_forum.form.handler.topic_delete');
 

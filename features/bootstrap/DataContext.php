@@ -90,13 +90,13 @@ class DataContext extends BehatContext implements KernelAwareInterface
      *
      * Get service by id.
      *
-     * @param string $id
+     * @param string $serviceName
      *
      * @return object
      */
-    protected function getService($id)
+    protected function getService($serviceName)
     {
-        return $this->getContainer()->get($id);
+        return $this->getContainer()->get($serviceName);
     }
 
     protected $users = array();
@@ -250,7 +250,7 @@ class DataContext extends BehatContext implements KernelAwareInterface
      */
     public function thereAreFollowingTopicsDefined(TableNode $table)
     {
-        foreach ($table->getHash() as $index => $data) {
+        foreach ($table->getHash() as $data) {
             $this->topics[] = $this->thereIsTopic(
                 isset($data['title']) ? $data['title'] : sha1(uniqid(mt_rand(), true)),
                 isset($data['body']) ? $data['body'] : sha1(uniqid(mt_rand(), true)),

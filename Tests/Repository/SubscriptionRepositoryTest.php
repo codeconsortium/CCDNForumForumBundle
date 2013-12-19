@@ -25,8 +25,8 @@ class SubscriptionRepositoryTest extends TestBase
 		$category = $this->addNewCategory('testFindAllSubscriptionsForUserById', 1, $forum);
 		$board = $this->addNewBoard('testFindAllSubscriptionsForUserById', 'testFindAllSubscriptionsForUserById', 1, $category);
 		$topics = $this->addFixturesForTopics(array($board));
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
-		$subscriptions = $this->addFixturesForSubscriptions($forum, $topics, $users['tom'], false);
+		$this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForSubscriptions($forum, $topics, $users['tom'], false);
 		$subscriptionsFound = $this->getSubscriptionModel()->findAllSubscriptionsForUserById($users['tom']->getId(), true);
 		
 		$this->assertCount(3, $subscriptionsFound);
@@ -40,8 +40,8 @@ class SubscriptionRepositoryTest extends TestBase
 		$category = $this->addNewCategory('testFindAllSubscriptionsForUserById', 1, $forum);
 		$board = $this->addNewBoard('testFindAllSubscriptionsForUserById', 'testFindAllSubscriptionsForUserById', 1, $category);
 		$topics = $this->addFixturesForTopics(array($board));
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
-		$subscriptions = $this->addFixturesForSubscriptions($forum, $topics, $users['tom'], false);
+		$this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForSubscriptions($forum, $topics, $users['tom'], false);
 		$subscriptionsFound = $this->getSubscriptionModel()->findAllSubscriptionsForTopicById($topics[0]->getId(), true);
 		
 		$this->assertCount(1, $subscriptionsFound);
@@ -55,7 +55,7 @@ class SubscriptionRepositoryTest extends TestBase
 		$category = $this->addNewCategory('testFindAllTopicsPaginatedByBoardId', 1, $forum);
 		$board = $this->addNewBoard('testFindAllTopicsPaginatedByBoardId', 'testFindAllTopicsPaginatedByBoardId', 1, $category);
 		$topics = $this->addFixturesForTopics(array($board));
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
 		$subscriptions = $this->addFixturesForSubscriptions($forum, $topics, $users['tom'], false);
 		$pager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserById($users['tom']->getId(), 1, 25, 'unread', false);
 		$subscriptionsFound = $pager->getItems();
@@ -75,7 +75,7 @@ class SubscriptionRepositoryTest extends TestBase
 		$category = $this->addNewCategory('testFindAllTopicsPaginatedByBoardId', 1, $forum);
 		$board = $this->addNewBoard('testFindAllTopicsPaginatedByBoardId', 'testFindAllTopicsPaginatedByBoardId', 1, $category);
 		$topics = $this->addFixturesForTopics(array($board));
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
 		$subscriptions = $this->addFixturesForSubscriptions($forum, $topics, $users['tom'], false);
 		$pager = $this->getSubscriptionModel()->findAllSubscriptionsPaginatedForUserByIdAndForumById($forum->getId(), $users['tom']->getId(), 1, 25, 'unread', false);
 		$subscriptionsFound = $pager->getItems();
@@ -95,8 +95,8 @@ class SubscriptionRepositoryTest extends TestBase
 		$category = $this->addNewCategory('testFindAllTopicsPaginatedByBoardId', 1, $forum);
 		$board = $this->addNewBoard('testFindAllTopicsPaginatedByBoardId', 'testFindAllTopicsPaginatedByBoardId', 1, $category);
 		$topics = $this->addFixturesForTopics(array($board));
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
-		$subscriptions = $this->addFixturesForSubscriptions($forum, $topics, $users['tom'], false);
+		$this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForSubscriptions($forum, $topics, $users['tom'], false);
 	    $subscriptionFound = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
 
 		$this->assertTrue($subscriptionFound->isSubscribed());
@@ -111,7 +111,7 @@ class SubscriptionRepositoryTest extends TestBase
 		$category = $this->addNewCategory('testFindAllTopicsPaginatedByBoardId', 1, $forum);
 		$board = $this->addNewBoard('testFindAllTopicsPaginatedByBoardId', 'testFindAllTopicsPaginatedByBoardId', 1, $category);
 		$topics = $this->addFixturesForTopics(array($board));
-		$posts = $this->addFixturesForPosts(array($topics[0]), $users['tom']);
+		$this->addFixturesForPosts(array($topics[0]), $users['tom']);
 		$this->addFixturesForSubscriptions($forum, array($topics[0]), $users['tom'], false);
 		$this->addFixturesForSubscriptions($forum, array($topics[0]), $users['dick'], false);
 		$this->addFixturesForSubscriptions($forum, array($topics[0]), $users['harry'], false);

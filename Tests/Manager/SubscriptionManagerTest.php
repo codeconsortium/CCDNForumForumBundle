@@ -26,7 +26,7 @@ class SubscriptionManagerTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
 		$this->getSubscriptionModel()->subscribe($topics[0], $users['tom']);
 	    $subscriptionFound = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
 		
@@ -42,7 +42,7 @@ class SubscriptionManagerTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
 		$this->getSubscriptionModel()->subscribe($topics[0], $users['tom']);
 		$this->getSubscriptionModel()->unsubscribe($topics[0], $users['tom']->getId());
 	    $subscriptionFound = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
@@ -59,17 +59,17 @@ class SubscriptionManagerTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
 		$this->getSubscriptionModel()->subscribe($topics[0], $users['tom']);
 	    $subscriptionFound = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
 		$this->getSubscriptionModel()->markAsRead($subscriptionFound);
 		$subscriptionsFound = $this->getSubscriptionModel()->findAllSubscriptionsForUserById($users['tom']->getId(), true);
 		
 		foreach ($subscriptionsFound as $subscription) {
-			if ($subscriptionFound->getTopic()->getId() == $topics[0]->getId()) {
-				$this->assertTrue($subscriptionFound->isSubscribed());
-				$this->assertTrue($subscriptionFound->isRead());
-				$this->assertInternalType('integer', $subscriptionFound->getId());
+			if ($subscription->getTopic()->getId() == $topics[0]->getId()) {
+				$this->assertTrue($subscription->isSubscribed());
+				$this->assertTrue($subscription->isRead());
+				$this->assertInternalType('integer', $subscription->getId());
 			}
 		}
 	}
@@ -82,17 +82,17 @@ class SubscriptionManagerTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
 		$this->getSubscriptionModel()->subscribe($topics[0], $users['tom']);
 	    $subscriptionFound = $this->getSubscriptionModel()->findOneSubscriptionForTopicByIdAndUserById($topics[0]->getId(), $users['tom']->getId());
 		$this->getSubscriptionModel()->markAsUnread($subscriptionFound);
 		$subscriptionsFound = $this->getSubscriptionModel()->findAllSubscriptionsForUserById($users['tom']->getId(), true);
 		
 		foreach ($subscriptionsFound as $subscription) {
-			if ($subscriptionFound->getTopic()->getId() == $topics[0]->getId()) {
-				$this->assertTrue($subscriptionFound->isSubscribed());
-				$this->assertFalse($subscriptionFound->isRead());
-				$this->assertInternalType('integer', $subscriptionFound->getId());
+			if ($subscription->getTopic()->getId() == $topics[0]->getId()) {
+				$this->assertTrue($subscription->isSubscribed());
+				$this->assertFalse($subscription->isRead());
+				$this->assertInternalType('integer', $subscription->getId());
 			}
 		}
 	}
@@ -105,7 +105,7 @@ class SubscriptionManagerTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
 		$this->getSubscriptionModel()->subscribe($topics[0], $users['tom']);
 		$this->getSubscriptionModel()->subscribe($topics[0], $users['dick']);
 		$this->getSubscriptionModel()->subscribe($topics[0], $users['harry']);

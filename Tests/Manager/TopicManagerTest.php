@@ -42,7 +42,7 @@ class TopicManagerTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
 		$topics[0]->setTitle('the_new_title');
         $this->getTopicModel()->updateTopic($topics[0]);
 		$this->em->refresh($topics[0]);
@@ -73,7 +73,7 @@ class TopicManagerTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
         $this->getTopicModel()->softDelete($topics[0], $users['tom']);
 		$this->em->refresh($topics[0]);
 
@@ -91,7 +91,7 @@ class TopicManagerTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
         $this->getTopicModel()->softDelete($topics[0], $users['tom']);
 		$this->em->refresh($topics[0]);
 
@@ -106,7 +106,7 @@ class TopicManagerTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
         $this->getTopicModel()->sticky($topics[0], $users['tom']);
 		$this->em->refresh($topics[0]);
 
@@ -121,7 +121,7 @@ class TopicManagerTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
         $this->getTopicModel()->unsticky($topics[0]);
 		$this->em->refresh($topics[0]);
 
@@ -136,7 +136,7 @@ class TopicManagerTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
         $this->getTopicModel()->close($topics[0], $users['tom']);
 		$this->em->refresh($topics[0]);
 
@@ -151,7 +151,7 @@ class TopicManagerTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
         $this->getTopicModel()->reopen($topics[0]);
 		$this->em->refresh($topics[0]);
 

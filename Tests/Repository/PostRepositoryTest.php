@@ -73,7 +73,7 @@ class PostRepositoryTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
 		$firstPost = $this->getPostModel()->getFirstPostForTopicById($topics[0]->getId());
 
 		$this->assertSame($firstPost->getId(), $topics[0]->getFirstPost()->getId());
@@ -87,7 +87,7 @@ class PostRepositoryTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
 		$lastPost = $this->getPostModel()->getLastPostForTopicById($topics[0]->getId());
 		
 		$this->assertSame($lastPost->getId(), $topics[0]->getLastPost()->getId());
@@ -101,13 +101,13 @@ class PostRepositoryTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
 		$count = $this->getPostModel()->countPostsForTopicById($topics[0]->getId());
 		
 		$this->assertSame(3, (int) $count);
 	}
 
-    public function countPostsForUserById($userId)
+    public function testCountPostsForUserById()
     {
 		$this->purge();
 		$users = $this->addFixturesForUsers();
@@ -115,9 +115,9 @@ class PostRepositoryTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
 		$count = $this->getPostModel()->countPostsForUserById($users['tom']->getId());
-		ldd($count);
-		$this->assertSame(3, (int) $count);
+		
+		$this->assertSame(243, (int) $count);
 	}
 }

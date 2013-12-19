@@ -135,7 +135,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true));
         $this->isAuthorised($this->getAuthorizer()->canDeleteTopic($topic, $forum));
-        $formHandler = $this->getFormHandlerToDeleteTopic($forum, $topic);
+        $formHandler = $this->getFormHandlerToDeleteTopic($topic);
         $response = $this->renderResponse('CCDNForumForumBundle:Moderator:Topic/delete.html.', array(
             'crumbs' => $this->getCrumbs()->addModeratorTopicDelete($forum, $topic),
             'forum' => $forum,
@@ -161,7 +161,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true));
         $this->isAuthorised($this->getAuthorizer()->canDeleteTopic($topic, $forum));
-        $formHandler = $this->getFormHandlerToDeleteTopic($forum, $topic);
+        $formHandler = $this->getFormHandlerToDeleteTopic($topic);
 
         if ($formHandler->process()) {
             $response = $this->redirectResponseForTopicOnPageFromPost($forumName, $topic, $topic->getLastPost());

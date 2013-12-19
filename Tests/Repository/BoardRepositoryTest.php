@@ -22,7 +22,7 @@ class BoardRepositoryTest extends TestBase
 		$this->purge();
 		$forums = $this->addFixturesForForums();
 		$categories = $this->addFixturesForCategories($forums);
-		$boards = $this->addFixturesForBoards($categories);
+		$this->addFixturesForBoards($categories);
 		$boardsFound = $this->getBoardModel()->findAllBoards();
 		
 		// 3 Forums, with 3 categories each respectively, 3x3 = 9 Categories total.
@@ -49,7 +49,7 @@ class BoardRepositoryTest extends TestBase
 		$this->purge();
 		$forum = $this->addNewForum('testFindAllBoardsForForumById');
 		$categories = $this->addFixturesForCategories(array($forum));
-		$boards = $this->addFixturesForBoards($categories);
+		$this->addFixturesForBoards($categories);
 		$foundBoards = $this->getBoardModel()->findAllBoardsForForumById($forum->getId());
 	
 		$this->assertCount(9, $foundBoards);
@@ -84,7 +84,7 @@ class BoardRepositoryTest extends TestBase
 		$this->purge();
 		$forum = $this->addNewForum('TestForum');
 		$categories = $this->addFixturesForCategories(array($forum));
-		$boards = $this->addFixturesForBoards($categories);
+		$this->addFixturesForBoards($categories);
 		$count = $this->getBoardModel()->getBoardCount();
 		
 		$this->assertSame(9, (int) $count);

@@ -21,7 +21,7 @@ class CategoryRepositoryTest extends TestBase
 	{
 		$this->purge();
 		$forum = $this->addFixturesForForums();
-		$category = $this->addFixturesForCategories($forum);
+		$this->addFixturesForCategories($forum);
 		$categoriesFound = $this->getCategoryModel()->findAllCategories();
 		
 		// 3 Forums, with 3 categories each respectively, 3x3 = 9 Categories total.
@@ -32,7 +32,7 @@ class CategoryRepositoryTest extends TestBase
 	{
 		$this->purge();
 		$forums = $this->addFixturesForForums();
-		$category = $this->addFixturesForCategories($forums);
+		$this->addFixturesForCategories($forums);
 		
 		foreach ($forums as $forum) {
 			$categoriesFound = $this->getCategoryModel()->findAllCategoriesForForumById($forum->getId());
@@ -46,7 +46,7 @@ class CategoryRepositoryTest extends TestBase
 		$this->purge();
 		$forum = $this->addNewForum('testFindAllCategoriesWithBoardsForForumByName');
 		$categories = $this->addFixturesForCategories(array($forum));
-		$boards = $this->addFixturesForBoards($categories);
+		$this->addFixturesForBoards($categories);
 		$foundCategories = $this->getCategoryModel()->findAllCategoriesWithBoardsForForumByName($forum->getName());
 
 		$this->assertCount(3, $foundCategories);

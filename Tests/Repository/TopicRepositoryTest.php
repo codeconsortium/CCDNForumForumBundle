@@ -25,7 +25,7 @@ class TopicRepositoryTest extends TestBase
 		$category = $this->addNewCategory('testFindAllTopicsPaginatedByBoardId', 1, $forum);
 		$board = $this->addNewBoard('testFindAllTopicsPaginatedByBoardId', 'testFindAllTopicsPaginatedByBoardId', 1, $category);
 		$topics = $this->addFixturesForTopics(array($board));
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
 
 		$this->assertCount(3, $topics);
 		$pager = $this->getTopicModel()->findAllTopicsPaginatedByBoardId($board->getId(), 1, 25, true);
@@ -41,7 +41,7 @@ class TopicRepositoryTest extends TestBase
 		$category = $this->addNewCategory('testFindAllPostsPaginatedByTopicId', 1, $forum);
 		$board = $this->addNewBoard('testFindAllPostsPaginatedByTopicId', 'testFindAllPostsPaginatedByTopicId', 1, $category);
 		$topics = $this->addFixturesForTopics(array($board));
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
 
 		$this->assertCount(3, $topics);
 
@@ -88,8 +88,8 @@ class TopicRepositoryTest extends TestBase
 		$this->purge();
 		$users = $this->addFixturesForUsers();
 		$topic = $this->addNewTopic('NewTopicTest', null, true, true);
-		$post1 = $this->addNewPost('foobar1', $topic, $users['tom'], new \DateTime(), true, true);
-		$post2 = $this->addNewPost('foobar2', $topic, $users['tom'], new \DateTime(), true, true);
+		$this->addNewPost('foobar1', $topic, $users['tom'], new \DateTime(), true, true);
+		$this->addNewPost('foobar2', $topic, $users['tom'], new \DateTime(), true, true);
 		$this->em->refresh($topic);
 		$foundTopic = $this->getTopicModel()->findOneTopicByIdWithPosts($topic->getId(), true);
 		
@@ -108,7 +108,7 @@ class TopicRepositoryTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
 
 		$lastTopic = $this->getTopicModel()->findLastTopicForBoardByIdWithLastPost($topics[count($topics) - 1]->getBoard()->getId());
 
@@ -123,7 +123,7 @@ class TopicRepositoryTest extends TestBase
 		$categories = $this->addFixturesForCategories($forums);
 		$boards = $this->addFixturesForBoards($categories);
 		$topics = $this->addFixturesForTopics($boards);
-		$posts = $this->addFixturesForPosts($topics, $users['tom']);
+		$this->addFixturesForPosts($topics, $users['tom']);
 	
 		$count = $this->getTopicModel()->getTopicAndPostCountForBoardById($boards[0]->getId());
 	
