@@ -15,7 +15,6 @@ namespace CCDNForum\ForumBundle\Model\Component\Manager;
 
 use CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface;
 use CCDNForum\ForumBundle\Model\Component\Manager\BaseManager;
-
 use CCDNForum\ForumBundle\Entity\Registry;
 
 /**

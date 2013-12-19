@@ -21,7 +21,6 @@ use CCDNForum\ForumBundle\Model\Component\Manager\BaseManager;
 use CCDNForum\ForumBundle\Component\Helper\PostLockHelper;
 
 use CCDNForum\ForumBundle\Entity\Topic;
-use CCDNForum\ForumBundle\Entity\Post;
 
 /**
  *
