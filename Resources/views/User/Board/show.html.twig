@@ -17,18 +17,13 @@
     {%- spaceless -%}
 
 	<section class="row btn-toolbar clearfix">
-        <div class="col-md-6">
             {% set is_topic_create_disabled = board.isAuthorisedToCreateTopic(app.security) ? '': ' disabled' %}
 
             <a class="btn btn-danger{{ is_topic_create_disabled }}" rel="nofollow" href="{{- path('ccdn_forum_user_topic_create', {'forumName': forumName, 'boardId': board.getId }) -}}">
 				<i class="glyphicon glyphicon-asterisk"></i>
 				{{- 'link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}
 			</a>
-        </div>
 
-		<nav class="col-md-6 text-right">
-			{{- knp_pagination_render(pager) -}}
-		</nav>
 	</section>
 
 	<header class="row clearfix">
@@ -48,7 +43,7 @@
 		</div>
 	</header>
 
-	<br>
+	{{- knp_pagination_render(pager) -}}
 
 	<section class="clearfix">
         <table class="table table-striped table-hover">
@@ -97,6 +92,8 @@
             </tbody>
         </table>
 	</section>
+
+	{{- knp_pagination_render(pager) -}}
 
     {%- endspaceless -%}
 {%- endblock body_content -%}

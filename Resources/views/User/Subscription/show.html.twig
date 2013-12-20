@@ -48,14 +48,6 @@
 	{%- spaceless -%}
 
 	<section class="row clearfix">
-		<div class="btn-toolbar">
-			<nav class="col-md-12 text-right">
-				{{- knp_pagination_render(pager) -}}
-			</nav>
-		</div>
-	</section>
-
-	<section class="row clearfix">
 		<div class="col-md-12">
 			<ul class="nav nav-tabs">
 				{%- import _self as tabs -%}
@@ -72,7 +64,7 @@
 		</div>
 	</section>
 
-	<br>
+	{{- knp_pagination_render(pager) -}}
 
 	<section class="clearfix">
 		<table class="table table-striped table-hover">
@@ -103,6 +95,8 @@
 			</tbody>
 		</table>
 	</section>
+
+	{{- knp_pagination_render(pager) -}}
 
 	{%- endspaceless -%}
 {%- endblock body_content -%}

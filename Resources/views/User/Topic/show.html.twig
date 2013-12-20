@@ -17,13 +17,7 @@
     {%- spaceless -%}
 
 	<section class="row clearfix btn-toolbar">
-        <div class="col-md-6">
-            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
-        </div>
-
-		<nav class="col-md-6 pull-right text-right">
-			{{- knp_pagination_render(pager) -}}
-		</nav>
+        {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
 	</section>
 
 	{%- include "CCDNForumForumBundle:User:Topic/Partial/stat_vitals.html.twig" -%}
@@ -32,13 +26,15 @@
 		{%- include "CCDNForumForumBundle:User:Topic/Partial/stat_mods.html.twig" -%}
 	{%- endif -%}
 
-	<br>
+	{{- knp_pagination_render(pager) -}}
 
 	<section class="row clearfix">
 	    {%- for key, post in pager.getItems() -%}
 	        {%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig" -%}
 	    {%- endfor -%}
 	</section>
+
+	{{- knp_pagination_render(pager) -}}
 
     {%- endspaceless -%}
 {%- endblock body_content -%}
