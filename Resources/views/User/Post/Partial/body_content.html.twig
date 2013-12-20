@@ -1,5 +1,5 @@
 {%- spaceless -%}
 
-	{{- BBCode_Parse(post.getBody | raw, 'forum_post_body') | raw -}}
+	{{- post.getBody -}}
 
 {%- endspaceless -%}
