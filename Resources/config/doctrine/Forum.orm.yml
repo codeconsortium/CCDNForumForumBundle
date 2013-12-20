@@ -1,7 +1,6 @@
 CCDNForum\ForumBundle\Entity\Forum:
     type: entity
     table: cc_forum_forum
-    #repositoryClass: CCDNForum\ForumBundle\Repository\ForumRepository
     id:
         id:
             type: integer
