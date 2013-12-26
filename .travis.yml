@@ -13,7 +13,8 @@ before_script:
     - echo 'date.timezone = "Europe/London"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - curl -s http://getcomposer.org/installer | php
     - php composer.phar --dev install
-    - mysql -u ccdnroot -p root
+    #- mysql -u ccdnroot -p root
+    - mysql > CREATE USER 'ccdnroot'@'localhost' IDENTIFIED BY 'root';
     #- mysql -e 'CREATE DATABASE ccdndev_travis_test'
     #- mysql > grant usage on *.* to ccdndev_travis_test``
     - php ./Tests/Functional/app/console doctrine:database create
