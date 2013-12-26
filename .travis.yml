@@ -13,6 +13,7 @@ before_script:
     - echo 'date.timezone = "Europe/London"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - mysql -e 'CREATE DATABASE ccdndev_travis_test'
     - mysql -u ccdnroot
+    - mysql > SET PASSWORD FOR 'ccdnroot'@'localhost' = PASSWORD('root');
     #- mysql > CREATE USER 'ccdnroot'@'localhost' IDENTIFIED BY 'root';
     #- mysql -u ccdnroot
     #- mysql > SET PASSWORD FOR 'ccdnroot'@'localhost' = PASSWORD('root');
