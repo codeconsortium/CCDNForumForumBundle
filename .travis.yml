@@ -11,6 +11,8 @@ matrix:
 
 before_script:
     - echo 'date.timezone = "Europe/London"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    - mysql -e 'CREATE DATABASE ccdndev_travis_test'
+    - mysql -u ccdnroot
     #- mysql > CREATE USER 'ccdnroot'@'localhost' IDENTIFIED BY 'root';
     #- mysql -u ccdnroot
     #- mysql > SET PASSWORD FOR 'ccdnroot'@'localhost' = PASSWORD('root');
@@ -20,7 +22,7 @@ before_script:
     #- mysql -u ccdnroot -p root
     #- mysql -e 'CREATE DATABASE ccdndev_travis_test'
     #- mysql > grant usage on *.* to ccdndev_travis_test``
-    - php ./Tests/Functional/app/console doctrine:database create
+    #- php ./Tests/Functional/app/console doctrine:database create
     - php ./Tests/Functional/app/console doctrine:schema:create
     - php ./Tests/Functional/app/console doctrine:schema:update --force
 
