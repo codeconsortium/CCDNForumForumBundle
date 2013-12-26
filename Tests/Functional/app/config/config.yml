@@ -49,8 +49,8 @@ doctrine:
         host:     127.0.0.1
         port:     null
         dbname:   ccdndev_travis_test
-        user:     root
-        password: ~
+        user:     ccdnroot
+        password: root
         charset:  UTF8
     orm:
         default_entity_manager: default
