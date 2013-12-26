@@ -12,8 +12,9 @@ matrix:
 before_script:
     - echo 'date.timezone = "Europe/London"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     #- mysql > CREATE USER 'ccdnroot'@'localhost' IDENTIFIED BY 'root';
-    - mysql -u ccdnroot
-    - mysql > SET PASSWORD FOR 'ccdnroot'@'localhost' = PASSWORD('root');
+    #- mysql -u ccdnroot
+    #- mysql > SET PASSWORD FOR 'ccdnroot'@'localhost' = PASSWORD('root');
+    - mysqladmin -u ccdnroot -h localhost password "root"
     - curl -s http://getcomposer.org/installer | php
     - php composer.phar --dev install
     #- mysql -u ccdnroot -p root
