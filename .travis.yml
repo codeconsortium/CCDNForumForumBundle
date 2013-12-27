@@ -19,7 +19,7 @@ before_script:
             database_host: 127.0.0.1
             database_port: null
             database_name: ccdn_test
-            database_user: ccdnroot
+            database_user: root
             database_password: root
             locale: en
        
@@ -31,7 +31,7 @@ before_script:
     #- mysql > SET PASSWORD FOR 'ccdnroot'@'localhost' = PASSWORD('root');
     #- mysqladmin -u ccdnroot -h localhost password "root"
     - curl -s http://getcomposer.org/installer | php
-    - php composer.phar --dev install
+    - php composer.phar --dev install --prefer-dist
     #- mysql -u ccdnroot -p root
     #- mysql -e 'CREATE DATABASE ccdndev_travis_test'
     #- mysql > grant usage on *.* to ccdndev_travis_test``
