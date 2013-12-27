@@ -13,12 +13,22 @@ before_script:
     - echo 'date.timezone = "Europe/London"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - echo "USE mysql;\nUPDATE user SET password=PASSWORD('password') WHERE user='ccdnroot';\nFLUSH PRIVILEGES;\n" | mysql -u ccdnroot
     - mysql -e 'CREATE DATABASE ccdndev_travis_test'
+    - echo 'parameters:
+          database_driver: pdo_mysql
+          database_host: 127.0.0.1
+          database_port: null
+          database_name: ccdn_test
+          database_user: ccdnroot
+          database_password: root
+          locale: en
+       
+       ' > ./Tests/Functional/app/config/parameters.yml
     #- mysql -u ccdnroot
     #- mysql > SET PASSWORD FOR 'ccdnroot'@'localhost' = PASSWORD('root');
     #- mysql > CREATE USER 'ccdnroot'@'localhost' IDENTIFIED BY 'root';
     #- mysql -u ccdnroot
     #- mysql > SET PASSWORD FOR 'ccdnroot'@'localhost' = PASSWORD('root');
-    - mysqladmin -u ccdnroot -h localhost password "root"
+    #- mysqladmin -u ccdnroot -h localhost password "root"
     - curl -s http://getcomposer.org/installer | php
     - php composer.phar --dev install
     #- mysql -u ccdnroot -p root

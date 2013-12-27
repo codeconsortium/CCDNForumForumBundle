@@ -1,5 +1,6 @@
 app/config/parameters.yml
 app/config/parameters.ini
+Tests/Functional/app/config/parameters.yml
 logs/
 cache/
 vendor/
