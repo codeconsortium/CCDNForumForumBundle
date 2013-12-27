@@ -20,7 +20,7 @@ before_script:
             database_port: null
             database_name: ccdn_test
             database_user: root
-            database_password: root
+            database_password: ~
             locale: en
        
         ' > ./Tests/Functional/app/config/parameters.yml
