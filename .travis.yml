@@ -11,7 +11,7 @@ matrix:
 
 before_script:
     - echo 'date.timezone = "Europe/London"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-    - echo "USE mysql;\nUPDATE user SET password=PASSWORD('password') WHERE user='ccdnroot';\nFLUSH PRIVILEGES;\n" | mysql -u ccdnroot
+    #- echo "USE mysql;\nUPDATE user SET password=PASSWORD('password') WHERE user='ccdnroot';\nFLUSH PRIVILEGES;\n" | mysql -u ccdnroot
     - mysql -e 'CREATE DATABASE ccdndev_travis_test'
     - > 
         echo 'parameters:
