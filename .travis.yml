@@ -34,7 +34,7 @@ script:
     - 'php ./vendor/bin/behat'
 
 after_script:
-    - mysql -e 'DROP DATABASE ccdndev_test;'
+    - mysql -e 'DROP DATABASE ccdn_test;'
 
 notifications:
     email: status@codeconsortium.com
