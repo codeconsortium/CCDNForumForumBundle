@@ -25,7 +25,7 @@ before_script:
        
         ' > ./Tests/Functional/app/config/parameters.yml
     - curl -s http://getcomposer.org/installer | php
-    - php composer.phar --dev install --prefer-dist
+    - php composer.phar install --dev --prefer-dist
     - php ./Tests/Functional/app/console doctrine:schema:create
     - php ./Tests/Functional/app/console doctrine:schema:update --force
 
