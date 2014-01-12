@@ -311,7 +311,7 @@ class CrumbBuilder extends BaseCrumbBuilder
                 array(
                     'route' => 'ccdn_forum_user_category_index',
                     'params' => array(
-                        'forumName' => $forum ? $forum->getName() : ''
+                        'forumName' => $forum ? $forum->getName() : 'default'
                     )
                 )
             )

@@ -13,8 +13,9 @@
 
 namespace CCDNForum\ForumBundle\Form\Type\User\Post;
 
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormError;
@@ -86,15 +87,14 @@ class PostDeleteFormType extends AbstractType
         ;
     }
 
-    /**
-     *
-     * @access public
-     * @param  array $options
-     * @return array
-     */
-    public function getDefaultOptions(array $options)
+	/**
+	 * 
+	 * @access public
+	 * @param  \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+	 */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+	    $resolver->setDefaults(array(
             'data_class'          => $this->postClass,
             'csrf_protection'     => true,
             'csrf_field_name'     => '_token',
@@ -102,7 +102,7 @@ class PostDeleteFormType extends AbstractType
             'intention'           => 'forum_post_delete_item',
             'validation_groups'   => array('forum_post_delete'),
             'cascade_validation'  => true,
-        );
+        ));
     }
 
     /**

@@ -15,6 +15,7 @@ namespace CCDNForum\ForumBundle\Form\Type\Moderator\Topic;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  *
@@ -76,14 +77,14 @@ class TopicChangeBoardFormType extends AbstractType
         ;
     }
 
-    /**
-     *
-     * @access public
-     * @param array $options
-     */
-    public function getDefaultOptions(array $options)
+	/**
+	 * 
+	 * @access public
+	 * @param  \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+	 */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+	    $resolver->setDefaults(array(
             'data_class'         => $this->topicClass,
             'csrf_protection'    => true,
             'csrf_field_name'    => '_token',
@@ -91,7 +92,7 @@ class TopicChangeBoardFormType extends AbstractType
             'intention'          => 'forum_topic_change_board_item',
             'validation_groups'  => array('forum_topic_change_board'),
             'boards'             => array(),
-        );
+        ));
     }
 
     /**

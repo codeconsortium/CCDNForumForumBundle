@@ -15,6 +15,7 @@ namespace CCDNForum\ForumBundle\Form\Type\User\Topic;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  *
@@ -64,22 +65,21 @@ class TopicUpdateFormType extends AbstractType
         ;
     }
 
-    /**
-     *
-     * @access public
-     * @param  array $options
-     * @return array
-     */
-    public function getDefaultOptions(array $options)
+	/**
+	 * 
+	 * @access public
+	 * @param  \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+	 */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+	    $resolver->setDefaults(array(
             'data_class'         => $this->topicClass,
             'csrf_protection'    => true,
             'csrf_field_name'    => '_token',
             // a unique key to help generate the secret token
             'intention'          => 'forum_topic_update_item',
             'validation_groups'  => array('forum_topic_update', 'forum_post_update'),
-        );
+        ));
     }
 
     /**

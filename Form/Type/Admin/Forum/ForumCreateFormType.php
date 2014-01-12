@@ -15,6 +15,7 @@ namespace CCDNForum\ForumBundle\Form\Type\Admin\Forum;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  *
@@ -83,15 +84,14 @@ class ForumCreateFormType extends AbstractType
         ;
     }
 
-    /**
-     *
-     * @access public
-     * @param  array $options
-     * @return array
-     */
-    public function getDefaultOptions(array $options)
+	/**
+	 * 
+	 * @access public
+	 * @param  \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+	 */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+	    $resolver->setDefaults(array(
             'data_class'          => $this->forumClass,
             'csrf_protection'     => true,
             'csrf_field_name'     => '_token',
@@ -100,7 +100,7 @@ class ForumCreateFormType extends AbstractType
             'validation_groups'   => array('forum_forum_create'),
             'cascade_validation'  => true,
             'available_roles'     => $this->roleHelper->getRoleHierarchy(),
-        );
+        ));
     }
 
     /**

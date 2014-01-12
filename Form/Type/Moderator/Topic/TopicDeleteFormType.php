@@ -13,8 +13,9 @@
 
 namespace CCDNForum\ForumBundle\Form\Type\Moderator\Topic;
 
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormError;
@@ -86,15 +87,14 @@ class TopicDeleteFormType extends AbstractType
         ;
     }
 
-    /**
-     *
-     * @access public
-     * @param  array $options
-     * @return array
-     */
-    public function getDefaultOptions(array $options)
+	/**
+	 * 
+	 * @access public
+	 * @param  \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+	 */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+	    $resolver->setDefaults(array(
             'data_class'          => $this->topicClass,
             'csrf_protection'     => true,
             'csrf_field_name'     => '_token',
@@ -102,7 +102,7 @@ class TopicDeleteFormType extends AbstractType
             'intention'           => 'forum_topic_delete_item',
             'validation_groups'   => array('forum_topic_delete'),
             'cascade_validation'  => true,
-        );
+        ));
     }
 
     /**

@@ -30,10 +30,8 @@
         "behat/behat": "2.4.*@stable",
         "behat/mink": "v1.5.0",
         "behat/mink-goutte-driver": "*",
-
         "behat/mink-browserkit-driver": "*",
         "behat/mink-selenium2-driver": "*",
-
         "behat/mink-extension": "*",
         "behat/symfony2-extension": "*",
         "phpunit/phpunit": "3.7.*",
