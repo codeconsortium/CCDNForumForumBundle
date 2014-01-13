@@ -60,7 +60,7 @@ class CategoryDeleteFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $trueValidator = function(FormEvent $event) {
+        $trueValidator = function (FormEvent $event) {
             $form = $event->getForm();
 
             $confirm = $form->get('confirm_delete')->getData();
@@ -99,14 +99,14 @@ class CategoryDeleteFormType extends AbstractType
         ;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-	 */
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-	    $resolver->setDefaults(array(
+        $resolver->setDefaults(array(
             'data_class'          => $this->categoryClass,
             'csrf_protection'     => true,
             'csrf_field_name'     => '_token',

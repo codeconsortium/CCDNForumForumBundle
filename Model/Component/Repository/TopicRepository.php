@@ -59,7 +59,7 @@ class TopicRepository extends BaseRepository implements RepositoryInterface
             ->leftJoin('t.board', 'b')
             ->leftJoin('b.category', 'c')
             ->where(
-                call_user_func_array(function($canViewDeletedTopics, $qb) {
+                call_user_func_array(function ($canViewDeletedTopics, $qb) {
                     if ($canViewDeletedTopics) {
                         $expr = $qb->expr()->eq('b.id', ':boardId');
                     } else {
@@ -112,7 +112,7 @@ class TopicRepository extends BaseRepository implements RepositoryInterface
             ->leftJoin('t.board', 'b')
             ->leftJoin('b.category', 'c')
             ->where(
-                call_user_func_array(function($canViewDeletedTopics, $qb) {
+                call_user_func_array(function ($canViewDeletedTopics, $qb) {
                     if ($canViewDeletedTopics) {
                         $expr = $qb->expr()->eq('b.id', ':boardId');
                     } else {
@@ -164,7 +164,7 @@ class TopicRepository extends BaseRepository implements RepositoryInterface
             ->leftJoin('t.board', 'b')
             ->leftJoin('b.category', 'c')
             ->where(
-                call_user_func_array(function($canViewDeletedTopics, $qb) {
+                call_user_func_array(function ($canViewDeletedTopics, $qb) {
                     if ($canViewDeletedTopics) {
                         $expr = $qb->expr()->eq('t.id', ':topicId');
                     } else {
@@ -211,7 +211,7 @@ class TopicRepository extends BaseRepository implements RepositoryInterface
             ->leftJoin('t.board', 'b')
             ->leftJoin('b.category', 'c')
             ->where(
-                call_user_func_array(function($canViewDeletedTopics, $qb) {
+                call_user_func_array(function ($canViewDeletedTopics, $qb) {
                     if ($canViewDeletedTopics) {
                         $expr = $qb->expr()->eq('t.id', ':topicId');
                     } else {

@@ -73,14 +73,14 @@ class TopicCreateFormType extends AbstractType
         ;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-	 */
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-	    $resolver->setDefaults(array(
+        $resolver->setDefaults(array(
             'data_class'         => $this->topicClass,
             'csrf_protection'    => true,
             'csrf_field_name'    => '_token',

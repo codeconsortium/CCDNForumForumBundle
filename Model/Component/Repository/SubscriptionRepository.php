@@ -59,7 +59,7 @@ class SubscriptionRepository extends BaseRepository implements RepositoryInterfa
             ->leftJoin('t.board', 'b')
             ->leftJoin('b.category', 'c')
             ->where(
-                call_user_func_array(function($canViewDeletedTopics, $qb) {
+                call_user_func_array(function ($canViewDeletedTopics, $qb) {
                     if ($canViewDeletedTopics) {
                         $expr = $qb->expr()->eq('s.ownedBy', ':userId');
                     } else {
@@ -154,7 +154,7 @@ class SubscriptionRepository extends BaseRepository implements RepositoryInterfa
             ->leftJoin('b.category', 'c')
             ->leftJoin('c.forum', 'f')
             ->where(
-                call_user_func_array(function($qb, $canViewDeletedTopics, $filter) {
+                call_user_func_array(function ($qb, $canViewDeletedTopics, $filter) {
                     $expr = $qb->expr()->andX(
                         $qb->expr()->eq('s.ownedBy', ':userId'),
                         $qb->expr()->eq('s.isSubscribed', 'TRUE')
@@ -231,7 +231,7 @@ class SubscriptionRepository extends BaseRepository implements RepositoryInterfa
             ->leftJoin('b.category', 'c')
             ->leftJoin('c.forum', 'f')
             ->where(
-                call_user_func_array(function($qb, $canViewDeletedTopics, $filter) {
+                call_user_func_array(function ($qb, $canViewDeletedTopics, $filter) {
                     if ($canViewDeletedTopics) {
                         $expr = $qb->expr()->eq('f.id', ':forumId');
                     } else {

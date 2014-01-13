@@ -129,7 +129,7 @@ class CategoryManager extends BaseManager implements ManagerInterface
             $sorted[$categoryIndex] = $category;
         }
 
-        $incrementKeysAfterIndex = function($index, $arr) {
+        $incrementKeysAfterIndex = function ($index, $arr) {
             $hydrated = array();
 
             foreach ($arr as $key => $el) {
@@ -143,7 +143,7 @@ class CategoryManager extends BaseManager implements ManagerInterface
             return $hydrated;
         };
 
-        $decrementKeysBeforeIndex = function($index, $arr) {
+        $decrementKeysBeforeIndex = function ($index, $arr) {
             $hydrated = array();
 
             foreach ($arr as $key => $el) {

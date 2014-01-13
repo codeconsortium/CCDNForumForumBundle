@@ -60,7 +60,7 @@ class PostDeleteFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $trueValidator = function(FormEvent $event) {
+        $trueValidator = function (FormEvent $event) {
             $form = $event->getForm();
 
             $confirm = $form->get('confirm_delete')->getData();
@@ -87,14 +87,14 @@ class PostDeleteFormType extends AbstractType
         ;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-	 */
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-	    $resolver->setDefaults(array(
+        $resolver->setDefaults(array(
             'data_class'          => $this->postClass,
             'csrf_protection'     => true,
             'csrf_field_name'     => '_token',

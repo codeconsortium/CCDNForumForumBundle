@@ -81,7 +81,7 @@ class BoardUpdateFormType extends AbstractType
                     'class'              => $this->categoryClass,
                     'group_by'           => 'category.forum.name',
                     'query_builder'      =>
-                        function(EntityRepository $er) {
+                        function (EntityRepository $er) {
                             return $er
                                 ->createQueryBuilder('c')
                                 ->leftJoin('c.forum', 'f')
@@ -137,14 +137,14 @@ class BoardUpdateFormType extends AbstractType
         ;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-	 */
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-	    $resolver->setDefaults(array(
+        $resolver->setDefaults(array(
             'data_class'          => $this->boardClass,
             'csrf_protection'     => true,
             'csrf_field_name'     => '_token',

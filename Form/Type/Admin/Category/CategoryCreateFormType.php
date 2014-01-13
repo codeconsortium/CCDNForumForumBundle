@@ -80,7 +80,7 @@ class CategoryCreateFormType extends AbstractType
                     'property'           => 'name',
                     'class'              => $this->forumClass,
                     'query_builder'      =>
-                        function(EntityRepository $er) {
+                        function (EntityRepository $er) {
                             return $er
                                 ->createQueryBuilder('f')
                             ;
@@ -110,14 +110,14 @@ class CategoryCreateFormType extends AbstractType
         ;
     }
 
-	/**
-	 * 
-	 * @access public
-	 * @param  \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-	 */
+    /**
+     *
+     * @access public
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-	    $resolver->setDefaults(array(
+        $resolver->setDefaults(array(
             'data_class'          => $this->categoryClass,
             'csrf_protection'     => true,
             'csrf_field_name'     => '_token',

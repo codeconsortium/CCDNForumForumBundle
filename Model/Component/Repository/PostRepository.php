@@ -59,7 +59,7 @@ class PostRepository extends BaseRepository implements RepositoryInterface
             ->leftJoin('p.deletedBy', 'p_deletedBy')
             ->leftJoin('t.board', 'b')
             ->where(
-                call_user_func_array(function($canViewDeletedTopics, $qb) {
+                call_user_func_array(function ($canViewDeletedTopics, $qb) {
                     if ($canViewDeletedTopics) {
                         $expr = $qb->expr()->eq('p.topic', ':topicId');
                     } else {
@@ -108,7 +108,7 @@ class PostRepository extends BaseRepository implements RepositoryInterface
             ->leftJoin('t.board', 'b')
             ->leftJoin('b.category', 'c')
             ->where(
-                call_user_func_array(function($canViewDeletedTopics, $qb) {
+                call_user_func_array(function ($canViewDeletedTopics, $qb) {
                     if ($canViewDeletedTopics) {
                         $expr = $qb->expr()->eq('p.id', ':postId');
                     } else {

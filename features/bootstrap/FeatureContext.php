@@ -238,7 +238,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     {
         // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
         $items = array_map(
-            function($element) { return strtolower($element->getText()); },
+            function ($element) { return strtolower($element->getText()); },
             $this->getPage()->findAll('css', '[id^=' . $postId . '] > header ul li a')
         );
 
@@ -330,7 +330,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
     {
         // http://neverstopbuilding.net/simple-method-for-checking-for-order-with-behat/
         $items = array_map(
-            function($element) { return strtolower($element->getText()); },
+            function ($element) { return strtolower($element->getText()); },
             $this->getPage()->findAll('css', $cssQuery)
         );
 
@@ -405,7 +405,7 @@ class FeatureContext extends RawMinkContext implements KernelAwareInterface
 
         $date = new \Datetime($diff);
 
-        $filterFunc = function($options, $has) {
+        $filterFunc = function ($options, $has) {
             foreach ($options as $option) {
                 if ($option->getText() == $has) {
                     return true;
