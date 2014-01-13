@@ -15,13 +15,13 @@ before_script:
     - mysql -e 'CREATE DATABASE ccdn_test'
     - > 
         echo 'parameters:
-            database_driver: pdo_mysql
-            database_host: 127.0.0.1
-            database_port: null
-            database_name: ccdn_test
-            database_user: root
+            database_driver:   pdo_mysql
+            database_host:     127.0.0.1
+            database_port:     null
+            database_name:     ccdn_test
+            database_user:     root
             database_password: ~
-            locale: en
+            locale:            en
        
         ' > ./Tests/Functional/app/config/parameters.yml
     - curl -s http://getcomposer.org/installer | php
