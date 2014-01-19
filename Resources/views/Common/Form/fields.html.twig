@@ -41,7 +41,8 @@
 
 {%- block textarea_widget -%}
 	{%- spaceless -%}
-	    <textarea {{ block('widget_attributes') -}}>{{- value -}}</textarea>
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' form-control'}) -%}
+	    <textarea rows="5" {{ block('widget_attributes') -}}>{{- value -}}</textarea>
 	{%- endspaceless -%}
 {%- endblock textarea_widget -%}
 
