@@ -197,7 +197,7 @@ class TopicCreateFormHandler extends BaseFormHandler
             $filteredBoards = $this->boardModel->findAllBoardsForForumById($this->forum->getId());
             $topicOptions = array(
                 'boards' => $filteredBoards,
-				'auto_initialize' => false,
+                'auto_initialize' => false,
             );
 
             $topic = $this->topicModel->createTopic();

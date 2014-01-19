@@ -125,7 +125,7 @@ class TopicUpdateFormHandler extends BaseFormHandler
             }
 
             $topicOptions = array(
-				'auto_initialize' => false,
+                'auto_initialize' => false,
             );
 
             $this->dispatcher->dispatch(ForumEvents::USER_POST_EDIT_INITIALISE, new UserPostEvent($this->request, $this->post));
