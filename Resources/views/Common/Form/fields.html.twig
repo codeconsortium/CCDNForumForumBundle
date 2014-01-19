@@ -76,10 +76,30 @@
 
 {%- block choice_widget_collapsed -%}
 	{%- spaceless -%}
+		{%- if form.parent.vars.block_prefixes[1] == 'date' -%}
+			<div class="col-lg-4">
+	            {{- block('choice_widget_collapsed_inner') -}}
+			</div>
+		{%- else -%}
+			{%- if form.parent.vars.block_prefixes[1] == 'time' -%}
+				<div class="col-lg-6">
+		            {{- block('choice_widget_collapsed_inner') -}}
+				</div>
+			{%- else -%}
+	            {{- block('choice_widget_collapsed_inner') -}}
+			{%- endif -%}
+		{%- endif -%}
+	{%- endspaceless -%}
+{%- endblock choice_widget_collapsed -%}
+
+{%- block choice_widget_collapsed_inner -%}
+	{%- spaceless -%}
+		{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' form-control'}) -%}
+
 	    {%- if required and empty_value is none and not empty_value_in_choices -%}
 	        {%- set required = false -%}
 	    {%- endif -%}
-	    <select {{ block('widget_attributes') }} class="form-control"{%- if multiple %} multiple="multiple"{%- endif -%}>
+	    <select {{ block('widget_attributes') }} class="{{- attr.class -}}"{%- if multiple %} multiple="multiple"{%- endif -%}>
 	        {%- if empty_value is not none -%}
 	            <option value=""{%- if required and value is empty %} selected="selected"{%- endif -%}>{{- empty_value|trans({}, translation_domain) -}}</option>
 	        {%- endif -%}
@@ -94,7 +114,7 @@
 	        {{- block('choice_widget_options') -}}
 	    </select>
 	{%- endspaceless -%}
-{%- endblock choice_widget_collapsed -%}
+{%- endblock choice_widget_collapsed_inner -%}
 
 {%- block choice_widget_options -%}
 	{%- spaceless -%}
@@ -128,6 +148,7 @@
 	    {%- if widget == 'single_text' -%}
 	        {{- block('form_widget_simple') -}}
 	    {%- else -%}
+			{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' row'}) -%}
 	        <div {{ block('widget_container_attributes') -}}>
 	            {{- form_errors(form.date) -}}
 	            {{- form_errors(form.time) -}}
@@ -143,6 +164,7 @@
 	    {%- if widget == 'single_text' -%}
 	        {{- block('form_widget_simple') -}}
 	    {%- else -%}
+			{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' row'}) -%}
 	        <div {{ block('widget_container_attributes') -}}>
 	            {{- date_pattern|replace({
 	                '{{ year }}':  form_widget(form.year),
@@ -160,6 +182,7 @@
 	        {{- block('form_widget_simple') -}}
 	    {%- else -%}
 	        {%- set vars = widget == 'text' ? { 'attr': { 'size': 1 }} : {} -%}
+			{%- set attr = attr|merge({ 'class': attr.class|default('') ~ ' row'}) -%}
 	        <div {{ block('widget_container_attributes') -}}>
 	            {{- form_widget(form.hour, vars) -}}
 				{%- if with_minutes -%}
@@ -235,9 +258,6 @@
 	{%- spaceless -%}
 	    {%- set type = type|default('email') -%}
 	    {{- block('form_widget_simple') -}}
-
-	    {%- set type = type|default('text') -%}
-	    <input type="{{- type -}}" value="{{- value -}}" {{ block('widget_attributes') -}} />
 	{%- endspaceless -%}
 {%- endblock email_widget -%}
 
@@ -312,7 +332,7 @@
 				<div class="col-lg-offset-2 col-lg-10">
 					<div class="checkbox">
 						{{- form_errors(form) -}}
-						<label for="label[{{- id -}}]" class="form-label">
+						<label id="label[{{- id -}}]" for="{{- id -}}" class="form-label">
 							{{- form_widget(form) -}}
 							{{- label |trans({}, translation_domain) | raw -}}
 						</label>
