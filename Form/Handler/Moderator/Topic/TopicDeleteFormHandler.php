@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Form\Handler\Moderator\Topic;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface ;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent;
@@ -60,12 +60,12 @@ class TopicDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher     $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface     $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                  $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicDeleteFormType $formTopicType
      * @param \CCDNForum\ForumBundle\Model\FrontModel\TopicModel                   $topicModel
      */
-    public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory, $formTopicType, ModelInterface $topicModel)
+    public function __construct(EventDispatcherInterface $dispatcher, FormFactory $factory, $formTopicType, ModelInterface $topicModel)
     {
         $this->dispatcher = $dispatcher;
         $this->factory = $factory;

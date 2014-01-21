@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Form\Handler\Admin\Forum;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface ;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -62,12 +62,12 @@ class ForumDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
      * @param \Symfony\Component\Form\FormFactory                              $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumDeleteFormType $forumDeleteFormType
      * @param \CCDNForum\ForumBundle\Model\FrontModel\ForumModel               $forumModel
      */
-    public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory, $forumDeleteFormType, ModelInterface $forumModel)
+    public function __construct(EventDispatcherInterface $dispatcher, FormFactory $factory, $forumDeleteFormType, ModelInterface $forumModel)
     {
         $this->dispatcher = $dispatcher;
         $this->factory = $factory;

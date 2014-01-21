@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Form\Handler\User\Topic;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface ;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent;
@@ -99,7 +99,7 @@ class TopicCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
      * @param \Symfony\Component\Form\FormFactory                              $factory
      * @param \CCDNForum\ForumBundle\Form\Type\User\Topic\TopicCreateFormType  $formTopicType
      * @param \CCDNForum\ForumBundle\Form\Type\User\Post\PostCreateFormType    $formPostType
@@ -108,7 +108,7 @@ class TopicCreateFormHandler extends BaseFormHandler
      * @param \CCDNForum\ForumBundle\Model\FrontModel\BoardModel               $boardModel
      * @param \CCDNForum\ForumBundle\Component\FloodControl                    $floodControl
      */
-    public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory, $formTopicType,
+    public function __construct(EventDispatcherInterface $dispatcher, FormFactory $factory, $formTopicType,
      $formPostType, ModelInterface $topicModel, ModelInterface $postModel, ModelInterface $boardModel, FloodControl $floodControl)
     {
         $this->dispatcher = $dispatcher;

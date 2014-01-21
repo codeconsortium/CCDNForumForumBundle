@@ -46,7 +46,7 @@ class BaseFormHandler
     /**
      *
      * @access protected
-     * @var \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher  $dispatcher
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface  $dispatcher
      */
     protected $dispatcher;
 

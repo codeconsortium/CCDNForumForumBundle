@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Form\Handler\Moderator\Topic;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface ;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\ModeratorTopicEvent;
@@ -76,13 +76,13 @@ class TopicChangeBoardFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher          $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface          $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                       $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicChangeBoardFormType $formTopicChangeBoardType
      * @param \CCDNForum\ForumBundle\Model\FrontModel\TopicModel                        $topicModel
      * @param \CCDNForum\ForumBundle\Model\FrontModel\BoardModel                        $boardModel
      */
-    public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory,
+    public function __construct(EventDispatcherInterface $dispatcher, FormFactory $factory,
      $formTopicChangeBoardType, ModelInterface $topicModel, ModelInterface $boardModel)
     {
         $this->dispatcher = $dispatcher;

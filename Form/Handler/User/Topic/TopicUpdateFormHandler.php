@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Form\Handler\User\Topic;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface ;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent;
@@ -75,14 +75,14 @@ class TopicUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
      * @param \Symfony\Component\Form\FormFactory                              $factory
      * @param \CCDNForum\ForumBundle\Form\Type\User\Topic\TopicUpdateFormType  $formTopicType
      * @param \CCDNForum\ForumBundle\Form\Type\User\Post\PostUpdateFormType    $formPostType
      * @param \CCDNForum\ForumBundle\Model\FrontModel\TopicModel               $topicModel
      * @param \CCDNForum\ForumBundle\Model\FrontModel\PostModel                $postModel
      */
-    public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory,
+    public function __construct(EventDispatcherInterface $dispatcher, FormFactory $factory,
      $formTopicType, $formPostType, ModelInterface $topicModel, ModelInterface $postModel)
     {
         $this->dispatcher = $dispatcher;

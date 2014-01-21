@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Form\Handler\Admin\Board;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface ;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminBoardEvent;
@@ -60,12 +60,12 @@ class BoardUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
      * @param \Symfony\Component\Form\FormFactory                              $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardUpdateFormType $boardUpdateFormType
      * @param \CCDNForum\ForumBundle\Model\FrontModel\BoardModel               $boardModel
      */
-    public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory, $boardUpdateFormType, ModelInterface $boardModel)
+    public function __construct(EventDispatcherInterface $dispatcher, FormFactory $factory, $boardUpdateFormType, ModelInterface $boardModel)
     {
         $this->dispatcher = $dispatcher;
         $this->factory = $factory;

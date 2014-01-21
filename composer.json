@@ -21,10 +21,10 @@
         "knplabs/knp-paginator-bundle": "2.3.*"
     },
     "require-dev": {
-        "symfony/swiftmailer-bundle": "2.3.*",
-        "symfony/monolog-bundle": "2.3.*",
+        "symfony/swiftmailer-bundle": "~2.3",
+        "symfony/monolog-bundle": "~2.4",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
-        "behat/behat": "2.4.*@stable",
+        "behat/behat": "2.5.*@stable",
         "behat/mink": "v1.5.0",
         "behat/mink-goutte-driver": "*",
         "behat/mink-browserkit-driver": "*",

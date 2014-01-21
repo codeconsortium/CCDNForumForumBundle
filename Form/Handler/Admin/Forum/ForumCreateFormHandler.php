@@ -15,7 +15,7 @@ namespace CCDNForum\ForumBundle\Form\Handler\Admin\Forum;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher ;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface ;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\AdminForumEvent;
@@ -53,12 +53,12 @@ class ForumCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
      * @param \Symfony\Component\Form\FormFactory                              $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumCreateFormType $forumCreateFormType
      * @param \CCDNForum\ForumBundle\Model\FrontModel\ForumModel               $forumModel
      */
-    public function __construct(ContainerAwareEventDispatcher $dispatcher, FormFactory $factory, $forumCreateFormType, ModelInterface $forumModel)
+    public function __construct(EventDispatcherInterface $dispatcher, FormFactory $factory, $forumCreateFormType, ModelInterface $forumModel)
     {
         $this->dispatcher = $dispatcher;
         $this->factory = $factory;
