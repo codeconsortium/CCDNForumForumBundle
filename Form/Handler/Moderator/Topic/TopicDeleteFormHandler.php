@@ -60,7 +60,7 @@ class TopicDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface     $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface          $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                  $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicDeleteFormType $formTopicType
      * @param \CCDNForum\ForumBundle\Model\FrontModel\TopicModel                   $topicModel

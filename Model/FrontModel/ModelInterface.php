@@ -33,7 +33,7 @@ interface ModelInterface
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface      $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface           $dispatcher
      * @param \CCDNForum\ForumBundle\Model\Component\Repository\RepositoryInterface $repository
      * @param \CCDNForum\ForumBundle\Model\Component\Manager\ManagerInterface       $manager
      */

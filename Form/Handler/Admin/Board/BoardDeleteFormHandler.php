@@ -62,7 +62,7 @@ class BoardDeleteFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface      $dispatcher
      * @param \Symfony\Component\Form\FormFactory                              $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Admin\Board\BoardDeleteFormType $boardDeleteFormType
      * @param \CCDNForum\ForumBundle\Model\FrontModel\BoardModel               $boardModel

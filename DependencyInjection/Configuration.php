@@ -46,14 +46,14 @@ class Configuration implements ConfigurationInterface
      * @access protected
      * @var string $defaultValueFormTheme
      */
-    protected $defaultValueFormTheme = 'CCDNForumForumBundle:Common:Form/fields.html.twig';
+    protected $defaultValueFormTheme = 'form_div_layout.html.twig';
 
     /**
      *
      * @access protected
      * @var string $defaultValuePaginatorTheme
      */
-    protected $defaultValuePaginatorTheme = 'CCDNForumForumBundle:Common:Paginator/twitter_bootstrap.html.twig';
+    protected $defaultValuePaginatorTheme = null;
 
     /**
      *
@@ -787,15 +787,15 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->canBeUnset()
                     ->children()
-                        ->arrayNode('dashboard')
+                        ->arrayNode('integrator')
                             ->addDefaultsIfNotSet()
                             ->canBeUnset()
                             ->children()
-                                ->arrayNode('integrator')
+                                ->arrayNode('dashboard')
                                     ->addDefaultsIfNotSet()
                                     ->canBeUnset()
                                     ->children()
-                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Component\Dashboard\DashboardIntegrator')->end()
+                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Component\Integrator\DashboardIntegrator')->end()
                                     ->end()
                                 ->end()
                             ->end()

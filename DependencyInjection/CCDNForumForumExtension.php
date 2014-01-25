@@ -65,7 +65,7 @@ class CCDNForumForumExtension extends Extension
 
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $this->env = $container->getParameter("kernel.environment");
+        $this->env = $container->getParameter('kernel.environment');
 
         // Class file namespaces.
         $this->getEntitySection($config, $container);
@@ -275,7 +275,7 @@ class CCDNForumForumExtension extends Extension
      */
     private function getComponentSection(array $config, ContainerBuilder $container)
     {
-        $container->setParameter('ccdn_forum_forum.component.dashboard.integrator.class', $config['component']['dashboard']['integrator']['class']);
+        $container->setParameter('ccdn_forum_forum.component.integrator.dashboard.class', $config['component']['integrator']['dashboard']['class']);
         $container->setParameter('ccdn_forum_forum.component.crumb_factory.class', $config['component']['crumb_factory']['class']);
         $container->setParameter('ccdn_forum_forum.component.crumb_builder.class', $config['component']['crumb_builder']['class']);
         $container->setParameter('ccdn_forum_forum.component.security.authorizer.class', $config['component']['security']['authorizer']['class']);

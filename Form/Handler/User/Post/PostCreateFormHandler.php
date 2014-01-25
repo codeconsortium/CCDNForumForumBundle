@@ -77,11 +77,11 @@ class PostCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                              $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\User\Post\PostCreateFormType    $formPostType
-     * @param \CCDNForum\ForumBundle\Model\FrontModel\PostModel                $postModel
-     * @param \CCDNForum\ForumBundle\Component\FloodControl                    $floodControl
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface   $dispatcher
+     * @param \Symfony\Component\Form\FormFactory                           $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\User\Post\PostCreateFormType $formPostType
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\PostModel             $postModel
+     * @param \CCDNForum\ForumBundle\Component\FloodControl                 $floodControl
      */
     public function __construct(EventDispatcherInterface $dispatcher, FormFactory $factory, $formPostType, ModelInterface $postModel, FloodControl $floodControl)
     {

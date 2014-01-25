@@ -75,12 +75,12 @@ class TopicUpdateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
-     * @param \Symfony\Component\Form\FormFactory                              $factory
-     * @param \CCDNForum\ForumBundle\Form\Type\User\Topic\TopicUpdateFormType  $formTopicType
-     * @param \CCDNForum\ForumBundle\Form\Type\User\Post\PostUpdateFormType    $formPostType
-     * @param \CCDNForum\ForumBundle\Model\FrontModel\TopicModel               $topicModel
-     * @param \CCDNForum\ForumBundle\Model\FrontModel\PostModel                $postModel
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface     $dispatcher
+     * @param \Symfony\Component\Form\FormFactory                             $factory
+     * @param \CCDNForum\ForumBundle\Form\Type\User\Topic\TopicUpdateFormType $formTopicType
+     * @param \CCDNForum\ForumBundle\Form\Type\User\Post\PostUpdateFormType   $formPostType
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\TopicModel              $topicModel
+     * @param \CCDNForum\ForumBundle\Model\FrontModel\PostModel               $postModel
      */
     public function __construct(EventDispatcherInterface $dispatcher, FormFactory $factory,
      $formTopicType, $formPostType, ModelInterface $topicModel, ModelInterface $postModel)

@@ -11,9 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace CCDNForum\ForumBundle\Component\Dashboard;
-
-use CCDNComponent\DashboardBundle\Component\Integrator\Model\BuilderInterface;
+namespace CCDNForum\ForumBundle\Component\Integrator;
 
 /**
  *

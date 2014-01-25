@@ -13,9 +13,9 @@ services:
     ccdn_forum_forum.component.helper.pagination_config:
         class: %ccdn_forum_forum.component.helper.pagination_config.class%
         arguments:
+            - %ccdn_forum_forum.subscription.list.topics_per_page%
             - %ccdn_forum_forum.board.user.show.topics_per_page%
             - %ccdn_forum_forum.topic.user.show.posts_per_page%
-            - %ccdn_forum_forum.subscription.list.topics_per_page%
 
     ccdn_forum_forum.component.helper.role:
         class: %ccdn_forum_forum.component.helper.role.class%
@@ -29,15 +29,17 @@ services:
     ccdn_forum_forum.component.flood_control:
        class: %ccdn_forum_forum.component.flood_control.class%
        arguments:
+           - @security.context
            - @session
+           - %kernel.environment%
            - %ccdn_forum_forum.topic.user.flood_control.post_limit%
            - %ccdn_forum_forum.topic.user.flood_control.block_for_minutes%
 
     #
     # Dashboard Integrator.
     #
-    ccdn_forum_forum.component.dashboard.integrator:
-        class: %ccdn_forum_forum.component.dashboard.integrator.class%
+    ccdn_forum_forum.component.integrator.dashboard:
+        class: %ccdn_forum_forum.component.integrator.dashboard.class%
         tags:
             - { name: ccdn_component_dashboard.integrator }
 

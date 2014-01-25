@@ -76,7 +76,7 @@ class TopicChangeBoardFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface          $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface               $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                       $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Moderator\Topic\TopicChangeBoardFormType $formTopicChangeBoardType
      * @param \CCDNForum\ForumBundle\Model\FrontModel\TopicModel                        $topicModel

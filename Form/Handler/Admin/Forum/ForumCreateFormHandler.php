@@ -53,7 +53,7 @@ class ForumCreateFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface      $dispatcher
      * @param \Symfony\Component\Form\FormFactory                              $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Admin\Forum\ForumCreateFormType $forumCreateFormType
      * @param \CCDNForum\ForumBundle\Model\FrontModel\ForumModel               $forumModel

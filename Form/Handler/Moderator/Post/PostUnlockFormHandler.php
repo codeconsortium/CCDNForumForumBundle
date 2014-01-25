@@ -60,7 +60,7 @@ class PostUnlockFormHandler extends BaseFormHandler
     /**
      *
      * @access public
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface   $dispatcher
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface        $dispatcher
      * @param \Symfony\Component\Form\FormFactory                                $factory
      * @param \CCDNForum\ForumBundle\Form\Type\Moderator\Post\PostUnlockFormType $formPostType
      * @param \CCDNForum\ForumBundle\Model\FrontModel\PostModel                  $postModel

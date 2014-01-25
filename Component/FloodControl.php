@@ -13,6 +13,7 @@
 
 namespace CCDNForum\ForumBundle\Component;
 
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
@@ -31,9 +32,23 @@ class FloodControl
     /**
      *
      * @access protected
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
+     */
+    protected $securityContext;
+
+    /**
+     *
+     * @access protected
      * @var \Symfony\Component\HttpFoundation\Session\Session $session
      */
     protected $session;
+
+    /**
+     *
+     * @access protected
+     * @var string $kernelEnv
+     */
+    protected $kernelEnv;
 
     /**
      *
@@ -52,13 +67,16 @@ class FloodControl
     /**
      *
      * @access public
-     * @param \Symfony\Component\HttpFoundation\Session\Session $session
-     * @param int                                               $postLimit
-     * @param int                                               $blockTimeInMinutes
+     * @param \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
+     * @param \Symfony\Component\HttpFoundation\Session\Session         $session
+     * @param int                                                       $postLimit
+     * @param int                                                       $blockTimeInMinutes
      */
-    public function __construct(Session $session, $postLimit, $blockTimeInMinutes)
+    public function __construct(SecurityContextInterface $securityContext, Session $session, $kernelEnv, $postLimit, $blockTimeInMinutes)
     {
+        $this->securityContext = $securityContext;
         $this->session = $session;
+        $this->kernelEnv = $kernelEnv;
 
         if (! $this->session->has('flood_control_forum_post_count')) {
             $this->session->set('flood_control_forum_post_count', array());
@@ -74,11 +92,13 @@ class FloodControl
      */
     public function incrementCounter()
     {
-        $postCount = $this->session->get('flood_control_forum_post_count');
+        if (! $this->securityContext->getToken()->getUser()->hasRole('ROLE_MODERATOR') || $this->kernelEnv != 'prod') {
+            $postCount = $this->session->get('flood_control_forum_post_count');
 
-        $postCount[] = new \DateTime('now');
+            $postCount[] = new \DateTime('now');
 
-        $this->session->set('flood_control_forum_post_count', $postCount);
+            $this->session->set('flood_control_forum_post_count', $postCount);
+        }
     }
 
     /**
@@ -88,9 +108,7 @@ class FloodControl
      */
     public function isFlooded()
     {
-        $timeLimit = new \DateTime('-' . $this->blockTimeInMinutes . ' minutes');
-
-        if ($this->postLimit < 1) {
+        if ($this->postLimit < 1 || ! $this->securityContext->getToken()->getUser()->hasRole('ROLE_MODERATOR') || $this->kernelEnv != 'prod') {
             return false;
         }
 
@@ -100,6 +118,7 @@ class FloodControl
             // Iterate over attempts and only reveal attempts that fall within the $timeLimit.
             $freshenedAttempts = array();
 
+            $timeLimit = new \DateTime('-' . $this->blockTimeInMinutes . ' minutes');
             $limit = $timeLimit->getTimestamp();
 
             foreach ($attempts as $attempt) {
