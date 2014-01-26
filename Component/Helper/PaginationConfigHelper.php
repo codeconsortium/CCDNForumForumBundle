@@ -47,9 +47,9 @@ class PaginationConfigHelper
     /**
      *
      * @access public
-     * @param  int $topicsPerPageOnSubscriptions
-     * @param  int $topicsPerPageOnBoards
-     * @param  int $postsPerPageOnTopics
+     * @param int $topicsPerPageOnSubscriptions
+     * @param int $topicsPerPageOnBoards
+     * @param int $postsPerPageOnTopics
      */
     public function __construct($topicsPerPageOnSubscriptions, $topicsPerPageOnBoards, $postsPerPageOnTopics)
     {
