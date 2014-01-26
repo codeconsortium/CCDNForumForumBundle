@@ -67,10 +67,11 @@ class FloodControl
     /**
      *
      * @access public
-     * @param \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
-     * @param \Symfony\Component\HttpFoundation\Session\Session         $session
-     * @param int                                                       $postLimit
-     * @param int                                                       $blockTimeInMinutes
+     * @param  \Symfony\Component\Security\Core\SecurityContextInterface $securityContext
+     * @param  \Symfony\Component\HttpFoundation\Session\Session         $session
+     * @param  string                                                    $kernelEnv
+     * @param  int                                                       $postLimit
+     * @param  int                                                       $blockTimeInMinutes
      */
     public function __construct(SecurityContextInterface $securityContext, Session $session, $kernelEnv, $postLimit, $blockTimeInMinutes)
     {

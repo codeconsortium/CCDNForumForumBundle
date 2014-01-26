@@ -27,15 +27,15 @@ framework:
 
 monolog:
     handlers:
-#       main:
-#           type: test
-        main:
-            type:  stream
-            path:  "%kernel.logs_dir%/%kernel.environment%.log"
-            level: debug
-        firephp:
-            type:  firephp
-            level: info
+       main:
+           type: test
+#        main:
+#            type:  stream
+#            path:  "%kernel.logs_dir%/%kernel.environment%.log"
+#            level: debug
+#        firephp:
+#            type:  firephp
+#            level: info
 
 # Twig Configuration
 twig:
