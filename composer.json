@@ -18,7 +18,7 @@
         "symfony/symfony": "2.4.*",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
-        "knplabs/knp-paginator-bundle": "2.3.*"
+        "knplabs/knp-paginator-bundle": "2.4.*"
     },
     "require-dev": {
         "symfony/swiftmailer-bundle": "~2.3",

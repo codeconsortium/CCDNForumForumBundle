@@ -92,7 +92,7 @@ class FloodControl
      */
     public function incrementCounter()
     {
-        if (! $this->securityContext->getToken()->getUser()->hasRole('ROLE_MODERATOR') || $this->kernelEnv != 'prod') {
+        if (! $this->securityContext->isGranted('ROLE_MODERATOR') || $this->kernelEnv != 'prod') {
             $postCount = $this->session->get('flood_control_forum_post_count');
 
             $postCount[] = new \DateTime('now');
@@ -108,7 +108,7 @@ class FloodControl
      */
     public function isFlooded()
     {
-        if ($this->postLimit < 1 || ! $this->securityContext->getToken()->getUser()->hasRole('ROLE_MODERATOR') || $this->kernelEnv != 'prod') {
+        if ($this->postLimit < 1 || ! $this->securityContext->isGranted('ROLE_MODERATOR') || $this->kernelEnv != 'prod') {
             return false;
         }
 
