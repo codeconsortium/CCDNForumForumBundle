@@ -16,8 +16,6 @@ namespace CCDNForum\ForumBundle\Model\Component\Repository;
 use CCDNForum\ForumBundle\Model\Component\Repository\Repository;
 use CCDNForum\ForumBundle\Model\Component\Repository\RepositoryInterface;
 
-use CCDNForum\ForumBundle\Entity\Category;
-
 /**
  * CategoryRepository
  *

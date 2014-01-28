@@ -29,9 +29,9 @@ class DashboardIntegrator
     /**
      *
      * @access public
-     * @param CCDNComponent\DashboardBundle\Component\Integrator\Model\BuilderInterface $builder
+     * @param  $builder
      */
-    public function build(BuilderInterface $builder)
+    public function build($builder)
     {
         $builder
             ->addCategory('forum')
