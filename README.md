@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/codeconsortium/ccdnforumforumbundle.png?label=ready)](https://waffle.io/codeconsortium/ccdnforumforumbundle)
 CCDNForum ForumBundle README.
 =============================
 
