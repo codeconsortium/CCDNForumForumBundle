@@ -5,10 +5,9 @@ CCDNForum ForumBundle README.
 
 ## Notes: 
 
-This bundle is for the symfony framework and requires Symfony >= 2.1.x and PHP >= 5.3.2
+This bundle is for the symfony framework and requires Symfony ~2.4 and PHP >= 5.3.2
   
 This project uses Doctrine >= 2.1.x and so does not require any specific database.
-  
 
 &copy; CCDN &copy; [CodeConsortium](http://www.codeconsortium.com/)
 
@@ -28,7 +27,7 @@ For the full copyright and license information, please view the [LICENSE](http:/
 
 ## Description:
 
-This is a ForumBundle for Symfony (>= 2.1.x) for building a bulletin board forum community where users can create and reply to discussions.
+This is a ForumBundle for Symfony for building a bulletin board forum community where users can create and reply to discussions.
 
 ## Features.
 
@@ -69,8 +68,6 @@ All the installation instructions are located in [documentation](http://github.c
 
 > Do NOT use the CLI doctrine/symfony console utility to force an update, data will be lost if you do!
 > Manually run the sql update in the upgrading docs. Always backup your database before updating.
-
-To upgrade to version 2.0 please read the [upgrading to version 1.1.2 guide](http://github.com/codeconsortium/CCDNForumForumBundle/blob/2.0.x/Resources/doc/upgrading_to_2_0.md).
 
 ## License.
 
