@@ -44,9 +44,9 @@ class TopicRepository extends BaseRepository implements RepositoryInterface
             throw new \Exception('Board id "' . $boardId . '" is invalid!');
         }
 
-        $params = array(':boardId' => $boardId, ':isSticky' => false);
-
         $qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
+
+        $params = array(':boardId' => $boardId, ':isSticky' => $qb->expr()->literal(false));
 
         $qb
             ->innerJoin('t.firstPost', 'fp')
@@ -97,9 +97,9 @@ class TopicRepository extends BaseRepository implements RepositoryInterface
             throw new \Exception('Board id "' . $boardId . '" is invalid!');
         }
 
-        $params = array(':boardId' => $boardId, ':isSticky' => true);
-
         $qb = $this->createSelectQuery(array('t', 'b', 'c', 'fp', 'fp_author', 'lp', 'lp_author', 't_closedBy', 't_deletedBy', 't_stickiedBy'));
+
+        $params = array(':boardId' => $boardId, ':isSticky' => $qb->expr()->literal(true));
 
         $qb
             ->innerJoin('t.firstPost', 'fp')
