@@ -3,7 +3,7 @@ Installing CCDNForum ForumBundle
 
 ## Dependencies:
 
-> Note you will need a User Bundle so that you can map the UserInterface to your own User entity. You can use whatecer User Bundle you prefer. FOSUserBundle is highly rated.
+> Note you will need a User Bundle so that you can map the UserInterface to your own User entity. You can use whatever User Bundle you prefer. FOSUserBundle is highly rated.
 
 ## Installation:
 
