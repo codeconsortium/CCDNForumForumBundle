@@ -24,7 +24,7 @@ title:
         manage-categories:
             index:                     "Manage Categories"
             create:                    "Create New Category"
-            edit:                      "Edit Forum %category_name%"
+            edit:                      "Edit Category %category_name%"
             delete:                    "Delete Category %category_name%"
         manage-boards:
             index:                     "Manage Boards"
@@ -61,7 +61,7 @@ crumbs:
         manage-categories:
             index:                     "Manage Categories"
             create:                    "Create New Category"
-            edit:                      "Edit Forum %category_name%"
+            edit:                      "Edit Category %category_name%"
             delete:                    "Delete Category %category_name%"
         manage-boards:
             index:                     "Manage Boards"
