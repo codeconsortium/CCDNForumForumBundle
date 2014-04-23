@@ -221,6 +221,9 @@ post:
     hide:                              "Hide"
 subscription:
     no-topics:                         "You are not subscribed to any topics."
+    all:                               "all"
+    unread:                            "unread"
+    read:                              "read"
 
 next:                                  "Next"
 previous:                              "Previous"
