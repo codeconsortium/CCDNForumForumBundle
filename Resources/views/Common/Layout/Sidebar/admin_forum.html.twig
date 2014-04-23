@@ -18,7 +18,7 @@
 					<a href="{{- path('ccdn_forum_admin_forum_list') -}}">
 						<i class="glyphicon glyphicon-list"></i>
 			{%- endif -%}
-						Manage Forums
+						{{'crumbs.admin.manage-forums.index' |trans({}, 'CCDNForumForumBundle')}}
 					</a>
 				</li>
 		{%- endif -%}
@@ -36,7 +36,7 @@
 				<a href="{{- path('ccdn_forum_admin_category_list') -}}">
 					<i class="glyphicon glyphicon-list"></i>
 		{%- endif -%}
-					Manage Categories
+					{{'crumbs.admin.manage-categories.index' |trans({}, 'CCDNForumForumBundle')}}
 				</a>
 			</li>
 
@@ -53,7 +53,7 @@
 				<a href="{{- path('ccdn_forum_admin_board_list') -}}">
 					<i class="glyphicon glyphicon-list"></i>
 		{%- endif -%}
-					Manage Boards
+					{{'crumbs.admin.manage-boards.index' |trans({}, 'CCDNForumForumBundle')}}
 				</a>
 			</li>
 
