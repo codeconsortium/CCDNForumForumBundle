@@ -40,7 +40,7 @@ title:
         show:                          "Topic : %topic_title%"
         create:                        "Créer le Topic"
         reply:                         "Répondre au Topic"
-        edit:                          "Édite le Topic"
+        edit:                          "Éditer le Topic"
         delete:                        "Supprimer le Topic"
         change_board:                  "Changer la Board pour le Topic"
     post:
