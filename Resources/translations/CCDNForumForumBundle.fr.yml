@@ -45,8 +45,8 @@ title:
         change_board:                  "Changer la Board pour le Topic"
     post:
         show:                          "Post #%post_id%"
-        edit:                          "Éditer Post #%post_id%"
-        delete:                        "Supprimer Post #%post_id%"
+        edit:                          "Éditer le Post #%post_id%"
+        delete:                        "Supprimer le Post #%post_id%"
     subscription:
         index:                         "Abonnements"
 
@@ -71,7 +71,7 @@ crumbs:
     moderator:
         topic:
             move:                      "Déplacer le Topic"
-            delete:                    "Supprimer Topic"
+            delete:                    "Supprimer le Topic"
     user:
         category:
             index:                     "Index du Forum"
@@ -146,7 +146,7 @@ forum:
     category-count-th:                 "Nombre de catégorie"
     name-label:                        "Nom : "
     roles:
-        board-view-label:              "Board View Roles:"
+        board-view-label:              "Rôles autorisés à voir la Board :"
     confirm-delete-label:              "Je confirme que je veux supprimer ce Forum."
     confirm-delete-subordinates-label: "Supprimer aussi les boards et les topics."
 category:
@@ -194,7 +194,7 @@ topic:
     subscription-count-label:          "Abonnés : "
     view-count-label:                  "Vues : "
     reply-count-label:                 "Réponses : "
-    transcript:                        "Transcript."
+    transcript:                        "Historique."
     closed-by:                         "Topic fermé par %name%"
     deleted-by:                        "Topic supprimé par %name%"
     stickied-by:                       "Épinglé par %name%"
@@ -220,7 +220,7 @@ post:
     show:                              "Montrer"
     hide:                              "Cacher"
 subscription:
-    no-topics:                         "Vous êtes abonné à aucun topic."
+    no-topics:                         "Vous n'êtes abonné à aucun topic."
 
 next:                                  "Suivant"
 previous:                              "Précédent"
