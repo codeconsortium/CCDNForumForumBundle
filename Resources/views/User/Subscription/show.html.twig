@@ -52,13 +52,13 @@
 			<ul class="nav nav-tabs">
 				{%- import _self as tabs -%}
 				{%- if forum is not null -%}
-					{{- tabs.subscription_tab('all', forumName, 'all', filter, total_subscribed_forums['count_read'], total_subscribed_forums['count_unread'], total_subscribed_forums['count_total']) -}}
-					{{- tabs.subscription_tab('unread', forumName, 'unread', filter, null, total_subscribed_forums['count_unread'], null) -}}
-					{{- tabs.subscription_tab('read', forumName, 'read', filter, total_subscribed_forums['count_read'], null, null) -}}
+					{{- tabs.subscription_tab('subscription.all'|trans({}, 'CCDNForumForumBundle'), forumName, 'all', filter, total_subscribed_forums['count_read'], total_subscribed_forums['count_unread'], total_subscribed_forums['count_total']) -}}
+					{{- tabs.subscription_tab('subscription.unread'|trans({}, 'CCDNForumForumBundle'), forumName, 'unread', filter, null, total_subscribed_forums['count_unread'], null) -}}
+					{{- tabs.subscription_tab('subscription.read'|trans({}, 'CCDNForumForumBundle'), forumName, 'read', filter, total_subscribed_forums['count_read'], null, null) -}}
 				{%- else -%}
-					{{- tabs.subscription_tab('all', '~', 'all', filter, total_subscribed_forums['count_read'], total_subscribed_forums['count_unread'], total_subscribed_forums['count_total']) -}}
-					{{- tabs.subscription_tab('unread', '~', 'unread', filter, null, total_subscribed_forums['count_unread'], null) -}}
-					{{- tabs.subscription_tab('read', '~', 'read', filter, total_subscribed_forums['count_read'], null, null) -}}
+					{{- tabs.subscription_tab('subscription.all'|trans({}, 'CCDNForumForumBundle'), '~', 'all', filter, total_subscribed_forums['count_read'], total_subscribed_forums['count_unread'], total_subscribed_forums['count_total']) -}}
+					{{- tabs.subscription_tab('subscription.unread'|trans({}, 'CCDNForumForumBundle'), '~', 'unread', filter, null, total_subscribed_forums['count_unread'], null) -}}
+					{{- tabs.subscription_tab('subscription.read'|trans({}, 'CCDNForumForumBundle'), '~', 'read', filter, total_subscribed_forums['count_read'], null, null) -}}
 				{%- endif -%}
 			</ul>
 		</div>
