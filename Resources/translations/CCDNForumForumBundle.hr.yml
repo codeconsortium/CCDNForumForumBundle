@@ -1,0 +1,250 @@
+dashboard:
+    pages:
+        forum:                         "Forum"
+        community:                     "Zajednica"
+    categories:
+        forum:                         "Forum"
+        community:                     "Zajednica"
+    links:
+        forum:                         "Forum Index"
+        subscriptions:                 "Forum Pretplate"
+
+layout:
+    header_links:
+        forum:                         "Forum"
+
+title:
+    admin:
+        index:                         "Admin Index"
+        manage-forums:
+            index:                     "Upravljaj Forumima"
+            create:                    "Stvori Novi Forum"
+            edit:                      "Uredi Forum %forum_name%"
+            delete:                    "Izbriši Forum %forum_name%"
+        manage-categories:
+            index:                     "Upravljaj Kategorijama"
+            create:                    "Stvori Novu Kategoriju"
+            edit:                      "Uredi Kategoriju %category_name%"
+            delete:                    "Izbriši Kategoriju %category_name%"
+        manage-boards:
+            index:                     "Upravljaj Pločama"
+            create:                    "Stvori Novu Ploču"
+            edit:                      "Uredi Ploču %board_name%"
+            delete:                    "Izbriši Ploču %board_name%"
+    category:
+        index:                         "Index"
+        show:                          "%category_name% Kategorija"
+    board:
+        show:                          "%board_name% Ploča"
+    topic:
+        show:                          "Tema: %topic_title%"
+        create:                        "Stvori Temu"
+        reply:                         "Odgovori na Temu"
+        edit:                          "Uredi Temu"
+        delete:                        "Izbriši Temu"
+        change_board:                  "Izmijeni Ploču za Temu"
+    post:
+        show:                          "Post #%post_id%"
+        edit:                          "Uredi Post #%post_id%"
+        delete:                        "Izbriši Post #%post_id%"
+    subscription:
+        index:                         "Pretplate"
+
+crumbs:
+    admin:
+        index:                         "Admin Index"
+        manage-forums:
+            index:                     "Upravljaj Forumima"
+            create:                    "Stvori Novi Forum"
+            edit:                      "Uredi Forum %forum_name%"
+            delete:                    "Izbriši Forum %forum_name%"
+        manage-categories:
+            index:                     "Upravljaj Kategorijama"
+            create:                    "Stvori Novu Kategoriju"
+            edit:                      "Uredi Kategoriju %category_name%"
+            delete:                    "Izbriši Kategoriju %category_name%"
+        manage-boards:
+            index:                     "Upravljaj Pločama"
+            create:                    "Stvori Novu Ploču"
+            edit:                      "Uredi Ploču %board_name%"
+            delete:                    "Izbriši Ploču %board_name%"
+    moderator:
+        topic:
+            move:                      "Premjesti Temu"
+            delete:                    "Izbriši Temu"
+    user:
+        category:
+            index:                     "Forum Index"
+        topic:
+            create:                    "Stvori Novu Temu"
+            reply:                     "Odgovori na Temu"
+            delete:                    "Izbriši Temu"
+        post:
+            edit:                      "Uredi Post: #"
+            delete:                    "Izbriši Post: #"
+        subscription:
+            index:                     "Pretplate"
+
+link:
+    edit:                              "Uredi"
+    delete:                            "Izbriši"
+    unassigned:                        "Neraspoređeni"
+    admin:
+        index:                         "Admin"
+    forum:
+        index:                         "Forum"
+        create:                        "Stvori Novi Forum"
+    category:
+        index:                         "Forum Index"
+        create:                        "Stvori Novu Kategoriju"
+    board:
+        create:                        "Stvori Novu Ploču"
+    topic:
+        create:                        "Stvori Novu Temu"
+        reply:                         "Odgovori"
+        subscribe:                     "Pretplati se"
+        unsubscribe:                   "Otkaži pretplatu"
+        close:                         "Zatvori Temu"
+        reopen:                        "Ponovo Otvori Temu"
+        delete:                        "Izbriši Temu"
+        restore:                       "Vrati Temu"
+        change_board:                  "Promjeni Temu"
+        sticky:                        "Istakni Temu"
+        unsticky:                      "Ukloni iz Istaknutog Temu"
+    post:
+        quote:                         "Citiraj"
+        delete:                        "Izbriši"
+        restore:                       "Vrati"
+        lock:                          "Zaključaj"
+        unlock:                        "Otvori"
+    subscription:
+        index:                         "Pretplate"
+
+form:
+    required:                          "Ovo polje je obavezno"
+    button:
+        confirm-delete:                "Potvrdi Brisanje"
+        save:                          "Spremi"
+        save-changes:                  "Spremi Promjene"
+        topic:
+            create:                    "Objavi Temu"
+            reply:                     "Objavi Odgovor"
+            move:                      "Premjesti Temu"
+        preview:                       "Pregled"
+        cancel:                        "Otkaži"
+        yes:                           "Da"
+        no:                            "Ne"
+
+
+filter:
+    forums:                            "Forumi"
+    categories:                        "Kategorije"
+forum:
+    label:                             "Forum: "
+    id-th:                             "ID"
+    name-th:                           "Ime"
+    category-count-th:                 "Broj Kategorija"
+    name-label:                        "Ime: "
+    roles:
+        board-view-label:              "Pregled Uloga za Ploču:"
+    confirm-delete-label:              "Potvrđujem da želim izbrisati ovaj forum."
+    confirm-delete-subordinates-label: "Također izbriši kategorije, ploče i teme."
+category:
+    label:                             "Kategorija"
+    id-th:                             "ID"
+    name-th:                           "Ime"
+    board-count-th:                    "Broj Ploča"
+    name-label:                        "Ime: "
+    confirm-delete-label:              "Potvrđujem da želim izbrisati ovu Kategoriju."
+    confirm-delete-subordinates-label: "Također izbriši ploču i teme."
+    roles:
+        board-view-label:              "Pregled Uloga za Ploču:"
+    index:                             "Forum Index"
+    none:                              "Nema kategorija."
+    no-boards:                         "Nema ploča za ovu kategoriju."
+board:
+    th:                                "Ploča"
+    id-th:                             "ID"
+    name-th:                           "Ime"
+    topic-th:                          "Tema"
+    topics-th:                         "Teme"
+    view-count-th:                     "Pogledi"
+    reply-count-th:                    "Odgovori"
+    topic-count-th:                    "Teme"
+    post-count-th:                     "Postovi"
+    last-post-th:                      "Izbriši Post"
+    announcements-th:                  "Najave"
+    label:                             "Ploča: "
+    name-label:                        "Ime: "
+    topic-count-label:                 "Teme: "
+    post-count-label:                  "Postovi: "
+    description-label:                 "Opic: "
+    confirm-delete-label:              "Potvrđujem da želim izbrisati ovu Ploču."
+    confirm-delete-subordinates-label: "Također izbriši teme."
+    roles:
+        topic-create-label:            "Stvori Uloge za Temu: "
+        topic-view-label:              "Pregled Uloga za Temu: "
+        topic-reply-label:             "Uloge za odogovor na Temu: "
+    no-topics:                         "Nema tema za ovu ploču, budi prvi i postaj!"
+topic:
+    label:                             "Tema: "
+    board-label:                       "Ploča: "
+    title-label:                       "Naslov: "
+    confirm-delete-label:              "Potvrđujem da želim izbrisati ovu Temu."
+    subscription-count-label:          "Pretplatnici: "
+    view-count-label:                  "Pregledi: "
+    reply-count-label:                 "Odgovori: "
+    transcript:                        "Transcript."
+    closed-by:                         "Temu zatvorio %name%"
+    deleted-by:                        "Temu izbrisao %name%"
+    stickied-by:                       "Temu istaknuo %name%"
+    delete-confirm:                    "Jesi li siguran da želiš izbrisati ovu temu?"
+    badge:
+        closed:                        "Zatvori"
+    deleted-by:                        "Izbrisao "
+    closed-by:                         "Zatvorio "
+post:
+    preview:                           "Pregled"
+    posted-by:                         "Post "
+    edited-by:                         "Uredio "
+    deleted-by:                        "Izbrisao "
+    locked-by:                         "Zaključao "
+    confirm-delete-label:              "Potvrđujem da želim izbrisati ovaj post."
+    body-label:                        "Tijelo:"
+    subscribe-label:                   "Pretplati se na ovu temu."
+    unlock-until-label:                "Unlock Until:"
+    has_been_locked:                   "Ovaj post je zaključan."
+    has_been_deleted:                  "Ovaj post je izbrisan."
+    user_post_count:                   "{0} Nema postova još|{1} %post_count% Post |[2, Inf] %post_count% Postova"
+    delete_confirm:                    "Jesi li siguran da želiš izbrisati ovaj post?"
+    show:                              "Prikaži"
+    hide:                              "Sakrij"
+subscription:
+    no-topics:                         "Nisi se preplatio na niti jednu Temu."
+
+next:                                  "Sljedeći"
+previous:                              "Prethodni"
+
+flash:
+    success:
+        topic:
+            create:                    "Uspješno stvorio novu temu: %topic_title%."
+            reply:                     "Uspješno odgovorio na temu: %topic_title%."
+            move:                      "Uspješno premjestio temu: %topic_title%."
+            subscribe:                 "Pretplatio si se za temu %topic_title%."
+            unsubscribe:               "Otkazao si pretplatu sa teme %topic_title%."
+        post:
+            edit:                      "Uspješno izmijenio post #%post_id% teme: %topic_title%."
+            delete:                    "Uspješno izbrisao post: #%post_id%."
+    warning:
+        topic:
+            flood_control:             "Previše postova odjednom. Pričekajte trenutak."
+    error:
+        topic:
+            reply:
+                not_found:             "Temu na koju pokušavate odgovoriti više ne postoji."
+            subscribe:
+                not_found:             "Tema na koju ste se pretplatili više ne postoji."
+        board:
+            topic_create:
+                not_found:             "Ploča više ne postoji."
