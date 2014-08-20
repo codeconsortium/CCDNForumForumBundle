@@ -322,7 +322,9 @@ class SubscriptionRepository extends BaseRepository implements RepositoryInterfa
 
         $qb = $this->createCountQuery();
 
-        $qb->where('s.topic = :topicId');
+        $qb
+            ->where('s.topic = :topicId')
+            ->andWhere('s.isSubscribed = true');
 
         return $this->gateway->countSubscriptions($qb, array(':topicId' => $topicId));
     }
