@@ -881,6 +881,13 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Component\TwigExtension\AuthorizerExtension')->end()
                                     ->end()
                                 ->end()
+                                ->arrayNode('forum_global')
+                                    ->addDefaultsIfNotSet()
+                                    ->canBeUnset()
+                                    ->children()
+                                        ->scalarNode('class')->defaultValue('CCDNForum\ForumBundle\Component\TwigExtension\ForumGlobalExtension')->end()
+                                    ->end()
+                                ->end()
                             ->end()
                         ->end()
 

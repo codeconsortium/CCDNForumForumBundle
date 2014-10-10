@@ -285,6 +285,7 @@ class CCDNForumForumExtension extends Extension
         $container->setParameter('ccdn_forum_forum.component.helper.post_lock.class', $config['component']['helper']['post_lock']['class']);
         $container->setParameter('ccdn_forum_forum.component.twig_extension.board_list.class', $config['component']['twig_extension']['board_list']['class']);
         $container->setParameter('ccdn_forum_forum.component.twig_extension.authorizer.class', $config['component']['twig_extension']['authorizer']['class']);
+        $container->setParameter('ccdn_forum_forum.component.twig_extension.forum_global.class', $config['component']['twig_extension']['forum_global']['class']);
         $container->setParameter('ccdn_forum_forum.component.event_listener.flash.class', $config['component']['event_listener']['flash']['class']);
         $container->setParameter('ccdn_forum_forum.component.event_listener.subscriber.class', $config['component']['event_listener']['subscriber']['class']);
         $container->setParameter('ccdn_forum_forum.component.event_listener.stats.class', $config['component']['event_listener']['stats']['class']);

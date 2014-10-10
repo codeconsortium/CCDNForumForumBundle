@@ -21,3 +21,10 @@ services:
             - @ccdn_forum_forum.component.security.authorizer
         tags:
             - { name: twig.extension }
+
+    ccdn_forum_forum.component.twig_extension.forum_global:
+        class: %ccdn_forum_forum.component.twig_extension.forum_global.class%
+        arguments:
+            - @service_container
+        tags:
+            - { name: twig.extension }
