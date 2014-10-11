@@ -182,6 +182,8 @@ ccdn_forum_forum:
                 class:                CCDNForum\ForumBundle\Component\TwigExtension\BoardListExtension
             authorizer:
                 class:                CCDNForum\ForumBundle\Component\TwigExtension\AuthorizerExtension
+            forum_global:
+                class:                CCDNForum\ForumBundle\Component\TwigExtension\ForumGlobalExtension
         event_listener:
             flash:
                 class:                CCDNForum\ForumBundle\Component\Dispatcher\Listener\FlashListener
