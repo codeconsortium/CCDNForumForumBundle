@@ -35,7 +35,7 @@ CCDNForum\ForumBundle\Entity\Topic:
         title:
             - Type: { type: string, groups: [forum_topic_create, forum_topic_update] }
             - NotBlank: { groups: [forum_topic_create, forum_topic_update] }
-            - Length: { min: 10, max: 225, groups: [forum_topic_create, forum_topic_update] }
+            - Length: { min: 10, max: 100, groups: [forum_topic_create, forum_topic_update] }
 
 #%ccdn_forum_forum.entity.post.class%:
 CCDNForum\ForumBundle\Entity\Post:
