@@ -1,0 +1,253 @@
+dashboard:
+    pages:
+        forum:                         "Foro"
+        community:                     "Comunidad"
+    categories:
+        forum:                         "Foro"
+        community:                     "Comunidad"
+    links:
+        forum:                         "Indice del Foro"
+        subscriptions:                 "Subscripciones"
+
+layout:
+    header_links:
+        forum:                         "Foro"
+
+title:
+    admin:
+        index:                         "Admin Index"
+        manage-forums:
+            index:                     "Gestionar Foros"
+            create:                    "Crear nuevo foro"
+            edit:                      "Editar foro %forum_name%"
+            delete:                    "Eliminar foro %forum_name%"
+        manage-categories:
+            index:                     "Gestionar Categorías"
+            create:                    "Crear nueva categoría"
+            edit:                      "Editar categoría %category_name%"
+            delete:                    "Eliminar categoría %category_name%"
+        manage-boards:
+            index:                     "Gestionar Tableros"
+            create:                    "Crear nuevo tablero"
+            edit:                      "Editar tablero %board_name%"
+            delete:                    "Eliminar tablero %board_name%"
+    category:
+        index:                         "Indice"
+        show:                          "Categoría %category_name%"
+    board:
+        show:                          "tablero %board_name%"
+    topic:
+        show:                          "Tema: %topic_title%"
+        create:                        "Crear Tema"
+        reply:                         "Responder al tema"
+        edit:                          "Editar Tema"
+        delete:                        "Eliminar Tema"
+        change_board:                  "Cambiar tablero para el tema"
+    post:
+        show:                          "Mensaje #%post_id%"
+        edit:                          "Editar Mensaje #%post_id%"
+        delete:                        "Eliminar mensaje #%post_id%"
+    subscription:
+        index:                         "Subscripciones"
+
+crumbs:
+    admin:
+        index:                         "Admin Index"
+        manage-forums:
+            index:                     "Gestionar Foros"
+            create:                    "Crear nuevo foro"
+            edit:                      "Editar forum %forum_name%"
+            delete:                    "Eliminar forum %forum_name%"
+        manage-categories:
+            index:                     "Gestionar Categorías"
+            create:                    "Crear nueva categoría"
+            edit:                      "Editar categoría %category_name%"
+            delete:                    "Eliminar categoría %category_name%"
+        manage-boards:
+            index:                     "Gestionar Tableros"
+            create:                    "Crear nuevo tablero"
+            edit:                      "Editar tablero %board_name%"
+            delete:                    "Eliminar tablero %board_name%"
+    moderator:
+        topic:
+            move:                      "Mover Tema"
+            delete:                    "Eliminar Tema"
+    user:
+        category:
+            index:                     "Indice del Foro"
+        topic:
+            create:                    "Crear nuevo tema"
+            reply:                     "Responder al tema"
+            delete:                    "Eliminar Tema"
+        post:
+            edit:                      "Editar Mensaje: #"
+            delete:                    "Eliminar Mensaje: #"
+        subscription:
+            index:                     "Subscripciones"
+
+link:
+    edit:                              "Editar"
+    delete:                            "Eliminar"
+    unassigned:                        "Sin asignar"
+    admin:
+        index:                         "Admin"
+    forum:
+        index:                         "Foro"
+        create:                        "Crear nuevo foro"
+    category:
+        index:                         "Indice del Foro"
+        create:                        "Crear nueva categoría"
+    board:
+        create:                        "Crear nuevo tablero"
+    topic:
+        create:                        "Crear nuevo tema"
+        reply:                         "Responder"
+        subscribe:                     "Suscribirse"
+        unsubscribe:                   "Cancelar la suscripción"
+        close:                         "Cerrar Tema"
+        reopen:                        "Reabrir Tema"
+        delete:                        "Eliminar Tema"
+        restore:                       "Recuperar Tema"
+        change_board:                  "Cambiar Tablero"
+        sticky:                        "Fijar Tema"
+        unsticky:                      "Desfijar Tema"
+    post:
+        quote:                         "Citar"
+        delete:                        "Eliminar"
+        restore:                       "Recuperar"
+        lock:                          "Bloquear"
+        unlock:                        "Desbloquear"
+    subscription:
+        index:                         "Subscripciones"
+
+form:
+    required:                          "El campo es obligatorio"
+    button:
+        confirm-delete:                "Confirmar eliminado"
+        save:                          "Guardar"
+        save-changes:                  "Guardar Cambios"
+        topic:
+            create:                    "Publicar Tema"
+            reply:                     "Publicar Respuesta"
+            move:                      "Mover Tema"
+        preview:                       "Previsualizar"
+        cancel:                        "Cancelar"
+        yes:                           "Si"
+        no:                            "No"
+
+
+filter:
+    forums:                            "Foros"
+    categories:                        "Categorías"
+forum:
+    label:                             "Foro: "
+    id-th:                             "ID"
+    name-th:                           "Nombre"
+    category-count-th:                 "Total Categorías"
+    name-label:                        "Nombre: "
+    roles:
+        board-view-label:              "Roles ver tablero:"
+    confirm-delete-label:              "Confirmo que quiero borrar este foro."
+    confirm-delete-subordinates-label: "De paso borra categorías, tableros y temas."
+category:
+    label:                             "Categoría"
+    id-th:                             "ID"
+    name-th:                           "Nombre"
+    board-count-th:                    "Total Tableros"
+    name-label:                        "Nombre: "
+    confirm-delete-label:              "Confirmo que quiero borrar esta Categoría."
+    confirm-delete-subordinates-label: "De paso borra tableros y temas."
+    roles:
+        board-view-label:              "Roles ver tablero:"
+    index:                             "Indice del Foro"
+    none:                              "No hay categorías."
+    no-boards:                         "No hay tableros en esta categoría."
+board:
+    th:                                "Tablero"
+    id-th:                             "ID"
+    name-th:                           "Nombre"
+    topic-th:                          "Tema"
+    topics-th:                         "Temas"
+    view-count-th:                     "Vistas"
+    reply-count-th:                    "Respuestas"
+    topic-count-th:                    "Temas"
+    post-count-th:                     "Mensajes"
+    last-post-th:                      "Últimos Mensajes"
+    announcements-th:                  "Anuncios"
+    label:                             "Tablero: "
+    name-label:                        "Nombre: "
+    topic-count-label:                 "Temas: "
+    post-count-label:                  "Mensajes: "
+    description-label:                 "Descripción: "
+    confirm-delete-label:              "Confirmo que quiero borrar este tablero."
+    confirm-delete-subordinates-label: "De paso borra temas."
+    roles:
+        topic-create-label:            "Roles crear temas: "
+        topic-view-label:              "Roles ver temas: "
+        topic-reply-label:             "Roles responder temas: "
+    no-topics:                         "No hay temas en este tabler, ¡se el primero!"
+topic:
+    label:                             "Tema: "
+    board-label:                       "Tablero: "
+    title-label:                       "Título: "
+    confirm-delete-label:              "Confirmo que quiero borrar este tema."
+    subscription-count-label:          "Suscriptores: "
+    view-count-label:                  "Vistas: "
+    reply-count-label:                 "Respuestas: "
+    transcript:                        "Transcripción."
+    closed-by:                         "Tema cerrado por %name%"
+    deleted-by:                        "Tema eliminado por %name%"
+    stickied-by:                       "Hecho fijo por %name%"
+    delete-confirm:                    "¿Estas seguro de que deseas eliminar este tema?"
+    badge:
+        closed:                        "Cerrar"
+    deleted-by:                        "Eliminado por "
+    closed-by:                         "Cerrado por "
+post:
+    preview:                           "Previsualizar"
+    posted-by:                         "Enviado por "
+    edited-by:                         "Editado por "
+    deleted-by:                        "Eliminado por "
+    locked-by:                         "Bloqueado por "
+    confirm-delete-label:              "Confirmo que quiero borrar este mensaje."
+    body-label:                        "Cuerpo:"
+    subscribe-label:                   "Suscribirse a este tema."
+    unlock-until-label:                "Desbloquear Hasta:"
+    has_been_locked:                   "Este mensaje ha sido bloqueado."
+    has_been_deleted:                  "Este mensaje ha sido eliminado."
+    user_post_count:                   "{0} Todavía no hay mensajes|{1} %post_count% Mensajes |[2, Inf] %post_count% Mensajes"
+    delete_confirm:                    "¿Seguro que quieres borrar este mensaje?"
+    show:                              "Show"
+    hide:                              "Hide"
+subscription:
+    no-topics:                         "No estas suscrito a ningún tema."
+    all:                               "todos"
+    unread:                            "no leidos"
+    read:                              "leidos"
+
+next:                                  "Siguiente"
+previous:                              "Anterior"
+
+flash:
+    success:
+        topic:
+            create:                    "El tema %topic_title% ha sido creado satisfactoriamente."
+            reply:                     "Respondiste satisfactoriamente al tema: %topic_title%."
+            move:                      "Moviste satisfactoriamente el tema: %topic_title%."
+            subscribe:                 "Te ahs suscrito al tema %topic_title%."
+            unsubscribe:               "Cancelaste la suscripción al tema %topic_title%."
+        post:
+            edit:                      "Editaste #%post_id% del tema %topic_title% satisfactoriamente"
+            delete:                    "Eliminaste #%post_id% satisfactoriamente."
+    warning:
+        topic:
+            flood_control:             "No puedes enviar otro mensaje tan pronto."
+    error:
+        topic:
+            reply:
+                not_found:             "El tema al que intentabas responder ya no existe."
+            subscribe:
+                not_found:             "No puedes Suscribirte al tema por que no se encontro! Perdona las molestias."
+        board:
+            topic_create:
+                not_found:             "El tablero al que intentas enviar un mensaje no existe! Perdona las molestias."
