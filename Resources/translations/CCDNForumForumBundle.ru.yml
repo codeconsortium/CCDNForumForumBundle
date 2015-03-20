@@ -1,0 +1,253 @@
+dashboard:
+    pages:
+        forum:                         "Форум"
+        community:                     "Сообщество"
+    categories:
+        forum:                         "Форум"
+        community:                     "Сообщество"
+    links:
+        forum:                         "Все форумы"
+        subscriptions:                 "Обновления"
+
+layout:
+    header_links:
+        forum:                         "Форум"
+
+title:
+    admin:
+        index:                         "Администрация"
+        manage-forums:
+            index:                     "Управление форумами"
+            create:                    "Создать новый форум"
+            edit:                      "Редактирование форума %forum_name%"
+            delete:                    "Удаление форума %forum_name%"
+        manage-categories:
+            index:                     "Управление категориями"
+            create:                    "Создать новую категорию"
+            edit:                      "Редактирование категории %category_name%"
+            delete:                    "Удаление категории %category_name%"
+        manage-boards:
+            index:                     "Управление досками"
+            create:                    "Создать доску"
+            edit:                      "Редактирование доски %board_name%"
+            delete:                    "Удаление доски %board_name%"
+    category:
+        index:                         "Категории"
+        show:                          "%category_name% - Категория"
+    board:
+        show:                          "%board_name% - Доска"
+    topic:
+        show:                          "Тема: %topic_title%"
+        create:                        "Создание темы"
+        reply:                         "Ответ в тему"
+        edit:                          "Редактирование темы"
+        delete:                        "Удаление темы"
+        change_board:                  "Изменение доски для темы"
+    post:
+        show:                          "Пост #%post_id%"
+        edit:                          "Редактирование поста #%post_id%"
+        delete:                        "Удаление поста #%post_id%"
+    subscription:
+        index:                         "Обновления"
+
+crumbs:
+    admin:
+        index:                         "Администрация"
+        manage-forums:
+            index:                     "Управление форумами"
+            create:                    "Создать новый форум"
+            edit:                      "Редактирование форума %forum_name%"
+            delete:                    "Удаление форума %forum_name%"
+        manage-categories:
+            index:                     "Управление категориями"
+            create:                    "Создать новую категорию"
+            edit:                      "Редактирование категории %category_name%"
+            delete:                    "Удаление категории %category_name%"
+        manage-boards:
+            index:                     "Управление досками"
+            create:                    "Создать доску"
+            edit:                      "Редактирование доски %board_name%"
+            delete:                    "Удаление доски %board_name%"
+    moderator:
+        topic:
+            move:                      "Перемещение темы"
+            delete:                    "Удаление темы"
+    user:
+        category:
+            index:                     "Категории"
+        topic:
+            create:                    "Создание темы"
+            reply:                     "Ответ в тему"
+            delete:                    "Удаление темы"
+        post:
+            edit:                      "Редактирование поста: #"
+            delete:                    "Удаление поста: #"
+        subscription:
+            index:                     "Обновления"
+
+link:
+    edit:                              "Редактировать"
+    delete:                            "Удалить"
+    unassigned:                        "Отписаться"
+    admin:
+        index:                         "Администрация"
+    forum:
+        index:                         "Форум"
+        create:                        "Создать новый форум"
+    category:
+        index:                         "Все категории"
+        create:                        "Создать категорию"
+    board:
+        create:                        "Создать доску"
+    topic:
+        create:                        "Создать тему"
+        reply:                         "Ответить"
+        subscribe:                     "Подписаться"
+        unsubscribe:                   "Отписаться"
+        close:                         "Закрыть тему"
+        reopen:                        "Открыть тему снова"
+        delete:                        "Удалить тему"
+        restore:                       "Восстановить тему"
+        change_board:                  "Изменить доску"
+        sticky:                        "Прикрепить в топ"
+        unsticky:                      "Открепить из топа"
+    post:
+        quote:                         "Цитата"
+        delete:                        "Удалить"
+        restore:                       "Восстановить"
+        lock:                          "Заблокировать"
+        unlock:                        "Разблокировать"
+    subscription:
+        index:                         "Обновления"
+
+form:
+    required:                          "Поле не может быть пустым"
+    button:
+        confirm-delete:                "Подтвердите удаление"
+        save:                          "Сохранить"
+        save-changes:                  "Сохранить изменения"
+        topic:
+            create:                    "Опубликовать тему"
+            reply:                     "Опубликовать ответ"
+            move:                      "Переместить тему"
+        preview:                       "Просмотр"
+        cancel:                        "Отмена"
+        yes:                           "Да"
+        no:                            "Нет"
+
+
+filter:
+    forums:                            "Форумы"
+    categories:                        "Категории"
+forum:
+    label:                             "Форум: "
+    id-th:                             "ID"
+    name-th:                           "Имя"
+    category-count-th:                 "Категорий"
+    name-label:                        "Имя: "
+    roles:
+        board-view-label:              "Роли просмотра:"
+    confirm-delete-label:              "Подтверждаю, что хочу удалить форум."
+    confirm-delete-subordinates-label: "Так же удалить категории, доски и темы."
+category:
+    label:                             "Категории"
+    id-th:                             "ID"
+    name-th:                           "Имя"
+    board-count-th:                    "Досок"
+    name-label:                        "Имя: "
+    confirm-delete-label:              "Подтверждаю, что хочу удалить категорию."
+    confirm-delete-subordinates-label: "Так же удалить доски и темы."
+    roles:
+        board-view-label:              "Роли просмотра:"
+    index:                             "Категории"
+    none:                              "Здесь нет категорий."
+    no-boards:                         "В этой категории нет досок."
+board:
+    th:                                "Доска"
+    id-th:                             "ID"
+    name-th:                           "Имя"
+    topic-th:                          "Тема"
+    topics-th:                         "Темы"
+    view-count-th:                     "Просмотров"
+    reply-count-th:                    "Ответом"
+    topic-count-th:                    "Количество тем"
+    post-count-th:                     "Количество ответов"
+    last-post-th:                      "Последний ответ"
+    announcements-th:                  "Предпросмотр"
+    label:                             "Доска: "
+    name-label:                        "Имя: "
+    topic-count-label:                 "Количество тем: "
+    post-count-label:                  "Количество постов: "
+    description-label:                 "Описание: "
+    confirm-delete-label:              "Подтверждаю, что хочу удалить доску."
+    confirm-delete-subordinates-label: "Так же удалить темы."
+    roles:
+        topic-create-label:            "Роли создания: "
+        topic-view-label:              "Роли просмотра: "
+        topic-reply-label:             "Роли ответа: "
+    no-topics:                         "В этой доске еще нет тем, будь первым!"
+topic:
+    label:                             "Тема: "
+    board-label:                       "Доска: "
+    title-label:                       "Заголовок: "
+    confirm-delete-label:              "Подтверждаю, что хочу удалить тему."
+    subscription-count-label:          "Обновления: "
+    view-count-label:                  "Просмотров: "
+    reply-count-label:                 "Ответов: "
+    transcript:                        "Transcript."
+    closed-by:                         "Тема закрыта %name%"
+    deleted-by:                        "Тема удалена %name%"
+    stickied-by:                       "Прикрепил %name%"
+    delete-confirm:                    "Уверены, что хотите удалить тему?"
+    badge:
+        closed:                        "Закрыто"
+    deleted-by:                        "Удалено "
+    closed-by:                         "Закрыто "
+post:
+    preview:                           "Просмотр"
+    posted-by:                         "Написал "
+    edited-by:                         "Отредактировал "
+    deleted-by:                        "Удалил "
+    locked-by:                         "Заблокировал "
+    confirm-delete-label:              "Подтверждаю, что хочу удалить пост."
+    body-label:                        "Ответ:"
+    subscribe-label:                   "Подписаться на обновления."
+    unlock-until-label:                "Заблокировано до:"
+    has_been_locked:                   "Этот пост заблокирован."
+    has_been_deleted:                  "Этот пост удален."
+    user_post_count:                   "{0} Нет ответов|{1} %post_count% ответа |[2, 4] %post_count% ответа|[4, Inf]%post_count% ответов"
+    delete_confirm:                    "Уверены, что хотите удалить ответ?"
+    show:                              "Показать"
+    hide:                              "Спрятать"
+subscription:
+    no-topics:                         "У вас нет подписок."
+    all:                               "все"
+    unread:                            "непрочитанные"
+    read:                              "прочитанные"
+
+next:                                  "Слудующий"
+previous:                              "Предыдущий"
+
+flash:
+    success:
+        topic:
+            create:                    "Успешно создана тема: %topic_title%."
+            reply:                     "Успешно создан ответ в тему: %topic_title%."
+            move:                      "Успешно перемещена тема: %topic_title%."
+            subscribe:                 "Вы подписались на обновления темы %topic_title%."
+            unsubscribe:               "Вы отписались от темы %topic_title%."
+        post:
+            edit:                      "Отредактирован ответ #%post_id% темы: %topic_title%."
+            delete:                    "Удален ответ: #%post_id%."
+    warning:
+        topic:
+            flood_control:             "Флудильня-коптильня: друг, отдохни, ты слишком часто постишь."
+    error:
+        topic:
+            reply:
+                not_found:             "Такого топика больше не существует."
+            subscribe:
+                not_found:             "Такой темы нет, поэтмоу нельзя на нее подписаться."
+        board:
+            topic_create:
+                not_found:             "Такой доски не существует."
