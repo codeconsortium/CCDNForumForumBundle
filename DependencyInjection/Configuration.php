@@ -1482,23 +1482,6 @@ class Configuration implements ConfigurationInterface
         return $this;
     }
 
-
-    private function addPostTemplateSection()
-    {
-        $treeBuilder = new TreeBuilder();
-        $node = $treeBuilder->root('template');
-
-        $node
-            ->addDefaultsIfNotSet()
-            ->canBeUnset()
-            ->children()
-                ->scalarNode('single_post_template')->defaultValue($this->defaultPostSingleTemplate)->end()
-            ->end()
-        ;
-
-        return $node;
-    }
-
     /**
      *
      * @access private
