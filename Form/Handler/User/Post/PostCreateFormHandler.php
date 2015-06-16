@@ -18,6 +18,7 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface ;
 
 use CCDNForum\ForumBundle\Component\Dispatcher\ForumEvents;
+use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicEvent;
 use CCDNForum\ForumBundle\Component\Dispatcher\Event\UserTopicFloodEvent;
 use CCDNForum\ForumBundle\Form\Handler\BaseFormHandler;
@@ -209,6 +210,7 @@ class PostCreateFormHandler extends BaseFormHandler
         $post->setDeleted(false);
 
         $this->dispatcher->dispatch(ForumEvents::USER_TOPIC_REPLY_SUCCESS, new UserTopicEvent($this->request, $post->getTopic()));
+        $this->dispatcher->dispatch(ForumEvents::USER_POST_CREATE_SUCCESS, new UserPostEvent($this->request, $post));
 
         $this->postModel->savePost($post);
 

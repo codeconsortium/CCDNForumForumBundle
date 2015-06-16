@@ -712,6 +712,15 @@ final class ForumEvents
 
     /**
      *
+     * The USER_POST_CREATE_SUCCESS event occurs when the post create process is successful before persisting.
+     *
+     * This event allows you to modify the values of the post entity object after form submission before persisting.
+     * The event listener method receives a CCDNForum\ForumBundle\Component\Dispatcher\Event\UserPostEvent instance.
+     */
+    const USER_POST_CREATE_SUCCESS = 'ccdn_forum.user.post.create.success';
+
+    /**
+     *
      * The USER_POST_EDIT_SUCCESS event occurs when the post edit process is successful before persisting.
      *
      * This event allows you to modify the values of the post entity object after form submission before persisting.
