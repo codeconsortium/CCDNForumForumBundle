@@ -1,9 +1,11 @@
-CCDNForum ForumBundle README.
+[NO LONGER SUPPORTED] CCDNForum ForumBundle README.
 =============================
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/5ad1db2a-0342-4716-8d29-0c056f784c79/mini.png)](https://insight.sensiolabs.com/projects/5ad1db2a-0342-4716-8d29-0c056f784c79) [![Build Status](https://secure.travis-ci.org/codeconsortium/CCDNForumForumBundle.png)](https://travis-ci.org/codeconsortium/CCDNForumForumBundle) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/codeconsortium/CCDNForumForumBundle/badges/quality-score.png?s=76b9ab276cb72457064e0a4a5ca30d1c98acdf7f)](https://scrutinizer-ci.com/g/codeconsortium/CCDNForumForumBundle/) [![Code Coverage](https://scrutinizer-ci.com/g/codeconsortium/CCDNForumForumBundle/badges/coverage.png?s=156a3d8a1dd2a79d465ea564ab991fe91a842fce)](https://scrutinizer-ci.com/g/codeconsortium/CCDNForumForumBundle/) [![Latest Stable Version](https://poser.pugx.org/codeconsortium/ccdn-forum-bundle/v/stable.png)](https://packagist.org/packages/codeconsortium/ccdn-forum-bundle) [![Total Downloads](https://poser.pugx.org/codeconsortium/ccdn-forum-bundle/downloads.png)](https://packagist.org/packages/codeconsortium/ccdn-forum-bundle) [![Stories in Ready](https://badge.waffle.io/codeconsortium/ccdnforumforumbundle.png?label=ready)](https://waffle.io/codeconsortium/ccdnforumforumbundle)
 
 ## Notes: 
+
+This is no longer supported or worked on. If you wish to continue using this and wish to take over let me know.
 
 This bundle is for the symfony framework and requires Symfony ~2.4 and PHP >= 5.3.2
   
