@@ -79,7 +79,7 @@ class BoardCreateFormType extends AbstractType
                 array(
                     'property'           => 'name',
                     'class'              => $this->categoryClass,
-                    'group_by'           => 'category.forum.name',
+                    'group_by'           => 'forum.name',
                     'query_builder'      =>
                         function (EntityRepository $er) {
                             return $er
