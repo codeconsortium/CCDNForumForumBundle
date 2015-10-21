@@ -16,6 +16,7 @@ namespace CCDNForum\ForumBundle\Form\Type\Admin\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -83,7 +84,7 @@ class CategoryCreateFormType extends AbstractType
                         function (EntityRepository $er) {
                             return $er
                                 ->createQueryBuilder('f')
-                            ;
+                                ;
                         },
                     'data'               => $options['default_forum'],
                     'required'           => false,
@@ -115,7 +116,7 @@ class CategoryCreateFormType extends AbstractType
      * @access public
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class'          => $this->categoryClass,

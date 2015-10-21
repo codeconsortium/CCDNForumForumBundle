@@ -1,0 +1,253 @@
+dashboard:
+    pages:
+        forum:                         "Forum"
+        community:                     "Community"
+    categories:
+        forum:                         "Forum"
+        community:                     "Community"
+    links:
+        forum:                         "Forum Index"
+        subscriptions:                 "Forum Abonnements"
+
+layout:
+    header_links:
+        forum:                         "Forum"
+
+title:
+    admin:
+        index:                         "Admin Index"
+        manage-forums:
+            index:                     "Forum Verwaltung"
+            create:                    "Neues Forum anlegen"
+            edit:                      "Forum %forum_name% bearbeiten"
+            delete:                    "Forum %forum_name% löschen"
+        manage-categories:
+            index:                     "Kategorien verwalten"
+            create:                    "Neue Kategorie anlegen"
+            edit:                      "Kategorie %category_name% bearbeiten"
+            delete:                    "Kategorie %category_name% löschen"
+        manage-boards:
+            index:                     "Boards verwalten"
+            create:                    "Neues Board anlegen"
+            edit:                      "Board %board_name% bearbeiten"
+            delete:                    "Board %board_name% löschen"
+    category:
+        index:                         "Index"
+        show:                          "Kategorie %category_name%"
+    board:
+        show:                          "Board %board_name%"
+    topic:
+        show:                          "Thema: %topic_title%"
+        create:                        "Thema erstellen"
+        reply:                         "Auf Thema antworten"
+        edit:                          "Thema bearbeiten"
+        delete:                        "Thema löschen"
+        change_board:                  "Thema auf anderes Board verschieben"
+    post:
+        show:                          "Beitrag #%post_id%"
+        edit:                          "Beitrag #%post_id% bearbeiten"
+        delete:                        "Beitrag #%post_id% löschen"
+    subscription:
+        index:                         "Abonnements"
+
+crumbs:
+    admin:
+        index:                         "Admin Index"
+        manage-forums:
+            index:                     "Manage Forums"
+            create:                    "Create New Forum"
+            edit:                      "Edit Forum %forum_name%"
+            delete:                    "Delete Forum %forum_name%"
+        manage-categories:
+            index:                     "Manage Categories"
+            create:                    "Create New Category"
+            edit:                      "Edit Category %category_name%"
+            delete:                    "Delete Category %category_name%"
+        manage-boards:
+            index:                     "Manage Boards"
+            create:                    "Create New Board"
+            edit:                      "Edit Board %board_name%"
+            delete:                    "Delete Board %board_name%"
+    moderator:
+        topic:
+            move:                      "Move Topic"
+            delete:                    "Delete Topic"
+    user:
+        category:
+            index:                     "Forum Index"
+        topic:
+            create:                    "Create New Topic"
+            reply:                     "Reply to Topic"
+            delete:                    "Delete Topic"
+        post:
+            edit:                      "Edit Post: #"
+            delete:                    "Delete Post: #"
+        subscription:
+            index:                     "Subscriptions"
+
+link:
+    edit:                              "Edit"
+    delete:                            "Delete"
+    unassigned:                        "Unassigned"
+    admin:
+        index:                         "Admin"
+    forum:
+        index:                         "Forum"
+        create:                        "Create New Forum"
+    category:
+        index:                         "Forum Index"
+        create:                        "Create New Category"
+    board:
+        create:                        "Create New Board"
+    topic:
+        create:                        "Create New Topic"
+        reply:                         "Reply"
+        subscribe:                     "Subscribe"
+        unsubscribe:                   "Unsubscribe"
+        close:                         "Close Topic"
+        reopen:                        "Reopen Topic"
+        delete:                        "Delete Topic"
+        restore:                       "Restore Topic"
+        change_board:                  "Change Board"
+        sticky:                        "Sticky Topic"
+        unsticky:                      "Unsticky Topic"
+    post:
+        quote:                         "Quote"
+        delete:                        "Delete"
+        restore:                       "Restore"
+        lock:                          "Lock"
+        unlock:                        "Unlock"
+    subscription:
+        index:                         "Subscriptions"
+
+form:
+    required:                          "This field is required"
+    button:
+        confirm-delete:                "Confirm Delete"
+        save:                          "Save"
+        save-changes:                  "Save Changes"
+        topic:
+            create:                    "Publish Topic"
+            reply:                     "Publish Reply"
+            move:                      "Move Topic"
+        preview:                       "Preview"
+        cancel:                        "Cancel"
+        yes:                           "Yes"
+        no:                            "No"
+
+
+filter:
+    forums:                            "Forums"
+    categories:                        "Categories"
+forum:
+    label:                             "Forum: "
+    id-th:                             "ID"
+    name-th:                           "Name"
+    category-count-th:                 "Category Count"
+    name-label:                        "Name: "
+    roles:
+        board-view-label:              "Board View Roles:"
+    confirm-delete-label:              "I confirm I want to delete this Forum."
+    confirm-delete-subordinates-label: "Also delete categories, boards and topics."
+category:
+    label:                             "Category"
+    id-th:                             "ID"
+    name-th:                           "Name"
+    board-count-th:                    "Board Count"
+    name-label:                        "Name: "
+    confirm-delete-label:              "I confirm I want to delete this Category."
+    confirm-delete-subordinates-label: "Also delete boards and topics."
+    roles:
+        board-view-label:              "Board View Roles:"
+    index:                             "Forum Index"
+    none:                              "There are no categories."
+    no-boards:                         "There are no boards for this category."
+board:
+    th:                                "Board"
+    id-th:                             "ID"
+    name-th:                           "Name"
+    topic-th:                          "Topic"
+    topics-th:                         "Topics"
+    view-count-th:                     "Views"
+    reply-count-th:                    "Replies"
+    topic-count-th:                    "Topics"
+    post-count-th:                     "Posts"
+    last-post-th:                      "Last Post"
+    announcements-th:                  "Announcements"
+    label:                             "Board: "
+    name-label:                        "Name: "
+    topic-count-label:                 "Topics: "
+    post-count-label:                  "Posts: "
+    description-label:                 "Description: "
+    confirm-delete-label:              "I confirm I want to delete this Board."
+    confirm-delete-subordinates-label: "Also delete topics."
+    roles:
+        topic-create-label:            "Topic Create Roles: "
+        topic-view-label:              "Topic View Roles: "
+        topic-reply-label:             "Topic Reply Roles: "
+    no-topics:                         "There are no topics for this board, be the first to post one!"
+topic:
+    label:                             "Topic: "
+    board-label:                       "Board: "
+    title-label:                       "Title: "
+    confirm-delete-label:              "I confirm I want to delete this Topic."
+    subscription-count-label:          "Subscribers: "
+    view-count-label:                  "Views: "
+    reply-count-label:                 "Replies: "
+    transcript:                        "Transcript."
+    closed-by:                         "Topic closed by %name%"
+    deleted-by:                        "Topic deleted by %name%"
+    stickied-by:                       "Stickied by %name%"
+    delete-confirm:                    "Are you sure you want to delete this topic?"
+    badge:
+        closed:                        "Closed"
+    deleted-by:                        "Deleted by "
+    closed-by:                         "Closed by "
+post:
+    preview:                           "Preview"
+    posted-by:                         "Posted by "
+    edited-by:                         "Edited by "
+    deleted-by:                        "Deleted by "
+    locked-by:                         "Locked by "
+    confirm-delete-label:              "I confirm I want to delete this Post."
+    body-label:                        "Body:"
+    subscribe-label:                   "Subscribe to this topic."
+    unlock-until-label:                "Unlock Until:"
+    has_been_locked:                   "This post has been locked."
+    has_been_deleted:                  "This post has been deleted."
+    user_post_count:                   "{0} No Posts Yet|{1} %post_count% Post |[2, Inf] %post_count% Posts"
+    delete_confirm:                    "Are you sure you want to delete this post?"
+    show:                              "Show"
+    hide:                              "Hide"
+subscription:
+    no-topics:                         "You are not subscribed to any topics."
+    all:                               "all"
+    unread:                            "unread"
+    read:                              "read"
+
+next:                                  "Next"
+previous:                              "Previous"
+
+flash:
+    success:
+        topic:
+            create:                    "Successfully posted the new topic: %topic_title%."
+            reply:                     "Successfully posted a reply to the topic: %topic_title%."
+            move:                      "Successfully moved topic: %topic_title%."
+            subscribe:                 "You subscribed to the topic %topic_title%."
+            unsubscribe:               "You unsubscribed from the topic %topic_title%."
+        post:
+            edit:                      "Successfully edited #%post_id% of topic: %topic_title%."
+            delete:                    "Successfully deleted post: #%post_id%."
+    warning:
+        topic:
+            flood_control:             "Flood Control - You have posted too much at once, take a break before posting again."
+    error:
+        topic:
+            reply:
+                not_found:             "The topic you are trying to reply to no longer exists."
+            subscribe:
+                not_found:             "Topic could not be subscribed to because it was not found! Sorry about that."
+        board:
+            topic_create:
+                not_found:             "The board you are trying to post to no longer exists! Sorry about that."

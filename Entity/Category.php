@@ -53,6 +53,7 @@ class Category extends AbstractCategory
      */
     protected $readAuthorisedRoles;
 
+    private $category;
     /**
      *
      * @access public
@@ -63,6 +64,11 @@ class Category extends AbstractCategory
 
         // your own logic
         $this->readAuthorisedRoles = array();
+    }
+
+    public function getCategory()
+    {
+        return $this->category;
     }
 
     public function __toString()
