@@ -4,14 +4,6 @@
 
 {% set page_title = 'label.forum.category.index'|trans %}
 {% block content %}
-{%- block sidebar -%}
-	{%- spaceless -%}
-	{{- parent() -}}
-    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
-	{%- endspaceless -%}
-{%- endblock sidebar -%}
-
-
 	{%- spaceless -%}
 
 	{%- for category in categories -%}
