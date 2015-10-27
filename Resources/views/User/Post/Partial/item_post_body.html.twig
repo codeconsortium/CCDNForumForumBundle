@@ -45,12 +45,12 @@
 
 		{%- if is_granted('ROLE_MODERATOR') -%}
 			<section class="accordion-body collapse" id="post_{{- post.getId() -}}_body">
-				{%- include 'CCDNForumForumBundle:User:Post/Partial/body_content.html.twig' with {'post': post } -%}
+				{%- include 'CCDNForumForumBundle:User:Post/Partial/content.html.twig' with {'post': post } -%}
 			</section>
 		{%- endif -%}
 	{%- else -%}
 		<section id="post_{{- post.getId() -}}_body">
-			{%- include 'CCDNForumForumBundle:User:Post/Partial/body_content.html.twig' with {'post': post } -%}
+			{%- include 'CCDNForumForumBundle:User:Post/Partial/content.html.twig' with {'post': post } -%}
 		</section>
 	{%- endif -%}
 
