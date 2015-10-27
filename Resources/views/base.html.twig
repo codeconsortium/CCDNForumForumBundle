@@ -1,114 +1,113 @@
 <!DOCTYPE html>
-<html lang="{{- app.request.locale -}}">
-    <head>
-        <meta http-equiv="content-type" content="text/html;charset=utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+<head>
+	<!-- Metadata -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>{%- block title -%}{%- endblock -%}</title>
+	<!-- CSS Files -->
+	<link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
+	<link href="{{ asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" media="screen">
+	<link href="{{ asset('css/animate.css') }}" rel="stylesheet" media="screen">
+	<link href="{{ asset('css/style.css') }}" rel="stylesheet" media="screen">
+	{% block customcss %}
+	{% endblock %}
 
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-		{%- block stylesheets -%}
-		{%- endblock -%}
-    </head>
-    <body>
+	<!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
+	{% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
 
-		{%- spaceless -%}
+	<title>eFIS - Coffee-Bike GmbH</title>
+</head>
 
-		<div id="page-wrap">
-			<div id="page-main">
+<body class="md-skin fixed-sidebar fixed-nav   pace-done">  <!-- TODO: Try md-skin -->
+<div id="wrapper">
+	<nav class="navbar-default navbar-static-side " role="navigation">
+		<div class="sidebar-collapse">
+			<ul class="nav" id="side-menu">
+				<li class="nav-header">
+					<div class="dropdown profile-element">
+						<span><img alt="profile-image" class="img-circle" src="{{ asset('img/profile_small.jpg') }}"></span>
+						<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+							<span class="clear"> </span> <span class="block m-t-xs"></span> <strong class="font-bold">{#{{ render(controller('AppBundle:Default:getUsername')) }}#}</strong></span>
+							<span class="text-muted text-xs block">Coffee-Bike GmbH <i class="caret"></i></span> </span>
+						</a>
+						<ul class="dropdown-menu animated fadeInRight m-t-xs">
+							<li>
+								<a href="#">
+									<i class="fa fa-fw fa-sign-out"></i> {{ 'link.logout'|trans }}
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="logo-element">
+						CB
+					</div>
+				</li>
+				{% include 'menu.html.twig' %}
+			</ul>
+		</div>
+	</nav>
 
-				{%- block navbar -%}
-					<header class="navbar navbar-default navbar-fixed-top clearfix" role="navigation">
-						<a target="_blank" class="navbar-brand" href="http://www.codeconsortium.com/">Code Consortium</a>
-
-						<p class="navbar-text pull-right">
-							<i class="glyphicon glyphicon-user"></i>
-							&nbsp;
-							{%- if app.user -%}
-								{{- app.user.email -}}
-							{%- endif -%}
-						</p>
-					</header>
-
-					{%- block tool_bar -%}
-					{%- endblock tool_bar -%}
-				{%- endblock navbar -%}
-
-				<div class="container clearfix">
-					<br>
-					<div class="row">
-				        <aside class="col-md-2 page-sidebar-left">
-							{%- block sidebar -%}
-				            {%- endblock sidebar -%}
-						</aside>
-
-				        <div class="col-md-10 page-body-right">
-							<div id="top clearfix"></div>
-				            {%- block body -%}
-							{%- endblock body -%}
-				        </div>
-			        </div>
+	<div id="page-wrapper" class="gray-bg">
+		<div class="row border-bottom">
+			<nav class="navbar navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+				<div class="navbar-header">
+					<a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-fw fa-bars"></i></a>
+					<form role="search" class="navbar-form-custom" method="post" action="#">
+						<div class="form-group">
+							<input type="text" placeholder="{{ 'label.search'|trans }}" class="form-control"
+								   name="top-search" id="top-search">
+						</div>
+					</form>
 				</div>
-			</div>
+				<ul class="nav navbar-top-links navbar-right">
+					<li><span class="m-r-sm text-muted welcome-message">{{ "now"|date("d.m.Y") }}</span></li>
+					<li>
+						<a href="#">
+							<i class="fa fa-fw fa-sign-out"></i> {{ 'link.logout'|trans }}
+						</a>
+					</li>
+				</ul>
+			</nav>
 		</div>
 
-		<br>
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="col-lg-8">
 
-		<footer class="footer site-footer">
-
-			<div class="navbar navbar-default clearfix">
-				<p class="navbar-text pull-right content-right">
-					Copyright <a target="_blank" class="navbar-link" href="http://www.codeconsortium.com/">Code Consortium</a> 2011 - {{ 'now'|date("Y") }}.
-				</p>
+				<h2>{{ page_title }}</h2>
+				<ol class="breadcrumb">
+					<li><a href="">{{ 'home'|trans }}</a></li>
+					{% block breadcrumbs %}{% endblock %}
+				</ol>
 			</div>
-
-			<nav class="navbar navbar-inverse clearfix" style="bottom:0px;margin-bottom:0px;">
-				<div class="collapse navbar-collapse navbar-ex1-collapse">
-				    <ul class="nav navbar-nav">
-						<li>
-							<a href="http://www.codeconsortium.com">
-								Code Consortium
-							</a>
-						</li>
-
-						<li>
-							<a rel="friend" target="_blank" href="http://github.com/codeconsortium">Contribute</a>
-						</li>
-				    </ul>
+			<div class="col-sm-4">
+				<div class="title-action"><a href="#" class="btn btn-primary">Action</a></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="wrapper wrapper-content animated fadeInRight">
+					{% block content %}{% endblock %}
 				</div>
-			</nav>
 
-		</footer>
+			</div>
+			<div class="footer foxed">
+				<div><strong>Copyright</strong> &copy; 2015 Coffee-Bike GmbH</div>
+			</div>
+		</div>
+	</div>
 
-		<script src="//code.jquery.com/jquery.js"></script>
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-		{%- block javascripts -%}
-		{%- endblock -%}
+</div>
 
-		<script type='text/javascript'>
-		<!--
-			$(document).ready(function() {
-				// make visible js compat toolbars site wide
-				$("[data-js-non-compat]").each(function(i, el) {
-					$(el).addClass('collapse').addClass('hidden');
-				});
+<!-- Mainly scripts -->
+<script src="{{ asset('js/jquery.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+<script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-				$("[data-js-compat]").each(function(i, el) {
-					$(el).removeClass('collapse').removeClass('hidden');
-				});
-
-				$('[data-tip]').each(function() {
-					$(this).tooltip({
-						html: true,
-						placement: $(this).data('tip')
-					});
-				});
-
-				$('[data-toggle="dropdown"]').dropdown();
-			});
-		//-->
-		</script>
-
-		{%- endspaceless -%}
-    </body>
+<!-- Custom and plugin javascript -->
+<script src="{{ asset('js/inspinia.js') }}"></script>
+<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+{% block customjs %}{% endblock %}
+</body>
 </html>
