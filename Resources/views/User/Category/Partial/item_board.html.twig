@@ -15,30 +15,45 @@
 	            {%- endif -%}
 	        {%- endif -%}
 	    </td>
+		<div class="forum-item active">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="forum-icon">
+						<i class="fa fa-shield"></i>
+					</div>
+					<a href="{{- path('ccdn_forum_user_board_show', {'forumName': forumName, 'boardId': board.getId }) -}}" title="{{- board.getName -}}">
+						{{- board.getName -}}
+					</a>
+					<div class="forum-sub-title">{{- board.getDescription -}}</div>
+				</div>
+				<div class="col-md-1 forum-info">
+                                        <span class="views-number">
+                                            				{{- board.getCachedTopicCount -}}
 
-	    <td class="left">
-	        <h4>
-	            <a href="{{- path('ccdn_forum_user_board_show', {'forumName': forumName, 'boardId': board.getId }) -}}" title="{{- board.getName -}}">
-	                {{- board.getName -}}
-	            </a>
-	        </h4>
-
-			<blockquote class="slim">
-	            {{- board.getDescription -}}
-			</blockquote>
-	    </td>
-
-	    <td class="center" style="width: 100px;">
-			<span class="label label-info lead" title="{{- board.getCachedTopicCount -}}">
-				{{- board.getCachedTopicCount -}}
-			</span>
-	    </td>
-
-	    <td class="center" style="width: 100px;">
-			<span class="label label-info lead" title="{{- board.getCachedPostCount -}}">
-		        {{- board.getCachedPostCount -}}
-			</span>
-	    </td>
+                                        </span>
+					<div>
+						<small>Views</small>
+					</div>
+				</div>
+				<div class="col-md-1 forum-info">
+                                        <span class="views-number">
+                                            {{- board.getCachedTopicCount -}}
+                                        </span>
+					<div>
+						<small>Topics</small>
+					</div>
+				</div>
+				<div class="col-md-1 forum-info">
+                                        <span class="views-number">
+                                             {{- board.getCachedPostCount -}}
+                                        </span>
+					<div>
+						<small>Posts</small>
+					</div>
+				</div>
+			</div>
+		</div>
+	    
 
 	    <td class="center" style="width:170px;">
 	        {%- if board.getLastPost -%}
