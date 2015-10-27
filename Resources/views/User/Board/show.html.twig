@@ -1,10 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.board.user.show.layout_template %}
-
-{%- block title -%}
-	{{- 'title.board.show' | trans({'%board_name%': board.name}, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
+{% set page_title = 'label.forum.board.show'|trans %}
 
 {%- block sidebar -%}
 	{%- spaceless -%}

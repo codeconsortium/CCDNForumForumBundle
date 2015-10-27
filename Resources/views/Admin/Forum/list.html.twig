@@ -2,10 +2,8 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.forum.admin.list.layout_template %}
 
-{%- block title -%}
-	{{- 'title.admin.manage-forums.index' |trans({}, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
 
+{% set page_title = 'label.forum.admin.index'|trans %}
 {%- block sidebar -%}
 	{%- spaceless -%}
 	{{- parent() -}}

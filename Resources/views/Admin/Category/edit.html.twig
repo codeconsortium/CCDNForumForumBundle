@@ -2,9 +2,8 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.category.admin.edit.layout_template %}
 
-{%- block title -%}
-	{{- 'title.admin.manage-categories.edit' |trans({'%category_name%': category.name}, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
+{% set page_title = 'label.forum.admin.category.edit'|trans %}
+
 
 {%- block sidebar -%}
 	{%- spaceless -%}

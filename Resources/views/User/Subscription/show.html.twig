@@ -2,9 +2,7 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.subscription.list.layout_template %}
 
-{%- block title -%}
-	{{- 'title.subscription.index' | trans({}, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
+{% set page_title = 'label.forum.subscription.show'|trans %}
 
 {%- block sidebar -%}
 	{%- spaceless -%}

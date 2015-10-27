@@ -2,9 +2,8 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.category.admin.delete.layout_template %}
 
-{%- block title -%}
-	{{- 'title.admin.manage-categories.delete' |trans({'%category_name%': category.name}, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
+{% set page_title = 'label.forum.admin.category.delete'|trans %}
+
 
 {%- block sidebar -%}
 	{%- spaceless -%}

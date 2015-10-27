@@ -2,10 +2,7 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.topic.user.show.layout_template %}
 
-{%- block title -%}
-	{{- 'title.topic.show' | trans({'%topic_title%': topic.getTitle |capitalize}, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
-
+{% set page_title = 'label.forum.topic.show'|trans %}
 {%- block sidebar -%}
 	{%- spaceless -%}
 	{{- parent() -}}

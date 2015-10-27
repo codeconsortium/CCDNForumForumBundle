@@ -2,9 +2,7 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.post.user.edit.layout_template %}
 
-{%- block title -%}
-	{{- 'title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
+{% set page_title = 'label.forum.post.edit'|trans %}
 
 {%- block sidebar -%}
 	{%- spaceless -%}

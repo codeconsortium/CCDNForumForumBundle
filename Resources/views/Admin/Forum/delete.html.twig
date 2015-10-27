@@ -2,9 +2,7 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.forum.admin.delete.layout_template %}
 
-{%- block title -%}
-	{{- 'title.admin.manage-forums.delete' |trans({'%forum_name%': forum.name}, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
+{% set page_title = 'label.forum.admin.delete'|trans %}
 
 {%- block sidebar -%}
 	{%- spaceless -%}
