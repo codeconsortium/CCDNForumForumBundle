@@ -10,8 +10,9 @@
 				{{- topic.getFirstPost.getCreatedDate |date('d.m.Y H:i') -}}
              {% endif %}
 				</div>
+				<h2>
 				<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-					{{- topic.getTitle -}}
+					{{- topic.getTitle -}}</h2>
 				</a>
 
 
