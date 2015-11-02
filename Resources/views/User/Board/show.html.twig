@@ -14,6 +14,53 @@
     {%- spaceless -%}
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="ibox-content m-b-sm border-bottom">
+        <section class="clearfix">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th class="center" style="width: 18px;"></th>
+                    <th class="center" style="width: 18px;"></th>
+                    <th class="left">{{- 'board.topic-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
+                    <th class="center" style="width: 80px;">{{- 'board.reply-count-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
+                    <th class="center" style="width: 80px;">{{- 'board.view-count-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
+                    <th class="center" style="width: 170px;">{{- 'board.last-post-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {%- if sticky_topics is not empty -%}
+                    <tr>
+                        <td colspan="6" class="row-group-heading">
+                            {{- 'board.announcements-th' | trans({}, 'CCDNForumForumBundle') -}}
+                        </td>
+                    </tr>
+
+                    {%- for row, topic in sticky_topics -%}
+                        {%- if not topic.isDeleted or is_granted('ROLE_MODERATOR') -%}
+                            {%- include 'CCDNForumForumBundle:User:Board/Partial/item_topic_list.html.twig' -%}
+                        {%- endif -%}
+                    {%- endfor -%}
+
+                    <tr>
+                        <td colspan="6" class="row-group-heading">
+                            {{- 'board.topics-th' | trans({}, 'CCDNForumForumBundle') -}}
+                        </td>
+                    </tr>
+                {%- endif -%}
+
+                {%- for row, topic in pager.getItems() -%}
+                    {%- if not topic.isDeleted or is_granted('ROLE_MODERATOR') -%}
+                        {%- include 'CCDNForumForumBundle:User:Board/Partial/item_topic_list.html.twig' -%}
+                    {%- endif -%}
+                {%- else -%}
+                    <tr>
+                        <td class="center" colspan="6">
+                            {{- 'board.no-topics' | trans({}, 'CCDNForumForumBundle') -}}
+                        </td>
+                    </tr>
+                {%- endfor -%}
+                </tbody>
+            </table>
+        </section>
 		<div class="p-xs">
 			<div class="pull-left m-r-md">
 				<i class="fa {{ board.getIcon }} text-navy mid-icon"></i>
@@ -36,53 +83,7 @@
 
 	{{- knp_pagination_render(pager) -}}
 
-	<section class="clearfix">
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th class="center" style="width: 18px;"></th>
-                    <th class="center" style="width: 18px;"></th>
-                    <th class="left">{{- 'board.topic-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
-                    <th class="center" style="width: 80px;">{{- 'board.reply-count-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
-                    <th class="center" style="width: 80px;">{{- 'board.view-count-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
-                    <th class="center" style="width: 170px;">{{- 'board.last-post-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
-                </tr>
-            </thead>
-            <tbody>
-			    {%- if sticky_topics is not empty -%}
-					<tr>
-						<td colspan="6" class="row-group-heading">
-							{{- 'board.announcements-th' | trans({}, 'CCDNForumForumBundle') -}}
-						</td>
-					</tr>
 
-		            {%- for row, topic in sticky_topics -%}
-		                {%- if not topic.isDeleted or is_granted('ROLE_MODERATOR') -%}
-		                    {%- include 'CCDNForumForumBundle:User:Board/Partial/item_topic_list.html.twig' -%}
-		                {%- endif -%}
-		            {%- endfor -%}
-
-					<tr>
-						<td colspan="6" class="row-group-heading">
-							{{- 'board.topics-th' | trans({}, 'CCDNForumForumBundle') -}}
-						</td>
-					</tr>
-			    {%- endif -%}
-
-		        {%- for row, topic in pager.getItems() -%}
-		            {%- if not topic.isDeleted or is_granted('ROLE_MODERATOR') -%}
-		                {%- include 'CCDNForumForumBundle:User:Board/Partial/item_topic_list.html.twig' -%}
-		            {%- endif -%}
-		        {%- else -%}
-		            <tr>
-		                <td class="center" colspan="6">
-		                    {{- 'board.no-topics' | trans({}, 'CCDNForumForumBundle') -}}
-		                </td>
-		            </tr>
-		        {%- endfor -%}
-            </tbody>
-        </table>
-	</section>
 
 	{{- knp_pagination_render(pager) -}}
 
