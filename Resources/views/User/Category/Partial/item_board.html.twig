@@ -3,15 +3,15 @@
         <td class="center">
             {%- if canCreateTopicOnBoard(board, forum) -%}
                 {%- if canReplyToTopicOnBoard(board, forum) -%}
-                    <i class="glyphicon glyphicon-folder-close" style="margin-top:10px;"></i>
+                    <i class="fa fa-commenting" style="margin-top:10px;"></i>
                 {%- else -%}
-                    <i class="glyphicon glyphicon-lock" style="margin-top:10px;"></i>
+                    <i class="fa fa-commenting" style="margin-top:10px;"></i>
                 {%- endif -%}
             {%- else -%}
                 {%- if canReplyToTopicOnBoard(board, forum) -%}
-                    <i class="glyphicon glyphicon-eye-open" style="margin-top:10px;"></i>
+                    <i class="fa fa-commenting" style="margin-top:10px;"></i>
                 {%- else -%}
-                    <i class="glyphicon glyphicon-lock" style="margin-top:10px;"></i>
+                    <i class="fa fa-commenting" style="margin-top:10px;"></i>
                 {%- endif -%}
             {%- endif -%}
         </td>
