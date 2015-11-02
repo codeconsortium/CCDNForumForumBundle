@@ -10,7 +10,7 @@
 					{{- topic.getTitle -}}
 				</a>
 
-				
+
 			</div>
 			<div class="col-md-1 forum-info">
                                         <span class="views-number">
@@ -34,12 +34,12 @@
 			 {%- if topic.getFirstPost -%}
 				{{- 'post.posted-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
 				{{- topic.getFirstPost.getCreatedBy -}}
-
+             {% endif %}
             <div class="col-md-1 forum-info">
 			{%- if topic.getLastPost -%}
                 {{- 'post.posted-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
 				{{- topic.getLastPost.getCreatedBy -}}
-
+            {% endif %}
 				<br>
 
 
@@ -48,4 +48,5 @@
     </div>
 
 	</tr>
+
 {%- endspaceless -%}
