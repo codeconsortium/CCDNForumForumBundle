@@ -37,8 +37,9 @@
 
             <div class="col-md-1 forum-info">
 			{%- if topic.getLastPost -%}
-                {{- 'post.posted-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
+                {{- 'post.post-last-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
 				{{- topic.getLastPost.getCreatedBy -}}
+				{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}
             {% endif %}
 				<br>
 

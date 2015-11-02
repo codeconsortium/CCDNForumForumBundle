@@ -206,6 +206,7 @@ topic:
 post:
     preview:                           "Preview"
     posted-by:                         "Posted by "
+    post-last-by:                      "Last post by "
     edited-by:                         "Edited by "
     deleted-by:                        "Deleted by "
     locked-by:                         "Locked by "
