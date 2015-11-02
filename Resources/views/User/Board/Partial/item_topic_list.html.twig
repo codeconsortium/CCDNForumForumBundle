@@ -38,6 +38,7 @@
 
             <div class="col-md-1 forum-info">
 			{%- if topic.getLastPost -%}
+			<img src="{{ topic.getLastPost.getCreatedBy }}">
                 {{- 'post.post-last-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
 				{{- topic.getLastPost.getCreatedBy -}}
 				{{- topic.getLastPost.getCreatedDate |date('d.m.Y H:i') -}}
