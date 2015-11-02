@@ -134,6 +134,13 @@ class BoardUpdateFormType extends AbstractType
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
+            ->add('icon', 'text',
+                array(
+                    'required'          => true,
+                    'label'              => 'board.icon',
+                    'translation_domain' => 'CCDNForumForumBundle',
+                )
+            )
         ;
     }
 
