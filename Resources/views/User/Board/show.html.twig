@@ -12,6 +12,11 @@
 
 {%- block content -%}
     {%- spaceless -%}
+<div class="wrapper wrapper-content animated fadeInRight">
+	<div class="ibox-content forum-post-container">
+		<div class="forum-post-info">
+			<h4><span class="text-navy"><i class="fa fa-globe"></i> {{ board.getName }}</span></h4>
+		</div>
 
 	<section class="row btn-toolbar clearfix">
             {% set is_topic_create_disabled = board.isAuthorisedToCreateTopic(app.security) ? '': ' disabled' %}
@@ -91,6 +96,8 @@
 	</section>
 
 	{{- knp_pagination_render(pager) -}}
+
+
 
     {%- endspaceless -%}
 {%- endblock content -%}
