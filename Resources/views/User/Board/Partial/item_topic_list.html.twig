@@ -39,7 +39,7 @@
 			{%- if topic.getLastPost -%}
                 {{- 'post.post-last-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
 				{{- topic.getLastPost.getCreatedBy -}}
-				{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}
+				{{- topic.getLastPost.getCreatedDate |date('d-m-Y H:i') -}}
             {% endif %}
 				<br>
 
