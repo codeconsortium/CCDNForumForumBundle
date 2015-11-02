@@ -31,7 +31,7 @@
             {% set is_topic_create_disabled = board.isAuthorisedToCreateTopic(app.security) ? '': ' disabled' %}
 
             <a class="btn btn-xs btn-primary{{ is_topic_create_disabled }}" rel="nofollow" href="{{- path('ccdn_forum_user_topic_create', {'forumName': forumName, 'boardId': board.getId }) -}}">
-				<i class="btn btn-xs btn-primary"></i>
+				<i class="fa fa-fw fa-plus"> </i>
 				{{- 'link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}
 			</a>
 
