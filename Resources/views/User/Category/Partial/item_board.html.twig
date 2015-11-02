@@ -1,25 +1,10 @@
 {%- spaceless -%}
     <tr>
-        <td class="center">
-            {%- if canCreateTopicOnBoard(board, forum) -%}
-                {%- if canReplyToTopicOnBoard(board, forum) -%}
-                    <i class="fa fa-commenting" style="margin-top:10px;"></i>
-                {%- else -%}
-                    <i class="fa fa-commenting" style="margin-top:10px;"></i>
-                {%- endif -%}
-            {%- else -%}
-                {%- if canReplyToTopicOnBoard(board, forum) -%}
-                    <i class="fa fa-commenting" style="margin-top:10px;"></i>
-                {%- else -%}
-                    <i class="fa fa-commenting" style="margin-top:10px;"></i>
-                {%- endif -%}
-            {%- endif -%}
-        </td>
         <div class="forum-item active">
             <div class="row">
                 <div class="col-md-9">
                     <div class="forum-icon">
-                        <i class="fa fa-commenting"></i>
+                        <i class="fa fa-commenting-o"></i>
                     </div>
                     <a href="{{- path('ccdn_forum_user_board_show', {'forumName': forumName, 'boardId': board.getId }) -}}"
                        title="{{- board.getName -}}">
