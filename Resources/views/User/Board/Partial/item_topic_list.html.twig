@@ -10,13 +10,7 @@
 					{{- topic.getTitle -}}
 				</a>
 
-
-				&nbsp;&#183;
-                <a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-                    <abbr class="timestamper" title="{{- topic.getFirstPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-                        {{- topic.getFirstPost.getCreatedDate |date(ccdn_forum_forum.board.user.show.first_post_datetime_format) -}}
-                    </abbr>
-                </a>
+				
 			</div>
 			<div class="col-md-1 forum-info">
                                         <span class="views-number">
@@ -36,12 +30,12 @@
 					<small>Views</small>
 				</div>
 			</div>
-			<br>
+
 			 {%- if topic.getFirstPost -%}
 				{{- 'post.posted-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
 				{{- topic.getFirstPost.getCreatedBy -}}
-			<div class="col-md-1 forum-info">
 
+            <div class="col-md-1 forum-info">
 			{%- if topic.getLastPost -%}
                 {{- 'post.posted-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
 				{{- topic.getLastPost.getCreatedBy -}}
@@ -49,81 +43,9 @@
 				<br>
 
 
-				{#
-					@TODO figure a way to determine page in a more appropriate way
-	                {%- set page = divCeil((topic.getCachedReplyCount + 1), posts_per_page) -%}
-				#}
-				{%- set page = 1 -%}
-				{%- if page < 2 -%}
-					<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId } ) -}}#{{- topic.getLastPost.getId -}}">
-						<i class="glyphicon glyphicon-arrow-right"></i>
-						<abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-							{{- topic.getLastPost.getCreatedDate |date(ccdn_forum_forum.board.user.show.last_post_datetime_format) -}}
-						</abbr>
-					</a>
-				{%- else -%}
-					<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId, 'page':page }) -}}#{{- topic.getLastPost.getId -}}">
-						<i class="glyphicon glyphicon-arrow-right"></i>
-						<abbr class="timestamper" title="{{- topic.getLastPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-							{{- topic.getLastPost.getCreatedDate |date(ccdn_forum_forum.board.user.show.last_post_datetime_format) -}}
-						</abbr>
-					</a>
-				{%- endif -%}
-			{%- endif -%}
-
 				</div>
-			</div>
-		</div>
-	</div>
-	<tr>
-		<td class="center">
-			{%- if topic.isDeleted -%}
-				<i class="glyphicon glyphicon-trash"></i>
-			{%- else -%}
-				{%- if topic.isClosed -%}
-					<i class="glyphicon glyph-icon-lock"></i>
-				{%- else -%}
-					{# else if not closed, then if new posts add special icon here #}
-					{%- if topic.cachedReplyCount > 100 -%}
-						<i class="glyphicon glyphicon-fire"></i>
-					{%- endif -%}
-				{%- endif -%}
-			{%- endif -%}
-		</td>
-		<td class="center">
-			{# use custom icons below, will be later specified in the create topic form #}
-
-				{%- if topic.isSticky -%}
-					<i class="glyphicon glyphicon-bullhorn"></i>
-				{%- else -%}
-					<i class="glyphicon glyphicon-comment"></i>
-				{%- endif -%}
-			</a>
-		</td>
-		<td class="left">
-			{%- if topic.getClosedDate -%}
-				<span class="label label-danger">{{- 'topic.badge.closed' |trans({}, 'CCDNForumForumBundle') -}}</span>&nbsp;
-			{%- endif -%}
-
-			<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId }) -}}" title="{{- topic.getTitle -}}">
-				{{- topic.getTitle |title -}}
-			</a>
-
-			<br>
-
-
-			{%- endif -%}
-		</td>
-		<td class="center">
-			<span class="label label-info lead" title="{{- topic.getCachedReplyCount -}}">
-				{{- topic.getCachedReplyCount -}}
-			</span>
-		</td>
-		<td class="center">
-			<span class="label label-info lead" title="{{- topic.getCachedViewCount -}}">
-				{{- topic.getCachedViewCount -}}
-			</span>
-		</td>
+        </div>
+    </div>
 
 	</tr>
 {%- endspaceless -%}
