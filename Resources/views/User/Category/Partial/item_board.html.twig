@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-9">
                     <div class="forum-icon">
-                        <i class="fa fa-pencil-square-o"></i>
+                        <i class="fa {{ board.getIcon }}"></i>
                     </div>
                     <a href="{{- path('ccdn_forum_user_board_show', {'forumName': forumName, 'boardId': board.getId }) -}}"
                        title="{{- board.getName -}}" class="forum-item-title">
