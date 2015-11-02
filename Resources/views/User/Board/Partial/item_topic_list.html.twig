@@ -7,6 +7,7 @@
                  <img src="{{ topic.getFirstPost.getCreatedBy }}">
                  {%- if topic.getFirstPost -%}
 				{{- topic.getFirstPost.getCreatedBy -}}
+				{{- topic.getFirstPost.getCreatedDate |date('d.m.Y H:i') -}}
              {% endif %}
 				</div>
 				<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId }) -}}">
@@ -39,7 +40,7 @@
 			{%- if topic.getLastPost -%}
                 {{- 'post.post-last-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
 				{{- topic.getLastPost.getCreatedBy -}}
-				{{- topic.getLastPost.getCreatedDate |date('d-m-Y H:i') -}}
+				{{- topic.getLastPost.getCreatedDate |date('d.m.Y H:i') -}}
             {% endif %}
 				<br>
 
