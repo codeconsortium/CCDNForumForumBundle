@@ -9,9 +9,7 @@
 				<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId }) -}}">
 					{{- topic.getTitle -}}
 				</a>
-                {%- if topic.getFirstPost -%}
-				{{- 'post.posted-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
-				{{- topic.getFirstPost.getCreatedBy -}}
+
 
 				&nbsp;&#183;
                 <a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId }) -}}">
@@ -38,6 +36,10 @@
 					<small>Views</small>
 				</div>
 			</div>
+			<br>
+			 {%- if topic.getFirstPost -%}
+				{{- 'post.posted-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
+				{{- topic.getFirstPost.getCreatedBy -}}
 			<div class="col-md-1 forum-info">
 
 			{%- if topic.getLastPost -%}
