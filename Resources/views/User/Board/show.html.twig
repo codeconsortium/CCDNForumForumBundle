@@ -13,13 +13,21 @@
 {%- block content -%}
     {%- spaceless -%}
 <div class="wrapper wrapper-content animated fadeInRight">
-	<div class="forum-post-info">
-		<h4><span class="text-navy"><i class="fa fa-globe"></i> {{ board.getName }}</span></h4>
+	<div class="ibox-content m-b-sm border-bottom">
+		<div class="p-xs">
+			<div class="pull-left m-r-md">
+				<i class="fa fa-globe text-navy mid-icon"></i>
+			</div>
+			<h2>{{ board.getTitle }}</h2>
+			<span>{{ board.getDescription }}</span>
+		</div>
 	</div>
 	<div class="ibox-content forum-post-container">
 
 
-	<section class="row btn-toolbar clearfix">
+
+
+		<section class="row btn-toolbar clearfix">
             {% set is_topic_create_disabled = board.isAuthorisedToCreateTopic(app.security) ? '': ' disabled' %}
 
             <a class="btn btn-danger{{ is_topic_create_disabled }}" rel="nofollow" href="{{- path('ccdn_forum_user_topic_create', {'forumName': forumName, 'boardId': board.getId }) -}}">
