@@ -137,6 +137,13 @@ class BoardCreateFormType extends AbstractType
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
+            ->add('icon', 'text',
+                array(
+                    'required'          => true,
+                    'label'              => 'board.icon',
+                    'translation_domain' => 'CCDNForumForumBundle',
+                )
+            )
         ;
     }
 
@@ -144,7 +151,7 @@ class BoardCreateFormType extends AbstractType
      *
      * @access public
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     */
+    */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
