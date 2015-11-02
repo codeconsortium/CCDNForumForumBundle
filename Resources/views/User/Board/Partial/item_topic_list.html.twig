@@ -5,6 +5,9 @@
 			<div class="col-md-9">
 				<div class="forum-icon">
                  <img src="{{ topic.getFirstPost.getCreatedBy }}">
+                 {%- if topic.getFirstPost -%}
+				{{- topic.getFirstPost.getCreatedBy -}}
+             {% endif %}
 				</div>
 				<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId }) -}}">
 					{{- topic.getTitle -}}
@@ -31,10 +34,7 @@
 				</div>
 			</div>
 
-			 {%- if topic.getFirstPost -%}
-				{{- 'post.posted-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
-				{{- topic.getFirstPost.getCreatedBy -}}
-             {% endif %}
+
             <div class="col-md-1 forum-info">
 			{%- if topic.getLastPost -%}
                 {{- 'post.posted-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
