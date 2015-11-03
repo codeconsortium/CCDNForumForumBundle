@@ -6,8 +6,8 @@
 
 {%- block sidebar -%}
 	{%- spaceless -%}
-	{{- parent() -}}
-    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_subscriptions.html.twig' -%}
+		{{- parent() -}}
+		{%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_subscriptions.html.twig' -%}
 	{%- endspaceless -%}
 {%- endblock sidebar -%}
 
@@ -17,10 +17,10 @@
 	{%- else -%}
 		<li>
 	{%- endif -%}
-		<a href="{{- path('ccdn_forum_user_subscription_index', {'forumName': forum_name, 'filter': filter_key}) -}}">
-			{{- label -}}
+	<a href="{{- path('ccdn_forum_user_subscription_index', {'forumName': forum_name, 'filter': filter_key}) -}}">
+		{{- label -}}
 
-			&nbsp;
+		&nbsp;
 
 			<span class="badge">
 				{%- if count_unread is not null and count_total is not null -%}
@@ -37,7 +37,7 @@
 					{%- endif -%}
 				{%- endif -%}
 			</span>
-		</a>
+	</a>
 	</li>
 {%- endmacro -%}
 
@@ -45,28 +45,28 @@
 {%- block content -%}
 	{%- spaceless -%}
 
-	<section class="row clearfix">
-		<div class="col-md-12">
-			<ul class="nav nav-tabs">
-				{%- import _self as tabs -%}
-				{%- if forum is not null -%}
-					{{- tabs.subscription_tab('subscription.all'|trans({}, 'CCDNForumForumBundle'), forumName, 'all', filter, total_subscribed_forums['count_read'], total_subscribed_forums['count_unread'], total_subscribed_forums['count_total']) -}}
-					{{- tabs.subscription_tab('subscription.unread'|trans({}, 'CCDNForumForumBundle'), forumName, 'unread', filter, null, total_subscribed_forums['count_unread'], null) -}}
-					{{- tabs.subscription_tab('subscription.read'|trans({}, 'CCDNForumForumBundle'), forumName, 'read', filter, total_subscribed_forums['count_read'], null, null) -}}
-				{%- else -%}
-					{{- tabs.subscription_tab('subscription.all'|trans({}, 'CCDNForumForumBundle'), '~', 'all', filter, total_subscribed_forums['count_read'], total_subscribed_forums['count_unread'], total_subscribed_forums['count_total']) -}}
-					{{- tabs.subscription_tab('subscription.unread'|trans({}, 'CCDNForumForumBundle'), '~', 'unread', filter, null, total_subscribed_forums['count_unread'], null) -}}
-					{{- tabs.subscription_tab('subscription.read'|trans({}, 'CCDNForumForumBundle'), '~', 'read', filter, total_subscribed_forums['count_read'], null, null) -}}
-				{%- endif -%}
-			</ul>
-		</div>
-	</section>
+		<section class="row clearfix">
+			<div class="col-md-12">
+				<ul class="nav nav-tabs">
+					{%- import _self as tabs -%}
+					{%- if forum is not null -%}
+						{{- tabs.subscription_tab('subscription.all'|trans({}, 'CCDNForumForumBundle'), forumName, 'all', filter, total_subscribed_forums['count_read'], total_subscribed_forums['count_unread'], total_subscribed_forums['count_total']) -}}
+						{{- tabs.subscription_tab('subscription.unread'|trans({}, 'CCDNForumForumBundle'), forumName, 'unread', filter, null, total_subscribed_forums['count_unread'], null) -}}
+						{{- tabs.subscription_tab('subscription.read'|trans({}, 'CCDNForumForumBundle'), forumName, 'read', filter, total_subscribed_forums['count_read'], null, null) -}}
+					{%- else -%}
+						{{- tabs.subscription_tab('subscription.all'|trans({}, 'CCDNForumForumBundle'), '~', 'all', filter, total_subscribed_forums['count_read'], total_subscribed_forums['count_unread'], total_subscribed_forums['count_total']) -}}
+						{{- tabs.subscription_tab('subscription.unread'|trans({}, 'CCDNForumForumBundle'), '~', 'unread', filter, null, total_subscribed_forums['count_unread'], null) -}}
+						{{- tabs.subscription_tab('subscription.read'|trans({}, 'CCDNForumForumBundle'), '~', 'read', filter, total_subscribed_forums['count_read'], null, null) -}}
+					{%- endif -%}
+				</ul>
+			</div>
+		</section>
 
-	{{- knp_pagination_render(pager) -}}
+		{{- knp_pagination_render(pager) -}}
 
-	<section class="clearfix">
-		<table class="table table-striped table-hover">
-			<thead>
+		<section class="clearfix">
+			<table class="table table-striped table-hover">
+				<thead>
 				<tr>
 					<th class="center" style="width:18px;"></th>
 					<th class="center" style="width:18px;"></th>
@@ -75,8 +75,8 @@
 					<th class="center" style="width: 100px;">{{- 'board.view-count-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
 					<th class="center" style="width: 170px;">{{- 'board.last-post-th' | trans({}, 'CCDNForumForumBundle') -}}</th>
 				</tr>
-			</thead>
-			<tbody>
+				</thead>
+				<tbody>
 				{%- for row, subscription in pager.getItems() -%}
 					{%- set topic = subscription.getTopic -%}
 
@@ -90,11 +90,11 @@
 						</td>
 					</tr>
 				{%- endfor -%}
-			</tbody>
-		</table>
-	</section>
+				</tbody>
+			</table>
+		</section>
 
-	{{- knp_pagination_render(pager) -}}
+		{{- knp_pagination_render(pager) -}}
 
 	{%- endspaceless -%}
 {%- endblock content -%}

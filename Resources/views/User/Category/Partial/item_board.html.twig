@@ -1,48 +1,48 @@
 {%- spaceless -%}
-    <tr>
-        <div class="forum-item">
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="forum-icon">
-                        <i class="fa {{ board.getIcon }}"></i>
-                    </div>
-                    <a href="{{- path('ccdn_forum_user_board_show', {'forumName': forumName, 'boardId': board.getId }) -}}"
-                       title="{{- board.getName -}}" class="forum-item-title">
-                        {{- board.getName -}}
-                    </a>
-
-                    <div class="forum-sub-title">{{- board.getDescription -}}</div>
+<tr>
+    <div class="forum-item">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="forum-icon">
+                    <i class="fa {{ board.getIcon }} text-navy"></i>
                 </div>
-                <div class="col-md-1 forum-info">
+                <a href="{{- path('ccdn_forum_user_board_show', {'forumName': forumName, 'boardId': board.getId }) -}}"
+                   title="{{- board.getName -}}" class="forum-item-title">
+                    {{- board.getName -}}
+                </a>
+
+                <div class="forum-sub-title">{{- board.getDescription -}}</div>
+            </div>
+            <div class="col-md-1 forum-info">
                                         <span class="views-number">
                                             {{- board.getCachedTopicCount -}}
                                         </span>
 
-                    <div>
-                        <small>Views</small>
-                    </div>
+                <div>
+                    <small>Views</small>
                 </div>
-                <div class="col-md-1 forum-info">
+            </div>
+            <div class="col-md-1 forum-info">
                                         <span class="views-number">
                                             {{- board.getCachedTopicCount -}}
                                         </span>
 
-                    <div>
-                        <small>Topics</small>
-                    </div>
+                <div>
+                    <small>Topics</small>
                 </div>
-                <div class="col-md-1 forum-info">
+            </div>
+            <div class="col-md-1 forum-info">
                                         <span class="views-number">
                                              {{- board.getCachedPostCount -}}
                                         </span>
 
-                    <div>
-                        <small>Posts</small>
-                    </div>
+                <div>
+                    <small>Posts</small>
                 </div>
             </div>
         </div>
+    </div>
 
 
 
-{%- endspaceless -%}
+    {%- endspaceless -%}

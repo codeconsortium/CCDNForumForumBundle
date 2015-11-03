@@ -6,13 +6,13 @@
 
 
 
-				{%- for row, board in category.boards -%}
-					{%- include "CCDNForumForumBundle:User:Category/Partial/item_board.html.twig" -%}
-				{%- else -%}
-						<div class="forum-title">
-							{{- 'category.no-boards' | trans({}, 'CCDNForumForumBundle') -}}
-						</div>
-				{%- endfor -%}
+	{%- for row, board in category.boards -%}
+		{%- include "CCDNForumForumBundle:User:Category/Partial/item_board.html.twig" -%}
+	{%- else -%}
+		<div class="forum-title">
+			{{- 'category.no-boards' | trans({}, 'CCDNForumForumBundle') -}}
+		</div>
+	{%- endfor -%}
 
 
 {%- endspaceless -%}

@@ -4,39 +4,40 @@
 {% set page_title = 'forum.board.show'|trans %}
 
 {%- block sidebar -%}
-	{%- spaceless -%}
-	{{- parent() -}}
-    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
-	{%- endspaceless -%}
+    {%- spaceless -%}
+        {{- parent() -}}
+        {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
+    {%- endspaceless -%}
 {%- endblock sidebar -%}
 
 {%- block content -%}
     {%- spaceless -%}
 <div class="wrapper wrapper-content animated fadeInRight">
-	<div class="ibox-content m-b-sm border-bottom">
-		<div class="p-xs">
-			<div class="pull-left m-r-md">
-				<i class="fa {{ board.getIcon }} text-navy mid-icon"></i>
-			</div>
-			<h2>{{ board.getName }}</h2>
-			<span>{{ board.getDescription }}</span>
-		</div>
-	</div>
-	<div class="ibox-content forum-post-container">
-	<section class="">
+    <div class="ibox-content m-b-sm border-bottom">
+        <div class="p-xs">
+            <div class="pull-left m-r-md">
+                <i class="fa {{ board.getIcon }} text-navy mid-icon"></i>
+            </div>
+            <h2>{{ board.getName }}</h2>
+            <span>{{ board.getDescription }}</span>
+        </div>
+    </div>
+    <div class="ibox-content forum-post-container">
+        <section class="">
             {% set is_topic_create_disabled = board.isAuthorisedToCreateTopic(app.security) ? '': ' disabled' %}
-        <div class="float-right">
-            <a class="btn btn-xs btn-primary{{ is_topic_create_disabled }}" rel="nofollow" href="{{- path('ccdn_forum_user_topic_create', {'forumName': forumName, 'boardId': board.getId }) -}}">
-				<i class="fa fa-fw fa-plus"> </i>
-				 {{- 'link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}
-			</a></div>
-        <hr></hr>
-    </section>
+            <div class="pull-right">
+                <a class="btn btn-xs btn-primary{{ is_topic_create_disabled }}" rel="nofollow" href="{{- path('ccdn_forum_user_topic_create', {'forumName': forumName, 'boardId': board.getId }) -}}">
+                    <i class="fa fa-fw fa-plus"> </i>
+                    {{- 'link.topic.create' | trans({}, 'CCDNForumForumBundle') -}}
+                </a></div>
+            <br>
+            <hr></hr>
+        </section>
 
 
-	{{- knp_pagination_render(pager) -}}
+        {{- knp_pagination_render(pager) -}}
 
-	<section class="clearfix">
+        <section class="clearfix">
 
             {%- if sticky_topics is not empty -%}
                 <tr>
@@ -70,11 +71,11 @@
                 </tr>
             {%- endfor -%}
 
-	</section>
+        </section>
 
-	{{- knp_pagination_render(pager) -}}
+        {{- knp_pagination_render(pager) -}}
 
 
 
-    {%- endspaceless -%}
-{%- endblock content -%}
+        {%- endspaceless -%}
+        {%- endblock content -%}

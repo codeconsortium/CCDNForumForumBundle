@@ -44,11 +44,11 @@
 							{{- topic.getFirstPost.getCreatedBy -}}
 
 							&nbsp;&#183;
-			                <a href="{{- path('ccdn_forum_user_topic_show', {'forumName': topic.board.category.forumName, 'topicId': topic.getId }) -}}">
-			                    <abbr class="timestamper" title="{{- topic.getFirstPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-			                        {{- topic.getFirstPost.getCreatedDate |date(ccdn_forum_forum.board.user.show.first_post_datetime_format) -}}
-			                    </abbr>
-			                </a>
+							<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': topic.board.category.forumName, 'topicId': topic.getId }) -}}">
+								<abbr class="timestamper" title="{{- topic.getFirstPost.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+									{{- topic.getFirstPost.getCreatedDate |date(ccdn_forum_forum.board.user.show.first_post_datetime_format) -}}
+								</abbr>
+							</a>
 						{%- endif -%}
 					</td>
 					<td class="center">
@@ -64,7 +64,7 @@
 					<td class="center">
 						{%- if topic.getLastPost -%}
 
-			                {{- 'post.posted-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
+							{{- 'post.posted-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
 							{{- topic.getLastPost.getCreatedBy -}}
 
 							<br>

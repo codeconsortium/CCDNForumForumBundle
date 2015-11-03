@@ -25,18 +25,11 @@
 	{%- import _self as post_panel -%}
 	{%- set panel = post_panel.class(post, post.topic) -%}
 
-	<div class="col-md-12">
-		<article class="row panel {{ panel }} clearfix" {%- if post.id %} id="{{- post.getBody |slice(0,24) -}}"{#id="post_{{- post.getId -}}"#}{%- endif -%}>
 
-		    <header class="panel-heading">
-		        {%- include 'CCDNForumForumBundle:User:Post/Partial/item_post_head.html.twig' with {'post': post } -%}
-			</header>
-
-			<div class="panel-body">
-				{%- include 'CCDNForumForumBundle:User:Post/Partial/item_post_body.html.twig' with {'post': post } -%}
-			</div>
-
-		</article>
+	<div class="media">
+		{%- include 'CCDNForumForumBundle:User:Post/Partial/item_post_head.html.twig' with {'post': post } -%}
+		{%- include 'CCDNForumForumBundle:User:Post/Partial/item_post_body.html.twig' with {'post': post } -%}
 	</div>
+
 
 {%- endspaceless -%}

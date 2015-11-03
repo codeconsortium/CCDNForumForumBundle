@@ -4,17 +4,17 @@
 
 {% set page_title = 'forum.category.index'|trans %}
 {% block content %}
-	{% include 'CCDNForumForumBundle:Common:Layout/welcome.html.twig' %}
-	{%- spaceless -%}
+    {% include 'CCDNForumForumBundle:Common:Layout/welcome.html.twig' %}
+    {%- spaceless -%}
         <div class="ibox-content forum-container">
-        {%- for category in categories -%}
-            {%- include "CCDNForumForumBundle:User:Category/Partial/item_category.html.twig" -%}
-        {%- else -%}
-            <div class="forum-title">
-          		<h3>{{- 'category.none' | trans({}, 'CCDNForumForumBundle') -}}</h3>
-		   </div>
-        {%- endfor -%}
+            {%- for category in categories -%}
+                {%- include "CCDNForumForumBundle:User:Category/Partial/item_category.html.twig" -%}
+            {%- else -%}
+                <div class="forum-title">
+                    <h3>{{- 'category.none' | trans({}, 'CCDNForumForumBundle') -}}</h3>
+                </div>
+            {%- endfor -%}
         </div>
 
-	{%- endspaceless -%}
+    {%- endspaceless -%}
 {%- endblock content -%}

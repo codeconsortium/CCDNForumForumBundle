@@ -1,21 +1,12 @@
 {%- spaceless -%}
+	<a class="forum-avatar" href="#">
+		<img src="img/a1.jpg" class="img-circle" alt="image">
+		<div class="author-info">
+			<strong>Name: </strong> {{- post.getCreatedBy.username -}}<br>
+			<strong>Posted: </strong> {{- post.getCreatedDate |date('d.m.Y H:i:s') -}} <br>
+		</div>
+	</a>
 
-	<div class="row clearfix">
-	    <div class="col-md-7">
-			<h3 class="panel-title">
-				{%- if post.getCreatedBy -%}
-			        {{- 'post.posted-by' |trans({}, 'CCDNForumForumBundle') |raw -}}
-					{{- post.getCreatedBy.username -}}
-
-			        &nbsp;&#183;&nbsp;
-
-				{%- endif -%}
-
-		        <span class="timestamper" title="{{- post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-		            {{- post.getCreatedDate |date(ccdn_forum_forum.item_post.created_datetime_format) -}}
-		        </span>
-			</h3>
-	    </div>
 
 	    <div class="col-md-5 pull-right text-right">
 	        {% if post.id and not post.isDeleted %}

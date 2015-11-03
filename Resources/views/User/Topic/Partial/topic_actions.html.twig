@@ -8,32 +8,38 @@
 
 
 		{%- if canReplyToTopic(topic, forum) -%}
-		    <a class="btn btn-danger" rel="nofollow"
-			 href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-				<i class="glyphicon glyphicon-comment"></i>
-				{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
-			</a>
-		{%- else -%}
-		    <a class="btn btn-danger disabled" rel="nofollow"
-			 href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-				<i class="glyphicon glyphicon-lock"></i>
-				{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
-			</a>
+<div class="pull-right">
+	<a class="btn btn-xs btn-primary" rel="nofollow"
+	   href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forumName, 'topicId': topic.getId }) -}}">
+		<i class="fa fa-commenting-o"></i>
+		{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
+	</a>
+
+	{%- else -%}
+	<div class="pull-right">
+		<a class="btn btn-xs btn-primary disabled" rel="nofollow"
+		   href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forumName, 'topicId': topic.getId }) -}}">
+			<i class="glyphicon glyphicon-lock"></i>
+			{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
+		</a>
+
 		{%- endif -%}
 
 
 		{%- if canSubscribeToTopic(topic, forum, (subscription is defined ? subscription : null)) -%}
-			<a class="btn btn-info" href="{{- path('ccdn_forum_user_subscription_subscribe', {'forumName': forumName, 'topicId': topic.getId }) -}}">
+			<a class="btn btn-xs btn-primary" href="{{- path('ccdn_forum_user_subscription_subscribe', {'forumName': forumName, 'topicId': topic.getId }) -}}">
 				<i class="glyphicon glyphicon-eye-open"></i>
 				{{- 'link.topic.subscribe' | trans({}, 'CCDNForumForumBundle') -}}
 			</a>
+
 		{%- endif -%}
 
 		{%- if canUnsubscribeFromTopic(topic, forum, (subscription is defined ? subscription : null)) -%}
-			<a class="btn btn-info" href="{{- path('ccdn_forum_user_subscription_unsubscribe', {'forumName': forumName, 'topicId': topic.getId }) -}}">
+			<a class="btn btn-xs btn-primary" href="{{- path('ccdn_forum_user_subscription_unsubscribe', {'forumName': forumName, 'topicId': topic.getId }) -}}">
 				<i class="glyphicon glyphicon-eye-close"></i>
 				{{- 'link.topic.unsubscribe' | trans({}, 'CCDNForumForumBundle') -}}
 			</a>
+
 		{%- endif -%}
 
 
@@ -114,6 +120,6 @@
 
 		{%- endif -%}
 
-	{%- endif -%}
+		{%- endif -%}
 
-{%- endspaceless -%}
+		{%- endspaceless -%}
