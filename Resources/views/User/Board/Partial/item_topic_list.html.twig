@@ -6,7 +6,7 @@
 				<div class="forum-icon">
                  <img class="img-circle" src="{{ asset(profilepicture.getAvatarPath(topic.getFirstPost.getCreatedBy)) }}" width="58" height="58">
                  {%- if topic.getFirstPost -%}
-				{{- topic.getFirstPost.getCreatedBy -}}
+				{{- topic.getFirstPost.getCreatedBy.name -}}
 				{{- topic.getFirstPost.getCreatedDate |date('d.m.Y H:i') -}}
              {% endif %}
 				</div>
