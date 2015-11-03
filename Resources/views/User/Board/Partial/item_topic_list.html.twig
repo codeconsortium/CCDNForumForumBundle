@@ -1,22 +1,26 @@
 {%- spaceless -%}
+<style>
+.forum-avatar {
+
+	margin-right: 15px; !important;
+	width: auto; !important;
+}
+</style>
+
 
 	<div class="forum-item active">
 		<div class="row">
 			<div class="col-md-9">
-				<div class="forum-icon">
-                 <img class="img-circle" src="{{ asset(profilepicture.getAvatarPath(topic.getFirstPost.getCreatedBy)) }}" width="58" height="58">
-                 {%- if topic.getFirstPost -%}
-				{{- topic.getFirstPost.getCreatedBy.name -}}
-				{{- topic.getFirstPost.getCreatedDate |date('d.m.Y H:i') -}}
-             {% endif %}
+				<div class="forum-avatar" >
+                 <img class="img-thumbnail" src="{{ asset(profilepicture.getAvatarPath(topic.getFirstPost.getCreatedBy)) }}" style="max-width: none; width: 48px; height: 48px; !important;">
 				</div>
 				<h3>
-				<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-					{{- topic.getTitle -}}</h3>
-				</a>
-
-
+				<a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': topic.getId }) -}}">{{- topic.getTitle -}}</a><br>
+				<small>{{- topic.getFirstPost.getCreatedBy.name -}}&nbsp;{{ 'helper.at'|trans }}&nbsp; {{- topic.getFirstPost.getCreatedDate |date('d.m.Y H:i') -}} </small></h3>
 			</div>
+
+
+
 			<div class="col-md-1 forum-info">
                                         <span class="views-number">
                                             {{- topic.getCachedReplyCount -}}
@@ -35,19 +39,18 @@
 					<small>Views</small>
 				</div>
 			</div>
+			<!--<div class="col-md-1 forum-info">
+                                        <span class="views-number">
+                                       {{- topic.getLastPost.getCreatedBy.name -}}&nbsp;{{ 'helper.at'|trans }}&nbsp;{{- topic.getLastPost.getCreatedDate |date('d.m.Y H:i') -}}
+				                        </span>
 
-
-            <div class="col-md-1 forum-info">
-			{%- if topic.getLastPost -%}
-			<img src="{{ asset(profilepicture.getAvatarPath(topic.getFirstPost.getCreatedBy)) }}" width="16" height="16">
-                {{- 'post.post-last-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
-				{{- topic.getLastPost.getCreatedBy -}}
-				{{- topic.getLastPost.getCreatedDate |date('d.m.Y H:i') -}}
-            {% endif %}
-				<br>
-
-
+				<div>
+					<small>Last Post</small>
 				</div>
+			</div>-->
+
+
+
         </div>
     </div>
 
