@@ -11,22 +11,23 @@
 <div class="pull-right">
 	<a class="btn btn-xs btn-primary" rel="nofollow"
 	   href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-		<i class="fa fa-commenting-o"></i>
+		<i class="fa fa-commenting-o"> </i>
 		{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
 	</a>
+
 
 	{%- else -%}
 	<div class="pull-right">
 		<a class="btn btn-xs btn-primary disabled" rel="nofollow"
 		   href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-			<i class="glyphicon glyphicon-lock"></i>
+			<i class="glyphicon glyphicon-lock"> </i>
 			{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
 		</a>
 
 		{%- endif -%}
 
 
-		{%- if canSubscribeToTopic(topic, forum, (subscription is defined ? subscription : null)) -%}
+	{#	{%- if canSubscribeToTopic(topic, forum, (subscription is defined ? subscription : null)) -%}
 			<a class="btn btn-xs btn-primary" href="{{- path('ccdn_forum_user_subscription_subscribe', {'forumName': forumName, 'topicId': topic.getId }) -}}">
 				<i class="glyphicon glyphicon-eye-open"></i>
 				{{- 'link.topic.subscribe' | trans({}, 'CCDNForumForumBundle') -}}
@@ -40,13 +41,13 @@
 				{{- 'link.topic.unsubscribe' | trans({}, 'CCDNForumForumBundle') -}}
 			</a>
 
-		{%- endif -%}
+		{%- endif -%} #}
+		&nbsp;
 
-
-		{%- if is_granted('ROLE_MODERATOR') -%}
+		{%- if is_granted('ROLE_SUPER_ADMIN') -%}
 			<div class="btn-group">
-				<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
-					<i class="glyphicon glyphicon-wrench"></i>
+				<a class="btn btn-xs btn-primary" data-toggle="dropdown" href="#">
+					<i class="glyphicon glyphicon-wrench"> </i>
 					{{- 'link.admin.index' |trans({}, 'CCDNForumForumBundle') -}}
 					<span class="caret"></span>
 				</a>
@@ -121,5 +122,5 @@
 		{%- endif -%}
 
 		{%- endif -%}
-
+		&nbsp;
 		{%- endspaceless -%}

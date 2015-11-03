@@ -49,7 +49,7 @@
                 </tr>
 
                 {%- for row, topic in sticky_topics -%}
-                    {%- if not topic.isDeleted or is_granted('ROLE_MODERATOR') -%}
+                    {%- if not topic.isDeleted or is_granted('ROLE_SUPER_ADMIN') -%}
                         {%- include 'CCDNForumForumBundle:User:Board/Partial/item_topic_list.html.twig' -%}
                     {%- endif -%}
                 {%- endfor -%}
@@ -62,7 +62,7 @@
             {%- endif -%}
 
             {%- for row, topic in pager.getItems() -%}
-                {%- if not topic.isDeleted or is_granted('ROLE_MODERATOR') -%}
+                {%- if not topic.isDeleted or is_granted('ROLE_SUPER_ADMIN') -%}
                     {%- include 'CCDNForumForumBundle:User:Board/Partial/item_topic_list.html.twig' -%}
                 {%- endif -%}
             {%- else -%}
