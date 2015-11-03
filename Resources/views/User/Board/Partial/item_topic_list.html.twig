@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col-md-9">
 				<div class="forum-icon">
-                 <img class="img-circle" src="{{ asset(profilepicture.getAvatarPath(topic.getFirstPost.getCreatedBy)) }}">
+                 <img class="img-circle" src="{{ asset(profilepicture.getAvatarPath(topic.getFirstPost.getCreatedBy)) }}" width="58" height="58">
                  {%- if topic.getFirstPost -%}
 				{{- topic.getFirstPost.getCreatedBy -}}
 				{{- topic.getFirstPost.getCreatedDate |date('d.m.Y H:i') -}}
@@ -39,7 +39,7 @@
 
             <div class="col-md-1 forum-info">
 			{%- if topic.getLastPost -%}
-			<img src="{{ asset(profilepicture.getAvatarPath(topic.getFirstPost.getCreatedBy)) }}">
+			<img src="{{ asset(profilepicture.getAvatarPath(topic.getFirstPost.getCreatedBy)) }}" width="16" height="16">
                 {{- 'post.post-last-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
 				{{- topic.getLastPost.getCreatedBy -}}
 				{{- topic.getLastPost.getCreatedDate |date('d.m.Y H:i') -}}
