@@ -36,7 +36,7 @@ CCDNForumForumBundle-Moderator-Post:
 
 CCDNForumForumBundle-User-Category:
     resource: "@CCDNForumForumBundle/Resources/config/routing/user-category.yml"
-    prefix: /forum
+    prefix: /
 
 CCDNForumForumBundle-User-Board:
     resource: "@CCDNForumForumBundle/Resources/config/routing/user-board.yml"
