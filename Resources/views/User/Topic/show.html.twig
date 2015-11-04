@@ -17,12 +17,13 @@
                 <div class="wrapper wrapper-content animated fadeInRight">
                      <div class="ibox-content forum-post-container">
                            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig'  -%}
-                      </div>
+                        </div>
                         <br><br>
                         <hr>
                           {%- for key, post in pager.getItems() -%}
             	              {%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig"  -%}
 	                      {%- endfor -%}
+
                 </div>
            </div>
     </div>
@@ -39,5 +40,7 @@
 	{{- knp_pagination_render(pager) -}}
 
     {%- endspaceless -%}
+</div>
+</div>
 
 {%- endblock content -%}

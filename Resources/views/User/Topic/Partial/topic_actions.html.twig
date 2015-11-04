@@ -3,128 +3,133 @@
 	{%- if topic is defined -%}
 
 		{%- if board is not defined -%}
-			{%- set board = topic.getBoard -%}
-		{%- endif -%}
-      {%- if topic.isDeleted or topic.isClosed or topic.isSticky -%}
+            {%- set board = topic.getBoard -%}
+        {%- endif -%}
+
 		  {%- include "CCDNForumForumBundle:User:Topic/Partial/stat_mods.html.twig" -%}
-	  {%- endif -%}
+
 
 		{%- if canReplyToTopic(topic, forum) -%}
 <div class="pull-right">
-    <a href="{{- path('ccdn_forum_user_board_show', {'boardId': topic.getBoard.id, 'forumName': forumName}) -}}" class="btn btn-outline btn-xs btn-default"><i class="fa fa-chevron-left"></i> {{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
-	<a class="btn btn-xs btn-primary" rel="nofollow"
-	   href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-		<i class="fa fa-commenting-o"> </i>
-		{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
-	</a>
+    <a href="{{- path('ccdn_forum_user_board_show', {'boardId': topic.getBoard.id, 'forumName': forumName}) -}}"
+       class="btn btn-outline btn-xs btn-default"><i
+                class="fa fa-chevron-left"></i> {{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+    <a class="btn btn-xs btn-primary" rel="nofollow"
+       href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forumName, 'topicId': topic.getId }) -}}">
+        <i class="fa fa-commenting-o"> </i>
+        {{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
+    </a>
 
 
-	{%- else -%}
-	<div class="pull-right">
-        <a href="{{- path('ccdn_forum_user_board_show', {'boardId': topic.getBoard, 'forumName': forumName}) -}}" class="btn btn-outline btn-xs btn-default"><i class="fa fa-chevron-left"></i> {{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+    {%- else -%}
+    <div class="pull-right">
+        <a href="{{- path('ccdn_forum_user_board_show', {'boardId': topic.getBoard, 'forumName': forumName}) -}}"
+           class="btn btn-outline btn-xs btn-default"><i
+                    class="fa fa-chevron-left"></i> {{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
         <a class="btn btn-xs btn-primary disabled" rel="nofollow"
-		   href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-			<i class="glyphicon glyphicon-lock"> </i>
-			{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
-		</a>
+           href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forumName, 'topicId': topic.getId }) -}}">
+            <i class="glyphicon glyphicon-lock"> </i>
+            {{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
+        </a>
 
-		{%- endif -%}
+        {%- endif -%}
 
 
-	{#	{%- if canSubscribeToTopic(topic, forum, (subscription is defined ? subscription : null)) -%}
-			<a class="btn btn-xs btn-primary" href="{{- path('ccdn_forum_user_subscription_subscribe', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-				<i class="glyphicon glyphicon-eye-open"></i>
-				{{- 'link.topic.subscribe' | trans({}, 'CCDNForumForumBundle') -}}
-			</a>
+        {#	{%- if canSubscribeToTopic(topic, forum, (subscription is defined ? subscription : null)) -%}
+                <a class="btn btn-xs btn-primary" href="{{- path('ccdn_forum_user_subscription_subscribe', {'forumName': forumName, 'topicId': topic.getId }) -}}">
+                    <i class="glyphicon glyphicon-eye-open"></i>
+                    {{- 'link.topic.subscribe' | trans({}, 'CCDNForumForumBundle') -}}
+                </a>
 
-		{%- endif -%}
+            {%- endif -%}
 
-		{%- if canUnsubscribeFromTopic(topic, forum, (subscription is defined ? subscription : null)) -%}
-			<a class="btn btn-xs btn-primary" href="{{- path('ccdn_forum_user_subscription_unsubscribe', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-				<i class="glyphicon glyphicon-eye-close"></i>
-				{{- 'link.topic.unsubscribe' | trans({}, 'CCDNForumForumBundle') -}}
-			</a>
+            {%- if canUnsubscribeFromTopic(topic, forum, (subscription is defined ? subscription : null)) -%}
+                <a class="btn btn-xs btn-primary" href="{{- path('ccdn_forum_user_subscription_unsubscribe', {'forumName': forumName, 'topicId': topic.getId }) -}}">
+                    <i class="glyphicon glyphicon-eye-close"></i>
+                    {{- 'link.topic.unsubscribe' | trans({}, 'CCDNForumForumBundle') -}}
+                </a>
 
-		{%- endif -%} #}
-		&nbsp;
+            {%- endif -%} #}
+        &nbsp;
 
-		{%- if is_granted('ROLE_MODERATOR') -%}
-			<div class="btn-group">
-				<a class="btn btn-xs btn-primary" data-toggle="dropdown" href="#">
-					<i class="glyphicon glyphicon-wrench"> </i>
-					{{- 'link.admin.index' |trans({}, 'CCDNForumForumBundle') -}}
-					<span class="caret"></span>
-				</a>
-				<ul class="dropdown-menu">
+        {%- if is_granted('ROLE_MODERATOR') -%}
+            <div class="btn-group">
+                <a class="btn btn-xs btn-primary" data-toggle="dropdown" href="#">
+                    <i class="glyphicon glyphicon-wrench"> </i>
+                    {{- 'link.admin.index' |trans({}, 'CCDNForumForumBundle') -}}
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
 
-					{%- if canStickyTopic(topic, forum) -%}
-						<li>
-							<a href="{{- path('ccdn_forum_moderator_topic_sticky', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-								<i class="glyphicon glyphicon-bullhorn"></i>
-								{{- 'link.topic.sticky' |trans({}, 'CCDNForumForumBundle') -}}
-							</a>
-						</li>
-					{%- endif -%}
+                    {%- if canStickyTopic(topic, forum) -%}
+                        <li>
+                            <a href="{{- path('ccdn_forum_moderator_topic_sticky', {'forumName': forumName, 'topicId': topic.getId }) -}}">
+                                <i class="glyphicon glyphicon-bullhorn"></i>
+                                {{- 'link.topic.sticky' |trans({}, 'CCDNForumForumBundle') -}}
+                            </a>
+                        </li>
+                    {%- endif -%}
 
-					{%- if canUnstickyTopic(topic, forum) -%}
-						<li>
-							<a href="{{- path('ccdn_forum_moderator_topic_unsticky', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-								<i class="glyphicon glyphicon-bullhorn"></i>
-								{{- 'link.topic.unsticky' |trans({}, 'CCDNForumForumBundle') -}}
-							</a>
-						</li>
-					{%- endif -%}
+                    {%- if canUnstickyTopic(topic, forum) -%}
+                        <li>
+                            <a href="{{- path('ccdn_forum_moderator_topic_unsticky', {'forumName': forumName, 'topicId': topic.getId }) -}}">
+                                <i class="glyphicon glyphicon-bullhorn"></i>
+                                {{- 'link.topic.unsticky' |trans({}, 'CCDNForumForumBundle') -}}
+                            </a>
+                        </li>
+                    {%- endif -%}
 
-					{%- if canCloseTopic(topic, forum) -%}
-						<li>
-							<a href="{{- path('ccdn_forum_moderator_topic_close', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-								<i class="glyphicon glyphicon-lock"></i>
-								{{- 'link.topic.close' | trans({}, 'CCDNForumForumBundle') -}}
-							</a>
-						</li>
-					{%- endif -%}
+                    {%- if canCloseTopic(topic, forum) -%}
+                        <li>
+                            <a href="{{- path('ccdn_forum_moderator_topic_close', {'forumName': forumName, 'topicId': topic.getId }) -}}">
+                                <i class="glyphicon glyphicon-lock"></i>
+                                {{- 'link.topic.close' | trans({}, 'CCDNForumForumBundle') -}}
+                            </a>
+                        </li>
+                    {%- endif -%}
 
-					{%- if canReopenTopic(topic, forum) -%}
-						<li>
-							<a href="{{- path('ccdn_forum_moderator_topic_reopen', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-								<i class="glyphicon glyphicon-lock"></i>
-								{{- 'link.topic.reopen' | trans({}, 'CCDNForumForumBundle') -}}
-							</a>
-						</li>
-					{%- endif -%}
+                    {%- if canReopenTopic(topic, forum) -%}
+                        <li>
+                            <a href="{{- path('ccdn_forum_moderator_topic_reopen', {'forumName': forumName, 'topicId': topic.getId }) -}}">
+                                <i class="glyphicon glyphicon-lock"></i>
+                                {{- 'link.topic.reopen' | trans({}, 'CCDNForumForumBundle') -}}
+                            </a>
+                        </li>
+                    {%- endif -%}
 
-					{%- if canRestoreTopic(topic, forum) -%}
-						<li>
-							<a href="{{- path('ccdn_forum_moderator_topic_restore', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-								<i class="glyphicon glyphicon-trash"></i>
-								{{- 'link.topic.restore' |trans({}, 'CCDNForumForumBundle') -}}
-							</a>
-						</li>
-					{%- endif -%}
+                    {%- if canRestoreTopic(topic, forum) -%}
+                        <li>
+                            <a href="{{- path('ccdn_forum_moderator_topic_restore', {'forumName': forumName, 'topicId': topic.getId }) -}}">
+                                <i class="glyphicon glyphicon-trash"></i>
+                                {{- 'link.topic.restore' |trans({}, 'CCDNForumForumBundle') -}}
+                            </a>
+                        </li>
+                    {%- endif -%}
 
-					{%- if canDeleteTopic(topic, forum) -%}
-						<li>
-							<a href="{{- path('ccdn_forum_moderator_topic_delete', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-								<i class="glyphicon glyphicon-trash"></i>
-								{{- 'link.topic.delete' |trans({}, 'CCDNForumForumBundle') -}}
-							</a>
-						</li>
-					{%- endif -%}
+                    {%- if canDeleteTopic(topic, forum) -%}
+                        <li>
+                            <a href="{{- path('ccdn_forum_moderator_topic_delete', {'forumName': forumName, 'topicId': topic.getId }) -}}">
+                                <i class="glyphicon glyphicon-trash"></i>
+                                {{- 'link.topic.delete' |trans({}, 'CCDNForumForumBundle') -}}
+                            </a>
+                        </li>
+                    {%- endif -%}
 
-					{%- if canTopicChangeBoard(topic, forum) -%}
-						<li>
-							<a href="{{- path('ccdn_forum_moderator_topic_change_board', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-								<i class="glyphicon glyphicon-move"></i>
-								{{- 'link.topic.change_board' | trans({}, 'CCDNForumForumBundle') -}}
-							</a>
-						</li>
-					{%- endif -%}
+                    {%- if canTopicChangeBoard(topic, forum) -%}
+                        <li>
+                            <a href="{{- path('ccdn_forum_moderator_topic_change_board', {'forumName': forumName, 'topicId': topic.getId }) -}}">
+                                <i class="glyphicon glyphicon-move"></i>
+                                {{- 'link.topic.change_board' | trans({}, 'CCDNForumForumBundle') -}}
+                            </a>
+                        </li>
+                    {%- endif -%}
 
-				</ul>
-			</div>
+                </ul>
+            </div>
 
-		{%- endif -%}
+        {%- endif -%}
 
-		{%- endif -%}
-		&nbsp;
-		{%- endspaceless -%}
+        {%- endif -%}
+        &nbsp;
+        {%- endspaceless -%}
+
