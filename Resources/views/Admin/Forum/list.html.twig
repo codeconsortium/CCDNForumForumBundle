@@ -41,7 +41,7 @@
 									{{- 'link.edit' |trans({}, 'CCDNForumForumBundle') -}}
 								</a>
 
-								{%- if is_granted('ROLE_SUPER_ADMIN') -%}
+								{%- if is_granted('ROLE_MODERATOR') -%}
 									<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_forum_delete', {'forumId': forum.id}) -}}" id="delete_forum[{{- forum.name -}}]">
 										{{- 'link.delete' |trans({}, 'CCDNForumForumBundle') -}}
 									</a>

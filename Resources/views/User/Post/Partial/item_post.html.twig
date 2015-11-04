@@ -25,11 +25,11 @@
 	{%- import _self as post_panel -%}
 	{%- set panel = post_panel.class(post, post.topic) -%}
 
-
+	{%- if post.isDeleted == false or is_granted('ROLE_MODERATOR') -%}
 	<div class="media">
 		{%- include 'CCDNForumForumBundle:User:Post/Partial/item_post_head.html.twig' with {'post': post } -%}
 		{%- include 'CCDNForumForumBundle:User:Post/Partial/item_post_body.html.twig' with {'post': post } -%}
 	</div>
-
+{% endif %}
 
 {%- endspaceless -%}

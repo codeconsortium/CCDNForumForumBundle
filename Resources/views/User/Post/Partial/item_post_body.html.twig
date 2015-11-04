@@ -1,27 +1,23 @@
 {%- spaceless -%}
 
-	{%- if post.isDeleted == false or is_granted('ROLE_SUPER_ADMIN') -%}
+	{%- if post.isDeleted == false or is_granted('ROLE_MODERATOR') -%}
 		{%- if post.getEditedDate -%}
         <div class="media-body">
 			<div class="ibox-content">
 					<i class="glyphicon glyphicon-pencil"></i>
-
 					{{- 'post.edited-by' |trans({}, 'CCDNForumForumBundle') |raw -}}
 					{{- post.getEditedBy.name -}}
-
 					&nbsp;&#183;
-
 					<abbr class="timestamper" title="{{- post.getEditedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 						{{- post.getEditedDate |date(ccdn_forum_forum.item_post.edited_datetime_format) -}}
 					</abbr>
 				</div>
 			</div>
-
 		{%- endif -%}
 	{%- endif -%}
 
 	{%- if post.isDeleted == true -%}
-		{%- if is_granted('ROLE_SUPER_ADMIN') -%}
+		{%- if is_granted('ROLE_MODERATOR') -%}
             <div class="media-body">
 				<div class="ibox-content">
 					<i class="fa fa-trash"></i>
@@ -34,13 +30,10 @@
                     <br>
                     {{- post.getBody -}}
 				</div>
-
-
-
+             </div>
 			{%- endif -%}
-		</div>
 
-		{%- if is_granted('ROLE_SUPER_ADMIN') -%}
+		{%- if is_granted('ROLE_MODERATOR') -%}
 			<section class="accordion-body collapse" id="post_{{- post.getId() -}}_body">
 				{%- include 'CCDNForumForumBundle:User:Post/Partial/body_content.html.twig' with {'post': post } -%}
 			</section>
@@ -48,8 +41,9 @@
 	{%- else -%}
 		<div class="media-body">
 			{%- include 'CCDNForumForumBundle:User:Post/Partial/body_content.html.twig' with {'post': post } -%}
-		</div>
+        </div>
 
 	{%- endif -%}
+
 
 {%- endspaceless -%}
