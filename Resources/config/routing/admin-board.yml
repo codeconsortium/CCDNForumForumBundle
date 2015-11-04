@@ -1,36 +1,36 @@
 
 ccdn_forum_admin_board_list:
     pattern: /
-    defaults: { _controller: CCDNForumForumBundle:AdminBoard:list, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminBoard:list, _locale: de }
 
 ccdn_forum_admin_board_create:
     pattern: /create
-    defaults: { _controller: CCDNForumForumBundle:AdminBoard:create, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminBoard:create, _locale: de }
 
 ccdn_forum_admin_board_create_process:
     pattern: /create/process
-    defaults: { _controller: CCDNForumForumBundle:AdminBoard:createProcess, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminBoard:createProcess, _locale: de }
 
 ccdn_forum_admin_board_edit:
     pattern: /edit/{boardId}
-    defaults: { _controller: CCDNForumForumBundle:AdminBoard:edit, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminBoard:edit, _locale: de }
 
 ccdn_forum_admin_board_edit_process:
     pattern: /edit/{boardId}/process
-    defaults: { _controller: CCDNForumForumBundle:AdminBoard:editProcess, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminBoard:editProcess, _locale: de }
 
 ccdn_forum_admin_board_delete:
     pattern: /delete/{boardId}
-    defaults: { _controller: CCDNForumForumBundle:AdminBoard:delete, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminBoard:delete, _locale: de }
 
 ccdn_forum_admin_board_delete_process:
     pattern: /delete/{boardId}/process
-    defaults: { _controller: CCDNForumForumBundle:AdminBoard:deleteProcess, _locale: en }
+    defaults: { _controller: CCDNForumForumBundle:AdminBoard:deleteProcess, _locale: de }
 
 ccdn_forum_admin_board_reorder_up:
     pattern: /reorder/{boardId}/up
-    defaults: { _controller: CCDNForumForumBundle:AdminBoard:reorder, _locale: en, direction: 0 }
+    defaults: { _controller: CCDNForumForumBundle:AdminBoard:reorder, _locale: de, direction: 0 }
 
 ccdn_forum_admin_board_reorder_down:
     pattern: /reorder/{boardId}/down
-    defaults: { _controller: CCDNForumForumBundle:AdminBoard:reorder, _locale: en, direction: 1 }
+    defaults: { _controller: CCDNForumForumBundle:AdminBoard:reorder, _locale: de, direction: 1 }

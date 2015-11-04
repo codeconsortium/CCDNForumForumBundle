@@ -1,12 +1,12 @@
 
 #ccdn_forum_user_category_index:
 #    pattern: /index
-#    defaults: { _controller: CCDNForumForumBundle:UserCategory:index, _locale: en, forumName: default }
+#    defaults: { _controller: CCDNForumForumBundle:UserCategory:index, _locale: de, forumName: default }
 
 ccdn_forum_user_category_index:
     path:     /{forumName}
-    defaults: { _controller: CCDNForumForumBundle:UserCategory:index, _locale: en, forumName: default }
+    defaults: { _controller: CCDNForumForumBundle:UserCategory:index, _locale: de, forumName: default }
 
 ccdn_forum_user_category_show:
     path:     /{forumName}/category/{categoryId}
-    defaults: { _controller: CCDNForumForumBundle:UserCategory:show, _locale: en, forumName: default }
+    defaults: { _controller: CCDNForumForumBundle:UserCategory:show, _locale: de, forumName: default }
