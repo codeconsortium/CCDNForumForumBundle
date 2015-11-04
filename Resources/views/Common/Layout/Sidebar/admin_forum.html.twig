@@ -4,7 +4,7 @@
 
 		{%- set route = app.request.attributes.get('_route') -%}
 
-		{%- if is_granted('ROLE_SUPER_ADMIN') -%}
+		{%- if is_granted('ROLE_MODERATOR') -%}
 			{%- if route == 'ccdn_forum_admin_forum_list'
 				or route == 'ccdn_forum_admin_forum_create'
 				or route == 'ccdn_forum_admin_forum_edit'

@@ -16,7 +16,7 @@
                 <div style="position: relative; overflow: hidden; width: auto; height: 200px;" class="slimScrollDiv">
                     <div style="overflow: hidden; width: auto; height: 200px;" class="scroll_content">
                         {%- for key, post in topic.getPosts -%}
-                            {%- if post.isDeleted == false or is_granted('ROLE_SUPER_ADMIN') -%}
+                            {%- if post.isDeleted == false or is_granted('ROLE_MODERATOR') -%}
                                 <div class="media">
                                     <h4 class="media-heading">
                                         {%- if post.getCreatedBy -%}

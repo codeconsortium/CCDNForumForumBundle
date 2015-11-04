@@ -1,4 +1,6 @@
 {%- spaceless -%}
+
+	{%- if post.isDeleted == false or is_granted('ROLE_MODERATOR') -%}
 	<a class="forum-avatar" href="#">
 	     <img class="img-thumbnail" src="{{ asset(profilepicture.getAvatarPath(topic.getFirstPost.getCreatedBy)) }}" style="max-width: none; width: 48px; height: 48px; !important;">
 			<div class="author-info">
@@ -11,7 +13,7 @@
 	    <div class="col-md-5 pull-right text-right">
 
 
-            {%- if is_granted('ROLE_USER') and post.id and (is_granted('ROLE_SUPER_ADMIN') or not post.isDeleted) -%}
+            {%- if is_granted('ROLE_USER') and post.id and (is_granted('ROLE_MODERATOR') or not post.isDeleted) -%}
 				&nbsp;
                 <div class="dropdown btn-group text-left">
                     <a class="dropdown-toggle btn btn-xs btn-icon-only" data-toggle="dropdown" href="#">
@@ -81,6 +83,6 @@
                 </div>
             {%- endif -%}
 		</div>
-
+{% endif %}
 
 {%- endspaceless -%}
