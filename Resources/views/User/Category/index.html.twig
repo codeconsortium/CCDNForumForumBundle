@@ -2,7 +2,7 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.category.user.index.layout_template %}
 
-{% set page_title = forum.getTitle %}
+{% set page_title = forum.name %}
 {% block content %}
     {% include 'CCDNForumForumBundle:Common:Layout/welcome.html.twig' %}
     {%- spaceless -%}
