@@ -1,14 +1,25 @@
 {%- spaceless -%}
     {%- if preview.getBody -%}
-	<h4>
-		{{- 'post.preview' |trans({}, 'CCDNForumForumBundle') -}}
-	</h4>
+<div class="forum-topic-transcript">
+	<div class="ibox">
+		<div class="ibox-title">
+			<h5>{{- 'post.preview' |trans({}, 'CCDNForumForumBundle') -}}</h5>
 
-		<div class="col-md-12">
-			<article class="row panel panel-default clearfix" {%- if post.id %} id="{{- post.getBody |slice(0,24) -}}"{%- endif -%}>
+			<div class="ibox-tools">
+				<a class="collapse-link">
+					<i class="fa fa-chevron-up"></i>
+				</a>
+				<a class="close-link">
+					<i class="fa fa-times"></i>
+				</a>
+			</div>
+		</div>
+		<div class="ibox-content">
+			<div style="position: relative; overflow: hidden; width: auto; height: auto;" class="slimScrollDiv">
+				<div style="overflow: hidden; width: auto; height: auto;" class="scroll_content">
 
-			    <header class="panel-heading">
-					<h3 class="panel-title">
+			    <div class="media">
+					<h4 class="media-heading">
 						{%- if post.getCreatedBy -%}
 					        {{- 'post.posted-by' |trans({}, 'CCDNForumForumBundle') |raw -}}
 							{{- post.getCreatedBy.username -}}
@@ -17,17 +28,21 @@
 
 						{%- endif -%}
 
-				        <span class="timestamper" title="{{- post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-				            {{- post.getCreatedDate |date(ccdn_forum_forum.item_post.created_datetime_format) -}}
+				        <span class="timestamper" title="{{- post.getCreatedDate |date('d.m.Y H:i:s T Z', 'Europe/London') -}}">
+				           {{- post.getCreatedDate |date('d.m.Y H:i:s') -}}
 				        </span>
-					</h3>
-				</header>
-
-				<div class="panel-body">
-					{%- include 'CCDNForumForumBundle:User:Post/Partial/item_post_body.html.twig' with {'post': preview } -%}
+					</h4>
 				</div>
 
-			</article>
+				<div class="media">
+                    {{ post.getBody|raw }}
+				</div>
+
+			</div>
 		</div>
-    {%- endif -%}
+         </div>
+        </div>
+    </div>
+
+            {%- endif -%}
 {%- endspaceless -%}

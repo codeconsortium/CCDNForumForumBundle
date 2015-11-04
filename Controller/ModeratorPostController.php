@@ -42,7 +42,7 @@ class ModeratorPostController extends ModeratorPostBaseController
      */
     public function lockAction($forumName, $postId)
     {
-        $this->isAuthorised('ROLE_MODERATOR');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true));
         $this->isAuthorised($this->getAuthorizer()->canLockPost($post, $forum));
@@ -64,7 +64,7 @@ class ModeratorPostController extends ModeratorPostBaseController
      */
     public function unlockAction($forumName, $postId)
     {
-        $this->isAuthorised('ROLE_MODERATOR');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true));
         $this->isAuthorised($this->getAuthorizer()->canUnlockPost($post, $forum));
@@ -91,7 +91,7 @@ class ModeratorPostController extends ModeratorPostBaseController
      */
     public function unlockProcessAction($forumName, $postId)
     {
-        $this->isAuthorised('ROLE_MODERATOR');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true));
         $this->isAuthorised($this->getAuthorizer()->canUnlockPost($post, $forum));
@@ -123,7 +123,7 @@ class ModeratorPostController extends ModeratorPostBaseController
      */
     public function restoreAction($forumName, $postId)
     {
-        $this->isAuthorised('ROLE_MODERATOR');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($post = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($postId, true));
         $this->isAuthorised($this->getAuthorizer()->canRestorePost($post, $forum));

@@ -58,8 +58,12 @@ class PostUpdateFormType extends AbstractType
         $builder
             ->add('body', 'textarea',
                 array(
-                    'label'              => 'post.body-label',
+                    'label'              => false,
                     'translation_domain' => 'CCDNForumForumBundle',
+                    'attr' => array(
+                        'placeholder' => 'placeholder.topic.content',
+                        'class' => 'summernote',
+                    ),
                 )
             )
         ;

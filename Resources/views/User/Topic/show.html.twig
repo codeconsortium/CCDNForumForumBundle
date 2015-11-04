@@ -2,7 +2,7 @@
 
 {% set LayoutTemplate = ccdn_forum_forum.topic.user.show.layout_template %}
 
-{% set page_title =  topic.getTitle  %}
+{% set page_title = topic.getBoard  %}
 {%- block sidebar -%}
 	{%- spaceless -%}
 		{{- parent() -}}
@@ -12,32 +12,26 @@
 
 {%- block content -%}
     {%- spaceless -%}
-
-
     <div class="row">
-                <div class="col-lg-12">
-                   <div class="wrapper wrapper-content animated fadeInRight">
-                        <div class="ibox-content forum-post-container">
+           <div class="col-lg-12">
+                <div class="wrapper wrapper-content animated fadeInRight">
+                     <div class="ibox-content forum-post-container">
                            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig'  -%}
-                        </div>
-                        <br>
+                      </div>
+                        <br><br>
                         <hr>
-
-                    {%- for key, post in pager.getItems() -%}
-            	        {%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig"  -%}
-	                {%- endfor -%}
-                   </div>
+                          {%- for key, post in pager.getItems() -%}
+            	              {%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig"  -%}
+	                      {%- endfor -%}
                 </div>
-        </div>
+           </div>
     </div>
-</div>
 
 
 
 
-	{%- if topic.isDeleted or topic.isClosed or topic.isSticky -%}
-		{%- include "CCDNForumForumBundle:User:Topic/Partial/stat_mods.html.twig" -%}
-	{%- endif -%}
+
+
 
 	{{- knp_pagination_render(pager) -}}
 
@@ -45,4 +39,5 @@
 	{{- knp_pagination_render(pager) -}}
 
     {%- endspaceless -%}
+
 {%- endblock content -%}

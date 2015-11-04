@@ -7,7 +7,7 @@
 					<i class="glyphicon glyphicon-pencil"></i>
 
 					{{- 'post.edited-by' |trans({}, 'CCDNForumForumBundle') |raw -}}
-					{{- post.getEditedBy -}}
+					{{- post.getEditedBy.name -}}
 
 					&nbsp;&#183;
 
@@ -26,7 +26,7 @@
 				<div class="ibox-content">
 					<i class="fa fa-trash"></i>
 					{{- 'post.deleted-by' |trans({}, 'CCDNForumForumBundle') |raw -}}
-					{{- post.getDeletedBy -}}
+					{{- post.getDeletedBy.name -}}
 					&nbsp;&#183;
 					<abbr class="timestamper" title="{{- post.getDeletedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 						{{- post.getDeletedDate |date(ccdn_forum_forum.item_post.deleted_datetime_format) -}}

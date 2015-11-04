@@ -197,7 +197,7 @@ topic:
     transcript:                        "Transcript."
     closed-by:                         "Topic closed by %name%"
     deleted-by:                        "Topic deleted by %name%"
-    stickied-by:                       "Stickied by %name%"
+    stickied-by:                       "Stickied by "
     delete-confirm:                    "Are you sure you want to delete this topic?"
     badge:
         closed:                        "Closed"

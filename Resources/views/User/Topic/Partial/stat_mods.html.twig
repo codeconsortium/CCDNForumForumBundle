@@ -1,13 +1,13 @@
 {%- spaceless -%}
 
-	<section class="row clearfix">
+	<section class="row clearfix" xmlns="http://www.w3.org/1999/html">
 		{%- if topic.isDeleted or topic.isClosed %}
-			<div class="alert alert-danger">
+			<div class="alert alert-warning">
 				{%- if topic.isDeleted -%}
 					<i class="glyphicon glyphicon-trash"></i>
 
 					{{- 'topic.deleted-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
-					{{- topic.getDeletedBy -}}
+					{{- topic.getDeletedBy.name -}}
 
 					&nbsp;&#183;
 
@@ -19,7 +19,7 @@
 					<i class="glyphicon glyphicon-lock"></i>
 
 					{{- 'topic.closed-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
-					{{- topic.getClosedBy -}}
+					{{- topic.getClosedBy.name -}}
 
 					&nbsp;&#183;
 
@@ -29,17 +29,25 @@
 		{%- endif -%}
 
 		{%- if topic.isSticky -%}
-			<div class="alert alert-info">
+			<div class="alert alert-warning">
 				<i class="glyphicon glyphicon-bullhorn"></i>
 
 				{{- 'topic.stickied-by' | trans({}, 'CCDNForumForumBundle') |raw -}}
-				{{- topic.stickiedBy -}}
+				{{- topic.stickiedBy.name -}}
 
 				&nbsp;&#183;
 
 				{{- topic.getStickiedDate |date(ccdn_forum_forum.topic.user.show.deleted_datetime_format) -}}
-			</div>
+				</div>
+
+
+
+			<br>
 		{%- endif -%}
 	</section>
-
+    <div class="col-md-5">
+    <h1>
+        {{- topic.getTitle -}}
+    </h1>
+    </div>
 {%- endspaceless -%}

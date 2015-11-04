@@ -5,10 +5,13 @@
 		{%- if board is not defined -%}
 			{%- set board = topic.getBoard -%}
 		{%- endif -%}
-
+      {%- if topic.isDeleted or topic.isClosed or topic.isSticky -%}
+		  {%- include "CCDNForumForumBundle:User:Topic/Partial/stat_mods.html.twig" -%}
+	  {%- endif -%}
 
 		{%- if canReplyToTopic(topic, forum) -%}
 <div class="pull-right">
+    <a href="{{- path('ccdn_forum_user_board_show', {'boardId': topic.getBoard.id, 'forumName': forumName}) -}}" class="btn btn-outline btn-xs btn-default"><i class="fa fa-chevron-left"></i> {{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
 	<a class="btn btn-xs btn-primary" rel="nofollow"
 	   href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forumName, 'topicId': topic.getId }) -}}">
 		<i class="fa fa-commenting-o"> </i>
@@ -18,7 +21,8 @@
 
 	{%- else -%}
 	<div class="pull-right">
-		<a class="btn btn-xs btn-primary disabled" rel="nofollow"
+        <a href="{{- path('ccdn_forum_user_board_show', {'boardId': topic.getBoard, 'forumName': forumName}) -}}" class="btn btn-outline btn-xs btn-default"><i class="fa fa-chevron-left"></i> {{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+        <a class="btn btn-xs btn-primary disabled" rel="nofollow"
 		   href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forumName, 'topicId': topic.getId }) -}}">
 			<i class="glyphicon glyphicon-lock"> </i>
 			{{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
