@@ -26,7 +26,7 @@
                                         <div class="pull-right">
                                             <a class="btn btn-outline btn-xs btn-default"
                                                href="{{- path('ccdn_forum_user_board_show', {'boardId': board.id, 'forumName': forumName}) -}}">
-                                                <i class="fa fa-chevron-left"></i> {{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
+                                                <i class="fa fa-fw fa-chevron-left"></i>&nbsp; {{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
                                             </a>
                                         </div>
                                         <h1>
@@ -54,9 +54,8 @@
                                         <div class="pull-left">
                                             <div class="form-group">
                                                 &nbsp;&nbsp;&nbsp;
-                                                <button type="submit" id="submit[post]" name="submit[post]"
-                                                        class="btn-primary btn"><i
-                                                            class="fa fa-save"></i> {{- 'form.button.topic.create' | trans({}, 'CCDNForumForumBundle') -}}
+                                                <button type="submit" id="submit[post]" name="submit[post]" class="btn-primary btn">
+                                                    <i class="fa fa-fw fa-save"></i>&nbsp; {{- 'form.button.topic.create' | trans({}, 'CCDNForumForumBundle') -}}
                                                 </button>
                                             </div>
                                         </div>

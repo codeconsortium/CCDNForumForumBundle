@@ -161,7 +161,7 @@ category:
         board-view-label:              "Berechtigungen:"
     index:                             "Forum Startseite"
     none:                              "Keine Kategorien vorhanden."
-    no-boards:                         "Keine Boards für diese Kategorie vorhanden."
+    no-boards:                         "Keine Boards für diese Kategorie vorhanden"
 board:
     th:                                "Board"
     id-th:                             "ID"
@@ -189,7 +189,7 @@ board:
 topic:
     label:                             "Thema: "
     board-label:                       "Board: "
-    title-label:                       "Titel: "
+    title-label:                       "Titel"
     confirm-delete-label:              "Ich bestätige, dass ich dieses Thema wirklich löschen möchte."
     subscription-count-label:          "Abonnenten: "
     view-count-label:                  "Aufrufe"

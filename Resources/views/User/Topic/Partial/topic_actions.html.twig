@@ -13,10 +13,10 @@
 <div class="pull-right">
     <a href="{{- path('ccdn_forum_user_board_show', {'boardId': topic.getBoard.id, 'forumName': forumName}) -}}"
        class="btn btn-outline btn-xs btn-default"><i
-                class="fa fa-chevron-left"></i> {{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+                class="fa fa-fw fa-chevron-left"></i>&nbsp; {{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
     <a class="btn btn-xs btn-primary" rel="nofollow"
        href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-        <i class="fa fa-commenting-o"> </i>
+        <i class="fa fa-fw fa-commenting-o"></i>&nbsp;
         {{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
     </a>
 
@@ -25,10 +25,10 @@
     <div class="pull-right">
         <a href="{{- path('ccdn_forum_user_board_show', {'boardId': topic.getBoard, 'forumName': forumName}) -}}"
            class="btn btn-outline btn-xs btn-default"><i
-                    class="fa fa-chevron-left"></i> {{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
+                    class="fa fa-fw fa-chevron-left"></i>&nbsp; {{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}</a>&nbsp;
         <a class="btn btn-xs btn-primary disabled" rel="nofollow"
            href="{{- path('ccdn_forum_user_topic_reply', {'forumName': forumName, 'topicId': topic.getId }) -}}">
-            <i class="glyphicon glyphicon-lock"> </i>
+            <i class="fa fa-fw fa-lock"></i>&nbsp;
             {{- 'link.topic.reply' | trans({}, 'CCDNForumForumBundle') -}}
         </a>
 
