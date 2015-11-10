@@ -21,7 +21,7 @@
 		{%- if is_granted('ROLE_MODERATOR') -%}
             <div class="media-body">
 				<div class="ibox-content">
-					<i class="fa fa-trash"></i>
+					<i class="fa fa-fw fa-trash"></i>&nbsp;
 					{{- 'post.deleted-by' |trans({}, 'CCDNForumForumBundle') |raw -}}
 					{{- post.getDeletedBy.name -}}
 					&nbsp;&#183;
