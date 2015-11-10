@@ -195,8 +195,8 @@ topic:
     view-count-label:                  "Aufrufe"
     reply-count-label:                 "Antworten"
     transcript:                        "Letzte Antworten"
-    closed-by:                         "Thema geschlossen von %name%"
-    deleted-by:                        "Thema gelöscht von %name%"
+    closed-by:                         "Thema geschlossen von "
+    deleted-by:                        "Thema gelöscht von "
     stickied-by:                       "Angepinnt von "
     delete-confirm:                    "Bist du sicher, dass Du dieses Thema löschen möchtest?"
     badge:
@@ -206,7 +206,7 @@ topic:
 post:
     preview:                           "Vorschau"
     posted-by:                         "Geschrieben von "
-    post-last-by:                     "Letzter Beitrag von "
+    post-last-by:                      "Letzter Beitrag von "
     edited-by:                         "Bearbeitet von "
     deleted-by:                        "Gelöscht von "
     locked-by:                         "Gesperrt von "

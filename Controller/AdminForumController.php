@@ -38,10 +38,13 @@ class AdminForumController extends AdminForumBaseController
     {
         $this->isAuthorised('ROLE_SUPER_ADMIN');
         $forums = $this->getForumModel()->findAllForums();
+        $formHandler = $this->getFormHandlerToCreateForum();
         $response = $this->renderResponse('CCDNForumForumBundle:Admin:/Forum/list.html.', array(
             'crumbs' => $this->getCrumbs()->addAdminManageForumsIndex(),
-            'forums' => $forums
+            'forums' => $forums,
+            'form' => $formHandler->getForm()->createView()
         ));
+
 
         return $response;
     }

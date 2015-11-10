@@ -1,52 +1,44 @@
-{% extends 'base.html.twig' %}
-
 {% set LayoutTemplate = ccdn_forum_forum.forum.admin.create.layout_template %}
-
-{% set page_title = 'forum.admin.create'|trans %}
-
-{%- block sidebar -%}
-	{%- spaceless -%}
-	{{- parent() -}}
-    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/admin_forum.html.twig' -%}
-	{%- endspaceless -%}
-{%- endblock sidebar -%}
 
 {%- block content -%}
     {%- spaceless -%}
+<h1>{{- 'title.admin.manage-forums.create' |trans({}, 'CCDNForumForumBundle') -}}
+    <small></small>
+</h1>
+<hr>
 
-	<section class="clearfix">
-	    {%- form_theme form ccdn_forum_forum.forum.admin.create.form_theme -%}
-	    <form action="{{- path('ccdn_forum_admin_forum_create_process') -}}"
-		 method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
-	        <fieldset>
+{%- form_theme form ccdn_forum_forum.forum.admin.create.form_theme -%}
+<form action="{{- path('ccdn_forum_admin_forum_create_process') -}}"
+      method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
+    {{- form_errors(form) -}}
+    <div class="form-group">
+        <label class="col-sm-2 control-label required"
+               for="Forum_ForumCreate_name">{{- 'forum.name-label' |trans({}, 'CCDNForumForumBundle') -}}</label>
 
-				<div class="form-group">
-					<div class="col-lg-offset-2 col-lg-10">
-						<h4>
-							{{- 'title.admin.manage-forums.create' |trans({}, 'CCDNForumForumBundle') -}}
-						</h4>
-					</div>
-				</div>
+        <div class="col-sm-10">
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    {{ form_errors(form.readAuthorisedRoles) }}
+    {% for readAuthorisedRole in form.readAuthorisedRoles %}
+        {{ form_errors(readAuthorisedRole) }}
+        <div class="checkbox">
+            <label>
+                {{ form_row(readAuthorisedRole) }}
+            </label>
+        </div>
+    {% endfor %}
 
-				{{- form_errors(form) -}}
+    <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-10">
+            <button type="submit" id="submit[post]" name="submit[post]" class="btn-primary btn"><i
+                        class="fa fa-save"></i>&nbsp {{- 'form.button.save' |trans({}, 'CCDNForumForumBundle') -}}
+            </button>
+        </div>
+    </div>
 
-				{{- form_rest(form) -}}
 
-				<div class="form-group">
-					<div class="col-lg-offset-2 col-lg-10">
-		                <input type="submit" class="btn btn-primary" value="
-							{{- 'form.button.save' |trans({}, 'CCDNForumForumBundle') -}}
-						" name="submit[post]" id="submit[post]">
-
-		                <a class="btn btn-default" href="{{- path('ccdn_forum_admin_forum_list') -}}">
-							{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
-						</a>
-					</div>
-	            </div>
-
-	        </fieldset>
-	    </form>
-	</section>
+    {{ form_end(form) }}
 
     {%- endspaceless -%}
-{%- endblock content -%}
+    {%- endblock content -%}
