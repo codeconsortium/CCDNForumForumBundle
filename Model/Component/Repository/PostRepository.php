@@ -209,7 +209,7 @@ class PostRepository extends BaseRepository implements RepositoryInterface
      */
     public function countPostsForUserById($userId)
     {
-        if (null == $userId || $userId == 0) {
+        if (null == $userId) {
             throw new \Exception('User id "' . $userId . '" is invalid!');
         }
 
