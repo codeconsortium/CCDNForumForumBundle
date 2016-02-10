@@ -57,6 +57,14 @@ class Configuration implements ConfigurationInterface
 
     /**
      *
+     * @access protected
+     * @var string $defaultPostSingleTemplate
+     */
+    protected $defaultPostSingleTemplate = 'CCDNForumForumBundle:User:Post/Partial/body_content.html.twig';
+
+
+    /**
+     *
      * @access public
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder
      */
@@ -1229,6 +1237,23 @@ class Configuration implements ConfigurationInterface
         return $this;
     }
 
+
+    private function addPostTemplateSection()
+    {
+        $treeBuilder = new TreeBuilder();
+        $node = $treeBuilder->root('template');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->canBeUnset()
+            ->children()
+                ->scalarNode('single_post_template')->defaultValue($this->defaultPostSingleTemplate)->end()
+            ->end()
+        ;
+
+        return $node;
+    }
+
     /**
      *
      * @access private
@@ -1330,6 +1355,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->append($this->addPostModeratorSection())
                         ->append($this->addPostUserSection())
+                        ->append($this->addPostTemplateSection())
                     ->end()
                 ->end()
             ->end()

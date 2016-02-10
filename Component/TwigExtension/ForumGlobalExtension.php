@@ -179,6 +179,9 @@ class ForumGlobalExtension extends \Twig_Extension
                             'form_theme' => $this->container->getParameter('ccdn_forum_forum.post.user.delete.form_theme'),
                         ),
                     ),
+                    'template' => array(
+                        'single_post_template' => $this->container->getParameter('ccdn_forum_forum.post.template.single_post_template')
+                    )
                 ),
                 'item_post' => array(
                     'created_datetime_format' => $this->container->getParameter('ccdn_forum_forum.item_post.created_datetime_format'),
