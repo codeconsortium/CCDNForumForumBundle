@@ -2,7 +2,7 @@
 
 	{%- if post.isDeleted == false or is_granted('ROLE_MODERATOR') -%}
 	<a class="forum-avatar" href="#">
-	     <img class="img-thumbnail" src="{{ asset(profilepicture.getAvatarPath(post.getCreatedBy)) }}" style="max-width: none; width: 48px; height: 48px; !important;">
+	     <img class="img-thumbnail" src="{{ asset(profilepicture.getAvatarPath(post.getCreatedBy)) }}" style="max-width: none; width: 96px; height: 96px; !important;">
 			<div class="author-info">
 			<strong>Name: </strong> {{- post.getCreatedBy.name -}}<br>
 			<strong>Posted: </strong> {{- post.getCreatedDate |date('d.m.Y H:i:s') -}} <br>
