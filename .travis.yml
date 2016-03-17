@@ -24,8 +24,8 @@ before_script:
             locale:            en
        
         ' > ./Tests/Functional/app/config/parameters.yml
-    - curl -s http://getcomposer.org/installer | php
-    - php composer.phar install --dev --prefer-dist
+    - composer selfupdate
+    - composer install --dev --prefer-dist
     - php ./Tests/Functional/app/console doctrine:schema:create
     - php ./Tests/Functional/app/console doctrine:schema:update --force
 
@@ -37,5 +37,5 @@ after_script:
     - mysql -e 'DROP DATABASE ccdn_test;'
 
 notifications:
-    email: status@codeconsortium.com
+    email: 127.joschi@gmail.com
 
