@@ -20,24 +20,15 @@
                         </div>
                         <br><br>
                         <hr>
+                    {{- knp_pagination_render(pager) -}}
                           {%- for key, post in pager.getItems() -%}
             	              {%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig"  -%}
 	                      {%- endfor -%}
+                    {{- knp_pagination_render(pager) -}}
 
                 </div>
            </div>
     </div>
-
-
-
-
-
-
-
-	{{- knp_pagination_render(pager) -}}
-
-
-	{{- knp_pagination_render(pager) -}}
 
     {%- endspaceless -%}
 </div>
