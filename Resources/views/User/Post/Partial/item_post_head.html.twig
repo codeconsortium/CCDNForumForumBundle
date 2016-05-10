@@ -1,4 +1,5 @@
 {%- spaceless -%}
+	<a name="{{ post.id }}" id="{{ post.id }}"></a>
 
 	{%- if post.isDeleted == false or is_granted('ROLE_MODERATOR') -%}
 	<a class="forum-avatar" href="#">
