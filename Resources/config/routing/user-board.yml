@@ -1,4 +1,4 @@
 
 ccdn_forum_user_board_show:
     pattern: /{boardId}
-    defaults: { _controller: CCDNForumForumBundle:UserBoard:show, _locale: de, forumName: default }
+    defaults: { _controller: CCDNForumForumBundle:UserBoard:show, forumName: default }
