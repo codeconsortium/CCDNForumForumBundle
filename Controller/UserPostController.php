@@ -61,6 +61,7 @@ class UserPostController extends UserPostBaseController
         ));
     }
 
+
     /**
      *
      * @access public

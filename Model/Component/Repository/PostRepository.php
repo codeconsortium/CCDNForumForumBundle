@@ -29,6 +29,20 @@ use CCDNForum\ForumBundle\Model\Component\Repository\RepositoryInterface;
  */
 class PostRepository extends BaseRepository implements RepositoryInterface
 {
+
+    public function findAllPostsExtendingString($string)
+    {
+        $qb = $this->createSelectQuery(array('p'));
+        $qb->where("p.body LIKE '%".$string."%'");
+        return $this->gateway->findPosts($qb);
+    }
+
+    public function findAll()
+    {
+        $qb = $this->createSelectQuery(array('p'));
+        return $this->gateway->findPosts($qb);
+    }
+
     /**
      *
      * @access public

@@ -5,6 +5,7 @@
 {% set page_title = forum.name %}
 {% block content %}
     {% include 'CCDNForumForumBundle:Common:Layout/welcome.html.twig' %}
+    {% include 'CCDNForumForumBundle:Common:Layout/searchbar.html.twig' %}
     {%- spaceless -%}
         <div class="ibox-content forum-container">
             {%- for category in categories -%}

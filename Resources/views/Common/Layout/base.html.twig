@@ -60,7 +60,9 @@
 	{%- endspaceless -%}
 {% endblock %}
 
-
+{% block searchbar %}
+  {% INCLUDE 'CCDNForumForumBundle:Common:Layout/searchbar.html.twig' %}
+{% endblock %}
 
 {% block body %}
 	{%- spaceless -%}
