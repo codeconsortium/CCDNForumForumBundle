@@ -252,3 +252,8 @@ flash:
         board:
             topic_create:
                 not_found:             "The board you are trying to post to no longer exists! Sorry about that."
+
+custom:
+    search_button: "Search"
+    search_title: "Search in forums"
+    searchtermrequired: "Search term required"

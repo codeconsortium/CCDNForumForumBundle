@@ -252,3 +252,8 @@ flash:
         board:
             topic_create:
                 not_found:             "Das Board wurde nicht gefunden."
+
+custom:
+    search_button: "Suchen"
+    search_title: "Im Forum suchen"
+    searchtermrequired: "Suchbegriff eingeben!"
