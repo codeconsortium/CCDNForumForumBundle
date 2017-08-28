@@ -1,0 +1,26 @@
+<div>
+
+  <form>
+    <h3>{{ 'custom.search_title'|trans({}, 'CCDNForumForumBundle') }}</h3>
+    <input id="searchterm" type="text" name="searchterm" required data-fv-notempty-message="{{ 'custom.searchtermrequired'|trans({}, 'CCDNForumForumBundle') }}" />
+    <input type="submit" value="{{ 'custom.search_button'|trans({}, 'CCDNForumForumBundle') }}"/>
+  </form>
+</div>
+<br />
+<div>
+<ul>
+  {% if posts is defined %}
+    {% for post in posts %}
+    <p>
+
+    </p>
+     <li>
+      <p><b><a href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': post.topic.getId }) -}}">{{- post.topic.getTitle -}}</a></b><br>
+      {%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig" -%}
+      </p>
+      </li>
+    {% endfor %}
+  {% endif %}
+</ul>
+
+</div>
