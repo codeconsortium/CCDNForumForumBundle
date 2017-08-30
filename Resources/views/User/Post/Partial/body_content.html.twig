@@ -1,5 +1,13 @@
 {%- spaceless -%}
-
-	{{- post.getBody -}}
+{% if requested is defined %}
+{% set body_content = post.getBody %}
+{% set requested = requested|split(' ') %}
+{% for requested1 in requested %}
+	{% set body_content = body_content|replace({(requested1): ("<span style='color: yellow; background-color: red;'>" ~ requested1 ~ "</span>"),(requested1|lower): ("<span style='color: yellow; background-color: red;'>" ~ requested1 ~ "</span>")})|raw %}
+	{% endfor %}
+	{{ body_content|raw }}
+{% else %}
+	{{- post.getBody|raw -}}
+{% endif %}
 
 {%- endspaceless -%}

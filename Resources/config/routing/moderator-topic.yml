@@ -1,36 +1,36 @@
 
 ccdn_forum_moderator_topic_close:
-    pattern: /{topicId}/close
-    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:close, _locale: en, forumName: default }
+    path: /{topicId}/close
+    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:close, forumName: default }
 
 ccdn_forum_moderator_topic_reopen:
-    pattern: /{topicId}/reopen
-    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:reopen, _locale: en, forumName: default }
+    path: /{topicId}/reopen
+    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:reopen, forumName: default }
 
 ccdn_forum_moderator_topic_sticky:
-    pattern: /{topicId}/sticky
-    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:sticky, _locale: en, forumName: default }
+    path: /{topicId}/sticky
+    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:sticky, forumName: default }
 
 ccdn_forum_moderator_topic_unsticky:
-    pattern: /{topicId}/unsticky
-    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:unsticky, _locale: en, forumName: default }
+    path: /{topicId}/unsticky
+    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:unsticky, forumName: default }
 
 ccdn_forum_moderator_topic_delete:
-    pattern: /{topicId}/delete
-    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:delete, _locale: en, forumName: default }
+    path: /{topicId}/delete
+    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:delete, forumName: default }
 
 ccdn_forum_moderator_topic_delete_process:
-    pattern: /{topicId}/delete/process
-    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:deleteProcess, _locale: en, forumName: default }
+    path: /{topicId}/delete/process
+    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:deleteProcess, forumName: default }
 
 ccdn_forum_moderator_topic_restore:
-    pattern: /{topicId}/restore
-    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:restore, _locale: en, forumName: default }
+    path: /{topicId}/restore
+    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:restore, forumName: default }
 
 ccdn_forum_moderator_topic_change_board:
-    pattern: /{topicId}/change-board
-    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:changeBoard, _locale: en, forumName: default }
+    path: /{topicId}/change-board
+    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:changeBoard, forumName: default }
 
 ccdn_forum_moderator_topic_change_board_process:
-    pattern: /{topicId}/change-board/process
-    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:changeBoardProcess, _locale: en, forumName: default }
+    path: /{topicId}/change-board/process
+    defaults: { _controller: CCDNForumForumBundle:ModeratorTopic:changeBoardProcess, forumName: default }

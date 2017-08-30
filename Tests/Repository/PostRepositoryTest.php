@@ -17,6 +17,23 @@ use CCDNForum\ForumBundle\Tests\TestBase;
 
 class PostRepositoryTest extends TestBase
 {
+
+    public function testFindAllExtendingString()
+    {
+        $this->purge();
+        $users = $this->addFixturesForUsers();
+        $forum = $this->addNewForum('testFindAllExtendingString');
+        $category = $this->addNewCategory('testFindAllExtendingString',1,$forum);
+        $board = $this->addNewBoard('testFindAllExtendingString','testFindAllExtendingString',1,$category);
+        $topic = $this->addNewTopic('testFindAllExtendingString',$board);
+        $posts = $this->addFixturesForPosts(array($topic),$users('tom'));
+        $tester = $this->getPostModel()->findAllPostsExtendingString('Hallo');
+        $reply = $tester->getItems();
+
+        $this->assertSame(0,count($reply));
+
+    }
+
 	public function testFindAllPostsPaginatedByTopicId()
 	{
 		$this->purge();
@@ -28,7 +45,7 @@ class PostRepositoryTest extends TestBase
 		$posts = $this->addFixturesForPosts(array($topic), $users['tom']);
 		$pager = $this->getPostModel()->findAllPostsPaginatedByTopicId($topic->getId(), 1, 25, true);
 		$posts = $pager->getItems();
-	
+
 		$this->assertSame(3, count($posts));
 	}
 
@@ -41,14 +58,14 @@ class PostRepositoryTest extends TestBase
 		// Can view deleted topics.
 		$topic1 = $this->addNewTopic('topic1', $board);
 		$posts = $this->addFixturesForPosts(array($topic1), $users['harry']);
-		
+
 		foreach ($posts as $post) {
 			$this->em->refresh($post);
 			$foundPost = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($post->getId(), true);
 			$this->assertNotNull($foundPost->getId());
 			$this->assertInstanceOf('CCDNForum\ForumBundle\Entity\Post', $foundPost);
 		}
-		
+
 		// Can NOT view deleted topics.
 		$topic2 = $this->addNewTopic('topic2', $board);
 		$posts = $this->addFixturesForPosts(array($topic2), $users['harry']);
@@ -56,11 +73,11 @@ class PostRepositoryTest extends TestBase
 		$this->em->persist($topic2);
 		$this->em->flush();
 		$this->em->refresh($topic2);
-		
+
 		foreach ($posts as $post) {
 			$this->em->refresh($post);
 			$foundPost = $this->getPostModel()->findOnePostByIdWithTopicAndBoard($post->getId(), false);
-			
+
 			$this->assertNull($foundPost);
 		}
 	}
@@ -89,7 +106,7 @@ class PostRepositoryTest extends TestBase
 		$topics = $this->addFixturesForTopics($boards);
 		$this->addFixturesForPosts($topics, $users['tom']);
 		$lastPost = $this->getPostModel()->getLastPostForTopicById($topics[0]->getId());
-		
+
 		$this->assertSame($lastPost->getId(), $topics[0]->getLastPost()->getId());
 	}
 
@@ -103,7 +120,7 @@ class PostRepositoryTest extends TestBase
 		$topics = $this->addFixturesForTopics($boards);
 		$this->addFixturesForPosts($topics, $users['tom']);
 		$count = $this->getPostModel()->countPostsForTopicById($topics[0]->getId());
-		
+
 		$this->assertSame(3, (int) $count);
 	}
 
@@ -117,7 +134,7 @@ class PostRepositoryTest extends TestBase
 		$topics = $this->addFixturesForTopics($boards);
 		$this->addFixturesForPosts($topics, $users['tom']);
 		$count = $this->getPostModel()->countPostsForUserById($users['tom']->getId());
-		
+
 		$this->assertSame(243, (int) $count);
 	}
 }

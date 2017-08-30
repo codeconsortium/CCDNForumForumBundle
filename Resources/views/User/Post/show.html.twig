@@ -1,26 +1,38 @@
-{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.post.user.show.layout_template %}
 
-{%- block title -%}
-	{{- 'title.post.show' | trans({'%post_id%': post.getId}, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
+{% set page_title = 'forum.post.show'|trans %}
 
 {%- block sidebar -%}
 	{%- spaceless -%}
-	{{- parent() -}}
-    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
+		{{- parent() -}}
+		{%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
 	{%- endspaceless -%}
 {%- endblock sidebar -%}
 
-{%- block body_content -%}
+{%- block content -%}
 	{%- spaceless -%}
+<div class="row">
+                <div class="col-lg-12">
+                    <div class="wrapper wrapper-content animated fadeInRight">
+                        <div class="ibox-content forum-post-container">
+                            <div class="forum-post-info">
+                                <h4><span class="text-navy"><i class="fa fa-fw fa-commenting-o"></i>&nbsp; {{ topic.getTitle }}</span> </h4>
+                            </div>
+                    <section class="row btn-toolbar clearfix">
+                        <div class="col-md-6">
+                            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
+                        </div>
+                    </section>
+                    {%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig" -%}
 
-	<section class="row btn-toolbar clearfix">
-        <div class="col-md-6">
-            {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
+
+                </div>
+            </div>
         </div>
-	</section>
+    </div>
+</div>
 
 	{%- include "CCDNForumForumBundle:User:Topic/Partial/stat_vitals.html.twig" -%}
 
@@ -30,9 +42,7 @@
 
 	<br>
 
-	<section class="row clearfix">
-		{%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig" -%}
-	</section>
+
 
 	{%- endspaceless -%}
-{%- endblock body_content -%}
+{%- endblock content -%}

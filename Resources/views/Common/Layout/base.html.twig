@@ -60,15 +60,17 @@
 	{%- endspaceless -%}
 {% endblock %}
 
-
+{% block searchbar %}
+  {% INCLUDE 'CCDNForumForumBundle:Common:Layout/searchbar.html.twig' %}
+{% endblock %}
 
 {% block body %}
 	{%- spaceless -%}
 
     {%- include 'CCDNForumForumBundle:Common:Layout/flashes.html.twig' -%}
 
-	{%- block body_content -%}
-	{%- endblock body_content -%}
+	{%- block content -%}
+	{%- endblock content -%}
 
 	{%- block body_footer -%}
 		<hr>

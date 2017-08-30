@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormError;
-use Symfony\Component\Validator\Constraints\True;
+use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -78,7 +78,7 @@ class BoardDeleteFormType extends AbstractType
                     'label'              => 'board.confirm-delete-label',
                     'translation_domain' => 'CCDNForumForumBundle',
                     'constraints'        => array(
-                        new True(),
+                        new IsTrue(),
                         new NotBlank()
                     ),
                 )
@@ -90,7 +90,7 @@ class BoardDeleteFormType extends AbstractType
                     'label'              => 'board.confirm-delete-subordinates-label',
                     'translation_domain' => 'CCDNForumForumBundle',
                     'constraints'        => array(
-                        new True(),
+                        new IsTrue(),
                         new NotBlank()
                     ),
                 )

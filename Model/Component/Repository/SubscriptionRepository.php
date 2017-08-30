@@ -38,7 +38,7 @@ class SubscriptionRepository extends BaseRepository implements RepositoryInterfa
      */
     public function findAllSubscriptionsForUserById($userId, $canViewDeletedTopics = false)
     {
-        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+        if (null == $userId) {
             throw new \Exception('User id "' . $userId . '" is invalid!');
         }
 
@@ -133,7 +133,7 @@ class SubscriptionRepository extends BaseRepository implements RepositoryInterfa
      */
     public function findAllSubscriptionsPaginatedForUserById($userId, $page, $itemsPerPage = 25, $filter, $canViewDeletedTopics = false)
     {
-        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+        if (null == $userId) {
             throw new \Exception('User id "' . $userId . '" is invalid!');
         }
 
@@ -210,7 +210,7 @@ class SubscriptionRepository extends BaseRepository implements RepositoryInterfa
             throw new \Exception('Forum id "' . $forumId . '" is invalid!');
         }
 
-        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+        if (null == $userId) {
             throw new \Exception('User id "' . $userId . '" is invalid!');
         }
 
@@ -288,7 +288,7 @@ class SubscriptionRepository extends BaseRepository implements RepositoryInterfa
             throw new \Exception('Topic id "' . $topicId . '" is invalid!');
         }
 
-        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+        if (null == $userId) {
             throw new \Exception('User id "' . $userId . '" is invalid!');
         }
 

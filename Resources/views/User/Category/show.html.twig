@@ -1,32 +1,29 @@
-{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.category.user.show.layout_template %}
-
-{%- block title -%}
-	{{- 'title.category.show' | trans({'%category_name%': categories[0].name}, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
+{% set page_title = 'forum.category.show'|trans %}
 
 {%- block sidebar -%}
 	{%- spaceless -%}
-	{{- parent() -}}
-    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
+		{{- parent() -}}
+		{%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
 	{%- endspaceless -%}
 {%- endblock sidebar -%}
 
-{%- block body_content -%}
+{%- block content -%}
 	{%- spaceless -%}
 
-	{%- for category in categories -%}
-		{%- include "CCDNForumForumBundle:User:Category/Partial/item_category.html.twig" -%}
-	{%- else -%}
-		<section class="row clearfix">
-			<div class="well text-center">
+		{%- for category in categories -%}
+			{%- include "CCDNForumForumBundle:User:Category/Partial/item_category.html.twig" -%}
+		{%- else -%}
+			<section class="row clearfix">
+				<div class="well text-center">
 				<span class="lead">
 					{{- 'category.none' | trans({}, 'CCDNForumForumBundle') -}}
 				</span>
-			</div>
-		</section>
-	{%- endfor -%}
+				</div>
+			</section>
+		{%- endfor -%}
 
 	{%- endspaceless -%}
-{%- endblock body_content -%}
+{%- endblock content -%}

@@ -1,43 +1,54 @@
 {%- spaceless -%}
-
-	<div class="forum-topic-transcript">
-		<h3>{{- 'topic.transcript' |trans({}, 'CCDNForumForumBundle') -}}</h3>
-
-		<div class="well pre-scrollable">
-			{%- for key, post in topic.getPosts -%}
-
-				{%- if post.isDeleted == false or is_granted('ROLE_MODERATOR') -%}
-
-					<div class="col-md-12">
-						<article class="row panel panel-{%- if post.isDeleted == false or is_granted('ROLE_MODERATOR') -%} default {% else -%} danger {% endif -%}
-						clearfix" data-snip="{{- post.getBody |slice(0,24) -}}" {%- if post.id %} id="post_{{- post.getId -}}"{% endif %}>
-
-						    <header class="panel-heading">
-								{%- if post.getCreatedBy -%}
-							        {{- 'post.posted-by' |trans({}, 'CCDNForumForumBundle') |raw -}}
-									{{- post.getCreatedBy.username -}}
-
-							        &nbsp;&#183;
-
-								{%- endif -%}
-
-						        <span class="timestamper" title="{{- post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
+    <div class="forum-topic-transcript">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>{{- 'topic.transcript' |trans({}, 'CCDNForumForumBundle') -}}</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-fw fa-chevron-up"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-fw fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div style="position: relative; overflow: hidden; width: auto; height: 200px;" class="slimScrollDiv">
+                    <div style="overflow: hidden; width: auto; height: 200px;" class="scroll_content">
+                        {%- for key, post in topic.getPosts -%}
+                            {%- if post.isDeleted == false or is_granted('ROLE_MODERATOR') -%}
+                                <div class="media">
+                                    <h4 class="media-heading">
+                                        {%- if post.getCreatedBy -%}
+                                            {{- 'post.posted-by' |trans({}, 'CCDNForumForumBundle') |raw -}}
+                                            {{- post.getCreatedBy.name -}}
+                                            &nbsp;&#183;
+                                        {%- endif -%}
+                                        <span class="timestamper"
+                                              title="{{- post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
 						            {{- post.getCreatedDate |date(ccdn_forum_forum.item_post.created_datetime_format) -}}
 						        </span>
-							</header>
+                                    </h4>
 
-							<div class="panel-body">
-								<p>
-									{{ post.getBody }}
-								</p>
-							</div>
+                                    <div class="media-body">
+                                        <p>
+                                            {{ post.getBody|raw}}
+                                        </p>
+                                    </div>
 
-						</article>
-					</div>
+                                </div>
+                            {%- endif -%}
+                        {%- endfor -%}
+                        <div style="background: rgb(0, 0, 0) none repeat scroll 0% 0%; width: 7px; position: absolute; top: 54px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 1px; height: 133.333px;"
+                             class="slimScrollBar"></div>
+                        <div style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51) none repeat scroll 0% 0%; opacity: 0.2; z-index: 90; right: 1px;"
+                             class="slimScrollRail"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-				{%- endif -%}
-			{%- endfor -%}
-		</div>
-	</div>
+
 
 {%- endspaceless -%}

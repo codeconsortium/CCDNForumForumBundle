@@ -1,0 +1,259 @@
+dashboard:
+    pages:
+        forum:                         "Forum"
+        community:                     "Community"
+    categories:
+        forum:                         "Forum"
+        community:                     "Community"
+    links:
+        forum:                         "Forum Startseite"
+        subscriptions:                 "Forum Abonnements"
+
+layout:
+    header_links:
+        forum:                         "Forum"
+
+title:
+    admin:
+        index:                         "Admin Startseite"
+        manage-forums:
+            index:                     "Forum Verwaltung"
+            create:                    "Neues Forum anlegen"
+            edit:                      "Forum %forum_name% bearbeiten"
+            delete:                    "Forum %forum_name% löschen"
+        manage-categories:
+            index:                     "Kategorien verwalten"
+            create:                    "Neue Kategorie anlegen"
+            edit:                      "Kategorie %category_name% bearbeiten"
+            delete:                    "Kategorie %category_name% löschen"
+        manage-boards:
+            index:                     "Boards verwalten"
+            create:                    "Neues Board anlegen"
+            edit:                      "Board %board_name% bearbeiten"
+            delete:                    "Board %board_name% löschen"
+    category:
+        index:                         "Index"
+        show:                          "Kategorie %category_name%"
+    board:
+        show:                          "Board %board_name%"
+    topic:
+        show:                          "Thema: %topic_title%"
+        create:                        "Thema erstellen"
+        reply:                         "Auf Thema antworten"
+        edit:                          "Thema bearbeiten"
+        delete:                        "Thema löschen"
+        change_board:                  "Thema auf anderes Board verschieben"
+    post:
+        show:                          "Beitrag #%post_id%"
+        edit:                          "Beitrag #%post_id% bearbeiten"
+        delete:                        "Beitrag #%post_id% löschen"
+    subscription:
+        index:                         "Abonnements"
+
+crumbs:
+    admin:
+        index:                         "Admin Startseite"
+        manage-forums:
+            index:                     "Forum Verwaltung"
+            create:                    "Neues Forum anlegen"
+            edit:                      "Forum %forum_name% bearbeiten"
+            delete:                    "Forum %forum_name% löschen"
+        manage-categories:
+            index:                     "Kategorien verwalten"
+            create:                    "Neue Kategorie anlegen"
+            edit:                      "Kategorie %category_name% bearbeiten"
+            delete:                    "Kategorie %category_name% löschen"
+        manage-boards:
+            index:                     "Boards verwalten"
+            create:                    "Neues Board anlegen"
+            edit:                      "Board %board_name% bearbeiten"
+            delete:                    "Board %board_name% löschen"
+    moderator:
+        topic:
+            move:                      "Thema verschieben"
+            delete:                    "Thema löschen"
+    user:
+        category:
+            index:                     "Forum Startseite"
+        topic:
+            create:                        "Thema erstellen"
+            reply:                         "Auf Thema antworten"
+            delete:                        "Thema löschen"
+        post:
+            edit:                      "Beitrag bearbeiten: #"
+            delete:                    "Beitrag löschen: #"
+        subscription:
+            index:                     "Abonnements"
+
+link:
+    edit:                              "Bearbeiten"
+    delete:                            "Löschen"
+    unassigned:                        "Nicht zugewiesen"
+    admin:
+        index:                         "Admin"
+    forum:
+        index:                         "Forum"
+        create:                        "Forum anlegen"
+    category:
+        index:                         "Forum Startseite"
+        create:                        "Kategorie anlegen"
+    board:
+        create:                        "Board anlegen"
+    topic:
+        create:                        "Thema erstellen"
+        reply:                         "Antworten"
+        subscribe:                     "Abonnieren"
+        unsubscribe:                   "Abbestellen"
+        close:                         "Thema schließen"
+        reopen:                        "Thema erneut öffnen"
+        delete:                        "Thema löschen"
+        restore:                       "Thema wiederherstellen"
+        change_board:                  "Board wechseln"
+        sticky:                        "Thema anpinnen"
+        unsticky:                      "Thema nicht mehr anpinnen"
+    post:
+        quote:                         "Zitat"
+        delete:                        "Löschen"
+        restore:                       "Wiederherstellen"
+        lock:                          "Sperren"
+        unlock:                        "Entsperren"
+    subscription:
+        index:                         "Abonnements"
+
+form:
+    required:                          "Pflichtfeld!"
+    button:
+        confirm-delete:                "Löschen bestätigen"
+        save:                          "Speichern"
+        save-changes:                  "Änderungen speichern"
+        topic:
+            create:                    "Thema veröffentlichen"
+            reply:                     "Beitrag veröffentlichen"
+            move:                      "Thema verschieben"
+        preview:                       "Vorschau"
+        cancel:                        "Abbrechen"
+        yes:                           "Ja"
+        no:                            "Nein"
+
+
+filter:
+    forums:                            "Foren"
+    categories:                        "Kategorien"
+forum:
+    label:                             "Forum: "
+    id-th:                             "ID"
+    name-th:                           "Name"
+    category-count-th:                 "Anzahl Kategorien"
+    name-label:                        "Name: "
+    roles:
+        board-view-label:              "Berechtigungen:"
+    confirm-delete-label:              "Ich bestätige, dass ich dieses Forum wirklich löschen möchte."
+    confirm-delete-subordinates-label: "Auch alle Kategorien, Boards und Themen löschen."
+category:
+    label:                             "Kategorie"
+    id-th:                             "ID"
+    name-th:                           "Name"
+    board-count-th:                    "Anzahl Boards"
+    name-label:                        "Name: "
+    confirm-delete-label:              "Ich bestätige, dass ich diese Kategorie wirklich löschen möchte."
+    confirm-delete-subordinates-label: "Auch alle Boards und Themen löschen."
+    roles:
+        board-view-label:              "Berechtigungen:"
+    index:                             "Forum Startseite"
+    none:                              "Keine Kategorien vorhanden."
+    no-boards:                         "Keine Boards für diese Kategorie vorhanden"
+board:
+    th:                                "Board"
+    id-th:                             "ID"
+    name-th:                           "Name"
+    topic-th:                          "Thema"
+    topics-th:                         "Themen"
+    view-count-th:                     "Aufrufe"
+    reply-count-th:                    "Antworten"
+    topic-count-th:                    "Themen"
+    post-count-th:                     "Beiträge"
+    last-post-th:                      "Letzter Beitrag"
+    announcements-th:                  "Wichtige Ankündigungen"
+    label:                             "Board: "
+    name-label:                        "Name: "
+    topic-count-label:                 "Themen"
+    post-count-label:                  "Beiträge"
+    description-label:                 "Beschreibung"
+    confirm-delete-label:              "Ich bestätige, dass ich dieses Board wirklich löschen möchte."
+    confirm-delete-subordinates-label: "Auch alle Themen löschen."
+    roles:
+        topic-create-label:            "Berechtigungen (Thema erstellen): "
+        topic-view-label:              "Berechtigungen (Thema anzeigen): "
+        topic-reply-label:             "Berechtigungen (Thema antworten): "
+    no-topics:                         "Es gibt noch keine Themen in diesem Board. Sei der erste, der ein neues Thema eröffnet!"
+topic:
+    label:                             "Thema: "
+    board-label:                       "Board: "
+    title-label:                       "Titel"
+    confirm-delete-label:              "Ich bestätige, dass ich dieses Thema wirklich löschen möchte."
+    subscription-count-label:          "Abonnenten: "
+    view-count-label:                  "Aufrufe"
+    reply-count-label:                 "Antworten"
+    transcript:                        "Letzte Antworten"
+    closed-by:                         "Thema geschlossen von "
+    deleted-by:                        "Thema gelöscht von "
+    stickied-by:                       "Angepinnt von "
+    delete-confirm:                    "Bist du sicher, dass Du dieses Thema löschen möchtest?"
+    badge:
+        closed:                        "Geschlossen"
+    deleted-by:                        "Gelöscht von "
+    closed-by:                         "Geschlossen von "
+post:
+    preview:                           "Vorschau"
+    posted-by:                         "Geschrieben von "
+    post-last-by:                      "Letzter Beitrag von "
+    edited-by:                         "Bearbeitet von "
+    deleted-by:                        "Gelöscht von "
+    locked-by:                         "Gesperrt von "
+    confirm-delete-label:              "Ich bestätige, dass ich diesen Beitrag wirklich löschen möchte."
+    body-label:                        "Beitrag:"
+    subscribe-label:                   "Thema abonnieren."
+    unlock-until-label:                "Entsperren bis:"
+    has_been_locked:                   "Dieser Beitrag wurde gesperrt."
+    has_been_deleted:                  "Dieser Beitrag wurde gelöscht."
+    user_post_count:                   "{0} Bisher keine Beiträge|{1} %post_count% Beitrag |[2, Inf] %post_count% Beiträge"
+    delete_confirm:                    "Bist du sicher, dass Du diesen Beitrag löschen möchtest?"
+    show:                              "Einblenden"
+    hide:                              "Ausblenden"
+subscription:
+    no-topics:                         "Du hast keine Themen abonniert"
+    all:                               "alle"
+    unread:                            "ungelesen"
+    read:                              "gelesen"
+
+next:                                  "Nächstes"
+previous:                              "Vorheriges"
+
+flash:
+    success:
+        topic:
+            create:                    "Thema wurde veröffentlicht: %topic_title%."
+            reply:                     "Antwort wurde veröffentlicht: %topic_title%."
+            move:                      "Thema verschoben: %topic_title%."
+            subscribe:                 "Du hast das Thema %topic_title% abonniert."
+            unsubscribe:               "Du hast das Abonnement für das Thema %topic_title% beendet."
+        post:
+            edit:                      "Beitrag #%post_id% von Thema %topic_title% wurde bearbeitet."
+            delete:                    "Beitrag wurde gelöscht: #%post_id%."
+    warning:
+        topic:
+            flood_control:             "Flood Control - Du hast zu viele Beiträge auf einmal erstellt. Bitte lege eine Pause ein."
+    error:
+        topic:
+            reply:
+                not_found:             "Das Thema, auf welches du antworten möchtest, existiert nicht mehr."
+            subscribe:
+                not_found:             "Das Thema konnte nicht abonniert werden, da es nicht gefunden wurde."
+        board:
+            topic_create:
+                not_found:             "Das Board wurde nicht gefunden."
+
+custom:
+    search_button: "Suchen"
+    search_title: "Im Forum suchen"
+    searchtermrequired: "Suchbegriff eingeben!"

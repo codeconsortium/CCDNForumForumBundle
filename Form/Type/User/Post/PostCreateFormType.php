@@ -58,8 +58,12 @@ class PostCreateFormType extends AbstractType
         $builder
             ->add('body', 'textarea',
                 array(
-                    'label'              => 'post.body-label',
+                    'label'              => false,
                     'translation_domain' => 'CCDNForumForumBundle',
+                    'attr' => array(
+                        'placeholder' => 'placeholder.topic.content',
+                        'class' => 'summernote',
+                    )
                 )
             )
             ->add('subscribe', 'checkbox',
@@ -69,7 +73,8 @@ class PostCreateFormType extends AbstractType
                     'label'              => 'post.subscribe-label',
                     'translation_domain' => 'CCDNForumForumBundle',
                     'attr'     => array(
-                        'checked' => 'checked'
+                        'checked' => 'checked',
+                        'hidden' => true,
                     )
                 )
             )

@@ -1,34 +1,18 @@
 {%- spaceless -%}
+	<a name="{{ post.id }}" id="{{ post.id }}"></a>
 
-	<div class="row clearfix">
-	    <div class="col-md-7">
-			<h3 class="panel-title">
-				{%- if post.getCreatedBy -%}
-			        {{- 'post.posted-by' |trans({}, 'CCDNForumForumBundle') |raw -}}
-					{{- post.getCreatedBy.username -}}
+	{%- if post.isDeleted == false or is_granted('ROLE_MODERATOR') -%}
+	<a class="forum-avatar" href="#">
+	     <img class="img-thumbnail" src="{{ asset(profilepicture.getAvatarPath(post.getCreatedBy)) }}" style="max-width: none; width: 96px; height: 96px; !important;">
+			<div class="author-info">
+			<strong>Name: </strong> {{- post.getCreatedBy.name -}}<br>
+			<strong>Posted: </strong> {{- post.getCreatedDate |date('d.m.Y H:i:s') -}} <br>
+		</div>
+	</a>
 
-			        &nbsp;&#183;&nbsp;
-
-				{%- endif -%}
-
-		        <span class="timestamper" title="{{- post.getCreatedDate |date('Y-m-d H:i:s T Z', 'Europe/London') -}}">
-		            {{- post.getCreatedDate |date(ccdn_forum_forum.item_post.created_datetime_format) -}}
-		        </span>
-			</h3>
-	    </div>
 
 	    <div class="col-md-5 pull-right text-right">
-	        {% if post.id and not post.isDeleted %}
-	            <div class="btn-group">
-	                <a class="btn btn-xs btn-icon-only" title="show post"
-					 href="{{- path('ccdn_forum_user_post_show', {'forumName': forumName, 'postId': post.getId }) -}}">
-						<i class="glyphicon glyphicon-fullscreen"></i>
-					</a>
-	                <a class="btn btn-xs btn-icon-only" href="#post_{{- post.getId -}}">
-						<i class="glyphicon glyphicon-link"></i>
-					</a>
-	            </div>
-	        {% endif %}
+
 
             {%- if is_granted('ROLE_USER') and post.id and (is_granted('ROLE_MODERATOR') or not post.isDeleted) -%}
 				&nbsp;
@@ -37,7 +21,7 @@
 						<i class="glyphicon glyphicon-cog"></i>
 						<span class="caret"></span>
 					</a>
-                    <ul class="dropdown-menu pull-right content-left" style="z-index:15;">
+                    <ul class="dropdown-menu pull-right content-left" >
 
 						{%- if canReplyToTopic(post.getTopic) -%}
 	                        <li>
@@ -100,6 +84,6 @@
                 </div>
             {%- endif -%}
 		</div>
-	</div>
+{% endif %}
 
 {%- endspaceless -%}

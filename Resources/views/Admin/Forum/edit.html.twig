@@ -1,11 +1,8 @@
-{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.forum.admin.edit.layout_template %}
 
-{%- block title -%}
-	{{- 'title.admin.manage-forums.edit' |trans({'%forum_name%': forum.name}, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
-
+{% set page_title = 'forum.admin.edit'|trans %}
 {%- block sidebar -%}
 	{%- spaceless -%}
 	{{- parent() -}}
@@ -13,7 +10,7 @@
 	{%- endspaceless -%}
 {%- endblock sidebar -%}
 
-{%- block body_content -%}
+{%- block content -%}
     {%- spaceless -%}
 
 	<section class="clearfix">
@@ -51,4 +48,4 @@
 	</section>
 
     {%- endspaceless -%}
-{%- endblock body_content -%}
+{%- endblock content -%}

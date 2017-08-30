@@ -16,6 +16,7 @@ namespace CCDNForum\ForumBundle\Form\Type\Admin\Board;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -79,14 +80,14 @@ class BoardCreateFormType extends AbstractType
                 array(
                     'property'           => 'name',
                     'class'              => $this->categoryClass,
-                    'group_by'           => 'category.forum.name',
+                    'group_by'           => 'forum.name',
                     'query_builder'      =>
                         function (EntityRepository $er) {
                             return $er
                                 ->createQueryBuilder('c')
                                 ->leftJoin('c.forum', 'f')
                                 //->groupBy('c.forum')
-                            ;
+                                ;
                         },
                     'data'               => $options['default_category'],
                     'required'           => false,
@@ -136,6 +137,13 @@ class BoardCreateFormType extends AbstractType
                     'translation_domain' => 'CCDNForumForumBundle',
                 )
             )
+            ->add('icon', 'text',
+                array(
+                    'required'          => true,
+                    'label'              => 'board.icon',
+                    'translation_domain' => 'CCDNForumForumBundle',
+                )
+            )
         ;
     }
 
@@ -143,8 +151,8 @@ class BoardCreateFormType extends AbstractType
      *
      * @access public
      * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    */
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class'          => $this->boardClass,

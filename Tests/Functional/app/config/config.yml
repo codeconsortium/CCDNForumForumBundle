@@ -82,9 +82,9 @@ doctrine:
 security:
     role_hierarchy:
         ROLE_USER:        ROLE_USER
-        ROLE_MODERATOR:   [ROLE_USER]
-        ROLE_ADMIN:       [ROLE_USER, ROLE_MODERATOR]
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_MODERATOR, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SUPER_ADMIN:   [ROLE_USER]
+        ROLE_ADMIN:       [ROLE_USER, ROLE_SUPER_ADMIN]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_SUPER_ADMIN, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
     providers:
@@ -94,7 +94,7 @@ security:
 #            memory:
 #                users:
 #                    user:       { password: root, roles: [ 'ROLE_USER' ] }
-#                    moderator:  { password: root, roles: [ 'ROLE_MODERATOR' ] }
+#                    moderator:  { password: root, roles: [ 'ROLE_SUPER_ADMIN' ] }
 #                    admin:      { password: root, roles: [ 'ROLE_ADMIN' ] }
     firewalls:
         main:

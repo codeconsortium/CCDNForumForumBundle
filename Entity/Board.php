@@ -85,6 +85,12 @@ class Board extends AbstractBoard
 
     /**
      *
+     * @var string icon
+     */
+    protected $icon;
+
+    /**
+     *
      * @access public
      */
     public function __construct()
@@ -131,6 +137,29 @@ class Board extends AbstractBoard
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get icon
+     *
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * Set icon
+     *
+     * @param  string $icon
+     * @return Board
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
 
         return $this;
     }

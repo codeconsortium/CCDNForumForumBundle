@@ -1,36 +1,36 @@
 
 ccdn_forum_admin_category_list:
-    pattern: /
-    defaults: { _controller: CCDNForumForumBundle:AdminCategory:list, _locale: en }
+    path: /
+    defaults: { _controller: CCDNForumForumBundle:AdminCategory:list }
 
 ccdn_forum_admin_category_create:
-    pattern: /create
-    defaults: { _controller: CCDNForumForumBundle:AdminCategory:create, _locale: en }
+    path: /create
+    defaults: { _controller: CCDNForumForumBundle:AdminCategory:create }
 
 ccdn_forum_admin_category_create_process:
-    pattern: /create/process
-    defaults: { _controller: CCDNForumForumBundle:AdminCategory:createProcess, _locale: en }
+    path: /create/process
+    defaults: { _controller: CCDNForumForumBundle:AdminCategory:createProcess }
 
 ccdn_forum_admin_category_edit:
-    pattern: /edit/{categoryId}
-    defaults: { _controller: CCDNForumForumBundle:AdminCategory:edit, _locale: en }
+    path: /edit/{categoryId}
+    defaults: { _controller: CCDNForumForumBundle:AdminCategory:edit }
 
 ccdn_forum_admin_category_edit_process:
-    pattern: /edit/{categoryId}/process
-    defaults: { _controller: CCDNForumForumBundle:AdminCategory:editProcess, _locale: en }
+    path: /edit/{categoryId}/process
+    defaults: { _controller: CCDNForumForumBundle:AdminCategory:editProcess }
 
 ccdn_forum_admin_category_delete:
-    pattern: /delete/{categoryId}
-    defaults: { _controller: CCDNForumForumBundle:AdminCategory:delete, _locale: en }
+    path: /delete/{categoryId}
+    defaults: { _controller: CCDNForumForumBundle:AdminCategory:delete }
 
 ccdn_forum_admin_category_delete_process:
-    pattern: /delete/{categoryId}/process
-    defaults: { _controller: CCDNForumForumBundle:AdminCategory:deleteProcess, _locale: en }
+    path: /delete/{categoryId}/process
+    defaults: { _controller: CCDNForumForumBundle:AdminCategory:deleteProcess }
 
 ccdn_forum_admin_category_reorder_up:
-    pattern: /reorder/{categoryId}/up
-    defaults: { _controller: CCDNForumForumBundle:AdminCategory:reorder, _locale: en, direction: 0 }
+    path: /reorder/{categoryId}/up
+    defaults: { _controller: CCDNForumForumBundle:AdminCategory:reorder, direction: 0 }
 
 ccdn_forum_admin_category_reorder_down:
-    pattern: /reorder/{categoryId}/down
-    defaults: { _controller: CCDNForumForumBundle:AdminCategory:reorder, _locale: en, direction: 1 }
+    path: /reorder/{categoryId}/down
+    defaults: { _controller: CCDNForumForumBundle:AdminCategory:reorder, direction: 1 }

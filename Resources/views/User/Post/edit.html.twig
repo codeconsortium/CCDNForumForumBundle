@@ -1,70 +1,99 @@
-{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.post.user.edit.layout_template %}
 
-{%- block title -%}
-	{{- 'title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
+{% set page_title = 'forum.post.edit'|trans %}
 
 {%- block sidebar -%}
-	{%- spaceless -%}
-	{{- parent() -}}
-    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
-	{%- endspaceless -%}
+    {%- spaceless -%}
+        {{- parent() -}}
+        {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
+    {%- endspaceless -%}
 {%- endblock sidebar -%}
 
-{%- block body_content -%}
+{%- block content -%}
     {%- spaceless -%}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="ibox">
+                        <div class="ibox-content ecommerce">
+                            {%- form_theme form ccdn_forum_forum.post.user.edit.form_theme -%}
+                            <form action="{{- path('ccdn_forum_user_post_edit_process', {'forumName': forumName, 'postId': post.id } ) -}}"
+                                  method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
+                                <fieldset>
 
-	<section class="clearfix">
-	    {%- form_theme form ccdn_forum_forum.post.user.edit.form_theme -%}
-	    <form action="{{- path('ccdn_forum_user_post_edit_process', {'forumName': forumName, 'postId': post.id } ) -}}"
-		 method="post" {{ form_enctype(form) }} class="form-horizontal" novalidate>
-	        <fieldset>
+                                    <div class="pull-right">
+                                        <a class="btn btn-outline btn-xs btn-default"
+                                           href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': post.getTopic.getId}) -}}">
+                                            <i class="fa fa-fw fa-chevron-left"></i>&nbsp; {{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
+                                        </a>
+                                    </div>
+                                    <h1>
+                                        {{- 'title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}
+                                    </h1>
+                                    <hr>
 
-				<div class="form-group">
-					<div class="col-lg-offset-2 col-lg-10">
-						<h4>
-							{{- 'title.post.edit' | trans({'%post_id%': post.getId, '%topic_title%': post.getTopic.getTitle }, 'CCDNForumForumBundle') -}}
-						</h4>
-					</div>
-				</div>
+                                    {{- form_errors(form) -}}
 
-				{{- form_errors(form) -}}
+                                    {%- if form.Topic is defined -%}
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                            {{- form_widget(form.Topic.title, {'attr': {'class': 'form-control'}}) -}}
+                                            </div>
+                                        </div>
 
-				{%- if form.Topic is defined -%}
-					{{- form_row(form.Topic.title) -}}
-				{%- endif -%}
+                                    {%- endif -%}
 
-				{{- form_rest(form) -}}
+                                    {{- form_rest(form) -}}
+                                    <br>
 
-				<div class="form-group">
-					<div class="col-lg-offset-2 col-lg-10">
-		                <input type="submit" class="btn btn-primary" value="
-							{{- 'form.button.save-changes' | trans({}, 'CCDNForumForumBundle') -}}
-						" name="submit[post]" id="submit[post]">
+                                    <div class="pull-left">
+                                        <div class="form-group">
+                                            <button type="submit" id="submit[post]" name="submit[post]"
+                                                    class="btn-primary btn"><i
+                                                        class="fa fa-save"></i> {{- 'form.button.save-changes' | trans({}, 'CCDNForumForumBundle') -}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-					{#
-						<input type="submit" class="btn" value="
-							{{- 'form.button.preview' | trans({}, 'CCDNForumForumBundle') -}}
-						" name="submit[preview]">
-					#}
+        {#{%- if preview is defined -%}
+                {%- if preview is not empty -%}
+                    {%- include "CCDNForumForumBundle:User:Post/Partial/post_preview.html.twig" with {'post': preview} -%}
+                {%- endif -%}
+            {%- endif -%} #}
 
-		                <a class="btn btn-default" href="{{- path('ccdn_forum_user_topic_show', {'forumName': forumName, 'topicId': post.getTopic.getId}) -}}">
-							{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
-						</a>
-					</div>
-	            </div>
+        {# Custom CSS #}
+        {% block customcss %}
+            <link href="{{ asset('css/plugins/summernote/summernote.css') }}" rel="stylesheet" media="screen">
+            <link href="{{ asset('css/plugins/summernote/summernote-bs3.css') }}" rel="stylesheet" media="screen">
+        {% endblock %}
 
-	        </fieldset>
-	    </form>
-	</section>
+        {# Custom JS #}
+        {% block customjs %}
+            {{ parent() }}
+            <script src="{{ asset('js/plugins/summernote/summernote.min.js') }}"></script>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('.summernote').summernote({
+                        height: 210,
+                        maxHeight: 210,
+                        minHeight: 210,
+                        disableResizeEditor: false,
+                    });
+                    <!-- TODO: do it better -->
+                    $('.note-resizebar').hide();
 
-    {%- if preview is defined -%}
-        {%- if preview is not empty -%}
-            {%- include "CCDNForumForumBundle:User:Post/Partial/post_preview.html.twig" with {'post': preview} -%}
-        {%- endif -%}
-    {%- endif -%}
-
+                });
+            </script>
+            <script src="{{ asset('js/bootstrap_bc-bootstrap-collection_13.js') }}"></script>
+        {% endblock customjs %}
     {%- endspaceless -%}
-{%- endblock body_content -%}
+{%- endblock content -%}

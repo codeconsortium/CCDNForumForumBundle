@@ -29,6 +29,20 @@ use CCDNForum\ForumBundle\Model\Component\Repository\RepositoryInterface;
  */
 class PostRepository extends BaseRepository implements RepositoryInterface
 {
+
+    public function findAllPostsExtendingString($string)
+    {
+        $qb = $this->createSelectQuery(array('p'));
+        $qb->where("p.body LIKE '%".$string."%'");
+        return $this->gateway->findPosts($qb);
+    }
+
+    public function findAll()
+    {
+        $qb = $this->createSelectQuery(array('p'));
+        return $this->gateway->findPosts($qb);
+    }
+
     /**
      *
      * @access public
@@ -209,7 +223,7 @@ class PostRepository extends BaseRepository implements RepositoryInterface
      */
     public function countPostsForUserById($userId)
     {
-        if (null == $userId || ! is_numeric($userId) || $userId == 0) {
+        if (null == $userId) {
             throw new \Exception('User id "' . $userId . '" is invalid!');
         }
 

@@ -1,10 +1,9 @@
-{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.board.admin.list.layout_template %}
 
-{%- block title -%}
-	{{- 'title.admin.manage-boards.index' |trans({}, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
+{% set page_title = 'forum.admin.boards.index'|trans %}
+
 
 {%- block sidebar -%}
 	{%- spaceless -%}
@@ -13,7 +12,7 @@
 	{%- endspaceless -%}
 {%- endblock sidebar -%}
 
-{%- block body_content -%}
+{%- block content -%}
 	{%- spaceless -%}
 
 		<section class="row btn-toolbar clearfix">
@@ -99,7 +98,7 @@
 										{{- 'link.edit' |trans({}, 'CCDNForumForumBundle') -}}
 									</a>
 
-									{%- if is_granted('ROLE_SUPER_ADMIN') -%}
+									{%- if is_granted('ROLE_MODERATOR') -%}
 										<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_board_delete', {'boardId': board.id, 'forum_filter': forum_filter, 'category_filter': category_filter}) -}}"
 										 id="delete_board[{{- board.name -}}]">
 											{{- 'link.delete' |trans({}, 'CCDNForumForumBundle') -}}
@@ -138,4 +137,4 @@
 		</section>
 
 	{%- endspaceless -%}
-{%- endblock body_content -%}
+{%- endblock content -%}

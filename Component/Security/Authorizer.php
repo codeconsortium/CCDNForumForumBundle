@@ -151,7 +151,7 @@ class Authorizer
         }
 
         if ($topic->isDeleted()) {
-            if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+            if (! $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
                 return false;
             }
         }
@@ -190,7 +190,7 @@ class Authorizer
             return false;
         }
 
-        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+        if (! $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             return false;
         }
 
@@ -207,7 +207,7 @@ class Authorizer
             return false;
         }
 
-        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+        if (! $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             return false;
         }
 
@@ -226,7 +226,7 @@ class Authorizer
             }
         }
 
-        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+        if (! $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             return false;
         }
 
@@ -245,7 +245,7 @@ class Authorizer
             }
         }
 
-        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+        if (! $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             return false;
         }
 
@@ -260,7 +260,7 @@ class Authorizer
             }
         }
 
-        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+        if (! $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             return false;
         }
 
@@ -275,7 +275,7 @@ class Authorizer
             }
         }
 
-        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+        if (! $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             return false;
         }
 
@@ -294,7 +294,7 @@ class Authorizer
             }
         }
 
-        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+        if (! $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             return false;
         }
 
@@ -313,7 +313,7 @@ class Authorizer
             }
         }
 
-        if ($post->isDeleted() && ! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+        if ($post->isDeleted() && ! $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             return false;
         }
 
@@ -331,7 +331,7 @@ class Authorizer
         }
 
         if ($this->postLockHelper->isLocked($post)) {
-            if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+            if (! $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
                 return false;
             }
         }
@@ -359,12 +359,12 @@ class Authorizer
             return false;
         }
 
-        if (! $this->canShowPost($post, $forum) && ! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+        if (! $this->canShowPost($post, $forum) && ! $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             return false;
         }
 
         if ($post->isLocked()) {
-            if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+            if (! $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
                 return false;
             }
         }
@@ -384,7 +384,7 @@ class Authorizer
 
     public function canRestorePost(Post $post, Forum $forum = null)
     {
-        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+        if (! $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             return false;
         }
 
@@ -392,7 +392,7 @@ class Authorizer
             return false;
         }
 
-        if (! $this->canShowPost($post, $forum) && ! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+        if (! $this->canShowPost($post, $forum) && ! $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             return false;
         }
 
@@ -401,7 +401,7 @@ class Authorizer
 
     public function canLockPost(Post $post, Forum $forum = null)
     {
-        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+        if (! $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             return false;
         }
 
@@ -418,7 +418,7 @@ class Authorizer
 
     public function canUnlockPost(Post $post, Forum $forum = null)
     {
-        if (! $this->securityContext->isGranted('ROLE_MODERATOR')) {
+        if (! $this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             return false;
         }
 

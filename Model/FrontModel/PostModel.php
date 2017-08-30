@@ -41,6 +41,12 @@ class PostModel extends BaseModel implements ModelInterface
         return $this->getManager()->createPost();
     }
 
+
+    public function findAllPostsExtendingString($term)
+    {
+      return $this->getRepository()->findAllPostsExtendingString($term);
+    }
+
     /**
      *
      * @access public

@@ -20,7 +20,7 @@ services:
     ccdn_forum_forum.component.helper.role:
         class: %ccdn_forum_forum.component.helper.role.class%
         arguments:
-            - @security.context
+            - "@security.context"
             - %security.role_hierarchy.roles%
 
     #
@@ -29,8 +29,8 @@ services:
     ccdn_forum_forum.component.flood_control:
        class: %ccdn_forum_forum.component.flood_control.class%
        arguments:
-           - @security.context
-           - @session
+           - "@security.context"
+           - "@session"
            - %kernel.environment%
            - %ccdn_forum_forum.topic.user.flood_control.post_limit%
            - %ccdn_forum_forum.topic.user.flood_control.block_for_minutes%
@@ -48,25 +48,25 @@ services:
     #
     ccdn_forum_forum.component.event_listener.flash:
         class: %ccdn_forum_forum.component.event_listener.flash.class%
-        arguments: [@session]
+        arguments: ["@session"]
         tags:
             - { name: kernel.event_subscriber }
 
     ccdn_forum_forum.component.event_listener.subscriber:
         class: %ccdn_forum_forum.component.event_listener.subscriber.class%
         arguments:
-            - @ccdn_forum_forum.model.subscription
-            - @security.context
+            - "@ccdn_forum_forum.model.subscription"
+            - "@security.context"
         tags:
             - { name: kernel.event_subscriber }
 
     ccdn_forum_forum.component.event_listener.stats:
         class: %ccdn_forum_forum.component.event_listener.stats.class%
         arguments:
-            - @ccdn_forum_forum.model.board
-            - @ccdn_forum_forum.model.topic
-            - @ccdn_forum_forum.model.post
-            - @ccdn_forum_forum.model.registry
+            - "@ccdn_forum_forum.model.board"
+            - "@ccdn_forum_forum.model.topic"
+            - "@ccdn_forum_forum.model.post"
+            - "@ccdn_forum_forum.model.registry"
         tags:
             - { name: kernel.event_subscriber }
 
@@ -76,16 +76,16 @@ services:
     ccdn_forum_forum.component.crumb_factory:
         class: %ccdn_forum_forum.component.crumb_factory.class%
         arguments:
-            - @translator
-            - @router
+            - "@translator"
+            - "@router"
 
     ccdn_forum_forum.component.crumb_builder:
         class: %ccdn_forum_forum.component.crumb_builder.class%
         arguments:
-            - @ccdn_forum_forum.component.crumb_factory
+            - "@ccdn_forum_forum.component.crumb_factory"
 
     ccdn_forum_forum.component.security.authorizer:
         class: %ccdn_forum_forum.component.security.authorizer.class%
         arguments:
-            - @security.context
-            - @ccdn_forum_forum.component.helper.post_lock
+            - "@security.context"
+            - "@ccdn_forum_forum.component.helper.post_lock"

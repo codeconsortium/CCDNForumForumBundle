@@ -1,68 +1,106 @@
-{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.topic.user.create.layout_template %}
 
-{%- block title -%}
-	{{- 'title.topic.create' | trans({'%board_name%': board.getName }, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
-
+{% set page_title = board.getName %}
 {%- block sidebar -%}
-	{%- spaceless -%}
-	{{- parent() -}}
-    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
-	{%- endspaceless -%}
+    {%- spaceless -%}
+        {{- parent() -}}
+        {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
+    {%- endspaceless -%}
 {%- endblock sidebar -%}
 
-{%- block body_content -%}
-	{%- spaceless -%}
+{%- block content -%}
+    {%- spaceless -%}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="ibox">
+                        <div class="ibox-content ecommerce">
+                            <section class="clearfix">
+                                {%- form_theme form ccdn_forum_forum.topic.user.create.form_theme -%}
+                                <form action="{{- path('ccdn_forum_user_topic_create_process', {'forumName': forumName, 'boardId': board.id } ) -}}"
+                                      method="post" {{ form_enctype(form) }} class="form-horizontal" role="form"
+                                      novalidate>
+                                    <fieldset>
+                                        <div class="pull-right">
+                                            <a class="btn btn-outline btn-xs btn-default"
+                                               href="{{- path('ccdn_forum_user_board_show', {'boardId': board.id, 'forumName': forumName}) -}}">
+                                                <i class="fa fa-fw fa-chevron-left"></i>&nbsp; {{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
+                                            </a>
+                                        </div>
+                                        <h1>
+                                            {{- 'title.topic.create'|trans({}, 'CCDNForumForumBundle') -}}
+                                        </h1>
+                                        <hr>
 
-	<section class="clearfix">
-		{%- form_theme form ccdn_forum_forum.topic.user.create.form_theme -%}
-		<form action="{{- path('ccdn_forum_user_topic_create_process', {'forumName': forumName, 'boardId': board.id } ) -}}"
-		 method="post" {{ form_enctype(form) }} class="form-horizontal" role="form" novalidate>
-			<fieldset>
 
-				<div class="form-group">
-					<div class="col-lg-offset-2 col-lg-10">
-						<h4>{{- 'title.topic.create' | trans({}, 'CCDNForumForumBundle') -}}</h4>
-					</div>
-				</div>
+                                        {{- form_errors(form) -}}
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                {{- form_row(form.Topic.board, {'attr': {'class': 'form-control'}}) -}}
+                                            </div>
+                                        </div>
 
-				{{- form_errors(form) -}}
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                {{- form_row(form.Topic.title, {'attr': {'class': 'form-control'}}) -}}
+                                            </div>
+                                        </div>
 
-				{{- form_row(form.Topic.board) -}}
 
-				{{- form_row(form.Topic.title) -}}
+                                        {{- form_rest(form) -}}
 
-				{{- form_rest(form) -}}
+                                        <div class="pull-left">
+                                            <div class="form-group">
+                                                &nbsp;&nbsp;&nbsp;
+                                                <button type="submit" id="submit[post]" name="submit[post]" class="btn-primary btn">
+                                                    <i class="fa fa-fw fa-save"></i>&nbsp; {{- 'form.button.topic.create' | trans({}, 'CCDNForumForumBundle') -}}
+                                                </button>
+                                            </div>
+                                        </div>
 
-				<div class="form-group">
-					<div class="col-lg-offset-2 col-lg-10">
-						<input type="submit" class="btn btn-primary" value="
-							{{- 'form.button.topic.create' | trans({}, 'CCDNForumForumBundle') -}}
-						" name="submit[post]" id="submit[post]">
 
-					{#
-						<input type="submit" class="btn" value="
-							{{- 'form.button.preview' | trans({}, 'CCDNForumForumBundle') -}}
-						" name="submit[preview]">
-					#}
+                                    </fieldset>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-						<a class="btn btn-default" href="{{- path('ccdn_forum_user_board_show', {'forumName': forumName, 'boardId': board.id}) -}}">
-							{{- 'form.button.cancel' |trans({}, 'CCDNForumForumBundle') -}}
-						</a>
-					</div>
-				</div>
-
-			</fieldset>
-		</form>
-	</section>
-
-    {%- if preview is defined -%}
-        {%- if preview is not empty -%}
-            {%- include "CCDNForumForumBundle:User:Post/Partial/post_preview.html.twig" with {'post': preview} -%}
+        {%- if preview is defined -%}
+            {%- if preview is not empty -%}
+                {%- include "CCDNForumForumBundle:User:Post/Partial/post_preview.html.twig" with {'post': preview} -%}
+            {%- endif -%}
         {%- endif -%}
-    {%- endif -%}
+        {# Custom CSS #}
+        {% block customcss %}
+            <link href="{{ asset('css/plugins/summernote/summernote.css') }}" rel="stylesheet"
+                  media="screen">
+            <link href="{{ asset('css/plugins/summernote/summernote-bs3.css') }}" rel="stylesheet"
+                  media="screen">
+        {% endblock %}
 
-	{%- endspaceless -%}
-{%- endblock body_content -%}
+        {# Custom JS #}
+        {% block customjs %}
+            {{ parent() }}
+            <script src="{{ asset('js/plugins/summernote/summernote.min.js') }}"></script>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('.summernote').summernote({
+                        height: 210,
+                        maxHeight: 210,
+                        minHeight: 210,
+                        disableResizeEditor: false,
+                    });
+                    <!-- TODO: do it better -->
+                    $('.note-resizebar').hide();
+
+                });
+            </script>
+            <script src="{{ asset('js/bootstrap_bc-bootstrap-collection_13.js') }}"></script>
+        {% endblock customjs %}
+    {%- endspaceless -%}
+{%- endblock content -%}

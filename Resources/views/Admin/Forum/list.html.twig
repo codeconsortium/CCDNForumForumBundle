@@ -1,59 +1,76 @@
-{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.forum.admin.list.layout_template %}
 
-{%- block title -%}
-	{{- 'title.admin.manage-forums.index' |trans({}, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
 
+{% set page_title = 'forum.admin.index'|trans %}
 {%- block sidebar -%}
-	{%- spaceless -%}
-	{{- parent() -}}
-    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/admin_forum.html.twig' -%}
-	{%- endspaceless -%}
+    {%- spaceless -%}
+        {{- parent() -}}
+        {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/admin_forum.html.twig' -%}
+    {%- endspaceless -%}
 {%- endblock sidebar -%}
 
-{%- block body_content -%}
-	{%- spaceless -%}
+{%- block content -%}
+    {%- spaceless -%}
 
-		<section class="row btn-toolbar clearfix">
-			<a class="btn btn-primary" href="{{- path('ccdn_forum_admin_forum_create') -}}">
-				{{- 'link.forum.create' |trans({}, 'CCDNForumForumBundle') -}}
-			</a>
-		</section>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <h1>{{- 'title.admin.manage-forums.index' |trans({}, 'CCDNForumForumBundle') -}}
+                            <small></small>
+                        </h1>
+                        <hr>
+                        <table class="table table-striped table-hover dataTables">
+                            <thead>
+                            <tr>
+                                <th>{{- 'forum.id-th' |trans({}, 'CCDNForumForumBundle') -}}</th>
+                                <th>{{- 'forum.name-th' |trans({}, 'CCDNForumForumBundle') -}}</th>
+                                <th>{{- 'forum.category-count-th' |trans({}, 'CCDNForumForumBundle') -}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {%- for forum_index, forum in forums -%}
+                                <tr>
+                                    <td>{{- forum.id -}}</td>
+                                    <td>{{- forum.name -}}</td>
+                                    <td>{{- forum.categories |length -}}</td>
+                                    <td>
+                                        <a class="btn btn-outline btn-xs btn-info"
+                                           href="{{- path('ccdn_forum_admin_forum_edit', {'forumId': forum.id}) -}}"
+                                           id="update_forum[{{- forum.name -}}]">
+                                            {{- 'link.edit' |trans({}, 'CCDNForumForumBundle') -}}
+                                        </a>
+                                        &nbsp;
+                                        {%- if is_granted('ROLE_MODERATOR') -%}
+                                            <a class="btn btn-outline btn-xs btn-danger"
+                                               href="{{- path('ccdn_forum_admin_forum_delete', {'forumId': forum.id}) -}}"
+                                               id="delete_forum[{{- forum.name -}}]">
+                                                {{- 'link.delete' |trans({}, 'CCDNForumForumBundle') -}}
+                                            </a>
+                                        {%- endif -%}
+                                    </td>
+                                </tr>
+                            {%- endfor -%}
+                            </tbody>
+                        </table>
+                        <section class="row btn-toolbar clearfix">
+                            <a class="btn btn-primary" href="{{- path('ccdn_forum_admin_forum_create') -}}">
+                                {{- 'link.forum.create' |trans({}, 'CCDNForumForumBundle') -}}
+                            </a>
+                        </section>
 
-		<section class="clearfix">
-			<table class="table table-bordered" id="admin-forums-list">
-				<thead>
-					<tr>
-						<th>{{- 'forum.id-th' |trans({}, 'CCDNForumForumBundle') -}}</th>
-						<th>{{- 'forum.name-th' |trans({}, 'CCDNForumForumBundle') -}}</th>
-						<th>{{- 'forum.category-count-th' |trans({}, 'CCDNForumForumBundle') -}}</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					{%- for forum_index, forum in forums -%}
-						<tr>
-							<td>{{- forum.id -}}</td>
-							<td>{{- forum.name -}}</td>
-							<td>{{- forum.categories |length -}}</td>
-							<td>
-								<a class="btn btn-default" href="{{- path('ccdn_forum_admin_forum_edit', {'forumId': forum.id}) -}}" id="update_forum[{{- forum.name -}}]">
-									{{- 'link.edit' |trans({}, 'CCDNForumForumBundle') -}}
-								</a>
-
-								{%- if is_granted('ROLE_SUPER_ADMIN') -%}
-									<a class="btn btn-danger" href="{{- path('ccdn_forum_admin_forum_delete', {'forumId': forum.id}) -}}" id="delete_forum[{{- forum.name -}}]">
-										{{- 'link.delete' |trans({}, 'CCDNForumForumBundle') -}}
-									</a>
-								{%- endif -%}
-							</td>
-						</tr>
-					{%- endfor -%}
-				</tbody>
-			</table>
-		</section>
-
-	{%- endspaceless -%}
-{%- endblock body_content -%}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        {% include 'CCDNForumForumBundle:Admin/Forum:create.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%- endspaceless -%}
+{%- endblock content -%}

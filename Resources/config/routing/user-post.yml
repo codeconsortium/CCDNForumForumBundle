@@ -2,21 +2,21 @@
 # CRUD
 #
 ccdn_forum_user_post_show:
-    pattern: /{postId}
-    defaults: { _controller: CCDNForumForumBundle:UserPost:show, _locale: en, forumName: default }
+    path: /{postId}
+    defaults: { _controller: CCDNForumForumBundle:UserPost:show, forumName: default }
 
 ccdn_forum_user_post_edit:
-    pattern: /{postId}/edit
-    defaults: { _controller: CCDNForumForumBundle:UserPost:edit, _locale: en, forumName: default }
+    path: /{postId}/edit
+    defaults: { _controller: CCDNForumForumBundle:UserPost:edit, forumName: default }
 
 ccdn_forum_user_post_edit_process:
-    pattern: /{postId}/edit/process
-    defaults: { _controller: CCDNForumForumBundle:UserPost:editProcess, _locale: en, forumName: default }
+    path: /{postId}/edit/process
+    defaults: { _controller: CCDNForumForumBundle:UserPost:editProcess, forumName: default }
 
 ccdn_forum_user_post_delete:
-    pattern: /{postId}/delete
-    defaults: { _controller: CCDNForumForumBundle:UserPost:delete, _locale: en, forumName: default }
+    path: /{postId}/delete
+    defaults: { _controller: CCDNForumForumBundle:UserPost:delete, forumName: default }
 
 ccdn_forum_user_post_delete_process:
-    pattern: /{postId}/delete/process
-    defaults: { _controller: CCDNForumForumBundle:UserPost:deleteProcess, _locale: en, forumName: default }
+    path: /{postId}/delete/process
+    defaults: { _controller: CCDNForumForumBundle:UserPost:deleteProcess, forumName: default }

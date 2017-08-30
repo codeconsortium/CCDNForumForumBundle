@@ -8,6 +8,8 @@ CCDNForum\ForumBundle\Entity\Board:
     fields:
         name:
             type: string
+        icon:
+            type: string
         description:
             type: text
         cachedTopicCount:

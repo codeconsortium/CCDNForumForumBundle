@@ -7,7 +7,7 @@ Feature: Moderator Post Management
         Given I am logged in as "moderator"
         And there are following users defined:
           | email             | password | enabled  | role             |
-		  | moderator@foo.com | root     | 1        | ROLE_MODERATOR   |
+		  | moderator@foo.com | root     | 1        | ROLE_SUPER_ADMIN   |
         And there are following forums defined:
           | name                      | order    |
 		  | test_forum_f1             | 1        |

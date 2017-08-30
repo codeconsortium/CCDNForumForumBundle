@@ -1,55 +1,55 @@
 CCDNForumForumBundle-Admin:
     resource: "@CCDNForumForumBundle/Resources/config/routing/admin.yml"
-    prefix: /{_locale}/forum/admin
+    prefix: /admin
 
 CCDNForumForumBundle-Admin-Forum:
     resource: "@CCDNForumForumBundle/Resources/config/routing/admin-forum.yml"
-    prefix: /{_locale}/forum/admin/manage-forums
+    prefix: /admin/manage-forums
 
 CCDNForumForumBundle-Admin-Category:
     resource: "@CCDNForumForumBundle/Resources/config/routing/admin-category.yml"
-    prefix: /{_locale}/forum/admin/manage-categories
+    prefix: /admin/manage-categories
 
 CCDNForumForumBundle-Admin-Board:
     resource: "@CCDNForumForumBundle/Resources/config/routing/admin-board.yml"
-    prefix: /{_locale}/forum/admin/manage-boards
+    prefix: /admin/manage-boards
 
 CCDNForumForumBundle-Admin-Topic:
     resource: "@CCDNForumForumBundle/Resources/config/routing/admin-topic.yml"
-    prefix: /{_locale}/forum/admin/manage-topics
+    prefix: /admin/manage-topics
 
 CCDNForumForumBundle-Admin-Post:
     resource: "@CCDNForumForumBundle/Resources/config/routing/admin-post.yml"
-    prefix: /{_locale}/forum/admin/manage-posts
+    prefix: /admin/manage-posts
 
 
 
 CCDNForumForumBundle-Moderator-Topic:
     resource: "@CCDNForumForumBundle/Resources/config/routing/moderator-topic.yml"
-    prefix: /{_locale}/forum/{forumName}/moderator/manage-topics
+    prefix: /{forumName}/moderator/manage-topics
 
 CCDNForumForumBundle-Moderator-Post:
     resource: "@CCDNForumForumBundle/Resources/config/routing/moderator-post.yml"
-    prefix: /{_locale}/forum/{forumName}/moderator/manage-posts
+    prefix: /{forumName}/moderator/manage-posts
 
 
 
 CCDNForumForumBundle-User-Category:
     resource: "@CCDNForumForumBundle/Resources/config/routing/user-category.yml"
-    prefix: /{_locale}/forum
+    prefix: /
 
 CCDNForumForumBundle-User-Board:
     resource: "@CCDNForumForumBundle/Resources/config/routing/user-board.yml"
-    prefix: /{_locale}/forum/{forumName}/board
+    prefix: /{forumName}/board
 
 CCDNForumForumBundle-User-Topic:
     resource: "@CCDNForumForumBundle/Resources/config/routing/user-topic.yml"
-    prefix: /{_locale}/forum/{forumName}/topic
+    prefix: /{forumName}/topic
 
 CCDNForumForumBundle-User-Post:
     resource: "@CCDNForumForumBundle/Resources/config/routing/user-post.yml"
-    prefix: /{_locale}/forum/{forumName}/post
+    prefix: /{forumName}/post
 
 CCDNForumForumBundle-User-Subscription:
     resource: "@CCDNForumForumBundle/Resources/config/routing/user-subscription.yml"
-    prefix: /{_locale}/forum/{forumName}/subscription
+    prefix: /{forumName}/subscription

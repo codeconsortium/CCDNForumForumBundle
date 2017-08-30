@@ -1,40 +1,37 @@
-{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.topic.user.show.layout_template %}
 
-{%- block title -%}
-	{{- 'title.topic.show' | trans({'%topic_title%': topic.getTitle |capitalize}, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
-
+{% set page_title = topic.getBoard  %}
 {%- block sidebar -%}
 	{%- spaceless -%}
-	{{- parent() -}}
-    {%- include 'CCDNForumForumBundle:Common:Layout/Sidebar/user_forum.html.twig' -%}
+		{{- parent() -}}
+
 	{%- endspaceless -%}
 {%- endblock sidebar -%}
 
-{%- block body_content -%}
+{%- block content -%}
     {%- spaceless -%}
+    <div class="row">
+           <div class="col-lg-12">
+                <div class="wrapper wrapper-content animated fadeInRight">
+                     <div class="ibox-content forum-post-container">
+                           {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig'  -%}
+                        </div>
+                        <br><br>
+                        <hr>
+                    {{- knp_pagination_render(pager) -}}
+                          {%- for key, post in pager.getItems() -%}
+            	              {%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig"  -%}
+	                      {%- endfor -%}
+                    {{- knp_pagination_render(pager) -}}
 
-	<section class="row clearfix btn-toolbar">
-        {%- include 'CCDNForumForumBundle:User:Topic/Partial/topic_actions.html.twig' -%}
-	</section>
-
-	{%- include "CCDNForumForumBundle:User:Topic/Partial/stat_vitals.html.twig" -%}
-
-	{%- if topic.isDeleted or topic.isClosed or topic.isSticky -%}
-		{%- include "CCDNForumForumBundle:User:Topic/Partial/stat_mods.html.twig" -%}
-	{%- endif -%}
-
-	{{- knp_pagination_render(pager) -}}
-
-	<section class="row clearfix">
-	    {%- for key, post in pager.getItems() -%}
-	        {%- include "CCDNForumForumBundle:User:Post/Partial/item_post.html.twig" -%}
-	    {%- endfor -%}
-	</section>
-
-	{{- knp_pagination_render(pager) -}}
+                </div>
+           </div>
+    </div>
 
     {%- endspaceless -%}
-{%- endblock body_content -%}
+</div>
+</div>
+
+{%- endblock content -%}

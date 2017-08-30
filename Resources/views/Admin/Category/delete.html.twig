@@ -1,10 +1,9 @@
-{% extends 'CCDNForumForumBundle:Common:Layout/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% set LayoutTemplate = ccdn_forum_forum.category.admin.delete.layout_template %}
 
-{%- block title -%}
-	{{- 'title.admin.manage-categories.delete' |trans({'%category_name%': category.name}, 'CCDNForumForumBundle') -}}
-{%- endblock title -%}
+{% set page_title = 'forum.admin.category.delete'|trans %}
+
 
 {%- block sidebar -%}
 	{%- spaceless -%}
@@ -13,7 +12,7 @@
 	{%- endspaceless -%}
 {%- endblock sidebar -%}
 
-{%- block body_content -%}
+{%- block content -%}
     {%- spaceless -%}
 
 	<section class="clearfix">
@@ -51,4 +50,4 @@
 	</section>
 
     {%- endspaceless -%}
-{%- endblock body_content -%}
+{%- endblock content -%}

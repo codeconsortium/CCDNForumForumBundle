@@ -47,7 +47,23 @@ class UserCategoryController extends BaseController
             $forum = null;
             $this->isAuthorised($this->getAuthorizer()->canShowForumUnassigned());
         }
-
+        $requested = "";
+        if(isset($_GET['searchterm']))
+        {
+          $requested = $_GET['searchterm'];
+          $request = $requested;
+          parse_str($requested);
+          if(!empty($request) || $request!=" ")
+          {
+            $request = strip_tags($request);
+            $request = str_replace("'","",$request);
+            $request = str_replace(" ","%' AND p.body LIKE '%",$request);
+            $posts = $this->getPostModel()->findAllPostsExtendingString($request);
+          } else {
+            $posts = [];
+          }
+        } else {
+          $posts = [];        }
         $categories = $this->getCategoryModel()->findAllCategoriesWithBoardsForForumByName($forumName);
 
         return $this->renderResponse('CCDNForumForumBundle:User:Category/index.html.', array(
@@ -55,9 +71,20 @@ class UserCategoryController extends BaseController
             'forum' => $forum,
             'forumName' => $forumName,
             'categories' => $categories,
+            'posts' => $posts,
+            'requested' => $requested,
             'topics_per_page' => $this->container->getParameter('ccdn_forum_forum.board.user.show.topics_per_page'),
         ));
     }
+
+    /**
+*
+* @access public
+* @param Request $request
+* @return RenderResponse
+*
+*/
+
 
     /**
      *

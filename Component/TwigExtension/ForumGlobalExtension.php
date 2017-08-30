@@ -25,7 +25,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class ForumGlobalExtension extends \Twig_Extension
+class ForumGlobalExtension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
     /**
      *

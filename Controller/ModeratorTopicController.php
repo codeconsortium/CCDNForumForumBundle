@@ -41,7 +41,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
      */
     public function stickyAction($forumName, $topicId)
     {
-        $this->isAuthorised('ROLE_MODERATOR');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true));
         $this->isAuthorised($this->getAuthorizer()->canStickyTopic($topic, $forum));
@@ -63,7 +63,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
      */
     public function unstickyAction($forumName, $topicId)
     {
-        $this->isAuthorised('ROLE_MODERATOR');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true));
         $this->isAuthorised($this->getAuthorizer()->canUnstickyTopic($topic, $forum));
@@ -87,7 +87,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
      */
     public function closeAction($forumName, $topicId)
     {
-        $this->isAuthorised('ROLE_MODERATOR');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId));
         $this->isAuthorised($this->getAuthorizer()->canCloseTopic($topic, $forum));
@@ -109,7 +109,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
      */
     public function reopenAction($forumName, $topicId)
     {
-        $this->isAuthorised('ROLE_MODERATOR');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId));
         $this->isAuthorised($this->getAuthorizer()->canReopenTopic($topic, $forum));
@@ -131,7 +131,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
      */
     public function deleteAction($forumName, $topicId)
     {
-        $this->isAuthorised('ROLE_MODERATOR');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true));
         $this->isAuthorised($this->getAuthorizer()->canDeleteTopic($topic, $forum));
@@ -157,7 +157,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
      */
     public function deleteProcessAction($forumName, $topicId)
     {
-        $this->isAuthorised('ROLE_MODERATOR');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true));
         $this->isAuthorised($this->getAuthorizer()->canDeleteTopic($topic, $forum));
@@ -188,7 +188,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
      */
     public function restoreAction($forumName, $topicId)
     {
-        $this->isAuthorised('ROLE_MODERATOR');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId, true));
         $this->isAuthorised($this->getAuthorizer()->canRestoreTopic($topic, $forum));
@@ -210,7 +210,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
      */
     public function changeBoardAction($forumName, $topicId)
     {
-        $this->isAuthorised('ROLE_MODERATOR');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId));
         $this->isAuthorised($this->getAuthorizer()->canTopicChangeBoard($topic, $forum));
@@ -236,7 +236,7 @@ class ModeratorTopicController extends ModeratorTopicBaseController
      */
     public function changeBoardProcessAction($forumName, $topicId)
     {
-        $this->isAuthorised('ROLE_MODERATOR');
+        $this->isAuthorised('ROLE_SUPER_ADMIN');
         $this->isFound($forum = $this->getForumModel()->findOneForumByName($forumName));
         $this->isFound($topic = $this->getTopicModel()->findOneTopicByIdWithBoardAndCategory($topicId));
         $this->isAuthorised($this->getAuthorizer()->canTopicChangeBoard($topic, $forum));
