@@ -33,8 +33,10 @@ use CCDNForum\ForumBundle\Entity\Post;
  * @link     https://github.com/codeconsortium/CCDNForumForumBundle
  *
  */
-class BaseController extends ContainerAware
+class BaseController implements ContainerAwareInterface
 {
+    use ContainerAwareTrait;
+
     /**
      *
      * @var \Symfony\Bundle\FrameworkBundle\Routing\Router $router
