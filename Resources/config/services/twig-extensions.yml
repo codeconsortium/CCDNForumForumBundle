@@ -11,20 +11,20 @@ services:
     ccdn_forum_forum.component.twig_extension.board_list:
         class: %ccdn_forum_forum.component.twig_extension.board_list.class%
         arguments:
-            - @ccdn_forum_forum.model.category
+            - "@ccdn_forum_forum.model.category"
         tags:
             - { name: twig.extension }
 
     ccdn_forum_forum.component.twig_extension.authorizer:
         class: %ccdn_forum_forum.component.twig_extension.authorizer.class%
         arguments:
-            - @ccdn_forum_forum.component.security.authorizer
+            - "@ccdn_forum_forum.component.security.authorizer"
         tags:
             - { name: twig.extension }
 
     ccdn_forum_forum.component.twig_extension.forum_global:
         class: %ccdn_forum_forum.component.twig_extension.forum_global.class%
         arguments:
-            - @service_container
+            - "@service_container"
         tags:
             - { name: twig.extension }

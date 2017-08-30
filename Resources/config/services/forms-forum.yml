@@ -11,29 +11,29 @@ services:
         class: %ccdn_forum_forum.form.type.forum_create.class%
         arguments:
             - %ccdn_forum_forum.entity.forum.class%
-            - @ccdn_forum_forum.component.helper.role
+            - "@ccdn_forum_forum.component.helper.role"
 
     ccdn_forum_forum.form.handler.forum_create:
         class: %ccdn_forum_forum.form.handler.forum_create.class%
         arguments:
-            - @event_dispatcher
-            - @form.factory
-            - @ccdn_forum_forum.form.type.forum_create
-            - @ccdn_forum_forum.model.forum
+            - "@event_dispatcher"
+            - "@form.factory"
+            - "@ccdn_forum_forum.form.type.forum_create"
+            - "@ccdn_forum_forum.model.forum"
 
     ccdn_forum_forum.form.type.forum_update:
         class: %ccdn_forum_forum.form.type.forum_update.class%
         arguments:
             - %ccdn_forum_forum.entity.forum.class%
-            - @ccdn_forum_forum.component.helper.role
+            - "@ccdn_forum_forum.component.helper.role"
 
     ccdn_forum_forum.form.handler.forum_update:
         class: %ccdn_forum_forum.form.handler.forum_update.class%
         arguments:
-            - @event_dispatcher
-            - @form.factory
-            - @ccdn_forum_forum.form.type.forum_update
-            - @ccdn_forum_forum.model.forum
+            - "@event_dispatcher"
+            - "@form.factory"
+            - "@ccdn_forum_forum.form.type.forum_update"
+            - "@ccdn_forum_forum.model.forum"
 
     ccdn_forum_forum.form.type.forum_delete:
         class: %ccdn_forum_forum.form.type.forum_delete.class%
@@ -43,7 +43,7 @@ services:
     ccdn_forum_forum.form.handler.forum_delete:
         class: %ccdn_forum_forum.form.handler.forum_delete.class%
         arguments:
-            - @event_dispatcher
-            - @form.factory
-            - @ccdn_forum_forum.form.type.forum_delete
-            - @ccdn_forum_forum.model.forum
+            - "@event_dispatcher"
+            - "@form.factory"
+            - "@ccdn_forum_forum.form.type.forum_delete"
+            - "@ccdn_forum_forum.model.forum"
