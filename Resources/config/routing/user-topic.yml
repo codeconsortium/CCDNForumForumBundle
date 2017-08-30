@@ -3,21 +3,21 @@
 # CRUD
 #
 ccdn_forum_user_topic_show:
-    pattern: /{topicId}
+    path: /{topicId}
     defaults: { _controller: CCDNForumForumBundle:UserTopic:show, forumName: default }
 
 ccdn_forum_user_topic_create:
-    pattern: /create/for-board/{boardId}
+    path: /create/for-board/{boardId}
     defaults: { _controller: CCDNForumForumBundle:UserTopic:create, forumName: default }
 
 ccdn_forum_user_topic_create_process:
-    pattern: /create/for-board/{boardId}/process
+    path: /create/for-board/{boardId}/process
     defaults: { _controller: CCDNForumForumBundle:UserTopic:createProcess, forumName: default }
 
 ccdn_forum_user_topic_reply:
-    pattern: /{topicId}/reply
+    path: /{topicId}/reply
     defaults: { _controller: CCDNForumForumBundle:UserTopic:reply, forumName: default }
 
 ccdn_forum_user_topic_reply_process:
-    pattern: /{topicId}/reply/process
+    path: /{topicId}/reply/process
     defaults: { _controller: CCDNForumForumBundle:UserTopic:replyProcess, forumName: default }

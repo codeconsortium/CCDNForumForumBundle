@@ -1,6 +1,6 @@
 
 #ccdn_forum_user_category_index:
-#    pattern: /index
+#    path: /index
 #    defaults: { _controller: CCDNForumForumBundle:UserCategory:index, _locale: de, forumName: default }
 
 ccdn_forum_user_category_index:

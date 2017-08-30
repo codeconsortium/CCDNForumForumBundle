@@ -1,12 +1,12 @@
 
 ccdn_forum_user_subscription_index:
-    pattern: /
+    path: /
     defaults: { _controller: CCDNForumForumBundle:UserSubscription:index, _locale: de }
 
 ccdn_forum_user_subscription_subscribe:
-    pattern: /topic/{topicId}/subscribe
+    path: /topic/{topicId}/subscribe
     defaults: { _controller: CCDNForumForumBundle:UserSubscription:subscribe, _locale: de }
 
 ccdn_forum_user_subscription_unsubscribe:
-    pattern: /topic/{topicId}/unsubscribe
+    path: /topic/{topicId}/unsubscribe
     defaults: { _controller: CCDNForumForumBundle:UserSubscription:unsubscribe, _locale: de }

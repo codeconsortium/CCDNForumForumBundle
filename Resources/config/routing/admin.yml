@@ -1,4 +1,4 @@
 
 ccdn_forum_admin_index:
-    pattern: /
+    path: /
     defaults: { _controller: CCDNForumForumBundle:AdminPanel:Index, _locale: de }
