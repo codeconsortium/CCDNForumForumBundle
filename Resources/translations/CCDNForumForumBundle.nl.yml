@@ -1,0 +1,253 @@
+dashboard:
+    pages:
+        forum:                         "Forum"
+        community:                     "Gemeenschap"
+    categories:
+        forum:                         "Forum"
+        community:                     "Gemeenschap"
+    links:
+        forum:                         "Forumindex"
+        subscriptions:                 "Forumabonnement"
+
+layout:
+    header_links:
+        forum:                         "Forum"
+
+title:
+    admin:
+        index:                         "Administratie-index"
+        manage-forums:
+            index:                     "Beheer van fora"
+            create:                    "Maak niew forum"
+            edit:                      "Wijzig forum %forum_name%"
+            delete:                    "Verwijder forum %forum_name%"
+        manage-categories:
+            index:                     "Beheer Categorieëm"
+            create:                    "Maak nieuwe categorie"
+            edit:                      "Wijzig categorie %category_name%"
+            delete:                    "Verwijder categorie %category_name%"
+        manage-boards:
+            index:                     "Beheer van raden van bestuur"
+            create:                    "Maak een nieuw bord"
+            edit:                      "Bord bewerken %board_name%"
+            delete:                    "Verwijder board %board_name%"
+    category:
+        index:                         "Index"
+        show:                          "%category_name% Categorie"
+    board:
+        show:                          "%board_name% Bord"
+    topic:
+        show:                          "Onderwerp: %topic_title%"
+        create:                        "Maak onderwerp"
+        reply:                         "Reageer op onderwerp"
+        edit:                          "Wijzig onderwerp"
+        delete:                        "Verwijder onderwerp"
+        change_board:                  "Wijzig bord voor onderwerp"
+    post:
+        show:                          "Bericht #%post_id%"
+        edit:                          "Wijzig bericht #%post_id%"
+        delete:                        "Verwijder bericht #%post_id%"
+    subscription:
+        index:                         "Abonnementen"
+
+crumbs:
+    admin:
+        index:                         "Administratie-index"
+        manage-forums:
+            index:                     "Beheer Fora"
+            create:                    "Maak nieuw forum"
+            edit:                      "Wijzig forum %forum_name%"
+            delete:                    "Verwijder forum %forum_name%"
+        manage-categories:
+            index:                     "Beheer categorieën"
+            create:                    "Maak nieuwe categorie"
+            edit:                      "Wijzig categorie %category_name%"
+            delete:                    "Verwijder categorie %category_name%"
+        manage-boards:
+            index:                     "Beheer borden"
+            create:                    "Maak nieuw bord"
+            edit:                      "Wijzig bord %board_name%"
+            delete:                    "Verwijder bord %board_name%"
+    moderator:
+        topic:
+            move:                      "Verplaats onderwerp"
+            delete:                    "Verwijder onderwerp"
+    user:
+        category:
+            index:                     "Forum index"
+        topic:
+            create:                    "Maap nieuw onderwerp"
+            reply:                     "Reageer op onderwerp"
+            delete:                    "Verwijder onderwerp"
+        post:
+            edit:                      "Wijzig bericht: #"
+            delete:                    "Verwijder bericht: #"
+        subscription:
+            index:                     "Abonnementen"
+
+link:
+    edit:                              "Wijzig"
+    delete:                            "Verwijder"
+    unassigned:                        "niet-toegewezen"
+    admin:
+        index:                         "Admin"
+    forum:
+        index:                         "Forum"
+        create:                        "Maak nieuw forum"
+    category:
+        index:                         "Forum index"
+        create:                        "Maak nieuwe category"
+    board:
+        create:                        "Maak nieuw bord"
+    topic:
+        create:                        "Maak nieuw onderwerp"
+        reply:                         "Reageren"
+        subscribe:                     "Abonneren"
+        unsubscribe:                   "Uitschrijven"
+        close:                         "Onderwerp"
+        reopen:                        "Heropen onderwerp"
+        delete:                        "Onderwerp verwijderen"
+        restore:                       "Herstel onderwerp"
+        change_board:                  "Verander bord"
+        sticky:                        "Kleverig onderwerp"
+        unsticky:                      "Onplakkerig onderwerp"
+    post:
+        quote:                         "Quote"
+        delete:                        "Verwijderen"
+        restore:                       "Herstellen"
+        lock:                          "Vergrendelen"
+        unlock:                        "Ontgrendelen"
+    subscription:
+        index:                         "Abonnementen"
+
+form:
+    required:                          "Dit veld is verplicht"
+    button:
+        confirm-delete:                "Bevestigen wissen"
+        save:                          "Opslaan"
+        save-changes:                  "Wijzigingen opslaan"
+        topic:
+            create:                    "Onderwerp publiceren"
+            reply:                     "Antwoord publiceren"
+            move:                      "Verplaats onderwerp"
+        preview:                       "Voorbeeld"
+        cancel:                        "Annuleren"
+        yes:                           "Ja"
+        no:                            "Nee"
+
+
+filter:
+    forums:                            "Forums"
+    categories:                        "Categorieën"
+forum:
+    label:                             "Forum: "
+    id-th:                             "ID"
+    name-th:                           "Naam"
+    category-count-th:                 "Categorietelling"
+    name-label:                        "Naam: "
+    roles:
+        board-view-label:              "Board View Rollen:"
+    confirm-delete-label:              "Ik bevestig dat ik dit Forum wil verwijderen."
+    confirm-delete-subordinates-label: "Ook categorieën, borden en onderwerpen verwijderen."
+category:
+    label:                             "Categorie"
+    id-th:                             "ID"
+    name-th:                           "Naam"
+    board-count-th:                    "Bordtelling"
+    name-label:                        "Naam: "
+    confirm-delete-label:              "Ik bevestig dat ik deze categorie wil verwijderen."
+    confirm-delete-subordinates-label: "Verwijder ook borden en onderwerpen."
+    roles:
+        board-view-label:              "Board View Rollen:"
+    index:                             "Forum Index"
+    none:                              "Er zijn geen categorieën."
+    no-boards:                         "Er zijn geen borden voor deze categorie."
+board:
+    th:                                "Bord"
+    id-th:                             "ID"
+    name-th:                           "Naam"
+    topic-th:                          "Onderwerp"
+    topics-th:                         "Onderwerpen"
+    view-count-th:                     "Weergaven"
+    reply-count-th:                    "Reacties"
+    topic-count-th:                    "Onderwerpen"
+    post-count-th:                     "Posts"
+    last-post-th:                      "Laatste post"
+    announcements-th:                  "Mededelingen"
+    label:                             "Bord: "
+    name-label:                        "Naam: "
+    topic-count-label:                 "Onderwerpen: "
+    post-count-label:                  "Posts: "
+    description-label:                 "Beschrijving: "
+    confirm-delete-label:              "Ik bevestig dat ik dit bord wil verwijderen."
+    confirm-delete-subordinates-label: "Verwijder ook onderwerpen"
+    roles:
+        topic-create-label:            "Onderwerp: Rollen creëren: "
+        topic-view-label:              "Thematische View Roles: "
+        topic-reply-label:             "Thematische Reply Roles: "
+    no-topics:                         "Er zijn geen onderwerpen voor dit bord, wees de eerste die er een plaatst!"
+topic:
+    label:                             "Onderwerp: "
+    board-label:                       "Bord: "
+    title-label:                       "Titel: "
+    confirm-delete-label:              "Ik bevestig dat ik dit onderwerp wil verwijderen."
+    subscription-count-label:          "Abonnees: "
+    view-count-label:                  "Weergaven: "
+    reply-count-label:                 "Reacties: "
+    transcript:                        "Transcript."
+    closed-by:                         "Onderwerp gesloten door %name%"
+    deleted-by:                        "Onderwerp verdwijderd door %name%"
+    stickied-by:                       "Vastgeplakt door %name%"
+    delete-confirm:                    "Weet je zeker dat je dit onderwerp wilt verwijderen?"
+    badge:
+        closed:                        "Gesloten"
+    deleted-by:                        "Verwijderd door %name%"
+    closed-by:                         "Gesloten door %name% "
+post:
+    preview:                           "voorbeschouwing"
+    posted-by:                         "Geplaatst door %name% "
+    edited-by:                         "Gewijzigd door %name%"
+    deleted-by:                        "Verwijderd door %name%"
+    locked-by:                         "Vergrendeld door %name%"
+    confirm-delete-label:              "Ik bevestig dat ik dit bericht wil verwijderen."
+    body-label:                        "Bericht:"
+    subscribe-label:                   "Abonneer je op dit onderwerp"
+    unlock-until-label:                "Ontgrendel tot:"
+    has_been_locked:                   "Deze post is vergrendeld."
+    has_been_deleted:                  "Dit bericht is verwijderd."
+    user_post_count:                   "{0} Nog geen berichten|{1} %post_count% Post |[2, Inf] %post_count% Posts"
+    delete_confirm:                    "Weet u zeker dat u deze post wilt verwijderen?"
+    show:                              "Laat zien"
+    hide:                              "Verberg"
+subscription:
+    no-topics:                         "U bent niet geabonneerd op een onderwerp."
+    all:                               "alle"
+    unread:                            "Ongelezen"
+    read:                              "Gelezen"
+
+next:                                  "Volgende"
+previous:                              "Vorige"
+
+flash:
+    success:
+        topic:
+            create:                    "Het nieuwe onderwerp is met succes gepost: %topic_title%."
+            reply:                     "Met succes een antwoord op het onderwerp geplaatst: %topic_title%."
+            move:                      "Succesvol verplaatst onderwerp: %topic_title%."
+            subscribe:                 "U heeft zich geabonneerd op het onderwerp %topic_title%."
+            unsubscribe:               "U heeft zich uitgeschreven van het onderwerp %topic_title%."
+        post:
+            edit:                      "Successvol gewijzigd #%post_id% van onderwerp: %topic_title%."
+            delete:                    "Succesvol verwijderd bericht: #%post_id%."
+    warning:
+        topic:
+            flood_control:             "Flood Control - Je hebt te veel in één keer gepost, neem een pauze voordat je weer post."
+    error:
+        topic:
+            reply:
+                not_found:             "Het onderwerp waarop u probeert te antwoorden bestaat niet meer."
+            subscribe:
+                not_found:             "Onderwerp kon niet worden onderschreven omdat het niet werd gevonden! Sorry daarvoor."
+        board:
+            topic_create:
+                not_found:             "Het bord waar je probeert te posten bestaat niet meer! Sorry daarvoor."
