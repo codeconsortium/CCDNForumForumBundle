@@ -201,8 +201,8 @@ topic:
     delete-confirm:                    "¿Estas seguro de que deseas eliminar este tema?"
     badge:
         closed:                        "Cerrar"
-    deleted-by:                        "Eliminado por "
-    closed-by:                         "Cerrado por "
+    deleted.by:                        "Eliminado por "
+    closed.by:                         "Cerrado por "
 post:
     preview:                           "Previsualizar"
     posted-by:                         "Enviado por "
