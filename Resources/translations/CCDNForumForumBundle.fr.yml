@@ -195,8 +195,8 @@ topic:
     view-count-label:                  "Vues : "
     reply-count-label:                 "Réponses : "
     transcript:                        "Historique."
-    closed-by:                         "Topic fermé par %name%"
-    deleted-by:                        "Topic supprimé par %name%"
+    closed.by:                         "Topic fermé par %name%"
+    deleted.by:                        "Topic supprimé par %name%"
     stickied-by:                       "Épinglé par %name%"
     delete-confirm:                    "Êtes-vous sûr de vouloir supprimer ce topic ?"
     badge:
