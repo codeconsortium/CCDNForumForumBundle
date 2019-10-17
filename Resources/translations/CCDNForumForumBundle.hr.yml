@@ -201,8 +201,8 @@ topic:
     delete-confirm:                    "Jesi li siguran da želiš izbrisati ovu temu?"
     badge:
         closed:                        "Zatvori"
-    deleted-by:                        "Izbrisao "
-    closed-by:                         "Zatvorio "
+    deleted.by:                        "Izbrisao "
+    closed.by:                         "Zatvorio "
 post:
     preview:                           "Pregled"
     posted-by:                         "Post "
