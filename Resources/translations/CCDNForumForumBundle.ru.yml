@@ -201,8 +201,8 @@ topic:
     delete-confirm:                    "Уверены, что хотите удалить тему?"
     badge:
         closed:                        "Закрыто"
-    deleted-by:                        "Удалено "
-    closed-by:                         "Закрыто "
+    deleted.by:                        "Удалено "
+    closed.by:                         "Закрыто "
 post:
     preview:                           "Просмотр"
     posted-by:                         "Написал "
