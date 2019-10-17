@@ -201,8 +201,8 @@ topic:
     delete-confirm:                    "Are you sure you want to delete this topic?"
     badge:
         closed:                        "Closed"
-    deleted-by:                        "Deleted by "
-    closed-by:                         "Closed by "
+    deleted.by:                        "Deleted by "
+    closed.by:                         "Closed by "
 post:
     preview:                           "Preview"
     posted-by:                         "Posted by "
