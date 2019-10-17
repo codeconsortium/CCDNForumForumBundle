@@ -201,8 +201,8 @@ topic:
     delete-confirm:                    "Weet je zeker dat je dit onderwerp wilt verwijderen?"
     badge:
         closed:                        "Gesloten"
-    deleted-by:                        "Verwijderd door %name%"
-    closed-by:                         "Gesloten door %name% "
+    deleted.by:                        "Verwijderd door %name%"
+    closed.by:                         "Gesloten door %name% "
 post:
     preview:                           "voorbeschouwing"
     posted-by:                         "Geplaatst door %name% "
